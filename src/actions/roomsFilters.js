@@ -1,0 +1,28 @@
+export const roomsFiltersTwo = ({ 
+    all = false, 
+    remixable = false, 
+    vr = false, 
+    ar = false,
+    three60 = false,
+    ai = false,
+    desktop = false,
+    tablet = false,
+    mobile = false,
+    developmental = false,
+    production = false,
+    live = false,
+}) => ({
+    type:'ROOMS_FILTER_2',
+    all,
+    remixable, 
+    vr, 
+    ar,
+    three60,
+    ai,
+    desktop,
+    tablet,
+    mobile,
+    developmental,
+    production,
+    live
+});
