@@ -21,7 +21,7 @@ export const EditRoute = ({ isAuthenticated, username, component:Component, ...r
                 <div style={{display:'flex', flex:1, flexDirection:'column'}}>
                 <HeaderLoggedIn/>
                     <Component {...props}/>
-                <Footer/>
+                {/* <Footer/> */}
                 </div>
             )
 

@@ -12,13 +12,17 @@ import { OPEN_MODAL } from '../../actions/entireApp';
       
       this.props.openModal({isModalOpen:true, modalType:'message', customStyles:{
         overlay: {
-          backgroundColor:'transparent'
+          backgroundColor:'transparent',
         },
         content: {
           color: 'lightsteelblue',
           backgroundColor:'white',
-          height:'60%',
-          width:'60%',
+          height:'90%',
+          width:'79%',
+          right:'0px',
+          top:'30px',
+          left:'0px',
+          bottom:'0px',
           marginLeft:'auto',
           marginRight:'auto',
           borderRadius:10, 

@@ -9,6 +9,7 @@ import userExists from '../reducers/userExists';
 import entireAppReducer from '../reducers/entireApp'
 import roomsFilters from '../reducers/roomsFilters'
 import communitiesFilter from '../reducers/communitiesFilter'
+import UpdateEditor from '../reducers/updateEditor';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -23,7 +24,8 @@ export default () => {
             entireApp:entireAppReducer,
             userExists:userExists,
             roomsFilters:roomsFilters,
-            communitiesFilter:communitiesFilter
+            communitiesFilter:communitiesFilter,
+            updateEditor:UpdateEditor
         }),
         composeEnhancers(applyMiddleware(thunk))
     );

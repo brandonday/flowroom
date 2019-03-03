@@ -1,229 +1,1116 @@
-function testFR (elementID, url) {
-     var file, fr, img, dkrm;
-     let imageFromCanvas;
-//(function() {
-    let inputEL = document.createElement("input");
-    inputEL.setAttribute('type', 'file');
-    inputEL.setAttribute('id', 'img-file');
-    inputEL.style.display ='none';
-    document.body.appendChild(inputEL);   
-    document.getElementById('myModal').style.display = 'block';
+(function(window) {
+    'use strict'
+  
+    let calledOnce = false;
+    //figure this all out review library creation vid
+    let counter = 0;
+    let elId;
+    let currentImage;
 
-const targetElement = document.querySelector("#myModal");
- 
-// 2. ...in some event handler after showing the target element...disable body scroll
-bodyScrollLock.disableBodyScroll(targetElement);
-
-    document.getElementById('scream').style.display = 'none';
-    //document.getElementById('a').style.display = 'none';
    
-       
-                 // you need to create an input element in HTML, explained later
-                 
-            let input = document.getElementById('img-file');
+  
+   
+  //function defineFlowroom() {
+    let flowroom = { 
 
-                 input.addEventListener('change', function() {
-                     var loadedImage = input.files[0];
-                     alert(loadedImage)
-                     //config['Image Path'] = file.name;
-                     // update all controllers
-                     //document.getElementById('pic').style.backgroundImage = `url(${img})`;
-                     loadImage();
+       elId:'',
+       RemixImage:function(elId, contentType, btnLabel) {
+     
+                this.elId = elId;
+                let FR_REMIX_LIST = JSON.parse(localStorage.getItem("FR_REMIX_LIST"));
+                if(FR_REMIX_LIST === null) {
+                    FR_REMIX_LIST = [];
+                } else {
+                    FR_REMIX_LIST = JSON.parse(localStorage.getItem("FR_REMIX_LIST"));
+                }
+      
+        
+            
+            let list = parent.document.getElementById('main-menu');
+            let item = parent.document.createElement('li');
+            if(this.elId.charAt(0) === '.') {
+                let classorid = flowroom.elId.substring(1);
+          
+                classorid = classorid.toString();
+               
 
+                    var img = document.getElementsByClassName(`${classorid}`)[0];
+                    let style = img.currentStyle || window.getComputedStyle(img, false);
+                    let bi = style.backgroundImage.slice(4, -1).replace(/"/g, "");
+                    
+
+                 if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(1)) === -1) { /*I keep (0) in case a class is an id too*/
+                    // let bgImg = document.createElement('div');
+                    // let text = document.createElement('p');
+                    // text.style.marginRight = '55px';
+                    
                    
+                    // text.appendChild(document.createTextNode('CHANGE IMAGE'))
+                    // bgImg.style.backgroundImage = `url(${bi})`;
+                    // bgImg.style.height = '40px';
+                    // bgImg.style.width = '40px';
+                    // bgImg.style.backgroundSize = 'cover';
 
-                     function loadImage() {
-                       
-                
-                        if (typeof window.FileReader !== 'function') {
-                            write("The file API isn't supported on this browser yet.");
-                            return;
-                        }
-                
-                        
-                        if (!input) {
-                            write("Um, couldn't find the imgfile element.");
-                        }
-                        else if (!input.files) {
-                            write("This browser doesn't seem to support the `files` property of file inputs.");
-                        }
-                        else if (!input.files[0]) {
-                            write("Please select a file before clicking 'Load'");
-                        }
-                        else {
-                            file = loadedImage;
-                            fr = new FileReader();
-                            fr.onload = createImage;
-                            fr.readAsDataURL(file);
-                        }
-                
-                        function createImage() {
-                            img = new Image();
-                            img.onload = imageLoaded;
-                            img.src = fr.result;
-                        }
-                
-                        function imageLoaded() {
-                            document.getElementById('scream').src = fr.result;
-                            document.getElementById('scream').style.display = 'none';
-                            //let fcanvas = document.getElementById('result-canvas');
-                                dkrm = new Darkroom('#scream', {
-                                    minWidth: 100,
-                                    minHeight: 100,
-                                    maxWidth: 200,
-                                    maxHeight: 200,
-                                plugins:{
-                                    save: { callback: function() {
-                                        this.darkroom.selfDestroy(); // Cleanup
-                                        var newImage = dkrm.canvas.toDataURL();
-                                        fileStorageLocation = newImage;
-                                        document.getElementById('drag-here').style.display = 'none';
-                                        //document.getElementById('scream').src = canvas.toDataURL("image/png");
-                                        theApp(fileStorageLocation);
-                                    
-                                      }
-                                    }
-                                }
-                            });
+                    // item.style.height = '50px';
+                    // item.style.width = '348px';
+                    
+                    // item.style.marginTop = '10px';
+                    // item.style.marginBottom = '10px';
+
+                    // item.style.marginLeft = 'auto';
+                    // item.style.marginRight = 'auto';
+
+                    // item.style.border = '1px solid #DDE0EB';
+                    // item.style.display = 'flex';
+                    // item.style.alignItems = 'center';
+
+                    // item.style.borderRadius = '5px';
+
+                    // bgImg.style.marginRight = '5px';
+                    // bgImg.style.marginLeft = '7px';
+                    // bgImg.style.position = 'relative';
+                    // item.style.display = 'flex';
+                    // //item.style.justifyContent = 'flex-end';
+                    
+                    // bgImg.style.right = '0px';
+                    // item.appendChild(bgImg);
+                    // item.appendChild(text);
+                    // list.appendChild(item);
+                    // item.addEventListener('click', function() {
+                      
+                    //     var img = new Image,
+                    //     canvas = document.createElement("canvas"),
+                    //     ctx = canvas.getContext("2d"),
+                    //     src = bi; // insert image url here
+                    
+                    // img.crossOrigin = "Anonymous";
+                    
+                    // img.onload = function() {
+                    //     canvas.width = img.width;
+                    //     canvas.height = img.height;
+                    //     ctx.drawImage( img, 0, 0 );
+                    //     localStorage.setItem( "savedImageData", canvas.toDataURL("image/png") );
+                    //     testFR(elId);
+                    // }
+                    // img.src = src;
+                   
+                    // make sure the load event fires for cached images too
+                    // if ( img.complete || img.complete === undefined ) {
+                    //     img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+                    //     img.src = bi;
+                    // }
+
                            
-                        }
-                
-                        function write(msg) {
-                            var p = document.createElement('p');
-                            p.innerHTML = msg;
-                            document.body.appendChild(p);
-                        }
-                    }
-           
-                     console.log(file);
-
-
+                            //return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+                         
+                          
+                        //   var base64 = getBase64Image(bi);
+                        //   alert(base64)
+                        
                      
- 
-                    //  for (var i in gui.__controllers) {
-                    //      gui.__controllers[i].updateDisplay();
-                    //  }
-                 });
-                 //input.click(); 
+
+
+                //           var blob = null;
+                //           var xhr = new XMLHttpRequest(); 
+                //           xhr.open("GET", bi); 
+                //           xhr.responseType = "blob";//force the HTTP response, response-type header to be blob
+                //           xhr.onload = function() 
+                //           {
+                //               blob = xhr.response;//xhr.response is now a blob object
+                              
+                //           }
+                //           xhr.send();
+                //           var myReader = new FileReader();
+                //   myReader.readAsArrayBuffer(blob)
+                //   myReader.addEventListener("loadend", function(e)
+                //   {
+                //           var buffer = e.srcElement.result;//arraybuffer object
+                //           //that.setState({ src: buffer})
+                //   });
+
+                
+                  
+                  //var base64 = getBase64Image('https://i.pinimg.com/originals/69/64/4d/69644d2af4e6bf16fcf88a9ac1b275d6.jpg');
+
+                          //alert(base64)
+                          //testFR(base64);
+                        //window.top
+                        //alert(classorid);
+                        //if(secondCreated === false) {
+                        
+                        // overlay.style.position = 'absolute';
+                        // overlay.style.zIndex = '1';
+                        // overlay.style.height = '100%';
+                        // overlay.style.width = '100%';
+                        // overlay.style.backgroundColor = 'white';
+                        // overlay.style.visibility = 'visible';
+    
+                        // overlay.style.alignItems = 'center';
+                        // overlay.style.display = 'flex';
+                        // overlay.style.flexDirection = 'column';
+    
+                        // let oside = parent.document.getElementById('main-menu');
+                        
+                        // oside.appendChild(overlay);
+                     
+                        // let head = document.createElement('div');
+                        // let headText = document.createElement('p');
+                        // let iconContainer = document.createElement('div');
+                        // let descriptionText = document.createElement('p');
+                        // let saveBTN = document.createElement('div');
+                        // saveBTN.style.height = '30px';
+                        // saveBTN.style.width = '150px';
+                        // saveBTN.style.border = '1px solid black';
+                        // saveBTN.style.borderRadius = '6px';
+                        // saveBTN.style.marginTop = '10px';
+                        // saveBTN.appendChild(document.createTextNode('SAVE'));
+                        // saveBTN.style.display = 'flex';
+                        // saveBTN.style.justifyContent = 'center';
+                        // saveBTN.style.alignItems = 'center';
+                        // saveBTN.addEventListener('click', ()=> {
+                        //     let beforeT;
+                        //     if(tagType === 'textarea') {
+                        //      beforeT = document.getElementById(classorid).value;
+                        //     } else if(tagType === 'input') { 
+                        //      beforeT = document.getElementById(classorid).value;
+                        //     } else {
+                        //      beforeT = document.getElementById(classorid).innerText;
+                        //     }
+            
+                        //     if(tagType === 'textarea') {
+                        //      beforeT = document.getElementById(classorid).value;
+                        //     } else if(tagType === 'input') { 
+                        //      beforeT = document.getElementById(classorid).value;
+                        //     } else {
+                        //      beforeT = document.getElementById(classorid).innerText;
+                        //     }
+                        //    let text = document.getElementById(classorid).innerText = singleLine.value;
+                        //    parent.window.callUpdate(beforeT, text);
+                        //    parent.window.calledAlready(true);
+                        // });
+                      
+                        // iconContainer.style.marginBottom = '10px';
+                      
+                        // headText.style.marginRight = '20px';
+                        // let icon = document.createElement('div');
+                        // icon.className = 'fa fa-angle-left';
+                        // icon.fontSize = '40px';
+                        // head.style.height = '35px';
+                        //     head.style.width = '100%';
+                        //     head.style.borderBottom = '1px solid #DDE0EB'; 
+                        // let overlaySide;
+                        // if(localStorage.getItem("remixhead3") === null) {
+                        //     headText.appendChild(document.createTextNode('CHANGE IMAGE'))
+                            
+                        //     head.style.display = 'flex';
+                        //     head.style.justifyContent = 'center';
+                        //     head.style.alignItems = 'center';
+                            
+                        //     head.appendChild(iconContainer);
+                        //     iconContainer.appendChild(icon);
+                        //     head.appendChild(headText);
+                            
+                        //     head.setAttribute("id", "remixhead3");
+                        //     overlay.appendChild(head);
+                        //     parent.window.croppedImageUrl = bi;
+                        //     iconContainer.addEventListener('click', function() {
+                        //         //overlay.style.visibility = 'hidden';
+                        //     })
+                        //     localStorage.setItem("remixhead3", true);
+                        //     secondCreated = true;
+                        // }
+                        // } else {
+                        //     overlay.style.visibility = 'visible';
+                        // }
+                    //})
+                    FR_REMIX_LIST.push({[classorid]:classorid,image:bi,classorid:`${classorid}`,type:'class'});
+                    console.log(FR_REMIX_LIST)
+                    localStorage.setItem("FR_REMIX_LIST", JSON.stringify(FR_REMIX_LIST));
+                 }
+                //}
+            } else if(this.elId.charAt(0) === '#') {
+                let classorid = flowroom.elId.substring(1);
+                //alert(classorid)
+                classorid = classorid.toString();
+                var img = document.getElementById(`${classorid}`);
+                let style = img.currentStyle || window.getComputedStyle(img, false);
+                let bi = style.backgroundImage.slice(4, -1).replace(/"/g, "");
+
+                // Display the url to the user
+                //alert(flowroom.elId.substring(0))
+                if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(1)) === -1) {
+      
+
+    
+                      
+                        // iconContainer.style.marginBottom = '10px';
+                      
+                        // headText.style.marginRight = '20px';
+                        // let icon = document.createElement('div');
+                        // icon.className = 'fa fa-angle-left';
+                        // icon.fontSize = '40px';
+                        // head.style.height = '35px';
+                        //     head.style.width = '100%';
+                        //     head.style.borderBottom = '1px solid #DDE0EB'; 
+                        // let overlaySide;
+                        // if(localStorage.getItem("remixhead3") === null) {
+                        //     headText.appendChild(document.createTextNode('CHANGE IMAGE'))
+                            
+                        //     head.style.display = 'flex';
+                        //     head.style.justifyContent = 'center';
+                        //     head.style.alignItems = 'center';
+                            
+                        //     head.appendChild(iconContainer);
+                        //     iconContainer.appendChild(icon);
+                        //     head.appendChild(headText);
+                            
+                        //     head.setAttribute("id", "remixhead3");
+                        //     overlay.appendChild(head);
+                        //     parent.window.croppedImageUrl = bi;
+                        //     iconContainer.addEventListener('click', function() {
+                        //         //overlay.style.visibility = 'hidden';
+                        //     })
+                        //     localStorage.setItem("remixhead3", true);
+                        //     secondCreated = true;
+                        // }
+                        // } else {
+                        //     overlay.style.visibility = 'visible';
+                        // }
+                    //})
+                    //list.appendChild(item);
+                    FR_REMIX_LIST.push({[classorid]:classorid,image:bi, classorid:`${classorid}`, type:'id'});
+                    localStorage.setItem("FR_REMIX_LIST", JSON.stringify(FR_REMIX_LIST));
+                    console.log(localStorage.getItem("FR_REMIX_LIST"))
+                }
+              
+    
+            }
+            
+            //  item.style.height = '50px';
+            //  item.style.width = '235px';
+            //  item.style.marginTop = '10px';
+            //  item.style.marginBottom = '10px';
+            //  item.style.border = '1px solid #DDE0EB';
+            //  item.appendChild(bi);
+            //  list.appendChild(item);
+
+
+        },
+        menu:function() {
+           
+         
+                let remixlist = parent.document.getElementById('main-menu');
+                remixlist.style.display = 'flex';
+                remixlist.style.width = '584px';
+                remixlist.style.flexDirection = 'column';
+                remixlist.style.alignItems = 'center';
+                let head = document.createElement('div');
+                let headText = document.createElement('p');
+                headText.style.marginRight = '20px';
+                let icon = document.createElement('div');
+                icon.className = 'fa fa-random';
+                icon.fontSize = '40px';
+                head.style.height = '35px';
+                    head.style.width = '100%';
+                    head.style.borderBottom = '1px solid #DDE0EB'; 
+                if(localStorage.getItem("remixhead") === null) {
+                    headText.appendChild(document.createTextNode('REMIX MENU'))
+                    
+                    head.style.display = 'flex';
+                    head.style.justifyContent = 'center';
+                    head.style.alignItems = 'center';
+                    head.appendChild(headText);
+                    head.appendChild(icon);
+                    head.setAttribute("id", "remixhead");
+                    remixlist.appendChild(head);
+                    localStorage.setItem("remixhead", true);
+                }
+
+        },
+        RemixText:function(elId, options) {
+           
+            this.elId = elId;
+            let FR_REMIX_LIST = JSON.parse(localStorage.getItem("FR_REMIX_LIST"));
+            let FR_REMIX_LIST2 = [];
+            if(FR_REMIX_LIST === null) {
+                FR_REMIX_LIST = [];
+            } else {
+                FR_REMIX_LIST = JSON.parse(localStorage.getItem("FR_REMIX_LIST"));
+            }
+    
+            let list = parent.document.getElementById('main-menu');
+            let item = parent.document.createElement('li');
+            let classorid = flowroom.elId.substring(1);
+          
+        
+            if(this.elId.charAt(0) === '.') {
              
-       
- function theApp(image) {
-    let canvasff = document.getElementById('final-result-canvas');
-    document.getElementById('scream').style.display = 'none';
-    var toBase64Btn = document.getElementById("toBase64");
-    var ctx = canvasff.getContext("2d");
-    canvasff.width = dkrm.canvas.width + 50;
-    canvasff.height = dkrm.canvas.height + 50;
+                let classorid = flowroom.elId.substring(1);
+                classorid = classorid.toString();
+                var textEdit = document.getElementsByClassName(`${classorid}`)[0];
+               
+                if(textEdit === 'textarea') {
+                    textEdit = document.getElementsByClassName(`${classorid}`)[0].value;
+                } else if(textEdit === 'input') {
+                    textEdit = document.getElementsByClassName(`${classorid}`)[0].value;
+                } else {
+                    textEdit = document.getElementsByClassName(`${classorid}`)[0].innerText;
+                }
+                // Display the url to the user
+                if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(1)) === -1) { /*if at least one array item with that name of class or id without # or . then*/
+                    let bgImg = document.createElement('div');
+                    let text = document.createElement('p');
+                    let overlay = document.createElement('div');
+                    let descriptionBox = document.createElement('div');
+                    descriptionBox.appendChild(document.createTextNode(options.description));
+                    let singleLine = document.createElement('input');
+                    let multiLine = document.createElement('textarea');
+                    let tagType = document.getElementsByClassName(classorid)[0].tagName;
+                    if(tagType === 'textarea') {
+                        singleLine.value = document.getElementsByClassName(classorid)[0].value;
+                    } else if(tagType === 'input') { 
+                        singleLine.value = document.getElementsByClassName(classorid)[0].value;
+                    } else {
+                        singleLine.value = document.getElementsByClassName(classorid)[0].innerText;
+                    }
+                    if(tagType === 'textarea') {
+                        multiLine.value = document.getElementsByClassName(classorid)[0].value;
+                    } else if(tagType === 'input') { 
+                        multiLine.value = document.getElementsByClassName(classorid)[0].value;
+                    } else {
+                        multiLine.value = document.getElementsByClassName(classorid)[0].innerText;
+                    }
+                    let beforeT;
+                    if(tagType === 'textarea') {
+                     beforeT = document.getElementsByClassName(classorid)[0].value;
+                    } else if(tagType === 'input') { 
+                     beforeT = document.getElementsByClassName(classorid)[0].value;
+                    } else {
+                     beforeT = document.getElementsByClassName(classorid)[0].innerText;
+                    }
+                    if(tagType === 'textarea') {
+                     beforeT = document.getElementsByClassName(classorid)[0].value;
+                    } else if(tagType === 'input') { 
+                     beforeT = document.getElementsByClassName(classorid)[0].value;
+                    } else {
+                     beforeT = document.getElementsByClassName(classorid)[0].innerText;
+                    }
+                    if(options.multiline === false) {
+                        singleLine.setAttribute("type", "text");
+                        singleLine.setAttribute("id", "singleLine");
+                        singleLine.style.marginTop = '10px';
+                        singleLine.style.width = '230px';
+                        singleLine.style.height = '40px';
+                        singleLine.style.padding = '10px';
+                        singleLine.addEventListener('input', ()=>{
+                            parent.window.calledAlready(false);
+                        })
+                        
+                    } else {
+                        multiLine.style.marginTop = '10px';
+                        multiLine.style.width = '230px';
+                        multiLine.style.height = '80px';
+                        multiLine.style.resize = 'none';
+                        multiLine.style.padding = '10px';
+                        multiLine.addEventListener('input', ()=>{
+                            parent.window.calledAlready(false);
+                        });//change this
+                        
+                    }
+                    
+                    descriptionBox.setAttribute = ("contentEditable");
+                    descriptionBox.style.height = '100px';
+                    descriptionBox.style.width = '230px';
+                    descriptionBox.style.overflowY = 'scroll';
+                    descriptionBox.style.marginTop = '10px';
+                    descriptionBox.style.backgroundColor = '#EFEFEF';
+                    descriptionBox.style.padding = '10px';
+                    text.appendChild(document.createTextNode(`${textEdit}`))
+                    item.style.height = '50px';
+                    item.style.width = '348px';
+                    item.style.marginTop = '10px';
+                    item.style.marginBottom = '10px';
+                    item.style.marginLeft = 'auto';
+                    item.style.marginRight = 'auto';
+                    item.style.border = '1px solid #DDE0EB';
+                    item.style.display = 'flex';
+                    item.style.alignItems = 'center';
+                    bgImg.style.marginRight = '5px';
+                    bgImg.style.position = 'relative';
+                    item.style.display = 'flex';
+                    item.style.justifyContent = 'center';
+                    item.style.paddingLeft = '10px';
+                    item.style.paddingRight = '10px';
+                    bgImg.style.right = '0px';
+                    text.style.whiteSpace = 'nowrap'; 
+                    text.style.overflow ='hidden';
+                    text.style.textOverflow = 'ellipsis';
     
-    var imgTile = new Image();
-imgTile.src = image;
-imgTile.height = dkrm.canvas.height;
-imgTile.width = dkrm.canvas.width;
-imgTile.onload = function() {
-   ctx.drawImage(imgTile, 25, 25);
-   document.querySelector('img').style.display = 'none';
-   document.getElementById('final-result-canvas').style.display = 'block';
+                    item.appendChild(text);
+                    let secondCreated = false;
+                    item.addEventListener('click', function() {
+                        //alert(classorid);
+                        if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(1)) !== -1) {
+                        
+                        overlay.style.position = 'absolute';
+                        overlay.style.zIndex = '1';
+                        overlay.style.height = '100%';
+                        overlay.style.width = '100%';
+                        overlay.style.backgroundColor = 'white';
+                        overlay.style.visibility = 'visible';
+    
+                        overlay.style.alignItems = 'center';
+                        overlay.style.display = 'flex';
+                        overlay.style.flexDirection = 'column';
+    
+                        let oside = parent.document.getElementById('main-menu');
+                        
+                        oside.appendChild(overlay);
+                        
+                        let head = document.createElement('div');
+                        let headText = document.createElement('p');
+                        let iconContainer = document.createElement('div');
+                        let descriptionText = document.createElement('p');
+                        let saveBTN = document.createElement('div');
+                        saveBTN.style.height = '30px';
+                        saveBTN.style.width = '150px';
+                        saveBTN.style.border = '1px solid black';
+                        saveBTN.style.borderRadius = '6px';
+                        saveBTN.style.marginTop = '10px';
+                        saveBTN.appendChild(document.createTextNode('SAVE'));
+                        saveBTN.style.display = 'flex';
+                        saveBTN.style.justifyContent = 'center';
+                        saveBTN.style.alignItems = 'center';
+                        saveBTN.addEventListener('click', ()=> {
+                            let beforeT;
+                            if(tagType === 'textarea') {
+                             beforeT = document.getElementsByClassName(classorid)[0].value;
+                            } else if(tagType === 'input') { 
+                             beforeT = document.getElementsByClassName(classorid)[0].value;
+                            } else {
+                             beforeT = document.getElementsByClassName(classorid)[0].innerText;
+                            }
+            
+                            if(tagType === 'textarea') {
+                             beforeT = document.getElementsByClassName(classorid)[0].value;
+                            } else if(tagType === 'input') { 
+                             beforeT = document.getElementsByClassName(classorid)[0].value;
+                            } else {
+                             beforeT = document.getElementsByClassName(classorid)[0].innerText;
+                            }
+                           let text = document.getElementsByClassName(classorid)[0].innerText = singleLine.value;
+                        //    parent.window.callUpdate(beforeT, text);
+                        //    parent.window.calledAlready(true);
+                      
+                              document.getElementsByClassName(elId)[0].style.innerText = text;
+                        });
+                        descriptionText.appendChild(document.createTextNode('Description'));
+                        let descriptionTextWrap = document.createElement('div');
+                        descriptionTextWrap.appendChild(descriptionText);
+                        descriptionTextWrap.style.display = 'flex';
+                        descriptionTextWrap.style.justifyContent = 'flex-start';
+                       
+                        descriptionTextWrap.style.padding = '10px';
+                        descriptionTextWrap.style.wordBreak = 'break-all';
+                        descriptionTextWrap.appendChild(descriptionText);
+                        descriptionTextWrap.style.width = '100%';
+                        iconContainer.style.border = '1px solid black';
+                        iconContainer.style.height = '30px';
+                        iconContainer.style.width = '30px';
+                        iconContainer.style.display = 'flex';
+                        iconContainer.style.justifyContent = 'center';
+                        iconContainer.style.alignItems = 'center';
+                        iconContainer.style.left = '-45px';
+                        iconContainer.style.position = 'relative';
+                        iconContainer.style.marginBottom = '10px';
+                      
+                        headText.style.marginRight = '20px';
+                        let icon = document.createElement('div');
+                        icon.className = 'fa fa-angle-left';
+                        icon.fontSize = '40px';
+                        head.style.height = '35px';
+                            head.style.width = '100%';
+                            head.style.borderBottom = '1px solid #DDE0EB'; 
+                        let overlaySide;
+                        if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(1)) !== -1) {
+    
+                            if(FR_REMIX_LIST2.indexOf(flowroom.elId.substring(1)) === -1) {
+                            headText.appendChild(document.createTextNode('CHANGE TEXT'))
+                            
+                            head.style.display = 'flex';
+                            head.style.justifyContent = 'center';
+                            head.style.alignItems = 'center';
+                            
+                            head.appendChild(iconContainer);
+                            iconContainer.appendChild(icon);
+                            head.appendChild(headText);
+                            
+                            head.setAttribute("id", "remixhead2");
+                            overlay.appendChild(head);
+                            
+                            overlay.appendChild(descriptionTextWrap);
+                            overlay.appendChild(descriptionBox);
+                            if(options.multiline === false) {
+                                overlay.appendChild(singleLine);
+                            } else {
+                                overlay.appendChild(multiLine);
+    
+                            }
+    
+                            overlay.appendChild(saveBTN);
+    
+                            FR_REMIX_LIST2.push(flowroom.elId.substring(1))
+    
+                            iconContainer.addEventListener('click', function(){
+                                //overlay.style.visibility = 'hidden';
+                              
+                                oside.removeChild(overlay);
+                         
+                                
+                            })
+                            localStorage.setItem("remixhead2", true);
+                            secondCreated = true;
+                            
+                            }
+    
+                        }
+    
+    
+                        } else {
+                            //overlay.style.visibility = 'visible';
+                        }
+                    })
+                
+                    //item.appendChild(bgImg);
+                    list.appendChild(item);
+                   
+                    FR_REMIX_LIST.push(classorid);
+                    localStorage.setItem("FR_REMIX_LIST", JSON.stringify(FR_REMIX_LIST));
+                    
+                }
+      
+      
+        } else if(this.elId.charAt(0) === '#') {
+            let classorid = flowroom.elId.substring(1);
+            classorid = classorid.toString();
+            var textEdit = document.getElementById(`${classorid}`);
+            if(textEdit  === 'textarea') {
+                textEdit = document.getElementById(`${classorid}`).value;
+            } else if(textEdit === 'input') {
+                textEdit = document.getElementById(`${classorid}`).value;
+            } else {
+                textEdit = document.getElementById(`${classorid}`).innerText;
+            }
+            // Display the url to the user
+            if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(1)) === -1) { /*if at least one array item with that name of class or id without # or . then*/
+                let bgImg = document.createElement('div');
+                let text = document.createElement('p');
+                let overlay = document.createElement('div');
+                let descriptionBox = document.createElement('div');
+                descriptionBox.appendChild(document.createTextNode(options.description));
+                let singleLine = document.createElement('input');
+                let multiLine = document.createElement('textarea');
+                let tagType = document.getElementById(classorid).tagName;
+                if(tagType === 'textarea') {
+                    singleLine.value = document.getElementById(classorid).value;
+                } else if(tagType === 'input') { 
+                    singleLine.value = document.getElementById(classorid).value;
+                } else {
+                    singleLine.value = document.getElementById(classorid).innerHTML;
+                }
+                if(tagType === 'textarea') {
+                    multiLine.value = document.getElementById(classorid).value;
+                } else if(tagType === 'input') { 
+                    multiLine.value = document.getElementById(classorid).value;
+                } else {
+                    multiLine.value = document.getElementById(classorid).innerHTML;
+                }
+                let beforeT;
+                if(tagType === 'textarea') {
+                 beforeT = document.getElementById(classorid).value;
+                } else if(tagType === 'input') { 
+                 beforeT = document.getElementById(classorid).value;
+                } else {
+                 beforeT = document.getElementById(classorid).innerText;
+                }
+                if(tagType === 'textarea') {
+                 beforeT = document.getElementById(classorid).value;
+                } else if(tagType === 'input') { 
+                 beforeT = document.getElementById(classorid).value;
+                } else {
+                 beforeT = document.getElementById(classorid).innerText;
+                }
+                if(options.multiline === false) {
+                    singleLine.setAttribute("type", "text");
+                    singleLine.setAttribute("id", "singleLine");
+                    singleLine.style.marginTop = '10px';
+                    singleLine.style.width = '230px';
+                    singleLine.style.height = '40px';
+                    singleLine.style.padding = '10px';
+                    singleLine.addEventListener('input', ()=>{
+                        //parent.window.calledAlready(false);
+                    })
+                    
+                } else {
+                    multiLine.style.marginTop = '10px';
+                    multiLine.style.width = '230px';
+                    multiLine.style.height = '80px';
+                    multiLine.style.resize = 'none';
+                    multiLine.style.padding = '10px';
+                    multiLine.addEventListener('input', ()=>{
+                        //parent.window.calledAlready(false);
+                    });//change this
+                    
+                }
+                
+                descriptionBox.setAttribute = ("contentEditable");
+                descriptionBox.style.height = '100px';
+                descriptionBox.style.width = '230px';
+                descriptionBox.style.overflowY = 'scroll';
+                descriptionBox.style.marginTop = '10px';
+                descriptionBox.style.backgroundColor = '#EFEFEF';
+                descriptionBox.style.padding = '10px';
+                text.appendChild(document.createTextNode(`${textEdit}`))
+                item.style.height = '50px';
+                item.style.width = '348px';
+                item.style.marginTop = '10px';
+                item.style.marginBottom = '10px';
+                item.style.marginLeft = 'auto';
+                item.style.marginRight = 'auto';
+                item.style.border = '1px solid #DDE0EB';
+                item.style.display = 'flex';
+                item.style.alignItems = 'center';
+                item.style.borderRadius = '5px';
+                bgImg.style.marginRight = '5px';
+                bgImg.style.position = 'relative';
+                item.style.display = 'flex';
+                item.style.justifyContent = 'center';
+                item.style.paddingLeft = '10px';
+                item.style.paddingRight = '10px';
+                bgImg.style.right = '0px';
+                text.style.whiteSpace = 'nowrap'; 
+                text.style.overflow ='hidden';
+                text.style.textOverflow = 'ellipsis';
 
-}
-            //ctx.drawImage(image,0,0);
+                item.appendChild(text);
+                let secondCreated = false;
+                item.addEventListener('click', function() {
+                    //alert(classorid);
+                    if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(1)) !== -1) {
+                    
+                    overlay.style.position = 'absolute';
+                    overlay.style.zIndex = '1';
+                    overlay.style.height = '100%';
+                    overlay.style.width = '384px';
+                    overlay.style.backgroundColor = 'white';
+                    overlay.style.visibility = 'visible';
+
+                    overlay.style.alignItems = 'center';
+                    overlay.style.display = 'flex';
+                    overlay.style.flexDirection = 'column';
+
+                    let oside = parent.document.getElementById('main-menu');
+                    
+                    oside.appendChild(overlay);
+                    
+                    let head = document.createElement('div');
+                    let headText = document.createElement('p');
+                    let iconContainer = document.createElement('div');
+                    let descriptionText = document.createElement('p');
+                    let saveBTN = document.createElement('div');
+                    saveBTN.style.height = '30px';
+                    saveBTN.style.width = '150px';
+                    saveBTN.style.border = '1px solid black';
+                    saveBTN.style.borderRadius = '6px';
+                    saveBTN.style.marginTop = '10px';
+                    saveBTN.appendChild(document.createTextNode('SAVE'));
+                    saveBTN.style.display = 'flex';
+                    saveBTN.style.justifyContent = 'center';
+                    saveBTN.style.alignItems = 'center';
+                    saveBTN.addEventListener('click', ()=> {
+                        let beforeT;
+                        if(tagType === 'textarea') {
+                         beforeT = document.getElementById(classorid).value;
+                        } else if(tagType === 'input') { 
+                         beforeT = document.getElementById(classorid).value;
+                        } else {
+                         beforeT = document.getElementById(classorid).innerText;
+                        }
         
-   
-    
+                        if(tagType === 'textarea') {
+                         beforeT = document.getElementById(classorid).value;
+                        } else if(tagType === 'input') { 
+                         beforeT = document.getElementById(classorid).value;
+                        } else {
+                         beforeT = document.getElementById(classorid).innerText;
+                        }
+                       let text = document.getElementById(classorid).innerText = singleLine.value;
+                    //    parent.window.callUpdate(beforeT, text);
+                    //    parent.window.calledAlready(true);
+                  
+                          document.getElementById(elId).style.innerText = text;
+                    });
+                    descriptionText.appendChild(document.createTextNode('Description'));
+                    let descriptionTextWrap = document.createElement('div');
+                    descriptionTextWrap.appendChild(descriptionText);
+                    descriptionTextWrap.style.display = 'flex';
+                    descriptionTextWrap.style.justifyContent = 'flex-start';
+                   
+                    descriptionTextWrap.style.padding = '10px';
+                    descriptionTextWrap.style.wordBreak = 'break-all';
+                    descriptionTextWrap.appendChild(descriptionText);
+                    descriptionTextWrap.style.width = '100%';
+                    iconContainer.style.border = '1px solid black';
+                    iconContainer.style.height = '30px';
+                    iconContainer.style.width = '30px';
+                    iconContainer.style.display = 'flex';
+                    iconContainer.style.justifyContent = 'center';
+                    iconContainer.style.alignItems = 'center';
+                    iconContainer.style.left = '-45px';
+                    iconContainer.style.position = 'relative';
+                    iconContainer.style.marginBottom = '10px';
+                  
+                    headText.style.marginRight = '20px';
+                    let icon = document.createElement('div');
+                    icon.className = 'fa fa-angle-left';
+                    icon.fontSize = '40px';
+                    head.style.height = '35px';
+                        head.style.width = '100%';
+                        head.style.borderBottom = '1px solid #DDE0EB'; 
+                    let overlaySide;
+                    if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(1)) !== -1) {
 
-    var drawing = false;
-    var drawingMode = "add";
-    var pencilWidth = 25;
-    var base64Str = "";
-    var fabCan = new fabric.Canvas("b");
-    var fillColor = "rgba(255,0,0,.5)";
-    
-    var getMouseCoordinate = function (evt) {
-        return {
-          x : evt.pageX - this.offsetLeft,
-        y : evt.pageY - this.offsetTop
-      };
-    };
-    
-    canvasff.onmousedown = function (e) {
-        if (drawing) return false;
-      drawing = true;
-      var mouse = getMouseCoordinate.call(this, e);
-      
-      ctx.globalCompositeOperation = drawingMode === "add" ? "xor" : "destination-out";
-      ctx.fillStyle = drawingMode === "add" ? fillColor : "rgba(0,0,0,1)";
-      
-      ctx.beginPath();
-      ctx.arc(mouse.x, mouse.y, pencilWidth, 0, 2*Math.PI);
-      ctx.fill();
-      ctx.closePath();
-    };
-    
-    canvasff.onmousemove = function (e) {
-        if (!drawing) return false;
-      var mouse = getMouseCoordinate.call(this, e);
-      ctx.beginPath();
-      ctx.arc(mouse.x, mouse.y, pencilWidth, 0, 2*Math.PI);
-      ctx.fill();
-      ctx.closePath();
-    };
-    
-    canvasff.onmouseup = function (e) {
-        if (!drawing) return false;
-      drawing = false;
-      let finalImg = canvasff.toDataURL("image/png");
-      document.getElementById('saveImg').addEventListener('click',()=>{
-          //alert(imgTile.src)
-       document.getElementById('brando').style.backgroundImage = `url(${finalImg})`;
-   })
-    };
-    
-    toBase64Btn.onclick = function () {
-        if (drawing) return false;
-      
-      var img = document.createElement("img");
-      
-      img.onload = function () {
-      
-          var group = [];
-      
-          ctx.clearRect(0,0,canvasff.width, canvasff.height);
-        fabCan.add(new fabric.Image(this));
+                        if(FR_REMIX_LIST2.indexOf(flowroom.elId.substring(1)) === -1) {
+                        headText.appendChild(document.createTextNode('CHANGE TEXT'))
+                        
+                        head.style.display = 'flex';
+                        head.style.justifyContent = 'center';
+                        head.style.alignItems = 'center';
+                        
+                        head.appendChild(iconContainer);
+                        iconContainer.appendChild(icon);
+                        head.appendChild(headText);
+                        
+                        head.setAttribute("id", "remixhead2");
+                        overlay.appendChild(head);
+                        
+                        overlay.appendChild(descriptionTextWrap);
+                        overlay.appendChild(descriptionBox);
+                        if(options.multiline === false) {
+                            overlay.appendChild(singleLine);
+                        } else {
+                            overlay.appendChild(multiLine);
+
+                        }
+
+                        overlay.appendChild(saveBTN);
+
+                        FR_REMIX_LIST2.push(flowroom.elId.substring(1))
+
+                        iconContainer.addEventListener('click', function(){
+                            //overlay.style.visibility = 'hidden';
+                          
+                            oside.removeChild(overlay);
+                     
+                            
+                        })
+                        localStorage.setItem("remixhead2", true);
+                        secondCreated = true;
+                        
+                        }
+
+                    }
+
+
+                    } else {
+                        //overlay.style.visibility = 'visible';
+                    }
+                })
+            
+                //item.appendChild(bgImg);
+                list.appendChild(item);
+               
+                FR_REMIX_LIST.push({classorid:classorid,image:bi});
+                localStorage.setItem("FR_REMIX_LIST", JSON.stringify(FR_REMIX_LIST));
+                
+            }
+          
+
+        } else {
+            let classorid = flowroom.elId.substring(0);
+            classorid = classorid.toString();
+            var textEdit = document.getElementsByTagName(`${classorid}`)[0];
+            if(textEdit  === 'textarea') {
+                textEdit = document.getElementsByTagName(`${classorid}`)[0].value;
+            } else if(textEdit === 'input') {
+                textEdit = document.getElementsByTagName(`${classorid}`)[0].value;
+            } else {
+                textEdit = document.getElementsByTagName(`${classorid}`)[0].innerText;
+            }
+            // Display the url to the user
+            if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(0)) === -1) { /*if at least one array item with that name of class or id without # or . then*/
+                let bgImg = document.createElement('div');
+                let text = document.createElement('p');
+                let overlay = document.createElement('div');
+                let descriptionBox = document.createElement('div');
+                descriptionBox.appendChild(document.createTextNode(options.description));
+                let singleLine = document.createElement('input');
+                let multiLine = document.createElement('textarea');
+                let tagType = document.getElementsByTagName(classorid)[0].tagName;
+                if(tagType === 'textarea') {
+                    singleLine.value = document.getElementsByTagName(classorid)[0].value;
+                } else if(tagType === 'input') { 
+                    singleLine.value = document.getElementsByTagName(classorid)[0].value;
+                } else {
+                    singleLine.value = document.getElementsByTagName(classorid)[0].innerText;
+                }
+                if(tagType === 'textarea') {
+                    multiLine.value = document.getElementsByTagName(classorid)[0].value;
+                } else if(tagType === 'input') { 
+                    multiLine.value = document.getElementsByTagName(classorid)[0].value;
+                } else {
+                    multiLine.value = document.getElementsByTagName(classorid)[0].innerText;
+                }
+                let beforeT;
+                if(tagType === 'textarea') {
+                 beforeT = document.getElementsByTagName(classorid)[0].value;
+                } else if(tagType === 'input') { 
+                 beforeT = document.getElementsByTagName(classorid)[0].value;
+                } else {
+                 beforeT = document.getElementsByTagName(classorid)[0].innerText;
+                }
+                if(tagType === 'textarea') {
+                 beforeT = document.getElementsByTagName(classorid)[0].value;
+                } else if(tagType === 'input') { 
+                 beforeT = document.getElementsByTagName(classorid)[0].value;
+                } else {
+                 beforeT = document.getElementsByTagName(classorid)[0].innerText;
+                }
+                if(options.multiline === false) {
+                    singleLine.setAttribute("type", "text");
+                    singleLine.setAttribute("id", "singleLine");
+                    singleLine.style.marginTop = '10px';
+                    singleLine.style.width = '230px';
+                    singleLine.style.height = '40px';
+                    singleLine.style.padding = '10px';
+                    singleLine.addEventListener('input', ()=>{
+                        parent.window.calledAlready(false);
+                    })
+                    
+                } else {
+                    multiLine.style.marginTop = '10px';
+                    multiLine.style.width = '230px';
+                    multiLine.style.height = '80px';
+                    multiLine.style.resize = 'none';
+                    multiLine.style.padding = '10px';
+                    multiLine.addEventListener('input', ()=>{
+                        parent.window.calledAlready(false);
+                    });//change this
+                    
+                }
+                
+                descriptionBox.setAttribute = ("contentEditable");
+                descriptionBox.style.height = '100px';
+                descriptionBox.style.width = '230px';
+                descriptionBox.style.overflowY = 'scroll';
+                descriptionBox.style.marginTop = '10px';
+                descriptionBox.style.backgroundColor = '#EFEFEF';
+                descriptionBox.style.padding = '10px';
+                text.appendChild(document.createTextNode(`${textEdit}`))
+                item.style.height = '50px';
+                item.style.width = '100%';
+                item.style.marginTop = '10px';
+                item.style.marginBottom = '10px';
+                item.style.border = '1px solid #DDE0EB';
+                item.style.display = 'flex';
+                item.style.alignItems = 'center';
+                bgImg.style.marginRight = '5px';
+                bgImg.style.position = 'relative';
+                item.style.display = 'flex';
+                item.style.justifyContent = 'center';
+                item.style.paddingLeft = '10px';
+                item.style.paddingRight = '10px';
+                bgImg.style.right = '0px';
+                text.style.whiteSpace = 'nowrap'; 
+                text.style.overflow ='hidden';
+                text.style.textOverflow = 'ellipsis';
+
+                item.appendChild(text);
+                let secondCreated = false;
+                item.addEventListener('click', function() {
+                    //alert(classorid);
+                    if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(0)) !== -1) {
+                    
+                    overlay.style.position = 'absolute';
+                    overlay.style.zIndex = '1';
+                    overlay.style.height = '100%';
+                    overlay.style.width = '384px';
+                    overlay.style.backgroundColor = 'white';
+                    overlay.style.visibility = 'visible';
+
+                    overlay.style.alignItems = 'center';
+                    overlay.style.display = 'flex';
+                    overlay.style.flexDirection = 'column';
+
+                    let oside = parent.document.getElementById('main-menu');
+                    
+                    oside.appendChild(overlay);
+                    
+                    let head = document.createElement('div');
+                    let headText = document.createElement('p');
+                    let iconContainer = document.createElement('div');
+                    let descriptionText = document.createElement('p');
+                    let saveBTN = document.createElement('div');
+                    saveBTN.style.height = '30px';
+                    saveBTN.style.width = '150px';
+                    saveBTN.style.border = '1px solid black';
+                    saveBTN.style.borderRadius = '6px';
+                    saveBTN.style.marginTop = '10px';
+                    saveBTN.appendChild(document.createTextNode('SAVE'));
+                    saveBTN.style.display = 'flex';
+                    saveBTN.style.justifyContent = 'center';
+                    saveBTN.style.alignItems = 'center';
+                    saveBTN.addEventListener('click', ()=> {
+                        let beforeT;
+                        if(tagType === 'textarea') {
+                         beforeT = document.getElementsByTagName(classorid)[0].value;
+                        } else if(tagType === 'input') { 
+                         beforeT = document.getElementsByTagName(classorid)[0].value;
+                        } else {
+                         beforeT = document.getElementsByTagName(classorid)[0].innerText;
+                        }
         
-        fabCan.getObjects().forEach(function (obj) {
-            obj.globalCompositeOperation = "xor";
-          group.push(obj);
-        });
+                        if(tagType === 'textarea') {
+                         beforeT = document.getElementsByTagName(classorid)[0].value;
+                        } else if(tagType === 'input') { 
+                         beforeT = document.getElementsByTagName(classorid)[0].value;
+                        } else {
+                         beforeT = document.getElementsByTagName(classorid)[0].innerText;
+                        }
+                       let text = document.getElementsByTagName(classorid)[0].innerText = singleLine.value;
+                       parent.window.callUpdate(beforeT, text);
+                       parent.window.calledAlready(true);
+                    });
+                    descriptionText.appendChild(document.createTextNode('Description'));
+                    let descriptionTextWrap = document.createElement('div');
+                    descriptionTextWrap.appendChild(descriptionText);
+                    descriptionTextWrap.style.display = 'flex';
+                    descriptionTextWrap.style.justifyContent = 'flex-start';
+                   
+                    descriptionTextWrap.style.padding = '10px';
+                    descriptionTextWrap.style.wordBreak = 'break-all';
+                    descriptionTextWrap.appendChild(descriptionText);
+                    descriptionTextWrap.style.width = '100%';
+                    iconContainer.style.border = '1px solid black';
+                    iconContainer.style.height = '30px';
+                    iconContainer.style.width = '30px';
+                    iconContainer.style.display = 'flex';
+                    iconContainer.style.justifyContent = 'center';
+                    iconContainer.style.alignItems = 'center';
+                    iconContainer.style.left = '-45px';
+                    iconContainer.style.position = 'relative';
+                    iconContainer.style.marginBottom = '10px';
+                  
+                    headText.style.marginRight = '20px';
+                    let icon = document.createElement('div');
+                    icon.className = 'fa fa-angle-left';
+                    icon.fontSize = '40px';
+                    head.style.height = '35px';
+                        head.style.width = '100%';
+                        head.style.borderBottom = '1px solid #DDE0EB'; 
+                    let overlaySide;
+                    if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(0)) !== -1) {
+
+                        if(FR_REMIX_LIST2.indexOf(flowroom.elId.substring(0)) === -1) {
+                        headText.appendChild(document.createTextNode('CHANGE TEXT'))
+                        
+                        head.style.display = 'flex';
+                        head.style.justifyContent = 'center';
+                        head.style.alignItems = 'center';
+                        
+                        head.appendChild(iconContainer);
+                        iconContainer.appendChild(icon);
+                        head.appendChild(headText);
+                        
+                        head.setAttribute("id", "remixhead2");
+                        overlay.appendChild(head);
+                        
+                        overlay.appendChild(descriptionTextWrap);
+                        overlay.appendChild(descriptionBox);
+                        if(options.multiline === false) {
+                            overlay.appendChild(singleLine);
+                        } else {
+                            overlay.appendChild(multiLine);
+
+                        }
+
+                        overlay.appendChild(saveBTN);
+
+                        FR_REMIX_LIST2.push(flowroom.elId.substring(0))
+
+                        iconContainer.addEventListener('click', function(){
+                            //overlay.style.visibility = 'hidden';
+                          
+                            oside.removeChild(overlay);
+                     
+                            
+                        })
+                        localStorage.setItem("remixhead2", true);
+                        secondCreated = true;
+                        
+                        }
+
+                    }
+
+
+                    } else {
+                        //overlay.style.visibility = 'visible';
+                    }
+                })
+            
+                //item.appendChild(bgImg);
+                list.appendChild(item);
+               
+                FR_REMIX_LIST.push(classorid);
+                localStorage.setItem("FR_REMIX_LIST", JSON.stringify(FR_REMIX_LIST));
+                
+            }
+          
+
+        }
         
-        fabCan.clear().add(new fabric.Group(group)).renderAll();
-      };
+        //  item.style.height = '50px';
+        //  item.style.width = '235px';
+        //  item.style.marginTop = '10px';
+        //  item.style.marginBottom = '10px';
+        //  item.style.border = '1px solid #DDE0EB';
+        //  item.appendChild(bi);
+        //  list.appendChild(item);
+            
+    },
+        datGUI:function() {
+            localStorage.setItem("FR_REMIX_LIST", "");
+
+            let gui = new dat.GUI({ autoPlace: false });
+            var customContainer = parent.document.getElementById('frmenu');
+            customContainer.appendChild(gui.domElement);
+            return gui;
+        }
       
-      img.src = canvasff.toDataURL("image/png");
-    };
-   
-    drawingMode =  "delete";
-    fabCan.add(new fabric.Rect({
-    width: 100,
-    height: 100,
-    fill: fillColor
-    }));
-    
+        
 
- }
-    
- //})();
+              
+    }
 
-    // var imgEl = document.getElementById("scream");
-    // imgEl.setAttribute("src", "http://static1.purebreak.com/articles/3/16/45/93/@/645628-kim-kardashian-accusee-d-avoir-aminci-sa-diapo-2.jpg");
-    // imgEl.setAttribute("height", "500px");
-    // imgEl.setAttribute("width", "500px");
-
-    
-    // 
-    // var canvas = document.getElementById("a");
-    // var ctx = canvas.getContext("2d");
-    // var imgg=document.getElementById("scream");
-    // ctx.drawImage(imgEl,10,10);
+     
+     
+    //if(typeof(flowroom) === 'undefined') {
+        window.flowroom = flowroom;
+        //alert('ff')
+    // } else {
+    //     alert('xs')
+    // }
+})(window)
 
 
-}
 

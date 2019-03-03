@@ -18,6 +18,9 @@ import ReactResizeDetector from 'react-resize-detector';
 import { saveDHTML } from '../../actions/rooms';
 import { connect } from 'react-redux';
 import { OPEN_MODAL } from '../../actions/entireApp';
+import { Update_Editor } from '../../actions/updateEditor';
+import { Store } from './store.js';
+
 import AppModal from './AppModal';
 import { firebase } from '../firebase/firebase';
 
@@ -37,7 +40,12 @@ require('codemirror/mode/javascript/javascript.js');
 const bodyScrollLock = require('body-scroll-lock');
 const disableBodyScroll = bodyScrollLock.disableBodyScroll;
 const enableBodyScroll = bodyScrollLock.enableBodyScroll;
-
+let updateHTML;
+let update_html;
+let calledRenderC = false;
+let HTML_EDITOR;
+let CSS_EDITOR;
+let JS_EDITOR;
 class Editor extends Component {
     constructor() {
         super();
@@ -53,16 +61,19 @@ class Editor extends Component {
             showMoreSection:false,
             isMobileHeightForResize:0,
             descriptionOverflows:false,
-            libraries:['../jquery-3.3.1.min.js','../dat.gui.js','../fabric.js', '../darkroom.js','../lib/bodyScrollLock.js','../flowroom.js'],
+            libraries:['../flowroom.js'],
             cssStyles:['../darkroom.css'],
             postVisible:'block',
             saveVisible:'block',
             remixVisible:'block',
-            display:'none'
+            display:'none',
+            updateHTML:''
         }
         
      }
     componentDidMount() {
+       
+        
         localStorage.setItem("dhtml",JSON.stringify({html:"w",css:"w",js:"d"}));
         this.renderContent();
        
@@ -73,8 +84,9 @@ class Editor extends Component {
     
             const targetElement = document.querySelector("#full-page");
             disableBodyScroll(targetElement);
-         
-       
+          
+           
+           
 
         
     }
@@ -84,12 +96,20 @@ class Editor extends Component {
             if (document.querySelector('.CodeMirror') === null) {
                 this.renderContent();                 
             }
-                       
+             
         }
+ 
+        if(Store.getState().updateEditor.before !== undefined) {
+            if(Store.getState().calledAlready.calledAlready.calledAlready === false) {
+                let update = Store.getState().updateEditor;
+                this.renderContent2(update.before, update.before.updateHTML);
+                
+            } 
+        } 
        
-        
     }
-    renderContent() {
+    renderContent(before = null, htmlUpdate = null, cssUpdate = null, jsUpdate = null) {
+  
         let base_tpl = "<!doctype html>\n" +
         "<html>\n\t" +
         "<head>\n\t\t" +
@@ -99,127 +119,24 @@ class Editor extends Component {
         "<body class='preview'>\n\t\n\t" +
         "</body>\n" +
         "</html>";
-
-        let imageEditor = "<div id='myModal' class='modal'>\n" +
-        "<div class='modal-content'>\n\n" +
-        "<canvas id='final-result-canvas'></canvas>\n\t\t" +
-        "<span class='close'>&times;</span>\n" +
-        "<div id='output' style='backgroundColor:red'></div>\n" +
-        "<div id='upload'>\n\t\t" +
-        "<div id='drag-here'>\n\t\t" +
-        "<p class='drag-here-text'>Drag a file here</p>\n\t\t" +
-        "</div>\n\t\t" + 
-        "<p class='drag-or'>or</p>\n\t\t" +
-        "<div id='browse-file' style='position:absolute;'>Browse<div>\n\t\t" +
-        "</div>\n" +
-        "<div style='display:block'>\n\t" +
-        "<img id='scream' src=''/>\n\t\t" +
-        "</div>\n\t\t" +
-        "<input id='img-file' type='file'/>\n\n\t\t\n\t" +
-        "<input id='erase' type='checkbox' style='display:none;'/>\n\n\t\t\n\t" +
-        "<button id='toBase64' type='button' style='display:none;'>addToAOILayer</button><br/> \n\t" +
-        "<button id='saveImg' type='button'>Save</button><br/> \n\t" +
-        "<div>\n\t\t";
         
-
         
-        let modal_CSS = `body {font-family: Arial, Helvetica, sans-serif;}
-
-        /* The Modal (background) */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            padding-top: 21px; /* Location of the box */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-        }
-        
-        /* Modal Content */
-        .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-         
-            width: 80%;
-       
-        }
-        
-        /* The Close Button */
-        .close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        
-        .close:hover,
-        .close:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        
-        #drag-here {
-            font-size: 10px;
-            height: 100px;
-            width: 100px;
-            border: dotted;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            display: flex;
-        }
-        
-        .drag-or {
-            font-size: 14px;
-        }
-
-        #browse-file {
-            font-size: 14px;
-        }
-
-        #upload {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .browse-btn {
-            display: inline-block;
-            color: #333;
-            padding: 4px 15px;
-            margin: 0 5px;
-            border-radius: 3px;
-            background-image: linear-gradient(to bottom,#e0e0e0,#b7b7b7);
-            box-shadow: 0 2px 4px 0 rgba(0,0,0,.5);
-        }
-
-        canvas {
-            -moz-user-select: none; cursor: crosshair;
-        }
-
      
-        
-        `
         let prepareSource = () => {
           let html = HTML_EDITOR.getValue(),
           css = CSS_EDITOR.getValue(),
           js = JS_EDITOR.getValue(),
           src = '';
-          src = base_tpl.replace('</body>', html + imageEditor + '</body>');
-          css = '<style>' + css + modal_CSS + '</style>';
+          src = base_tpl.replace('</body>', html + '</body>');
+          css = '<style>' + css + '</style>';
           src = src.replace('</head>', css + '</head>');
           js = '<script>' + js + '<\/script>';
           src = src.replace('</body>', js + '</body>');
-          
+          let htmlObj = {html:html}
+         // alert(htmlObj.html);
+          localStorage.setItem("html", JSON.stringify(htmlObj));
+        //   localStorage.setItem("css", JSON.stringify(css));
+        //   localStorage.setItem("js", JSON.stringify(js));
           return src;
         };
 
@@ -253,6 +170,7 @@ class Editor extends Component {
             let css = CSS_EDITOR.getValue() || null;
             let js = JS_EDITOR.getValue() || null;
             
+          
             
             this.props.saveDHTML({html, css, js});
 
@@ -262,21 +180,21 @@ class Editor extends Component {
          
         };
   
-        let HTML_EDITOR = CodeMirror.fromTextArea(document.getElementById("html_code"), {
+        HTML_EDITOR = CodeMirror.fromTextArea(document.getElementById("html_code"), {
           lineNumbers: true,
           mode: "htmlmixed",
           theme: "base16-light",
           lineWrapping: true
         });
   
-        let CSS_EDITOR = CodeMirror.fromTextArea(document.getElementById("css_code"), {
+        CSS_EDITOR = CodeMirror.fromTextArea(document.getElementById("css_code"), {
           lineNumbers: true,
           mode: "css",
           theme: "base16-light",
           lineWrapping: true
         });
   
-        let JS_EDITOR = CodeMirror.fromTextArea(document.getElementById("js_code"), {
+        JS_EDITOR = CodeMirror.fromTextArea(document.getElementById("js_code"), {
           lineNumbers: true,
           mode: "javascript",
           theme: "base16-light",
@@ -306,9 +224,10 @@ class Editor extends Component {
          
         });
 
-        let html = localStorage.getItem("html");
-        let css = localStorage.getItem("css");
-        let js = localStorage.getItem("js");
+    
+        
+
+        
       
         var parts = window.location.pathname.split('/');
         let that = this;
@@ -322,6 +241,14 @@ class Editor extends Component {
               HTML_EDITOR.setValue(html);
               CSS_EDITOR.setValue(css);
               JS_EDITOR.setValue(js);
+
+             
+
+
+            //   if(poor !== '') {
+            //     HTML_EDITOR.setValue(poor);
+            //   }
+           
               //console.log(snapshot.val())
               let uid = snapshot.val().uid;
              
@@ -356,7 +283,11 @@ class Editor extends Component {
                 HTML_EDITOR.setValue('');
                 CSS_EDITOR.setValue('');
                 JS_EDITOR.setValue('');
+
+                
             } 
+
+          
         
         }).catch((error) => {
           console.log(error)
@@ -366,6 +297,26 @@ class Editor extends Component {
      
 
 
+        
+    }
+
+    renderContent2(before = null, htmlUpdate = null, cssUpdate = null, jsUpdate = null) {
+  
+
+        if(before !== null) {
+        
+          let html = JSON.parse(localStorage.getItem("html"));
+        // let css = JSON.parse(localStorage.getItem("css"));
+        // let js = JSON.parse(localStorage.getItem("js"));
+        
+           console.log(htmlUpdate);
+           let str = html.html;
+
+           var res = str.replace(before.before, htmlUpdate);
+            //console.log(before.before, '', htmlUpdate)
+            HTML_EDITOR.setValue(res);
+            
+       }
         
     }
     editorDragStart() {
@@ -463,41 +414,7 @@ class Editor extends Component {
             return likes
         } 
     }
-    isResizing(width, height) {
-        // let that = this;
-        // if(width <= 767) {
-        //     document.getElementById('output_frame').style.paddingBottom = '74px';
-        //     document.getElementById('preferences-bottom').style.display = 'flex';
-        //     if (document.querySelector('.show-more-preview-bar-wrap-mobile') !== null) {
-        //         if(that.state.descriptionOverflows === true) {
-        //             document.getElementById('cover-strip').style.visibility = 'visible';
-        //             document.getElementById('show-more-button').style.visibility = 'visible';
-        //             document.getElementById('text-for-overflow-detector').style.wordWrap = 'break-word';
-        //         }
-        //     }
-        //     document.getElementById('resizable-box').style.height = '269px';
-        //     this.setState({resizableHeight:269});
-        //     this.setState({isMobileHeightForResize:269});
-        //     this.setState({OverflowConstraints:[269,269]});
-        //     //this.setState({OverflowConstraints:177});
-        // } else  {
-        //     document.getElementById('output_frame').style.paddingBottom = '0px';
-        //     document.getElementById('preferences-bottom').style.display = 'none';
-        //     if (document.querySelector('.show-more-preview-bar-wrap') !== null) {
-        //         if(that.state.descriptionOverflows === true) {
-        //             document.getElementById('cover-strip').style.visibility = 'visible';
-        //             document.getElementById('show-more-button').style.visibility = 'visible';
-        //             document.getElementById('text-for-overflow-detector').style.wordWrap = 'break-word';
-        //         }
-        //     }
-        //     //document.getElementById('resizable-box').style.height = '135px';
-        //     this.setState({resizableHeight:177});
-        //     this.setState({isMobileHeightForResize:177});
-        //     this.setState({OverflowConstraints:[177,177]});
-        // }  
-        
-      
-    }
+
     remix() {
         var iframe = document.getElementById("output_frame");
         var elmnt = iframe.contentWindow.document.getElementsByClassName("remix")[0];
@@ -530,6 +447,8 @@ injectJS() {
 }
 
     render() {
+
+    
         return (<div id="full-page" className="full-page">
             <div className="top-boxes editor-parent">
                 <VelocityComponent 

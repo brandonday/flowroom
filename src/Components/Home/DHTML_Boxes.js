@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 
+
+function getTheNodes() {
+
+}
+
  const DHTML_Boxes = (props) => (
     <div className="code-section" style={{height:props.height}}>   
         <textarea id="html_code" className="html_code"></textarea>

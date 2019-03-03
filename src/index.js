@@ -14,6 +14,7 @@ import Login from './Components/Home/Login.js';
 import About from './Components/Home/About.js';
 import Profile from './Components/Home/Profile.js';
 import Full from './Components/Home/full.js';
+import PhotoEditor from './Components/Home/PhotoEditor.js';
 import reduxIt from './redux.js';
 import './Components/styles/stylesheet.css';
 import 'normalize.css/normalize.css';
@@ -30,14 +31,19 @@ import FullRoute from './routers/FullRoute';
 import ProfileRoute from './routers/ProfileRoute.js';
 import Footer from './Components/Home/Footer.js';
 import { userStore } from './actions/authentication';
+import { updateEditor, calledAlready } from './actions/updateEditor';
 import { Store } from './Components/Home/store.js';
 
 const store = Store;
 
+
 //store.dispatch(createRoom({description:'new room'})) //when you send to the store ths object with type the rudcer for that type will run
 
 
+document.getElementById('default-modal').addEventListener('click', ()=>{
 
+    document.getElementById('default-modal').style.display = 'none';
+});
 
 
 store.dispatch({type:'SAVE_DHTML', html:'',css:'',js:''});
@@ -51,9 +57,10 @@ const Routes = () => (
      <div className="content">
         <Switch>
             <PrivateRoute exact path="/" component={Main}></PrivateRoute>
+            {/* <PrivateRoute exact path="/editor" component={PhotoEditor}></PrivateRoute> */}
             <PrivateRoute path="/room/:user/:id" component={Room}></PrivateRoute>
-            <PrivateRoute path="/room/:id" component={Room}></PrivateRoute>
-            <PrivateRoute path="/room/" component={Room}></PrivateRoute>
+            <PrivateRoute exact path="/room/:id" component={Room}></PrivateRoute>
+            <PrivateRoute exact path="/room/" component={Room}></PrivateRoute>
             <FullRoute path="/full/:id" component={Full}></FullRoute>
             <FullRoute path="/full/" component={Full}></FullRoute>
             <PrivateRoute path="/community" component={Community}></PrivateRoute>
@@ -62,6 +69,7 @@ const Routes = () => (
             <PrivateRoute path="/about" component={About}></PrivateRoute>
             <PrivateRoute exact path="/:id" component={ProfilePage}></PrivateRoute>
             <EditRoute exact path="/:id/edit" component={Profile}></EditRoute>
+            
             <PrivateRoute component={NotFound}></PrivateRoute>
         </Switch>
         </div> 
@@ -77,6 +85,18 @@ const jsx = (
 )
 
 let hasRendered = false;
+
+window.callUpdate = function(before, updateHTML, updateCSS, updateJS) {
+    store.dispatch(updateEditor({before:before, updateHTML:updateHTML, updateCSS:updateCSS, updateJS:updateJS}));
+}
+
+window.calledAlready = function(bool, before) {
+    //alert(bool);
+    store.dispatch(calledAlready({calledAlready:bool}));
+    //store.dispatch(updateEditor({before:before}));
+
+}
+
 const renderApp = () => {
   /*conditional here. if path is / or any path names then*/
   /*are params just easy way get whats after the forward slash
@@ -85,57 +105,57 @@ const renderApp = () => {
   /*problem is I want to be able to not need to get params from each
   page and ths might be fine. It'll render normal no matter what. how
   do I know if the behavior is fine*/
-  let name = window.location.pathname;
-  name = name.replace(/\//g, "");
-  name = name.substr(0, name.lastIndexOf("/"));
+//   let name = window.location.pathname;
+//   name = name.replace(/\//g, "");
+//   name = name.substr(0, name.lastIndexOf("/"));
 
   //remove anything after foward slash too pop
   //wont event begin using firebase for normal routes so its the same
-  if(!( name == '' || name == '/' || name == 'room' ||
-    name == 'full' || name == 'about' || name == 'signup' ||
-    name == 'login' || name == 'brandondedit'
-  )) {
-  let ref = firebase.database().ref("users");
+//   if(!( name == '' || name == '/' || name == 'room' ||
+//     name == 'full' || name == 'about' || name == 'signup' ||
+//     name == 'login' || name == 'brandondedit'
+//   )) {
+//   let ref = firebase.database().ref("users");
   
-  ref.once("value")
-    .then((snapshot) => {
-      let hasName = snapshot.hasChild(`${name}`); // true
+//   ref.once("value")
+//     .then((snapshot) => {
+//       let hasName = snapshot.hasChild(`${name}`); // true
       
-      if(hasName) {
-        ReactDOM.render([jsx], document.getElementById('root'));
-      } else  {
-        ReactDOM.render(<div><h1>not found</h1></div>, document.getElementById('root'));
-      }
-    });
-  } else {
+//       if(hasName) {
+//         ReactDOM.render([jsx], document.getElementById('root'));
+//       } else  {
+//         ReactDOM.render(<div><h1>not found</h1></div>, document.getElementById('root'));
+//       }
+//     });
+//   } else {
  
-    if(hasRendered === false) {
+    //if(hasRendered === false) {
         ReactDOM.render([jsx], document.getElementById('root'));
         hasRendered = true;
-    } 
+    // } 
     
 
   }
    
         
         //render normal showing Profile componenet   
-}
-//renderApp();
+
+renderApp();
 firebase.auth().onAuthStateChanged((user)=> {
     if(user) {
-        if(hasRendered === false) {
+        //if(hasRendered === false) {
             renderApp();
-            hasRendered = true;
-        }
+           // hasRendered = true;
+       // }
         store.dispatch(isLoggedIn({isLoggedIn:true}));
         store.dispatch(userStore({username:user.displayName}));
     } else {
         //hasRendered = false;
         store.dispatch(logout());
-        if(hasRendered === false) {
+        //if(hasRendered === false) {
             renderApp();
-            hasRendered = true;
-        }
+            //hasRendered = true;
+        //}
         //history.push('/');
         store.dispatch(userStore({username:null}));
         store.dispatch(isLoggedIn({isLoggedIn:false})) 

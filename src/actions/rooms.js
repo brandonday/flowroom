@@ -283,16 +283,48 @@ export const startCreateRoom = (roomData = {}) => {
             }
 
             database.ref(`rooms/${shortID}/`).update(room).then(() => {
-                        dispatch(createRoom({
-                            ...room
-                        }));
-                        database.ref(`categorizations/${regular}${posttype}${isunlisted}${isprivate}${isweb}${isnative}${iswebnative}${allres}${mobile}${tablet}${desktop}${live}${remixable}${aiType}${arType}${vrType}${three60Type}${shortID}/`).update(room).then(() => {
-                    
-                        history.push(`${shortID}`)
-                        
-                    });
-                    
+              dispatch(createRoom({
+                ...room
+              }));
+                      
+            //   let saveStr = `categorizations/${live}${remixable}${aiType}${arType}${vrType}${three60Type}${shortID}/`;
+            //   database.ref(`categorizations/${mobile}${tablet}${desktop}${live}${remixable}${aiType}${arType}${vrType}${three60Type}${shortID}/`).update(room).then(() => {
+            //   /*second time without posttype so there's an All*/
+            //     database.ref(`categorizations/${regular}${shortID}/`).update(room).then(() => {
+            //       /*second time without posttype so there's an All*/
+                             
+            //       database.ref(`UsersRooms/${userName}/${shortID}/`).update(room).then(() => {
+           
+            // database.ref(`categorizations/${live}${remixable}${aiType}${arType}${vrType}${three60Type}${shortID}/`).update(room).then(() => { 
+            // history.push(`${shortID}`)
+                                
+            // });
+                               
+            // });              
+            // });
+            // });
+            database.ref(`categorizations/${regular}${allres}${mobile}${tablet}${desktop}${live}${remixable}${aiType}${arType}${vrType}${three60Type}${shortID}/`).update(room).then(() => {
+              /*second time without posttype so there's an All*/
+              database.ref(`categorizations/${regular}${allres}${mobile}${tablet}${desktop}${shortID}/`).update(room).then(() => {
+                /*second time without posttype so there's an All*/
+
+
+                database.ref(`categorizations/${regular}${shortID}/`).update(room).then(() => {
+                  database.ref(`categorizations/${regular}${live}${remixable}${aiType}${arType}${vrType}${three60Type}${shortID}/`).update(room).then(() => {
+                database.ref(`UsersRooms/${userName}/${shortID}/`).update(room).then(() => {
+                  history.push(`${shortID}`)
                 });
+              })
+              });
+
+
+
+
+            });
+              
+          });
+
+            });
             } else {
               // No user is signed in.
               alert('you must sign up')

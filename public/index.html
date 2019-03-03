@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="overflow-y:scroll;">
   <head>
 
     <meta charset="utf-8">
@@ -11,6 +11,7 @@
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="/darkroom.css">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
@@ -33,14 +34,14 @@
     <title>flowroom</title>
   
   </head>
-  <body class="Site" style="width:100%;">
+  <body class="Site" style="overflow-y:scroll;width:100%;">
       <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.6.3/fabric.min.js"></script> -->
 
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
   
-    <div id="root" class="site-content" style="width:100%;">
+    <div id="root" class="site-content" style="overflow-y:scroll;width:100%;">
         
     </div>
     
@@ -55,16 +56,28 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    <div id="create" class="create-hide" style="display:none;">
-        <div style="flex:1; border:1px solid black;"><p style="font-size:20px;font-weight:bold;text-align:center;">Create a new</p></div>
+    <!-- <div id="create" class="create-hide" style="display:none;">
+        <div style="flex:1; border:1px solid rgb(221, 224, 235);display:flex;justify-content:center;align-items:center;"><p style="font-size:25px;font-weight:bolder;text-align:center;color: rgb(27, 178, 67);">Create a new</p></div>
         <div style="display:flex;flex-direction:row;flex:2;">
-          <a style="flex:1; border:1px solid black;" href="/room/"><div>New Room</div></a>
-          <a style="flex:1; border:1px solid black;"  href="/community/"><div style="flex:1; border:1px solid black;">New Community</div></a>
+          <a style="display:flex;flex:1; border:1px solid rgb(221, 224, 235);justify-content:center;align-items:center;" href="/room/"><div>New Room</div></a>
+          <a style="background: rgb(27, 178, 67);flex:1; border:0px solid black;display:flex;justify-content:center;align-items:center;"  href="/community/"><i class="far fa-user" style="color:white;font-size:12px;" aria-hidden="true"></i><div style="border:0px solid black; color:white; font-weight:bold;">New Community</div></a>
         </div>
-    </div>
+    </div> -->
     <div id="full-screen-fallback" style="display:none;">
+        
+    </div>
+    <div id="default-modal" style="display:none; 
+    position: absolute; 
+    background: white; 
+    opacity:0.5;
+    height:100%;
+    width:100%;
+    z-index:9999;
+    ">
         
     </div>
   </body>
   <script src="/bundle.js"></script>
+  <script src="/public/fabric.js"></script>
+  <script src="/public/darkroom.js"></script>
 </html>

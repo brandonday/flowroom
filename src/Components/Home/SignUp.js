@@ -71,7 +71,8 @@ const thumb = {
            isUploading: false,
            progress: 0,
            avatarURL: "",
-           postedPicURL:''
+           postedPicURL:'',
+           fullname:''
        }
        this.createUserAccount = this.createUserAccount.bind(this);
        this.updateProfile = this.updateProfile.bind(this);
@@ -90,8 +91,11 @@ const thumb = {
     createUserAccount ({createAccount, userStore}) {
         let email = document.getElementById('email').value;
         let password = document.getElementById('password').value;
+        let fullname = document.getElementById('fullname').value;
+       
         localStorage.setItem("email", `${email}`);
-
+        localStorage.setItem("fullname", `${fullname}`);
+        
                 createAccount(email, password).then(() => {
                     
 
@@ -109,27 +113,56 @@ const thumb = {
         this.props.history.push('/')
     }
     updateProfile() {
+        let that = this;
         let username = document.getElementById('username').value;
         username = username.toLowerCase();
+        
         let nameCaseSensitive = username;
-        let email = localStorage.getItem("email");       
+        let email = localStorage.getItem("email"); 
+        let fullname = localStorage.getItem("fullname");      
         let bio = document.getElementById('bioText').value;
         let location = document.getElementById('bioText').value;
-        let pic = this.state.avatarURL;
+        let pic = this.state.postedPicURL;
         if(username === '') {
             document.getElementById('username').focus();
         } else {
+            
             firebase.database().ref(`users/${username}`).set({
                 username:username,
                 email:email,
                 nameCaseSensitive:nameCaseSensitive,
                 bio:bio,
                 location:location, 
-                pic:pic
+                pic:pic,
+                fullname:fullname
             }).then(() => {
-                firebase.auth().currentUser.updateProfile({ displayName:username
-                     }).then(()=>{
+                
+                firebase.auth().currentUser.updateProfile({ 
+                    displayName:username,
+                    photoURL:pic,
+                    fullname:fullname
+                }).then(()=> {
+
+
+                    firebase.database().ref(`follows/${username}`).update({
+                        following:'',
+                        followers:'',
+                        fullname:fullname,
+                        verified:false
+                    }).then(() => {
+                        
                         this.props.history.push('/');
+                        
+                    }).catch((error) => {
+        
+                    });
+
+
+                        
+
+
+
+
                 });
                 
             }).catch((error) => {
@@ -232,7 +265,7 @@ const thumb = {
                                     <div className="signup-section-fields">
                                         <div>
                                             <p className="signup-screen-lbl">Name</p>
-                                            <input type="text" style={{marginRight:'16px'}} className="signup-section-input-field" placeholder="Name"/>
+                                            <input type="text" id="fullname" style={{marginRight:'16px'}} className="signup-section-input-field" placeholder="Name"/>
                                         </div>
                                         <div>
                                             <p className="signup-screen-lbl">Email</p>

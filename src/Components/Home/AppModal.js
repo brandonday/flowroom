@@ -12,40 +12,39 @@ import MessageItem from './MessageItem';
 import Create from './Create';
 import { WithContext as ReactTags } from 'react-tag-input';
 import FileUploader from "react-firebase-file-uploader";
+import Convo from './Convo';
+var moment = require('moment');
 
-
-// let database = firebase.database();
-// database.ref().child('rooms').orderByChild('shortID').equalTo('LpH4FK').on("value", function(snapshot) {
-//     console.log(snapshot.val());
-//     snapshot.forEach(function(data) {
-//         console.log('room', data.key);
-//     });
-// });
-
-const messages = [{
-    userName:'Brandon',
-    pic:'',
-    timeAgo:'5hr',
-    recentMessage:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce aliquam eget enim nec venenatis. Donec ac tortor id.'
-},
-{
-    userName:'Jesse',
-    pic:'',
-    timeAgo:'7m',
-    recentMessage:'Lorem ipsum dolor sit amet'
-},
-{
-    userName:'John',
-    pic:'',
-    timeAgo:'10h',
-    recentMessage:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce aliquam eget enim nec venenatis. Donec ac tortor id.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce aliquam eget enim nec venenatis. Donec ac tortor id.'
-},
-{
-    userName:'Danny',
-    pic:'',
-    timeAgo:'24h',
-    recentMessage:'Lorem ipsum dolor sit amet'
-}];
+const messages = [];
+let names = [];
+let messagesSent = [];
+let messageList = [];
+let preventDuplicateArray = []; //keeps track
+let callOnce = false;
+// {
+//     userName:'Brandon',
+//     pic:'',
+//     timeAgo:'5hr',
+//     recentMessage:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce aliquam eget enim nec venenatis. Donec ac tortor id.'
+// },
+// {
+//     userName:'Jesse',
+//     pic:'',
+//     timeAgo:'7m',
+//     recentMessage:'Lorem ipsum dolor sit amet'
+// },
+// {
+//     userName:'John',
+//     pic:'',
+//     timeAgo:'10h',
+//     recentMessage:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce aliquam eget enim nec venenatis. Donec ac tortor id.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce aliquam eget enim nec venenatis. Donec ac tortor id.'
+// },
+// {
+//     userName:'Danny',
+//     pic:'',
+//     timeAgo:'24h',
+//     recentMessage:'Lorem ipsum dolor sit amet'
+// }
 
 const KeyCodes = {
     comma: 188,
@@ -56,6 +55,7 @@ const KeyCodes = {
   const delimiters2 = [KeyCodes.comma, KeyCodes.enter];
   const delimiters3 = [KeyCodes.comma, KeyCodes.enter];
   const delimiters4 = [KeyCodes.comma, KeyCodes.enter];
+  const delimiters5 = [KeyCodes.comma, KeyCodes.enter];
 
  class AppModal extends Component {
     constructor(props) {
@@ -82,7 +82,7 @@ const KeyCodes = {
          tags: [
             
          ],
-        suggestionsIdeaBy: [
+         suggestionsIdeaBy: [
             
          ],
          suggestionscredits: [
@@ -94,6 +94,12 @@ const KeyCodes = {
          suggestionsTags: [
            
          ],
+         suggestionNamesTags : [
+            
+         ],
+         NamesTags : [ 
+
+         ],
             isRemixable:false,
             isLive:false,
             isAR:false,
@@ -104,7 +110,7 @@ const KeyCodes = {
             isTable:false,
             isMobile:false,
             isAllRes:false,
-            isProduction:false,
+            isProduction:true,
             isObject:false,
             publicBtnClass:'',
             privateBtnClass:'',
@@ -163,6 +169,18 @@ const KeyCodes = {
             isWebNative:false,
             placeholder:'',
             imagePostDisplay:'none',
+            username:'',
+            newMessage:'',
+            messageTo:'',
+            showBack:false,
+            myusername:'',
+            messages:[],
+            messagebox:[],
+            picForMessage:'',
+            fullname:'',
+            messageList:[],
+            messageReset:false,
+            theMessages:true
             
 
       }
@@ -171,6 +189,10 @@ const KeyCodes = {
       this.handleDeletecredits = this.handleDeletecredits.bind(this);
       this.handleAdditioncredits = this.handleAdditioncredits.bind(this);
       this.handleDragcredits = this.handleDragcredits.bind(this);
+
+      this.handleDeleteNames = this.handleDeleteNames.bind(this);
+      this.handleAdditionalNames = this.handleAdditionalNames.bind(this);
+      this.handleDragNames = this.handleDragNames.bind(this);
 
       this.handleDeleteIdeaBy = this.handleDeleteIdeaBy.bind(this);
       this.handleAdditionIdeaBy = this.handleAdditionIdeaBy.bind(this);
@@ -183,12 +205,6 @@ const KeyCodes = {
       this.handleDeleteTags = this.handleDeleteTags.bind(this);
       this.handleAdditionTags = this.handleAdditionTags.bind(this);
       this.handleDragTags = this.handleDragTags.bind(this);
-
-      
-
-    //   this.handleDelete = this.handleDelete.bind(this);
-    //   this.handleAddition = this.handleAddition.bind(this);
-    //   this.handleDrag = this.handleDrag.bind(this);
 
       this.closeModal = this.closeModal.bind(this)
       this.selectPr.bind(this)
@@ -207,67 +223,44 @@ const KeyCodes = {
     }
     componentDidMount() {
         var user = firebase.auth().currentUser;
-        var name, email, photoUrl, uid, emailVerified;
+        var name, email, photoUrl, uid, emailVerified, fullname;
+        this.setState({newMessage:'message-screen'});
         Modal.setAppElement('#root');
-
+        const database = firebase.database();
+        let that = this;
         if (user != null) {
             name = user.displayName;
+            that.setState({username:name});
             email = user.email;
             photoUrl = user.photoURL;
             emailVerified = user.emailVerified;
+            fullname = user.fullname;
             uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
                      // this value to authenticate with your backend server, if
-                     // you have one. Use User.getToken() instead.
-    
-            // this.setState({ideaByTags:[{ id:name, text:name}]});
-            // this.setState({creditsTags:[{ id:name, text:name}]})
+                     // you have one. Use User.getToken() instead.       
+            that.setState({picForMessage:photoUrl, fullname:fullname});
+            database.ref(`/follows/${name}/following`).once('value').then((snapshot) => {
+                snapshot.forEach((childSnapShot) => {
+                    names.push({id:`${childSnapShot.val()}`,text:`${childSnapShot.val()}`});
+                })
+                this.setState({suggestionNamesTags:names, myusername:name})
+                console.log(this.state.suggestionNamesTags);
+
+            });
+
         }
-        this.setState({publicBtnClass:'selected-background'});
-        this.setState({privateBtnClass:''});
-        this.setState({unlistedBtnClass:''});
+        this.setState({publicBtnClass:'selected-background',
+            privateBtnClass:'',unlistedBtnClass:'',webBtnClass:'selected-background',
+            roomType:'other',roomPostBtnClass:'selected-background',isProduction:true,
+            regBtnClass:'selected-background',exBtnClass:'',isRemixable:false,rmxBtnClass:'selected-background',
+            notRmxBtnClass:'',isLive:false,liveBtnClass:'selected-background',notLiveBtnClass:'',
+            isAR:false,isVR:false,is360:false,notArVr360Class:'selected-background',arBtnClass:'',
+            vrBtnClass:'',three60BtnClass:'',aiBtnClass:'',notAIBtnClass:'selected-background',
+            isAI:false, mobileBtnClass:'selected-background',isDesktop:true,isTable:true,
+            isMobile:true,tabletBtnClass:'selected-background',desktopBtnClass:'selected-background',
+            isObject:false, notObjectClass:'selected-background',objectBtnClass:''
+        });
 
-        this.setState({webBtnClass:'selected-background'});
-       
-        this.setState({roomType:'other'});
-        this.setState({roomPostBtnClass:'selected-background'})
-
-        this.setState({isProduction:true});
-        this.setState({regBtnClass:'selected-background'});
-        this.setState({exBtnClass:''});
-
-        this.setState({isRemixable:false});
-        this.setState({rmxBtnClass:'selected-background'});
-        this.setState({notRmxBtnClass:''});
-
-        this.setState({isLive:false});
-        this.setState({liveBtnClass:'selected-background'});
-        this.setState({notLiveBtnClass:''});
-
-        this.setState({isAR:false});
-        this.setState({isVR:false});
-        this.setState({is360:false});
-        this.setState({notArVr360Class:'selected-background'});
-        this.setState({arBtnClass:''});
-        this.setState({vrBtnClass:''});
-        this.setState({three60BtnClass:''});
-
-        this.setState({aiBtnClass:''});
-        this.setState({notAIBtnClass:'selected-background'});
-        this.setState({isAI:false});
-
-        this.setState({allResBtnClass:'selected-background'});
-        this.setState({mobileBtnClass:''});
-        this.setState({isAllRes:true});  
-        this.setState({isDesktop:false});
-        this.setState({isTable:false});
-        this.setState({isMobile:false});  
-        this.setState({isAllRes:false});
-        this.setState({tabletBtnClass:''});
-        this.setState({desktopBtnClass:''});
-
-        this.setState({isObject:false});   
-        this.setState({notObjectClass:'selected-background'});
-        this.setState({objectBtnClass:''});
     }
     saveRoom () {
         let hashids = new Hashids(uuid(), 6);
@@ -327,7 +320,7 @@ const KeyCodes = {
                 isVerified:false,
                 isDeveloper:false,
                 isNormalUser:this.state.isProduction,
-                userName:'',
+                userName:this.state.username,
                 emailAddress:'',
                 shortID:hashids.encode(1, 2, 3),
                 permissions: { },
@@ -347,244 +340,176 @@ const KeyCodes = {
 
         })
     }
+    sendMessage() {
+        const database = firebase.database();
+        var theDate = new Date().getTime();
+        let message = document.getElementById('message-box').value;
+        let fullname = localStorage.getItem("fullname"); 
+        let that = this;
+        database.ref(`Messages/${this.state.messageTo}`).push({
+            message: {
+                id:this.state.myusername, 
+                message:message,
+                To:this.state.messageTo,
+                pic:this.state.picForMessage,
+                date:new Date().getTime(),
+                fullname:fullname
+            }
+        }).then(() => {
+
+
+            database.ref(`Messages/${this.state.myusername}`).push({
+                message: {
+                    id:this.state.myusername, 
+                    message:message,
+                    To:this.state.messageTo,
+                    pic:this.state.picForMessage,
+                    date:new Date().getTime(),
+                    fullname:fullname
+                }
+            }).then(() => {
+    
+    
+                
+                
+            });
+
+            
+        });
+
+
+
+    }
     selectPr = (i) => {
         if(i !== null) {
             let elID = i;
             if(elID === 'room-post-btn') {
-                this.setState({placeholder:'description...'})
-                this.setState({roomPostBtnClass:'selected-background'});
-                this.setState({imagePostBtnClass:''});
-                this.setState({textPostBtnClass:''});
-                this.setState({description:""});
-                this.setState({descriptionD:'block'});
-                this.setState({imagePost:'none'});
-                this.setState({imageText:'none'});
-                this.setState({thumbnailPicBox:'flex'});
-                this.setState({roomType:'other'});
-                this.setState({imagePostDisplay:'none'})
-
+                this.setState({placeholder:'description...', roomPostBtnClass:'selected-background',
+                    imagePostBtnClass:'',textPostBtnClass:'',description:"",descriptionD:'block',imagePost:'none',
+                    imageText:'none',thumbnailPicBox:'flex',roomType:'other',imagePostDisplay:'none'
+                });
             }
             if(elID === 'room-post-image-btn') {
                
-                this.setState({descriptionD:'none'});
-                this.setState({imagePost:'block'});
-                this.setState({roomPostBtnClass:''})
-                this.setState({imagePostBtnClass:'selected-background'});
-                this.setState({textPostBtnClass:''});
-                this.setState({imageText:'block'});
-                this.setState({thumbnailPicBox:'none'});
-                this.setState({roomType:'image'});
-                this.setState({imagePostDisplay:'flex'});
-              
-                
-
+                this.setState({descriptionD:'none',imagePost:'block',roomPostBtnClass:'',imagePostBtnClass:'selected-background',
+                    textPostBtnClass:'',imageText:'block',thumbnailPicBox:'none',roomType:'image',imagePostDisplay:'flex'
+                });
             }
             if(elID === 'room-post-text-btn') {
-                this.setState({placeholder:"What's up?"})
-                this.setState({roomPostBtnClass:''})
-                this.setState({imagePostBtnClass:''});
-                this.setState({textPostBtnClass:'selected-background'});
-                this.setState({description:""});
-                this.setState({descriptionD:'block'});
-                this.setState({imagePost:'none'});
-                this.setState({imageText:'none'});
-                this.setState({thumbnailPicBox:'none'});
-                this.setState({roomType:'text'});
-                this.setState({imagePostDisplay:'none'});
-
+                this.setState({placeholder:"What's up?",roomPostBtnClass:'',imagePostBtnClass:'',
+                    textPostBtnClass:'selected-background',description:"",descriptionD:'block',imagePost:'none',
+                    imageText:'none',thumbnailPicBox:'none',roomType:'text',imagePostDisplay:'none'
+                })
             }
             if(elID === 'public-btn') {
-                //this.setState({isProduction:true});
-                this.setState({publicBtnClass:'selected-background'});
-                this.setState({privateBtnClass:''});
-                this.setState({unlistedBtnClass:''});
-                this.setState({isPrivate:false});
-                this.setState({isUnlisted:false});
+                this.setState({publicBtnClass:'selected-background',privateBtnClass:'',
+                    unlistedBtnClass:'',isPrivate:false,isUnlisted:false
+                });
+  
             }
             if(elID === 'private-btn') {
-                //this.setState({isProduction:true});
-                this.setState({publicBtnClass:''});
-                this.setState({privateBtnClass:'selected-background'});
-                this.setState({unlistedBtnClass:''});
-                this.setState({isPrivate:true});
-                this.setState({isUnlisted:false});
-      
+                this.setState({publicBtnClass:'',privateBtnClass:'selected-background',
+                    unlistedBtnClass:'',isPrivate:true,isUnlisted:false
+                });
+        
             }
             if(elID === 'unlisted-btn') {
-                //this.setState({isProduction:true});
-                this.setState({publicBtnClass:''});
-                this.setState({privateBtnClass:''});
-                this.setState({unlistedBtnClass:'selected-background'});
-                this.setState({isPrivate:false});
-                this.setState({isUnlisted:true});
+                this.setState({publicBtnClass:'',privateBtnClass:'', unlistedBtnClass:'selected-background',
+                    isPrivate:false, isUnlisted:true
+                });
+              
             }
             if(elID === 'web-btn') {
-                //this.setState({isProduction:true});
-                this.setState({webBtnClass:'selected-background'});
-                this.setState({nativeBtnClass:''});
-                this.setState({webNativeBtnClass:''});
-                this.setState({isWeb:true});
-                this.setState({isNative:false});
-                this.setState({isWebNative:false});
+                this.setState({webBtnClass:'selected-background',
+                    nativeBtnClass:'',webNativeBtnClass:'',isWeb:true,
+                    isNative:false,isWebNative:false
+                });
             }
             if(elID === 'native-btn') {
-                //this.setState({isProduction:true});
-                this.setState({webBtnClass:''});
-                this.setState({nativeBtnClass:'selected-background'});
-                this.setState({webNativeBtnClass:''});
-                this.setState({isWeb:false});
-                this.setState({isNative:true});
-                this.setState({isWebNative:false});
-      
+                this.setState({webBtnClass:'',nativeBtnClass:'selected-background',
+                    webNativeBtnClass:'',isWeb:false,isNative:true,isWebNative:false
+                });
             }
             if(elID === 'web-native-btn') {
-                //this.setState({isProduction:true});
-                this.setState({webBtnClass:''});
-                this.setState({nativeBtnClass:''});
-                this.setState({webNativeBtnClass:'selected-background'});
-                this.setState({isWeb:false});
-                this.setState({isNative:false});
-                this.setState({isWebNative:true});
+                this.setState({webBtnClass:'',nativeBtnClass:'',webNativeBtnClass:'selected-background',
+                    isWeb:false,isNative:false,isWebNative:true
+                });
             }
             if(elID === 'reg-btn') {
-                this.setState({isProduction:true});
-                this.setState({regBtnClass:'selected-background'});
-                this.setState({exBtnClass:''});
+                this.setState({isProduction:true,regBtnClass:'selected-background',exBtnClass:''});
             }
             if(elID === 'exp-btn') {
-                this.setState({isProduction:false});
-                this.setState({regBtnClass:''});
-                this.setState({exBtnClass:'selected-background'});
+                this.setState({isProduction:false,regBtnClass:'',exBtnClass:'selected-background'});
             }
-
             if(elID === 'not-remixable') {
                 document.getElementById('not-remixable').className = 'selected-background';
-                this.setState({isRemixable:false});
-                this.setState({rmxBtnClass:'selected-background'});
-                this.setState({notRmxBtnClass:''});
+                this.setState({isRemixable:false,rmxBtnClass:'selected-background',notRmxBtnClass:''});
             }
             if(elID === 'remixable-btn') {
                 document.getElementById('remixable-btn').className = 'selected-background';
-                this.setState({rmxBtnClass:''});
-                this.setState({notRmxBtnClass:'selected-background'});
-                this.setState({isRemixable:true});
+                this.setState({rmxBtnClass:'',notRmxBtnClass:'selected-background',isRemixable:true});
             }
             if(elID === 'not-live') {
-                this.setState({isLive:false});
-                this.setState({liveBtnClass:'selected-background'});
-                this.setState({notLiveBtnClass:''});
+                this.setState({isLive:false,liveBtnClass:'selected-background',notLiveBtnClass:''});
             }
             if(elID === 'live-btn') {
-                this.setState({isLive:true});
-                this.setState({liveBtnClass:''});
-                this.setState({notLiveBtnClass:'selected-background'});
+                this.setState({isLive:true,liveBtnClass:'',notLiveBtnClass:'selected-background'});
             }
             if(elID === 'no-ar-vr-360-btn') {
-                this.setState({isAR:false});
-                this.setState({isVR:false});
-                this.setState({is360:false});
-                this.setState({notArVr360Class:'selected-background'});
-                this.setState({arBtnClass:''});
-                this.setState({vrBtnClass:''});
-                this.setState({three60BtnClass:''});
+                this.setState({isAR:false,isVR:false,is360:false,notArVr360Class:'selected-background',
+                    arBtnClass:'',vrBtnClass:'',three60BtnClass:''
+                });
             }
             if(elID === 'ar-btn') {
-                
-                this.setState({arBtnClass:'selected-background'});
-                this.setState({notArVr360Class:''});
-                this.setState({vrBtnClass:''});
-                this.setState({three60BtnClass:''});
-                this.setState({isAR:true});
-                this.setState({isVR:false});
-                this.setState({is360:false});
+                this.setState({arBtnClass:'selected-background',notArVr360Class:'',vrBtnClass:'',
+                    three60BtnClass:'',isAR:true,isVR:false,is360:false
+                });
             }
             if(elID === 'vr-btn') {
-                this.setState({isAR:false});
-                this.setState({vrBtnClass:'selected-background'});
-                this.setState({arBtnClass:''});
-                this.setState({notArVr360Class:''});
-                this.setState({three60BtnClass:''});
-                this.setState({isVR:true});
-                this.setState({is360:false});
+                this.setState({isAR:false,vrBtnClass:'selected-background',
+                    arBtnClass:'',notArVr360Class:'',three60BtnClass:'',
+                    isVR:true,is360:false
+                });
             }
             if(elID === '360-btn') {
-                this.setState({arBtnClass:''});
-                this.setState({vrBtnClass:''});
-                this.setState({notArVr360Class:''});
-                this.setState({three60BtnClass:'selected-background'});
-                this.setState({isAR:false});
-                this.setState({isVR:false});
-                this.setState({is360:true});
+                this.setState({arBtnClass:'',vrBtnClass:'',notArVr360Class:'',
+                    three60BtnClass:'selected-background',isAR:false,isVR:false,
+                    is360:true
+                });
             }
             if(elID === 'yes-ai-btn') {
-                this.setState({isAI:true});
-                this.setState({aiBtnClass:'selected-background'});
-                this.setState({notAIBtnClass:''});
+                this.setState({isAI:true,aiBtnClass:'selected-background',notAIBtnClass:''});
             }
             if(elID === 'no-ai-btn') {
-                this.setState({aiBtnClass:''});
-                this.setState({notAIBtnClass:'selected-background'});
-                this.setState({isAI:false});
-            }
-            if(elID === 'all-res-btn') {
-                this.setState({allResBtnClass:'selected-background'});
-                this.setState({mobileBtnClass:''});
-                this.setState({isAllRes:true});  
-                this.setState({isDesktop:false});
-                this.setState({isTable:false});
-                this.setState({isMobile:false});  
-                this.setState({isAllRes:false});
-                this.setState({tabletBtnClass:''});
-                this.setState({desktopBtnClass:''});
+                this.setState({aiBtnClass:'',notAIBtnClass:'selected-background',isAI:false});
             }
             if(elID === 'mobile-btn') {
-                this.setState({allResBtnClass:''});
-                this.setState({mobileBtnClass:'selected-background'});
-                this.setState({allResBtnClass:''});
-                this.setState({isDesktop:false});
-                this.setState({isTable:false});
-                this.setState({isMobile:true});  
-                this.setState({isAllRes:false});
-                this.setState({tabletBtnClass:''});
-                this.setState({desktopBtnClass:''});
+                if(this.state.isMobile === false) {
+                    this.setState({mobileBtnClass:'selected-background',isMobile:true});
+                } else {
+                    this.setState({mobileBtnClass:'',isMobile:false}); 
+                }
             }
             if(elID === 'tablet-btn') {
-                this.setState({isDesktop:false});
-                this.setState({isTable:true});
-                this.setState({isMobile:false}); 
-                this.setState({isAllRes:false}); 
-                this.setState({tabletBtnClass:'selected-background'});
-                this.setState({mobileBtnClass:''});
-                this.setState({allResBtnClass:''});
-                this.setState({desktopBtnClass:''});
+                if(this.state.isTable === false) {
+                    this.setState({isTable:true,tabletBtnClass:'selected-background'});
+                } else {
+                    this.setState({isTable:false,tabletBtnClass:''});
+                }
             }
             if(elID === 'desktop-btn') {
-                this.setState({isDesktop:true});
-                this.setState({isTable:false});
-                this.setState({isMobile:false});  
-                this.setState({isAllRes:false});
-                this.setState({tabletBtnClass:''});
-                this.setState({desktopBtnClass:'selected-background'});
-            
+                if(this.state.isDesktop === false) {
+                    this.setState({isDesktop:true,desktopBtnClass:'selected-background'});
+                } else {
+                    this.setState({isDesktop:false,desktopBtnClass:''});
+                }
             }   
             if(elID === 'object-yes-btn') {
-                this.setState({isObject:true});
-                this.setState({objectBtnClass:'selected-background'});
-                this.setState({notObjectClass:''});
+                this.setState({isObject:true,objectBtnClass:'selected-background'});
             }
             if(elID === 'object-no-btn') {
-                this.setState({isObject:false});   
-                this.setState({notObjectClass:'selected-background'});
-                this.setState({objectBtnClass:''});
+                this.setState({isObject:false,notObjectClass:'selected-background'});   
             }
-            // document.getElementById(elID).className = 'selected-background';
-            // let classElements = document.getElementsByClassName('selected-background');
-            // console.log(classElements)
-            // for(i = 0; i < classElements.length; i++) {
-            //     if(elID != classElements[i].id) {
-            //         classElements[i].className = '';
-            //     } 
-            // 
         }
 
     }
@@ -592,25 +517,55 @@ const KeyCodes = {
     
     modalType(){
         let that = this;
-        if(this.props.state.entireApp.modalType === 'message') {
-            
+        if(this.props.state.entireApp.modalType === 'message') {           
             return (
                 <div className="modal-wrap">
                     <div className="modal-messages-wrap">
-                        <h2 className="modal-messages-title">Messages</h2>
-                        <div className="modal-messages-message-box-wrap">
-                            <NewMessageButton/>
-                            <div className="modal-messages-close" onClick={this.closeModal}>X</div>
+                        <h2 className="modal-messages-title" style={{fontSize:'20px', color:'rgb(27, 178, 67)', display:'flex',
+                            justifyContent:'center',
+                            alignItems:'center'}}>Messages</h2>
+                        
+                            {this.state.showBack === true? (<div style={{display:'flex',padding:'10px', width:'100%', justifyContent:'space-between', alignItems:'center'}}>
+                                    <div style={{height:'23px', width:'23px', backgroundColor:'black',borderRadius:'30px'}}></div>
+                                        <p style={{color:'black', fontSize:15,float:'left',position:'absolute',
+                                            left:'152px'}}>{that.state.messageTo}</p><button style={{
+                                            border:'1px solid gray',
+                                            borderRadius:'4px',
+                                            /* background: rgb(221, 224, 235); */
+                                            height:'25px',
+                                            width:'50px',
+                                            fontFamily: "Source Sans Pro",
+                                            fontWeight:'800'
+                             
+                                        }} onClick={()=> {
+                                            var ul = document.getElementById('the-messages');
+                                            //ul.parentNode.removeChild(ul); 
+                                            
+                                            this.setState({newMessage:'message-screen', showBack:false});
+
+                                            let list = document.getElementsByTagName('li')
+                                            for(let i=0; i < list.length; i++) {
+                                               
+                                                if(list[i].className = 'message') {
+                                                    console.log(list[i]);
+                                                }
+                                            }
+
+                                        }}>Back</button></div>):(<div className="modal-messages-message-box-wrap">
+                                        <div onClick={()=> {
+                                            this.setState({newMessage:'new-message'});
+                                        }}>
+                                            <NewMessageButton />
+                                        </div>
+                                        <div className="modal-messages-close" onClick={this.closeModal}>X</div>
+                                    </div>
+                                )
+                            }
+
                         </div>
-                    </div>
-                    <ul>
-                        { 
-                            messages.map((i)=> {
-                                return (<MessageItem pic={i.pic} userName={i.userName} timeAgo={i.timeAgo} recentMessage={i.recentMessage} />)
-                            })
+                        {
+                            this.showMessages()
                         }
-                    </ul>
-       
                 </div>
             )
         } else if(this.props.state.entireApp.modalType === 'save') {
@@ -623,29 +578,30 @@ const KeyCodes = {
             
             return (
                 <div style={{height:'100%', width:'100%'}} onClick={this.closeModal}>
-             <Create/>   
-             </div>
+                    <Create/>   
+                </div>
             )
         }  else {
             return (
                 <div style={{display:'flex', flexDirection:'column'}}>
                     <h2 ref={subtitle => this.subtitle = subtitle}>Post Room</h2>
                     <div onClick={this.closeModal} style={{position:'absolute',right:20,fontSize:20, marginBottom:20}}>X</div>
-                    <button style={{outline:'none',
-                                    cursor:'pointer',
-                                    border:'1px solid rgb(10, 127, 41)',
-                                    borderRadius:'17.5px',
-                                    height:'36px',
-                                    width:'100%',
-                                    backgroundColor:'rgb(27, 178, 67)',
-                                    fontFamily:"Source Sans Pro",
-                                    color:'white',
-                                    fontWeight:'100',
-                                    fontSize:'14px',
-                                    marginTop:20
-                                }} onClick={this.saveRoom.bind(this)}>Post</button>
-                    <div style={{width:'100%', display:'flex', justifyContent:'center', marginTop:20}}><p>Type of Post</p></div>
-                    <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none',marginTop:20}}>
+                        <button style={{
+                            outline:'none',
+                            cursor:'pointer',
+                            border:'1px solid rgb(10, 127, 41)',
+                            borderRadius:'17.5px',
+                            height:'36px',
+                            width:'100%',
+                            backgroundColor:'rgb(27, 178, 67)',
+                            fontFamily:"Source Sans Pro",
+                            color:'white',
+                            fontWeight:'100',
+                            fontSize:'14px',
+                            marginTop:20
+                        }} onClick={this.saveRoom.bind(this)}>Post</button>
+                        <div style={{width:'100%', display:'flex', justifyContent:'center', marginTop:20}}><p>Type of Post</p></div>
+                        <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none',marginTop:20}}>
                         <div onClick={()=>{this.selectPr('room-post-btn')}} id="room-post-btn" className={this.state.roomPostBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Room</p></div>
              
                         <label onClick={()=>{this.selectPr('room-post-image-btn')}} id="room-post-image-btn" className={this.state.imagePostBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}>
@@ -883,11 +839,16 @@ const KeyCodes = {
                         </div>
                     </div>
 
-                     <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none'}}>
-                     <div onClick={()=>{this.selectPr('no-ar-vr-360-btn')}} id="no-ar-vr-360-btn" className={this.state.notArVr360Class} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>None</p></div>
+                     <div style={{display:'flex',justifyContent:'center',flexDirection:'column',border:'1px solid rgb(221, 224, 235)',listStyle:'none', width:'100%'}}>
+                     <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                        <p>Is this AR, VR, 360 content (?)</p>
+                     </div>
+                     <div style={{display:'flex',flexDirection:'row'}}>
+                        <div onClick={()=>{this.selectPr('no-ar-vr-360-btn')}} id="no-ar-vr-360-btn" className={this.state.notArVr360Class} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>None</p></div>
                         <div onClick={()=>{this.selectPr('ar-btn')}} id="ar-btn" className={this.state.arBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>AR (?)</p></div>
                         <div onClick={()=>{this.selectPr('vr-btn')}} id="vr-btn" className={this.state.vrBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>VR (?)</p></div>
                         <div onClick={()=>{this.selectPr('360-btn')}} id="360-btn" className={this.state.three60BtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>360 (?)</p></div>
+                    </div>
                     </div>
                     <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none',display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center', width:'100%'}}>
                     <p>Is there AI (?)</p>
@@ -898,9 +859,9 @@ const KeyCodes = {
                     </div>
 
                      <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
-                     <p>Best for:</p>
+                     <p>Select devices best viewed with</p>
                      <div style={{display:'flex', flexDirection:'row', width:'100%'}}>
-                     <div onClick={()=>{this.selectPr('all-res-btn')}} id="all-res-btn" className={this.state.allResBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>All</p></div>
+                     {/* <div onClick={()=>{this.selectPr('all-res-btn')}} id="all-res-btn" className={this.state.allResBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>All</p></div> */}
                         <div onClick={()=>{this.selectPr('mobile-btn')}} id="mobile-btn" className={this.state.mobileBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Mobile</p></div>
                         <div onClick={()=>{this.selectPr('tablet-btn')}} id="tablet-btn" className={this.state.tabletBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Tablet</p></div>
                         <div onClick={()=>{this.selectPr('desktop-btn')}} id="desktop-btn" className={this.state.desktopBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Desktop</p></div>
@@ -924,8 +885,154 @@ const KeyCodes = {
     } 
     closeModal() {
         document.getElementById('create').className = 'create-hide';
+        //document.getElementById('default-modal').style.display = 'none';
         this.props.closeModal({isModalOpen:false, modalType:'message'});
+        
     } 
+
+    getUnique(arr, comp) {
+
+        const unique = arr
+             .map(e => e[comp])
+      
+           // store the keys of the unique objects
+          .map((e, i, final) => final.indexOf(e) === i && i)
+      
+          // eliminate the dead keys & store unique objects
+          .filter(e => arr[e]).map(e => arr[e]);
+      
+         return unique;
+      }
+
+    showMessages() {
+        let that = this;
+        if(this.state.newMessage === 'new-message') {
+            return (
+                <div>
+                    <p>Send message to:</p>
+                    <ReactTags tags={this.state.NamesTags}
+                        suggestions={this.state.suggestionNamesTags}
+                        handleDelete={this.handleDeleteNames}
+                        handleAddition={this.handleAdditionalNames}
+                        handleDrag={this.handleDragNames}
+                        delimiters={delimiters5} 
+                        placeholder={'Add additional names (optional)'}
+                    /> 
+                    <button onClick={()=>{
+                        this.setState({newMessage:'message',messageTo:this.state.NamesTags[0].id,showBack:true});
+                      
+                    }}>Next</button>
+                </div>
+            )
+        } else if(this.state.newMessage === 'message-screen') {
+            let currentId;
+            firebase.auth().onAuthStateChanged((user)=> {
+                if(user) {
+         
+          
+            const database = firebase.database();
+                database.ref(`Messages/${this.state.myusername}`).once('value').then((snapshot) => {
+                    //alert(this.state.myusername)
+              
+                    snapshot.forEach((childSnapShot) => {
+                        //alert(childSnapShot.val().message.To)
+                        if(!(childSnapShot.val().message.fullname === undefined || childSnapShot.val().message.To === undefined)) {
+                            //preventDuplicateArray.push(`${childSnapShot.val().message.fullname}`);
+                            
+                            if(childSnapShot.val().message.To !== this.state.myusername) {
+                                messageList.push({
+                                    name:`${childSnapShot.val().message.To}`, 
+                                    pic:childSnapShot.val().message.pic, 
+                                    message:childSnapShot.val().message.message,
+                                    you:true, //if their name is going to be shown then the "you" will be where your message
+                                    date:childSnapShot.val().message.date
+                                });
+        
+                            } else  {
+                                
+                                messageList.push({
+                                    name:`${childSnapShot.val().message.fullname}`, 
+                                    pic:childSnapShot.val().message.pic, 
+                                    message:childSnapShot.val().message.message,
+                                    you:false,
+                                    date:childSnapShot.val().message.date
+                                });
+                            }
+                            
+                           
+                            
+                        }
+
+                        
+             
+                })
+                if(!callOnce) {
+
+
+                    
+                    console.log(this.getUnique(messageList,'name'))
+                    //console.log(messageList)
+                    this.setState({messageList:this.getUnique(messageList.reverse(),'name')})
+                    
+                    console.log(messageList)
+
+                    callOnce = true;
+                }
+                
+                  
+              });
+
+            }
+        });
+
+
+
+             
+            return (
+                <div>
+                    <ul id="the-messages" style={{height:'100%', width:'100%', display:this.state.theMessages === true ? 'block':'none',  flexDirection:'column', overflow:'scroll'}}>
+                     {this.state.messageList.map((i)=> {
+                         return (
+                         <li onClick={()=>{
+                            this.setState({newMessage:'message',messageTo:i.name,showBack:true});
+
+                         }} className="message" style={{height:'92px', 
+                         width:'100%', 
+                         borderBottom:'1px solid rgb(204, 204, 204)'}}>
+                         <div style={{display:'flex'}}>
+                         <div style={{
+                             backgroundImage:`url(${i.pic})`, 
+                             backgroundRepeat:'no-repeat', 
+                             backgroundSize:'cover',
+                             height:43,
+                             width:43,
+                             borderRadius:20,
+                             margin:'10px 20px'
+                            }}>
+                         </div>
+                         <div style={{display:'flex', flexDirection:'column'}}>
+                         <div style={{display:'flex'}}>
+                            <p style={{fontFamily:"Source Sans Pro", fontWeight:'800',marginTop:'10px',fontSize:'14px', color:"black"}}>{i.name}</p>
+                            <p style={{fontFamily:"Source Sans Pro", fontWeight:'800',marginTop:'10px',fontSize:'14px', color:"black", marginLeft:10, fontSize:14, fontWeight:500}}>{moment(i.date).fromNow()}</p>
+                         </div>
+                         {i.you === true ? (<p style={{fontFamily:"Source Sans Pro", color:"black"}}>You:{i.message}</p>):(<p style={{fontFamily:"Source Sans Pro", color:"black"}}>{i.message}</p>)}
+                         </div>
+                         </div>
+                        </li> )
+                     })}
+                
+                    </ul>
+                </div>
+            )
+        } else if(this.state.newMessage === 'message') {
+           
+            return(<Convo To={this.state.messageTo} myusername={this.state.myusername}
+                picForMessage={this.state.picForMessage}
+                username={this.state.username}
+            />)
+        }
+       
+    }
 
     
     handleDeletecredits(i) {
@@ -1021,6 +1128,28 @@ const KeyCodes = {
     }
 
 
+    handleDeleteNames(i) {
+        const { NamesTags } = this.state;
+        this.setState({
+            NamesTags: NamesTags.filter((tag, index) => index !== i),
+        });
+    }
+
+    handleAdditionalNames(tag) {
+        this.setState(state => ({ NamesTags: [...state.NamesTags, tag] }));
+    }
+ 
+    handleDragNames(tag, currPos, newPos) {
+        const tags = [...this.state.NamesTags];
+        const newTags = tags.slice();
+ 
+        newTags.splice(currPos, 1);
+        newTags.splice(newPos, 0, tag);
+ 
+        // re-render
+        this.setState({ NamesTags: newTags });
+    }
+
     handleUploadSuccess = filename => {
         this.setState({ avatar: filename, progress: 100, isUploading: false });
         firebase
@@ -1080,7 +1209,8 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => ({
     closeModal: (modal) => dispatch(OPEN_MODAL(modal)),
-    startCreateRoom: (room) => dispatch(startCreateRoom(room))
+    startCreateRoom: (room) => dispatch(startCreateRoom(room)),
+    openModal: (modal) => dispatch(OPEN_MODAL(modal))
 });
 const ConnectedAppModal = connect(mapStateToProps, mapDispatchToProps)(AppModal);
 export default ConnectedAppModal;

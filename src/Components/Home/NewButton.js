@@ -52,7 +52,7 @@ class NewButton extends Component {
       }
     render() {
     return  (
-        <div style={{position:'absolute'}}>
+        <div style={{position:'relative'}}>
             <div onClick={this.newclicked.bind(this)} id="new-button-dropdown" className="new-button-dropdown">
                 <div className="new-btn">
                     <button className="new-button">

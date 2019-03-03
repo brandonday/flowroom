@@ -11,6 +11,11 @@ import EditorOptionsTablet from './EditorOptionsTablet.js';
 import { OPEN_MODAL } from '../../actions/entireApp';
 import { connect } from 'react-redux';
 import { firebase } from '../firebase/firebase';
+// import ImageEdit from './ImageEdit.js';
+
+import ImageEdit from './ImageEdit.js';
+
+
 const bodyScrollLock = require('body-scroll-lock');
 const disableBodyScroll = bodyScrollLock.disableBodyScroll;
 const enableBodyScroll = bodyScrollLock.enableBodyScroll;
@@ -27,13 +32,22 @@ class RoomMain extends Component {
         super();
         this.state = {
            descriptionText:'',
-           modalIsOpen:true
+           modalIsOpen:true,
+           details:false,
+           objects:false,
+           comments:false,
+           draw:false,
+           remix:false,
+           preferences:false,
+           record:false
         };
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
     }
     componentDidMount() {
+     
+    
         const targetElement = document.querySelector("#room-main-page");
         disableBodyScroll(targetElement);
 
@@ -137,124 +151,310 @@ class RoomMain extends Component {
             backgroundColor: 'none',
           },
           content: {
-            top                   : '44%',
-          left                  : '50%',
-          right                 : 'auto',
+          top                   : '0%',
+          left                  : '0%',
+          right                 : '0',
           bottom                : 'auto',
-          marginRight           : '-50%',
+          marginRight           : '0%',
           transform             : 'translate(-50%, -50%)',
-          height:'80%',
-          width:'50%',
+          height:'100%',
+          width:'100%',
           }
         }})
       }
+
+    menuSelect() {
+        if(this.state.details === true) {
+            return (<p>jkjkkj</p>)
+        } else if(this.state.objects === true) {
+            return (<p>object</p>)
+        } else if(this.state.comments === true) {
+            return (<Comments />)
+        } else if(this.state.draw === true) {
+            return (<p>draw</p>)
+        } else if(this.state.remix === true) {
+            
+            return (
+                <ImageEdit/>
+)
+        } else if(this.state.preferences === true) {
+            return (<p>preferences</p>)
+        } else if(this.state.record === true) {
+            return (<p>record</p>)
+        }
+     }
     render() {
         return (<div id="room-main-page" className="page-wrap twilight room-main-page-wrap">
-            <div style={{display:'flex', flexDirection:'column', background:'white'}}>
-                <div style={{width:'100%'}}>
-                    <Tabs onSelect={(i) => { this.setState({tabIndex:i})}}>
+        
+            <div style={{height:'100vh',
+                width:'60px', 
+                background:'#202020'
+            }}>
+            <div id="details" onClick={()=> {
+                let detailsid = document.getElementById('details');
+                detailsid.className = 'menubg';
+                detailsid.style.borderRight = '0px solid #181818';
+                let getclasses = document.getElementsByClassName('menubg');
+                this.setState({details:true, objects:false, comments:false, draw:false, 
+                    remix:false, 
+                    preferences:false,
+                    record:false});
+                document.getElementById('main-menu').style.display = 'flex';
+       
+                for(let i=0; i < getclasses.length; i++) {
+                    if(getclasses[i].id !== 'details') {
+                        getclasses[i].style.borderRight = '1px solid #181818';
+                        getclasses[i].className = '';
+                        
+                    }
+                }
+
+            }} style={{
+                height:'55px',
+                width:'59px',
+                display:'flex',
+                flexDirection:'column',
+                justifyContent:'center',
+                alignItems:'center',
+                borderRight:'1px solid #181818',
+                borderBottom:'1px solid #181818'}} className="menu-bg-border">
+                <div id="details-icon" className="details-3x"></div>
+                <p id="details-text" className="details-text">Details</p>
+            </div>
+            <div id="objects" onClick={()=> {
+                let objectsid = document.getElementById('objects');
+                objectsid.className = 'menubg';
+                objectsid.style.borderRight = '0px solid #181818';
+                document.getElementById('objects').className = 'menubg'
+                let getclasses = document.getElementsByClassName('menubg');
+                this.setState({details:false,
+                    objects:true,
+                    comments:false,
+                    draw:false,
+                    remix:false,
+                    preferences:false,
+                    record:false});
+                document.getElementById('main-menu').style.display = 'flex';
+                for(let i=0; i < getclasses.length; i++) {
+                    if(getclasses[i].id !== 'objects') {
+                        getclasses[i].style.borderRight = '1px solid #181818';
+                        getclasses[i].className = '';
+                        
+
+                    }
+                }
+            }} style={{height:'55px',width:'59px',display:'flex',
+            flexDirection:'column',
+            justifyContent:'center',
+            alignItems:'center',
+            borderRight:'1px solid #181818',
+            borderBottom:'1px solid #181818'}} className="menu-bg-border">
+                <div id="objects-icon" className="rooms-3x"></div>
+                <p id="details-text" className="details-text">Objects</p>
+            </div>
+            <div id="comments" onClick={()=> {
+           
+                let commentsid = document.getElementById('comments');
+                commentsid.className = 'menubg';
+                commentsid.style.borderRight = '0px solid #181818';
+                let getclasses = document.getElementsByClassName('menubg');
+                this.setState({details:false,
+                    objects:false,
+                    comments:true,
+                    draw:false,
+                    remix:false,
+                    preferences:false,
+                    record:false});
+                document.getElementById('main-menu').style.display = 'flex';
+                for(let i=0; i < getclasses.length; i++) {
+                    if(getclasses[i].id !== 'comments') {
+                        getclasses[i].style.borderRight = '1px solid #181818';
+                        getclasses[i].className = '';
+                        
+                    }
+                }
+            }} style={{height:'55px',width:'59px',display:'flex',
+            flexDirection:'column',
+            justifyContent:'center',
+            alignItems:'center',
+            borderRight:'1px solid #181818',
+            borderBottom:'1px solid #181818'}} className="menu-bg-border">
+            <div id="comments-icon" className="comments-3x"></div>
+                <p id="details-text" className="details-text">Comments</p>
+            </div>
+             <div id="draw" onClick={()=> {
+                let drawid = document.getElementById('draw');
+                drawid.className = 'menubg';
+                drawid.style.borderRight = '0px solid #181818';
+                let getclasses = document.getElementsByClassName('menubg');
+                this.setState({details:false,
+                    objects:false,
+                    comments:false,
+                    draw:true,
+                    remix:false,
+                    preferences:false,
+                    record:false});
+                    document.getElementById('main-menu').style.display = 'flex';
+
+                for(let i=0; i < getclasses.length; i++) {
+                    if(getclasses[i].id !== 'draw') {
+                        getclasses[i].style.borderRight = '1px solid #181818';
+                        getclasses[i].className = '';
+                        
+
+
+                    }
+                }
+            }} style={{height:'55px',width:'59px',display:'flex',
+            flexDirection:'column',
+            justifyContent:'center',
+            alignItems:'center',
+            borderRight:'1px solid #181818',
+            borderBottom:'1px solid #181818'}} className="menu-bg-border">
+            <div id="draw-icon" className="draw-3x"></div>
+                <p id="details-text" className="details-text">Draw</p>
+            </div>
+            <div id="remix" onClick={()=> {
+                let remixid = document.getElementById('remix');
+                remixid.className = 'menubg';
+                remixid.style.borderRight = '0px solid #181818';
+                let getclasses = document.getElementsByClassName('menubg');
+                this.setState({details:false,
+                    objects:false,
+                    comments:false,
+                    draw:false,
+                    remix:true,
+                    preferences:false,
+                    record:false});
+                    document.getElementById('main-menu').style.display = 'flex';
+
+                for(let i=0; i < getclasses.length; i++) {
+                    if(getclasses[i].id !== 'remix') {
+                        getclasses[i].style.borderRight = '1px solid #181818';
+                        getclasses[i].className = '';
+                    }
+                }
+            }} style={{height:'55px',width:'59px',display:'flex',
+            flexDirection:'column',
+            justifyContent:'center',
+            alignItems:'center',
+            borderRight:'1px solid #181818',
+            borderBottom:'1px solid #181818'}} className="menu-bg-border">
+            <div id="remix-icon" className="details-3x"></div>
+                <p id="details-text" className="details-text">Remix</p>
+            </div>
+            <div id="preferences" onClick={()=> {
+                let preferencesid = document.getElementById('preferences');
+                preferencesid.className = 'menubg';
+                preferencesid.style.borderRight = '0px solid #181818';
+                document.getElementById('preferences').className = 'menubg'
+                let getclasses = document.getElementsByClassName('menubg');
+                this.setState({details:true,
+                    objects:false,
+                    comments:false,
+                    draw:false,
+                    remix:false,
+                    preferences:true,
+                    record:false});
+                    document.getElementById('main-menu').style.display = 'flex';
+
+                for(let i=0; i < getclasses.length; i++) {
+                    if(getclasses[i].id !== 'preferences') {
+                        getclasses[i].style.borderRight = '1px solid #181818';
+                        getclasses[i].className = '';
+                    }
+                }
+            }} style={{height:'55px',width:'59px',display:'flex',
+            flexDirection:'column',
+            justifyContent:'center',
+            alignItems:'center',
+            borderRight:'1px solid #181818',
+            borderBottom:'1px solid #181818'}} className="menu-bg-border">
+            <div id="preferences-icon" className="details-3x"></div>
+                <p id="details-text" className="details-text">Preferences</p>
+            </div>
+            <div id="record" onClick={()=> {
+                let recordid = document.getElementById('record');
+                recordid.className = 'menubg';
+                recordid.style.borderRight = '0px solid #181818';
+             
+                let getclasses = document.getElementsByClassName('menubg');
+                this.setState({details:true,
+                    objects:false,
+                    comments:false,
+                    draw:false,
+                    remix:false,
+                    preferences:false,
+                    record:true});
+                    document.getElementById('main-menu').style.display = 'flex';
+
+                for(let i=0; i < getclasses.length; i++) {
+                    if(getclasses[i].id !== 'record') {
+                        getclasses[i].style.borderRight = '1px solid #181818';
+                        getclasses[i].className = '';
+                    }
+                }
+            }} style={{height:'55px',width:'59px',display:'flex',
+            flexDirection:'column',
+            justifyContent:'center',
+            alignItems:'center',
+            borderRight:'1px solid #181818',
+            borderBottom:'1px solid #181818'}} className="menu-bg-border">
+            <div id="record-icon" className="details-3x"></div>
+                <p id="details-text" className="details-text">Record</p>
+            </div>
+            </div>
+            
+            <div id="main-menu" style={{height:'100vh', width:'600px', borderRight:'1px solid #181818',background:'#FCFDFF',overflow:'hidden',overflowY:'scroll'}}>
+                {
+                  this.menuSelect()  
+                }
+                
+                <div onClick={()=>{
+                    document.getElementById('main-menu').style.display = 'none';
+                    let getclasses = document.getElementsByClassName('menubg');
+                    for(let i=0; i < getclasses.length; i++) {
+               
+                        getclasses[i].style.borderRight = '1px solid #181818';
+                        getclasses[i].className = '';
+                        
+                    }
+                }}
+                style={{background:'rgb(252, 253, 255)', zIndex:'999999',left:'453px', top:'295px', height:'44px',width:'12px',border:'1px solid rgb(221, 224, 235)',float:'right',position:'absolute'}}><p style={{color:'black',transform:'rotate(89deg)',
+                position:'relative',
+                fontSize:'12px',top:'6px',}}>hide</p></div>
+            </div>
+            <div style={{display:'flex', flexDirection:'column', background:'white', width:'100%', position:'relative'}}>
+                <div style={{width:'100%', borderBottom:'1px solid black',background:'rgb(24, 24, 24)'}}>
+                <div className="tabs-wrap">
+                </div>        
+         
+                <Editor 
+                                descriptionText={this.state.descriptionText}
+                                name={'Brandon'}
+                                likes={24}
+                                tags={['button', 'web', 'hover', 'animation', 'js', 'code', 'mobile', 'responsive', 'flat design', 'color', 'glow', 'hover effect']}
+                                
+                                />
+                            
+                           
+                                
+            
+                    {/* <Tabs onSelect={(i) => { this.setState({tabIndex:i})}}>
                         <Desktop>
                             <TabList>
-                                <div className="tabs-wrap">
-                                    <Tab onClick={this.tabDetailsClicked} className="tab-details-component">
-                                        <div className="tab-details-wrap">
-                                            <div id="details" className="details-sel-3x"></div>
-                                            <p id="details-text" className="details-text-selected">Room</p>
-                                        </div>
-                                    </Tab>
-                                    
-                                    <Tab onClick={this.tabRoomsClicked} className="tab-rooms-component">
-                                        <div>
-                                            <div className="tab-rooms-wrap">
-                                                <div id="rooms" className="rooms-3x"></div>
-                                                <p id="rooms-text" className="rooms-text">Objects</p>
-                                            </div>
-                                        </div>
-                                    </Tab>
-                                    <Tab onClick={this.tabCommentsClicked} className="tab-comments-component">
-                                        <div>
-                                            <div className="tabs-comments-wrap">
-                                                <div id="comments" className="comments-3x"></div>
-                                                <p id="comments-text" className="comments-text">Comments</p>
-                                            </div>
-                                        </div>
-                                    </Tab>
-                                    <Tab onClick={this.tabCommentsClicked} className="tab-comments-component">
-                                        <div>
-                                            <div className="tabs-comments-wrap">
-                                                <div id="comments" className="comments-3x"></div>
-                                                <p id="comments-text" className="comments-text">Details</p>
-                                            </div>
-                                        </div>
-                                    </Tab>
-                            
-                                  
-                                </div>
+                                
                           
 
                             </TabList>
                         </Desktop>
-                        <Tablet>
-                            <TabList>
-                                <div className="tabs-wrap">
-                                    <Tab onClick={this.tabDetailsClicked} className="tab-details-component">
-                                        <div className="tab-details-wrap">
-                                            <div id="details" className="details-sel-3x"></div>
-                                            <p id="details-text" className="details-text-selected">Details</p>
-                                        </div>
-                                    </Tab>
-                                    <Tab onClick={this.tabRoomsClicked} className="tab-rooms-component">
-                                        <div>
-                                            <div className="tab-rooms-wrap">
-                                                <div id="rooms" className="rooms-3x"></div>
-                                                <p id="rooms-text" className="rooms-text">Rooms</p>
-                                            </div>
-                                        </div>
-                                    </Tab>
-                                    <Tab onClick={this.tabCommentsClicked} className="tab-comments-component">
-                                        <div>
-                                            <div className="tabs-comments-wrap">
-                                                <div id="comments" className="comments-3x"></div>
-                                                <p id="comments-text" className="comments-text">Comments</p>
-                                            </div>
-                                        </div>
-                                    </Tab>
-                                    <Tab onClick={this.tabCommentsClicked} className="tab-comments-component">
-                                        <div>
-                                            <div className="tabs-comments-wrap">
-                                                <div id="comments" className="comments-3x"></div>
-                                                <p id="comments-text" className="comments-text">Details</p>
-                                            </div>
-                                        </div>
-                                    </Tab>
-                                </div>
-                            </TabList>
-                        </Tablet>
+                     
                         <Mobile>
                             <TabList>
                                 <div className="tabs-wrap-mobile">
-                                    <Tab onClick={this.tabDetailsClicked} className="tab-details-component">
-                                        <div className="tabs-details-wrap-mobile">
-                                            <div id="details" className="details-sel-3x"></div>
-                                            <p id="details-text" className="details-text-selected">Details</p>
-                                        </div>
-                                    </Tab>
-                                    <Tab onClick={this.tabRoomsClicked} className="tab-rooms-component">
-                                        <div>
-                                            <div className="tab-rooms-wrap">
-                                                <div id="rooms" className="rooms-3x"></div>
-                                                <p id="rooms-text" className="rooms-text">Rooms</p>
-                                            </div>
-                                        </div>
-                                    </Tab>
-                                    <Tab onClick={this.tabCommentsClicked} className="tab-comments-component">
-                                        <div>
-                                            <div className="tabs-comments-wrap">
-                                                <div id="comments" className="comments-3x"></div>
-                                                <p id="comments-text" className="comments-text">Comments</p>
-                                            </div>
-                                        </div>
-                                    </Tab>
+                                
+                                
+                            
                                     <Tab onClick={this.tabCommentsClicked} className="tab-comments-component">
                                         <div>
                                             <div className="tabs-comments-wrap">
@@ -268,22 +468,16 @@ class RoomMain extends Component {
                             </TabList>
                         </Mobile>
                         <TabPanel>
-                            <Editor 
-                                descriptionText={this.state.descriptionText}
-                                name={'Brandon'}
-                                likes={24}
-                                tags={['button', 'web', 'hover', 'animation', 'js', 'code', 'mobile', 'responsive', 'flat design', 'color', 'glow', 'hover effect']}
-                                
-                                />
+                           
                         </TabPanel>
                         
                         <TabPanel>
                             <RoomPosts/>
                         </TabPanel>
                         <TabPanel>
-                            <Comments/>
+                            <Comments />
                         </TabPanel>
-                    </Tabs>
+                    </Tabs> */}
                     {/* <div style={{position:'absolute',
                                     zIndex:'9999',
                                     display:'flex',

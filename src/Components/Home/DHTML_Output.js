@@ -10,6 +10,7 @@ const enableBodyScroll = bodyScrollLock.enableBodyScroll;
 const objects = [];
 
 
+
  class DHTML_Output extends Component {
      constructor() {
         super();
@@ -19,13 +20,20 @@ const objects = [];
         const targetElement = document.querySelector("#output-container");
         disableBodyScroll(targetElement);
 
-        
+        localStorage.removeItem("FR_REMIX_LIST");
+        localStorage.removeItem("remixhead");
+        localStorage.removeItem("remixhead2");
+        localStorage.removeItem("remixhead3");
         
      }
+   updateEditor() {
+       alert('called');
+   }
      render() {
     return(<div id="output-container" className="output-container">
         <div id="result-div" className="result">
             <iframe id="output_frame" className="output_frame" src=""></iframe>
+
         </div>
         <div id="out-cover">
         
@@ -46,6 +54,8 @@ const objects = [];
  }
 
 
-
+var calld = function() {
+    DHTML_Output.updateEditor()
+}
 
 export default DHTML_Output;

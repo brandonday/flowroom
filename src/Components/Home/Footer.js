@@ -13,11 +13,6 @@ const Footer = () => (
                         <p className="footer-link">Privacy</p>
                         <p className="footer-link">Policy</p>
                     </div>
-                    <div className="footer-links-right">
-                        <p className="footer-link">About</p>
-                        <p className="footer-link">Terms of Use</p>
-                        <p className="footer-link">Contact Us</p>
-                    </div>
                 </div>
             </div>
         </div>

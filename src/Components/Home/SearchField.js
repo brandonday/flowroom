@@ -8,10 +8,15 @@ const Mobile = props => <Responsive {...props} maxWidth={767} />;
 const Default = props => <Responsive {...props} minWidth={768} />;
 
  const Search = () => (
-    <div>
+    <div style={{
+        width:'100%',
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center'
+    }}>
         <div className="search-box">
             <div className="magnify-3x"></div>
-            <input className="search-input" type="text" autocapitalize="none" placeholder="Search" value=""></input>
+            <input className="search-input" type="text" autocapitalize="none" placeholder="Search for rooms, users and tags" value=""/>
         </div>
     </div>
 )

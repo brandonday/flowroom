@@ -10,7 +10,12 @@ const Default = props => <Responsive {...props} minWidth={768} />;
     <div>
         {/* <Desktop> */}
         <div className="logo-wrap">
-            <a href="/" className="large-logo-desktop">flowroom</a>
+            <a href="/" style={{color:'white',
+  fontFamily:'Arial',
+  fontSize:'35px',
+  fontWeight:'700',
+  lineHeight:'42px',
+  textAlign:'left'}}>flowroom</a>
         </div>
         {/* </Desktop> */}
         {/* <Tablet>

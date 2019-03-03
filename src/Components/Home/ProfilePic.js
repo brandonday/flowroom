@@ -20,7 +20,16 @@ class ProfilePic extends Component {
     let user = firebase.auth().currentUser.displayName;
     let that = this;
  
-  
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        let myusername = user.displayName;
+        console.log()
+        that.setState({pic:user.photoURL})
+      } else {
+        // No user is signed in.
+        that.getProfileInfo('nousername')
+      }
+    });
 
   }
   render() {
@@ -33,7 +42,7 @@ class ProfilePic extends Component {
           this.setState({menuVisible:false}); 
         }
       }} className="header-profile-pic" style={{
-        backgroundImage:`url(${pic})`,
+        backgroundImage:`url(${this.state.pic})`,
         backgroundRepeat:'no-repeat',
         backgroundPosition:'center center',
         backgroundSize:'cover',

@@ -15,7 +15,7 @@ export const PrivateRoute = ({isAuthenticated, userExists, component:Component, 
                 <div style={{display:'flex', flex:1, flexDirection:'column'}}>
                 <HeaderLoggedIn/>
                     <Component {...props}/>
-                <Footer/>
+                {/* <Footer/> */}
                 </div>
             )
         } else if(!isAuthenticated) {
@@ -23,7 +23,7 @@ export const PrivateRoute = ({isAuthenticated, userExists, component:Component, 
 
                 <HeaderLoggedOut/>
                 <Component {...props}/>
-                <Footer/>
+                {/* <Footer/> */}
             </div>)
         } 
 

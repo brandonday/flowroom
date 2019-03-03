@@ -14,7 +14,8 @@ let history = createHistory();
         }
         render() {
                 return  (
-                        <div style={{flex:1}}>
+                        <div style={{flex:1,display:'flex',
+                                flexDirection:'column',background:'#141414'}}>
                                 <Communities/>
                                 <RoomPosts/>
                                 <AppModal/>

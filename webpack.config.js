@@ -7,8 +7,9 @@ module.exports = {
     mode: 'development',
     entry: './src/index.js',
     output: {
-        path:path.join(__dirname, 'public'),
-        filename:'bundle.js'
+      publicPath: "http://localhost:3000/
+        // path:path.join(__dirname, 'public'),
+        // filename:'bundle.js'
     },
     module: {
         rules:[{

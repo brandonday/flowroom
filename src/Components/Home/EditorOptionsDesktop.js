@@ -53,7 +53,19 @@ const Default = props => <Responsive {...props} minWidth={768} />;
                         marginRight:'6px',
                         backgroundImage:'url(/images/draw.png)',
                         backgroundSize:'15px 19px',
-                        backgroundRepeat:'no-repeat'}}></div>
+                        backgroundRepeat:'no-repeat'}} onClick={()=> {
+                            //alert('adassd')
+                            let getNodes = document.getElementsByClassName('CodeMirror-sizer')[0].innerText;
+                        
+                            function replaceAll(str, find, replace) {
+                                return str.replace(new RegExp(find, 'g'), replace);
+                            }
+
+                            document.getElementsByClassName('CodeMirror-sizer')[0].innerHTML = replaceAll(getNodes, "hello", "yo");
+                    // for(let i=0; i < getNodes.length; i++) {
+                    //     alert(document.getElementsByClassName('CodeMirror-sizer')[i].getNodes)
+                    // }
+                        }}></div>
                             <p className="draw-text">Draw</p>
                 </div>
                 <div className="lock-editor-wrap">

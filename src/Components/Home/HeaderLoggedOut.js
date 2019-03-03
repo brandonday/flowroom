@@ -20,17 +20,17 @@ import { connect } from 'react-redux';
                     <div className="header-content">
                         <div className="left-section">
                             <Logo/>
-                            <MyCommunitiesDropDown/>
+              
                         </div>
             
                         <div className="right-section">
-                            <NewButton props={props.props}/>
+                            {/* <NewButton props={props.props}/> */}
                             <div className="button-box-logged-out"></div>
+                            <Search/>
                             <div className="sign-up-log-in-wrap">
                                 <SignUpButton/>
                                 <LoginButton/>
                             </div>
-                            <Search/>
                         </div>
                     </div>
                 </div>

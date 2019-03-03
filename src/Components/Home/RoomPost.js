@@ -15,24 +15,26 @@ class RoomPost extends Component {
         this.state = {
             theHeight:'29vw',
             isFull: false,
-            fullscreen:false
+            fullscreen:false,
+            pHeight:'',
+            dElem:''
         }
     }
-    componentDidMount() {
-   
+    componentDidMount() {       
+
     }
     mouseHover() {
-        if(this.props.id.id !== null) {
-            document.getElementById(this.props.id.id).style.display = 'flex';
-            document.getElementById(this.props.id.id + "description").style.display = 'flex';
-        }
+        // if(this.props.id.id !== null) {
+        //     document.getElementById(this.props.id.id).style.display = 'flex';
+        //     document.getElementById(this.props.id.id + "description").style.display = 'flex';
+        // }
     }
     
     mouseLeave() {
-        if(this.props.id.id !== null) {
-        document.getElementById(this.props.id.id).style.display = 'none';
-        document.getElementById(this.props.id.id + "description").style.display = 'none';
-        }
+        // if(this.props.id.id !== null) {
+        // document.getElementById(this.props.id.id).style.display = 'none';
+        // document.getElementById(this.props.id.id + "description").style.display = 'none';
+        // }
     }
     displayExtraInfo() {
         if(this.props.isRemixable === true || this.props.roomType === 'other' ) {
@@ -62,16 +64,16 @@ class RoomPost extends Component {
            return(<div></div>)
        }
     }
-    displayRemix() {
-        if(this.props.isRemixable === true) {
+    display() {
+       
         return ( <div style={{display:'flex',
         width:'100%',
         position:'relative', height:'34px'}}>
         <div onClick={this.goFull} style={{padding:'0px 10px',display:'flex', justifyContent:'center', alignItems:'center'}}>
-            <i class="fas fa-expand" style={{marginRight:'10px',fontSize:20,color:'rgb(10, 127, 41)',}}></i>
-            <p>Full Screen</p>
+            <i class="fas fa-expand" style={{marginRight:'10px',fontSize:20, color:'rgb(48, 184, 82)'}}></i>
+            <p style={{color:'rgb(128, 132, 140)'}}>full screen</p>
         </div>
-        <div style={{display:'flex',
+        {this.props.isRemixable ? (<div style={{display:'flex',
             justifyContent:'space-around',
             alignItems:'center',
             outline:'none',
@@ -91,12 +93,10 @@ class RoomPost extends Component {
             transition:'color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, width 0.3s ease, opacity 0.3s ease'}}>
           <i class="fas fa-random" style={{color:'rgb(10, 127, 41)'}}></i>
           <p style={{fontSize:12}}>Remix This</p>
-        </div>
+        </div>): ''}
 
     </div>)
-        }else {
-            return(<div></div>)
-        }
+     
     }
     post() {
         if(this.props.roomType === 'other') {
@@ -126,7 +126,7 @@ class RoomPost extends Component {
                 </div>
                 </Fullscreen>)
         } else if(this.props.roomType === 'image') {
-        return (<img style={{height:'auto', width:'100%'}} src={this.props.postedPicURL}/>)
+            return (<img style={{height:'auto', width:'100%'}} src={this.props.postedPicURL}/>)
         } else {
             return (<p>{this.props.postText}</p>)
         }
@@ -136,32 +136,45 @@ class RoomPost extends Component {
     }
     goFull = () => {
         
-        //this.setState({ isFull: true });
+        this.setState({ isFull: true });
         if(this.state.fullscreen === true) {
            // this.setState({fullscreen:false});
         } else {
-            let full = document.getElementById('full-screen-fallback');
-            let body = document.getElementsByTagName('body')[0];
-            full.style.position = 'absolute';
+            // let full = document.getElementById('full-screen-fallback');
+            // let body = document.getElementsByTagName('body')[0];
+            // full.style.position = 'absolute';
         
 
                       
-                      full.style.height = '100%';
-                      full.style.width = '100%';
-                      full.style.zIndex = '999999999';
-                      full.style.backgroundColor = 'white';
-                      full.style.display = 'flex';
-                      body.style.overflow = 'hidden';
+            // full.style.height = '100%';
+            //           full.style.width = '100%';
+            //           full.style.zIndex = '999999999';
+            //           full.style.backgroundColor = 'white';
+            //           full.style.display = 'flex';
+            //           body.style.overflow = 'hidden';
 
                     
                       
         }
       
     } 
+    expandText() {
+        let that = this;
+        var pos = 0;
+        var id = setInterval(frame, 0);
+        function frame() {
+          if (pos == that.state.pHeight) {
+            clearInterval(id);
+          } else {
+            pos++; 
+            that.state.dElem.style.height = pos + "px"; 
+          }
+        }
+    }
     render() {
        
         return  (
-            <div onMouseEnter={this.mouseHover.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} className="room-post" style={{
+            <div style={{position:'relative'}} onMouseEnter={this.mouseHover.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} className="room-post" style={{
                 height:this.props.roomHeight
             }}>
             
@@ -171,28 +184,24 @@ class RoomPost extends Component {
                     position:'relative',
                     webkitBoxSizing:'border-box',
                     mozBoxSizing:'border-box',
-                    border:'10px solid white',
                     boxSizing:'border-box'}}>
                  
                         {this.post()}
 
                         <div id={this.props.id.id} className={this.props.roomType === 'image'? '':"room-overlay"}></div>
-                        <Link to={"/room/" + this.props.id.id} >
+                        {/* <Link to={"/room/" + this.props.id.id} >
                             <div id={this.props.id.id + "description"} className={this.props.roomType === 'image'?'': "description-overlay"}>
-                                <p>{this.props.roomType === 'image'?'':this.props.id.description}</p>
+                                <p>{this.props.roomType === 'image'?''}</p>
                             </div>
-                        </Link>
+                        </Link> */}
                     </div>
-                    {this.displayRemix()}
+                    {this.display()}
                     {this.displayExtraInfo()}
-                    <div style={{display:'flex', fontSize:'16px', justifyContent:'center', alignItems:'center', padding:'0px 10px'}}>
-                    <p style={{fontSize:'12px', wordBreak:'break-all'}}>username</p>
-                </div>
+           
                     <div style={{display:'flex',
                         justifyContent:'space-between',
                         height:'39px',
                         width:'100%',
-                        /* margin: 0px 20px 0px 10px; */
                         padding:'0px 10px',
                         alignItems:'center',
                         position:'relative'
@@ -204,7 +213,9 @@ class RoomPost extends Component {
                                     textOverflow:'ellipsis',
                                     textAlign:'left',
                                     width:'97px',
-                                    fontSize:'14px'}}>Brandon</p>
+                                    fontSize:'14px',
+                                    color:'rgb(128, 132, 140)'
+                                    }}>Brandon</p>
                             </div>
                             <div style={{border:'0px solid red',overflow:'hidden',height:'31px',display:'flex',
                                 alignItems:'center'}}>
@@ -222,6 +233,16 @@ class RoomPost extends Component {
                         </div>
                     </div>
                 </div>
+                <div id="descriptionWrapText" style={{fontSize:'16px', padding:'0px 10px 10px'}}>
+                        <p id="descriptionText" style={{wordBreak:'break-all', fontSize:'12px', color:'rgb(128, 132, 140)'}}>
+
+{/* 
+                            <b style={{marginRight:'4px'}}>{`${this.props.username}`}</b>
+                            <span onClick={this.expandText.bind(this)} style={{position:'relative',height:'20px', width:'41px', float:'right', overflow:'hidden',top:'18px'}}>... more</span> */}
+
+                            {`${this.props.id.description}`}
+                            </p>
+                    </div>
             </div>
         )
     }

@@ -23,11 +23,10 @@ class HeaderLoggedIn extends Component {
                         <div className="header-content">
                             <div className="left-section">
                                 <Logo/>
-                                <MyCommunitiesDropDown/>
                             </div>
             
                             <div className="right-section">
-                                <NewButton props={this.props}/>
+                                {/* <NewButton props={this.props}/> */}
                                 <div className="button-box"></div>
                                 <div className="message-icon-profile-pic-wrap-mobile">
                                     <MessageIcon/> 

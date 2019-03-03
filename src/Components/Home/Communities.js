@@ -66,35 +66,36 @@ class Communities extends Component {
     }
     render() {
         return(
+<div></div>
+            // <div className="communities-wrap">
+            // <div className="communities-nav-wrap">
 
-            <div className="communities-wrap">
-            <div className="communities-nav-wrap">
-
-                    <nav className="communities">
-                        <div style={{fontSize:'13px',
-                            fontWeight:'bold',
-                            width:'86px',
-                            borderRight:'1px solid #979AA1',
-                            height:'20px',
-                            /* justify-content: center; */
-                            alignItems:'center',
-                            display:'flex',
-                            left:'0px',
-                            position:'relative',
-                            paddingRight:15
-                        }}>Communities</div>
-                        <div id="com-list" className="communities-list">
-                            { 
-                                communities.map((i) => {
-                                    return (<span id={i.community} onClick={()=>{this.selectCommunity(i.community)}}  style={{ textDecoration: 'none', fontSize:13, fontWeight:600, marginRight:12,whiteSpace:'nowrap'}}>{i.community}</span>)
-                                })
-                            }
-                        </div>
-                    </nav>
-                    <div className="communities-view-more" style={{fontWeight:'bold'}}>View More...</div>
-                </div>
+            //         <nav className="communities">
+            //             <div style={{fontSize:'13px',
+            //                 fontWeight:'bold',
+            //                 width:'86px',
+            //                 borderRight:'1px solid #979AA1',
+            //                 height:'20px',
+            //                 /* justify-content: center; */
+            //                 alignItems:'center',
+            //                 display:'flex',
+            //                 left:'0px',
+            //                 position:'relative',
+            //                 paddingRight:15
+            //             }}>Communities</div>
+            //             <div id="com-list" className="communities-list">
+            //             <span id="All" className="selected" onClick={()=>{this.selectCommunity('All')}}  style={{ textDecoration: 'none', fontSize:13, fontWeight:600, marginRight:12,whiteSpace:'nowrap'}}>All</span>
+            //                 { 
+            //                     communities.map((i) => {
+            //                         return (<span id={i.community} onClick={()=>{this.selectCommunity(i.community)}}  style={{ textDecoration: 'none', fontSize:13, fontWeight:600, marginRight:12,whiteSpace:'nowrap'}}>{i.community}</span>)
+            //                     })
+            //                 }
+            //             </div>
+            //         </nav>
+            //         <div className="communities-view-more" style={{fontWeight:'bold'}}>View More...</div>
+            //     </div>
               
-            </div>
+            // </div>
         )
      }
 }
