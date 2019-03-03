@@ -141,25 +141,25 @@ class RoomPosts extends Component {
             isPrivate:false,
             isWeb:false,
             isNative:false,
-            isWebNative:false, 
+            isWebNative:false,
             rooms:[]
         }
     }
     componentDidMount() {
-       
+
         let database = firebase.database();
         let that = this;
         let store = Store;
-       
+
         store.subscribe(() => {
             console.log(store.getState());
            // this.setState({roomsLoaded:false});
-            
-            
+
+
             let isProduction;
             let isUnlisted;
             let isPrivate;
-            
+
             let isWeb;
             let isNative;
             let isWebNative;
@@ -173,23 +173,7 @@ class RoomPosts extends Component {
             let isAR = store.getState().roomsFilters.ar;
             let isVR = store.getState().roomsFilters.vr;
             let is360 = store.getState().roomsFilters.three60;
-            
-            this.setState({
-                //isAllRes:isAllRes, 
-                isMobile:isMobile,
-                isTable:isTable,
-                isDesktop:isDesktop,
-                isLive:isLive,
-                isRemixable:isRemixable,
-                isAI:isAI,
-                isAR:isAR,
-                isVR:isVR,
-                is360:is360
-            });
 
-
-            
-    
             let regular = '';
             let allres = '';
             let live = '';
@@ -204,154 +188,154 @@ class RoomPosts extends Component {
             let posttype = '';
             let isunlisted = '';
             let isprivate = '';
-    
+
             let isweb = '';
             let isnative = '';
             let iswebnative = '';
-    
+
             // if(isProduction === true ) {
               regular= 'Regular/';
             // } else {
             //   regular = 'Experimental/';
             // }
-    
-       
-    
-            
+
+
+
+
             if(isUnlisted === true) {
               isunlisted = 'Unlisted/';
               regular = '';
             } else {
               isunlisted = '';
             }
-    
+
             if(isPrivate === true) {
               isprivate = 'Private/';
               regular = '';
             } else {
               isprivate = '';
             }
-    
+
             if(isWeb === true) {
               isweb = 'Web/';
               regular = '';
             } else {
-              isweb = '';  
+              isweb = '';
             }
-            
+
             if(isNative) {
               isnative = 'Native/';
               regular = '';
             } else {
               isnative = '';
             }
-    
+
             if(isWebNative) {
               iswebnative = 'WebNative/';
               regular = '';
             } else {
               iswebnative = '';
             }
-    
+
             // if(isAllRes === true) {
             //   allres = ''
-            //   //rooms = []; 
+            //   //rooms = [];
             // } else {
             //   allres = '';
-            //   //rooms = []; 
-            // } 
+            //   //rooms = [];
+            // }
             if(isMobile === true) {
-              //regular = ''; 
+              //regular = '';
               mobile = 'Mobile/'
-             
+
             } else {
               mobile = '';
-            } 
+            }
             if(isTable === true) {
               //regular = '';
               tablet = 'Tablet/';
             } else {
               tablet = '';
-            } 
+            }
             if(isDesktop === true) {
               //regular = '';
               desktop = 'Desktop/';
             } else {
               desktop = '';
-            } 
-            
+            }
+
             if(isLive === true) {
               //regular = '';
               live = 'Live/';
             } else {
               live = ''
             }
-    
+
             if(isRemixable === true) {
-               
+
               //regular = '';
               remixable = 'Remixable/';
-            
+
               //getRooms();
-             
-              
+
+
             } else {
               remixable = ''
               //that.setState({rooms:rooms})
-          
-              
+
+
             }
-    
+
             if(isAI === true) {
               aiType = 'AI/';
-            
+
               getRooms();
-              //rooms = []; 
+              //rooms = [];
             } else {
               aiType = ''
             }
-    
+
             if(isAR === true) {
               arType = 'AR/';
-         
+
               getRooms();
-              //rooms = []; 
+              //rooms = [];
             } else {
               arType = ''
             }
-    
+
             if(isVR === true) {
               vrType = 'VR/';
-              
+
               getRooms();
-              //rooms = []; 
+              //rooms = [];
             } else {
               vrType = ''
             }
-    
+
             if(is360 === true) {
               three60Type = '360/';
-              
+
               getRooms();
-              //rooms = []; 
+              //rooms = [];
             } else {
               three60Type = ''
             }
             let lastRoom;
-           
-  
+
+
             getRooms();
-        
+
             let that = this;
-           
+
             function getRooms() {
-                
+
                 //alert(`categorizations/${regular}${mobile}${tablet}${desktop}${live}${remixable}${aiType}${arType}${vrType}${three60Type}`)
                 // let stringSel = `categorizations/${regular}${mobile}${tablet}${desktop}${live}${remixable}${aiType}${arType}${vrType}${three60Type}`;
                 database.ref(`categorizations/${regular}${mobile}${tablet}${desktop}${live}${remixable}${aiType}${arType}${vrType}${three60Type}`).limitToFirst(7).once('value').then((snapshot) => {
-                  
+
                     snapshot.forEach((childSnapShot) => {
-                        
+
                         if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
                         if(rooms.length != 6) {
                             rooms.push({
@@ -380,39 +364,39 @@ class RoomPosts extends Component {
                                 username:childSnapShot.val().userName,
                                 shortID:childSnapShot.val().shortID,
                                 ...childSnapShot
-                            }); 
+                            });
 
-                          
-        
+
+
                         }
                     }
 
-                        
+
                     });
-                  
+
                     that.setState({rooms:rooms})
                     that.setState({roomsLoaded:true});
                     let lastRoomNum = rooms.length;
                     that.setState({lastRoomNum:lastRoomNum - 1});
                     that.setState({lastRoom:lastRoom});
                     //if(filtering === true) {
-                
-                       
-                    rooms = []; 
-                   
+
+
+                    rooms = [];
+
                     //}
 
-                    
-                    
-                
+
+
+
                 });
                 console.log('cake',rooms)
-        
-                
+
+
             }
         });
 
- 
+
 
 
         // const unsubscribe = Store.subscribe(()=>{
@@ -426,8 +410,8 @@ class RoomPosts extends Component {
         //             //possibly dont push anything since already exist
         //         } else {
 
-        //             //going to be slow if keep querying 
-                       
+        //             //going to be slow if keep querying
+
         //             let database = firebase.database();
         //             let that = this;
         //             let num = rooms.length - roomsFilter.length;
@@ -444,22 +428,22 @@ class RoomPosts extends Component {
         //                 console.log('last room', rooms[lastRoom - 1])
         //                 this.setState({lastRoom:lastRoom});
         //                 rooms = [];
-            
+
         //             });
 
         //         }
-                
+
         //    });
         //    rooms = [...roomsFilter];
         //    //alert(rooms.length)
-        
-           
-        // });        
+
+
+        // });
         store.dispatch({type:'SAVE_DHTML', html:'',css:'',js:''});
 
-        
+
     }
-   
+
     roomFilters1() {
 
         // let database = firebase.database();
@@ -468,7 +452,7 @@ class RoomPosts extends Component {
         // database.ref('rooms').orderByChild("isAR").equalTo(false).limitToFirst(6).once('value').then((snapshot) => {
         //     snapshot.forEach((childSnapShot) => {
 
-                
+
         //         rooms.push({
         //             id:childSnapShot.key,
         //             date:childSnapShot.val().date,
@@ -481,9 +465,9 @@ class RoomPosts extends Component {
         //     let lastRoom = rooms.length;
         //     console.log('last room', rooms[lastRoom - 1])
         //     this.setState({lastRoom:lastRoom});
-        //     rooms = [];   
+        //     rooms = [];
         // });
-        
+
     }
     roomFilters2() {
         // let database = firebase.database();
@@ -501,7 +485,7 @@ class RoomPosts extends Component {
         //     console.log('last room', rooms[lastRoom - 1])
         //     this.setState({lastRoom:lastRoom});
         //     rooms = [];
-            
+
         // });
     }
 
@@ -523,44 +507,44 @@ class RoomPosts extends Component {
             let posttype = '';
             let isunlisted = '';
             let isprivate = '';
-    
+
             let isweb = '';
             let isnative = '';
             let iswebnative = '';
-    
+
             // if(isProduction === true ) {
               regular= 'Regular/';
             // } else {
             //   regular = 'Experimental/';
             // }
-    
-       
-    
-            
+
+
+
+
             // if(isUnlisted === this.state.isUnlisted) {
             //   isunlisted = 'Unlisted/';
             // } else {
             //   isunlisted = '';
             // }
-    
+
             // if(isPrivate === this.state.isPrivate) {
             //   isprivate = 'Private/';
             // } else {
             //   isprivate = '';
             // }
-    
+
             // if(isWeb === this.state.isWeb) {
             //   isweb = 'Web/';
             // } else {
-            //   isweb = '';  
+            //   isweb = '';
             // }
-            
+
             // if(isNative === this.state.isNative) {
             //   isnative = 'Native/';
             // } else {
             //   isnative = '';
             // }
-    
+
             // if(isWebNative === this.state.isWebNative) {
             //   iswebnative = 'WebNative/';
             // } else {
@@ -572,76 +556,76 @@ class RoomPosts extends Component {
               allres = ''
             } else {
               allres = '';
-            } 
+            }
             if(this.state.isMobile === true) {
               mobile = 'Mobile/'
-           
+
             } else {
               mobile = '';
-            } 
+            }
             if(this.state.isTable === true) {
               tablet = 'Tablet/'
-              
+
             } else {
               tablet = '';
-            } 
+            }
             if(this.state.isDesktop === true) {
               desktop = 'Desktop/'
-              
+
             } else {
               desktop = '';
-            } 
-            
+            }
+
             if(this.state.isLive === true) {
               live = 'Live/'
-              
+
           } else {
               live = ''
           }
-    
+
           if(this.state.isRemixable === true) {
               remixable = 'Remixable/'
-             
+
           } else {
               remixable = ''
-              
+
           }
-    
+
           if(this.state.isAI === true) {
               aiType = 'AI/'
-             
+
           } else {
               aiType = ''
           }
-    
+
           if(this.state.isAR === true) {
               arType = 'AR/'
-             
+
           } else {
               arType = ''
           }
-    
+
           if(this.state.isVR === true) {
               vrType = 'VR/'
-              
+
           } else {
               vrType = ''
           }
-    
+
           if(this.state.is360 === true) {
               three60Type = '360/'
-              
+
           } else {
               three60Type = ''
           }
-          
+
         database.ref(`categorizations/${regular}${mobile}${tablet}${desktop}${live}${remixable}${aiType}${arType}${vrType}${three60Type}`).orderByChild('shortID').limitToLast(7).endAt(this.state.firstRoom).once('value').then((snapshot) => {
             snapshot.forEach((childSnapShot) => {
-                
+
                 //if(rooms.length != 7) {
             if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
                 if(rooms.length != 6) {
-                 
+
                     rooms.push({
                         id:childSnapShot.key,
                         date:childSnapShot.val().date,
@@ -674,7 +658,7 @@ class RoomPosts extends Component {
                 //alert(childSnapShot.val().shortID)
             //}
             }
-     
+
             });
             //if(rooms.length != 1) {
                 this.setState({rooms:rooms});
@@ -683,14 +667,14 @@ class RoomPosts extends Component {
                 this.setState({lastRoomNum:lastRoomNum - 1});
                 this.setState({lastRoom:rooms[lastRoomNum - 1].shortID});
                 this.setState({firstRoom:rooms[0].shortID});
-                
+
                 //if(filtering === true) {
-                    
-                    rooms = []; 
-                    
+
+                    rooms = [];
+
                 //}
-            //} 
-           
+            //}
+
         });
     }
     nextPage() {
@@ -721,9 +705,9 @@ class RoomPosts extends Component {
         //   regular = 'Experimental/';
         // }
 
-   
 
-        
+
+
         // if(isUnlisted === this.state.isUnlisted) {
         //   isunlisted = 'Unlisted/';
         // } else {
@@ -739,9 +723,9 @@ class RoomPosts extends Component {
         // if(isWeb === this.state.isWeb) {
         //   isweb = 'Web/';
         // } else {
-        //   isweb = '';  
+        //   isweb = '';
         // }
-        
+
         // if(isNative === this.state.isNative) {
         //   isnative = 'Native/';
         // } else {
@@ -758,23 +742,23 @@ class RoomPosts extends Component {
           allres = ''
         } else {
           allres = '';
-        } 
+        }
         if(this.state.isMobile === true) {
           mobile = 'Mobile/'
         } else {
           mobile = '';
-        } 
+        }
         if(this.state.isTable === true) {
           tablet = 'Tablet/'
         } else {
           tablet = '';
-        } 
+        }
         if(this.state.isDesktop === true) {
           desktop = 'Desktop/'
         } else {
           desktop = '';
-        } 
-        
+        }
+
         if(this.state.isLive === true) {
           live = 'Live/'
         } else {
@@ -815,8 +799,8 @@ class RoomPosts extends Component {
             snapshot.forEach((childSnapShot) => {
                 if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
                 if(rooms.length != 6) {
-                   
-                   
+
+
                         rooms.push({
                             id:childSnapShot.key,
                             date:childSnapShot.val().date,
@@ -844,11 +828,11 @@ class RoomPosts extends Component {
                             shortID:childSnapShot.val().shortID,
                         ...childSnapShot
                     });
-                
+
 
                 //alert(childSnapShot.val().shortID)
                 }
-                
+
             }
 
             });
@@ -858,25 +842,18 @@ class RoomPosts extends Component {
                 this.setState({lastRoomNum:lastRoomNum - 1});
                 this.setState({lastRoom:rooms[lastRoomNum - 1].shortID});
                 this.setState({firstRoom:rooms[0].shortID});
-                
+
                 console.log('rooom thing',rooms[0])
                 //if(filtering === true) {
-                    
-                    rooms = []; 
-                 
-                    
+
+                    rooms = [];
+
+
                 //}
         });
     }
     render() {
-        let { 
-            size: { 
-              width
-            } 
-          } = this.props;
-       
-      
-         if(this.state.roomsLoaded) {    
+         if(this.state.roomsLoaded) {
         //     let theHeight;
             return  (
                 <div style={{padding:'0px 10px', height:'100%'}}>
@@ -891,77 +868,93 @@ class RoomPosts extends Component {
                                 </div>
                                 <div style={{position:'relative'}}>
 
-                                    
+
                                             <StackGrid
-                                         
-                                            columnWidth={width <= 768 ? '100%' : '33.33%'}
+
+                                            columnWidth={window.innerWidth <= 768 ? '100%' : '33.33%'}
                                             gutterWidth={20}
                                             gutterHeight={20}
                                             horizontal={false}
                                           >
                         {
-                            
+
                             this.state.rooms.map((i)=> {
-                                
+
                                 if(i.isRemixable === true) {
-                                    return (<div><RoomPost id={i} 
-                                        description={i.description} 
+                                    return (<div><RoomPost id={i}
+                                        description={i.description}
                                         isRemixable={i.isRemixable}
                                         postedPicURL={i.postedPicURL}
                                         roomType={i.roomType}
                                         pic={i.pic}
                                         roomHeight={'auto'}
                                         username={i.username}
+                                        points = {i.hasOwnProperty("points") ? i.points : 0}
+                                        views = {i.hasOwnProperty("views") ? i.views : 0}
+                                        likes = {i.hasOwnProperty("likes") ? i.likes : 0}
+                                        commentsCount = {i.hasOwnProperty("commentsCount") ? i.commentsCount : 0}
                                         key={i}
                                     />
                                     </div>)
-                                } 
+                                }
                                 if (i.roomType === 'image') {
-                                    return (<div><RoomPost id={i} 
-                                        description={i.description} 
+                                    return (<div><RoomPost id={i}
+                                        description={i.description}
                                         isRemixable={i.isRemixable}
                                         postedPicURL={i.postedPicURL}
                                         roomType={i.roomType}
                                         pic={i.pic}
                                         roomHeight={'auto'}
                                         username={i.username}
+                                        points = {i.hasOwnProperty("points") ? i.points : 0}
+                                        views = {i.hasOwnProperty("views") ? i.views : 0}
+                                        likes = {i.hasOwnProperty("likes") ? i.likes : 0}
+                                        commentsCount = {i.hasOwnProperty("commentsCount") ? i.commentsCount : 0}
                                         key={i}
                                     /></div>)
-                                } 
+                                }
                                 if (i.roomType === 'other') {
-                                    return (<div><RoomPost id={i} 
-                                        description={i.description} 
+                                    return (<div><RoomPost id={i}
+                                        description={i.description}
                                         isRemixable={i.isRemixable}
                                         postedPicURL={i.postedPicURL}
                                         roomType={i.roomType}
                                         pic={i.pic}
                                         roomHeight={'auto'}
                                         username={i.username}
+                                        points = {i.hasOwnProperty("points") ? i.points : 0}
+                                        views = {i.hasOwnProperty("views") ? i.views : 0}
+                                        likes = {i.hasOwnProperty("likes") ? i.likes : 0}
+                                        commentsCount = {i.hasOwnProperty("commentsCount") ? i.commentsCount : 0}
                                         key={i}
                                     /></div>)
-                               }   
+                               }
                                 if (i.roomType === 'text') {
-                                    return (<div><RoomPost id={i} 
-                                        description={i.description} 
+                                    return (<div><RoomPost id={i}
+                                        description={i.description}
                                         isRemixable={i.isRemixable}
                                         postedPicURL={i.postedPicURL}
                                         roomType={i.roomType}
                                         pic={i.pic}
                                         roomHeight={'340px'}
                                         username={i.username}
+                                        points = {i.hasOwnProperty("points") ? i.points : 0}
+                                        views = {i.hasOwnProperty("views") ? i.views : 0}
+                                        likes = {i.hasOwnProperty("likes") ? i.likes : 0}
+                                        commentsCount = {i.hasOwnProperty("commentsCount") ? i.commentsCount : 0}
                                         key={i}
                                     /></div>)
-                                } 
-                              
+                                }
+
                                 })
-                                
+
                         }
                                           </StackGrid>
-                                      
-                                
-                                </div> 
-                            </div>   
-            
+
+
+                                </div>
+                            </div>
+
                         </section>
                         {/* <nav  style={{flex:1}} className="pagination-buttons-wrap">
                             <span onClick={this.prevPage.bind(this)} className="pagination-button"><span style={{display:'inline-block', background: "url('/images/sprite.png') no-repeat", overflow:'hidden',textIndent:'-9999px', textAlign:'left',backgroundSize:'89px 248px',backgroundPosition:'-75px -184px',width:'10px',height:'18px', marginRight:'15px', transform: 'rotate(179deg)'}}></span>Previous Page</span>
@@ -969,7 +962,7 @@ class RoomPosts extends Component {
                         </nav> */}
                     </div>
                 </div>
-                
+
             )
 
         } else {
@@ -989,5 +982,5 @@ const mapStateToProps = (state, ownProps) => {
 
 const ConnectedRoomPosts = connect(undefined)(RoomPosts)
 
-export default sizeMe()(ConnectedRoomPosts);
-  
+//export default sizeMe()(ConnectedRoomPosts);
+export default ConnectedRoomPosts;

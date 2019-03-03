@@ -4,7 +4,7 @@ import { firebase } from '.././firebase/firebase';
 
 class Full extends Component {
   constructor() {
-    super(); 
+    super();
   }
   componentDidMount() {
     let base_tpl = "<!doctype html>\n" +
@@ -17,9 +17,9 @@ class Full extends Component {
       "</body>\n" +
       "</html>";
       let ref = firebase.database().ref("rooms").child(this.props.match.params.id);
-      ref.once("value").then((snapshot) => {    
+      ref.once("value").then((snapshot) => {
         let prepareSource = () => {
-          let html, css, js, src;
+          let html, css, js, src, script;
           if(snapshot.val() !== null) {
             html =  snapshot.val().html;
             css = snapshot.val().css;
@@ -29,10 +29,11 @@ class Full extends Component {
             css = '';
             js = '';
           }
+          script = "<script src='../flowroom.js'></script>";
           src = '';
           src = base_tpl.replace('</body>', html + '</body>');
           css = '<style>' + css + '</style>';
-          src = src.replace('</head>', css + '</head>');
+          src = src.replace('</head>', css + script + '</head>');
           js = '<script>' + js + '<\/script>';
           src = src.replace('</body>', js + '</body>');
           return src;
@@ -43,13 +44,13 @@ class Full extends Component {
         frame.write(source);
         frame.close();
       });
-    } 
+    }
     render() {
       return (
       <div>
       </div>
     )
-  } 
+  }
 }
 
 export default Full;

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const SignUpButton = () => (
         <div className="signup-button-wrap">
                 <Link to="/signup">
-                        <button style={{backgroundColor:'#262626',
+                        <button style={{backgroundColor:'#B300FE',
   borderRadius:'2px',
   width:'100px',
   height:'30px',
@@ -14,10 +14,10 @@ const SignUpButton = () => (
   color:'#C6C6C6',
   fontWeight:'bold'
   }}>
-                                SIGN IN
+                                SIGN UP
                         </button>
                </Link>
         </div>
    )
- 
+
 export default SignUpButton;

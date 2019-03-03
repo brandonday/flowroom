@@ -1,21 +1,21 @@
 (function(window) {
     'use strict'
-  
+
     let calledOnce = false;
     //figure this all out review library creation vid
     let counter = 0;
     let elId;
     let currentImage;
 
-   
-  
-   
+
+
+
   //function defineFlowroom() {
-    let flowroom = { 
+    let flowroom = {
 
        elId:'',
        RemixImage:function(elId, contentType, btnLabel) {
-     
+
                 this.elId = elId;
                 let FR_REMIX_LIST = JSON.parse(localStorage.getItem("FR_REMIX_LIST"));
                 if(FR_REMIX_LIST === null) {
@@ -23,28 +23,28 @@
                 } else {
                     FR_REMIX_LIST = JSON.parse(localStorage.getItem("FR_REMIX_LIST"));
                 }
-      
-        
-            
+
+
+
             let list = parent.document.getElementById('main-menu');
             let item = parent.document.createElement('li');
             if(this.elId.charAt(0) === '.') {
                 let classorid = flowroom.elId.substring(1);
-          
+
                 classorid = classorid.toString();
-               
+
 
                     var img = document.getElementsByClassName(`${classorid}`)[0];
                     let style = img.currentStyle || window.getComputedStyle(img, false);
                     let bi = style.backgroundImage.slice(4, -1).replace(/"/g, "");
-                    
+
 
                  if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(1)) === -1) { /*I keep (0) in case a class is an id too*/
                     // let bgImg = document.createElement('div');
                     // let text = document.createElement('p');
                     // text.style.marginRight = '55px';
-                    
-                   
+
+
                     // text.appendChild(document.createTextNode('CHANGE IMAGE'))
                     // bgImg.style.backgroundImage = `url(${bi})`;
                     // bgImg.style.height = '40px';
@@ -53,7 +53,7 @@
 
                     // item.style.height = '50px';
                     // item.style.width = '348px';
-                    
+
                     // item.style.marginTop = '10px';
                     // item.style.marginBottom = '10px';
 
@@ -71,20 +71,20 @@
                     // bgImg.style.position = 'relative';
                     // item.style.display = 'flex';
                     // //item.style.justifyContent = 'flex-end';
-                    
+
                     // bgImg.style.right = '0px';
                     // item.appendChild(bgImg);
                     // item.appendChild(text);
                     // list.appendChild(item);
                     // item.addEventListener('click', function() {
-                      
+
                     //     var img = new Image,
                     //     canvas = document.createElement("canvas"),
                     //     ctx = canvas.getContext("2d"),
                     //     src = bi; // insert image url here
-                    
+
                     // img.crossOrigin = "Anonymous";
-                    
+
                     // img.onload = function() {
                     //     canvas.width = img.width;
                     //     canvas.height = img.height;
@@ -93,31 +93,31 @@
                     //     testFR(elId);
                     // }
                     // img.src = src;
-                   
+
                     // make sure the load event fires for cached images too
                     // if ( img.complete || img.complete === undefined ) {
                     //     img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
                     //     img.src = bi;
                     // }
 
-                           
+
                             //return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-                         
-                          
+
+
                         //   var base64 = getBase64Image(bi);
                         //   alert(base64)
-                        
-                     
+
+
 
 
                 //           var blob = null;
-                //           var xhr = new XMLHttpRequest(); 
-                //           xhr.open("GET", bi); 
+                //           var xhr = new XMLHttpRequest();
+                //           xhr.open("GET", bi);
                 //           xhr.responseType = "blob";//force the HTTP response, response-type header to be blob
-                //           xhr.onload = function() 
+                //           xhr.onload = function()
                 //           {
                 //               blob = xhr.response;//xhr.response is now a blob object
-                              
+
                 //           }
                 //           xhr.send();
                 //           var myReader = new FileReader();
@@ -128,8 +128,8 @@
                 //           //that.setState({ src: buffer})
                 //   });
 
-                
-                  
+
+
                   //var base64 = getBase64Image('https://i.pinimg.com/originals/69/64/4d/69644d2af4e6bf16fcf88a9ac1b275d6.jpg');
 
                           //alert(base64)
@@ -137,22 +137,22 @@
                         //window.top
                         //alert(classorid);
                         //if(secondCreated === false) {
-                        
+
                         // overlay.style.position = 'absolute';
                         // overlay.style.zIndex = '1';
                         // overlay.style.height = '100%';
                         // overlay.style.width = '100%';
                         // overlay.style.backgroundColor = 'white';
                         // overlay.style.visibility = 'visible';
-    
+
                         // overlay.style.alignItems = 'center';
                         // overlay.style.display = 'flex';
                         // overlay.style.flexDirection = 'column';
-    
+
                         // let oside = parent.document.getElementById('main-menu');
-                        
+
                         // oside.appendChild(overlay);
-                     
+
                         // let head = document.createElement('div');
                         // let headText = document.createElement('p');
                         // let iconContainer = document.createElement('div');
@@ -171,15 +171,15 @@
                         //     let beforeT;
                         //     if(tagType === 'textarea') {
                         //      beforeT = document.getElementById(classorid).value;
-                        //     } else if(tagType === 'input') { 
+                        //     } else if(tagType === 'input') {
                         //      beforeT = document.getElementById(classorid).value;
                         //     } else {
                         //      beforeT = document.getElementById(classorid).innerText;
                         //     }
-            
+
                         //     if(tagType === 'textarea') {
                         //      beforeT = document.getElementById(classorid).value;
-                        //     } else if(tagType === 'input') { 
+                        //     } else if(tagType === 'input') {
                         //      beforeT = document.getElementById(classorid).value;
                         //     } else {
                         //      beforeT = document.getElementById(classorid).innerText;
@@ -188,28 +188,28 @@
                         //    parent.window.callUpdate(beforeT, text);
                         //    parent.window.calledAlready(true);
                         // });
-                      
+
                         // iconContainer.style.marginBottom = '10px';
-                      
+
                         // headText.style.marginRight = '20px';
                         // let icon = document.createElement('div');
                         // icon.className = 'fa fa-angle-left';
                         // icon.fontSize = '40px';
                         // head.style.height = '35px';
                         //     head.style.width = '100%';
-                        //     head.style.borderBottom = '1px solid #DDE0EB'; 
+                        //     head.style.borderBottom = '1px solid #DDE0EB';
                         // let overlaySide;
                         // if(localStorage.getItem("remixhead3") === null) {
                         //     headText.appendChild(document.createTextNode('CHANGE IMAGE'))
-                            
+
                         //     head.style.display = 'flex';
                         //     head.style.justifyContent = 'center';
                         //     head.style.alignItems = 'center';
-                            
+
                         //     head.appendChild(iconContainer);
                         //     iconContainer.appendChild(icon);
                         //     head.appendChild(headText);
-                            
+
                         //     head.setAttribute("id", "remixhead3");
                         //     overlay.appendChild(head);
                         //     parent.window.croppedImageUrl = bi;
@@ -239,31 +239,31 @@
                 // Display the url to the user
                 //alert(flowroom.elId.substring(0))
                 if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(1)) === -1) {
-      
 
-    
-                      
+
+
+
                         // iconContainer.style.marginBottom = '10px';
-                      
+
                         // headText.style.marginRight = '20px';
                         // let icon = document.createElement('div');
                         // icon.className = 'fa fa-angle-left';
                         // icon.fontSize = '40px';
                         // head.style.height = '35px';
                         //     head.style.width = '100%';
-                        //     head.style.borderBottom = '1px solid #DDE0EB'; 
+                        //     head.style.borderBottom = '1px solid #DDE0EB';
                         // let overlaySide;
                         // if(localStorage.getItem("remixhead3") === null) {
                         //     headText.appendChild(document.createTextNode('CHANGE IMAGE'))
-                            
+
                         //     head.style.display = 'flex';
                         //     head.style.justifyContent = 'center';
                         //     head.style.alignItems = 'center';
-                            
+
                         //     head.appendChild(iconContainer);
                         //     iconContainer.appendChild(icon);
                         //     head.appendChild(headText);
-                            
+
                         //     head.setAttribute("id", "remixhead3");
                         //     overlay.appendChild(head);
                         //     parent.window.croppedImageUrl = bi;
@@ -282,10 +282,10 @@
                     localStorage.setItem("FR_REMIX_LIST", JSON.stringify(FR_REMIX_LIST));
                     console.log(localStorage.getItem("FR_REMIX_LIST"))
                 }
-              
-    
+
+
             }
-            
+
             //  item.style.height = '50px';
             //  item.style.width = '235px';
             //  item.style.marginTop = '10px';
@@ -297,9 +297,9 @@
 
         },
         menu:function() {
-           
-         
-                let remixlist = parent.document.getElementById('main-menu');
+            let remixlist = parent.document.getElementById('main-menu');
+            if (remixlist)
+            {
                 remixlist.style.display = 'flex';
                 remixlist.style.width = '584px';
                 remixlist.style.flexDirection = 'column';
@@ -312,10 +312,10 @@
                 icon.fontSize = '40px';
                 head.style.height = '35px';
                     head.style.width = '100%';
-                    head.style.borderBottom = '1px solid #DDE0EB'; 
+                    head.style.borderBottom = '1px solid #DDE0EB';
                 if(localStorage.getItem("remixhead") === null) {
                     headText.appendChild(document.createTextNode('REMIX MENU'))
-                    
+
                     head.style.display = 'flex';
                     head.style.justifyContent = 'center';
                     head.style.alignItems = 'center';
@@ -325,10 +325,10 @@
                     remixlist.appendChild(head);
                     localStorage.setItem("remixhead", true);
                 }
-
+            }
         },
         RemixText:function(elId, options) {
-           
+
             this.elId = elId;
             let FR_REMIX_LIST = JSON.parse(localStorage.getItem("FR_REMIX_LIST"));
             let FR_REMIX_LIST2 = [];
@@ -337,18 +337,18 @@
             } else {
                 FR_REMIX_LIST = JSON.parse(localStorage.getItem("FR_REMIX_LIST"));
             }
-    
+
             let list = parent.document.getElementById('main-menu');
             let item = parent.document.createElement('li');
             let classorid = flowroom.elId.substring(1);
-          
-        
+
+
             if(this.elId.charAt(0) === '.') {
-             
+
                 let classorid = flowroom.elId.substring(1);
                 classorid = classorid.toString();
                 var textEdit = document.getElementsByClassName(`${classorid}`)[0];
-               
+
                 if(textEdit === 'textarea') {
                     textEdit = document.getElementsByClassName(`${classorid}`)[0].value;
                 } else if(textEdit === 'input') {
@@ -368,14 +368,14 @@
                     let tagType = document.getElementsByClassName(classorid)[0].tagName;
                     if(tagType === 'textarea') {
                         singleLine.value = document.getElementsByClassName(classorid)[0].value;
-                    } else if(tagType === 'input') { 
+                    } else if(tagType === 'input') {
                         singleLine.value = document.getElementsByClassName(classorid)[0].value;
                     } else {
                         singleLine.value = document.getElementsByClassName(classorid)[0].innerText;
                     }
                     if(tagType === 'textarea') {
                         multiLine.value = document.getElementsByClassName(classorid)[0].value;
-                    } else if(tagType === 'input') { 
+                    } else if(tagType === 'input') {
                         multiLine.value = document.getElementsByClassName(classorid)[0].value;
                     } else {
                         multiLine.value = document.getElementsByClassName(classorid)[0].innerText;
@@ -383,14 +383,14 @@
                     let beforeT;
                     if(tagType === 'textarea') {
                      beforeT = document.getElementsByClassName(classorid)[0].value;
-                    } else if(tagType === 'input') { 
+                    } else if(tagType === 'input') {
                      beforeT = document.getElementsByClassName(classorid)[0].value;
                     } else {
                      beforeT = document.getElementsByClassName(classorid)[0].innerText;
                     }
                     if(tagType === 'textarea') {
                      beforeT = document.getElementsByClassName(classorid)[0].value;
-                    } else if(tagType === 'input') { 
+                    } else if(tagType === 'input') {
                      beforeT = document.getElementsByClassName(classorid)[0].value;
                     } else {
                      beforeT = document.getElementsByClassName(classorid)[0].innerText;
@@ -405,7 +405,7 @@
                         singleLine.addEventListener('input', ()=>{
                             parent.window.calledAlready(false);
                         })
-                        
+
                     } else {
                         multiLine.style.marginTop = '10px';
                         multiLine.style.width = '230px';
@@ -415,9 +415,9 @@
                         multiLine.addEventListener('input', ()=>{
                             parent.window.calledAlready(false);
                         });//change this
-                        
+
                     }
-                    
+
                     descriptionBox.setAttribute = ("contentEditable");
                     descriptionBox.style.height = '100px';
                     descriptionBox.style.width = '230px';
@@ -442,31 +442,31 @@
                     item.style.paddingLeft = '10px';
                     item.style.paddingRight = '10px';
                     bgImg.style.right = '0px';
-                    text.style.whiteSpace = 'nowrap'; 
+                    text.style.whiteSpace = 'nowrap';
                     text.style.overflow ='hidden';
                     text.style.textOverflow = 'ellipsis';
-    
+
                     item.appendChild(text);
                     let secondCreated = false;
                     item.addEventListener('click', function() {
                         //alert(classorid);
                         if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(1)) !== -1) {
-                        
+
                         overlay.style.position = 'absolute';
                         overlay.style.zIndex = '1';
                         overlay.style.height = '100%';
                         overlay.style.width = '100%';
                         overlay.style.backgroundColor = 'white';
                         overlay.style.visibility = 'visible';
-    
+
                         overlay.style.alignItems = 'center';
                         overlay.style.display = 'flex';
                         overlay.style.flexDirection = 'column';
-    
+
                         let oside = parent.document.getElementById('main-menu');
-                        
+
                         oside.appendChild(overlay);
-                        
+
                         let head = document.createElement('div');
                         let headText = document.createElement('p');
                         let iconContainer = document.createElement('div');
@@ -485,15 +485,15 @@
                             let beforeT;
                             if(tagType === 'textarea') {
                              beforeT = document.getElementsByClassName(classorid)[0].value;
-                            } else if(tagType === 'input') { 
+                            } else if(tagType === 'input') {
                              beforeT = document.getElementsByClassName(classorid)[0].value;
                             } else {
                              beforeT = document.getElementsByClassName(classorid)[0].innerText;
                             }
-            
+
                             if(tagType === 'textarea') {
                              beforeT = document.getElementsByClassName(classorid)[0].value;
-                            } else if(tagType === 'input') { 
+                            } else if(tagType === 'input') {
                              beforeT = document.getElementsByClassName(classorid)[0].value;
                             } else {
                              beforeT = document.getElementsByClassName(classorid)[0].innerText;
@@ -501,7 +501,7 @@
                            let text = document.getElementsByClassName(classorid)[0].innerText = singleLine.value;
                         //    parent.window.callUpdate(beforeT, text);
                         //    parent.window.calledAlready(true);
-                      
+
                               document.getElementsByClassName(elId)[0].style.innerText = text;
                         });
                         descriptionText.appendChild(document.createTextNode('Description'));
@@ -509,7 +509,7 @@
                         descriptionTextWrap.appendChild(descriptionText);
                         descriptionTextWrap.style.display = 'flex';
                         descriptionTextWrap.style.justifyContent = 'flex-start';
-                       
+
                         descriptionTextWrap.style.padding = '10px';
                         descriptionTextWrap.style.wordBreak = 'break-all';
                         descriptionTextWrap.appendChild(descriptionText);
@@ -523,73 +523,73 @@
                         iconContainer.style.left = '-45px';
                         iconContainer.style.position = 'relative';
                         iconContainer.style.marginBottom = '10px';
-                      
+
                         headText.style.marginRight = '20px';
                         let icon = document.createElement('div');
                         icon.className = 'fa fa-angle-left';
                         icon.fontSize = '40px';
                         head.style.height = '35px';
                             head.style.width = '100%';
-                            head.style.borderBottom = '1px solid #DDE0EB'; 
+                            head.style.borderBottom = '1px solid #DDE0EB';
                         let overlaySide;
                         if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(1)) !== -1) {
-    
+
                             if(FR_REMIX_LIST2.indexOf(flowroom.elId.substring(1)) === -1) {
                             headText.appendChild(document.createTextNode('CHANGE TEXT'))
-                            
+
                             head.style.display = 'flex';
                             head.style.justifyContent = 'center';
                             head.style.alignItems = 'center';
-                            
+
                             head.appendChild(iconContainer);
                             iconContainer.appendChild(icon);
                             head.appendChild(headText);
-                            
+
                             head.setAttribute("id", "remixhead2");
                             overlay.appendChild(head);
-                            
+
                             overlay.appendChild(descriptionTextWrap);
                             overlay.appendChild(descriptionBox);
                             if(options.multiline === false) {
                                 overlay.appendChild(singleLine);
                             } else {
                                 overlay.appendChild(multiLine);
-    
+
                             }
-    
+
                             overlay.appendChild(saveBTN);
-    
+
                             FR_REMIX_LIST2.push(flowroom.elId.substring(1))
-    
+
                             iconContainer.addEventListener('click', function(){
                                 //overlay.style.visibility = 'hidden';
-                              
+
                                 oside.removeChild(overlay);
-                         
-                                
+
+
                             })
                             localStorage.setItem("remixhead2", true);
                             secondCreated = true;
-                            
+
                             }
-    
+
                         }
-    
-    
+
+
                         } else {
                             //overlay.style.visibility = 'visible';
                         }
                     })
-                
+
                     //item.appendChild(bgImg);
                     list.appendChild(item);
-                   
+
                     FR_REMIX_LIST.push(classorid);
                     localStorage.setItem("FR_REMIX_LIST", JSON.stringify(FR_REMIX_LIST));
-                    
+
                 }
-      
-      
+
+
         } else if(this.elId.charAt(0) === '#') {
             let classorid = flowroom.elId.substring(1);
             classorid = classorid.toString();
@@ -613,14 +613,14 @@
                 let tagType = document.getElementById(classorid).tagName;
                 if(tagType === 'textarea') {
                     singleLine.value = document.getElementById(classorid).value;
-                } else if(tagType === 'input') { 
+                } else if(tagType === 'input') {
                     singleLine.value = document.getElementById(classorid).value;
                 } else {
                     singleLine.value = document.getElementById(classorid).innerHTML;
                 }
                 if(tagType === 'textarea') {
                     multiLine.value = document.getElementById(classorid).value;
-                } else if(tagType === 'input') { 
+                } else if(tagType === 'input') {
                     multiLine.value = document.getElementById(classorid).value;
                 } else {
                     multiLine.value = document.getElementById(classorid).innerHTML;
@@ -628,14 +628,14 @@
                 let beforeT;
                 if(tagType === 'textarea') {
                  beforeT = document.getElementById(classorid).value;
-                } else if(tagType === 'input') { 
+                } else if(tagType === 'input') {
                  beforeT = document.getElementById(classorid).value;
                 } else {
                  beforeT = document.getElementById(classorid).innerText;
                 }
                 if(tagType === 'textarea') {
                  beforeT = document.getElementById(classorid).value;
-                } else if(tagType === 'input') { 
+                } else if(tagType === 'input') {
                  beforeT = document.getElementById(classorid).value;
                 } else {
                  beforeT = document.getElementById(classorid).innerText;
@@ -650,7 +650,7 @@
                     singleLine.addEventListener('input', ()=>{
                         //parent.window.calledAlready(false);
                     })
-                    
+
                 } else {
                     multiLine.style.marginTop = '10px';
                     multiLine.style.width = '230px';
@@ -660,9 +660,9 @@
                     multiLine.addEventListener('input', ()=>{
                         //parent.window.calledAlready(false);
                     });//change this
-                    
+
                 }
-                
+
                 descriptionBox.setAttribute = ("contentEditable");
                 descriptionBox.style.height = '100px';
                 descriptionBox.style.width = '230px';
@@ -688,7 +688,7 @@
                 item.style.paddingLeft = '10px';
                 item.style.paddingRight = '10px';
                 bgImg.style.right = '0px';
-                text.style.whiteSpace = 'nowrap'; 
+                text.style.whiteSpace = 'nowrap';
                 text.style.overflow ='hidden';
                 text.style.textOverflow = 'ellipsis';
 
@@ -697,7 +697,7 @@
                 item.addEventListener('click', function() {
                     //alert(classorid);
                     if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(1)) !== -1) {
-                    
+
                     overlay.style.position = 'absolute';
                     overlay.style.zIndex = '1';
                     overlay.style.height = '100%';
@@ -710,9 +710,9 @@
                     overlay.style.flexDirection = 'column';
 
                     let oside = parent.document.getElementById('main-menu');
-                    
+
                     oside.appendChild(overlay);
-                    
+
                     let head = document.createElement('div');
                     let headText = document.createElement('p');
                     let iconContainer = document.createElement('div');
@@ -731,15 +731,15 @@
                         let beforeT;
                         if(tagType === 'textarea') {
                          beforeT = document.getElementById(classorid).value;
-                        } else if(tagType === 'input') { 
+                        } else if(tagType === 'input') {
                          beforeT = document.getElementById(classorid).value;
                         } else {
                          beforeT = document.getElementById(classorid).innerText;
                         }
-        
+
                         if(tagType === 'textarea') {
                          beforeT = document.getElementById(classorid).value;
-                        } else if(tagType === 'input') { 
+                        } else if(tagType === 'input') {
                          beforeT = document.getElementById(classorid).value;
                         } else {
                          beforeT = document.getElementById(classorid).innerText;
@@ -747,7 +747,7 @@
                        let text = document.getElementById(classorid).innerText = singleLine.value;
                     //    parent.window.callUpdate(beforeT, text);
                     //    parent.window.calledAlready(true);
-                  
+
                           document.getElementById(elId).style.innerText = text;
                     });
                     descriptionText.appendChild(document.createTextNode('Description'));
@@ -755,7 +755,7 @@
                     descriptionTextWrap.appendChild(descriptionText);
                     descriptionTextWrap.style.display = 'flex';
                     descriptionTextWrap.style.justifyContent = 'flex-start';
-                   
+
                     descriptionTextWrap.style.padding = '10px';
                     descriptionTextWrap.style.wordBreak = 'break-all';
                     descriptionTextWrap.appendChild(descriptionText);
@@ -769,31 +769,31 @@
                     iconContainer.style.left = '-45px';
                     iconContainer.style.position = 'relative';
                     iconContainer.style.marginBottom = '10px';
-                  
+
                     headText.style.marginRight = '20px';
                     let icon = document.createElement('div');
                     icon.className = 'fa fa-angle-left';
                     icon.fontSize = '40px';
                     head.style.height = '35px';
                         head.style.width = '100%';
-                        head.style.borderBottom = '1px solid #DDE0EB'; 
+                        head.style.borderBottom = '1px solid #DDE0EB';
                     let overlaySide;
                     if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(1)) !== -1) {
 
                         if(FR_REMIX_LIST2.indexOf(flowroom.elId.substring(1)) === -1) {
                         headText.appendChild(document.createTextNode('CHANGE TEXT'))
-                        
+
                         head.style.display = 'flex';
                         head.style.justifyContent = 'center';
                         head.style.alignItems = 'center';
-                        
+
                         head.appendChild(iconContainer);
                         iconContainer.appendChild(icon);
                         head.appendChild(headText);
-                        
+
                         head.setAttribute("id", "remixhead2");
                         overlay.appendChild(head);
-                        
+
                         overlay.appendChild(descriptionTextWrap);
                         overlay.appendChild(descriptionBox);
                         if(options.multiline === false) {
@@ -809,14 +809,14 @@
 
                         iconContainer.addEventListener('click', function(){
                             //overlay.style.visibility = 'hidden';
-                          
+
                             oside.removeChild(overlay);
-                     
-                            
+
+
                         })
                         localStorage.setItem("remixhead2", true);
                         secondCreated = true;
-                        
+
                         }
 
                     }
@@ -826,15 +826,15 @@
                         //overlay.style.visibility = 'visible';
                     }
                 })
-            
+
                 //item.appendChild(bgImg);
                 list.appendChild(item);
-               
+
                 FR_REMIX_LIST.push({classorid:classorid,image:bi});
                 localStorage.setItem("FR_REMIX_LIST", JSON.stringify(FR_REMIX_LIST));
-                
+
             }
-          
+
 
         } else {
             let classorid = flowroom.elId.substring(0);
@@ -859,14 +859,14 @@
                 let tagType = document.getElementsByTagName(classorid)[0].tagName;
                 if(tagType === 'textarea') {
                     singleLine.value = document.getElementsByTagName(classorid)[0].value;
-                } else if(tagType === 'input') { 
+                } else if(tagType === 'input') {
                     singleLine.value = document.getElementsByTagName(classorid)[0].value;
                 } else {
                     singleLine.value = document.getElementsByTagName(classorid)[0].innerText;
                 }
                 if(tagType === 'textarea') {
                     multiLine.value = document.getElementsByTagName(classorid)[0].value;
-                } else if(tagType === 'input') { 
+                } else if(tagType === 'input') {
                     multiLine.value = document.getElementsByTagName(classorid)[0].value;
                 } else {
                     multiLine.value = document.getElementsByTagName(classorid)[0].innerText;
@@ -874,14 +874,14 @@
                 let beforeT;
                 if(tagType === 'textarea') {
                  beforeT = document.getElementsByTagName(classorid)[0].value;
-                } else if(tagType === 'input') { 
+                } else if(tagType === 'input') {
                  beforeT = document.getElementsByTagName(classorid)[0].value;
                 } else {
                  beforeT = document.getElementsByTagName(classorid)[0].innerText;
                 }
                 if(tagType === 'textarea') {
                  beforeT = document.getElementsByTagName(classorid)[0].value;
-                } else if(tagType === 'input') { 
+                } else if(tagType === 'input') {
                  beforeT = document.getElementsByTagName(classorid)[0].value;
                 } else {
                  beforeT = document.getElementsByTagName(classorid)[0].innerText;
@@ -896,7 +896,7 @@
                     singleLine.addEventListener('input', ()=>{
                         parent.window.calledAlready(false);
                     })
-                    
+
                 } else {
                     multiLine.style.marginTop = '10px';
                     multiLine.style.width = '230px';
@@ -906,9 +906,9 @@
                     multiLine.addEventListener('input', ()=>{
                         parent.window.calledAlready(false);
                     });//change this
-                    
+
                 }
-                
+
                 descriptionBox.setAttribute = ("contentEditable");
                 descriptionBox.style.height = '100px';
                 descriptionBox.style.width = '230px';
@@ -931,7 +931,7 @@
                 item.style.paddingLeft = '10px';
                 item.style.paddingRight = '10px';
                 bgImg.style.right = '0px';
-                text.style.whiteSpace = 'nowrap'; 
+                text.style.whiteSpace = 'nowrap';
                 text.style.overflow ='hidden';
                 text.style.textOverflow = 'ellipsis';
 
@@ -940,7 +940,7 @@
                 item.addEventListener('click', function() {
                     //alert(classorid);
                     if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(0)) !== -1) {
-                    
+
                     overlay.style.position = 'absolute';
                     overlay.style.zIndex = '1';
                     overlay.style.height = '100%';
@@ -953,9 +953,9 @@
                     overlay.style.flexDirection = 'column';
 
                     let oside = parent.document.getElementById('main-menu');
-                    
+
                     oside.appendChild(overlay);
-                    
+
                     let head = document.createElement('div');
                     let headText = document.createElement('p');
                     let iconContainer = document.createElement('div');
@@ -974,15 +974,15 @@
                         let beforeT;
                         if(tagType === 'textarea') {
                          beforeT = document.getElementsByTagName(classorid)[0].value;
-                        } else if(tagType === 'input') { 
+                        } else if(tagType === 'input') {
                          beforeT = document.getElementsByTagName(classorid)[0].value;
                         } else {
                          beforeT = document.getElementsByTagName(classorid)[0].innerText;
                         }
-        
+
                         if(tagType === 'textarea') {
                          beforeT = document.getElementsByTagName(classorid)[0].value;
-                        } else if(tagType === 'input') { 
+                        } else if(tagType === 'input') {
                          beforeT = document.getElementsByTagName(classorid)[0].value;
                         } else {
                          beforeT = document.getElementsByTagName(classorid)[0].innerText;
@@ -996,7 +996,7 @@
                     descriptionTextWrap.appendChild(descriptionText);
                     descriptionTextWrap.style.display = 'flex';
                     descriptionTextWrap.style.justifyContent = 'flex-start';
-                   
+
                     descriptionTextWrap.style.padding = '10px';
                     descriptionTextWrap.style.wordBreak = 'break-all';
                     descriptionTextWrap.appendChild(descriptionText);
@@ -1010,31 +1010,31 @@
                     iconContainer.style.left = '-45px';
                     iconContainer.style.position = 'relative';
                     iconContainer.style.marginBottom = '10px';
-                  
+
                     headText.style.marginRight = '20px';
                     let icon = document.createElement('div');
                     icon.className = 'fa fa-angle-left';
                     icon.fontSize = '40px';
                     head.style.height = '35px';
                         head.style.width = '100%';
-                        head.style.borderBottom = '1px solid #DDE0EB'; 
+                        head.style.borderBottom = '1px solid #DDE0EB';
                     let overlaySide;
                     if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(0)) !== -1) {
 
                         if(FR_REMIX_LIST2.indexOf(flowroom.elId.substring(0)) === -1) {
                         headText.appendChild(document.createTextNode('CHANGE TEXT'))
-                        
+
                         head.style.display = 'flex';
                         head.style.justifyContent = 'center';
                         head.style.alignItems = 'center';
-                        
+
                         head.appendChild(iconContainer);
                         iconContainer.appendChild(icon);
                         head.appendChild(headText);
-                        
+
                         head.setAttribute("id", "remixhead2");
                         overlay.appendChild(head);
-                        
+
                         overlay.appendChild(descriptionTextWrap);
                         overlay.appendChild(descriptionBox);
                         if(options.multiline === false) {
@@ -1050,14 +1050,14 @@
 
                         iconContainer.addEventListener('click', function(){
                             //overlay.style.visibility = 'hidden';
-                          
+
                             oside.removeChild(overlay);
-                     
-                            
+
+
                         })
                         localStorage.setItem("remixhead2", true);
                         secondCreated = true;
-                        
+
                         }
 
                     }
@@ -1067,18 +1067,18 @@
                         //overlay.style.visibility = 'visible';
                     }
                 })
-            
+
                 //item.appendChild(bgImg);
                 list.appendChild(item);
-               
+
                 FR_REMIX_LIST.push(classorid);
                 localStorage.setItem("FR_REMIX_LIST", JSON.stringify(FR_REMIX_LIST));
-                
+
             }
-          
+
 
         }
-        
+
         //  item.style.height = '50px';
         //  item.style.width = '235px';
         //  item.style.marginTop = '10px';
@@ -1086,7 +1086,7 @@
         //  item.style.border = '1px solid #DDE0EB';
         //  item.appendChild(bi);
         //  list.appendChild(item);
-            
+
     },
         datGUI:function() {
             localStorage.setItem("FR_REMIX_LIST", "");
@@ -1096,14 +1096,14 @@
             customContainer.appendChild(gui.domElement);
             return gui;
         }
-      
-        
 
-              
+
+
+
     }
 
-     
-     
+
+
     //if(typeof(flowroom) === 'undefined') {
         window.flowroom = flowroom;
         //alert('ff')
@@ -1111,6 +1111,3 @@
     //     alert('xs')
     // }
 })(window)
-
-
-

@@ -50,7 +50,7 @@ const KeyCodes = {
     comma: 188,
     enter: 13,
   };
-   
+
   const delimiters1 = [KeyCodes.comma, KeyCodes.enter];
   const delimiters2 = [KeyCodes.comma, KeyCodes.enter];
   const delimiters3 = [KeyCodes.comma, KeyCodes.enter];
@@ -68,10 +68,10 @@ const KeyCodes = {
       this.state = {
         modalopen:false,
         ideaByTags: [
-           
+
          ],
          creditsTags: [
-           
+
          ],
          compatibleTags: [
             { id: "IE", text: "IE" },
@@ -80,24 +80,24 @@ const KeyCodes = {
             { id: "Opera", text: "Opera" },
          ],
          tags: [
-            
+
          ],
          suggestionsIdeaBy: [
-            
+
          ],
          suggestionscredits: [
-           
+
          ],
          suggestionsCompatibleTags: [
-          
+
          ],
          suggestionsTags: [
-           
+
          ],
          suggestionNamesTags : [
-            
+
          ],
-         NamesTags : [ 
+         NamesTags : [
 
          ],
             isRemixable:false,
@@ -148,7 +148,7 @@ const KeyCodes = {
             avatar:'',
             picURL:'',
             thumbPicURL:'',
-            progress: 100, 
+            progress: 100,
             isUploading: false,
             descriptionD:'block',
             thumbnailPicBox:'flex',
@@ -181,10 +181,10 @@ const KeyCodes = {
             messageList:[],
             messageReset:false,
             theMessages:true
-            
+
 
       }
-    
+
 
       this.handleDeletecredits = this.handleDeletecredits.bind(this);
       this.handleAdditioncredits = this.handleAdditioncredits.bind(this);
@@ -237,7 +237,7 @@ const KeyCodes = {
             fullname = user.fullname;
             uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
                      // this value to authenticate with your backend server, if
-                     // you have one. Use User.getToken() instead.       
+                     // you have one. Use User.getToken() instead.
             that.setState({picForMessage:photoUrl, fullname:fullname});
             database.ref(`/follows/${name}/following`).once('value').then((snapshot) => {
                 snapshot.forEach((childSnapShot) => {
@@ -266,10 +266,10 @@ const KeyCodes = {
         let hashids = new Hashids(uuid(), 6);
         let uid = firebase.auth().currentUser.uid;
         this.props.startCreateRoom(
-            { 
-                description:this.state.description, 
-                views:0, 
-                likes:0, 
+            {
+                description:this.state.description,
+                views:0,
+                likes:0,
                 html:this.props.state.dhtml.dhtml.html,
                 css:this.props.state.dhtml.dhtml.css,
                 js:this.props.state.dhtml.dhtml.js,
@@ -344,11 +344,11 @@ const KeyCodes = {
         const database = firebase.database();
         var theDate = new Date().getTime();
         let message = document.getElementById('message-box').value;
-        let fullname = localStorage.getItem("fullname"); 
+        let fullname = localStorage.getItem("fullname");
         let that = this;
         database.ref(`Messages/${this.state.messageTo}`).push({
             message: {
-                id:this.state.myusername, 
+                id:this.state.myusername,
                 message:message,
                 To:this.state.messageTo,
                 pic:this.state.picForMessage,
@@ -360,7 +360,7 @@ const KeyCodes = {
 
             database.ref(`Messages/${this.state.myusername}`).push({
                 message: {
-                    id:this.state.myusername, 
+                    id:this.state.myusername,
                     message:message,
                     To:this.state.messageTo,
                     pic:this.state.picForMessage,
@@ -368,13 +368,13 @@ const KeyCodes = {
                     fullname:fullname
                 }
             }).then(() => {
-    
-    
-                
-                
+
+
+
+
             });
 
-            
+
         });
 
 
@@ -390,7 +390,7 @@ const KeyCodes = {
                 });
             }
             if(elID === 'room-post-image-btn') {
-               
+
                 this.setState({descriptionD:'none',imagePost:'block',roomPostBtnClass:'',imagePostBtnClass:'selected-background',
                     textPostBtnClass:'',imageText:'block',thumbnailPicBox:'none',roomType:'image',imagePostDisplay:'flex'
                 });
@@ -405,19 +405,19 @@ const KeyCodes = {
                 this.setState({publicBtnClass:'selected-background',privateBtnClass:'',
                     unlistedBtnClass:'',isPrivate:false,isUnlisted:false
                 });
-  
+
             }
             if(elID === 'private-btn') {
                 this.setState({publicBtnClass:'',privateBtnClass:'selected-background',
                     unlistedBtnClass:'',isPrivate:true,isUnlisted:false
                 });
-        
+
             }
             if(elID === 'unlisted-btn') {
                 this.setState({publicBtnClass:'',privateBtnClass:'', unlistedBtnClass:'selected-background',
                     isPrivate:false, isUnlisted:true
                 });
-              
+
             }
             if(elID === 'web-btn') {
                 this.setState({webBtnClass:'selected-background',
@@ -487,7 +487,7 @@ const KeyCodes = {
                 if(this.state.isMobile === false) {
                     this.setState({mobileBtnClass:'selected-background',isMobile:true});
                 } else {
-                    this.setState({mobileBtnClass:'',isMobile:false}); 
+                    this.setState({mobileBtnClass:'',isMobile:false});
                 }
             }
             if(elID === 'tablet-btn') {
@@ -503,28 +503,28 @@ const KeyCodes = {
                 } else {
                     this.setState({isDesktop:false,desktopBtnClass:''});
                 }
-            }   
+            }
             if(elID === 'object-yes-btn') {
                 this.setState({isObject:true,objectBtnClass:'selected-background'});
             }
             if(elID === 'object-no-btn') {
-                this.setState({isObject:false,notObjectClass:'selected-background'});   
+                this.setState({isObject:false,notObjectClass:'selected-background'});
             }
         }
 
     }
 
-    
+
     modalType(){
         let that = this;
-        if(this.props.state.entireApp.modalType === 'message') {           
+        if(this.props.state.entireApp.modalType === 'message') {
             return (
                 <div className="modal-wrap">
                     <div className="modal-messages-wrap">
                         <h2 className="modal-messages-title" style={{fontSize:'20px', color:'rgb(27, 178, 67)', display:'flex',
                             justifyContent:'center',
                             alignItems:'center'}}>Messages</h2>
-                        
+
                             {this.state.showBack === true? (<div style={{display:'flex',padding:'10px', width:'100%', justifyContent:'space-between', alignItems:'center'}}>
                                     <div style={{height:'23px', width:'23px', backgroundColor:'black',borderRadius:'30px'}}></div>
                                         <p style={{color:'black', fontSize:15,float:'left',position:'absolute',
@@ -536,16 +536,16 @@ const KeyCodes = {
                                             width:'50px',
                                             fontFamily: "Source Sans Pro",
                                             fontWeight:'800'
-                             
+
                                         }} onClick={()=> {
                                             var ul = document.getElementById('the-messages');
-                                            //ul.parentNode.removeChild(ul); 
-                                            
+                                            //ul.parentNode.removeChild(ul);
+
                                             this.setState({newMessage:'message-screen', showBack:false});
 
                                             let list = document.getElementsByTagName('li')
                                             for(let i=0; i < list.length; i++) {
-                                               
+
                                                 if(list[i].className = 'message') {
                                                     console.log(list[i]);
                                                 }
@@ -557,7 +557,7 @@ const KeyCodes = {
                                         }}>
                                             <NewMessageButton />
                                         </div>
-                                        <div className="modal-messages-close" onClick={this.closeModal}>X</div>
+                                        <div className="modal-messages-close" onClick={this.closeModal}><i className="fa fa-window-close fa-2x"></i></div>
                                     </div>
                                 )
                             }
@@ -571,14 +571,14 @@ const KeyCodes = {
         } else if(this.props.state.entireApp.modalType === 'save') {
             return (
                 <div>
-                
+
                 </div>
             )
         } else if(this.props.state.entireApp.modalType === 'create') {
-            
+
             return (
                 <div style={{height:'100%', width:'100%'}} onClick={this.closeModal}>
-                    <Create/>   
+                    <Create/>
                 </div>
             )
         }  else {
@@ -603,9 +603,9 @@ const KeyCodes = {
                         <div style={{width:'100%', display:'flex', justifyContent:'center', marginTop:20}}><p>Type of Post</p></div>
                         <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none',marginTop:20}}>
                         <div onClick={()=>{this.selectPr('room-post-btn')}} id="room-post-btn" className={this.state.roomPostBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Room</p></div>
-             
+
                         <label onClick={()=>{this.selectPr('room-post-image-btn')}} id="room-post-image-btn" className={this.state.imagePostBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}>
-                            <p>Image</p>  
+                            <p>Image</p>
                             {/* {this.state.postedPicURL ? '':(<FileUploader
                             hidden
                             accept="image/*"
@@ -616,11 +616,11 @@ const KeyCodes = {
                             onUploadError={this.handleUploadError}
                             onUploadSuccess={this.handleUploadSuccess}
                             onProgress={this.handleProgress}
-                            />) 
+                            />)
                             } */}
-                        
+
                         </label>
-                        <div onClick={()=>{this.selectPr('room-post-text-btn')}} id="unlisted-btn" className={this.state.textPostBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Text</p></div>   
+                        <div onClick={()=>{this.selectPr('room-post-text-btn')}} id="unlisted-btn" className={this.state.textPostBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Text</p></div>
                     </div>
                     <div id="thumbnail-pic-box" style={{display:this.state.thumbnailPicBox, flexDirection:'column'}}>
                         <div style={{display:'flex'}}>
@@ -628,8 +628,8 @@ const KeyCodes = {
                         </div>
                         <div style={{display:this.state.thumbnailPicBox, height:'100px',border:'1px solid black', display:'flex'}}>
                             <div style={{backgroundImage:`url(${this.state.thumbPicURL})`,
-                                backgroundSize:'contain', 
-                                height:'100%', 
+                                backgroundSize:'contain',
+                                height:'100%',
                                 flex:1,
                                 backgroundRepeat:'no-repeat',
                                 overflow:'hidden',
@@ -638,9 +638,9 @@ const KeyCodes = {
                             </div>
                             <div style={{flex:2, display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',border:'1px solid black'}}>
                                 <label style={{height:20, width:50, marginTop:10, border:'1px solid black',zIndex:99999999}}>
-                                    <p style={{display:'flex',fontSize:12,justifyContent:'center',alignItems:'center'}}>Browse</p> 
+                                    <p style={{display:'flex',fontSize:12,justifyContent:'center',alignItems:'center'}}>Browse</p>
 
-                         
+
                                     {<FileUploader
                                         hidden
                                         accept="image/*"
@@ -653,7 +653,7 @@ const KeyCodes = {
                                         onProgress={this.handleProgress}
                                     />
                                     }
-                        
+
                                 </label>
                                 <p> or URL </p>
                                 <input type="text" placeholder="image URL here" value={this.state.thumbPicURL} onChange={(event)=>{
@@ -662,9 +662,9 @@ const KeyCodes = {
                             </div>
                         </div>
                     </div>
-             
+
                     <textarea id="description" className="description" style={{
-                        height:'100px', 
+                        height:'100px',
                         width:'100%',
                         border:'1px solid #DDE0EB',
                         borderRadius:'6px',
@@ -682,7 +682,7 @@ const KeyCodes = {
                         display:this.state.descriptionD
                     }} value={this.state.description} onChange={this.descriptionhandleChange} placeholder={this.state.placeholder}></textarea>
                     <textarea id="image-text" className="image-text" style={{
-                        height:'50px', 
+                        height:'50px',
                         width:'100%',
                         border:'1px solid #DDE0EB',
                         borderRadius:'6px',
@@ -700,7 +700,7 @@ const KeyCodes = {
                     }}  value={this.state.imageTextPosted} onChange={this.imageTextPostedhandleChange} placeholder={'Type something about this image.'}></textarea>
                     <div style={{display:'flex'}}>
                         <div id="image-post" className="image-post" style={{
-                            height:'100px', 
+                            height:'100px',
                             flex:1,
                             border:'1px solid #DDE0EB',
                             borderRadius:'6px',
@@ -724,9 +724,9 @@ const KeyCodes = {
                         <div style={{flex:2, display:this.state.imagePostDisplay,flexDirection:'column', flexDirection:'column',
                             justifyContent:'center',
                             alignItems:'center'}}>
-                    
+
                             <label style={{height:20, width:50, marginTop:10, marginLeft:20, border:'1px solid black',zIndex:99999999}}>
-                                <p style={{display:'flex',fontSize:12,justifyContent:'center',alignItems:'center'}}>Browse</p> 
+                                <p style={{display:'flex',fontSize:12,justifyContent:'center',alignItems:'center'}}>Browse</p>
                                 {this.state.postedPicURL ? '':(<FileUploader
                                     hidden
                                     accept="image/*"
@@ -737,9 +737,9 @@ const KeyCodes = {
                                     onUploadError={this.handleUploadError}
                                     onUploadSuccess={this.handleUploadSuccess}
                                     onProgress={this.handleProgress}
-                                    />) 
+                                    />)
                                 }
-                        
+
                             </label>
 
                                     <p> or URL </p>
@@ -749,8 +749,8 @@ const KeyCodes = {
                         </div>
                         <div style={{
                             backgroundImage:`url(${this.state.picURL})`,
-                            backgroundSize:'contain', 
-                            height:'100%', 
+                            backgroundSize:'contain',
+                            height:'100%',
                             width:'100px',
                             backgroundRepeat:'no-repeat'
                         }}>
@@ -761,8 +761,8 @@ const KeyCodes = {
                         <div onClick={()=>{this.selectPr('private-btn')}} id="private-btn" className={this.state.privateBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Private</p></div>
                         <div onClick={()=>{this.selectPr('unlisted-btn')}} id="unlisted-btn" className={this.state.unlistedBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Unlisted</p></div>
                     </div>
-       
-               
+
+
                     <p style={{marginTop:10}}>Community to post this room in (optional)</p>
                     <input style={{
                         border:'1px solid #DDE0EB',
@@ -787,18 +787,18 @@ const KeyCodes = {
                         handleDelete={this.handleDeletecredits}
                         handleAddition={this.handleAdditioncredits}
                         handleDrag={this.handleDragcredits}
-                        delimiters={delimiters1} 
+                        delimiters={delimiters1}
                         placeholder={'Add additional names (optional)'}
-                    /> 
+                    />
 
 
-                    <p style={{marginTop:10, marginBottom:10}}>Compatability</p>     
+                    <p style={{marginTop:10, marginBottom:10}}>Compatability</p>
                     <ReactTags tags={this.state.compatibleTags}
                         suggestions={this.state.suggestionsCompatibleTags}
                         handleDelete={this.handleDeleteCompatibleTags}
                         handleAddition={this.handleAdditionCompatibleTags}
                         handleDrag={this.handleDragCompatibleTags}
-                        delimiters={delimiters3} 
+                        delimiters={delimiters3}
                         placeholder={'Any browsers and OS compatible with (optional)'}
                     />
 
@@ -877,30 +877,30 @@ const KeyCodes = {
                 </div>
             )
         }
-   
+
     }
     afterOpenModal() {
         // references are now sync'd and can be accessed.
         //this.subtitle.style.color = '#f00';
-    } 
+    }
     closeModal() {
-        document.getElementById('create').className = 'create-hide';
+        //document.getElementById('create').className = 'create-hide';
         //document.getElementById('default-modal').style.display = 'none';
         this.props.closeModal({isModalOpen:false, modalType:'message'});
-        
-    } 
+
+    }
 
     getUnique(arr, comp) {
 
         const unique = arr
              .map(e => e[comp])
-      
+
            // store the keys of the unique objects
           .map((e, i, final) => final.indexOf(e) === i && i)
-      
+
           // eliminate the dead keys & store unique objects
           .filter(e => arr[e]).map(e => arr[e]);
-      
+
          return unique;
       }
 
@@ -915,12 +915,12 @@ const KeyCodes = {
                         handleDelete={this.handleDeleteNames}
                         handleAddition={this.handleAdditionalNames}
                         handleDrag={this.handleDragNames}
-                        delimiters={delimiters5} 
+                        delimiters={delimiters5}
                         placeholder={'Add additional names (optional)'}
-                    /> 
+                    />
                     <button onClick={()=>{
                         this.setState({newMessage:'message',messageTo:this.state.NamesTags[0].id,showBack:true});
-                      
+
                     }}>Next</button>
                 </div>
             )
@@ -928,58 +928,58 @@ const KeyCodes = {
             let currentId;
             firebase.auth().onAuthStateChanged((user)=> {
                 if(user) {
-         
-          
+
+
             const database = firebase.database();
                 database.ref(`Messages/${this.state.myusername}`).once('value').then((snapshot) => {
                     //alert(this.state.myusername)
-              
+
                     snapshot.forEach((childSnapShot) => {
                         //alert(childSnapShot.val().message.To)
                         if(!(childSnapShot.val().message.fullname === undefined || childSnapShot.val().message.To === undefined)) {
                             //preventDuplicateArray.push(`${childSnapShot.val().message.fullname}`);
-                            
+
                             if(childSnapShot.val().message.To !== this.state.myusername) {
                                 messageList.push({
-                                    name:`${childSnapShot.val().message.To}`, 
-                                    pic:childSnapShot.val().message.pic, 
+                                    name:`${childSnapShot.val().message.To}`,
+                                    pic:childSnapShot.val().message.pic,
                                     message:childSnapShot.val().message.message,
                                     you:true, //if their name is going to be shown then the "you" will be where your message
                                     date:childSnapShot.val().message.date
                                 });
-        
+
                             } else  {
-                                
+
                                 messageList.push({
-                                    name:`${childSnapShot.val().message.fullname}`, 
-                                    pic:childSnapShot.val().message.pic, 
+                                    name:`${childSnapShot.val().message.fullname}`,
+                                    pic:childSnapShot.val().message.pic,
                                     message:childSnapShot.val().message.message,
                                     you:false,
                                     date:childSnapShot.val().message.date
                                 });
                             }
-                            
-                           
-                            
+
+
+
                         }
 
-                        
-             
+
+
                 })
                 if(!callOnce) {
 
 
-                    
+
                     console.log(this.getUnique(messageList,'name'))
                     //console.log(messageList)
                     this.setState({messageList:this.getUnique(messageList.reverse(),'name')})
-                    
+
                     console.log(messageList)
 
                     callOnce = true;
                 }
-                
-                  
+
+
               });
 
             }
@@ -987,7 +987,7 @@ const KeyCodes = {
 
 
 
-             
+
             return (
                 <div>
                     <ul id="the-messages" style={{height:'100%', width:'100%', display:this.state.theMessages === true ? 'block':'none',  flexDirection:'column', overflow:'scroll'}}>
@@ -996,13 +996,13 @@ const KeyCodes = {
                          <li onClick={()=>{
                             this.setState({newMessage:'message',messageTo:i.name,showBack:true});
 
-                         }} className="message" style={{height:'92px', 
-                         width:'100%', 
+                         }} className="message" style={{height:'92px',
+                         width:'100%',
                          borderBottom:'1px solid rgb(204, 204, 204)'}}>
                          <div style={{display:'flex'}}>
                          <div style={{
-                             backgroundImage:`url(${i.pic})`, 
-                             backgroundRepeat:'no-repeat', 
+                             backgroundImage:`url(${i.pic})`,
+                             backgroundRepeat:'no-repeat',
                              backgroundSize:'cover',
                              height:43,
                              width:43,
@@ -1020,63 +1020,63 @@ const KeyCodes = {
                          </div>
                         </li> )
                      })}
-                
+
                     </ul>
                 </div>
             )
         } else if(this.state.newMessage === 'message') {
-           
+
             return(<Convo To={this.state.messageTo} myusername={this.state.myusername}
                 picForMessage={this.state.picForMessage}
                 username={this.state.username}
             />)
         }
-       
+
     }
 
-    
+
     handleDeletecredits(i) {
         const { creditsTags } = this.state;
         this.setState({
             creditsTags: creditsTags.filter((tag, index) => index !== i),
         });
     }
- 
+
     handleAdditioncredits(tag) {
         this.setState(state => ({ creditsTags: [...state.creditsTags, tag] }));
     }
- 
+
     handleDragcredits(tag, currPos, newPos) {
         const tags = [...this.state.creditsTags];
         const newTags = tags.slice();
- 
+
         newTags.splice(currPos, 1);
         newTags.splice(newPos, 0, tag);
- 
+
         // re-render
         this.setState({ creditsTags: newTags });
     }
-   
 
-        
+
+
     handleDeleteIdeaBy(i) {
         const { ideaByTags } = this.state;
         this.setState({
            ideaByTags: ideaByTags.filter((tag, index) => index !== i),
         });
     }
- 
+
     handleAdditionIdeaBy(tag) {
         this.setState(state => ({ ideaByTags: [...state.ideaByTags, tag] }));
     }
- 
+
     handleDragIdeaBy(tag, currPos, newPos) {
         const tags = [...this.state.ideaByTags];
         const newTags = tags.slice();
- 
+
         newTags.splice(currPos, 1);
         newTags.splice(newPos, 0, tag);
- 
+
         // re-render
         this.setState({ ideaByTags: newTags });
     }
@@ -1088,41 +1088,41 @@ const KeyCodes = {
             compatibleTags : compatibleTags.filter((tag, index) => index !== i),
         });
     }
- 
+
     handleAdditionCompatibleTags(tag) {
         this.setState(state => ({ compatibleTags: [...state.compatibleTags, tag] }));
     }
- 
+
     handleDragCompatibleTags(tag, currPos, newPos) {
         const tags = [...this.state.compatibleTags];
         const newTags = tags.slice();
- 
+
         newTags.splice(currPos, 1);
         newTags.splice(newPos, 0, tag);
- 
+
         // re-render
         this.setState({ compatibleTags: newTags });
     }
 
-    
+
     handleDeleteTags(i) {
         const { tags } = this.state;
         this.setState({
          tags: tags.filter((tag, index) => index !== i),
         });
     }
- 
+
     handleAdditionTags(tag) {
         this.setState(state => ({ tags: [...state.tags, tag] }));
     }
- 
+
     handleDragTags(tag, currPos, newPos) {
         const tags = [...this.state.tags];
         const newTags = tags.slice();
- 
+
         newTags.splice(currPos, 1);
         newTags.splice(newPos, 0, tag);
- 
+
         // re-render
         this.setState({ tags: newTags });
     }
@@ -1138,14 +1138,14 @@ const KeyCodes = {
     handleAdditionalNames(tag) {
         this.setState(state => ({ NamesTags: [...state.NamesTags, tag] }));
     }
- 
+
     handleDragNames(tag, currPos, newPos) {
         const tags = [...this.state.NamesTags];
         const newTags = tags.slice();
- 
+
         newTags.splice(currPos, 1);
         newTags.splice(newPos, 0, tag);
- 
+
         // re-render
         this.setState({ NamesTags: newTags });
     }
@@ -1162,9 +1162,9 @@ const KeyCodes = {
 
             alert(url)
         });
-     
-    };   
-     
+
+    };
+
     handleUploadSuccess2 = filename => {
         this.setState({ avatar: filename, progress: 100, isUploading: false });
         firebase
@@ -1177,8 +1177,8 @@ const KeyCodes = {
 
                 alert(url)
             });
-     
-    }; 
+
+    };
     render() {
         const { tags, suggestions } = this.state;
         return (
@@ -1190,19 +1190,19 @@ const KeyCodes = {
                         onAfterOpen={this.afterOpenModal}
                         onRequestClose={this.closeModal}
                         style={this.props.state.entireApp.customStyles}
-           
+
                     >
                         {
                             this.modalType()
                         }
-                      
+
                     </Modal>
             </div>
         )
     }
 }
 
-const mapStateToProps = (state) => { 
+const mapStateToProps = (state) => {
     return {
     state:state
   }

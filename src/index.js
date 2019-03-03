@@ -52,7 +52,7 @@ store.dispatch({type:'SAVE_DHTML', html:'',css:'',js:''});
 const history = createHistory();
 let p = false
 const Routes = () => (
-   
+
     <Router history={history}>
      <div className="content">
         <Switch>
@@ -69,10 +69,10 @@ const Routes = () => (
             <PrivateRoute path="/about" component={About}></PrivateRoute>
             <PrivateRoute exact path="/:id" component={ProfilePage}></PrivateRoute>
             <EditRoute exact path="/:id/edit" component={Profile}></EditRoute>
-            
+
             <PrivateRoute component={NotFound}></PrivateRoute>
         </Switch>
-        </div> 
+        </div>
     </Router>
 )
 
@@ -116,11 +116,11 @@ const renderApp = () => {
 //     name == 'login' || name == 'brandondedit'
 //   )) {
 //   let ref = firebase.database().ref("users");
-  
+
 //   ref.once("value")
 //     .then((snapshot) => {
 //       let hasName = snapshot.hasChild(`${name}`); // true
-      
+
 //       if(hasName) {
 //         ReactDOM.render([jsx], document.getElementById('root'));
 //       } else  {
@@ -128,25 +128,27 @@ const renderApp = () => {
 //       }
 //     });
 //   } else {
- 
+
     //if(hasRendered === false) {
         ReactDOM.render([jsx], document.getElementById('root'));
         hasRendered = true;
-    // } 
-    
+    // }
+
 
   }
-   
-        
-        //render normal showing Profile componenet   
 
-renderApp();
+
+        //render normal showing Profile componenet
+
+//renderApp();
 firebase.auth().onAuthStateChanged((user)=> {
+    console.log("firebase.auth user: ",user);
     if(user) {
         //if(hasRendered === false) {
             renderApp();
            // hasRendered = true;
        // }
+        history.push('/');
         store.dispatch(isLoggedIn({isLoggedIn:true}));
         store.dispatch(userStore({username:user.displayName}));
     } else {
@@ -156,9 +158,8 @@ firebase.auth().onAuthStateChanged((user)=> {
             renderApp();
             //hasRendered = true;
         //}
-        //history.push('/');
+        // TODO: error message
         store.dispatch(userStore({username:null}));
-        store.dispatch(isLoggedIn({isLoggedIn:false})) 
- 
+        store.dispatch(isLoggedIn({isLoggedIn:false}))
     }
 });

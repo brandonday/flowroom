@@ -7,17 +7,13 @@ import { loginAccount } from '../../actions/authentication';
 const loginUserAccount = ({ loginAccount }) => {
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;
-    
+
     loginAccount(email, password).then(()=> {
-        alert('signed up')
+        // TODO: ???
     }).catch((error) => {
-        alert('error')
+        // TODO: show error message
     });
 }
-
-const signUpHere = () => (
-    <p className="login-section-sign-up-here-p">Sign up here.</p>
-)
 
  const Login = (props) => (
     <div className="login-screen-wrap">
@@ -40,7 +36,7 @@ const signUpHere = () => (
                 </div>
                 <p className="forgot-password">Forgot password?</p>
                 <button onClick={()=>{loginUserAccount(props)}} className="login-section-login-button">Log In</button>
-                <p style={{display:'flex'}} className="login-section-p">Don't have an account? <Link to="/signup">{signUpHere()}</Link></p>
+                <p style={{display:'flex'}} className="login-section-p">Don't have an account? <Link to="/signup">{"Sign Up"}</Link></p>
             </div>
         </div>
     </div>

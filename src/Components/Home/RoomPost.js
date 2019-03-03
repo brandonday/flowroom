@@ -20,7 +20,7 @@ class RoomPost extends Component {
             dElem:''
         }
     }
-    componentDidMount() {       
+    componentDidMount() {
 
     }
     mouseHover() {
@@ -29,50 +29,31 @@ class RoomPost extends Component {
         //     document.getElementById(this.props.id.id + "description").style.display = 'flex';
         // }
     }
-    
+
     mouseLeave() {
         // if(this.props.id.id !== null) {
         // document.getElementById(this.props.id.id).style.display = 'none';
         // document.getElementById(this.props.id.id + "description").style.display = 'none';
         // }
     }
+
     displayExtraInfo() {
         if(this.props.isRemixable === true || this.props.roomType === 'other' ) {
 
-     
+
         return ( <div style={{display:'flex', width:'100%',justifyContent:'center',flexDirection:'column'}}>
-        <div style={{display:'flex', width:'100%',justifyContent:'space-between', 
-            display:'flex',
-            width:'100%',
-            padding:'0px 10px',
-            fontFamily:'Source Sans Pro',
-            color:'rgb(128, 132, 140)',
-            fontSize:'1px',
-            lineHeight:'0'}}>
-                <div style={{display:'flex', fontSize:'16px', justifyContent:'center', alignItems:'center'}}>
-                    <p style={{fontSize:'15px'}}>Credits</p>
-                    <i style={{color:'#979797', fontSize:'16px',margin:'0 5px'}} className="fas fa-question-circle"/>
-                </div>
-                <div style={{display:'flex', fontSize:'16px', justifyContent:'center', alignItems:'center'}}>
-                    <p>Performance </p>
-                    <i style={{color:'#979797', fontSize:'16px', margin:'0 5px'}} className="fas fa-question-circle"/>
-                </div>
-        </div>
     </div>)
        } else {
-           
+
            return(<div></div>)
        }
     }
+
     display() {
-       
+
         return ( <div style={{display:'flex',
         width:'100%',
         position:'relative', height:'34px'}}>
-        <div onClick={this.goFull} style={{padding:'0px 10px',display:'flex', justifyContent:'center', alignItems:'center'}}>
-            <i class="fas fa-expand" style={{marginRight:'10px',fontSize:20, color:'rgb(48, 184, 82)'}}></i>
-            <p style={{color:'rgb(128, 132, 140)'}}>full screen</p>
-        </div>
         {this.props.isRemixable ? (<div style={{display:'flex',
             justifyContent:'space-around',
             alignItems:'center',
@@ -96,7 +77,7 @@ class RoomPost extends Component {
         </div>): ''}
 
     </div>)
-     
+
     }
     post() {
         if(this.props.roomType === 'other') {
@@ -105,10 +86,10 @@ class RoomPost extends Component {
                     enabled={this.state.isFull}
                     onChange={(isFull) => {
                         this.setState({isFull,fullscreen:true});
-                    
-                    }}> 
-                    
-                    
+
+                    }}>
+
+
                     <div className="full-screenable-node" style={{height:246}}>
                         <iframe src={"/full/" + this.props.id.id} style={{
                             height:'200%', border:'1px solid red',
@@ -118,9 +99,9 @@ class RoomPost extends Component {
                             top:0,
                             left: 0,
                             background:'white',
-                            webkitTransform:'scale(0.5)',
+                            WebkitTransform:'scale(0.5)',
                             transform:'scale(0.5)',
-                            webkitTransformOrigin:'top left',
+                            WebkitTransformOrigin:'top left',
                             transformOrigin:'top left'
                 }} />
                 </div>
@@ -130,12 +111,12 @@ class RoomPost extends Component {
         } else {
             return (<p>{this.props.postText}</p>)
         }
-     
-        
-        
+
+
+
     }
     goFull = () => {
-        
+
         this.setState({ isFull: true });
         if(this.state.fullscreen === true) {
            // this.setState({fullscreen:false});
@@ -143,9 +124,9 @@ class RoomPost extends Component {
             // let full = document.getElementById('full-screen-fallback');
             // let body = document.getElementsByTagName('body')[0];
             // full.style.position = 'absolute';
-        
 
-                      
+
+
             // full.style.height = '100%';
             //           full.style.width = '100%';
             //           full.style.zIndex = '999999999';
@@ -153,11 +134,11 @@ class RoomPost extends Component {
             //           full.style.display = 'flex';
             //           body.style.overflow = 'hidden';
 
-                    
-                      
+
+
         }
-      
-    } 
+
+    }
     expandText() {
         let that = this;
         var pos = 0;
@@ -166,26 +147,26 @@ class RoomPost extends Component {
           if (pos == that.state.pHeight) {
             clearInterval(id);
           } else {
-            pos++; 
-            that.state.dElem.style.height = pos + "px"; 
+            pos++;
+            that.state.dElem.style.height = pos + "px";
           }
         }
     }
     render() {
-       
+
         return  (
             <div style={{position:'relative'}} onMouseEnter={this.mouseHover.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} className="room-post" style={{
                 height:this.props.roomHeight
             }}>
-            
+
                 <div style={{height:this.props.roomType === 'image'? '100%':'78%',
                     background:'#F9F9F9',
                     overflow:'hidden',
                     position:'relative',
-                    webkitBoxSizing:'border-box',
-                    mozBoxSizing:'border-box',
+                    WebkitBoxSizing:'border-box',
+                    MozBoxSizing:'border-box',
                     boxSizing:'border-box'}}>
-                 
+
                         {this.post()}
 
                         <div id={this.props.id.id} className={this.props.roomType === 'image'? '':"room-overlay"}></div>
@@ -197,7 +178,7 @@ class RoomPost extends Component {
                     </div>
                     {this.display()}
                     {this.displayExtraInfo()}
-           
+
                     <div style={{display:'flex',
                         justifyContent:'space-between',
                         height:'39px',
@@ -215,28 +196,32 @@ class RoomPost extends Component {
                                     width:'97px',
                                     fontSize:'14px',
                                     color:'rgb(128, 132, 140)'
-                                    }}>Brandon</p>
+                                }}>{this.props.username}</p>
                             </div>
                             <div style={{border:'0px solid red',overflow:'hidden',height:'31px',display:'flex',
                                 alignItems:'center'}}>
-                            <div style={{display:'flex',width:'41px',justifyContent:'space-between',alignItems:'center',marginRight:'18px'}}>
+                            <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',marginRight:'18px'}}>
                                 <div className="view-3x"></div>
-                                <p style={{fontFamily:'Source Sans Pro',color:'#80848C',fontSize:'14px',lineHeight:0}}>324</p>
+                                <p style={{fontFamily:'Source Sans Pro',color:'#80848C',fontSize:'14px',marginLeft:"4px",lineHeight:0}}>{this.props.views}</p>
                             </div>
-                            <div style={{display:'flex',width:'33px',justifyContent:'space-between',alignItems:'center', marginRight:'18px'}}>
+                            <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center', marginRight:'18px'}}>
                                 <div className="likes-3x"></div>
-                                <p style={{fontFamily:'Source Sans Pro',color:'#80848C',fontSize:'14px',lineHeight:0}}>24</p>
+                                <p style={{fontFamily:'Source Sans Pro',color:'#80848C',fontSize:'14px',marginLeft:"4px",lineHeight:0}}>{this.props.likes}</p>
                             </div>
-                            <div style={{display:'flex',width:'27px',justifyContent:'space-between',alignItems:'center'}}>
+                            <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center'}}>
                                 <div className="comments-preview-3x"></div>
-                            <p style={{fontFamily:'Source Sans Pro',color:'#80848C',fontSize:'14px', lineHeight:0}}>3</p>
+                            <p style={{fontFamily:'Source Sans Pro',color:'#80848C',fontSize:'14px',marginLeft:"4px", lineHeight:0}}>{this.props.commentsCount}</p>
+
+                        </div>
+                        <div onClick={this.goFull} style={{padding:'0px 10px',display:'flex', justifyContent:'center', alignItems:'center'}}>
+                            <i className="fas fa-expand" style={{marginRight:'10px',fontSize:20, color:'rgb(48, 184, 82)'}}></i>
                         </div>
                     </div>
                 </div>
                 <div id="descriptionWrapText" style={{fontSize:'16px', padding:'0px 10px 10px'}}>
                         <p id="descriptionText" style={{wordBreak:'break-all', fontSize:'12px', color:'rgb(128, 132, 140)'}}>
 
-{/* 
+{/*
                             <b style={{marginRight:'4px'}}>{`${this.props.username}`}</b>
                             <span onClick={this.expandText.bind(this)} style={{position:'relative',height:'20px', width:'41px', float:'right', overflow:'hidden',top:'18px'}}>... more</span> */}
 
@@ -249,5 +234,5 @@ class RoomPost extends Component {
 }
 
 
-  
+
 export default RoomPost;

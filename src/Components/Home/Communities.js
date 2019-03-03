@@ -15,7 +15,7 @@ class Communities extends Component {
             height:0
         }
     }
-   
+
     componentDidMount() {
 
         let database = firebase.database();
@@ -32,23 +32,23 @@ class Communities extends Component {
                         community:childSnapShot.val().community,
                         ...childSnapShot
                     });
-                }     
-               
-               
+                }
+
+
             });
         }
-          
+
             let lastcom = communities.length;
             console.log('last room', communities[lastcom - 1])
-            this.setState({lastcom:lastcom});
-           
-           //communities = []; 
-           
+            //this.setState({lastcom:lastcom});
+
+           //communities = [];
+
            //alert(communities)
         });
-        
+
     }
-  
+
     selectCommunity = (i) => {
         let elID = i;
         document.getElementById(elID).className = 'selected';
@@ -57,12 +57,12 @@ class Communities extends Component {
         for(i = 0; i < classElements.length; i++) {
             if(elID != classElements[i].id) {
                 classElements[i].className = '';
-            } 
+            }
         }
         this.props.filterSelection({communitySelected:elID});
     }
     onResize() {
-           
+
     }
     render() {
         return(
@@ -85,7 +85,7 @@ class Communities extends Component {
             //             }}>Communities</div>
             //             <div id="com-list" className="communities-list">
             //             <span id="All" className="selected" onClick={()=>{this.selectCommunity('All')}}  style={{ textDecoration: 'none', fontSize:13, fontWeight:600, marginRight:12,whiteSpace:'nowrap'}}>All</span>
-            //                 { 
+            //                 {
             //                     communities.map((i) => {
             //                         return (<span id={i.community} onClick={()=>{this.selectCommunity(i.community)}}  style={{ textDecoration: 'none', fontSize:13, fontWeight:600, marginRight:12,whiteSpace:'nowrap'}}>{i.community}</span>)
             //                     })
@@ -94,7 +94,7 @@ class Communities extends Component {
             //         </nav>
             //         <div className="communities-view-more" style={{fontWeight:'bold'}}>View More...</div>
             //     </div>
-              
+
             // </div>
         )
      }
