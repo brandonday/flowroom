@@ -5,16 +5,17 @@ import { Link } from 'react-router-dom';
 const SignUpButton = () => (
         <div className="signup-button-wrap">
                 <Link to="/signup">
-                        <button style={{backgroundColor:'#B300FE',
-  borderRadius:'2px',
-  width:'100px',
-  height:'30px',
-  border:'0',
-  fontSize:'16px',
-  color:'#C6C6C6',
-  fontWeight:'bold'
+                        <button style={{backgroundColor:'rgb(179, 0, 254)',
+    borderRadius:'2px',
+    width:'85px',
+    height:'30px',
+    border:'0px',
+    fontSize:'16px',
+    color:'rgb(198, 198, 198)',
+    fontWeight:'bold',
+    fontSize:'12px'
   }}>
-                                SIGN UP
+                                Sign Up
                         </button>
                </Link>
         </div>

@@ -22,8 +22,7 @@ const NewMessageButton = () => {
                 className="new-button-dropdown">
                 <div className="new-btn">
                     <button className="new-button" style={{width:'134px'}}>
-                    <span className="plus-3x" style={{color:'white'}}></span>
-                        New Message
+               
                     </button>
                 </div>
             </div>

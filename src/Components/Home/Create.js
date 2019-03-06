@@ -7,7 +7,8 @@ import {Link} from 'react-router-dom';
          this.state = {}
      }
      componentDidMount() {
-         document.getElementById('create').className = 'create-show';
+       
+
      }
      render() {
 

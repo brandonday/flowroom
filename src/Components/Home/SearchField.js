@@ -15,7 +15,15 @@ const Default = props => <Responsive {...props} minWidth={768} />;
         alignItems:'center'
     }}>
         <div className="search-box">
-            <div className="magnify-3x"></div>
+            <i style={{color:'rgb(95, 95, 95)',
+    width:'30px',
+    height:'30px',
+    /* text-align: center; */
+    alignItems:'center',
+    display:'flex',
+    justifyContent:'center',
+    margin:'0px 10px 0'
+ }} className="fas fa-search"></i>
             <input className="search-input" type="text" autoCapitalize="none" placeholder="Search for rooms, users and tags"/>
         </div>
     </div>

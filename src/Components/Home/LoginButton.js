@@ -10,10 +10,10 @@ const LoginButton = () => (
   width:'100px',
   height:'30px',
   border:'0',
-  fontSize:'16px',
+  fontSize:'12px',
   color:'#C6C6C6',
   fontWeight:'bold'}}>
-            SIGN IN
+            Sign In
          </button>
       </Link>
    </div>

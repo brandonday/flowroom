@@ -43,6 +43,7 @@ const store = Store;
 document.getElementById('default-modal').addEventListener('click', ()=>{
 
     document.getElementById('default-modal').style.display = 'none';
+    document.getElementById('create-box').style.display = 'none';
 });
 
 
@@ -129,10 +130,10 @@ const renderApp = () => {
 //     });
 //   } else {
 
-    //if(hasRendered === false) {
+    if(hasRendered === false) {
         ReactDOM.render([jsx], document.getElementById('root'));
         hasRendered = true;
-    // }
+     }
 
 
   }
@@ -144,20 +145,20 @@ const renderApp = () => {
 firebase.auth().onAuthStateChanged((user)=> {
     console.log("firebase.auth user: ",user);
     if(user) {
-        //if(hasRendered === false) {
+        if(hasRendered === false) {
             renderApp();
-           // hasRendered = true;
-       // }
-        history.push('/');
+            hasRendered = true;
+         }
+        //history.push('/');
         store.dispatch(isLoggedIn({isLoggedIn:true}));
         store.dispatch(userStore({username:user.displayName}));
     } else {
         //hasRendered = false;
         store.dispatch(logout());
-        //if(hasRendered === false) {
+        if(hasRendered === false) {
             renderApp();
-            //hasRendered = true;
-        //}
+            hasRendered = true;
+        }
         // TODO: error message
         store.dispatch(userStore({username:null}));
         store.dispatch(isLoggedIn({isLoggedIn:false}))
