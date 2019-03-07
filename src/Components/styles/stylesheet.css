@@ -272,12 +272,11 @@ body {
 }
   
 .content {
-  flex: 1 0 auto;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: column;
   flex-direction: column;
-  overflow: hidden;
+  overflow-y:scroll;
 }
   
 .header {
@@ -898,7 +897,7 @@ body {
 .room-post {
   display: inline-block;
   height:auto;
-  width: 99%;
+  /* width: 99%; */
 
   border-radius: 5px;
 
@@ -2577,7 +2576,7 @@ body {
   flex-direction: column;
   background: #F9FAFA;
   align-items: center;
-  padding: 4px 20px 65px 15px;
+
 }
 
 .main-section-wrap-comments-box {

@@ -394,19 +394,31 @@ const repliesNum = [];
         
     }
     render() {
-        return(<div>
+        return(<div style={{height:'100%',width:'100%'}}>
             <div className="main-section-wrap-comments-screen">
-                <div style={{display:'flex',  height:'32px', alignItems:'center', position:'relative', width:'100%'}}>
-                    <div style={{display:'flex'}}>
-                        <div className="back-arrow-3x"></div>
-                        <p style={{fontFamily: "Source Sans Pro", fontSize:'14px',fontWeight:'600',cursor:'pointer',color: '#686B72',marginLeft:'26px',marginTop:'-1px', webkitFontSmoothing:'antialiased'}}>Back to room</p>
+                <div style={{height:'42px', position:'relative', width:'100%'}}>
+                    <div style={{display:'flex', height:42, border:'1px solid red',background:'rgb(32, 32, 32)'}}>
+                       
                     </div>
                 </div>
+                {/* <div style={{height:'200px',width:'100%'}}></div> */}
                 <div className="main-section-wrap-comments-box">
-                    <div style={{display:'flex',height:'32px', width:'100%'}}>
-                        <p style={{color:'#1BB243'}}>Recent Comments</p>
+                    <div style={{height:'100px',width:'100%', display:'flex', justifyContent:'space-between'}}>
+                        <p>Asteroids</p>
+                        <div style={{display:'flex'}}>
+                        <i className="fa fa-heart">Reactions</i>
+                        <i className="fa fa-share">Share</i>
+                        </div>
                     </div>
-                    <div style={{width:'100%', border:'1px solid red'}}>
+
+                    <div style={{display:'flex',height:'32px',width:'100%'}}>
+                        <p style={{color:'#1BB243'}}>..Read More</p>
+                    </div>
+                    <div style={{height:'100%',width:'100%',borderTop:'1px solid black',marginBottom:'10px'}}>
+                    <div style={{width:'100%', marginTop:'20px'}}>
+                        <div style={{display:'flex', flexDirection:'row'}}>
+                            <i className="fa fa-comments"/><p style={{marginLeft:10}}>{167}</p><p style={{marginLeft:10}}>Comments</p>
+                        </div>
                         <textarea id="comment" 
                             style={{
                                 border:'1px solid #DDE0EB',
@@ -427,7 +439,7 @@ const repliesNum = [];
                             }} placeholder="Write a new comment here...">
    
                         </textarea>
-                        <button style={{border:'1px solid gray',
+                        {/* <button style={{border:'1px solid gray',
                             borderRadius:'4px',
                             background:'rgb(221, 224, 235)',
                             height:'25px',
@@ -440,7 +452,7 @@ const repliesNum = [];
                         }} 
     
                         onClick={this.postComment.bind(this)}
-                        >Post</button>
+                        >Post</button> */}
                     </div>
                     <ul style={{width:'100%'}} id="main-comments">
                         { 
@@ -450,6 +462,8 @@ const repliesNum = [];
                             
                         }
                     </ul>
+
+                    </div>
                 </div>
             </div>  
         </div>)
