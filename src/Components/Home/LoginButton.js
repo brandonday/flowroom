@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const LoginButton = () => (
    <div className="login-button-wrap">
       <Link to="/login">
-         <button style={{backgroundColor:'#262626',
+         <button style={{backgroundColor:'#181818',
   borderRadius:'2px',
   width:'100px',
   height:'30px',

@@ -416,6 +416,19 @@ body {
   
 }
 
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color:#474747;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color:#474747;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color:#474747;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color:#474747;
+}
+
 
 
 @media (max-width: 830px) {
