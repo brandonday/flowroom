@@ -47,10 +47,15 @@ class RoomPost extends Component {
 
     display() {
         console.log('display it works', this.props.isRemixable)
-        return ( <div style={{display:'flex',
+        return (
+        <div style={{display:'flex',
             width:'100%',
             position:'relative', height:'34px'}}>
-                {this.props.isRemixable ? (<div style={{display:'flex',
+            
+           
+                {this.props.isRemixable ? (<Link to={`room/${this.props.shortID}`}>
+                
+                <div style={{display:'flex',
                     justifyContent:'space-around',
                     alignItems:'center',
                     outline:'none',
@@ -70,8 +75,10 @@ class RoomPost extends Component {
                     transition:'color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, width 0.3s ease, opacity 0.3s ease'}}>
                         <i class="fas fa-random" style={{color:'rgb(10, 127, 41)'}}></i>
                         <p style={{fontSize:12}}>Remix This</p>
-        </div>): ''}
-
+                      
+                </div></Link>): ''}
+                
+       
     </div>)
 
     }

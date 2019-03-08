@@ -435,6 +435,7 @@ class RoomMain extends Component {
                 fontSize:'12px',top:'6px',}}>hide</p></div>
             </div>
             <div style={{display:'flex', flexDirection:'column', background:'white', width:'100%', position:'relative', border:'1px solid red'}}>
+            <Editor/>
                 <div style={{width:'100%', borderBottom:'1px solid black',background:'rgb(24, 24, 24)'}}>
                 <div className="tabs-wrap">
                 </div>        
