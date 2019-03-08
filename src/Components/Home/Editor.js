@@ -320,11 +320,11 @@ class Editor extends Component {
         
     }
     editorDragStart() {
-        document.getElementById('out-cover').style.display = 'block';
+       // document.getElementById('out-cover').style.display = 'block';
     }
     editorDragStop() {
-        document.getElementById('out-cover').style.display = 'none';
-        this.setState({resizableHeight:0});
+        // document.getElementById('out-cover').style.display = 'none';
+        // this.setState({resizableHeight:0});
     }
     handleOverflowChange(isOverflowed) {
         // let that = this;
