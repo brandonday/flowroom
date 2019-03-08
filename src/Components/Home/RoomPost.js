@@ -39,41 +39,37 @@ class RoomPost extends Component {
 
     displayExtraInfo() {
         if(this.props.isRemixable === true || this.props.roomType === 'other' ) {
-
-
-        return ( <div style={{display:'flex', width:'100%',justifyContent:'center',flexDirection:'column'}}>
-    </div>)
+            return ( <div style={{display:'flex', width:'100%',justifyContent:'center',flexDirection:'column'}}></div>)
        } else {
-
-           return(<div></div>)
+            return(<div></div>)
        }
     }
 
     display() {
-
+        console.log('display it works', this.props.isRemixable)
         return ( <div style={{display:'flex',
-        width:'100%',
-        position:'relative', height:'34px'}}>
-        {this.props.isRemixable ? (<div style={{display:'flex',
-            justifyContent:'space-around',
-            alignItems:'center',
-            outline:'none',
-            cursor:'pointer',
-            border:'1px solid rgb(10, 127, 41)',
-            borderRadius:'40px',
-            height:'32px',
-            width:'99px',
-            backgroundColor:'rgb(27, 178, 67)',
-            fontFamily:"Source Sans Pro",
-            color:'white',
-            fontSize:'14px',
-            fontWeight:'600',
-            padding:'0 8px',
-            position:'absolute',
-            right:'10px',
-            transition:'color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, width 0.3s ease, opacity 0.3s ease'}}>
-          <i class="fas fa-random" style={{color:'rgb(10, 127, 41)'}}></i>
-          <p style={{fontSize:12}}>Remix This</p>
+            width:'100%',
+            position:'relative', height:'34px'}}>
+                {this.props.isRemixable ? (<div style={{display:'flex',
+                    justifyContent:'space-around',
+                    alignItems:'center',
+                    outline:'none',
+                    cursor:'pointer',
+                    border:'1px solid rgb(10, 127, 41)',
+                    borderRadius:'40px',
+                    height:'32px',
+                    width:'99px',
+                    backgroundColor:'rgb(27, 178, 67)',
+                    fontFamily:"Source Sans Pro",
+                    color:'white',
+                    fontSize:'14px',
+                    fontWeight:'600',
+                    padding:'0 8px',
+                    position:'absolute',
+                    right:'10px',
+                    transition:'color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, width 0.3s ease, opacity 0.3s ease'}}>
+                        <i class="fas fa-random" style={{color:'rgb(10, 127, 41)'}}></i>
+                        <p style={{fontSize:12}}>Remix This</p>
         </div>): ''}
 
     </div>)

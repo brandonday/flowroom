@@ -885,41 +885,42 @@ class RoomPosts extends Component {
                         {
 
                             this.state.rooms.map((i)=> {
-
-                                if(i.isRemixable === true) {
-                                    return (<div><RoomPost id={i}
-                                        description={i.description}
-                                        isRemixable={i.isRemixable}
-                                        postedPicURL={i.postedPicURL}
-                                        roomType={i.roomType}
-                                        pic={i.pic}
-                                        roomHeight={'auto'}
-                                        username={i.username}
-                                        points = {i.hasOwnProperty("points") ? i.points : 0}
-                                        views = {i.hasOwnProperty("views") ? i.views : 0}
-                                        likes = {i.hasOwnProperty("likes") ? i.likes : 0}
-                                        commentsCount = {i.hasOwnProperty("commentsCount") ? i.commentsCount : 0}
-                                        key={i}
-                                    />
-                                    </div>)
-                                }
-                                if (i.roomType === 'image') {
-                                    return (<div><RoomPost id={i}
-                                        description={i.description}
-                                        isRemixable={i.isRemixable}
-                                        postedPicURL={i.postedPicURL}
-                                        roomType={i.roomType}
-                                        pic={i.pic}
-                                        roomHeight={'auto'}
-                                        username={i.username}
-                                        points = {i.hasOwnProperty("points") ? i.points : 0}
-                                        views = {i.hasOwnProperty("views") ? i.views : 0}
-                                        likes = {i.hasOwnProperty("likes") ? i.likes : 0}
-                                        commentsCount = {i.hasOwnProperty("commentsCount") ? i.commentsCount : 0}
-                                        key={i}
-                                    /></div>)
-                                }
+                              console.log(i)
+                                // if(i.isRemixable === true) {
+                                //     return (<div><RoomPost id={i}
+                                //         description={i.description}
+                                //         isRemixable={i.isRemixable}
+                                //         postedPicURL={i.postedPicURL}
+                                //         roomType={i.roomType}
+                                //         pic={i.pic}
+                                //         roomHeight={'auto'}
+                                //         username={i.username}
+                                //         points = {i.hasOwnProperty("points") ? i.points : 0}
+                                //         views = {i.hasOwnProperty("views") ? i.views : 0}
+                                //         likes = {i.hasOwnProperty("likes") ? i.likes : 0}
+                                //         commentsCount = {i.hasOwnProperty("commentsCount") ? i.commentsCount : 0}
+                                //         key={i}
+                                //     />
+                                //     </div>)
+                                // }
+                                // if (i.roomType === 'image') {
+                                //     return (<div><RoomPost id={i}
+                                //         description={i.description}
+                                //         isRemixable={i.isRemixable}
+                                //         postedPicURL={i.postedPicURL}
+                                //         roomType={i.roomType}
+                                //         pic={i.pic}
+                                //         roomHeight={'auto'}
+                                //         username={i.username}
+                                //         points = {i.hasOwnProperty("points") ? i.points : 0}
+                                //         views = {i.hasOwnProperty("views") ? i.views : 0}
+                                //         likes = {i.hasOwnProperty("likes") ? i.likes : 0}
+                                //         commentsCount = {i.hasOwnProperty("commentsCount") ? i.commentsCount : 0}
+                                //         key={i}
+                                //     /></div>)
+                                // }
                                 if (i.roomType === 'other') {
+                                  console.log(i);
                                     return (<div><RoomPost id={i}
                                         description={i.description}
                                         isRemixable={i.isRemixable}
@@ -935,22 +936,22 @@ class RoomPosts extends Component {
                                         key={i}
                                     /></div>)
                                }
-                                if (i.roomType === 'text') {
-                                    return (<div><RoomPost id={i}
-                                        description={i.description}
-                                        isRemixable={i.isRemixable}
-                                        postedPicURL={i.postedPicURL}
-                                        roomType={i.roomType}
-                                        pic={i.pic}
-                                        roomHeight={'340px'}
-                                        username={i.username}
-                                        points = {i.hasOwnProperty("points") ? i.points : 0}
-                                        views = {i.hasOwnProperty("views") ? i.views : 0}
-                                        likes = {i.hasOwnProperty("likes") ? i.likes : 0}
-                                        commentsCount = {i.hasOwnProperty("commentsCount") ? i.commentsCount : 0}
-                                        key={i}
-                                    /></div>)
-                                }
+                                // if (i.roomType === 'text') {
+                                //     return (<div><RoomPost id={i}
+                                //         description={i.description}
+                                //         isRemixable={i.isRemixable}
+                                //         postedPicURL={i.postedPicURL}
+                                //         roomType={i.roomType}
+                                //         pic={i.pic}
+                                //         roomHeight={'340px'}
+                                //         username={i.username}
+                                //         points = {i.hasOwnProperty("points") ? i.points : 0}
+                                //         views = {i.hasOwnProperty("views") ? i.views : 0}
+                                //         likes = {i.hasOwnProperty("likes") ? i.likes : 0}
+                                //         commentsCount = {i.hasOwnProperty("commentsCount") ? i.commentsCount : 0}
+                                //         key={i}
+                                //     /></div>)
+                                // }
 
                                 })
 
