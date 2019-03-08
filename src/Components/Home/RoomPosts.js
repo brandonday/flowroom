@@ -10,6 +10,7 @@ import StackGrid from "react-stack-grid";
 import { connect } from 'react-redux';
 import { Store } from './store.js';
 import sizeMe from 'react-sizeme';
+import ReactResizeDetector from 'react-resize-detector';
 
 const Desktop = props => <Responsive {...props} minWidth={992} />;
 const Tablet = props => <Responsive {...props} minWidth={768} maxWidth={991} />;
@@ -853,9 +854,14 @@ class RoomPosts extends Component {
         });
     }
     render() {
+
          if(this.state.roomsLoaded) {
         //     let theHeight;
             return  (
+              <ReactResizeDetector
+  handleWidth
+  handleHeight
+  render={({ width, height }) => (
                 <div style={{padding:'0px 10px', height:'100%'}}>
                     <div id="body-padding" style={{
                         flex:1
@@ -871,8 +877,8 @@ class RoomPosts extends Component {
 
                                             <StackGrid
 
-                                            columnWidth={window.innerWidth <= 768 ? '100%' : '33.33%'}
-                                            gutterWidth={20}
+                                            columnWidth={width <= 800 ? '100%' : '33.33%'}
+                                            gutterWidth={30}
                                             gutterHeight={20}
                                             horizontal={false}
                                           >
@@ -962,6 +968,8 @@ class RoomPosts extends Component {
                         </nav> */}
                     </div>
                 </div>
+                )}
+                />
 
             )
 

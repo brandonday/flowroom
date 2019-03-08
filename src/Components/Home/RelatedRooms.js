@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Nav from './Navigation.js';
 import RoomFilters from './RoomFilters.js';
 import RoomPost from './RoomPost.js';
+import RelatedRoomPost from './RelatedRoomPost.js';
 import Responsive from 'react-responsive';
 import Communities from './Communities.js';
 import {Link} from 'react-router-dom';
@@ -116,7 +117,7 @@ const Default = props => <Responsive {...props} minWidth={768} />;
 let rooms = [];
 let roomsFilter = [];
 let roomsBackUp = [];
-class RoomPosts extends Component {
+class RelatedRooms extends Component {
     constructor() {
         super();
         this.state = {
@@ -862,25 +863,22 @@ class RoomPosts extends Component {
                     }}>
                         <section style={{flex:1}}>
                             <div className="main" style={{flex:1}}>
-                                <div style={{display:'flex', flex:1, flexWrap:'wrap', justifyContent:'space-between', margin:'20px 0px 20px auto',fontSize:'16px'}}>
-                                    <Nav/>
-                                    <RoomFilters/>
-                                </div>
+                              
                                 <div style={{position:'relative'}}>
 
-{/* 
+
                                             <StackGrid
 
-                                      
-                                    
-                                            horizontal={false}
-                                          > */}
+columnWidth={window.innerWidth <= 768 ? '10%' : '43.33%'}
+gutterWidth={20}
+gutterHeight={20}
+                                          >
                         {
 
                             this.state.rooms.map((i)=> {
 
                                 if(i.isRemixable === true) {
-                                    return (<div><RoomPost id={i}
+                                    return (<div><RelatedRoomPost id={i}
                                         description={i.description}
                                         isRemixable={i.isRemixable}
                                         postedPicURL={i.postedPicURL}
@@ -897,7 +895,7 @@ class RoomPosts extends Component {
                                     </div>)
                                 }
                                 if (i.roomType === 'image') {
-                                    return (<div><RoomPost id={i}
+                                    return (<div><RelatedRoomPost id={i}
                                         description={i.description}
                                         isRemixable={i.isRemixable}
                                         postedPicURL={i.postedPicURL}
@@ -913,7 +911,7 @@ class RoomPosts extends Component {
                                     /></div>)
                                 }
                                 if (i.roomType === 'other') {
-                                    return (<div><RoomPost id={i}
+                                    return (<div><RelatedRoomPost id={i}
                                         description={i.description}
                                         isRemixable={i.isRemixable}
                                         postedPicURL={i.postedPicURL}
@@ -929,7 +927,7 @@ class RoomPosts extends Component {
                                     /></div>)
                                }
                                 if (i.roomType === 'text') {
-                                    return (<div><RoomPost id={i}
+                                    return (<div><RelatedRoomPost id={i}
                                         description={i.description}
                                         isRemixable={i.isRemixable}
                                         postedPicURL={i.postedPicURL}
@@ -948,7 +946,7 @@ class RoomPosts extends Component {
                                 })
 
                         }
-                                          {/* </StackGrid> */}
+                                          </StackGrid>
 
 
                                 </div>
@@ -979,7 +977,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 
-const ConnectedRoomPosts = connect(undefined)(RoomPosts)
+const ConnectedRoomPosts = connect(undefined)(RelatedRooms)
 
 //export default sizeMe()(ConnectedRoomPosts);
 export default ConnectedRoomPosts;

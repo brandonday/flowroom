@@ -173,6 +173,10 @@ h1 a:focus {
     background: #eee !important;
 }
 
+#root {
+  background: rgb(20, 20, 20);
+}
+
 .main-nav {
   display:flex;
 }
@@ -897,6 +901,19 @@ body {
 .room-post {
   display: inline-block;
   height:auto;
+  width: 99%;
+
+  border-radius: 5px;
+
+  /* margin: 0px 2% 13px 0px; */
+  position: relative;
+  /* box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.28); */
+  background-color:#242424;
+}
+
+.related-room-post {
+  display: inline-block;
+  height:auto;
   /* width: 99%; */
 
   border-radius: 5px;
@@ -906,6 +923,7 @@ body {
   /* box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.28); */
   background-color:#242424;
 }
+
 
 @media (max-width: 917px) {
   .main-nav ul li:nth-child(8n) {
