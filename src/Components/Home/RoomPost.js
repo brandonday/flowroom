@@ -53,7 +53,7 @@ class RoomPost extends Component {
             position:'relative', height:'34px'}}>
             
            
-                {this.props.isRemixable ? (<Link to={`room/${this.props.shortID}`}>
+                {this.props.isRemixable ? (<a href={`room/${this.props.shortID}`}>
                 
                 <div style={{display:'flex',
                     justifyContent:'space-around',
@@ -76,7 +76,7 @@ class RoomPost extends Component {
                         <i class="fas fa-random" style={{color:'rgb(10, 127, 41)'}}></i>
                         <p style={{fontSize:12}}>Remix This</p>
                       
-                </div></Link>): ''}
+                </div></a>): ''}
                 
        
     </div>)
