@@ -23,6 +23,7 @@ class HeaderLoggedIn extends Component {
                         <div className="header-content">
                             <div className="left-section">
                                 <Logo/>
+                                <NewButton/>
                             </div>
             
                             <div className="right-section">
