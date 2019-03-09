@@ -668,7 +668,7 @@ class RoomMain extends Component {
                                 justifyContent:'space-between',
                                 display:'flex',
                                 padding:'0px 9px'}}>
-                                <i className="fa fa-infinity"></i>Remix</button>
+                                <i className="fa fa-infinity"></i>Post</button>
                                 <i className="fas fa-expand" style={{fontSize:30, color:'rgb(179, 0, 254)'}}></i>
                         </div>
                         <RelatedRooms/>
