@@ -12,6 +12,8 @@ import EditorOptionsTablet from './EditorOptionsTablet.js';
 import { OPEN_MODAL } from '../../actions/entireApp';
 import { connect } from 'react-redux';
 import { firebase } from '../firebase/firebase';
+import { tween, styler } from 'popmotion';
+
 // import ImageEdit from './ImageEdit.js';
 
 import ImageEdit from './ImageEdit.js';
@@ -152,14 +154,14 @@ class RoomMain extends Component {
             backgroundColor: 'none',
           },
           content: {
-          top                   : '0%',
-          left                  : '0%',
+          top                   : '50%',
+          left                  : '50%',
           right                 : '0',
           bottom                : 'auto',
           marginRight           : '0%',
           transform             : 'translate(-50%, -50%)',
           height:'100%',
-          width:'100%',
+          width:'50%',
           }
         }})
       }
@@ -168,7 +170,185 @@ class RoomMain extends Component {
         if(this.state.details === true) {
             return (<p>jkjkkj</p>)
         } else if(this.state.objects === true) {
-            return (<p>object</p>)
+            return (
+                <div style={{
+
+                    display:'flex',
+                    flexDirection:'column',
+                    justifyContent:'center',
+                    alignItems:'center'
+
+                }}>
+                    <input type="text" style={{
+                        height:'30px',
+                        width:'300px',
+                        marginTop:'20px',
+                        borderRadius:'5px',
+                        border:'1px solid black',
+                        paddingLeft:'14px'}} placeholder="ddsdssd"/>
+            
+                    <div id="main-add-section" style={{display:'flex',flexWrap:'wrap', width:'300px', overflow:'hidden',height:'500px',backgroundColor:'#181818'}}>
+                        <div id="menu-sel-wrap" style={{ width:'100%',
+    height:'100%',
+    margin:'auto'}}>
+
+                            <div style={{width:'299px',
+    height:'100%',
+    float:'left',
+    display:'flex',
+    flexWrap:'wrap',
+    justifyContent:'center',
+    alignItems:'center',
+    backgroundColor:'#18181'
+    }}>
+
+                            <div style={{
+                            height:'100px',
+                            width:'100px', 
+                            margin:'10px',
+                            display:'flex',
+                            justifyContent:'center',
+                            alignItems:'center',
+                            flexDirection:'column',
+                            color:'white',
+                            background:'#01AADC',
+                            borderRadius:'5px',
+                            fontSize:'20px'
+                        }} onClick={()=>{
+                            const element = document.querySelector('#main-add-section #menu-sel-wrap');
+                            const ball = styler(element); 
+
+                            tween({ from:0, to: -300, duration: 200 })
+                            .start(v => ball.set('x', v));
+
+                            
+                        }} className="ball">
+                            <i className="fas fa-images"></i>
+                            <p>Images</p>
+                        </div>
+                        <div style={{
+                            height:'100px',
+                            width:'100px', 
+                            margin:'10px',
+                            display:'flex',
+                            justifyContent:'center',
+                            alignItems:'center',
+                            flexDirection:'column',
+                            color:'white',
+                            background:'#01AADC',
+                            borderRadius:'5px',
+                            fontSize:'20px'
+                        }}>
+                         <i class="fas fa-font"></i>
+                            <p>Text</p>
+                        </div>
+                        <div style={{
+                            height:'100px',
+                            width:'100px', 
+                            margin:'10px',
+                            display:'flex',
+                            justifyContent:'center',
+                            alignItems:'center',
+                            flexDirection:'column',
+                            color:'white',
+                            background:'#01AADC',
+                            borderRadius:'5px',
+                            fontSize:'20px'
+                        }}>
+                         <i className="fas fa-images"></i>
+                            <p>GIFS</p>
+                        </div>
+                        <div style={{
+                            height:'100px',
+                            width:'100px', 
+                            margin:'10px',
+                            display:'flex',
+                            justifyContent:'center',
+                            alignItems:'center',
+                            flexDirection:'column',
+                            color:'white',
+                            background:'#01AADC',
+                            borderRadius:'5px',
+                            fontSize:'20px'
+                        }}>
+                         <i className="fas fa-images"></i>
+                            <p>Stickers</p>
+                        </div>
+                        <div style={{
+                            height:'100px',
+                            width:'100px', 
+                            margin:'10px',
+                            display:'flex',
+                            justifyContent:'center',
+                            alignItems:'center',
+                            flexDirection:'column',
+                            color:'white',
+                            background:'#01AADC',
+                            borderRadius:'5px',
+                            fontSize:'20px'
+                        }}>
+                         <i class="fas fa-shapes"></i>
+                            <p>Shapes</p>
+                        </div>
+                        <div style={{
+                            height:'100px',
+                            width:'100px', 
+                            margin:'10px',
+                            display:'flex',
+                            justifyContent:'center',
+                            alignItems:'center',
+                            flexDirection:'column',
+                            color:'white',
+                            background:'#01AADC',
+                            borderRadius:'5px',
+                            fontSize:'20px'
+                        }}>
+                         <i className="fas fa-images"></i>
+                            <p>Icons</p>
+                        </div>
+                        <div style={{
+                            height:'100px',
+                            width:'100px', 
+                            margin:'10px',
+                            display:'flex',
+                            justifyContent:'center',
+                            alignItems:'center',
+                            flexDirection:'column',
+                            color:'white',
+                            background:'#01AADC',
+                            borderRadius:'5px',
+                            fontSize:'20px'
+                        }}>
+                         <i className="fas fa-images"></i>
+                            <p>Video</p>
+                        </div>
+                        <div style={{
+                            height:'100px',
+                            width:'100px', 
+                            margin:'10px',
+                            display:'flex',
+                            justifyContent:'center',
+                            alignItems:'center',
+                            flexDirection:'column',
+                            color:'white',
+                            background:'#01AADC',
+                            borderRadius:'5px',
+                            fontSize:'20px'
+                            
+                        }}>
+                         <i className="fas fa-images"></i>
+                            <p>Audio</p>
+                        </div>
+                            </div>
+
+                            <div id="selection" style={{ width:'299px',
+    marginLeft:'100%',
+    height:'100%',
+    background:'black'}}></div>
+                        </div>
+                    </div>
+                </div>
+            )
         } else if(this.state.comments === true) {
             return (<Comments />)
         } else if(this.state.draw === true) {
@@ -187,12 +367,12 @@ class RoomMain extends Component {
     render() {
         return (<div id="room-main-page" className="page-wrap twilight room-main-page-wrap">
             <div style={{display:'flex',flexDirection:'column', height:'100%',width:'100%'}}>
-                <div style={{display:'flex',flex:1}}>
+                <div style={{display:'flex',flex:'0 500px'}}>
                     <div style={{
                         width:'60px', 
                         background:'#202020'
                     }}>
-                         <div id="details" onClick={()=> {
+                        <div id="details" onClick={()=> {
                             let detailsid = document.getElementById('details');
                             detailsid.className = 'menubg';
                             detailsid.style.borderRight = '0px solid #181818';
@@ -201,7 +381,9 @@ class RoomMain extends Component {
                             remix:false, 
                             preferences:false,
                             record:false});
+                            
                             document.getElementById('main-menu').style.display = 'flex';
+                            
        
                             for(let i=0; i < getclasses.length; i++) {
                                 if(getclasses[i].id !== 'details') {
@@ -211,7 +393,7 @@ class RoomMain extends Component {
                                 }
                             }
 
-                        }} style={{
+                            }} style={{
                             height:'55px',
                             width:'59px',
                             display:'flex',
@@ -221,8 +403,10 @@ class RoomMain extends Component {
                             borderRight:'1px solid #181818',
                             borderBottom:'1px solid #181818'}} className="menu-bg-border">
                                 <div id="details-icon" className="details-3x"></div>
-                                    <p id="details-text" className="details-text">Details</p>
-                                </div>
+                                <p id="details-text" className="details-text">Remix Content</p>
+                        </div>
+
+
                                 <div id="objects" onClick={()=> {
                                     let objectsid = document.getElementById('objects');
                                     objectsid.className = 'menubg';
@@ -237,6 +421,7 @@ class RoomMain extends Component {
                                         preferences:false,
                                         record:false
                                     });
+                                    document.getElementById('remixhead').style.display = 'none';
                                     document.getElementById('main-menu').style.display = 'flex';
                                     for(let i=0; i < getclasses.length; i++) {
                                         if(getclasses[i].id !== 'objects') {
@@ -253,8 +438,10 @@ class RoomMain extends Component {
                                     borderRight:'1px solid #181818',
                                     borderBottom:'1px solid #181818'}} className="menu-bg-border">
                                         <div id="objects-icon" className="rooms-3x"></div>
-                                            <p id="details-text" className="details-text">Objects</p>
-                                        </div>
+                                        <p id="details-text" className="details-text">Add New Content</p>
+                                </div>
+
+
                                         <div id="comments" onClick={()=> {
            
                                             let commentsid = document.getElementById('comments');
@@ -288,175 +475,189 @@ class RoomMain extends Component {
                                             borderRight:'1px solid #181818',
                                             borderBottom:'1px solid #181818'}} className="menu-bg-border">
                                                 <div id="comments-icon" className="comments-3x"></div>
-                                                    <p id="details-text" className="details-text">Comments</p>
+                                                    <p id="details-text" className="details-text">Add Apps</p>
                                     </div>
-             <div id="draw" onClick={()=> {
-                let drawid = document.getElementById('draw');
-                drawid.className = 'menubg';
-                drawid.style.borderRight = '0px solid #181818';
-                let getclasses = document.getElementsByClassName('menubg');
-                this.setState({details:false,
-                    objects:false,
-                    comments:false,
-                    draw:true,
-                    remix:false,
-                    preferences:false,
-                    record:false});
-                    document.getElementById('main-menu').style.display = 'flex';
+                                    <div id="draw" onClick={()=> {
+                                        let drawid = document.getElementById('draw');
+                                        drawid.className = 'menubg';
+                                        drawid.style.borderRight = '0px solid #181818';
+                                        let getclasses = document.getElementsByClassName('menubg');
+                                        this.setState({
+                                            details:false,
+                                            objects:false,
+                                            comments:false,
+                                            draw:true,
+                                            remix:false,
+                                            preferences:false,
+                                            record:false
+                                        });
+                                        document.getElementById('main-menu').style.display = 'flex';
+                                        for(let i=0; i < getclasses.length; i++) {
+                                            if(getclasses[i].id !== 'draw') {
+                                                getclasses[i].style.borderRight = '1px solid #181818';
+                                                getclasses[i].className = '';
+                                            }
+                                        }
+                                    }} style={{
+                                        height:'55px',
+                                        width:'59px',
+                                        display:'flex',
+                                        flexDirection:'column',
+                                        justifyContent:'center',
+                                        alignItems:'center',
+                                        borderRight:'1px solid #181818',
+                                        borderBottom:'1px solid #181818'
+                                    }} 
+                                    className="menu-bg-border">
+                                        <div id="draw-icon" className="draw-3x"></div>
+                                        <p id="details-text" className="details-text">Add Templates</p>
+                            </div>
+                            {/* <div id="remix" onClick={()=> {
+                                let remixid = document.getElementById('remix');
+                                remixid.className = 'menubg';
+                                remixid.style.borderRight = '0px solid #181818';
+                                let getclasses = document.getElementsByClassName('menubg');
+                                this.setState({
+                                    details:false,
+                                    objects:false,
+                                    comments:false,
+                                    draw:false,
+                                    remix:true,
+                                    preferences:false,
+                                    record:false
+                                });
+                                document.getElementById('main-menu').style.display = 'flex';
 
-                for(let i=0; i < getclasses.length; i++) {
-                    if(getclasses[i].id !== 'draw') {
-                        getclasses[i].style.borderRight = '1px solid #181818';
-                        getclasses[i].className = '';
-                        
+                                for(let i=0; i < getclasses.length; i++) {
+                                    if(getclasses[i].id !== 'remix') {
+                                        getclasses[i].style.borderRight = '1px solid #181818';
+                                        getclasses[i].className = '';
+                                    }
+                                }
+                            }} style={{height:'55px',width:'59px',display:'flex',
+                                flexDirection:'column',
+                                justifyContent:'center',
+                                alignItems:'center',
+                                borderRight:'1px solid #181818',
+                                borderBottom:'1px solid #181818'}} className="menu-bg-border">
+                                <div id="remix-icon" className="details-3x"></div>
+                                <p id="details-text" className="details-text">Video</p>
+                            </div> */}
+                            {/* <div id="preferences" onClick={()=> {
+                                let preferencesid = document.getElementById('preferences');
+                                preferencesid.className = 'menubg';
+                                preferencesid.style.borderRight = '0px solid #181818';
+                                document.getElementById('preferences').className = 'menubg'
+                                let getclasses = document.getElementsByClassName('menubg');
+                                this.setState({details:true,
+                                    objects:false,
+                                    comments:false,
+                                    draw:false,
+                                    remix:false,
+                                    preferences:true,
+                                    record:false
+                                });
+                                document.getElementById('main-menu').style.display = 'flex';
 
-
-                    }
-                }
-            }} style={{height:'55px',width:'59px',display:'flex',
-            flexDirection:'column',
-            justifyContent:'center',
-            alignItems:'center',
-            borderRight:'1px solid #181818',
-            borderBottom:'1px solid #181818'}} className="menu-bg-border">
-            <div id="draw-icon" className="draw-3x"></div>
-                <p id="details-text" className="details-text">Draw</p>
-            </div>
-            <div id="remix" onClick={()=> {
-                let remixid = document.getElementById('remix');
-                remixid.className = 'menubg';
-                remixid.style.borderRight = '0px solid #181818';
-                let getclasses = document.getElementsByClassName('menubg');
-                this.setState({details:false,
-                    objects:false,
-                    comments:false,
-                    draw:false,
-                    remix:true,
-                    preferences:false,
-                    record:false});
-                    document.getElementById('main-menu').style.display = 'flex';
-
-                for(let i=0; i < getclasses.length; i++) {
-                    if(getclasses[i].id !== 'remix') {
-                        getclasses[i].style.borderRight = '1px solid #181818';
-                        getclasses[i].className = '';
-                    }
-                }
-            }} style={{height:'55px',width:'59px',display:'flex',
-            flexDirection:'column',
-            justifyContent:'center',
-            alignItems:'center',
-            borderRight:'1px solid #181818',
-            borderBottom:'1px solid #181818'}} className="menu-bg-border">
-            <div id="remix-icon" className="details-3x"></div>
-                <p id="details-text" className="details-text">Remix</p>
-            </div>
-            <div id="preferences" onClick={()=> {
-                let preferencesid = document.getElementById('preferences');
-                preferencesid.className = 'menubg';
-                preferencesid.style.borderRight = '0px solid #181818';
-                document.getElementById('preferences').className = 'menubg'
-                let getclasses = document.getElementsByClassName('menubg');
-                this.setState({details:true,
-                    objects:false,
-                    comments:false,
-                    draw:false,
-                    remix:false,
-                    preferences:true,
-                    record:false});
-                    document.getElementById('main-menu').style.display = 'flex';
-
-                for(let i=0; i < getclasses.length; i++) {
-                    if(getclasses[i].id !== 'preferences') {
-                        getclasses[i].style.borderRight = '1px solid #181818';
-                        getclasses[i].className = '';
-                    }
-                }
-            }} style={{height:'55px',width:'59px',display:'flex',
-            flexDirection:'column',
-            justifyContent:'center',
-            alignItems:'center',
-            borderRight:'1px solid #181818',
-            borderBottom:'1px solid #181818'}} className="menu-bg-border">
-            <div id="preferences-icon" className="details-3x"></div>
-                <p id="details-text" className="details-text">Preferences</p>
-            </div>
-            <div id="record" onClick={()=> {
-                let recordid = document.getElementById('record');
-                recordid.className = 'menubg';
-                recordid.style.borderRight = '0px solid #181818';
+                                for(let i=0; i < getclasses.length; i++) {
+                                    if(getclasses[i].id !== 'preferences') {
+                                        getclasses[i].style.borderRight = '1px solid #181818';
+                                        getclasses[i].className = '';
+                                    }
+                                }
+                                }} style={{
+                                    height:'55px',
+                                    width:'59px',
+                                    display:'flex',
+                                    flexDirection:'column',
+                                    justifyContent:'center',
+                                    alignItems:'center',
+                                    borderRight:'1px solid #181818',
+                                    borderBottom:'1px solid #181818'}} 
+                                    className="menu-bg-border">
+                                <div id="preferences-icon" className="details-3x"></div>
+                                <p id="details-text" className="details-text">Apps</p>
+                            </div> */}
+                            {/* <div id="record" onClick={()=> {
+                                let recordid = document.getElementById('record');
+                                recordid.className = 'menubg';
+                                recordid.style.borderRight = '0px solid #181818';
              
-                let getclasses = document.getElementsByClassName('menubg');
-                this.setState({details:true,
-                    objects:false,
-                    comments:false,
-                    draw:false,
-                    remix:false,
-                    preferences:false,
-                    record:true});
-                    document.getElementById('main-menu').style.display = 'flex';
+                                let getclasses = document.getElementsByClassName('menubg');
+                                this.setState({
+                                    details:true,
+                                    objects:false,
+                                    comments:false,
+                                    draw:false,
+                                    remix:false,
+                                    preferences:false,
+                                    record:true
+                                });
+                                document.getElementById('main-menu').style.display = 'flex';
 
-                for(let i=0; i < getclasses.length; i++) {
-                    if(getclasses[i].id !== 'record') {
-                        getclasses[i].style.borderRight = '1px solid #181818';
-                        getclasses[i].className = '';
-                    }
-                }
-            }} style={{height:'55px',width:'59px',display:'flex',
-            flexDirection:'column',
-            justifyContent:'center',
-            alignItems:'center',
-            borderRight:'1px solid #181818',
-            borderBottom:'1px solid #181818'}} className="menu-bg-border">
-            <div id="record-icon" className="details-3x"></div>
-                <p id="details-text" className="details-text">Record</p>
-            </div>
-            </div>
+                                for(let i=0; i < getclasses.length; i++) {
+                                    if(getclasses[i].id !== 'record') {
+                                        getclasses[i].style.borderRight = '1px solid #181818';
+                                        getclasses[i].className = '';
+                                    }
+                                }
+                            }} style={{
+                                height:'55px',
+                                width:'59px',
+                                display:'flex',
+                                flexDirection:'column',
+                                justifyContent:'center',
+                                alignItems:'center',
+                                borderRight:'1px solid #181818',
+                                borderBottom:'1px solid #181818'}} className="menu-bg-border">
+                                <div id="record-icon" className="details-3x"></div>
+                                <p id="details-text" className="details-text">Record</p>
+                            </div> */}
+                        </div>
             
-            <div id="main-menu" style={{width:'600px', borderRight:'1px solid #181818',background:'#FCFDFF',overflow:'hidden',overflowY:'scroll'}}>
-                {
-                  this.menuSelect()  
-                }
+                        <div id="main-menu" style={{width:'600px', borderRight:'1px solid #181818',background:'#FCFDFF',overflow:'hidden',overflowY:'scroll'}}>
+                            {
+                                this.menuSelect()  
+                            }
                 
-                <div onClick={()=>{
-                    document.getElementById('main-menu').style.display = 'none';
-                    let getclasses = document.getElementsByClassName('menubg');
+                            <div onClick={()=>{
+                                document.getElementById('main-menu').style.display = 'none';
+                                let getclasses = document.getElementsByClassName('menubg');
                     
-                    for(let i=0; i < getclasses.length; i++) {
+                                for(let i=0; i < getclasses.length; i++) {
                
-                        getclasses[i].style.borderRight = '1px solid #181818';
-                        getclasses[i].className = '';
+                                    getclasses[i].style.borderRight = '1px solid #181818';
+                                    getclasses[i].className = '';
                         
-                    }
-                }}
-                style={{background:'rgb(252, 253, 255)', zIndex:'999999',left:'453px', top:'295px', height:'44px',width:'12px',border:'1px solid rgb(221, 224, 235)',float:'right',position:'absolute'}}>
-                <p style={{color:'black',transform:'rotate(89deg)',
-                position:'relative',
-                fontSize:'12px',top:'6px',}}>hide</p></div>
-            </div>
-            <div style={{display:'flex', flexDirection:'column', background:'white', width:'100%', position:'relative', border:'1px solid red'}}>
-            <Editor/>
-                <div style={{width:'100%', borderBottom:'1px solid black',background:'rgb(24, 24, 24)'}}>
-                <div className="tabs-wrap">
-                </div>        
-         
-                
+                                }
+                            }}
+                            style={{background:'rgb(252, 253, 255)', zIndex:'999999',left:'453px', top:'295px', height:'44px',width:'12px',border:'1px solid rgb(221, 224, 235)',float:'right',position:'absolute'}}>
+                            <p style={{
+                                color:'black',
+                                transform:'rotate(89deg)',
+                                position:'relative',
+                                fontSize:'12px',top:'6px',}}>hide</p>
+                            </div>
+                        </div>
+                        <div style={{display:'flex', flexDirection:'column', background:'white', width:'100%', position:'relative', border:'1px solid red'}}>
+                            <Editor/>
+                            <div style={{width:'100%', borderBottom:'1px solid black',background:'rgb(24, 24, 24)'}}>
+                            <div className="tabs-wrap"></div>        
+                        </div>
+                    </div>
                 </div>
-        
-            </div>
-            </div>
-            <div style={{display:'flex',flex:1, border:'1px solid red'}}>
-                <Comments/>
-                <div style={{height:'100%',width:'400px',background:'white'}}>
-                    <div style={{height:'42px',
-                        width:'400px',
-                        background:'#202020',
-                        border:'1px solid red',
-                        display:'flex',
-                        alignItems:'center',
-                        justifyContent:'space-between',
-                        padding:'0px 70px'}}>
-                            <button style={{fontWeight:'bold',
+                <div style={{display:'flex',flex:1, border:'1px solid red'}}>
+                    <Comments/>
+                    <div style={{height:'100%',width:'400px',background:'white'}}>
+                        <div style={{height:'42px',
+                            width:'400px',
+                            background:'#202020',
+                            border:'1px solid red',
+                            display:'flex',
+                            alignItems:'center',
+                            justifyContent:'space-between',
+                            padding:'0px 70px'}}>
+                            <button onClick={this.openModal.bind(this)} style={{fontWeight:'bold',
                                 color:'white',
                                 fontSize:'15px',
                                 width:'93px',
@@ -469,10 +670,10 @@ class RoomMain extends Component {
                                 padding:'0px 9px'}}>
                                 <i className="fa fa-infinity"></i>Remix</button>
                                 <i className="fas fa-expand" style={{fontSize:30, color:'rgb(179, 0, 254)'}}></i>
+                        </div>
+                        <RelatedRooms/>
                     </div>
-                    <RelatedRooms/>
                 </div>
-            </div>
             </div>
         </div>)
     }

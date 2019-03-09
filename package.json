@@ -23,6 +23,7 @@
     "node-sass": "^4.10.0",
     "normalize.css": "^8.0.1",
     "photoeditorsdk": "^4.14.1",
+    "popmotion": "^8.6.3",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-cropper": "^1.0.1",
