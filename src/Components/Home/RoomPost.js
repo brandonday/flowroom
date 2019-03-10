@@ -46,10 +46,8 @@ class RoomPost extends Component {
     }
 
     display() {
-        console.log('display it works', this.props.isRemixable)
         return (
         <div style={{display:'flex',
-            width:'100%',
             position:'relative', height:'34px'}}>
             
            
@@ -70,8 +68,8 @@ class RoomPost extends Component {
                     fontSize:'14px',
                     fontWeight:'600',
                     padding:'0 8px',
-                    position:'absolute',
-                    right:'10px',
+                    position:'relative',
+                    right:'-25px',
                     transition:'color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, width 0.3s ease, opacity 0.3s ease'}}>
                         <i class="fas fa-random" style={{color:'rgb(10, 127, 41)'}}></i>
                         <p style={{fontSize:12}}>Remix</p>
@@ -92,23 +90,50 @@ class RoomPost extends Component {
 
                     }}>
 
-
-                    <div className="full-screenable-node" style={{height:246}}>
-                        <iframe src={"/full/" + this.props.id.id} style={{
-                            height:'200%', border:'1px solid red',
-                            width:'200%',
-                            border:0,
-                            position:'absolute',
-                            top:0,
-                            left: 0,
-                            background:'white',
-                            WebkitTransform:'scale(0.5)',
-                            transform:'scale(0.5)',
-                            WebkitTransformOrigin:'top left',
-                            transformOrigin:'top left'
-                }} />
-                </div>
-                </Fullscreen>)
+                    <div style={{display:'flex',height:'49px',width:'100%'}}>
+                        <div style={{display:'flex',
+                            marginTop:10,
+                            marginLeft:'19px',
+                            position:'relative'}}>
+                            <div style={{height:'35px',width:'35px',borderRadius:20,backgroundColor:'black', marginRight:'10px'}}></div>
+                                <p style={{overflow:'hidden',
+                                    textOverflow:'ellipsis',
+                                    textAlign:'left',
+                                    width:'97px',
+                                    fontSize:'16px',
+                                    color:'white'
+                                }}>{`@${this.props.username}`}</p>
+                                
+                            </div>
+                            <div style={{flex:1,
+                                display:'flex',
+                                justifyContent:'flex-end',
+                                /* align-items: center; */
+                                fontSize:'20px',
+                                marginRight:'10px',
+                                marginTop:'30px'}}>
+                                <i class="fas fa-ellipsis-v" style={{color:'white'}}></i>
+                            </div>
+                            
+                        </div>
+                        <div className="full-screenable-node" style={{height:246}}>
+                        <p style={{marginLeft:15,marginBottom:10, color:'white'}}>{this.props.title}</p>
+                            <iframe src={"/full/" + this.props.id.id} style={{
+                                height:'200%', border:'1px solid red',
+                                width:'200%',
+                                border:0,
+                                // position:'absolute',
+                                top:0,
+                                left: 0,
+                                background:'white',
+                                WebkitTransform:'scale(0.5)',
+                                transform:'scale(0.5)',
+                                WebkitTransformOrigin:'top left',
+                                transformOrigin:'top left'
+                            }} />
+                        </div>
+                </Fullscreen>
+            )
         } else if(this.props.roomType === 'image') {
             return (<img style={{height:'auto', width:'100%'}} src={this.props.postedPicURL}/>)
         } else {
@@ -168,7 +193,9 @@ class RoomPost extends Component {
                     position:'relative',
                     WebkitBoxSizing:'border-box',
                     MozBoxSizing:'border-box',
-                    boxSizing:'border-box'}}>
+                    boxSizing:'border-box',
+                    backgroundColor:'#242424'
+                    }}>
 
                         {this.post()}
 
@@ -179,7 +206,7 @@ class RoomPost extends Component {
                             </div>
                         </Link> */}
                     </div>
-                    {this.display()}
+                
                     {this.displayExtraInfo()}
 
                     <div style={{display:'flex',
@@ -188,41 +215,36 @@ class RoomPost extends Component {
                         width:'100%',
                         padding:'0px 10px',
                         alignItems:'center',
-                        position:'relative'
+                        marginTop:20,
+                        position:'relative',
+                    
                         }}>
-                            <div style={{display:'flex',
+                        
+                            <div style={{border:'0px solid red',overflow:'hidden',height:'50px',display:'flex',
                                 alignItems:'center'}}>
-                                <div style={{height:'20px',width:'20px',borderRadius:20,backgroundColor:'black', marginRight:'10px'}}></div>
-                                <p style={{overflow:'hidden',
-                                    textOverflow:'ellipsis',
-                                    textAlign:'left',
-                                    width:'97px',
-                                    fontSize:'14px',
-                                    color:'rgb(128, 132, 140)'
-                                }}>{this.props.username}</p>
+                            <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',marginRight:'18px',flexDirection:'column',height:'37px'}}>
+                            <i class="far fa-eye" style={{fontSize:20, color:'white'}}></i>
+                                <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.props.views}</p>
                             </div>
-                            <div style={{border:'0px solid red',overflow:'hidden',height:'31px',display:'flex',
-                                alignItems:'center'}}>
-                            <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',marginRight:'18px'}}>
-                                <div className="view-3x"></div>
-                                <p style={{fontFamily:'Source Sans Pro',color:'#80848C',fontSize:'14px',marginLeft:"4px",lineHeight:0}}>{this.props.views}</p>
+                            <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center', marginRight:'18px',flexDirection:'column',height:'37px'}}>
+                            <i class="far fa-heart" style={{fontSize:20, color:'white'}}></i>
+                                <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.props.likes}</p>
                             </div>
-                            <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center', marginRight:'18px'}}>
-                                <div className="likes-3x"></div>
-                                <p style={{fontFamily:'Source Sans Pro',color:'#80848C',fontSize:'14px',marginLeft:"4px",lineHeight:0}}>{this.props.likes}</p>
+                            <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',flexDirection:'column',height:'37px',marginRight:'18px'}}>
+                            <i class="fas fa-comment-alt" style={{fontSize:20, color:'white'}}></i>
+                            <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.props.commentsCount}</p>
                             </div>
-                            <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center'}}>
-                                <div className="comments-preview-3x"></div>
-                            <p style={{fontFamily:'Source Sans Pro',color:'#80848C',fontSize:'14px',marginLeft:"4px", lineHeight:0}}>{this.props.commentsCount}</p>
-
-                        </div>
-                        <div onClick={this.goFull} style={{padding:'0px 10px',display:'flex', justifyContent:'center', alignItems:'center'}}>
-                            <i className="fas fa-expand" style={{marginRight:'10px',fontSize:20, color:'rgb(48, 184, 82)'}}></i>
-                        </div>
+                            <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',flexDirection:'column',height:'37px'}}>
+                            <i class="far fa-share-square" style={{fontSize:20, color:'white'}}></i>
+                            </div>
                     </div>
+                    {this.display()}
+                    <div onClick={this.goFull} style={{padding:'0px 10px',display:'flex', justifyContent:'center', alignItems:'center'}}>
+                            <i className="fas fa-expand" style={{marginRight:'10px',fontSize:20, color:'white'}}></i>
+                        </div>
                 </div>
                 <div id="descriptionWrapText" style={{fontSize:'16px', padding:'0px 10px 10px'}}>
-                        <p id="descriptionText" style={{wordBreak:'break-all', fontSize:'12px', color:'rgb(128, 132, 140)'}}>
+                        <p id="descriptionText" style={{wordBreak:'break-all', fontSize:'12px', color:'white'}}>
 
 {/*
                             <b style={{marginRight:'4px'}}>{`${this.props.username}`}</b>

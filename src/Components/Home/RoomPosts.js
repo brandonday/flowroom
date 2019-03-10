@@ -935,6 +935,7 @@ class RoomPosts extends Component {
                                         commentsCount = {i.hasOwnProperty("commentsCount") ? i.commentsCount : 0}
                                         key={i}
                                         shortID={i.shortID}
+                                        title={i.hasOwnProperty("title") ? i.title: 'The title here'}
                                     /></div>)
                                }
                                 // if (i.roomType === 'text') {
