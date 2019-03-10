@@ -320,10 +320,10 @@ class Editor extends Component {
         
     }
     editorDragStart() {
-       // document.getElementById('out-cover').style.display = 'block';
+        document.getElementById('out-cover').style.display = 'block';
     }
     editorDragStop() {
-        // document.getElementById('out-cover').style.display = 'none';
+        document.getElementById('out-cover').style.display = 'none';
         // this.setState({resizableHeight:0});
     }
     handleOverflowChange(isOverflowed) {
@@ -484,7 +484,6 @@ injectJS() {
                             animation_height={this.state.showSubComponent ? 272 : 110}
                             overflowchange={this.handleOverflowChange.bind(this)}
                             overflow={this.state.OverflowDetector}
-
                         /> */}
                         <Default>
                         {/* <div className="show-more-preview-bar-wrap">

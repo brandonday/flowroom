@@ -13,6 +13,7 @@ import { OPEN_MODAL } from '../../actions/entireApp';
 import { connect } from 'react-redux';
 import { firebase } from '../firebase/firebase';
 import { tween, styler } from 'popmotion';
+import axios from 'axios';
 
 // import ImageEdit from './ImageEdit.js';
 
@@ -104,8 +105,7 @@ class RoomMain extends Component {
         }).catch((error) => {
           console.log(error)
         });
-        
-        
+
         
     }
 
@@ -181,7 +181,7 @@ class RoomMain extends Component {
                 }}>
                     <input type="text" style={{
                         height:'30px',
-                        width:'300px',
+                        width:'223px',
                         marginTop:'20px',
                         borderRadius:'5px',
                         border:'1px solid black',
@@ -221,7 +221,80 @@ class RoomMain extends Component {
                             tween({ from:0, to: -300, duration: 200 })
                             .start(v => ball.set('x', v));
 
-                            
+                                    
+        // axios.post(`https://pixabay.com/api/?username=mjweaver01&key=11834841-58b8712ec406d0b987a8d8509" + request + "&image_type=photo`, {
+        
+        // },
+        // {headers: {
+        //   'X-Api-Key': '11834841-58b8712ec406d0b987a8d8509'
+
+        // }}).then(data => {
+        //     alert(data)
+        //   // let img_base64_val = this.base64Encode(res.data);
+        //   // var reader = new FileReader();
+        //   // reader.onload = (function(self) {
+        //   //   return function(e) {
+        //   //     document.getElementById("img").src = e.target.result;
+        //   //   }
+        //   // });
+        //   // reader.readAsDataURL(new Blob([res.data]));
+        //   // this.setState({image:img_base64_val});
+        //   // console.log(img_base64_val)
+        // });
+
+        fetch('https://pixabay.com/api/?username=mjweaver01&key=11834841-58b8712ec406d0b987a8d8509')
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(myJson) {
+   console.log(myJson);
+   for(let i =0; i < myJson.hits.length; i++) {
+   // alert(myJson.hits[i].previewURL)
+    var node = document.createElement("div");                 
+    var img = document.createElement('img');    
+    //img.src = myJson.hits[i].previewURL;   
+    img.setAttribute("height", "100px");
+    img.setAttribute("width", "100px");
+    img.style.margin = '10px';
+
+    img.addEventListener('click', ()=> {
+                        
+     
+        let canvas = document.createElement('canvas');
+        let ctx = canvas.getContext("2d");
+        
+    
+      
+       
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage( img, 0, 0 );
+        // localStorage.setItem( `savedImageData${j}`, canvas.toDataURL("image/png") );
+        //let getImageSaved = canvas.toDataURL("image/png"); //localStorage.getItem(`savedImageData${j}`);
+        //alert(getImageSaved);
+        //document.getElementById('menu-wrap').style.display = 'block';
+        //document.getElementById('menu').style.display = 'block';
+
+        
+        
+       
+        
+
+        
+    })
+
+    img.src = myJson.hits[i].previewURL; 
+
+    
+
+    node.appendChild(img);   
+
+    document.getElementById("innerSel").appendChild(node); 
+
+   }
+  });
+
+     
                         }} className="ball">
                             <i className="fas fa-images"></i>
                             <p>Images</p>
@@ -341,10 +414,12 @@ class RoomMain extends Component {
                         </div>
                             </div>
 
-                            <div id="selection" style={{ width:'299px',
-    marginLeft:'100%',
-    height:'100%',
-    background:'black'}}></div>
+                            <div id="selection" style={{ width:'299px',marginLeft:'100%',height:'100%',background:'black'}}>
+                                <div id="innerSel" style={{justifyContent:'center',display:'flex', flexWrap:'wrap', height:'100%',width:'100%', alignItems:'center', background:'rgb(24, 24, 24)'}}>
+
+                                </div>
+    
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -367,34 +442,38 @@ class RoomMain extends Component {
     render() {
         return (<div id="room-main-page" className="page-wrap twilight room-main-page-wrap">
             <div style={{display:'flex',flexDirection:'column', height:'100%',width:'100%'}}>
-                <div style={{display:'flex',flex:'0 500px'}}>
+                <div style={{display:'flex',flex:'0 583px'}}>
                     <div style={{
                         width:'60px', 
                         background:'#202020'
                     }}>
                         <div id="details" onClick={()=> {
-                            let detailsid = document.getElementById('details');
-                            detailsid.className = 'menubg';
-                            detailsid.style.borderRight = '0px solid #181818';
-                            let getclasses = document.getElementsByClassName('menubg');
-                            this.setState({details:true, objects:false, comments:false, draw:false, 
-                            remix:false, 
-                            preferences:false,
-                            record:false});
-                            
-                            document.getElementById('main-menu').style.display = 'flex';
-                            
-       
-                            for(let i=0; i < getclasses.length; i++) {
-                                if(getclasses[i].id !== 'details') {
-                                    getclasses[i].style.borderRight = '1px solid #181818';
-                                    getclasses[i].className = '';
-                        
+                         
+                                let remixid = document.getElementById('details');
+                                remixid.className = 'menubg';
+                                remixid.style.borderRight = '0px solid #181818';
+                                let getclasses = document.getElementsByClassName('menubg');
+                                this.setState({
+                                    details:false,
+                                    objects:false,
+                                    comments:false,
+                                    draw:false,
+                                    remix:true,
+                                    preferences:false,
+                                    record:false
+                                });
+                                document.getElementById('main-menu').style.display = 'flex';
+
+                                for(let i=0; i < getclasses.length; i++) {
+                                    if(getclasses[i].id !== 'remix') {
+                                        getclasses[i].style.borderRight = '1px solid #181818';
+                                        getclasses[i].className = '';
+                                    }
                                 }
-                            }
+                            
 
                             }} style={{
-                            height:'55px',
+                            height:'70px',
                             width:'59px',
                             display:'flex',
                             flexDirection:'column',
@@ -402,8 +481,9 @@ class RoomMain extends Component {
                             alignItems:'center',
                             borderRight:'1px solid #181818',
                             borderBottom:'1px solid #181818'}} className="menu-bg-border">
-                                <div id="details-icon" className="details-3x"></div>
-                                <p id="details-text" className="details-text">Remix Content</p>
+                                <i className="fas fa-infinity" style={{fontSize:15, color:'white'}}/>
+                                <p id="details-text" className="details-text" style={{fontSize:11,fontWeight:'bold',color:'white'}}>Remix</p>
+                                <p style={{fontSize:11,fontWeight:'bold',color:'white'}}>Content</p>
                         </div>
 
 
@@ -421,7 +501,11 @@ class RoomMain extends Component {
                                         preferences:false,
                                         record:false
                                     });
-                                    document.getElementById('remixhead').style.display = 'none';
+                                    
+                                    if(document.getElementById('remixhead') !== null) {
+                                        document.getElementById('remixhead').style.display = 'none';
+                                    }
+                                   
                                     document.getElementById('main-menu').style.display = 'flex';
                                     for(let i=0; i < getclasses.length; i++) {
                                         if(getclasses[i].id !== 'objects') {
@@ -431,14 +515,20 @@ class RoomMain extends Component {
 
                                         }
                                     }
-                             }} style={{height:'55px',width:'59px',display:'flex',
+                                     let tagstoRemove = document.getElementsByTagName('li');
+                                     
+                                    for(let i = 0; i < tagstoRemove.length; i++) {
+                                      
+                                        tagstoRemove[i].remove()
+                                    }
+                             }} style={{height:'70px',width:'59px',display:'flex',
                                     flexDirection:'column',
                                     justifyContent:'center',
                                     alignItems:'center',
                                     borderRight:'1px solid #181818',
                                     borderBottom:'1px solid #181818'}} className="menu-bg-border">
-                                        <div id="objects-icon" className="rooms-3x"></div>
-                                        <p id="details-text" className="details-text">Add New Content</p>
+                                <p id="details-text" className="details-text" style={{fontSize:11,fontWeight:'bold',color:'white'}}>Add New</p>
+                                <p style={{fontSize:11,fontWeight:'bold',color:'white'}}>Content</p>
                                 </div>
 
 
@@ -615,7 +705,7 @@ class RoomMain extends Component {
                             </div> */}
                         </div>
             
-                        <div id="main-menu" style={{width:'600px', borderRight:'1px solid #181818',background:'#FCFDFF',overflow:'hidden',overflowY:'scroll'}}>
+                        <div id="main-menu" style={{width:'600px', borderRight:'1px solid #181818',background:'#FCFDFF',overflow:'hidden',overflowY:'scroll',backgroundColor:'#181818'}}>
                             {
                                 this.menuSelect()  
                             }
@@ -631,28 +721,35 @@ class RoomMain extends Component {
                         
                                 }
                             }}
-                            style={{background:'rgb(252, 253, 255)', zIndex:'999999',left:'453px', top:'295px', height:'44px',width:'12px',border:'1px solid rgb(221, 224, 235)',float:'right',position:'absolute'}}>
-                            <p style={{
-                                color:'black',
+                            style={{height:'584px',
+                                width:'10px',
+                                background: 'rgb(32, 32, 32)',
+                                left:'432px',
+                                position:'absolute',
+                                top:'-1px'}}>
+                                <div style={{background:'rgb(95, 95, 95', zIndex:'999999', top:'200px', height:'44px',width:'10px',border:'0px solid rgb(221, 224, 235)',float:'right',position:'absolute'}}>
+                                <p style={{
+                                color:'white',
                                 transform:'rotate(89deg)',
                                 position:'relative',
                                 fontSize:'12px',top:'6px',}}>hide</p>
+                                </div>
                             </div>
                         </div>
-                        <div style={{display:'flex', flexDirection:'column', background:'white', width:'100%', position:'relative', border:'1px solid red'}}>
+                        <div style={{display:'flex', flexDirection:'column', background:'white', width:'100%', position:'relative', border:'0px solid red'}}>
                             <Editor/>
                             <div style={{width:'100%', borderBottom:'1px solid black',background:'rgb(24, 24, 24)'}}>
                             <div className="tabs-wrap"></div>        
                         </div>
                     </div>
                 </div>
-                <div style={{display:'flex',flex:1, border:'1px solid red'}}>
+                <div style={{display:'flex',flex:1, border:'0px solid red'}}>
                     <Comments/>
                     <div style={{height:'100%',width:'400px',background:'white'}}>
                         <div style={{height:'42px',
                             width:'400px',
                             background:'#202020',
-                            border:'1px solid red',
+                            border:'0px solid red',
                             display:'flex',
                             alignItems:'center',
                             justifyContent:'space-between',
@@ -671,7 +768,7 @@ class RoomMain extends Component {
                                 <i className="fa fa-infinity"></i>Post</button>
                                 <i className="fas fa-expand" style={{fontSize:30, color:'rgb(179, 0, 254)'}}></i>
                         </div>
-                        <RelatedRooms/>
+                        {/* <RelatedRooms/> */}
                     </div>
                 </div>
             </div>

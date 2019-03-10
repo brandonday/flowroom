@@ -81,7 +81,7 @@ let that;
         let list = document.getElementById('main-menu');
         let overlay = document.createElement('div');
                     overlay.setAttribute("id","remix-overlay");
-                    let item;
+                    //let item;
                    
                     let getList = JSON.parse(localStorage.getItem( "FR_REMIX_LIST"));
                     let uniqueArray;
@@ -95,7 +95,7 @@ let that;
                     this.setState({currentpic:uniqueArray[0]});
                     
                     for(let j = 0; j < uniqueArray.length; j++) {
-                        item = document.createElement('li');
+                    let item = document.createElement('li');
                         
                 
                     let bgImg = document.createElement('div');
@@ -141,15 +141,16 @@ let that;
                         
                         let canvas = document.createElement('canvas');
                         let ctx = canvas.getContext("2d");
+                        
                     
                         img.onload = function() {
                        
                         canvas.width = img.width;
                         canvas.height = img.height;
                         ctx.drawImage( img, 0, 0 );
-                        localStorage.setItem( "savedImageData", canvas.toDataURL("image/png") );
-                        let getImageSaved = localStorage.getItem( "savedImageData");
-                        alert(getImageSaved);
+                        localStorage.setItem( `savedImageData${j}`, canvas.toDataURL("image/png") );
+                        let getImageSaved = localStorage.getItem(`savedImageData${j}`);
+                        //alert(getImageSaved);
                         document.getElementById('menu-wrap').style.display = 'block';
                         document.getElementById('menu').style.display = 'block';
                         that.setState({pic:getImageSaved,classorid:getList[j].classorid, type:getList[j].type})

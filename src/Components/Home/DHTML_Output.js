@@ -35,9 +35,9 @@ const objects = [];
             <iframe id="output_frame" className="output_frame" src=""></iframe>
 
         </div>
-        {/* <div id="out-cover">
+        <div id="out-cover">
         
-        </div> */}
+        </div>
             { 
                 objects.map((i)=> {
                 return (<FR_OBJECT id={i}/>)
