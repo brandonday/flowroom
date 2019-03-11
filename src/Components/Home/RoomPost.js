@@ -87,10 +87,32 @@ class RoomPost extends Component {
                     enabled={this.state.isFull}
                     onChange={(isFull) => {
                         this.setState({isFull,fullscreen:true});
-
+                       
+                    if(!isFull) {
+                        let fullscreennode = document.getElementsByClassName('full-screenable-node');
+                        let toptitle = document.getElementsByClassName('top-title');
+                        let roomtitlecard = document.getElementsByClassName('room-card-title');
+                  
+                        let iframe = document.getElementById(`${this.props.id.id}`);
+                        iframe.style.transform = 'scale(0.5)';
+                        iframe.style.height = '200%';
+                        iframe.style.width = '200%';
+                        for(let i = 0; i < fullscreennode.length; i++) {
+                            fullscreennode[i].style.height = '246px';
+                            fullscreennode[i].style.width = '100%';
+                        }
+                        for(let i = 0; i < toptitle.length; i++) {
+                            toptitle[i].style.display = 'flex';
+                        }
+                        for(let i = 0; i < roomtitlecard.length; i++) {
+                            roomtitlecard[i].style.display = 'flex';
+                        }
+                
+                        
+                    }
                     }}>
 
-                    <div style={{display:'flex',height:'49px',width:'100%'}}>
+                    <div className="top-title" style={{display:'flex',height:'49px',width:'100%'}}>
                         <div style={{display:'flex',
                             marginTop:10,
                             marginLeft:'19px',
@@ -117,8 +139,8 @@ class RoomPost extends Component {
                             
                         </div>
                         <div className="full-screenable-node" style={{height:246}}>
-                        <p style={{marginLeft:15,marginBottom:10, color:'white'}}>{this.props.title}</p>
-                            <iframe src={"/full/" + this.props.id.id} style={{
+                        <p className="room-card-title" style={{marginLeft:15,marginBottom:10, color:'white'}}>{this.props.title}</p>
+                            <iframe id={`${this.props.id.id}`} src={"/full/" + this.props.id.id} style={{
                                 height:'200%', border:'1px solid red',
                                 width:'200%',
                                 border:0,
@@ -145,25 +167,29 @@ class RoomPost extends Component {
     }
     goFull = () => {
 
+        document.fullscreenEnabled = false
+        if(document.fullscreenEnabled === true) {
+        let iframe = document.getElementById(`${this.props.id.id}`);
+        // alert(this.props.id.id)
+        let fullscreennode = document.getElementsByClassName('full-screenable-node');
+        let toptitle = document.getElementsByClassName('top-title');
+        let roomtitlecard = document.getElementsByClassName('room-card-title');
+        iframe.style.height = '100%';
+        iframe.style.width = '100%';
+        iframe.style.transform = 'none';
+        for(let i = 0; i < fullscreennode.length; i++) {
+            fullscreennode[i].style.height = '100%';
+            fullscreennode[i].style.width = '100%';
+        }
+        for(let i = 0; i < toptitle.length; i++) {
+            toptitle[i].style.display = 'none';
+        }
+        for(let i = 0; i < roomtitlecard.length; i++) {
+            roomtitlecard[i].style.display = 'none';
+        }
         this.setState({ isFull: true });
-        if(this.state.fullscreen === true) {
-           // this.setState({fullscreen:false});
         } else {
-            // let full = document.getElementById('full-screen-fallback');
-            // let body = document.getElementsByTagName('body')[0];
-            // full.style.position = 'absolute';
-
-
-
-            // full.style.height = '100%';
-            //           full.style.width = '100%';
-            //           full.style.zIndex = '999999999';
-            //           full.style.backgroundColor = 'white';
-            //           full.style.display = 'flex';
-            //           body.style.overflow = 'hidden';
-
-
-
+            alert('no ')
         }
 
     }
