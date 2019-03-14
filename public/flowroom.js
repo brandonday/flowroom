@@ -327,6 +327,11 @@
                 }
             }
         },
+        // RemixJS:function(urls, callback) {
+        //     for(let i = 0; i < urls.length; i++) {
+        //         urls[i] 
+        //     } 
+        // },
         RemixText:function(elId, options) {
 
             this.elId = elId;

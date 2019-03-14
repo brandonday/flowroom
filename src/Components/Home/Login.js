@@ -2,16 +2,19 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginAccount } from '../../actions/authentication';
-
-
+import createHistory from 'history/createBrowserHistory';
+const history = createHistory();
 const loginUserAccount = ({ loginAccount }) => {
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;
 
     loginAccount(email, password).then(()=> {
         // TODO: ???
+     
+      document.location.replace('/')
     }).catch((error) => {
         // TODO: show error message
+
     });
 }
 

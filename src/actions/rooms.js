@@ -85,7 +85,12 @@ export const startCreateRoom = (roomData = {}) => {
             performance = '',
             isWeb = false,
             isNative = false,
-            isWebNative = false
+            isWebNative = false,
+            isPosted = false,
+            real_time = [],
+            data = [],
+            room_title = '',
+            room_card_height = ''
         } = roomData;
 
         const room = {
@@ -157,6 +162,11 @@ export const startCreateRoom = (roomData = {}) => {
             isWeb,
             isNative,
             isWebNative,
+            isPosted:false,
+            real_time:[],
+            data:[],
+            room_title:'',
+            room_card_height:''
         }
       
         firebase.auth().onAuthStateChanged(function(user) {

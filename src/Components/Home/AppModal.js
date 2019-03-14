@@ -265,6 +265,8 @@ const KeyCodes = {
     saveRoom () {
         let hashids = new Hashids(uuid(), 6);
         let uid = firebase.auth().currentUser.uid;
+        let currentRoomID = window.location.pathname.split("room/").pop();
+
         this.props.startCreateRoom(
             {
                 description:this.state.description,
@@ -322,7 +324,7 @@ const KeyCodes = {
                 isNormalUser:this.state.isProduction,
                 userName:this.state.username,
                 emailAddress:'',
-                shortID:hashids.encode(1, 2, 3),
+                shortID:this.props.state.entireApp.post ? hashids.encode(1, 2, 3) : currentRoomID,
                 permissions: { },
                 uid:uid,
                 postedPicURL:this.state.postedPicURL,
@@ -335,10 +337,19 @@ const KeyCodes = {
                 performance:this.state.performance,
                 isWeb:this.state.isWeb,
                 isNative:this.state.isNative,
-                isWebNative:this.state.isWebNative
-
-
-        })
+                isWebNative:this.state.isWebNative,
+                isPosted:false,
+                real_time:[],
+                data:[],
+                room_title:'',
+                room_card_height:''
+                
+                
+        });
+        document.getElementById('postbtn').style.display = 'none';
+        document.getElementById('savechanges').style.display = 'flex';
+        document.getElementById('deletebtn').style.display = 'flex';
+        this.closeModal();
     }
     sendMessage() {
         const database = firebase.database();
@@ -782,34 +793,34 @@ const KeyCodes = {
                     }} value={this.state.communityApartOf} onChange={this.communityhandleChange} placeholder='Type community name here'/>
 
                      <p style={{marginBottom:10}}>Credits (optional) (?)</p>
-                     <ReactTags tags={this.state.creditsTags}
+                     {/* <ReactTags tags={this.state.creditsTags}
                         suggestions={this.state.suggestionscredits}
                         handleDelete={this.handleDeletecredits}
                         handleAddition={this.handleAdditioncredits}
                         handleDrag={this.handleDragcredits}
                         delimiters={delimiters1}
                         placeholder={'Add additional names (optional)'}
-                    />
+                    /> */}
 
 
                     <p style={{marginTop:10, marginBottom:10}}>Compatability</p>
-                    <ReactTags tags={this.state.compatibleTags}
+                    {/* <ReactTags tags={this.state.compatibleTags}
                         suggestions={this.state.suggestionsCompatibleTags}
                         handleDelete={this.handleDeleteCompatibleTags}
                         handleAddition={this.handleAdditionCompatibleTags}
                         handleDrag={this.handleDragCompatibleTags}
                         delimiters={delimiters3}
                         placeholder={'Any browsers and OS compatible with (optional)'}
-                    />
+                    /> */}
 
                     <p style={{marginTop:10, marginBottom:10}}>Tags (Optional)</p>
-                     <ReactTags style={{marginBottom:10}} tags={this.state.tags}
+                     {/* <ReactTags style={{marginBottom:10}} tags={this.state.tags}
                         suggestions={this.state.suggestionsTags}
                         handleDelete={this.handleDeleteTags}
                         handleAddition={this.handleAdditionTags}
                         handleDrag={this.handleDragTags}
                         placeholder={'Any additional tags (optional)'}
-                        delimiters={delimiters4} />
+                        delimiters={delimiters4} /> */}
 
                       <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none',marginBottom:10}}>
                         <div onClick={()=>{this.selectPr('web-btn')}} id="web-btn" className={this.state.webBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Web</p></div>

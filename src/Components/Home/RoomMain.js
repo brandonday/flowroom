@@ -13,6 +13,7 @@ import { OPEN_MODAL } from '../../actions/entireApp';
 import { connect } from 'react-redux';
 import { firebase } from '../firebase/firebase';
 import { tween, styler } from 'popmotion';
+import { startCreateRoom } from '../../actions/rooms';
 import axios from 'axios';
 
 // import ImageEdit from './ImageEdit.js';
@@ -43,7 +44,8 @@ class RoomMain extends Component {
            draw:false,
            remix:false,
            preferences:false,
-           record:false
+           record:false,
+           postBtnVisible:true
         };
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -80,26 +82,19 @@ class RoomMain extends Component {
                 if(currentUser === uid) {
                   //alert('the same');
                   console.log(that.state.saveVisible)
-                  that.setState({display:'flex'})
+                  that.setState({display:'flex', postBtnVisible:false});
                   
                 } else {
                   //alert('not');
-                  that.setState({saveVisible:'block'});
-                  that.setState({postVisible:'block'});
-                  that.setState({remixVisible:'block'});
+                  that.setState({saveVisible:'block',postVisible:'block',remixVisible:'block'});
                 }
               } else {
-                  that.setState({saveVisible:'block'});
-                  that.setState({postVisible:'block'});
-                  that.setState({remixVisible:'block'});
+                  that.setState({saveVisible:'block',postVisible:'block',remixVisible:'block'});
               }
             } else {
               //alert('not');
-                that.setState({saveVisible:'block'});
-                that.setState({postVisible:'block'});
-                that.setState({remixVisible:'block'});
-              
-      
+                that.setState({saveVisible:'block',postVisible:'block',remixVisible:'block'});
+  
             } 
         
         }).catch((error) => {
@@ -148,8 +143,8 @@ class RoomMain extends Component {
         document.getElementById('details').className = 'details-3x'; 
         document.getElementById('details-text').className = 'details-text'; 
     }
-    openModal() {
-        this.props.openModal({isModalOpen:true, modalType:'room', customStyles:{
+    openModal(post = true) {
+        this.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles:{
           overlay: {
             backgroundColor: 'none',
           },
@@ -160,7 +155,7 @@ class RoomMain extends Component {
           bottom                : 'auto',
           marginRight           : '0%',
           transform             : 'translate(-50%, -50%)',
-          height:'100%',
+          height:'50%',
           width:'50%',
           }
         }})
@@ -188,114 +183,90 @@ class RoomMain extends Component {
                         paddingLeft:'14px'}} placeholder="ddsdssd"/>
             
                     <div id="main-add-section" style={{display:'flex',flexWrap:'wrap', width:'300px', overflow:'hidden',height:'500px',backgroundColor:'#181818'}}>
-                        <div id="menu-sel-wrap" style={{ width:'100%',
-    height:'100%',
-    margin:'auto'}}>
-
+                        <div id="menu-sel-wrap" style={{ width:'100%',height:'100%',margin:'auto'}}>
                             <div style={{width:'299px',
-    height:'100%',
-    float:'left',
-    display:'flex',
-    flexWrap:'wrap',
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor:'#18181'
-    }}>
+                                height:'100%',
+                                float:'left',
+                                display:'flex',
+                                flexWrap:'wrap',
+                                justifyContent:'center',
+                                alignItems:'center',
+                                backgroundColor:'#18181'
+                            }}>
 
-                            <div style={{
-                            height:'100px',
-                            width:'100px', 
-                            margin:'10px',
-                            display:'flex',
-                            justifyContent:'center',
-                            alignItems:'center',
-                            flexDirection:'column',
-                            color:'white',
-                            background:'#01AADC',
-                            borderRadius:'5px',
-                            fontSize:'20px'
-                        }} onClick={()=>{
-                            const element = document.querySelector('#main-add-section #menu-sel-wrap');
-                            const ball = styler(element); 
+                                <div style={{
+                                    height:'100px',
+                                    width:'100px', 
+                                    margin:'10px',
+                                    display:'flex',
+                                    justifyContent:'center',
+                                    alignItems:'center',
+                                    flexDirection:'column',
+                                    color:'white',
+                                    background:'#01AADC',
+                                    borderRadius:'5px',
+                                    fontSize:'20px'
+                                }} onClick={()=> {
+                                    const element = document.querySelector('#main-add-section #menu-sel-wrap');
+                                    const ball = styler(element); 
 
-                            tween({ from:0, to: -300, duration: 200 })
-                            .start(v => ball.set('x', v));
+                                    tween({ from:0, to: -300, duration: 200 })
+                                    .start(v => ball.set('x', v));
 
                                     
-        // axios.post(`https://pixabay.com/api/?username=mjweaver01&key=11834841-58b8712ec406d0b987a8d8509" + request + "&image_type=photo`, {
+                                    // axios.post(`https://pixabay.com/api/?username=mjweaver01&key=11834841-58b8712ec406d0b987a8d8509" + request + "&image_type=photo`, {
         
-        // },
-        // {headers: {
-        //   'X-Api-Key': '11834841-58b8712ec406d0b987a8d8509'
+                                    // },
+                                    // {headers: {
+                                    //   'X-Api-Key': '11834841-58b8712ec406d0b987a8d8509'
 
-        // }}).then(data => {
-        //     alert(data)
-        //   // let img_base64_val = this.base64Encode(res.data);
-        //   // var reader = new FileReader();
-        //   // reader.onload = (function(self) {
-        //   //   return function(e) {
-        //   //     document.getElementById("img").src = e.target.result;
-        //   //   }
-        //   // });
-        //   // reader.readAsDataURL(new Blob([res.data]));
-        //   // this.setState({image:img_base64_val});
-        //   // console.log(img_base64_val)
-        // });
+                                    // }}).then(data => {
+                                    //     alert(data)
+                                    //   // let img_base64_val = this.base64Encode(res.data);
+                                    //   // var reader = new FileReader();
+                                    //   // reader.onload = (function(self) {
+                                    //   //   return function(e) {
+                                    //   //     document.getElementById("img").src = e.target.result;
+                                    //   //   }
+                                    //   // });
+                                    //   // reader.readAsDataURL(new Blob([res.data]));
+                                    //   // this.setState({image:img_base64_val});
+                                    //   // console.log(img_base64_val)
+                                    // });
 
-        fetch('https://pixabay.com/api/?username=mjweaver01&key=11834841-58b8712ec406d0b987a8d8509')
-  .then(function(response) {
-    return response.json();
-  })
-  .then(function(myJson) {
-   console.log(myJson);
-   for(let i =0; i < myJson.hits.length; i++) {
-   // alert(myJson.hits[i].previewURL)
-    var node = document.createElement("div");                 
-    var img = document.createElement('img');    
-    //img.src = myJson.hits[i].previewURL;   
-    img.setAttribute("height", "100px");
-    img.setAttribute("width", "100px");
-    img.style.margin = '10px';
+                                    fetch('https://pixabay.com/api/?username=mjweaver01&key=11834841-58b8712ec406d0b987a8d8509')
+                                    .then(function(response) {
+                                        return response.json();
+                                    })
+                                    .then(function(myJson) {
+                                        console.log(myJson);
+                                        for(let i =0; i < myJson.hits.length; i++) {
+                                            // alert(myJson.hits[i].previewURL)
+                                            var node = document.createElement("div");                 
+                                            var img = document.createElement('img');    
+                                            //img.src = myJson.hits[i].previewURL;   
+                                            img.setAttribute("height", "100px");
+                                            img.setAttribute("width", "100px");
+                                            img.style.margin = '10px';
+                                            img.addEventListener('click', ()=> {
+                                                let canvas = document.createElement('canvas');
+                                                let ctx = canvas.getContext("2d");
+                                                canvas.width = img.width;
+                                                canvas.height = img.height;
+                                                ctx.drawImage( img, 0, 0 );
+                                                // localStorage.setItem( `savedImageData${j}`, canvas.toDataURL("image/png") );
+                                                //let getImageSaved = canvas.toDataURL("image/png"); //localStorage.getItem(`savedImageData${j}`);
+                                                //alert(getImageSaved);
+                                                //document.getElementById('menu-wrap').style.display = 'block';
+                                                //document.getElementById('menu').style.display = 'block';
+                                            });
+                                            img.src = myJson.hits[i].previewURL; 
+                                            node.appendChild(img);   
+                                            document.getElementById("innerSel").appendChild(node); 
 
-    img.addEventListener('click', ()=> {
-                        
-     
-        let canvas = document.createElement('canvas');
-        let ctx = canvas.getContext("2d");
-        
-    
-      
-       
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage( img, 0, 0 );
-        // localStorage.setItem( `savedImageData${j}`, canvas.toDataURL("image/png") );
-        //let getImageSaved = canvas.toDataURL("image/png"); //localStorage.getItem(`savedImageData${j}`);
-        //alert(getImageSaved);
-        //document.getElementById('menu-wrap').style.display = 'block';
-        //document.getElementById('menu').style.display = 'block';
-
-        
-        
-       
-        
-
-        
-    })
-
-    img.src = myJson.hits[i].previewURL; 
-
-    
-
-    node.appendChild(img);   
-
-    document.getElementById("innerSel").appendChild(node); 
-
-   }
-  });
-
-     
-                        }} className="ball">
+                                        }
+                                    });
+                                }} className="ball">
                             <i className="fas fa-images"></i>
                             <p>Images</p>
                         </div>
@@ -440,6 +411,7 @@ class RoomMain extends Component {
         }
      }
     render() {
+        let that = this;
         return (<div id="room-main-page" className="page-wrap twilight room-main-page-wrap">
             <div style={{display:'flex',flexDirection:'column', height:'100%',width:'100%'}}>
                 <div style={{display:'flex',flex:'0 583px'}}>
@@ -727,7 +699,7 @@ class RoomMain extends Component {
                                 left:'432px',
                                 position:'absolute',
                                 top:'-1px'}}>
-                                <div style={{background:'rgb(95, 95, 95', zIndex:'999999', top:'200px', height:'44px',width:'10px',border:'0px solid rgb(221, 224, 235)',float:'right',position:'absolute'}}>
+                                <div style={{background:'rgb(95, 95, 95', zIndex:'90000', top:'200px', height:'44px',width:'10px',border:'0px solid rgb(221, 224, 235)',float:'right',position:'absolute'}}>
                                 <p style={{
                                 color:'white',
                                 transform:'rotate(89deg)',
@@ -754,20 +726,50 @@ class RoomMain extends Component {
                             alignItems:'center',
                             justifyContent:'space-between',
                             padding:'0px 70px'}}>
-                            <button onClick={this.openModal.bind(this)} style={{fontWeight:'bold',
+                            <button id="postbtn" onClick={()=>{this.openModal(true)}} style={{fontWeight:'bold',
                                 color:'white',
                                 fontSize:'15px',
-                                width:'93px',
+                                width:'50px',
                                 height:'27px',
                                 backgroundColor:'rgb(179, 0, 254)',
                                 border:'none',
                                 borderRadius:'5px',
                                 justifyContent:'space-between',
-                                display:'flex',
+                                display:that.state.postBtnVisible ? 'flex' : 'none',
                                 padding:'0px 9px'}}>
-                                <i className="fa fa-infinity"></i>Post</button>
+                                Post</button>
+                                <button id="savechanges" onClick={()=>{this.openModal(false)}} style={{fontWeight:'bold',
+                                color:'white',
+                                fontSize:'15px',
+                                width:'105px',
+                                height:'27px',
+                                backgroundColor:'rgb(179, 0, 254)',
+                                border:'none',
+                                borderRadius:'5px',
+                                justifyContent:'space-between',
+                                display:that.state.postBtnVisible ? 'none' : 'flex',
+                                padding:'0px 9px'}}>
+                                Save Changes</button>
+                                <button id="deletebtn" onClick={()=>{
+                                     let currentRoomID = window.location.pathname.split("room/").pop();
+firebase.database().ref(`rooms/${currentRoomID}`).remove();
+window.location.replace('/room/');
+
+                                }} style={{fontWeight:'bold',
+                                color:'white',
+                                fontSize:'15px',
+                                width:'55px',
+                                height:'27px',
+                                backgroundColor:'rgb(179, 0, 254)',
+                                border:'none',
+                                borderRadius:'5px',
+                                justifyContent:'space-between',
+                                display:that.state.postBtnVisible ? 'none' : 'flex',
+                                padding:'0px 9px'}}>
+                                Delete</button>
                                 <i className="fas fa-expand" style={{fontSize:30, color:'rgb(179, 0, 254)'}}></i>
                         </div>
+                        
                         {/* <RelatedRooms/> */}
                     </div>
                 </div>
@@ -778,7 +780,8 @@ class RoomMain extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         isLoggedIn:state.isLoggedIn,
-        props:ownProps
+        props:ownProps,
+        state:state
     }
 }
 

@@ -397,7 +397,7 @@ const repliesNum = [];
         return(<div style={{height:'100%',width:'100%'}}>
             <div className="main-section-wrap-comments-screen">
                 <div style={{height:'42px', position:'relative', width:'100%'}}>
-                    <div style={{display:'flex', height:42, border:'1px solid red',background:'rgb(32, 32, 32)'}}>
+                    <div style={{display:'flex', height:42, border:'0px solid red',background:'rgb(32, 32, 32)'}}>
                        
                     </div>
                 </div>

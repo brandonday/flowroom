@@ -5,6 +5,7 @@ export default (state = {}, action) => {
             return {
                 isModalOpen:action.isModalOpen,
                 modalType:action.modalType,
+                post:action.post,
                 customStyles:action.customStyles
             };
         default:

@@ -17,7 +17,7 @@ import { OPEN_MODAL } from '../../actions/entireApp';
         content: {
           color: 'lightsteelblue',
           backgroundColor:'white',
-          height:'90%',
+          height:'50%',
           width:'79%',
           right:'0px',
           top:'30px',
