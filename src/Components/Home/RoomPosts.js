@@ -885,7 +885,8 @@ class RoomPosts extends Component {
                         {
 
                             this.state.rooms.map((i)=> {
-                              console.log(i)
+                              
+                              console.log('main rendered',i)
                                 // if(i.isRemixable === true) {
                                 //     return (<div><RoomPost id={i}
                                 //         description={i.description}
@@ -965,10 +966,10 @@ class RoomPosts extends Component {
                             </div>
 
                         </section>
-                        {/* <nav  style={{flex:1}} className="pagination-buttons-wrap">
+                        <nav  style={{flex:1}} className="pagination-buttons-wrap">
                             <span onClick={this.prevPage.bind(this)} className="pagination-button"><span style={{display:'inline-block', background: "url('/images/sprite.png') no-repeat", overflow:'hidden',textIndent:'-9999px', textAlign:'left',backgroundSize:'89px 248px',backgroundPosition:'-75px -184px',width:'10px',height:'18px', marginRight:'15px', transform: 'rotate(179deg)'}}></span>Previous Page</span>
                             <span onClick={this.nextPage.bind(this)} className="pagination-button">Next Page<span style={{display:'inline-block', background: "url('/images/sprite.png') no-repeat", overflow:'hidden',textIndent:'-9999px', textAlign:'left',backgroundSize:'89px 248px',backgroundPosition:'-75px -184px',width:'10px',height:'18px',marginLeft:'15px'}}></span></span>
-                        </nav> */}
+                        </nav>
                     </div>
                 </div>
                 )}
