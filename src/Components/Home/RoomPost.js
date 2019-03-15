@@ -74,7 +74,29 @@ class RoomPost extends Component {
                         <i class="fas fa-random" style={{color:'rgb(10, 127, 41)'}}></i>
                         <p style={{fontSize:12}}>Remix</p>
                       
-                </div></a>): ''}
+                </div></a>): (<a href={`room/${this.props.shortID}`}>
+                
+                <div style={{display:'flex',
+                    justifyContent:'space-around',
+                    alignItems:'center',
+                    outline:'none',
+                    cursor:'pointer',
+                    border:'1px solid rgb(10, 127, 41)',
+                    borderRadius:'40px',
+                    height:'32px',
+                    width:'78px',
+                    backgroundColor:'rgb(27, 178, 67)',
+                    fontFamily:"Source Sans Pro",
+                    color:'white',
+                    fontSize:'14px',
+                    fontWeight:'600',
+                    padding:'0 8px',
+                    position:'relative',
+                    right:'-25px',
+                    transition:'color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, width 0.3s ease, opacity 0.3s ease'}}>
+                        <p style={{fontSize:12, with:20}}>Go to Room</p>
+                      
+                </div></a>)}
                 
        
     </div>)
