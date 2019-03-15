@@ -183,7 +183,8 @@ const KeyCodes = {
             messageList:[],
             messageReset:false,
             theMessages:true,
-            room_title:''
+            room_title:'',
+            shortID:''
 
       }
 
@@ -229,7 +230,11 @@ const KeyCodes = {
     componentDidMount() {
         var user = firebase.auth().currentUser;
         var name, email, photoUrl, uid, emailVerified, fullname;
-        this.setState({newMessage:'message-screen'});
+        var shortID = window.location.pathname.split("room/").pop();
+        
+    
+
+        this.setState({newMessage:'message-screen', shortID:shortID});
         Modal.setAppElement('#root');
         const database = firebase.database();
         let that = this;
@@ -253,16 +258,11 @@ const KeyCodes = {
 
             });
 
-            var shortID = window.location.pathname.split("room/").pop();
-            database.ref(`${shortID}`).once('value').then((snapshot) => {
-                
-                snapshot.forEach((childSnapShot) => {
-                   
-                    postData.push({room_title:`${childSnapShot.val().room_title ? childSnapShot.val().room_title:'' }`,description:`${childSnapShot.val().description ? childSnapShot.val().description:'' }`});
-                    
-                })
-               // alert(postData[0])
-                //that.setState({room_title:postData[0].room_title,description:postData[0].description});
+            
+           database.ref(`rooms/${shortID}`).once('value').then(function(snapshot) {
+        
+        
+                that.setState({room_title:snapshot.val().room_title,description:snapshot.val().description});
 
             });
 
@@ -708,7 +708,9 @@ const KeyCodes = {
                         marginTop:20,
                         marginBottom:20,
                        
-                    }}   onChange={this.titlehandleChange} value={this.state.room_title} placeholder={'Title (optional)'}/>
+                    }}   onLoad={()=>{
+                        alert('jkjk')
+                    }} onChange={this.titlehandleChange} value={this.state.room_title} placeholder={'Title (optional)'}/>
                     <textarea id="description" className="description" style={{
                         height:'100px',
                         width:'100%',
@@ -1248,9 +1250,10 @@ const KeyCodes = {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
     return {
-    state:state
+    state:state,
+    props:ownProps
   }
 };
 const mapDispatchToProps = (dispatch) => ({
