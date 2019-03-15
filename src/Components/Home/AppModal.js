@@ -61,6 +61,7 @@ const KeyCodes = {
     constructor(props) {
       super(props);
       this.descriptionhandleChange = this.descriptionhandleChange.bind(this);
+      this.titlehandleChange = this.titlehandleChange.bind(this);
       this.imageTextPostedhandleChange = this.imageTextPostedhandleChange.bind(this);
       this.textPostedhandleChange = this.textPostedhandleChange.bind(this);
       this.communityhandleChange = this.communityhandleChange.bind(this);
@@ -180,8 +181,8 @@ const KeyCodes = {
             fullname:'',
             messageList:[],
             messageReset:false,
-            theMessages:true
-
+            theMessages:true,
+            room_title:''
 
       }
 
@@ -211,6 +212,9 @@ const KeyCodes = {
     }
     descriptionhandleChange(event) {
         this.setState({description: event.target.value});
+      }
+    titlehandleChange(event) {
+        this.setState({room_title: event.target.value});
       }
     imageTextPostedhandleChange(event) {
         this.setState({imageTextPosted: event.target.value});
@@ -341,7 +345,7 @@ const KeyCodes = {
                 isPosted:false,
                 real_time:[],
                 data:[],
-                room_title:'',
+                room_title:this.state.room_title,
                 room_card_height:''
                 
                 
@@ -673,7 +677,24 @@ const KeyCodes = {
                             </div>
                         </div>
                     </div>
-
+                    <input id="room-title" className="room-title" style={{
+                        height:'50px',
+                        width:'100%',
+                        border:'1px solid #DDE0EB',
+                        borderRadius:'6px',
+                        color:'#333333',
+                        fontSize:'1.4rem',
+                        marginBottom:'1.4rem',
+                        padding:'1rem',
+                        fontFamily:'Helvetica, Arial, sans-serif',
+                        outline:'none',
+                        backgroundColor:'#F9FAFA',
+                        webkitFontSmoothing:'antialiased',
+                        resize:'none',
+                        marginTop:20,
+                        marginBottom:20,
+                       
+                    }}   onChange={this.titlehandleChange} value={this.state.room_title} placeholder={'Title (optional)'}/>
                     <textarea id="description" className="description" style={{
                         height:'100px',
                         width:'100%',

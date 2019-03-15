@@ -827,6 +827,7 @@ class RoomPosts extends Component {
                             roomType:childSnapShot.val().roomType,
                             username:childSnapShot.val().userName,
                             shortID:childSnapShot.val().shortID,
+                            room_title:childSnapShot.val().room_title,
                         ...childSnapShot
                     });
 
@@ -936,7 +937,7 @@ class RoomPosts extends Component {
                                         commentsCount = {i.hasOwnProperty("commentsCount") ? i.commentsCount : 0}
                                         key={i}
                                         shortID={i.shortID}
-                                        title={i.hasOwnProperty("title") ? i.title: 'The title here'}
+                                        title={i.hasOwnProperty("room_title") ? i.room_title: 'The Title Here'}
                                     /></div>)
                                }
                                 // if (i.roomType === 'text') {
