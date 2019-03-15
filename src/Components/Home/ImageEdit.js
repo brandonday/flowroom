@@ -79,12 +79,15 @@ let that;
     
         let that = this;
         let list = document.getElementById('main-menu');
+        let getList = JSON.parse(localStorage.getItem( "FR_REMIX_LIST"));
+        if(getList != null) {
         let overlay = document.createElement('div');
                     overlay.setAttribute("id","remix-overlay");
                     //let item;
                    
-                    let getList = JSON.parse(localStorage.getItem( "FR_REMIX_LIST"));
+                   
                     let uniqueArray;
+                 
                     for(let i = 0; i < getList.length; i++) {
                         let n = Object.getOwnPropertyNames(getList[i]);
                         let final = n[0];
@@ -165,8 +168,9 @@ let that;
 
                         
                     })
-                    }
+                  }
                    
+                }
                     //let secondCreated = false;
                 //     item.addEventListener('click', function() {
                       

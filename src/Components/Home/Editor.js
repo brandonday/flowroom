@@ -73,7 +73,7 @@ class Editor extends Component {
      }
     componentDidMount() {
        
-        
+      document.getElementById('out-cover').style.display = 'none';
         localStorage.setItem("dhtml",JSON.stringify({html:"w",css:"w",js:"d"}));
         this.renderContent();
        

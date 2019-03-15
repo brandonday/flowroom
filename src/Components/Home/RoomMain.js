@@ -459,7 +459,7 @@ class RoomMain extends Component {
                         </div>
 
 
-                                <div id="objects" onClick={()=> {
+                                {/* <div id="objects" onClick={()=> {
                                     let objectsid = document.getElementById('objects');
                                     objectsid.className = 'menubg';
                                     objectsid.style.borderRight = '0px solid #181818';
@@ -501,10 +501,10 @@ class RoomMain extends Component {
                                     borderBottom:'1px solid #181818'}} className="menu-bg-border">
                                 <p id="details-text" className="details-text" style={{fontSize:11,fontWeight:'bold',color:'white'}}>Add New</p>
                                 <p style={{fontSize:11,fontWeight:'bold',color:'white'}}>Content</p>
-                                </div>
+                                </div> */}
 
 
-                                        <div id="comments" onClick={()=> {
+                                        {/* <div id="comments" onClick={()=> {
            
                                             let commentsid = document.getElementById('comments');
                                             commentsid.className = 'menubg';
@@ -538,8 +538,8 @@ class RoomMain extends Component {
                                             borderBottom:'1px solid #181818'}} className="menu-bg-border">
                                                 <div id="comments-icon" className="comments-3x"></div>
                                                     <p id="details-text" className="details-text">Add Apps</p>
-                                    </div>
-                                    <div id="draw" onClick={()=> {
+                                    </div> */}
+                                    {/* <div id="draw" onClick={()=> {
                                         let drawid = document.getElementById('draw');
                                         drawid.className = 'menubg';
                                         drawid.style.borderRight = '0px solid #181818';
@@ -573,7 +573,7 @@ class RoomMain extends Component {
                                     className="menu-bg-border">
                                         <div id="draw-icon" className="draw-3x"></div>
                                         <p id="details-text" className="details-text">Add Templates</p>
-                            </div>
+                            </div> */}
                             {/* <div id="remix" onClick={()=> {
                                 let remixid = document.getElementById('remix');
                                 remixid.className = 'menubg';
@@ -752,8 +752,8 @@ class RoomMain extends Component {
                                 Save Changes</button>
                                 <button id="deletebtn" onClick={()=>{
                                      let currentRoomID = window.location.pathname.split("room/").pop();
-firebase.database().ref(`rooms/${currentRoomID}`).remove();
-window.location.replace('/room/');
+                                     firebase.database().ref(`rooms/${currentRoomID}`).remove();
+                                     window.location.replace('/room/');
 
                                 }} style={{fontWeight:'bold',
                                 color:'white',
