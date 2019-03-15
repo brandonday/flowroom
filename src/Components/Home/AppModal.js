@@ -859,17 +859,17 @@ const KeyCodes = {
                         placeholder={'Any additional tags (optional)'}
                         delimiters={delimiters4} /> */}
 
-                      <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none',marginBottom:10}}>
+                      {/* <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none',marginBottom:10}}>
                         <div onClick={()=>{this.selectPr('web-btn')}} id="web-btn" className={this.state.webBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Web</p></div>
                         <div onClick={()=>{this.selectPr('native-btn')}} id="native-btn" className={this.state.nativeBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Native</p></div>
                         <div onClick={()=>{this.selectPr('web-native-btn')}} id="web-native-btn" className={this.state.webNativeBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Both</p></div>
-                    </div>
+                    </div> */}
 
-                    <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none'}}>
+                    {/* <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none'}}>
                         <div onClick={()=>{this.selectPr('reg-btn')}} id="reg-btn" className={this.state.regBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Regular</p></div>
                         <div onClick={()=>{this.selectPr('exp-btn')}} id="exp-btn" className={this.state.exBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Experimental</p></div>
 
-                    </div>
+                    </div> */}
 
                     <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none', flexDirection:'column', justifyContent:'center', alignItems:'center', width:'100%'}}>
                         <p>Is this Room remixable (?)</p>

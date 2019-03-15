@@ -141,7 +141,7 @@ class RoomPost extends Component {
                             position:'relative'}}>
                             <div style={{height:'50px',width:'50px',borderRadius:30,backgroundColor:'black', backgroundImage:`url(${this.props.pic})`, marginRight:'10px'}}></div>
                             <div style={{display:'flex',flexDirection:'column'}}>
-                            <p className="room-card-title" style={{color:'white'}}>{this.props.title}</p>
+                            <p className="room-card-title" style={{color:'white'}}>{this.props.room_title}</p>
 
                                 <p style={{overflow:'hidden',
                                     textOverflow:'ellipsis',

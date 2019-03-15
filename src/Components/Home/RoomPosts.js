@@ -364,6 +364,7 @@ class RoomPosts extends Component {
                                 roomType:childSnapShot.val().roomType,
                                 username:childSnapShot.val().userName,
                                 shortID:childSnapShot.val().shortID,
+                                room_title:childSnapShot.val().room_title,
                                 ...childSnapShot
                             });
 
@@ -652,6 +653,7 @@ class RoomPosts extends Component {
                         roomType:childSnapShot.val().roomType,
                         username:childSnapShot.val().userName,
                         shortID:childSnapShot.val().shortID,
+                        room_title:childSnapShot.val().room_title,
                         ...childSnapShot
                     });
 
@@ -828,6 +830,7 @@ class RoomPosts extends Component {
                             username:childSnapShot.val().userName,
                             shortID:childSnapShot.val().shortID,
                             room_title:childSnapShot.val().room_title,
+                            
                         ...childSnapShot
                     });
 
@@ -922,7 +925,7 @@ class RoomPosts extends Component {
                                 //     /></div>)
                                 // }
                                 if (i.roomType === 'other') {
-                                  console.log('room ob', i);
+                                  console.log('room obj', i);
                                     return (<div><RoomPost id={i}
                                         description={i.description}
                                         isRemixable={i.isRemixable}
@@ -937,7 +940,7 @@ class RoomPosts extends Component {
                                         commentsCount = {i.hasOwnProperty("commentsCount") ? i.commentsCount : 0}
                                         key={i}
                                         shortID={i.shortID}
-                                        title={i.hasOwnProperty("room_title") ? i.room_title: 'The Title Here'}
+                                        room_title={i.room_title}
                                     /></div>)
                                }
                                 // if (i.roomType === 'text') {
