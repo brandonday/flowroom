@@ -183,46 +183,71 @@ class Editor extends Component {
         HTML_EDITOR = CodeMirror.fromTextArea(document.getElementById("html_code"), {
           lineNumbers: true,
           mode: "htmlmixed",
-          theme: "base16-light",
+          theme: "base16-dark",
           lineWrapping: true
         });
   
         CSS_EDITOR = CodeMirror.fromTextArea(document.getElementById("css_code"), {
           lineNumbers: true,
           mode: "css",
-          theme: "base16-light",
+          theme: "base16-dark",
           lineWrapping: true
         });
   
         JS_EDITOR = CodeMirror.fromTextArea(document.getElementById("js_code"), {
           lineNumbers: true,
           mode: "javascript",
-          theme: "base16-light",
+          theme: "base16-dark",
           lineWrapping: true
         });
   
         renderDHTML();
-
-        
+       
+        let typingTimer;                //timer identifier
+        let doneTypingInterval = 1000;
+       
+      
+      //user is "finished typing," do something
+      function doneTyping () {
+        renderDHTML();
+      }
   
         HTML_EDITOR.on('change', (inst, changes) => {
-          renderDHTML();
+          
           let html = HTML_EDITOR.getValue();
           html = html === null ? '' : html; 
     
         });
+        HTML_EDITOR.on('keyup', () => {
+          clearTimeout(typingTimer);
+          if (HTML_EDITOR.getValue()) {
+              typingTimer = setTimeout(doneTyping, doneTypingInterval);
+          }
+        });
         CSS_EDITOR.on('change', function(inst, changes) {
-          renderDHTML();
+          //renderDHTML();
           let css = CSS_EDITOR.getValue();
           css = css === null ? '' : css;
         
         });
-        JS_EDITOR.on('change', function(inst, changes) {
-          renderDHTML();
-          let js = CSS_EDITOR.getValue();
-      
-         
+        CSS_EDITOR.on('keyup', () => {
+          clearTimeout(typingTimer);
+          if (CSS_EDITOR.getValue()) {
+              typingTimer = setTimeout(doneTyping, doneTypingInterval);
+          }
         });
+        JS_EDITOR.on('change', function(inst, changes) {
+          //renderDHTML();
+          let js = CSS_EDITOR.getValue();
+        });
+
+        JS_EDITOR.on('keyup', () => {
+          clearTimeout(typingTimer);
+          if ( JS_EDITOR.getValue()) {
+              typingTimer = setTimeout(doneTyping, doneTypingInterval);
+          }
+        });
+        
 
     
         
