@@ -20,7 +20,9 @@ const repliesNum = [];
             dummyComments:[],
             replies:[],
             repliesShow:false,
-            plus:'+'
+            plus:'+',
+            room_title:'',
+            description:''
          }
     }
     test(id, comment) {
@@ -69,6 +71,24 @@ const repliesNum = [];
         var str = name;
         var tmp = str.split("room/");
         let shortID = tmp.pop();
+        let that = this;
+        database.ref(`rooms/${shortID}`).once('value').then(function(snapshot) {
+        
+            that.setState({room_title:snapshot.val().room_title,
+                description:snapshot.val().description});
+
+        });
+
+        database.ref(`CommentReplies/${shortID}`).once('value').then(function(snapshot) {
+          
+            that.setState({comment_number:snapshot.numChildren()
+            
+            });
+
+        });
+
+
+       
         
         // database.ref(`Comments/${shortID}`).once('value').then((snapshot) => {
         //     snapshot.forEach((childSnapShot) => {
@@ -404,20 +424,20 @@ const repliesNum = [];
                 {/* <div style={{height:'200px',width:'100%'}}></div> */}
                 <div className="main-section-wrap-comments-box">
                     <div style={{height:'100px',width:'100%', display:'flex', justifyContent:'space-between'}}>
-                        <p>Asteroids</p>
+                        <p>{this.state.room_title}</p>
                         <div style={{display:'flex'}}>
-                        <i className="fa fa-heart">Reactions</i>
-                        <i className="fa fa-share">Share</i>
+                        {/* <i className="fa fa-heart">Reactions</i>
+                        <i className="fa fa-share">Share</i> */}
                         </div>
                     </div>
 
-                    <div style={{display:'flex',height:'32px',width:'100%'}}>
-                        <p style={{color:'#1BB243'}}>..Read More</p>
+                    <div style={{display:'flex',height:'58px',width:'100%'}}>
+                        <p style={{color:'#000',fontSize:14}}>{this.state.description}</p>
                     </div>
                     <div style={{height:'100%',width:'100%',borderTop:'1px solid black',marginBottom:'10px'}}>
                     <div style={{width:'100%', marginTop:'20px'}}>
                         <div style={{display:'flex', flexDirection:'row'}}>
-                            <i className="fa fa-comments"/><p style={{marginLeft:10}}>{167}</p><p style={{marginLeft:10}}>Comments</p>
+                            <i className="fa fa-comments"/><p style={{marginLeft:10}}>{this.state.comment_number}</p><p style={{marginLeft:10}}>Comments</p>
                         </div>
                         <textarea id="comment" 
                             style={{
@@ -439,20 +459,20 @@ const repliesNum = [];
                             }} placeholder="Write a new comment here...">
    
                         </textarea>
-                        {/* <button style={{border:'1px solid gray',
+                        <button style={{border:'1px solid gray',
                             borderRadius:'4px',
                             background:'rgb(221, 224, 235)',
                             height:'25px',
                             width:'50px',
                             fontFamily:'Source Sans Pro',
                             fontWeight:'800',
-                            top:'149px',
-                            left:'335px',
+                            top:'910px',
+                            right:'436px',
                             position:'absolute'
                         }} 
     
                         onClick={this.postComment.bind(this)}
-                        >Post</button> */}
+                        >Post</button>
                     </div>
                     <ul style={{width:'100%'}} id="main-comments">
                         { 
