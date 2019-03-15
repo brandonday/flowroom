@@ -20,6 +20,7 @@ let names = [];
 let messagesSent = [];
 let messageList = [];
 let preventDuplicateArray = []; //keeps track
+let postData = [];
 let callOnce = false;
 // {
 //     userName:'Brandon',
@@ -249,6 +250,19 @@ const KeyCodes = {
                 })
                 this.setState({suggestionNamesTags:names, myusername:name})
                 console.log(this.state.suggestionNamesTags);
+
+            });
+
+            var shortID = window.location.pathname.split("room/").pop();
+            database.ref(`${shortID}`).once('value').then((snapshot) => {
+                
+                snapshot.forEach((childSnapShot) => {
+                   
+                    postData.push({room_title:`${childSnapShot.val().room_title ? childSnapShot.val().room_title:'' }`,description:`${childSnapShot.val().description ? childSnapShot.val().description:'' }`});
+                    
+                })
+               // alert(postData[0])
+                //that.setState({room_title:postData[0].room_title,description:postData[0].description});
 
             });
 
