@@ -710,7 +710,7 @@ const KeyCodes = {
                         marginBottom:20,
                        
                     }}   onLoad={()=>{
-                        alert('jkjk')
+                        
                     }} onChange={this.titlehandleChange} value={this.state.room_title} placeholder={'Title (optional)'}/>
                     <textarea id="description" className="description" style={{
                         height:'100px',

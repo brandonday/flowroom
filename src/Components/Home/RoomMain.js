@@ -58,33 +58,33 @@ class RoomMain extends Component {
        
       
 
-         alert('hgghhg')
-         var FizzyText = function() {
+//          alert('hgghhg')
+//          var FizzyText = function() {
 
-            this.color0 = "#ffae23"; // CSS string
-            this.color1 = [ 0, 128, 255 ]; // RGB array
-            this.color2 = [ 0, 128, 255, 0.3 ]; // RGB with alpha
-            this.color3 = { h: 350, s: 0.9, v: 0.3 }; // Hue, saturation, value
+//             this.color0 = "#ffae23"; // CSS string
+//             this.color1 = [ 0, 128, 255 ]; // RGB array
+//             this.color2 = [ 0, 128, 255, 0.3 ]; // RGB with alpha
+//             this.color3 = { h: 350, s: 0.9, v: 0.3 }; // Hue, saturation, value
           
-            // Define render logic ...
+//             // Define render logic ...
           
-          };
+//           };
           
-          //window.onload = function() {
+//           //window.onload = function() {
           
-            var text = new FizzyText();
-            var gui = new dat.GUI();
+//             var text = new FizzyText();
+//             var gui = new dat.GUI();
           
-            gui.addColor(text, 'color0');
-            gui.addColor(text, 'color1');
-            gui.addColor(text, 'color2');
-            gui.addColor(text, 'color3');
+//             gui.addColor(text, 'color0');
+//             gui.addColor(text, 'color1');
+//             gui.addColor(text, 'color2');
+//             gui.addColor(text, 'color3');
           
-          //};
-setTimeout(function() {
-var customContainer = document.getElementById('main-menu');
-customContainer.appendChild(gui.domElement);
-},5000)
+//           //};
+// setTimeout(function() {
+// var customContainer = document.getElementById('main-menu');
+// customContainer.appendChild(gui.domElement);
+// },5000)
           this.setState({isLoaded:true})
        
         
