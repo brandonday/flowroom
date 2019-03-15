@@ -262,7 +262,8 @@ const KeyCodes = {
            database.ref(`rooms/${shortID}`).once('value').then(function(snapshot) {
         
         
-                that.setState({room_title:snapshot.val().room_title,description:snapshot.val().description});
+                that.setState({room_title:snapshot.val() !== null ? snapshot.val().room_title :'',
+                description:snapshot.val() !== null ? snapshot.val().description : ''});
 
             });
 

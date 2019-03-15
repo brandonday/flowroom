@@ -211,8 +211,16 @@ class Editor extends Component {
       function doneTyping () {
         renderDHTML();
       }
+
+      let isHTMLREADY = false;
+      let isCSSREADY = false;
+      let isJSREADY= false;
   
         HTML_EDITOR.on('change', (inst, changes) => {
+          if(!isHTMLREADY) {
+            renderDHTML();
+            isHTMLREADY = true;
+          }
           
           let html = HTML_EDITOR.getValue();
           html = html === null ? '' : html; 
@@ -225,7 +233,11 @@ class Editor extends Component {
           }
         });
         CSS_EDITOR.on('change', function(inst, changes) {
-          //renderDHTML();
+          if(!isCSSREADY) {
+            renderDHTML();
+            isCSSREADY = true;
+          }
+          
           let css = CSS_EDITOR.getValue();
           css = css === null ? '' : css;
         
@@ -237,7 +249,11 @@ class Editor extends Component {
           }
         });
         JS_EDITOR.on('change', function(inst, changes) {
-          //renderDHTML();
+          if(!isJSREADY) {
+            renderDHTML();
+            isJSREADY = true;
+          }
+          
           let js = CSS_EDITOR.getValue();
         });
 
@@ -249,7 +265,6 @@ class Editor extends Component {
         });
         
 
-    
         
 
         
@@ -267,7 +282,6 @@ class Editor extends Component {
               CSS_EDITOR.setValue(css);
               JS_EDITOR.setValue(js);
 
-             
 
 
             //   if(poor !== '') {
