@@ -921,7 +921,7 @@ class RoomPosts extends Component {
                                 //     /></div>)
                                 // }
                                 if (i.roomType === 'other') {
-                                  console.log(i);
+                                  console.log('room ob', i);
                                     return (<div><RoomPost id={i}
                                         description={i.description}
                                         isRemixable={i.isRemixable}

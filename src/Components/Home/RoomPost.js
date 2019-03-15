@@ -112,12 +112,15 @@ class RoomPost extends Component {
                     }
                     }}>
 
-                    <div className="top-title" style={{display:'flex',height:'49px',width:'100%'}}>
+                    <div className="top-title" style={{display:'flex',height:'75px',width:'100%'}}>
                         <div style={{display:'flex',
                             marginTop:10,
                             marginLeft:'19px',
                             position:'relative'}}>
-                            <div style={{height:'35px',width:'35px',borderRadius:20,backgroundColor:'black', marginRight:'10px'}}></div>
+                            <div style={{height:'50px',width:'50px',borderRadius:30,backgroundColor:'black', backgroundImage:`url(${this.props.pic})`, marginRight:'10px'}}></div>
+                            <div style={{display:'flex',flexDirection:'column'}}>
+                            <p className="room-card-title" style={{color:'white'}}>{this.props.title}</p>
+
                                 <p style={{overflow:'hidden',
                                     textOverflow:'ellipsis',
                                     textAlign:'left',
@@ -125,7 +128,7 @@ class RoomPost extends Component {
                                     fontSize:'16px',
                                     color:'white'
                                 }}>{`@${this.props.username}`}</p>
-                                
+                            </div>
                             </div>
                             <div style={{flex:1,
                                 display:'flex',
@@ -139,7 +142,6 @@ class RoomPost extends Component {
                             
                         </div>
                         <div className="full-screenable-node" style={{height:246}}>
-                        <p className="room-card-title" style={{marginLeft:15,marginBottom:10, color:'white'}}>{this.props.title}</p>
                             <iframe id={`${this.props.id.id}`} src={"/full/" + this.props.id.id} style={{
                                 height:'200%', border:'1px solid red',
                                 width:'200%',

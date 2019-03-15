@@ -7,6 +7,7 @@ import StackGrid from "react-stack-grid";
 import { connect } from 'react-redux';
 import { Store } from './store.js';
 import sizeMe from 'react-sizeme';
+import ReactResizeDetector from 'react-resize-detector';
 
 let rooms = [];
 let roomsFilter = [];
@@ -262,11 +263,7 @@ class ProfilePage extends Component {
         // });
     }
     render() {
-        let { 
-            size: { 
-              width
-            } 
-          } = this.props;
+     
         if(this.state.hasName === 'found') {
     
         return (
@@ -310,10 +307,13 @@ class ProfilePage extends Component {
 
                     </div>            
                 </div>  
-                <div style={{overflow:'hidden',
-                    padding:'30px 20px',
-                    minHeight:'100%'
+                <div style={{
+                    padding:'30px 20px'
                 }}>
+            <ReactResizeDetector
+  handleWidth
+  handleHeight
+  render={({ width, height }) => (
              <div style={{padding:'0px 10px', height:'100%'}}>
                     <div id="body-padding" style={{
                         flex:1
@@ -396,6 +396,7 @@ class ProfilePage extends Component {
             
                         </section>
                         </div>
+  )}/>
                     <nav className="pagination-buttons-wrap">
                         <a href="" className="pagination-button">Previous Page</a>
                         <a href="" className="pagination-button">Next Page</a>

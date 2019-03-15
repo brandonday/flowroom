@@ -2631,12 +2631,11 @@ body {
 
 /*----------------------Profile----------------------*/
 .profile-main {
-  width:100%; 
-  background-color:white; 
-  overflow:hidden;
-  padding:20px 20px 20px;
-  border-bottom:1px solid rgb(221, 224, 235);
-
+  width: 100%;
+  background-color: white;
+  padding: 20px;
+  border-bottom: 1px solid #dde0eb;
+  height: 180px;
 }
 
 .profile-info {
