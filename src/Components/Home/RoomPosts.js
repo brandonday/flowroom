@@ -147,7 +147,7 @@ class RoomPosts extends Component {
         }
     }
     componentDidMount() {
-alert('jkjjk')
+
         let database = firebase.database();
         let that = this;
         let store = Store;
