@@ -15,6 +15,7 @@ import { firebase } from '../firebase/firebase';
 import { tween, styler } from 'popmotion';
 import { startCreateRoom } from '../../actions/rooms';
 import axios from 'axios';
+import * as dat from 'dat.gui';
 
 // import ImageEdit from './ImageEdit.js';
 
@@ -31,7 +32,7 @@ const Tablet = props => <Responsive {...props} minWidth={768} maxWidth={991} />;
 const Mobile = props => <Responsive {...props} maxWidth={767} />;
 const Default = props => <Responsive {...props} minWidth={768} />;
  
-
+let Loaded = false;
 class RoomMain extends Component {
     constructor() {
         super();
@@ -45,15 +46,48 @@ class RoomMain extends Component {
            remix:false,
            preferences:false,
            record:false,
-           postBtnVisible:true
+           postBtnVisible:true,
+           isLoaded:false
         };
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
     }
     componentDidMount() {
-     
-    
+        if(Loaded === false) {
+       
+      
+
+         alert('hgghhg')
+         var FizzyText = function() {
+
+            this.color0 = "#ffae23"; // CSS string
+            this.color1 = [ 0, 128, 255 ]; // RGB array
+            this.color2 = [ 0, 128, 255, 0.3 ]; // RGB with alpha
+            this.color3 = { h: 350, s: 0.9, v: 0.3 }; // Hue, saturation, value
+          
+            // Define render logic ...
+          
+          };
+          
+          //window.onload = function() {
+          
+            var text = new FizzyText();
+            var gui = new dat.GUI();
+          
+            gui.addColor(text, 'color0');
+            gui.addColor(text, 'color1');
+            gui.addColor(text, 'color2');
+            gui.addColor(text, 'color3');
+          
+          //};
+setTimeout(function() {
+var customContainer = document.getElementById('main-menu');
+customContainer.appendChild(gui.domElement);
+},5000)
+          this.setState({isLoaded:true})
+       
+        
         const targetElement = document.querySelector("#room-main-page");
         disableBodyScroll(targetElement);
 
@@ -101,7 +135,13 @@ class RoomMain extends Component {
           console.log(error)
         });
 
-        
+        this.setState({isLoaded:true});
+            Loaded = true;
+        }
+    }
+
+    remix() {
+
     }
 
     
@@ -410,8 +450,11 @@ class RoomMain extends Component {
             return (<p>record</p>)
         }
      }
+     
     render() {
         let that = this;
+        const {isLoaded} = this.state;
+        
         return (<div id="room-main-page" className="page-wrap twilight room-main-page-wrap">
             <div style={{display:'flex',flexDirection:'column', height:'100%',width:'100%'}}>
                 <div style={{display:'flex',flex:'0 583px'}}>
@@ -459,7 +502,7 @@ class RoomMain extends Component {
                         </div>
 
 
-                                {/* <div id="objects" onClick={()=> {
+                                 <div id="objects" onClick={()=> {
                                     let objectsid = document.getElementById('objects');
                                     objectsid.className = 'menubg';
                                     objectsid.style.borderRight = '0px solid #181818';
@@ -501,7 +544,7 @@ class RoomMain extends Component {
                                     borderBottom:'1px solid #181818'}} className="menu-bg-border">
                                 <p id="details-text" className="details-text" style={{fontSize:11,fontWeight:'bold',color:'white'}}>Add New</p>
                                 <p style={{fontSize:11,fontWeight:'bold',color:'white'}}>Content</p>
-                                </div> */}
+                                </div> 
 
 
                                         {/* <div id="comments" onClick={()=> {
@@ -775,6 +818,7 @@ class RoomMain extends Component {
                 </div>
             </div>
         </div>)
+       
     }
 }
 const mapStateToProps = (state, ownProps) => {

@@ -85,7 +85,7 @@ const jsx = (
     </Provider>
 )
 
-let hasRendered = false;
+
 
 window.callUpdate = function(before, updateHTML, updateCSS, updateJS) {
     store.dispatch(updateEditor({before:before, updateHTML:updateHTML, updateCSS:updateCSS, updateJS:updateJS}));
@@ -97,7 +97,7 @@ window.calledAlready = function(bool, before) {
     //store.dispatch(updateEditor({before:before}));
 
 }
-
+let hasRendered = false;
 const renderApp = () => {
   /*conditional here. if path is / or any path names then*/
   /*are params just easy way get whats after the forward slash

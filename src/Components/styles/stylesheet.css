@@ -12,7 +12,7 @@ body {
   overflow-y:scroll;
 }
 .CodeMirror-sizer {
-margin-left: 24px !important;
+margin-left: 30px !important; 
 margin-bottom: 0px !important;
 border-right-width: 30px !important;
 min-height: 140px !important;
@@ -293,7 +293,7 @@ body {
 }
 
 .CodeMirror-lines {
-  padding: 4px 10px 0px !important;
+  padding: 4px 0px 0px !important;
 }
 
 .header-profile-pic {
@@ -1510,6 +1510,7 @@ body {
   background: white !important;
   width: 100%;
   height: 100% !important;
+  padding-bottom: 40px;
 }
 .description-container {
   height:140px;
@@ -3229,7 +3230,7 @@ p {
 .likes-2x { background-position: -56px -798px; width: 28px; height: 28px; }
 .play-2x { background-position: -265px -801px; width: 28px; height: 32px; }
 .magnify-2x { background-position: -355px -789px; width: 26px; height: 26px; }
-.down-editor-3x { background-position: -68px -252px; background-size: 146px 292px; width: 11px; height: 14px; }
+.down-editor-3x { background-position: -68px -252px; background-size: 146px 292px; width: 11px; height: 14px; margin: 0px 10px -3px;}
 .like-2x { background-position: -10px -816px; width: 24px; height: 24px; }
 .my-communities-down-2x { background-position: -221px -823px; width: 24px; height: 16px; }
 .pricetag-2x { background-position: -355px -825px; width: 24px; height: 24px; }

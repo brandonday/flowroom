@@ -13,7 +13,7 @@
     "codemirror": "^5.40.0",
     "css-loader": "^1.0.0",
     "darkroom": "^2.0.0",
-    "dat.gui": "^0.7.3",
+    "dat.gui": "^0.7.5",
     "fabric": "^2.7.0",
     "firebase": "^5.5.4",
     "hashids": "^1.2.2",
