@@ -310,7 +310,8 @@ class ProfilePage extends Component {
                     </div>            
                 </div>  
                 <div style={{
-                    padding:'30px 20px'
+                    padding:'30px 20px',
+                    height:'100%'
                 }}>
             <ReactResizeDetector
   handleWidth
@@ -321,9 +322,9 @@ class ProfilePage extends Component {
                         flex:1
                     }}></div>
              <section style={{flex:1}}>
-                            <div className="main" style={{flex:1}}>
+                            <div className="main" style={{flex:1, height:'100%'}}>
                             
-                                <div style={{position:'relative'}}>
+                                <div style={{position:'relative', height:'100%'}}>
 
                                     
                                             <StackGrid

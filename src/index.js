@@ -141,12 +141,12 @@ const renderApp = () => {
 
         //render normal showing Profile componenet
 
-//renderApp();
+renderApp();
 firebase.auth().onAuthStateChanged((user)=> {
     console.log("firebase.auth user: ",user);
     if(user) {
         if(hasRendered === false) {
-            renderApp();
+            //renderApp();
             hasRendered = true;
          }
         //history.push('/');
@@ -156,7 +156,7 @@ firebase.auth().onAuthStateChanged((user)=> {
         //hasRendered = false;
         store.dispatch(logout());
         if(hasRendered === false) {
-            renderApp();
+            //renderApp();
             hasRendered = true;
         }
         // TODO: error message
