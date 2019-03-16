@@ -117,6 +117,10 @@ const Default = props => <Responsive {...props} minWidth={768} />;
 let rooms = [];
 let roomsFilter = [];
 let roomsBackUp = [];
+let currentPage = 1;
+let roomsPerPage = 6;
+let lastDate = '';
+let firstDate = '';
 class RoomPosts extends Component {
     constructor() {
         super();
@@ -151,195 +155,22 @@ class RoomPosts extends Component {
         let database = firebase.database();
         let that = this;
         let store = Store;
-
-        store.subscribe(() => {
-            console.log(store.getState());
-           // this.setState({roomsLoaded:false});
-
-
-            let isProduction;
-            let isUnlisted;
-            let isPrivate;
-
-            let isWeb;
-            let isNative;
-            let isWebNative;
-            //let isAllRes = store.getState().roomsFilters.all;
-            let isMobile = store.getState().roomsFilters.mobile;
-            let isTable = store.getState().roomsFilters.tablet;
-            let isDesktop = store.getState().roomsFilters.desktop;
-            let isLive = store.getState().roomsFilters.live;
-            let isRemixable = store.getState().roomsFilters.remixable;
-            let isAI = store.getState().roomsFilters.ai;
-            let isAR = store.getState().roomsFilters.ar;
-            let isVR = store.getState().roomsFilters.vr;
-            let is360 = store.getState().roomsFilters.three60;
-
-            let regular = '';
-            let allres = '';
-            let live = '';
-            let remixable = '';
-            let aiType = '';
-            let arType = '';
-            let vrType = '';
-            let three60Type = '';
-            let mobile = '';
-            let tablet = '';
-            let desktop = '';
-            let posttype = '';
-            let isunlisted = '';
-            let isprivate = '';
-
-            let isweb = '';
-            let isnative = '';
-            let iswebnative = '';
-
-            // if(isProduction === true ) {
-              regular= 'Regular/';
-            // } else {
-            //   regular = 'Experimental/';
-            // }
-
-
-
-
-            if(isUnlisted === true) {
-              isunlisted = 'Unlisted/';
-              regular = '';
-            } else {
-              isunlisted = '';
-            }
-
-            if(isPrivate === true) {
-              isprivate = 'Private/';
-              regular = '';
-            } else {
-              isprivate = '';
-            }
-
-            if(isWeb === true) {
-              isweb = 'Web/';
-              regular = '';
-            } else {
-              isweb = '';
-            }
-
-            if(isNative) {
-              isnative = 'Native/';
-              regular = '';
-            } else {
-              isnative = '';
-            }
-
-            if(isWebNative) {
-              iswebnative = 'WebNative/';
-              regular = '';
-            } else {
-              iswebnative = '';
-            }
-
-            // if(isAllRes === true) {
-            //   allres = ''
-            //   //rooms = [];
-            // } else {
-            //   allres = '';
-            //   //rooms = [];
-            // }
-            if(isMobile === true) {
-              //regular = '';
-              mobile = 'Mobile/'
-
-            } else {
-              mobile = '';
-            }
-            if(isTable === true) {
-              //regular = '';
-              tablet = 'Tablet/';
-            } else {
-              tablet = '';
-            }
-            if(isDesktop === true) {
-              //regular = '';
-              desktop = 'Desktop/';
-            } else {
-              desktop = '';
-            }
-
-            if(isLive === true) {
-              //regular = '';
-              live = 'Live/';
-            } else {
-              live = ''
-            }
-
-            if(isRemixable === true) {
-
-              //regular = '';
-              remixable = 'Remixable/';
-
-              //getRooms();
-
-
-            } else {
-              remixable = ''
-              //that.setState({rooms:rooms})
-
-
-            }
-
-            if(isAI === true) {
-              aiType = 'AI/';
-
-              getRooms();
-              //rooms = [];
-            } else {
-              aiType = ''
-            }
-
-            if(isAR === true) {
-              arType = 'AR/';
-
-              getRooms();
-              //rooms = [];
-            } else {
-              arType = ''
-            }
-
-            if(isVR === true) {
-              vrType = 'VR/';
-
-              getRooms();
-              //rooms = [];
-            } else {
-              vrType = ''
-            }
-
-            if(is360 === true) {
-              three60Type = '360/';
-
-              getRooms();
-              //rooms = [];
-            } else {
-              three60Type = ''
-            }
-            let lastRoom;
-
-
-            getRooms();
-
-            let that = this;
-
-            function getRooms() {
-
-                //alert(`categorizations/${regular}${mobile}${tablet}${desktop}${live}${remixable}${aiType}${arType}${vrType}${three60Type}`)
-                // let stringSel = `categorizations/${regular}${mobile}${tablet}${desktop}${live}${remixable}${aiType}${arType}${vrType}${three60Type}`;
-                database.ref(`categorizations/${regular}${mobile}${tablet}${desktop}${live}${remixable}${aiType}${arType}${vrType}${three60Type}`).limitToFirst(7).once('value').then((snapshot) => {
+        let counter = 0;
+                database.ref('categorizations/Regular/').orderByChild('date').limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
 
                     snapshot.forEach((childSnapShot) => {
-
+                        counter++;
+                       
                         if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
-                        if(rooms.length != 6) {
-                            rooms.push({
+                          if(counter == 1) {
+                            lastDate = childSnapShot.val().date;
+                            console.log('rooms: last date', lastDate);
+                          } else {
+                            if(counter == roomsPerPage + 1) {
+                              firstDate = childSnapShot.val().date;
+                              console.log('rooms: first date', firstDate);
+                            }
+                            rooms.unshift({
                                 id:childSnapShot.key,
                                 date:childSnapShot.val().date,
                                 isAR:childSnapShot.val().isAR,
@@ -369,266 +200,53 @@ class RoomPosts extends Component {
                             });
 
 
-
-                        }
+                          }
+                        
                     }
 
 
                     });
-
+                    console.log('rooms: loading',rooms)
+                    
                     that.setState({rooms:rooms})
                     that.setState({roomsLoaded:true});
-                    let lastRoomNum = rooms.length;
-                    that.setState({lastRoomNum:lastRoomNum - 1});
-                    that.setState({lastRoom:lastRoom});
-                    //if(filtering === true) {
-
-
+                  
                     rooms = [];
-
-                    //}
-
-
+               });
+           
 
 
-                });
-                console.log('cake',rooms)
-
-
-            }
-        });
-
-
-
-
-        // const unsubscribe = Store.subscribe(()=>{
-        //    rooms.forEach((room) => {
-        //         //if you query and get results equal to that then push
-        //         //otherwise search for it
-        //         //if room.isAR item is not eq roomsFilters state (true cause i clicked) query db
-        //         if(room.isAR === Store.getState().roomsFilters.ar) {
-        //             //alert(Store.getState().roomsFilters.ar)
-        //             roomsFilter.push(room)
-        //             //possibly dont push anything since already exist
-        //         } else {
-
-        //             //going to be slow if keep querying
-
-        //             let database = firebase.database();
-        //             let that = this;
-        //             let num = rooms.length - roomsFilter.length;
-        //             database.ref('rooms').orderByChild('date').limitToLast(num).startAt(this.state.lastRoom).once('value').then((snapshot) => {
-        //                 snapshot.forEach((childSnapShot) => {
-        //                     rooms.push({
-        //                         id:childSnapShot.key,
-        //                         date:childSnapShot.val().date,
-        //                         ...childSnapShot
-        //                     });
-        //                 });
-        //                 this.setState({roomsLoaded:true});
-        //                 let lastRoom = rooms.length;
-        //                 console.log('last room', rooms[lastRoom - 1])
-        //                 this.setState({lastRoom:lastRoom});
-        //                 rooms = [];
-
-        //             });
-
-        //         }
-
-        //    });
-        //    rooms = [...roomsFilter];
-        //    //alert(rooms.length)
-
-
-        // });
         store.dispatch({type:'SAVE_DHTML', html:'',css:'',js:''});
 
 
     }
 
-    roomFilters1() {
-
-        // let database = firebase.database();
-        // let that = this;
-
-        // database.ref('rooms').orderByChild("isAR").equalTo(false).limitToFirst(6).once('value').then((snapshot) => {
-        //     snapshot.forEach((childSnapShot) => {
-
-
-        //         rooms.push({
-        //             id:childSnapShot.key,
-        //             date:childSnapShot.val().date,
-        //             ...childSnapShot
-        //         });
-
-
-        //     });
-        //     this.setState({roomsLoaded:true});
-        //     let lastRoom = rooms.length;
-        //     console.log('last room', rooms[lastRoom - 1])
-        //     this.setState({lastRoom:lastRoom});
-        //     rooms = [];
-        // });
-
-    }
-    roomFilters2() {
-        // let database = firebase.database();
-        // let that = this;
-        // database.ref('rooms').orderByChild('date').limitToFirst(6).once('value').then((snapshot) => {
-        //     snapshot.forEach((childSnapShot) => {
-        //         rooms.push({
-        //             id:childSnapShot.key,
-        //             date:childSnapShot.val().date,
-        //             ...childSnapShot
-        //         });
-        //     });
-        //     this.setState({roomsLoaded:true});
-        //     let lastRoom = rooms.length;
-        //     console.log('last room', rooms[lastRoom - 1])
-        //     this.setState({lastRoom:lastRoom});
-        //     rooms = [];
-
-        // });
-    }
 
 
     prevPage() {
+        currentPage = currentPage === 1 ? 1 : currentPage - 1;
         let database = firebase.database();
         let that = this;
-        let regular = '';
-            let allres = '';
-            let live = '';
-            let remixable = '';
-            let aiType = '';
-            let arType = '';
-            let vrType = '';
-            let three60Type = '';
-            let mobile = '';
-            let tablet = '';
-            let desktop = '';
-            let posttype = '';
-            let isunlisted = '';
-            let isprivate = '';
-
-            let isweb = '';
-            let isnative = '';
-            let iswebnative = '';
-
-            // if(isProduction === true ) {
-              regular= 'Regular/';
-            // } else {
-            //   regular = 'Experimental/';
-            // }
-
-
-
-
-            // if(isUnlisted === this.state.isUnlisted) {
-            //   isunlisted = 'Unlisted/';
-            // } else {
-            //   isunlisted = '';
-            // }
-
-            // if(isPrivate === this.state.isPrivate) {
-            //   isprivate = 'Private/';
-            // } else {
-            //   isprivate = '';
-            // }
-
-            // if(isWeb === this.state.isWeb) {
-            //   isweb = 'Web/';
-            // } else {
-            //   isweb = '';
-            // }
-
-            // if(isNative === this.state.isNative) {
-            //   isnative = 'Native/';
-            // } else {
-            //   isnative = '';
-            // }
-
-            // if(isWebNative === this.state.isWebNative) {
-            //   iswebnative = 'WebNative/';
-            // } else {
-            //   iswebnative = '';
-            // }
-
-    /*pagination must use state */
-            if(this.state.isAllRes === true) {
-              allres = ''
-            } else {
-              allres = '';
-            }
-            if(this.state.isMobile === true) {
-              mobile = 'Mobile/'
-
-            } else {
-              mobile = '';
-            }
-            if(this.state.isTable === true) {
-              tablet = 'Tablet/'
-
-            } else {
-              tablet = '';
-            }
-            if(this.state.isDesktop === true) {
-              desktop = 'Desktop/'
-
-            } else {
-              desktop = '';
-            }
-
-            if(this.state.isLive === true) {
-              live = 'Live/'
-
-          } else {
-              live = ''
-          }
-
-          if(this.state.isRemixable === true) {
-              remixable = 'Remixable/'
-
-          } else {
-              remixable = ''
-
-          }
-
-          if(this.state.isAI === true) {
-              aiType = 'AI/'
-
-          } else {
-              aiType = ''
-          }
-
-          if(this.state.isAR === true) {
-              arType = 'AR/'
-
-          } else {
-              arType = ''
-          }
-
-          if(this.state.isVR === true) {
-              vrType = 'VR/'
-
-          } else {
-              vrType = ''
-          }
-
-          if(this.state.is360 === true) {
-              three60Type = '360/'
-
-          } else {
-              three60Type = ''
-          }
-
-        database.ref(`categorizations/${regular}${mobile}${tablet}${desktop}${live}${remixable}${aiType}${arType}${vrType}${three60Type}`).orderByChild('shortID').limitToLast(7).endAt(this.state.firstRoom).once('value').then((snapshot) => {
-            snapshot.forEach((childSnapShot) => {
+        let counter = 0;
+        
+        database.ref('categorizations/Regular').orderByChild('date').startAt(firstDate).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
+        
+         
+           snapshot.forEach((childSnapShot) => {
 
                 //if(rooms.length != 7) {
             if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
-                if(rooms.length != 6) {
-
-                    rooms.push({
+            
+              counter++;
+              if(counter == 1) {
+                lastDate = childSnapShot.val().date;
+                console.log('rooms: last date',lastDate);
+              } else {
+                if(counter == roomsPerPage + 1) {
+                  firstDate = childSnapShot.val().date;
+                  console.log('rooms: first date', firstDate);
+                }
+                    rooms.unshift({
                         id:childSnapShot.key,
                         date:childSnapShot.val().date,
                         isAR:childSnapShot.val().isAR,
@@ -657,154 +275,54 @@ class RoomPosts extends Component {
                         ...childSnapShot
                     });
 
-                }
+                  }
                 //alert(childSnapShot.val().shortID)
             //}
             }
 
             });
-            //if(rooms.length != 1) {
+            console.log('rooms: counter', counter)
+            if(counter == 1) {
+              return;
+            }
+              console.log('rooms previous',rooms)
                 this.setState({rooms:rooms});
                 this.setState({roomsLoaded:true});
-                let lastRoomNum = rooms.length;
-                this.setState({lastRoomNum:lastRoomNum - 1});
-                this.setState({lastRoom:rooms[lastRoomNum - 1].shortID});
-                this.setState({firstRoom:rooms[0].shortID});
-
-                //if(filtering === true) {
+               
+            
+             
 
                     rooms = [];
 
-                //}
-            //}
+           
+
 
         });
     }
     nextPage() {
+        currentPage++;
+        rooms = [];
         let database = firebase.database();
         let that = this;
-        let regular = '';
-        let allres = '';
-        let live = '';
-        let remixable = '';
-        let aiType = '';
-        let arType = '';
-        let vrType = '';
-        let three60Type = '';
-        let mobile = '';
-        let tablet = '';
-        let desktop = '';
-        let posttype = '';
-        let isunlisted = '';
-        let isprivate = '';
-
-        let isweb = '';
-        let isnative = '';
-        let iswebnative = '';
-
-        // if(isProduction === true ) {
-          regular= 'Regular/';
-        // } else {
-        //   regular = 'Experimental/';
-        // }
-
-
-
-
-        // if(isUnlisted === this.state.isUnlisted) {
-        //   isunlisted = 'Unlisted/';
-        // } else {
-        //   isunlisted = '';
-        // }
-
-        // if(isPrivate === this.state.isPrivate) {
-        //   isprivate = 'Private/';
-        // } else {
-        //   isprivate = '';
-        // }
-
-        // if(isWeb === this.state.isWeb) {
-        //   isweb = 'Web/';
-        // } else {
-        //   isweb = '';
-        // }
-
-        // if(isNative === this.state.isNative) {
-        //   isnative = 'Native/';
-        // } else {
-        //   isnative = '';
-        // }
-
-        // if(isWebNative === this.state.isWebNative) {
-        //   iswebnative = 'WebNative/';
-        // } else {
-        //   iswebnative = '';
-        // }
-
-        if(this.state.isAllRes === true) {
-          allres = ''
-        } else {
-          allres = '';
-        }
-        if(this.state.isMobile === true) {
-          mobile = 'Mobile/'
-        } else {
-          mobile = '';
-        }
-        if(this.state.isTable === true) {
-          tablet = 'Tablet/'
-        } else {
-          tablet = '';
-        }
-        if(this.state.isDesktop === true) {
-          desktop = 'Desktop/'
-        } else {
-          desktop = '';
-        }
-
-        if(this.state.isLive === true) {
-          live = 'Live/'
-        } else {
-          live = ''
-        }
-
-        if(this.state.isRemixable === true) {
-          remixable = 'Remixable/'
-        } else {
-          remixable = ''
-        }
-
-        if(this.state.isAI === true) {
-          aiType = 'AI/'
-        } else {
-          aiType = ''
-        }
-
-        if(this.state.isAR === true) {
-          arType = 'AR/'
-        } else {
-          arType = ''
-        }
-
-        if(this.state.isVR === true) {
-          vrType = 'VR/'
-        } else {
-          vrType = ''
-        }
-
-        if(this.state.is360 === true) {
-          three60Type = '360/'
-        } else {
-          three60Type = ''
-        }
-        //alert(this.state.lastRoom)
-        database.ref(`categorizations/${regular}${mobile}${tablet}${desktop}${live}${remixable}${aiType}${arType}${vrType}${three60Type}`).orderByChild('shortID').startAt(this.state.lastRoom).limitToFirst(6).once('value').then((snapshot) => {
-            snapshot.forEach((childSnapShot) => {
+        let counter = 0;
+        database.ref('categorizations/Regular/').orderByChild('date').endAt(lastDate).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
+          if(snapshot.length == 0) {
+            return;
+          }  
+          snapshot.forEach((childSnapShot) => {
                 if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
-                if(rooms.length != 6) {
-
-
-                        rooms.push({
+                  
+                  
+                    counter++;
+                    if(counter == 1) {
+                      lastDate = childSnapShot.val().date;
+                      console.log('rooms: last date',lastDate);
+                    } else {
+                      if(counter == roomsPerPage + 1) {
+                        firstDate = childSnapShot.val().date;
+                        console.log('rooms: first date', firstDate);
+                      }
+                        rooms.unshift({
                             id:childSnapShot.key,
                             date:childSnapShot.val().date,
                             isAR:childSnapShot.val().isAR,
@@ -833,28 +351,22 @@ class RoomPosts extends Component {
                             
                         ...childSnapShot
                     });
-
+                  }
 
                 //alert(childSnapShot.val().shortID)
-                }
+              
 
             }
 
             });
-                this.setState({rooms:rooms})
-                this.setState({roomsLoaded:true});
-                let lastRoomNum = rooms.length;
-                this.setState({lastRoomNum:lastRoomNum - 1});
-                this.setState({lastRoom:rooms[lastRoomNum - 1].shortID});
-                this.setState({firstRoom:rooms[0].shortID});
+            if(counter == 1) {
+              return;
+            }
+                console.log('rooms: next',rooms)
+                this.setState({rooms:rooms, roomsLoaded:true});
+                rooms = [];
 
-                console.log('rooom thing',rooms[0])
-                //if(filtering === true) {
-
-                    rooms = [];
-
-
-                //}
+              
         });
     }
     render() {

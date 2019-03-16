@@ -54,7 +54,8 @@ class RoomMain extends Component {
         this.closeModal = this.closeModal.bind(this);
     }
     componentDidMount() {
-        if(Loaded === false) {
+        let that = this;
+       //if(Loaded === false) {
        
       
 
@@ -85,7 +86,7 @@ class RoomMain extends Component {
 // var customContainer = document.getElementById('main-menu');
 // customContainer.appendChild(gui.domElement);
 // },5000)
-          this.setState({isLoaded:true})
+         // this.setState({isLoaded:true})
        
         
         const targetElement = document.querySelector("#room-main-page");
@@ -97,12 +98,12 @@ class RoomMain extends Component {
             this.setState({descriptionText:'A slider showing before and after'});
         }
 
-        let that = this;
+        
         var parts = window.location.pathname.split('/');
         var lastSegment = parts.pop() || parts.pop();  // handle potential trailing slash
 
 
-        firebase.database().ref(`/rooms/${lastSegment}`).once('value').then(function(snapshot) {
+        firebase.database().ref(`/rooms/${lastSegment}`).once('value').then((snapshot)=> {
             if(snapshot.val() !== null) {
               
               //console.log(snapshot.val())
@@ -115,9 +116,8 @@ class RoomMain extends Component {
                 
                 if(currentUser === uid) {
                   //alert('the same');
-                  console.log(that.state.saveVisible)
-                  that.setState({display:'flex', postBtnVisible:false});
                   
+                  that.setState({display:'flex', postBtnVisible:false});
                 } else {
                   //alert('not');
                   that.setState({saveVisible:'block',postVisible:'block',remixVisible:'block'});
@@ -135,9 +135,9 @@ class RoomMain extends Component {
           console.log(error)
         });
 
-        this.setState({isLoaded:true});
-            Loaded = true;
-        }
+        //this.setState({isLoaded:true});
+        //     Loaded = true;
+        //  }
     }
 
     remix() {
@@ -796,6 +796,7 @@ class RoomMain extends Component {
                                 <button id="deletebtn" onClick={()=>{
                                      let currentRoomID = window.location.pathname.split("room/").pop();
                                      firebase.database().ref(`rooms/${currentRoomID}`).remove();
+                                     firebase.database().ref(`categorizations/Regular/${currentRoomID}`).remove();
                                      window.location.replace('/room/');
 
                                 }} style={{fontWeight:'bold',

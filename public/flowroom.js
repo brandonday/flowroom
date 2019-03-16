@@ -296,6 +296,9 @@
 
 
         },
+        RemixJS:function() {
+            
+        },
         menu:function() {
             let remixlist = parent.document.getElementById('main-menu');
             if (remixlist)
@@ -1100,7 +1103,11 @@
             var customContainer = parent.document.getElementById('frmenu');
             customContainer.appendChild(gui.domElement);
             return gui;
-        }
+        },
+
+    remix(){
+        //parent
+    }
 
 
 

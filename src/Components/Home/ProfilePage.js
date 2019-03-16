@@ -69,6 +69,8 @@ class ProfilePage extends Component {
                         isRemixable:childSnapShot.val().isRemixable,
                         roomType:childSnapShot.val().roomType,
                         username:childSnapShot.val().userName,
+                        shortID:childSnapShot.val().shortID,
+                        room_title:childSnapShot.val().room_title,
                         ...childSnapShot
                     });
     
@@ -363,14 +365,20 @@ class ProfilePage extends Component {
                                 } 
                                 if (i.roomType === 'other') {
                                     return (<div><RoomPost id={i} 
-                                        description={i.description} 
+                                        description={i.description}
                                         isRemixable={i.isRemixable}
                                         postedPicURL={i.postedPicURL}
                                         roomType={i.roomType}
                                         pic={i.pic}
                                         roomHeight={'auto'}
                                         username={i.username}
+                                        points = {i.hasOwnProperty("points") ? i.points : 0}
+                                        views = {i.hasOwnProperty("views") ? i.views : 0}
+                                        likes = {i.hasOwnProperty("likes") ? i.likes : 0}
+                                        commentsCount = {i.hasOwnProperty("commentsCount") ? i.commentsCount : 0}
                                         key={i}
+                                        shortID={i.shortID}
+                                        room_title={i.room_title}
                                     /></div>)
                                }   
                                 if (i.roomType === 'text') {
