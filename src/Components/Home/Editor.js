@@ -61,7 +61,7 @@ class Editor extends Component {
             showMoreSection:false,
             isMobileHeightForResize:0,
             descriptionOverflows:false,
-            libraries:['../flowroom.js'],
+            libraries:[],
             cssStyles:['../darkroom.css'],
             postVisible:'block',
             saveVisible:'block',
@@ -126,10 +126,11 @@ class Editor extends Component {
           let html = HTML_EDITOR.getValue(),
           css = CSS_EDITOR.getValue(),
           js = JS_EDITOR.getValue(),
+          JSflowroom = '<script src="../flowroom.js"></script>',
           src = '';
           src = base_tpl.replace('</body>', html + '</body>');
           css = '<style>' + css + '</style>';
-          src = src.replace('</head>', css + '</head>');
+          src = src.replace('</head>', css + JSflowroom + '</head>');
           js = '<script>' + js + '<\/script>';
           src = src.replace('</body>', js + '</body>');
           let htmlObj = {html:html}
@@ -141,15 +142,18 @@ class Editor extends Component {
         };
 
         let renderDHTML = () => {
+          
           let source = prepareSource();
-          let iframe = document.querySelector('.output_frame'),
-          iframe_doc = iframe.contentDocument;
+          let iframe = document.querySelector('.output_frame');
+          let iframe_doc = iframe.contentDocument;
+                
           iframe_doc.open();
           iframe_doc.write(source);
           iframe_doc.close();
+       
         if(this.state.libraries.length !== 0) {
             for(i = 0; i < this.state.libraries.length; i++) {
-                var iFrameHead = iframe.contentWindow.document.getElementsByTagName("body")[0];
+                var iFrameHead = iframe.contentWindow.document.getElementsByTagName("head")[0];
                 var myscript = document.createElement('script');
                 myscript.type = 'text/javascript';
                 myscript.src = this.state.libraries[i];
@@ -170,7 +174,7 @@ class Editor extends Component {
             let css = CSS_EDITOR.getValue() || null;
             let js = JS_EDITOR.getValue() || null;
             
-          
+         
             
             this.props.saveDHTML({html, css, js});
 
