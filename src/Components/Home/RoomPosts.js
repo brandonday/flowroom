@@ -119,8 +119,8 @@ let roomsFilter = [];
 let roomsBackUp = [];
 let currentPage = 1;
 let roomsPerPage = 6;
-let lastDate = '';
-let firstDate = '';
+let nextDate = '';
+let previousDate = '';
 class RoomPosts extends Component {
     constructor() {
         super();
@@ -163,12 +163,13 @@ class RoomPosts extends Component {
                        
                         if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
                           if(counter == 1) {
-                            lastDate = childSnapShot.val().date;
-                            console.log('rooms: last date', lastDate);
+                            nextDate = childSnapShot.val().date;
+                          
+                            console.log('rooms: next date', childSnapShot.val().shortID + ' ',  nextDate);
                           } else {
                             if(counter == roomsPerPage + 1) {
-                              firstDate = childSnapShot.val().date;
-                              console.log('rooms: first date', firstDate);
+                              previousDate = childSnapShot.val().date;
+                              console.log('rooms: previous date', childSnapShot.val().shortID + ' ', previousDate);
                             }
                             rooms.unshift({
                                 id:childSnapShot.key,
@@ -229,7 +230,7 @@ class RoomPosts extends Component {
         let that = this;
         let counter = 0;
         
-        database.ref('categorizations/Regular').orderByChild('date').startAt(firstDate).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
+        database.ref('categorizations/Regular').orderByChild('date').limitToLast(roomsPerPage + 1).startAt(previousDate).once('value').then((snapshot) => {
         
          
            snapshot.forEach((childSnapShot) => {
@@ -239,12 +240,14 @@ class RoomPosts extends Component {
             
               counter++;
               if(counter == 1) {
-                lastDate = childSnapShot.val().date;
-                console.log('rooms: last date',lastDate);
+                nextDate = childSnapShot.val().date;
+        
+                console.log('rooms: next date', childSnapShot.val().shortID + ' ', nextDate);
               } else {
                 if(counter == roomsPerPage + 1) {
-                  firstDate = childSnapShot.val().date;
-                  console.log('rooms: first date', firstDate);
+                  previousDate = childSnapShot.val().date;
+               
+                  console.log('rooms: previous date', childSnapShot.val().shortID + ' ', previousDate);
                 }
                     rooms.unshift({
                         id:childSnapShot.key,
@@ -300,27 +303,29 @@ class RoomPosts extends Component {
         });
     }
     nextPage() {
-        currentPage++;
+        
         rooms = [];
         let database = firebase.database();
         let that = this;
         let counter = 0;
-        database.ref('categorizations/Regular/').orderByChild('date').endAt(lastDate).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
+        database.ref('categorizations/Regular/').orderByChild('date').limitToLast(roomsPerPage + 1).endAt(nextDate).once('value').then((snapshot) => {
           if(snapshot.length == 0) {
             return;
           }  
+        
           snapshot.forEach((childSnapShot) => {
                 if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
                   
                   
                     counter++;
                     if(counter == 1) {
-                      lastDate = childSnapShot.val().date;
-                      console.log('rooms: last date',lastDate);
+                      nextDate = childSnapShot.val().date;
+                      console.log('rooms: next date', childSnapShot.val().shortID + ' ', nextDate);
                     } else {
                       if(counter == roomsPerPage + 1) {
-                        firstDate = childSnapShot.val().date;
-                        console.log('rooms: first date', firstDate);
+                        previousDate = childSnapShot.val().date;
+                     
+                        console.log('rooms: previous date', childSnapShot.val().shortID + ' ', previousDate);
                       }
                         rooms.unshift({
                             id:childSnapShot.key,
