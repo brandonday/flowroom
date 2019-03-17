@@ -81,8 +81,10 @@ removeBG() {
     console.log(img_base64_val)
   });
 }
+
 bindExportEvent() {
   this.photoEditorSDK.current.ui.on('export', (result) => {
+
     console.log('exported' + result);
     var iframe = document.getElementById("output_frame");
     if(this.props.type === 'id') {
@@ -91,8 +93,17 @@ bindExportEvent() {
       for(let i = 0; i < iframe.contentWindow.document.getElementsByClassName(`${this.props.classorid}`).length; i++) {
         iframe.contentWindow.document.getElementsByClassName(`${this.props.classorid}`)[i].style.backgroundImage = `url(${result})`;
       }
+    } else {
+      let obj = {
+        id:this.props.id,
+        url:result
+      }
+      iframe.contentWindow.flowroom.remixCallback();
+      console.log(iframe.contentWindow)
+
     }
   });
+
 }
 waitForElementToDisplay(selector, time) {
   let that = this;
@@ -318,7 +329,7 @@ render() {
       <PhotoEditorUI.ReactComponent
         ref={this.photoEditorSDK}
         crossOrigin={'anonymous'}
-        license='{"owner":"Brandon Spellman","version":"2.1","enterprise_license":false,"available_actions":["magic","filter","transform","sticker","text","adjustments","brush","focus","frames","camera"],"features":["adjustment","filter","focus","overlay","transform","text","sticker","frame","brush","camera","textdesign","library","export"],"platform":"HTML5","app_identifiers":["localhost","test.flowroom.com"],"api_token":"UdnhTwaV6pXyTwR70rftKQ","domains":["https://api.photoeditorsdk.com"],"issued_at":1550134237,"expires_at":1552694400,"signature":"HCD8Nuh9AfRSrritmdao0aahQMXfoUqw4rKHtoqOIN2Tei7f5M4PeaYjfmC1ItzjU6IE3yYLWoeIxz4nrL8xtNAnhbIuIOsFdunOA58YzjnWBAEs0psdUfA66O28opMF7rCjqtWrgZ3aV56l2xxB0M2M0ewXF/pyGVeRqySROQLZkN9RV3unIkkEzmxIjaLiiShLHJLmLMqO6cZyJLrRPqEDgd9w2hzQWQ5zcBUBTC+4mXxvelqd/3z0VL9sD5s6wjCW+unyi6t2Lqx873xDmwkphnuuZLatZrnGBD81E0J/xo8Jqm620UDo5tUo8PsT23GcQ/JLzIcikL3KO8WC5hZO8w/iTZ53edzsg2U2vO2bSKS2PKtLqkDjjDjc94ydAZwat5LuVy/MP+zg9R2LSEuRfiFhnDGpRj0cgdjQlXMyZaWxnp58VcfE3XEcQIX/u2VdtXjFQMht9nBdQcb3Dr8GVVu6uwweumaIFq5a1/VQKs043I0Haqzxsgff02M92v89x7hfdCZ6JEgLJMnFdhUPBi6dGWCtqYUrmgGHDghrL6vXlxUaVvSMOs6e01+kQZLUlpMZ99SUFaRV/ECnraAzwSpZNtMzP0WCaCCCAq/DoIN9MDv9WMDDOWHVeAcrETFWJCLpTJwVkDqi89Eyy2fjvNlba+Ik1/wog9qjKlA="}'
+        // license='{"owner":"Brandon Spellman","version":"2.1","enterprise_license":false,"available_actions":["magic","filter","transform","sticker","text","adjustments","brush","focus","frames","camera"],"features":["adjustment","filter","focus","overlay","transform","text","sticker","frame","brush","camera","textdesign","library","export"],"platform":"HTML5","app_identifiers":["localhost","test.flowroom.com"],"api_token":"UdnhTwaV6pXyTwR70rftKQ","domains":["https://api.photoeditorsdk.com"],"issued_at":1550134237,"expires_at":1552694400,"signature":"HCD8Nuh9AfRSrritmdao0aahQMXfoUqw4rKHtoqOIN2Tei7f5M4PeaYjfmC1ItzjU6IE3yYLWoeIxz4nrL8xtNAnhbIuIOsFdunOA58YzjnWBAEs0psdUfA66O28opMF7rCjqtWrgZ3aV56l2xxB0M2M0ewXF/pyGVeRqySROQLZkN9RV3unIkkEzmxIjaLiiShLHJLmLMqO6cZyJLrRPqEDgd9w2hzQWQ5zcBUBTC+4mXxvelqd/3z0VL9sD5s6wjCW+unyi6t2Lqx873xDmwkphnuuZLatZrnGBD81E0J/xo8Jqm620UDo5tUo8PsT23GcQ/JLzIcikL3KO8WC5hZO8w/iTZ53edzsg2U2vO2bSKS2PKtLqkDjjDjc94ydAZwat5LuVy/MP+zg9R2LSEuRfiFhnDGpRj0cgdjQlXMyZaWxnp58VcfE3XEcQIX/u2VdtXjFQMht9nBdQcb3Dr8GVVu6uwweumaIFq5a1/VQKs043I0Haqzxsgff02M92v89x7hfdCZ6JEgLJMnFdhUPBi6dGWCtqYUrmgGHDghrL6vXlxUaVvSMOs6e01+kQZLUlpMZ99SUFaRV/ECnraAzwSpZNtMzP0WCaCCCAq/DoIN9MDv9WMDDOWHVeAcrETFWJCLpTJwVkDqi89Eyy2fjvNlba+Ik1/wog9qjKlA="}'
         assets={{
           baseUrl: '../assets'
         }}

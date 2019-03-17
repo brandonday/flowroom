@@ -137,6 +137,43 @@ let that;
                     
                     list.appendChild(item);
               
+                    if(getList[j].type === 'url') {
+                      item.addEventListener('click', ()=> {
+
+                        
+                        
+                        let img = new Image;
+                        img.setAttribute('crossOrigin', 'anonymous'); 
+                        
+                        let canvas = document.createElement('canvas');
+                        let ctx = canvas.getContext("2d");
+                        
+                    
+                        img.onload = function() {
+                       
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        ctx.drawImage( img, 0, 0 );
+                        localStorage.setItem( `savedImageData${j}`, canvas.toDataURL("image/png") );
+                        let getImageSaved = localStorage.getItem(`savedImageData${j}`);
+                        //alert(getImageSaved);
+                        document.getElementById('menu-wrap').style.display = 'block';
+                        document.getElementById('menu').style.display = 'block';
+                        that.setState({pic:getImageSaved,classorid:'class', type:getList[j].type})
+
+                        
+                        
+                        //testFR(elId);
+                        }
+                        img.src = getList[j].image;
+                    
+                        
+
+                        
+                    })
+
+                    } else {
+
                     item.addEventListener('click', ()=> {
                         
                         let img = new Image;
@@ -168,6 +205,9 @@ let that;
 
                         
                     })
+
+                    }
+
                   }
                    
                 }

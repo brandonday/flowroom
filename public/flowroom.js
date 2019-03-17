@@ -296,9 +296,29 @@
 
 
         },
-        RemixJS:function() {
-            
+        remixCallback:function() {
+            alert('works')
         },
+        RemixJS:function(json, callback) {
+            let FR_REMIX_LIST = JSON.parse(localStorage.getItem("FR_REMIX_LIST"));
+                if(FR_REMIX_LIST === null) {
+                    FR_REMIX_LIST = [];
+                } else {
+                    FR_REMIX_LIST = JSON.parse(localStorage.getItem("FR_REMIX_LIST"));
+                }
+            let obj = JSON.parse(json);
+          
+            for(let i = 0; i < obj.length; i++) {
+                //push into FRREMIX
+                FR_REMIX_LIST.push({image:obj[i].url, type:'url'});
+
+                    localStorage.setItem("FR_REMIX_LIST", JSON.stringify(FR_REMIX_LIST));
+                    
+            }
+            callback(obj);
+            //this.remixCallback = callback;
+        },
+       
         menu:function() {
             let remixlist = parent.document.getElementById('main-menu');
             if (remixlist)
@@ -330,11 +350,6 @@
                 }
             }
         },
-        // RemixJS:function(urls, callback) {
-        //     for(let i = 0; i < urls.length; i++) {
-        //         urls[i] 
-        //     } 
-        // },
         RemixText:function(elId, options) {
 
             this.elId = elId;

@@ -226,11 +226,12 @@ class RoomPosts extends Component {
 
     prevPage() {
         currentPage = currentPage === 1 ? 1 : currentPage - 1;
+        rooms = [];
         let database = firebase.database();
         let that = this;
         let counter = 0;
         
-        database.ref('categorizations/Regular').orderByChild('date').limitToLast(roomsPerPage + 1).startAt(previousDate).once('value').then((snapshot) => {
+        database.ref('categorizations/Regular').orderByChild('date').startAt(previousDate).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
         
          
            snapshot.forEach((childSnapShot) => {
