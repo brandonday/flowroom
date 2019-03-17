@@ -98,8 +98,8 @@ bindExportEvent() {
         id:this.props.id,
         url:result
       }
-      iframe.contentWindow.flowroom.remixCallback();
-      console.log(iframe.contentWindow)
+      iframe.contentWindow.flowroom.remixCallback(obj);
+    
 
     }
   });

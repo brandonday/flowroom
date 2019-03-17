@@ -21,7 +21,8 @@ let that;
             currentpic:'../public/batcat.png',
             pic:'',
             classorid:'',
-            type:''
+            type:'',
+            id:''
         }
     }
     componentDidMount() {
@@ -159,7 +160,7 @@ let that;
                         //alert(getImageSaved);
                         document.getElementById('menu-wrap').style.display = 'block';
                         document.getElementById('menu').style.display = 'block';
-                        that.setState({pic:getImageSaved,classorid:'class', type:getList[j].type})
+                        that.setState({pic:getImageSaved, id:getList[j].id,classorid:'class', type:getList[j].type})
 
                         
                         
@@ -817,6 +818,7 @@ let that;
             {this.state.pic ?<PhotoEditor image={this.state.pic} 
             classorid={this.state.classorid}
             type={this.state.type}
+            id={this.state.id}
             />:''}
             
             
