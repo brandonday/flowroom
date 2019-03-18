@@ -57,7 +57,7 @@ class RoomMain extends Component {
         let that = this;
        //if(Loaded === false) {
        
-      
+        document.getElementById('main-menu').style.display = 'none';
 
 //          alert('hgghhg')
 //          var FizzyText = function() {
