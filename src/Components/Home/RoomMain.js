@@ -733,6 +733,13 @@ class RoomMain extends Component {
                         <div id="main-menu" style={{width:'600px', borderRight:'1px solid #181818',background:'#FCFDFF',overflow:'hidden',overflowY:'scroll',backgroundColor:'#181818'}}>
                         <div style={{display:'flex', justifyContent:'flex-end', height:'30px', width:'100%', border:'1px solid blue', color:'white', fontSize:20,}}>
                             <i className="far fa-window-close" style={{margin:'3px'}} onClick={()=>{
+                                 let remixid = document.getElementById('details');
+                                 remixid.className = '';
+                                 remixid.style.borderRight = '0px solid #181818';
+ 
+                                 let objectsid = document.getElementById('objects');
+                                 objectsid.className = '';
+                                 objectsid.style.borderRight = '0px solid #181818';
                                 document.getElementById('main-menu').style.display = 'none';
                             }}></i>
                         </div>
