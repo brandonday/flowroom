@@ -806,7 +806,7 @@ class RoomMain extends Component {
                                      let currentRoomID = window.location.pathname.split("room/").pop();
                                      firebase.database().ref(`rooms/${currentRoomID}`).remove();
                                      firebase.database().ref(`categorizations/Regular/${currentRoomID}`).remove();
-                                     window.location.replace('/room/');
+                                     window.location.replace('/');
 
                                 }} style={{fontWeight:'bold',
                                 color:'white',

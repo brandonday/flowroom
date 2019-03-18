@@ -140,7 +140,7 @@ let that;
 
                         
                         
-                        let img = new Image();
+                        let img = new Image;
                         img.setAttribute('crossOrigin', 'anonymous'); 
                         
                         let canvas = document.createElement('canvas');
@@ -148,12 +148,11 @@ let that;
                         
                     
                         img.onload = function() {
-                      
+                       
                         canvas.width = img.width;
                         canvas.height = img.height;
                         ctx.drawImage( img, 0, 0 );
                         localStorage.setItem( `savedImageData${j}`, canvas.toDataURL("image/png") );
-                        
                         let getImageSaved = localStorage.getItem(`savedImageData${j}`);
                         //alert(getImageSaved);
                         document.getElementById('menu-wrap').style.display = 'block';
@@ -178,8 +177,6 @@ let that;
                         
                         //testFR(elId);
                         }
-                   
-                        
                         img.src = getList[j].image;
                     
                         
@@ -191,7 +188,7 @@ let that;
 
                     item.addEventListener('click', ()=> {
                         
-                        let img = new Image();
+                        let img = new Image;
                         img.setAttribute('crossOrigin', 'anonymous'); 
                         
                         let canvas = document.createElement('canvas');

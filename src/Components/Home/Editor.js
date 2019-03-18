@@ -170,13 +170,10 @@ class Editor extends Component {
                     iFrameHead.appendChild(link);
                 }
             }
-            let html = HTML_EDITOR.getValue() || null;
-            let css = CSS_EDITOR.getValue() || null;
-            let js = JS_EDITOR.getValue() || null;
-            
          
             
-            this.props.saveDHTML({html, css, js});
+         
+           
 
         }
         //when removing last library, set to [];
@@ -212,8 +209,17 @@ class Editor extends Component {
        
       
       //user is "finished typing," do something
+      
+      
       function doneTyping () {
+      
         renderDHTML();
+
+      let html = HTML_EDITOR.getValue() || null;
+      let css = CSS_EDITOR.getValue() || null;
+      let js = JS_EDITOR.getValue() || null;
+        that.props.saveDHTML({html, css, js});
+     
       }
 
       let isHTMLREADY = false;
