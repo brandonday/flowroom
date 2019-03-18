@@ -57,7 +57,10 @@ class RoomMain extends Component {
     componentDidMount() {
         let that = this;
        //if(Loaded === false) {
-        this.setState({user:firebase.auth().currentUser.displayName})
+       if(firebase.auth().currentUser !== null) {
+        that.setState({user:firebase.auth().currentUser.displayName});
+       }
+        
         document.getElementById('main-menu').style.display = 'none';
 
 //          alert('hgghhg')
