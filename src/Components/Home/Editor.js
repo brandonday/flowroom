@@ -227,6 +227,7 @@ class Editor extends Component {
       let isJSREADY= false;
   
         HTML_EDITOR.on('change', (inst, changes) => {
+          that.props.saveDHTML({html, css, js});
           if(!isHTMLREADY) {
             renderDHTML();
             isHTMLREADY = true;
@@ -237,12 +238,14 @@ class Editor extends Component {
     
         });
         HTML_EDITOR.on('keyup', () => {
+          that.props.saveDHTML({html, css, js});
           clearTimeout(typingTimer);
           if (HTML_EDITOR.getValue()) {
               typingTimer = setTimeout(doneTyping, doneTypingInterval);
           }
         });
         CSS_EDITOR.on('change', function(inst, changes) {
+          that.props.saveDHTML({html, css, js});
           if(!isCSSREADY) {
             renderDHTML();
             isCSSREADY = true;
