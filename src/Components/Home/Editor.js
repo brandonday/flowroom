@@ -226,33 +226,40 @@ class Editor extends Component {
       let isCSSREADY = false;
       let isJSREADY= false;
   
+      
+       
+
         HTML_EDITOR.on('change', (inst, changes) => {
+          let html = HTML_EDITOR.getValue() || null;
+      let css = CSS_EDITOR.getValue() || null;
+      let js = JS_EDITOR.getValue() || null;
           that.props.saveDHTML({html, css, js});
           if(!isHTMLREADY) {
             renderDHTML();
+            
             isHTMLREADY = true;
           }
           
-          let html = HTML_EDITOR.getValue();
-          html = html === null ? '' : html; 
-    
         });
         HTML_EDITOR.on('keyup', () => {
-          that.props.saveDHTML({html, css, js});
+     
           clearTimeout(typingTimer);
           if (HTML_EDITOR.getValue()) {
               typingTimer = setTimeout(doneTyping, doneTypingInterval);
           }
         });
         CSS_EDITOR.on('change', function(inst, changes) {
+          let html = HTML_EDITOR.getValue() || null;
+          let css = CSS_EDITOR.getValue() || null;
+          let js = JS_EDITOR.getValue() || null;
           that.props.saveDHTML({html, css, js});
           if(!isCSSREADY) {
             renderDHTML();
+          
             isCSSREADY = true;
           }
           
-          let css = CSS_EDITOR.getValue();
-          css = css === null ? '' : css;
+          
         
         });
         CSS_EDITOR.on('keyup', () => {
@@ -262,12 +269,16 @@ class Editor extends Component {
           }
         });
         JS_EDITOR.on('change', function(inst, changes) {
+          let html = HTML_EDITOR.getValue() || null;
+          let css = CSS_EDITOR.getValue() || null;
+          let js = JS_EDITOR.getValue() || null;
+          that.props.saveDHTML({html, css, js});
           if(!isJSREADY) {
             renderDHTML();
+            
             isJSREADY = true;
           }
           
-          let js = CSS_EDITOR.getValue();
         });
 
         JS_EDITOR.on('keyup', () => {
