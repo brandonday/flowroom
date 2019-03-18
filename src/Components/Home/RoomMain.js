@@ -47,7 +47,8 @@ class RoomMain extends Component {
            preferences:false,
            record:false,
            postBtnVisible:true,
-           isLoaded:false
+           isLoaded:false,
+           user:''
         };
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -56,7 +57,7 @@ class RoomMain extends Component {
     componentDidMount() {
         let that = this;
        //if(Loaded === false) {
-       
+        this.setState({user:firebase.auth().currentUser.displayName})
         document.getElementById('main-menu').style.display = 'none';
 
 //          alert('hgghhg')
@@ -730,6 +731,11 @@ class RoomMain extends Component {
                         </div>
             
                         <div id="main-menu" style={{width:'600px', borderRight:'1px solid #181818',background:'#FCFDFF',overflow:'hidden',overflowY:'scroll',backgroundColor:'#181818'}}>
+                        <div style={{display:'flex', justifyContent:'flex-end', height:'30px', width:'100%', border:'1px solid blue', color:'white', fontSize:20,}}>
+                            <i className="far fa-window-close" style={{margin:'3px'}} onClick={()=>{
+                                document.getElementById('main-menu').style.display = 'none';
+                            }}></i>
+                        </div>
                             {
                                 this.menuSelect()  
                             }
@@ -806,6 +812,7 @@ class RoomMain extends Component {
                                      let currentRoomID = window.location.pathname.split("room/").pop();
                                      firebase.database().ref(`rooms/${currentRoomID}`).remove();
                                      firebase.database().ref(`categorizations/Regular/${currentRoomID}`).remove();
+                                     firebase.database().ref(`${that.state.user}/${currentRoomID}`).remove();
                                      window.location.replace('/');
 
                                 }} style={{fontWeight:'bold',
