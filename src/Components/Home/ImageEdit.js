@@ -104,38 +104,35 @@ let that;
                 
                     let bgImg = document.createElement('div');
                                   
-                    let text = document.createElement('p');
-                    text.style.marginRight = '55px';
-                    //alert(getList[i])
-                    text.appendChild(document.createTextNode('CHANGE IMAGE'))
+                    
                     bgImg.style.backgroundImage = `url(${getList[j].image})`;
-                    bgImg.style.height = '40px';
-                    bgImg.style.width = '40px';
+                    bgImg.style.height = '50px';
+                    bgImg.style.width = '50px';
                     bgImg.style.backgroundSize = 'cover';
            
-                    item.style.height = '50px';
-                    item.style.width = '348px';
+                    item.style.height = '100px';
+                    item.style.width = '100px';
 
                     item.style.marginTop = '10px';
                     item.style.marginBottom = '10px';
 
-                    item.style.marginLeft = 'auto';
-                    item.style.marginRight = 'auto';
+                    item.style.marginLeft = '10px';
+                    item.style.marginRight = '10px';
 
                     item.style.border = '1px solid #DDE0EB';
                     item.style.display = 'flex';
                     item.style.alignItems = 'center';
-                    item.style.borderRadius = '5px';
+                    item.style.borderRadius = '0px';
 
                     bgImg.style.marginRight = '5px';
                     bgImg.style.marginLeft = '7px';
                     bgImg.style.position = 'relative';
                     item.style.display = 'flex';
-                    item.style.justifyContent = 'flex-end';
+                    item.style.justifyContent = 'center';
                     bgImg.style.right = '0px';
                     item.appendChild(bgImg);
-                    item.appendChild(text);
                     
+                   
                     list.appendChild(item);
               
                     if(getList[j].type === 'url') {
@@ -143,7 +140,7 @@ let that;
 
                         
                         
-                        let img = new Image;
+                        let img = new Image();
                         img.setAttribute('crossOrigin', 'anonymous'); 
                         
                         let canvas = document.createElement('canvas');
@@ -151,21 +148,38 @@ let that;
                         
                     
                         img.onload = function() {
-                       
+                      
                         canvas.width = img.width;
                         canvas.height = img.height;
                         ctx.drawImage( img, 0, 0 );
                         localStorage.setItem( `savedImageData${j}`, canvas.toDataURL("image/png") );
+                        
                         let getImageSaved = localStorage.getItem(`savedImageData${j}`);
                         //alert(getImageSaved);
                         document.getElementById('menu-wrap').style.display = 'block';
+                        document.getElementById('menu').style.display = '583px';
                         document.getElementById('menu').style.display = 'block';
+                        let backArrow = document.createElement('i');
+                        backArrow.className = 'far fa-caret-square-left';
+                        backArrow.style.height = '20px';
+                        backArrow.style.width = '20px';
+                        let menuTitle = document.createElement('p');
+                        let menuText = document.createTextNode('REMIXABLE ITEMS');
+                        menuTitle.appendChild(menuText);
+                        let close = document.createElement('i');
+                        close.className = 'far fa-caret-square-left';
+                        close.style.height = '20px';
+                        close.style.width = '20px';
+
                         that.setState({pic:getImageSaved, id:getList[j].id,classorid:'class', type:getList[j].type})
 
-                        
+                        document.getElementById('menu-wrap').style.height = '583px';
+                
                         
                         //testFR(elId);
                         }
+                   
+                        
                         img.src = getList[j].image;
                     
                         
@@ -177,7 +191,7 @@ let that;
 
                     item.addEventListener('click', ()=> {
                         
-                        let img = new Image;
+                        let img = new Image();
                         img.setAttribute('crossOrigin', 'anonymous'); 
                         
                         let canvas = document.createElement('canvas');
@@ -805,16 +819,20 @@ let that;
             position:'absolute',
             zIndex:'99999999999',
             height:'100%',
-            width:'363px',
+            width:'381px',
             overflow:'hidden',
             display:this.state.pic ? 'flex' : 'none',
             justifyContent:'center'
         }}>
-        <div id="menu" style={{height:'90%',
+        <div id="menu" style={{height:'550px',
             width:'396px',
             display:this.state.pic ? 'block' : 'none',
             }}>
-<div style={{height:'32px',width:'100%',borderBottom:'1px solid #202020',background:'rgb(24, 24, 24)'}}></div>
+            <div style={{height:'32px',width:'100%',borderBottom:'1px solid #202020',background:'rgb(24, 24, 24)', display:'flex', justifyContent:'space-between'}}>
+              <i className="far fa-caret-square-left" style={{color:'white'}}/>
+              <div><p style={{color:'white'}}>Swap or Edit Image</p></div>
+              <i className="far fa-caret-square-left" style={{color:'white'}}/>
+            </div>
             {this.state.pic ?<PhotoEditor image={this.state.pic} 
             classorid={this.state.classorid}
             type={this.state.type}

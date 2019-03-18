@@ -99,7 +99,7 @@ bindExportEvent() {
         url:result
       }
       iframe.contentWindow.flowroom.remixCallback(obj);
-    
+      //console.log(iframe.contentWindow)
 
     }
   });
@@ -347,7 +347,7 @@ render() {
         style={{
           height: '100%'
         }}/>
-        <button id="clear" onClick={()=> {
+        {/* <button id="clear" onClick={()=> {
           let canvas = document.getElementsByClassName('pesdk-react-canvas__canvas')[0];
           const context = canvas.getContext('2d');
           // Store the current transformation matrix
@@ -361,7 +361,7 @@ render() {
         <button id="eraser">eraser</button>
         <button>save</button>
         <button onClick={this.removeBG.bind(this)}>Remove BG</button>
-        <img id="img" src={`data:image/png;base64,${this.state.image}`}/>
+        <img id="img" src={`data:image/png;base64,${this.state.image}`}/> */}
     </div>
     )
   }

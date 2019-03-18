@@ -467,6 +467,12 @@ class RoomMain extends Component {
                                 let remixid = document.getElementById('details');
                                 remixid.className = 'menubg';
                                 remixid.style.borderRight = '0px solid #181818';
+
+                                let objectsid = document.getElementById('objects');
+                                objectsid.className = '';
+                                objectsid.style.borderRight = '0px solid #181818';
+
+
                                 let getclasses = document.getElementsByClassName('menubg');
                                 this.setState({
                                     details:false,
@@ -479,12 +485,12 @@ class RoomMain extends Component {
                                 });
                                 document.getElementById('main-menu').style.display = 'flex';
 
-                                for(let i=0; i < getclasses.length; i++) {
-                                    if(getclasses[i].id !== 'remix') {
-                                        getclasses[i].style.borderRight = '1px solid #181818';
-                                        getclasses[i].className = '';
-                                    }
-                                }
+                                // for(let i=0; i < getclasses.length; i++) {
+                                //     if(getclasses[i].id !== 'remix') {
+                                //         getclasses[i].style.borderRight = '1px solid #181818';
+                                //         getclasses[i].className = '';
+                                //     }
+                                // }
                             
 
                             }} style={{
@@ -507,6 +513,9 @@ class RoomMain extends Component {
                                     objectsid.className = 'menubg';
                                     objectsid.style.borderRight = '0px solid #181818';
                                     document.getElementById('objects').className = 'menubg'
+                                    let remixid = document.getElementById('details');
+                                    remixid.className = '';
+                                    remixid.style.borderRight = '0px solid #181818';
                                     let getclasses = document.getElementsByClassName('menubg');
                                     this.setState({details:false,
                                         objects:true,
@@ -522,15 +531,15 @@ class RoomMain extends Component {
                                     }
                                    
                                     document.getElementById('main-menu').style.display = 'flex';
-                                    for(let i=0; i < getclasses.length; i++) {
-                                        if(getclasses[i].id !== 'objects') {
-                                            getclasses[i].style.borderRight = '1px solid #181818';
-                                            getclasses[i].className = '';
+                                    // for(let i=0; i < getclasses.length; i++) {
+                                    //     if(getclasses[i].id !== 'objects') {
+                                    //         getclasses[i].style.borderRight = '1px solid #181818';
+                                    //         getclasses[i].className = '';
                         
 
-                                        }
-                                    }
-                                     let tagstoRemove = document.getElementsByTagName('li');
+                                    //     }
+                                    // }
+                                     let tagstoRemove = document.querySelectorAll('#main-menu li');
                                      
                                     for(let i = 0; i < tagstoRemove.length; i++) {
                                       
@@ -725,7 +734,7 @@ class RoomMain extends Component {
                                 this.menuSelect()  
                             }
                 
-                            <div onClick={()=>{
+                            {/* <div onClick={()=>{
                                 document.getElementById('main-menu').style.display = 'none';
                                 let getclasses = document.getElementsByClassName('menubg');
                     
@@ -749,7 +758,7 @@ class RoomMain extends Component {
                                 position:'relative',
                                 fontSize:'12px',top:'6px',}}>hide</p>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <div style={{display:'flex', flexDirection:'column', background:'white', width:'100%', position:'relative', border:'0px solid red'}}>
                             <Editor/>
