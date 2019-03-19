@@ -46,9 +46,11 @@ class RoomMain extends Component {
            remix:false,
            preferences:false,
            record:false,
+           openBtnVisible:true,
            postBtnVisible:true,
            isLoaded:false,
-           user:''
+           user:'',
+           
         };
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -62,6 +64,34 @@ class RoomMain extends Component {
        }
         
         document.getElementById('main-menu').style.display = 'none';
+
+        function myFunction(x) {
+            if (x.matches) { // If media query matches
+              document.getElementById('main-menu').style.position = 'absolute';
+              document.getElementById('main-menu').style.height = '583px';
+              document.getElementById('main-menu').style.width = '67%';
+              document.getElementById('main-menu').style.zIndex = '999994';
+              document.getElementById('main-menu').style.top = '0px';
+              document.getElementById('main-menu').style.zIndex = '999999';
+              document.getElementById('main-menu').style.left = '60px';
+              document.getElementById('main-menu').style.display = 'block';
+
+              document.getElementById('tab-menu').style.position = 'absolute';
+              document.getElementById('tab-menu').style.zIndex = '999999';
+              document.getElementById('tab-menu').style.height= '583px';
+            
+              document.getElementById('close-menu').addEventListener('click',function(){
+                document.getElementById('tab-menu').style.display = 'none';
+              })
+
+            } else {
+              document.body.style.backgroundColor = "pink";
+            }
+          }
+          
+          var x = window.matchMedia("(max-width: 768px)")
+          myFunction(x) // Call listener function at run time
+          x.addListener(myFunction) // Attach listener function on state changes
 
 //          alert('hgghhg')
 //          var FizzyText = function() {
@@ -254,7 +284,7 @@ class RoomMain extends Component {
                                     const element = document.querySelector('#main-add-section #menu-sel-wrap');
                                     const ball = styler(element); 
 
-                                    tween({ from:0, to: -300, duration: 200 })
+                                    tween({ from:600, to: -1081, duration: 200 })
                                     .start(v => ball.set('x', v));
 
                                     
@@ -462,7 +492,7 @@ class RoomMain extends Component {
         return (<div id="room-main-page" className="page-wrap twilight room-main-page-wrap">
             <div style={{display:'flex',flexDirection:'column', height:'100%',width:'100%'}}>
                 <div style={{display:'flex',flex:'0 583px'}}>
-                    <div style={{
+                    <div id="tab-menu" style={{
                         width:'60px', 
                         background:'#202020'
                     }}>
@@ -733,9 +763,9 @@ class RoomMain extends Component {
                             </div> */}
                         </div>
             
-                        <div id="main-menu" style={{width:'600px', borderRight:'1px solid #181818',background:'#FCFDFF',overflow:'hidden',overflowY:'scroll',backgroundColor:'#181818'}}>
+                        <div id="main-menu" style={{width:'600px', borderRight:'1px solid #181818',background:'#FCFDFF',overflow:'hidden',overflowY:'scroll',backgroundColor:'#181818',flexDirection:'column'}}>
                         <div style={{display:'flex', justifyContent:'flex-end', height:'30px', width:'100%', border:'1px solid blue', color:'white', fontSize:20,}}>
-                            <i className="far fa-window-close" style={{margin:'3px'}} onClick={()=>{
+                            <i id="close-menu" className="far fa-window-close" style={{margin:'3px'}} onClick={()=>{
                                  let remixid = document.getElementById('details');
                                  remixid.className = '';
                                  remixid.style.borderRight = '0px solid #181818';
@@ -794,6 +824,25 @@ class RoomMain extends Component {
                             alignItems:'center',
                             justifyContent:'space-between',
                             padding:'0px 70px'}}>
+                        <button id="postbtn" onClick={()=>{
+                              const element = document.querySelector('#main-menu');
+                              const ball = styler(element); 
+
+                              tween({ from:0, to: -300, duration: 200 })
+                              .start(v => ball.set('x', v));
+
+                        }} style={{fontWeight:'bold',
+                                color:'white',
+                                fontSize:'15px',
+                                width:'50px',
+                                height:'27px',
+                                backgroundColor:'rgb(179, 0, 254)',
+                                border:'none',
+                                borderRadius:'5px',
+                                justifyContent:'space-between',
+                                display:that.state.openBtnVisible ? 'flex' : 'none',
+                                padding:'0px 9px'}}>
+                                Open Remix Menu</button>
                             <button id="postbtn" onClick={()=>{this.openModal(true)}} style={{fontWeight:'bold',
                                 color:'white',
                                 fontSize:'15px',
