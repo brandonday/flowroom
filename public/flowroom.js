@@ -297,7 +297,7 @@
 
         },
         remixCallback:function(obj) {
-            console.log('works: ', obj)
+            alert('works: ', obj)
         },
         RemixJS:function(json, callback) {
             let FR_REMIX_LIST = [];
@@ -320,6 +320,7 @@
             }
             
             this.remixCallback = callback;
+
         },
        
         menu:function() {

@@ -85,7 +85,7 @@ removeBG() {
 bindExportEvent() {
   this.photoEditorSDK.current.ui.on('export', (result) => {
 
-    console.log('exported' + result);
+    // console.log('exported' + result);
     var iframe = document.getElementById("output_frame");
     if(this.props.type === 'id') {
       iframe.contentWindow.document.getElementById(`${this.props.classorid}`).style.backgroundImage = `url(${result})`;
@@ -98,8 +98,9 @@ bindExportEvent() {
         id:this.props.id,
         url:result
       }
-      iframe.contentWindow.flowroom.remixCallback(obj);
-      //console.log(iframe.contentWindow)
+      console.log('obj :', obj)
+      iframe.contentWindow.remixCallback(obj);
+   
 
     }
   });
