@@ -85,7 +85,19 @@ class RoomMain extends Component {
               })
 
             } else {
-              document.body.style.backgroundColor = "pink";
+              let main = document.getElementById('main-menu');
+              let tabMenu = document.getElementById('tab-menu');
+              main.style.width = '600px';
+              main.style.borderRight = '1px solid rgb(24, 24, 24)';
+              main.style.background = 'rgb(24, 24, 24)';
+              main.style.overflow = 'hidden scroll';
+              main.style.flexDirection = 'column';
+              main.style.display = 'flex';
+              main.style.position = 'relative';
+              tabMenu.style.position = 'relative';
+              main.style.left = '0px';
+   
+ 
             }
           }
           
@@ -823,7 +835,10 @@ class RoomMain extends Component {
                             display:'flex',
                             alignItems:'center',
                             justifyContent:'space-between',
-                            padding:'0px 70px'}}>
+                            padding:'0px 70px',
+                            position:'absolute',
+                            right:'0px'
+                            }}>
                         <button id="postbtn" onClick={()=>{
                               const element = document.querySelector('#main-menu');
                               const ball = styler(element); 
@@ -834,7 +849,7 @@ class RoomMain extends Component {
                         }} style={{fontWeight:'bold',
                                 color:'white',
                                 fontSize:'15px',
-                                width:'50px',
+                                width:'132px',
                                 height:'27px',
                                 backgroundColor:'rgb(179, 0, 254)',
                                 border:'none',

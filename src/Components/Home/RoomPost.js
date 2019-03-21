@@ -50,53 +50,55 @@ class RoomPost extends Component {
         <div style={{display:'flex',
             position:'relative', height:'34px'}}>
             
-           
-                {this.props.isRemixable ? (<a href={`room/${this.props.shortID}`}>
+            <a href={`room/${this.props.shortID}`}>
                 
                 <div style={{display:'flex',
                     justifyContent:'space-around',
                     alignItems:'center',
                     outline:'none',
                     cursor:'pointer',
-                    border:'1px solid rgb(10, 127, 41)',
+                    border:'1px solid #49A540',
                     borderRadius:'40px',
-                    height:'32px',
-                    width:'99px',
-                    backgroundColor:'rgb(27, 178, 67)',
-                    fontFamily:"Source Sans Pro",
-                    color:'white',
-                    fontSize:'14px',
-                    fontWeight:'600',
-                    padding:'0 8px',
-                    position:'relative',
-                    right:'-25px',
-                    transition:'color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, width 0.3s ease, opacity 0.3s ease'}}>
-                        <i class="fas fa-random" style={{color:'rgb(10, 127, 41)'}}></i>
-                        <p style={{fontSize:12}}>Remix</p>
-                      
-                </div></a>): (<a href={`room/${this.props.shortID}`}>
-                
-                <div style={{display:'flex',
-                    justifyContent:'space-around',
-                    alignItems:'center',
-                    outline:'none',
-                    cursor:'pointer',
-                    border:'1px solid rgb(10, 127, 41)',
-                    borderRadius:'40px',
-                    height:'32px',
+                    height:'25px',
                     width:'78px',
-                    backgroundColor:'rgb(27, 178, 67)',
+                    backgroundColor:'#49A540',
                     fontFamily:"Source Sans Pro",
                     color:'white',
                     fontSize:'14px',
                     fontWeight:'600',
                     padding:'0 8px',
                     position:'relative',
-                    right:'-25px',
                     transition:'color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, width 0.3s ease, opacity 0.3s ease'}}>
-                        <p style={{fontSize:12, with:20}}>Go to Room</p>
+                        <p style={{fontSize:13, with:20}}>Enter</p>
                       
-                </div></a>)}
+                </div></a>
+                <a href={`room/${this.props.shortID}`}>
+                
+                <div style={{display:'flex',
+                    justifyContent:'space-around',
+                    alignItems:'center',
+                    outline:'none',
+                    cursor:'pointer',
+                    border:'1px solid #429DCE',
+                    borderRadius:'40px',
+                    height:'25px',
+                    width:'78px',
+                    backgroundColor:'#429DCE',
+                    fontFamily:"Source Sans Pro",
+                    color:'white',
+                    fontSize:'14px',
+                    fontWeight:'600',
+                    padding:'0 8px',
+                    position:'relative',
+                    transition:'color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, width 0.3s ease, opacity 0.3s ease'}}>
+                        <i class="fas fa-infinity" style={{color:'white'}}></i>
+                        <p style={{fontSize:13, with:20}}>Remix</p>
+                      
+                </div></a>
+                <div onClick={this.goFull} style={{display:'flex'}}>
+                            <i className="fas fa-expand" style={{fontSize:15, color:'#B846F6'}}></i>
+                        </div>
+             
                 
        
     </div>)
@@ -265,33 +267,30 @@ class RoomPost extends Component {
                         width:'100%',
                         padding:'0px 10px',
                         alignItems:'center',
-                        marginTop:20,
                         position:'relative',
                     
                         }}>
                         
                             <div style={{border:'0px solid red',overflow:'hidden',height:'50px',display:'flex',
                                 alignItems:'center'}}>
-                            <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',marginRight:'18px',flexDirection:'column',height:'37px'}}>
+                            {/* <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',marginRight:'18px',flexDirection:'column',height:'37px'}}>
                             <i class="far fa-eye" style={{fontSize:20, color:'white'}}></i>
                                 <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.props.views}</p>
-                            </div>
-                            <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center', marginRight:'18px',flexDirection:'column',height:'37px'}}>
-                            <i class="far fa-heart" style={{fontSize:20, color:'white'}}></i>
+                            </div> */}
+                            <div style={{display:'flex',width:'auto',alignItems:'center', marginRight:'18px',flexDirection:'row',height:'37px'}}>
+                            <i class="far fa-heart" style={{fontSize:13, color:'white'}}></i>
                                 <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.props.likes}</p>
                             </div>
-                            <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',flexDirection:'column',height:'37px',marginRight:'18px'}}>
-                            <i class="fas fa-comment-alt" style={{fontSize:20, color:'white'}}></i>
+                            <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',flexDirection:'row',height:'37px',marginRight:'18px'}}>
+                            <i className="far fa-comment-alt" style={{fontSize:13, color:'white'}}></i>
                             <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.props.commentsCount}</p>
                             </div>
-                            <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',flexDirection:'column',height:'37px'}}>
+                            {/* <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',flexDirection:'column',height:'37px'}}>
                             <i class="far fa-share-square" style={{fontSize:20, color:'white'}}></i>
-                            </div>
+                            </div> */}
                     </div>
                     {this.display()}
-                    <div onClick={this.goFull} style={{padding:'0px 10px',display:'flex', justifyContent:'center', alignItems:'center'}}>
-                            <i className="fas fa-expand" style={{marginRight:'10px',fontSize:20, color:'white'}}></i>
-                        </div>
+                   
                 </div>
                 <div id="descriptionWrapText" style={{fontSize:'16px', padding:'0px 10px 10px'}}>
                         <p id="descriptionText" style={{wordBreak:'break-all', fontSize:'12px', color:'white'}}>
