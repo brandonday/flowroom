@@ -669,18 +669,7 @@ const KeyCodes = {
                             fontWeight:'100',
                             fontSize:'14px',
                             marginTop:20
-                        }} onClick={()=> {
-                            if(firebase.auth().currentUser === null) {
-                                this.setState({showSignInSignUp:true})
-                               // this.closeModal();
-                               
-                             
-                            } else {
-                                this.saveRoom.bind(this)
-                            }
-                            
-                            
-                            }}>Post</button>
+                        }} onClick={this.saveRoom.bind(this)}>Post</button>
                         <div style={{width:'100%', display:'flex', justifyContent:'center', marginTop:20}}><p>Type of Post</p></div>
                         <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none',marginTop:20}}>
                         <div onClick={()=>{this.selectPr('room-post-btn')}} id="room-post-btn" className={this.state.roomPostBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Room</p></div>

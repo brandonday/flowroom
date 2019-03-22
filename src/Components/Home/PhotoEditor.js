@@ -6,7 +6,19 @@ import ReactDOM from 'react-dom'
 import PhotoEditorUI from 'photoeditorsdk/react-ui';
 import Styles from 'photoeditorsdk/css/PhotoEditorSDK.UI.ReactUI.min.css';
 import axios from 'axios';
-console.log(React.version);
+import AWS from 'aws-sdk';
+import * as S3 from 'aws-sdk/clients/s3';
+
+AWS.config.update({
+  region: 'us-west-2',
+  credentials: new AWS.CognitoIdentityCredentials({
+    IdentityPoolId: 'us-west-2:5df2511a-5595-416c-b148-aba28893c3f3'
+  })
+});
+
+const s3 = new S3();
+
+
 
 class PhotoEditor extends React.Component {
   constructor(props) {
@@ -27,6 +39,8 @@ class PhotoEditor extends React.Component {
   handleLoad() {
 
   }
+
+
 
   resetEditor(e,img){
     return this.photoEditorSDK.current.ui.setImage(img);
@@ -82,7 +96,35 @@ removeBG() {
   });
 }
 
+async putObject(fileName, image) {
+  // const data = await s3.putObject({
+  //     Bucket: 'test.flowroom.com',
+  //     Key:'uploads/' + fileName,
+  //     ContentType: 'image/png',
+  //     Body: image
+  // }).promise();
+  // console.log('s3 data: ',data);
+  let buffer = new Buffer(image.replace(/^data:image\/\w+;base64,/, ""),'base64')
+
+  let params = { 
+      Bucket: 'test.flowroom.com',
+      Key:'uploads/' + fileName,
+      ContentEncoding: 'base64',
+      ContentType: 'image/png',
+      Body: buffer,
+      
+    }
+  s3.putObject(params, function(err, data) {
+    if (err) {
+      console.log('error :',err);
+    } else {
+      console.log('data :', data);
+    }
+  });
+}
+
 bindExportEvent() {
+  
   this.photoEditorSDK.current.ui.on('export', (result) => {
 
     // console.log('exported' + result);
@@ -98,6 +140,11 @@ bindExportEvent() {
         id:this.props.id,
         url:result
       }
+      
+      this.putObject('test.png', result)
+
+  
+
       console.log('obj :', obj)
       iframe.contentWindow.remixCallback(obj);
    
