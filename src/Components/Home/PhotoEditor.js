@@ -8,6 +8,8 @@ import Styles from 'photoeditorsdk/css/PhotoEditorSDK.UI.ReactUI.min.css';
 import axios from 'axios';
 import AWS from 'aws-sdk';
 import * as S3 from 'aws-sdk/clients/s3';
+import uuid from 'uuid';
+import Hashids from 'hashids';
 
 AWS.config.update({
   region: 'us-west-2',
@@ -96,7 +98,7 @@ removeBG() {
   });
 }
 
-async putObject(fileName, image) {
+async putObject(id, image) {
   // const data = await s3.putObject({
   //     Bucket: 'test.flowroom.com',
   //     Key:'uploads/' + fileName,
@@ -104,6 +106,9 @@ async putObject(fileName, image) {
   //     Body: image
   // }).promise();
   // console.log('s3 data: ',data);
+  let hashids = new Hashids(uuid(), 6);
+  let fileName = hashids.encode(1, 2, 3) + '.png';
+  
   let buffer = new Buffer(image.replace(/^data:image\/\w+;base64,/, ""),'base64')
 
   let params = { 
@@ -114,12 +119,22 @@ async putObject(fileName, image) {
       Body: buffer,
       
     }
+
+  
+  
   s3.putObject(params, function(err, data) {
     console.log('err: ', err)
     if (err) {
       console.log('error :',err);
     } else {
       console.log('data :', data);
+      let obj = {
+        id:id,
+        url:`http://test.flowroom.com/uploads/${fileName}`
+      }
+      console.log('obj :', obj);
+      let iframe = document.getElementById("output_frame");
+      iframe.contentWindow.remixCallback(obj);
     }
   });
 }
@@ -137,17 +152,9 @@ bindExportEvent() {
         iframe.contentWindow.document.getElementsByClassName(`${this.props.classorid}`)[i].style.backgroundImage = `url(${result})`;
       }
     } else {
-      let obj = {
-        id:this.props.id,
-        url:result
-      }
-      
-      this.putObject('test.png', result)
-
-  
-
-      console.log('obj :', obj)
-      iframe.contentWindow.remixCallback(obj);
+   
+   
+      this.putObject(this.props.id, result);
    
 
     }
