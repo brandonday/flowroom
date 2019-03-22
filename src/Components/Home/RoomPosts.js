@@ -459,6 +459,7 @@ class RoomPosts extends Component {
                                         key={i}
                                         shortID={i.shortID}
                                         room_title={i.room_title}
+                                        tags={['Fun', 'Game', 'Meme','Meme','Meme','Meme','Meme','Meme','Meme','Meme']}
                                     /></div>)
                                }
                                 // if (i.roomType === 'text') {

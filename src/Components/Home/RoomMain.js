@@ -266,7 +266,7 @@ class RoomMain extends Component {
                         marginTop:'20px',
                         borderRadius:'5px',
                         border:'1px solid black',
-                        paddingLeft:'14px'}} placeholder="ddsdssd"/>
+                        paddingLeft:'14px'}} placeholder="search..."/>
             
                     <div id="main-add-section" style={{display:'flex',flexWrap:'wrap', width:'300px', overflow:'hidden',height:'500px',backgroundColor:'#181818'}}>
                         <div id="menu-sel-wrap" style={{ width:'100%',height:'100%',margin:'auto'}}>
@@ -776,8 +776,8 @@ class RoomMain extends Component {
                         </div>
             
                         <div id="main-menu" style={{width:'600px', borderRight:'1px solid #181818',background:'#FCFDFF',overflow:'hidden',overflowY:'scroll',backgroundColor:'#181818',flexDirection:'column'}}>
-                        <div style={{display:'flex', justifyContent:'flex-end', height:'30px', width:'100%', border:'1px solid blue', color:'white', fontSize:20,}}>
-                            <i id="close-menu" className="far fa-window-close" style={{margin:'3px'}} onClick={()=>{
+                        <div style={{display:'flex', justifyContent:'flex-end', height:'30px', width:'100%', border:'1px solid #202020', color:'white', fontSize:20,}}>
+                            <i id="close-menu" className="far fa-window-close" style={{margin:'3px', color:'rgb(95, 95, 95)'}} onClick={()=>{
                                  let remixid = document.getElementById('details');
                                  remixid.className = '';
                                  remixid.style.borderRight = '0px solid #181818';

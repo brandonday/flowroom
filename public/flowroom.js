@@ -297,7 +297,7 @@
 
         },
         remixCallback:function(obj) {
-            alert('works: ', obj)
+           
         },
         RemixJS:function(json, callback) {
             let FR_REMIX_LIST = [];

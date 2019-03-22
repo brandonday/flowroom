@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import Responsive from 'react-responsive';
 import {Link} from 'react-router-dom';
 import Fullscreen from "react-full-screen";
+import Tag from './Tag';
 const Desktop = props => <Responsive {...props} minWidth={992} />;
 const Tablet = props => <Responsive {...props} minWidth={768} maxWidth={991} />;
 const Mobile = props => <Responsive {...props} maxWidth={767} />;
 const Default = props => <Responsive {...props} minWidth={768} />;
 
-
-
+let tagsLengthArray = [];
+let tagCounter = 0;
 class RoomPost extends Component {
     constructor(){
         super();
@@ -17,11 +18,25 @@ class RoomPost extends Component {
             isFull: false,
             fullscreen:false,
             pHeight:'',
-            dElem:''
+            dElem:'',
+            showMoreTag:false,
+            tags:[],
+            tagColor:''
         }
     }
     componentDidMount() {
-
+        let tags = this.props.tags;
+        
+        tags.map((tag)=> {
+            if(tagsLengthArray.length < 3) {
+                tagsLengthArray.push(tag);
+            }
+        })
+        
+        this.setState({tags:tagsLengthArray});
+        if(tags.length > 3) {
+            this.setState({showMoreTag:true});
+        }
     }
     mouseHover() {
         // if(this.props.id.id !== null) {
@@ -48,7 +63,7 @@ class RoomPost extends Component {
     display() {
         return (
         <div style={{display:'flex',
-            position:'relative', height:'34px'}}>
+            position:'relative', height:'34px',width:188,justifyContent:'space-between',marginTop:'10px'}}>
             
             <a href={`room/${this.props.shortID}`}>
                 
@@ -69,6 +84,7 @@ class RoomPost extends Component {
                     padding:'0 8px',
                     position:'relative',
                     transition:'color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, width 0.3s ease, opacity 0.3s ease'}}>
+                        <i class="fas fa-play" style={{fontSize:10, width:0}}></i>
                         <p style={{fontSize:13, with:20}}>Enter</p>
                       
                 </div></a>
@@ -96,7 +112,7 @@ class RoomPost extends Component {
                       
                 </div></a>
                 <div onClick={this.goFull} style={{display:'flex'}}>
-                            <i className="fas fa-expand" style={{fontSize:15, color:'#B846F6'}}></i>
+                            <i className="fas fa-expand" style={{fontSize:15, color:'#B846F6',margin:'5px 4px'}}></i>
                         </div>
              
                 
@@ -136,12 +152,12 @@ class RoomPost extends Component {
                     }
                     }}>
 
-                    <div className="top-title" style={{display:'flex',height:'75px',width:'100%'}}>
+                    <div className="top-title" style={{display:'flex',height:'60px',width:'100%'}}>
                         <div style={{display:'flex',
                             marginTop:10,
-                            marginLeft:'19px',
+                            marginLeft:'9px',
                             position:'relative'}}>
-                            <div style={{height:'50px',width:'50px',borderRadius:30,backgroundColor:'black', backgroundImage:`url(${this.props.pic})`, marginRight:'10px'}}></div>
+                            <div style={{height:'40px',width:'40px',borderRadius:30,backgroundColor:'black', backgroundImage:`url(${this.props.pic})`, marginRight:'10px'}}></div>
                             <div style={{display:'flex',flexDirection:'column'}}>
                             <p className="room-card-title" style={{color:'white'}}>{this.props.room_title}</p>
 
@@ -149,8 +165,10 @@ class RoomPost extends Component {
                                     textOverflow:'ellipsis',
                                     textAlign:'left',
                                     width:'97px',
-                                    fontSize:'16px',
-                                    color:'white'
+                                    fontSize:'12px',
+                                    color:'white',
+                                    position:'relative',
+                                    top:'-4px'
                                 }}>{`@${this.props.username}`}</p>
                             </div>
                             </div>
@@ -159,8 +177,8 @@ class RoomPost extends Component {
                                 justifyContent:'flex-end',
                                 /* align-items: center; */
                                 fontSize:'20px',
-                                marginRight:'10px',
-                                marginTop:'30px'}}>
+                                marginRight:'17px',
+                                marginTop:'17px'}}>
                                 <i class="fas fa-ellipsis-v" style={{color:'white'}}></i>
                             </div>
                             
@@ -272,17 +290,18 @@ class RoomPost extends Component {
                         }}>
                         
                             <div style={{border:'0px solid red',overflow:'hidden',height:'50px',display:'flex',
-                                alignItems:'center'}}>
+                                alignItems:'center',
+                                margin:'10px 5px 0px'}}>
                             {/* <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',marginRight:'18px',flexDirection:'column',height:'37px'}}>
                             <i class="far fa-eye" style={{fontSize:20, color:'white'}}></i>
                                 <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.props.views}</p>
                             </div> */}
                             <div style={{display:'flex',width:'auto',alignItems:'center', marginRight:'18px',flexDirection:'row',height:'37px'}}>
-                            <i class="far fa-heart" style={{fontSize:13, color:'white'}}></i>
+                            <i class="far fa-heart" style={{fontSize:13, color:'white',marginRight:6.5}}></i>
                                 <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.props.likes}</p>
                             </div>
                             <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',flexDirection:'row',height:'37px',marginRight:'18px'}}>
-                            <i className="far fa-comment-alt" style={{fontSize:13, color:'white'}}></i>
+                            <i className="far fa-comment-alt" style={{fontSize:13, color:'white',marginRight:6.5}}></i>
                             <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.props.commentsCount}</p>
                             </div>
                             {/* <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',flexDirection:'column',height:'37px'}}>
@@ -292,16 +311,46 @@ class RoomPost extends Component {
                     {this.display()}
                    
                 </div>
-                <div id="descriptionWrapText" style={{fontSize:'16px', padding:'0px 10px 10px'}}>
-                        <p id="descriptionText" style={{wordBreak:'break-all', fontSize:'12px', color:'white'}}>
+                <div id="descriptionWrapText" style={{fontSize:'16px', padding:'0px 10px 10px',marginBottom:'15px'}}>
+                       
 
-{/*
-                            <b style={{marginRight:'4px'}}>{`${this.props.username}`}</b>
-                            <span onClick={this.expandText.bind(this)} style={{position:'relative',height:'20px', width:'41px', float:'right', overflow:'hidden',top:'18px'}}>... more</span> */}
 
-                            {`${this.props.id.description}`}
-                            </p>
-                    </div>
+                <p style={{fontSize:'12px', color:'white',marginTop:12}}>{`${this.props.id.description}`}<span onClick={this.expandText.bind(this)} style={{color:'#5c5c5c'}}>... [Read More]</span>
+</p>
+
+
+
+                         
+                </div>
+                <div id="tags-area" style={{display:'flex',height:26,width:'100%',paddingLeft:'11px',marginBottom:20}}>
+                            {
+                          
+                            this.state.tags.map((tag)=> {
+                                
+                                let tagColor;
+                                if(tagCounter === 0) {
+                                    tagColor = '#429DCE';
+                                   
+                                } else if (tagCounter === 1) {
+                                    tagColor = '#B846F6';
+                                    
+                                } else {
+                                    tagColor = '#C96D4E'
+                                }
+                                tagCounter++;
+                                if(tagCounter == this.state.tags.length) {
+                                    tagCounter = 0;
+                                }
+                                
+                              
+                                return (
+                                  <Tag tagColor={tagColor} tag={tag}/>
+                                )   
+                            })
+                           
+                            }
+                    <div style={{display:this.state.showMoreTag ? 'block':'none',color:'#C7524D', border:'1px solid #C7524D', borderRadius:'12px', padding:'0 8px'}}><p>{'+10'}</p></div>
+                </div>
             </div>
         )
     }
