@@ -136,8 +136,8 @@ class Editor extends Component {
           let htmlObj = {html:html}
          // alert(htmlObj.html);
           localStorage.setItem("html", JSON.stringify(htmlObj));
-        //   localStorage.setItem("css", JSON.stringify(css));
-        //   localStorage.setItem("js", JSON.stringify(js));
+          localStorage.setItem("css", JSON.stringify(css));
+          localStorage.setItem("js", JSON.stringify(js));
           return src;
         };
 
