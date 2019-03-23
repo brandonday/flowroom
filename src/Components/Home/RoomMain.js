@@ -51,7 +51,7 @@ class RoomMain extends Component {
            postBtnVisible:true,
            isLoaded:false,
            user:'',
-           
+           OpenCloseMenu:false
         };
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -59,15 +59,19 @@ class RoomMain extends Component {
     }
     componentDidMount() {
         let that = this;
+        document.getElementById('main-menu').style.display = 'none';
+        
        //if(Loaded === false) {
        if(firebase.auth().currentUser !== null) {
         that.setState({user:firebase.auth().currentUser.displayName});
        }
         
-        document.getElementById('main-menu').style.display = 'none';
+       
+
 
         function myFunction(x) {
             if (x.matches) { // If media query matches
+              document.getElementById('tab-menu').style.display = 'none';
               document.getElementById('main-menu').style.position = 'absolute';
               document.getElementById('main-menu').style.height = '583px';
               document.getElementById('main-menu').style.width = '67%';
@@ -75,11 +79,12 @@ class RoomMain extends Component {
               document.getElementById('main-menu').style.top = '0px';
               document.getElementById('main-menu').style.zIndex = '999999';
               document.getElementById('main-menu').style.left = '60px';
-              document.getElementById('main-menu').style.display = 'block';
+              document.getElementById('main-menu').style.display = that.state.OpenCloseMenu ? 'flex' : 'none';
 
               document.getElementById('tab-menu').style.position = 'absolute';
               document.getElementById('tab-menu').style.zIndex = '999999';
-              document.getElementById('tab-menu').style.height= '583px';
+              document.getElementById('tab-menu').style.height = '583px';
+   
             
               document.getElementById('close-menu').addEventListener('click',function(){
                 document.getElementById('tab-menu').style.display = 'none';
@@ -93,9 +98,10 @@ class RoomMain extends Component {
               main.style.background = 'rgb(24, 24, 24)';
               main.style.overflow = 'hidden scroll';
               main.style.flexDirection = 'column';
-              main.style.display = 'flex';
+              main.style.display =  that.state.OpenCloseMenu ? 'flex' : 'none';
               main.style.position = 'relative';
               tabMenu.style.position = 'relative';
+              tabMenu.style.display = 'block';
               main.style.left = '0px';
    
  
@@ -528,10 +534,11 @@ class RoomMain extends Component {
                                     draw:false,
                                     remix:true,
                                     preferences:false,
-                                    record:false
+                                    record:false,
+                                    OpenCloseMenu:true
                                 });
                                 document.getElementById('main-menu').style.display = 'flex';
-
+                                this.setState({OpenCloseMenu:true});
                                 // for(let i=0; i < getclasses.length; i++) {
                                 //     if(getclasses[i].id !== 'remix') {
                                 //         getclasses[i].style.borderRight = '1px solid #181818';
@@ -570,7 +577,8 @@ class RoomMain extends Component {
                                         draw:false,
                                         remix:false,
                                         preferences:false,
-                                        record:false
+                                        record:false,
+                                        OpenCloseMenu:true
                                     });
                                     
                                     if(document.getElementById('remixhead') !== null) {
@@ -779,14 +787,51 @@ class RoomMain extends Component {
                         <div id="main-menu" style={{width:'600px', borderRight:'1px solid #181818',background:'#FCFDFF',overflow:'hidden',overflowY:'scroll',backgroundColor:'#181818',flexDirection:'column'}}>
                         <div style={{display:'flex', justifyContent:'flex-end', height:'30px', width:'100%', border:'1px solid #202020', color:'white', fontSize:20,}}>
                             <i id="close-menu" className="far fa-window-close" style={{margin:'3px', color:'rgb(95, 95, 95)'}} onClick={()=>{
-                                 let remixid = document.getElementById('details');
-                                 remixid.className = '';
-                                 remixid.style.borderRight = '0px solid #181818';
- 
-                                 let objectsid = document.getElementById('objects');
-                                 objectsid.className = '';
-                                 objectsid.style.borderRight = '0px solid #181818';
-                                document.getElementById('main-menu').style.display = 'none';
+                                   const element = document.querySelector('#main-menu');
+                                   const tabs = document.getElementById('tab-menu');
+                                   const ball = styler(element);
+                                   const ball2 = styler(tabs); 
+                                   function myFunction(x) {
+                                     if (x.matches) { // If media query matches
+                                  
+                                         if(that.state.OpenCloseMenu === true) {
+                                             tween({ from:0, to: -400, duration: 200 })
+                                             .start(v => ball.set('x', v));
+                                             tween({ from:0, to: -400, duration: 200 })
+                                             .start(v => ball2.set('x', v));
+     
+                                             that.setState({OpenCloseMenu:false});
+     
+                                           } else {
+                                               element.style.display = 'flex';
+                                               tween({ from:-300, to:0, duration: 200 })
+                                             .start(v => ball.set('x', v));
+                                             tween({ from:-300, to: 0, duration: 200 })
+                                             .start(v => ball2.set('x', v));
+                                             that.setState({OpenCloseMenu:true});
+                                           }
+                                       
+                                     } else {
+                                    
+                                        let remixid = document.getElementById('details');
+                                        remixid.className = '';
+                                        remixid.style.borderRight = '0px solid #181818';
+        
+                                        let objectsid = document.getElementById('objects');
+                                        objectsid.className = '';
+                                        objectsid.style.borderRight = '0px solid #181818';
+                                       document.getElementById('main-menu').style.display = 'none';
+                          
+                                     }
+                                   }
+                                   
+                                   var x = window.matchMedia("(max-width: 768px)")
+                                   myFunction(x) // Call listener function at run time
+                                   x.addListener(myFunction) // Attach listener function on state changes
+                                
+
+
+                                this.setState({OpenCloseMenu:false})
                             }}></i>
                         </div>
                             {
@@ -830,22 +875,52 @@ class RoomMain extends Component {
                     <Comments/>
                     <div style={{height:'100%',width:'400px',background:'white'}}>
                         <div style={{height:'42px',
-                            width:'400px',
+                            width:'320px',
                             background:'#202020',
                             border:'0px solid red',
                             display:'flex',
                             alignItems:'center',
                             justifyContent:'space-between',
-                            padding:'0px 70px',
                             position:'absolute',
                             right:'0px'
                             }}>
-                        <button id="postbtn" onClick={()=>{
+                        <button id="openCloseBtn" onClick={()=>{
                               const element = document.querySelector('#main-menu');
-                              const ball = styler(element); 
+                              const tabs = document.getElementById('tab-menu');
+                              const ball = styler(element);
+                              const ball2 = styler(tabs); 
+                              function myFunction(x) {
+                                if (x.matches) { // If media query matches
+                             
+                                    if(that.state.OpenCloseMenu === true) {
+                                        tween({ from:0, to: -400, duration: 200 })
+                                        .start(v => ball.set('x', v));
+                                        tween({ from:0, to: -400, duration: 200 })
+                                        .start(v => ball2.set('x', v));
 
-                              tween({ from:0, to: -300, duration: 200 })
-                              .start(v => ball.set('x', v));
+                                        that.setState({OpenCloseMenu:false});
+
+                                      } else {
+                                          element.style.display = 'flex';
+                                          tween({ from:-300, to:0, duration: 200 })
+                                        .start(v => ball.set('x', v));
+                                        tween({ from:-300, to: 0, duration: 200 })
+                                        .start(v => ball2.set('x', v));
+                                        that.setState({OpenCloseMenu:true});
+                                        tabs.style.display = 'block';
+                                      }
+                                  
+                                } else {
+                               
+                       
+                     
+                                }
+                              }
+                              
+                              var x = window.matchMedia("(max-width: 768px)")
+                              myFunction(x) // Call listener function at run time
+                              x.addListener(myFunction) // Attach listener function on state changes
+                          
 
                         }} style={{fontWeight:'bold',
                                 color:'white',
@@ -858,7 +933,7 @@ class RoomMain extends Component {
                                 justifyContent:'space-between',
                                 display:that.state.openBtnVisible ? 'flex' : 'none',
                                 padding:'0px 9px'}}>
-                                Open Remix Menu</button>
+                                {this.state.OpenCloseMenu ? 'Close Remix Menu' : 'Open Remix Menu'}</button>
                             <button id="postbtn" onClick={()=>{this.openModal(true)}} style={{fontWeight:'bold',
                                 color:'white',
                                 fontSize:'15px',
@@ -902,7 +977,7 @@ class RoomMain extends Component {
                                 display:that.state.postBtnVisible ? 'none' : 'flex',
                                 padding:'0px 9px'}}>
                                 Delete</button>
-                                <i className="fas fa-expand" style={{fontSize:30, color:'rgb(179, 0, 254)'}}></i>
+                                <i className="fas fa-expand" style={{fontSize:30, color:'rgb(179, 0, 254)', marginRight:25}}></i>
                         </div>
                         
                         {/* <RelatedRooms/> */}

@@ -322,37 +322,11 @@
             this.remixCallback = callback;
 
         },
-       
-        menu:function() {
-            let remixlist = parent.document.getElementById('main-menu');
-            if (remixlist)
-            {
-                remixlist.style.display = 'flex';
-                remixlist.style.width = '584px';
-                remixlist.style.flexDirection = 'column';
-                remixlist.style.alignItems = 'center';
-                let head = document.createElement('div');
-                let headText = document.createElement('p');
-                headText.style.marginRight = '20px';
-                let icon = document.createElement('div');
-                icon.className = 'fa fa-random';
-                icon.fontSize = '40px';
-                head.style.height = '35px';
-                    head.style.width = '100%';
-                    head.style.borderBottom = '1px solid #DDE0EB';
-                if(localStorage.getItem("remixhead") === null) {
-                    headText.appendChild(document.createTextNode('REMIX MENU'))
-
-                    head.style.display = 'flex';
-                    head.style.justifyContent = 'center';
-                    head.style.alignItems = 'center';
-                    head.appendChild(headText);
-                    head.appendChild(icon);
-                    head.setAttribute("id", "remixhead");
-                    remixlist.appendChild(head);
-                    localStorage.setItem("remixhead", true);
-                }
-            }
+        replaceString:function(searchString, replaceWith) {
+            var str = JSON.parse(localStorage.getItem("dhtml")).js;
+            str.toString();
+            str.replace(searchString, replaceWith);
+            parent.document.getElementsByClassName('CodeMirror')[2].value = str;
         },
         RemixText:function(elId, options) {
 
