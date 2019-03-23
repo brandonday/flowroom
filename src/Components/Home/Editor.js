@@ -133,9 +133,9 @@ class Editor extends Component {
           src = src.replace('</head>', css + JSflowroom + '</head>');
           js = '<script>' + js + '<\/script>';
           src = src.replace('</body>', js + '</body>');
-          let htmlObj = {html:html}
+          let dhtmlObj = {html:html, js:js, css:css}
          // alert(htmlObj.html);
-          localStorage.setItem("html", JSON.stringify(htmlObj));
+          localStorage.setItem("dhtml", JSON.stringify(dhtmlObj));
           localStorage.setItem("css", JSON.stringify(css));
           localStorage.setItem("js", JSON.stringify(js));
           return src;
