@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import { Resizable, ResizableBox } from 'react-resizable';
 import * as CodeMirror from 'codemirror';
-import 'codemirror/theme/base16-light.css';
+import 'codemirror/theme/dracula.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { OverflowDetector } from 'react-overflow';
 import Responsive from 'react-responsive';
@@ -184,21 +184,21 @@ class Editor extends Component {
         HTML_EDITOR = CodeMirror.fromTextArea(document.getElementById("html_code"), {
           lineNumbers: true,
           mode: "htmlmixed",
-          theme: "base16-dark",
+          theme: "dracula",
           lineWrapping: true
         });
   
         CSS_EDITOR = CodeMirror.fromTextArea(document.getElementById("css_code"), {
           lineNumbers: true,
           mode: "css",
-          theme: "base16-dark",
+          theme: "dracula",
           lineWrapping: true
         });
   
         JS_EDITOR = CodeMirror.fromTextArea(document.getElementById("js_code"), {
           lineNumbers: true,
           mode: "javascript",
-          theme: "base16-dark",
+          theme: "dracula",
           lineWrapping: true
         });
   

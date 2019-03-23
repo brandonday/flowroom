@@ -11,7 +11,7 @@ body {
   align-items: center;
   overflow-y:scroll;
 }
-.CodeMirror-sizer {
+/* .CodeMirror-sizer {
 margin-left: 30px !important; 
 margin-bottom: 0px !important;
 border-right-width: 30px !important;
@@ -33,7 +33,7 @@ font-size: 13px !important;
 .CodeMirror-scroll, .CodeMirror-sizer, .CodeMirror-gutter, .CodeMirror-gutters, .CodeMirror-linenumber {
   box-sizing: content-box;
   background-color:white;
-}
+} */
 
 .top-boxes {
   background-color: white !important;
@@ -293,9 +293,9 @@ body {
   height:80px;
 }
 
-.CodeMirror-lines {
+/* .CodeMirror-lines {
   padding: 4px 0px 0px !important;
-}
+} */
 
 .header-profile-pic {
   border-radius: 40px;
@@ -1511,9 +1511,9 @@ body {
   position: relative;
   overflow: hidden;
   background: white !important;
-  width: 100%;
-  height: 100% !important;
-  padding-bottom: 40px;
+  width: 100%; 
+  height: 100%;
+  font-size:16px;
 }
 .description-container {
   height:140px;
@@ -1566,8 +1566,10 @@ body {
   right: 0;
   box-sizing: border-box;
   cursor: se-resize;
-  background-color:#DDE0EB;
+
   z-index: 99999;
+
+  background-color: rgb(32, 32, 32);
 }
 .box {
   display: inline-block;
@@ -2340,7 +2342,8 @@ body {
   width:100%;
   resize:none;
   outline:none;
-  border:1px solid #DDE0EB;
+
+  border: 1px solid rgb(32, 32, 32);
 }
 
 .css_code {
@@ -2933,13 +2936,13 @@ body {
 #html-box {
   height:100%; 
   width:3px;
-  background-color:#DDE0EB;
+  background-color:rgb(32, 32, 32);
 }
 
 #css-box {
   height:100%;
   width:3px;
-  background-color:#DDE0EB;
+  background-color:rgb(32, 32, 32);
 }
 
 
@@ -3026,8 +3029,9 @@ p {
 .dhtml-labels-wrap {
   height:34px; 
   width:100%;
-  border-top: 1px solid rgb(221, 224, 235);
-  border-bottom:1px solid rgb(221, 224, 235);
+  border-top: 1px solid rgb(32, 32, 32);
+    border-bottom: 1px solid rgb(32, 32, 32);
+  background:rgb(24, 24, 24)
 }
 
 .preferencesLbls {
