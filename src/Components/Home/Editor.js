@@ -212,12 +212,11 @@ class Editor extends Component {
       
       
       function doneTyping () {
-      
         renderDHTML();
 
-      let html = HTML_EDITOR.getValue() || null;
-      let css = CSS_EDITOR.getValue() || null;
-      let js = JS_EDITOR.getValue() || null;
+        let html = HTML_EDITOR.getValue() || null;
+        let css = CSS_EDITOR.getValue() || null;
+        let js = JS_EDITOR.getValue() || null;
         that.props.saveDHTML({html, css, js});
      
       }

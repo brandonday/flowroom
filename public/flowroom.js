@@ -325,8 +325,8 @@
         replaceString:function(searchString, replaceWith) {
            
             let str = JSON.parse(localStorage.getItem("dhtml")).js;
+            str = str.replace('<script>','');
             str = str.replace(searchString, replaceWith);
-          
             parent.window.updateJSCode(str);
         },
         RemixText:function(elId, options) {
