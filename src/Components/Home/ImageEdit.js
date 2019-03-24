@@ -27,41 +27,7 @@ let that;
     }
     componentDidMount() {
         document.getElementsByClassName('remix-m')[0].style.display = 'none';  
-        // var innerWindow = document.getElementsByClassName('output_frame')[0].contentWindow;
-        // innerWindow.testFR= this.testFR; 
-        // that = this;
-
-        // setTimeout(function() {
-        //     var list = document.getElementsByClassName("pesdk-react-controls__list")[0];
-        //     var node = document.createElement('li');
-        //     node.setAttribute("data-identifier", "filter");
-        //     node.className = 'pesdk-react-controls__list__item';
-        //     let div = document.createElement('div');
-        //     div.className = 'pesdk-react-controls__button pesdk-react-controls__button--withLabel';
-        //     let img = document.createElement('img');
-        //     img.src = '../assets/ui/react/controls/overview/filters@2x.png';
-        //     img.className = 'pesdk-react-controls__button__icon';
-        //     let button = document.createElement('div');
-        //     button.className = 'pesdk-react-controls__button__label';
-        //     let btntext = document.createTextNode('Filters');
-        //     button.appendChild(btntext);
-        //     div.appendChild(img);
-        //     div.appendChild(button);
-        //     node.appendChild(div);
-         
-        
-           
-        //     list.insertBefore(node, list.childNodes[1]);
-        //     list.addEventListener('click', ()=>{
-        //       let canvas = document.getElementsByTagName('pesdk-react-canvas__canvas')[0];
-        //       const context = canvas.getContext('2d');
-          
-        //   context.clearRect(0, 0, canvas.width, canvas.height);
-        //     })
-        //     },10000)
-  
-
-      //console.log(this.state.currentpic)
+     
         function removeDuplicates(originalArray, prop) {
              var newArray = [];
              var lookupObject  = {};
@@ -81,8 +47,14 @@ let that;
         let that = this;
         let list = document.getElementById('main-menu');
         let getList = JSON.parse(localStorage.getItem( "FR_REMIX_LIST"));
-        if(getList != null) {
-        let overlay = document.createElement('div');
+        let remixList = document.createElement('div');
+                    remixList.setAttribute("id", "remix-list");
+                    remixList.style.display = 'flex';
+                    remixList.style.flexDirection = 'row';
+                  remixList.style.flexWrap = 'wrap';
+                 
+                  if(getList != null) {
+                    let overlay = document.createElement('div');
                     overlay.setAttribute("id","remix-overlay");
                     //let item;
                    
@@ -99,12 +71,12 @@ let that;
                     this.setState({currentpic:uniqueArray[0]});
                     
                     for(let j = 0; j < uniqueArray.length; j++) {
-                    let item = document.createElement('li');
+                 
+                      let item = document.createElement('li');
                         
                 
-                    let bgImg = document.createElement('div');
-                                  
-                    
+                      let bgImg = document.createElement('div');       
+                
                     bgImg.style.backgroundImage = `url(${getList[j].image})`;
                     bgImg.style.height = '50px';
                     bgImg.style.width = '50px';
@@ -133,7 +105,7 @@ let that;
                     item.appendChild(bgImg);
                     
                    
-                    list.appendChild(item);
+                    remixList.appendChild(item);
               
                     if(getList[j].type === 'url') {
                       item.addEventListener('click', ()=> {
@@ -221,6 +193,10 @@ let that;
                     }
 
                   }
+                  list.appendChild(remixList);
+
+
+
                    
                 }
                     //let secondCreated = false;

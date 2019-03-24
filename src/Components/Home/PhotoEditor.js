@@ -119,6 +119,11 @@ recreateList() {
   let that = this;
   let list = document.getElementById('main-menu');
   let getList = JSON.parse(localStorage.getItem( "FR_REMIX_LIST"));
+  let remixList = document.createElement('div');
+  remixList.setAttribute("id", "remix-list");
+  remixList.style.display = 'flex';
+  remixList.style.flexDirection = 'row';
+  remixList.style.flexWrap = 'wrap';
   if(getList != null) {
   let overlay = document.createElement('div');
               overlay.setAttribute("id","remix-overlay");
@@ -142,7 +147,9 @@ recreateList() {
           
               let bgImg = document.createElement('div');
                             
-              
+            
+
+
               bgImg.style.backgroundImage = `url(${getList[j].image})`;
               bgImg.style.height = '50px';
               bgImg.style.width = '50px';
@@ -170,8 +177,8 @@ recreateList() {
               bgImg.style.right = '0px';
               item.appendChild(bgImg);
               
-             
-              list.appendChild(item);
+              remixList.appendChild(item);
+          
         
               if(getList[j].type === 'url') {
                 item.addEventListener('click', ()=> {
@@ -257,9 +264,9 @@ recreateList() {
               })
 
               }
-
+              
             }
-             
+            list.appendChild(remixList);
           }
 
 }
@@ -312,9 +319,10 @@ async putObject(id, image) {
         } 
               
       }
- 
       localStorage.setItem("FR_REMIX_LIST", JSON.stringify(listObj));
-      document.getElementById('main-menu').innerHTML = '';
+      let remixList = document.getElementById('remix-list');
+      remixList.parentNode.removeChild(remixList);
+      document.getElementById('menu-wrap').style.display = 'none';
       that.recreateList();
     }
   });
@@ -334,7 +342,7 @@ bindExportEvent() {
       }
     } else {
    
-   
+      
       this.putObject(this.props.id, result);
      
     }
