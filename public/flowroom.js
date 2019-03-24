@@ -323,10 +323,11 @@
 
         },
         replaceString:function(searchString, replaceWith) {
-            var str = JSON.parse(localStorage.getItem("dhtml")).js;
-            str.toString();
-            str.replace(searchString, replaceWith);
-            parent.document.getElementsByClassName('CodeMirror')[2].value = str;
+           
+            let str = JSON.parse(localStorage.getItem("dhtml")).js;
+            str = str.replace(searchString, replaceWith);
+          
+            parent.window.updateJSCode(str);
         },
         RemixText:function(elId, options) {
 
