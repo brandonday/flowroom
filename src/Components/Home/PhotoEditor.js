@@ -97,7 +97,172 @@ removeBG() {
     console.log(img_base64_val)
   });
 }
+recreateList() {
+ // document.getElementsByClassName('remix-m')[0].style.display = 'none';  
 
+  function removeDuplicates(originalArray, prop) {
+       var newArray = [];
+       var lookupObject  = {};
+  
+       for(var i in originalArray) {
+          lookupObject[originalArray[i][prop]] = originalArray[i];
+       }
+  
+       for(i in lookupObject) {
+           newArray.push(lookupObject[i]);
+       }
+        return newArray;
+   }
+  
+ 
+
+  let that = this;
+  let list = document.getElementById('main-menu');
+  let getList = JSON.parse(localStorage.getItem( "FR_REMIX_LIST"));
+  if(getList != null) {
+  let overlay = document.createElement('div');
+              overlay.setAttribute("id","remix-overlay");
+              //let item;
+             
+             
+              let uniqueArray;
+           
+              for(let i = 0; i < getList.length; i++) {
+                  let n = Object.getOwnPropertyNames(getList[i]);
+                  let final = n[0];
+                  uniqueArray = removeDuplicates(getList, final);
+              }
+              
+              console.log(uniqueArray)
+              this.setState({currentpic:uniqueArray[0]});
+              
+              for(let j = 0; j < uniqueArray.length; j++) {
+              let item = document.createElement('li');
+                  
+          
+              let bgImg = document.createElement('div');
+                            
+              
+              bgImg.style.backgroundImage = `url(${getList[j].image})`;
+              bgImg.style.height = '50px';
+              bgImg.style.width = '50px';
+              bgImg.style.backgroundSize = 'cover';
+     
+              item.style.height = '100px';
+              item.style.width = '100px';
+
+              item.style.marginTop = '10px';
+              item.style.marginBottom = '10px';
+
+              item.style.marginLeft = '10px';
+              item.style.marginRight = '10px';
+
+              item.style.border = '1px solid #DDE0EB';
+              item.style.display = 'flex';
+              item.style.alignItems = 'center';
+              item.style.borderRadius = '0px';
+
+              bgImg.style.marginRight = '5px';
+              bgImg.style.marginLeft = '7px';
+              bgImg.style.position = 'relative';
+              item.style.display = 'flex';
+              item.style.justifyContent = 'center';
+              bgImg.style.right = '0px';
+              item.appendChild(bgImg);
+              
+             
+              list.appendChild(item);
+        
+              if(getList[j].type === 'url') {
+                item.addEventListener('click', ()=> {
+
+                  
+                  
+                  let img = new Image;
+                  img.setAttribute('crossOrigin', 'anonymous'); 
+                  
+                  let canvas = document.createElement('canvas');
+                  let ctx = canvas.getContext("2d");
+                  
+              
+                  img.onload = function() {
+                 
+                  canvas.width = img.width;
+                  canvas.height = img.height;
+                  ctx.drawImage( img, 0, 0 );
+                  localStorage.setItem( `savedImageData${j}`, canvas.toDataURL("image/png") );
+                  let getImageSaved = localStorage.getItem(`savedImageData${j}`);
+                  //alert(getImageSaved);
+                  document.getElementById('menu-wrap').style.display = 'block';
+                  document.getElementById('menu').style.display = '583px';
+                  document.getElementById('menu').style.display = 'block';
+                  let backArrow = document.createElement('i');
+                  backArrow.className = 'far fa-caret-square-left';
+                  backArrow.style.height = '20px';
+                  backArrow.style.width = '20px';
+                  let menuTitle = document.createElement('p');
+                  let menuText = document.createTextNode('REMIXABLE ITEMS');
+                  menuTitle.appendChild(menuText);
+                  let close = document.createElement('i');
+                  close.className = 'far fa-caret-square-left';
+                  close.style.height = '20px';
+                  close.style.width = '20px';
+
+                  that.setState({pic:getImageSaved, id:getList[j].id,classorid:'class', type:getList[j].type})
+
+                  document.getElementById('menu-wrap').style.height = '583px';
+          
+                  
+                  //testFR(elId);
+                  }
+                  img.src = getList[j].image;
+              
+                  
+
+                  
+              })
+
+              } else {
+
+              item.addEventListener('click', ()=> {
+                  
+                  let img = new Image;
+                  img.setAttribute('crossOrigin', 'anonymous'); 
+                  
+                  let canvas = document.createElement('canvas');
+                  let ctx = canvas.getContext("2d");
+                  
+              
+                  img.onload = function() {
+                 
+                  canvas.width = img.width;
+                  canvas.height = img.height;
+                  ctx.drawImage( img, 0, 0 );
+                  localStorage.setItem( `savedImageData${j}`, canvas.toDataURL("image/png") );
+                  let getImageSaved = localStorage.getItem(`savedImageData${j}`);
+                  //alert(getImageSaved);
+                  document.getElementById('menu-wrap').style.display = 'block';
+                  document.getElementById('menu').style.display = 'block';
+                  that.setState({pic:getImageSaved,classorid:getList[j].classorid, type:getList[j].type})
+
+                  
+                  
+                  //testFR(elId);
+                  }
+                  img.src = getList[j].image;
+              
+                  
+
+                  
+              })
+
+              }
+
+            }
+             
+          }
+
+}
 async putObject(id, image) {
   // const data = await s3.putObject({
   //     Bucket: 'test.flowroom.com',
@@ -121,7 +286,7 @@ async putObject(id, image) {
     }
 
   
-  
+  let that = this;
   s3.putObject(params, function(err, data) {
     console.log('err: ', err)
     if (err) {
@@ -135,6 +300,22 @@ async putObject(id, image) {
       console.log('obj :', obj);
       let iframe = document.getElementById("output_frame");
       iframe.contentWindow.remixCallback(obj);
+
+      let json = localStorage.getItem("FR_REMIX_LIST");
+      
+      let listObj = JSON.parse(json);
+     
+      for(let i = 0; i < listObj.length; i++) {
+        if(listObj[i].id == id) {
+          listObj[i].image = obj.url;
+          break;
+        } 
+              
+      }
+ 
+      localStorage.setItem("FR_REMIX_LIST", JSON.stringify(listObj));
+      document.getElementById('main-menu').innerHTML = '';
+      that.recreateList();
     }
   });
 }
@@ -155,12 +336,12 @@ bindExportEvent() {
    
    
       this.putObject(this.props.id, result);
-   
-
+     
     }
   });
 
 }
+
 waitForElementToDisplay(selector, time) {
   let that = this;
   if(document.querySelector(selector)!= null) {

@@ -816,7 +816,7 @@ let that;
             position:'absolute',
             zIndex:'99999999999',
             height:'100%',
-            width:'381px',
+            width:'397px',
             overflow:'hidden',
             display:this.state.pic ? 'flex' : 'none',
             justifyContent:'center'
@@ -825,10 +825,20 @@ let that;
             width:'396px',
             display:this.state.pic ? 'block' : 'none',
             }}>
-            <div style={{height:'32px',width:'100%',borderBottom:'1px solid #202020',background:'rgb(24, 24, 24)', display:'flex', justifyContent:'space-between'}}>
-              <i className="far fa-caret-square-left" style={{color:'white'}}/>
+            <div style={{
+              height:'32px',
+              width:'100%',
+              borderBottom:'1px solid #202020',
+              background:'rgb(24, 24, 24)', 
+              display:'flex', 
+              justifyContent:'space-between',
+              alignItems:'center'
+            }}>
+              <i onClick={()=>{
+                document.getElementById('menu-wrap').style.display = 'none';
+              }} className="fas fa-arrow-circle-left" style={{color:'white',fontSize:'20px',marginLeft:20}}></i>
               <div><p style={{color:'white'}}>Swap or Edit Image</p></div>
-              <i className="far fa-caret-square-left" style={{color:'white'}}/>
+              <i className="fas fa-window-close" style={{color:'white', fontSize:20, marginRight:20}}/>
             </div>
             {this.state.pic ?<PhotoEditor image={this.state.pic} 
             classorid={this.state.classorid}
