@@ -141,14 +141,16 @@ let that;
                         close.className = 'far fa-caret-square-left';
                         close.style.height = '20px';
                         close.style.width = '20px';
-
-                        that.setState({pic:getImageSaved, id:getList[j].id,classorid:'class', type:getList[j].type})
+                        console.log('id :', getList[j].id)
+                        
+                        that.setState({pic:getImageSaved, id:getList[j].id, classorid:'class', type:getList[j].type})
 
                         document.getElementById('menu-wrap').style.height = '583px';
                 
                         
                         //testFR(elId);
                         }
+                        that.setState({pic:false});
                         img.src = getList[j].image;
                     
                         
@@ -174,10 +176,11 @@ let that;
                         ctx.drawImage( img, 0, 0 );
                         localStorage.setItem( `savedImageData${j}`, canvas.toDataURL("image/png") );
                         let getImageSaved = localStorage.getItem(`savedImageData${j}`);
-                        //alert(getImageSaved);
-                        document.getElementById('menu-wrap').style.display = 'block';
+                        
+                        
+                         document.getElementById('menu-wrap').style.display = 'block';
                         document.getElementById('menu').style.display = 'block';
-                        that.setState({pic:getImageSaved,classorid:getList[j].classorid, type:getList[j].type})
+                        that.setState({pic:getImageSaved,id:getList[j].id,classorid:getList[j].classorid, type:getList[j].type})
 
                         
                         
@@ -810,13 +813,13 @@ let that;
               justifyContent:'space-between',
               alignItems:'center'
             }}>
-              <i onClick={()=>{
+              <i onClick={()=> {
                 document.getElementById('menu-wrap').style.display = 'none';
               }} className="fas fa-arrow-circle-left" style={{color:'white',fontSize:'20px',marginLeft:20}}></i>
               <div><p style={{color:'white'}}>Swap or Edit Image</p></div>
               <i className="fas fa-window-close" style={{color:'white', fontSize:20, marginRight:20}}/>
             </div>
-            {this.state.pic ?<PhotoEditor image={this.state.pic} 
+            {this.state.pic ? <PhotoEditor image={this.state.pic} 
             classorid={this.state.classorid}
             type={this.state.type}
             id={this.state.id}

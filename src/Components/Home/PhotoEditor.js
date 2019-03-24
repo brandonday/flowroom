@@ -28,14 +28,16 @@ class PhotoEditor extends React.Component {
     this.photoEditorSDK = React.createRef();
     this.state = {
       isDrawing:false,
-      image:'',
-      knob:23.6294
+      image:this.props.image,
+      knob:23.6294,
+      id:this.props.id
     }
   }
   componentDidMount() {
     this.bindExportEvent();
     this.resetEditor();
     this.waitForElementToDisplay('.pesdk-react-controls__list',100);
+    
   }
 
   handleLoad() {
@@ -214,14 +216,20 @@ recreateList() {
                   close.className = 'far fa-caret-square-left';
                   close.style.height = '20px';
                   close.style.width = '20px';
-
+            
                   that.setState({pic:getImageSaved, id:getList[j].id,classorid:'class', type:getList[j].type})
 
                   document.getElementById('menu-wrap').style.height = '583px';
-          
+                   
+                  
+                  let image = new Image();
+                  image.src = getImageSaved;
+                  that.resetEditor(null, image);
                   
                   //testFR(elId);
                   }
+                  
+                
                   img.src = getList[j].image;
               
                   
@@ -250,9 +258,12 @@ recreateList() {
                   //alert(getImageSaved);
                   document.getElementById('menu-wrap').style.display = 'block';
                   document.getElementById('menu').style.display = 'block';
-                  that.setState({pic:getImageSaved,classorid:getList[j].classorid, type:getList[j].type})
+                  that.setState({pic:getImageSaved,id:getList[j].id, classorid:getList[j].classorid, type:getList[j].type})
 
-                  
+              
+                  let image = new Image();
+                  image.src = getImageSaved;
+                  that.resetEditor(null, image);
                   
                   //testFR(elId);
                   }
@@ -323,6 +334,7 @@ async putObject(id, image) {
       let remixList = document.getElementById('remix-list');
       remixList.parentNode.removeChild(remixList);
       document.getElementById('menu-wrap').style.display = 'none';
+      
       that.recreateList();
     }
   });
@@ -343,7 +355,8 @@ bindExportEvent() {
     } else {
    
       
-      this.putObject(this.props.id, result);
+      this.putObject(this.state.id, result);
+      
      
     }
   });
@@ -568,7 +581,7 @@ waitForElementToDisplay(selector, time) {
 }
 render() {
   let image = new Image();
-  image.src = this.props.image;
+  image.src = this.state.image;
   return (
     <div style={{height:'100%',width:'100%'}}>
       <PhotoEditorUI.ReactComponent
