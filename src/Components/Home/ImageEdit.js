@@ -795,7 +795,7 @@ let that;
             position:'absolute',
             zIndex:'99999999999',
             height:'100%',
-            width:'397px',
+            width:'100%',
             overflow:'hidden',
             display:this.state.pic ? 'flex' : 'none',
             justifyContent:'center'

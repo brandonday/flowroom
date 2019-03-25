@@ -2281,6 +2281,7 @@ body {
   display:flex;
   flex-direction:row;
   height:100%;
+  padding-top: 34px;
 }
 
 .display-icon {
@@ -2367,7 +2368,7 @@ body {
   flex-grow: 1;
   position: relative;
   display: flex;
-  z-index:99;
+  z-index: 99999;
 }
 
 .preferences {
@@ -3032,6 +3033,7 @@ p {
   border-top: 1px solid rgb(32, 32, 32);
     border-bottom: 1px solid rgb(32, 32, 32);
   background:rgb(24, 24, 24);
+  z-index: 99999;
   position: absolute;
 }
 

@@ -34,6 +34,7 @@ const Mobile = props => <Responsive {...props} maxWidth={767} />;
 const Default = props => <Responsive {...props} minWidth={768} />;
  
 let Loaded = false;
+let isMenuOpen = false;
 class RoomMain extends Component {
     constructor() {
         super();
@@ -51,7 +52,6 @@ class RoomMain extends Component {
            postBtnVisible:true,
            isLoaded:false,
            user:'',
-           OpenCloseMenu:false
         };
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -60,6 +60,7 @@ class RoomMain extends Component {
     componentDidMount() {
         let that = this;
         document.getElementById('main-menu').style.display = 'none';
+        document.getElementById('tab-menu').style.height = 'none';
         
        //if(Loaded === false) {
        if(firebase.auth().currentUser !== null) {
@@ -71,7 +72,15 @@ class RoomMain extends Component {
 
         function myFunction(x) {
             if (x.matches) { // If media query matches
-              document.getElementById('tab-menu').style.display = 'none';
+                if(isMenuOpen === false) {
+                    document.getElementById('tab-menu').style.display = 'none';
+                } else {
+                    document.getElementById('tab-menu').style.display = 'block';
+                }
+              if(isMenuOpen === true) {
+                document.getElementById('main-menu').style.display = 'block';
+              }
+          
               document.getElementById('main-menu').style.position = 'absolute';
               document.getElementById('main-menu').style.height = '583px';
               document.getElementById('main-menu').style.width = '67%';
@@ -79,30 +88,37 @@ class RoomMain extends Component {
               document.getElementById('main-menu').style.top = '0px';
               document.getElementById('main-menu').style.zIndex = '999999';
               document.getElementById('main-menu').style.left = '60px';
-              document.getElementById('main-menu').style.display = that.state.OpenCloseMenu ? 'flex' : 'none';
+              document.getElementById('main-menu').style.display = 'none';
 
               document.getElementById('tab-menu').style.position = 'absolute';
               document.getElementById('tab-menu').style.zIndex = '999999';
               document.getElementById('tab-menu').style.height = '583px';
-   
+              
             
-              document.getElementById('close-menu').addEventListener('click',function(){
+               document.getElementById('close-menu').addEventListener('click',function(){
                 document.getElementById('tab-menu').style.display = 'none';
-              })
+               })
 
             } else {
+                
               let main = document.getElementById('main-menu');
               let tabMenu = document.getElementById('tab-menu');
+               tabMenu.style.position = 'relative';
+               tabMenu.style.display = 'block';
+               document.getElementById('tab-menu').style.transform = 0;
+              
               main.style.width = '600px';
               main.style.borderRight = '1px solid rgb(24, 24, 24)';
               main.style.background = 'rgb(24, 24, 24)';
               main.style.overflow = 'hidden scroll';
               main.style.flexDirection = 'column';
-              main.style.display =  that.state.OpenCloseMenu ? 'flex' : 'none';
+              if(isMenuOpen === true) {
+                document.getElementById('main-menu').style.display = 'flex';
+              }
               main.style.position = 'relative';
-              tabMenu.style.position = 'relative';
-              tabMenu.style.display = 'block';
+             
               main.style.left = '0px';
+         
    
  
             }
@@ -534,11 +550,11 @@ class RoomMain extends Component {
                                     draw:false,
                                     remix:true,
                                     preferences:false,
-                                    record:false,
-                                    OpenCloseMenu:true
+                                    record:false
+                          
                                 });
                                 document.getElementById('main-menu').style.display = 'flex';
-                                this.setState({OpenCloseMenu:true});
+                                isMenuOpen = true;
                                 // for(let i=0; i < getclasses.length; i++) {
                                 //     if(getclasses[i].id !== 'remix') {
                                 //         getclasses[i].style.borderRight = '1px solid #181818';
@@ -577,8 +593,7 @@ class RoomMain extends Component {
                                         draw:false,
                                         remix:false,
                                         preferences:false,
-                                        record:false,
-                                        OpenCloseMenu:true
+                                        record:false
                                     });
                                     
                                     if(document.getElementById('remixhead') !== null) {
@@ -794,21 +809,22 @@ class RoomMain extends Component {
                                    function myFunction(x) {
                                      if (x.matches) { // If media query matches
                                   
-                                         if(that.state.OpenCloseMenu === true) {
-                                             tween({ from:0, to: -400, duration: 200 })
+                                         if(isMenuOpen === true) {
+                                             tween({ from:0, to: -1000, duration: 200 })
                                              .start(v => ball.set('x', v));
-                                             tween({ from:0, to: -400, duration: 200 })
+                                             tween({ from:0, to: -1000, duration: 200 })
                                              .start(v => ball2.set('x', v));
-     
-                                             that.setState({OpenCloseMenu:false});
+                                            document.getElementById('main-menu').style.display = 'none';
+                                             //that.setState({isMenuOpen:false});
      
                                            } else {
                                                element.style.display = 'flex';
-                                               tween({ from:-300, to:0, duration: 200 })
+                                               document.getElementById('main-menu').style.display = 'none';
+                                               tween({ from:-1000, to:0, duration: 200 })
                                              .start(v => ball.set('x', v));
-                                             tween({ from:-300, to: 0, duration: 200 })
+                                             tween({ from:-1000, to: 0, duration: 200 })
                                              .start(v => ball2.set('x', v));
-                                             that.setState({OpenCloseMenu:true});
+                                            // that.setState({isMenuOpen:true});
                                            }
                                        
                                      } else {
@@ -831,7 +847,7 @@ class RoomMain extends Component {
                                 
 
 
-                                this.setState({OpenCloseMenu:false})
+                                //this.setState({isMenuOpen:false})
                             }}></i>
                         </div>
                             {
@@ -892,21 +908,22 @@ class RoomMain extends Component {
                               function myFunction(x) {
                                 if (x.matches) { // If media query matches
                              
-                                    if(that.state.OpenCloseMenu === true) {
+                                    if(isMenuOpen === true) {
                                         tween({ from:0, to: -400, duration: 200 })
                                         .start(v => ball.set('x', v));
                                         tween({ from:0, to: -400, duration: 200 })
                                         .start(v => ball2.set('x', v));
-
-                                        that.setState({OpenCloseMenu:false});
+                                        document.getElementById('main-menu').style.display = 'none';
+                                        isMenuOpen = false
 
                                       } else {
                                           element.style.display = 'flex';
+                                          document.getElementById('main-menu').style.display = 'block';
                                           tween({ from:-300, to:0, duration: 200 })
                                         .start(v => ball.set('x', v));
                                         tween({ from:-300, to: 0, duration: 200 })
                                         .start(v => ball2.set('x', v));
-                                        that.setState({OpenCloseMenu:true});
+                                        isMenuOpen = true
                                         tabs.style.display = 'block';
                                       }
                                   
@@ -933,7 +950,7 @@ class RoomMain extends Component {
                                 justifyContent:'space-between',
                                 display:that.state.openBtnVisible ? 'flex' : 'none',
                                 padding:'0px 9px'}}>
-                                {this.state.OpenCloseMenu ? 'Close Remix Menu' : 'Open Remix Menu'}</button>
+                                {isMenuOpen ? 'Close Remix Menu' : 'Open Remix Menu'}</button>
                             <button id="postbtn" onClick={()=>{this.openModal(true)}} style={{fontWeight:'bold',
                                 color:'white',
                                 fontSize:'15px',

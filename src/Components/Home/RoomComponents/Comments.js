@@ -22,7 +22,8 @@ const repliesNum = [];
             repliesShow:false,
             plus:'+',
             room_title:'',
-            description:''
+            description:'',
+            loggedIn:false
          }
     }
     test(id, comment) {
@@ -60,6 +61,7 @@ const repliesNum = [];
              
             } else {
 
+              
          
             }
         });
@@ -87,7 +89,15 @@ const repliesNum = [];
 
         });
 
+        firebase.auth().onAuthStateChanged((user)=> {
+            if(user) {
+                this.setState({loggedIn:true})
 
+            } else {
+
+                this.setState({loggedIn:false})
+            }
+        });
        
         
         // database.ref(`Comments/${shortID}`).once('value').then((snapshot) => {
@@ -435,7 +445,7 @@ const repliesNum = [];
                         <p style={{color:'#000',fontSize:14}}>{this.state.description}</p>
                     </div>
                     <div style={{height:'100%',width:'100%',borderTop:'1px solid black',marginBottom:'10px'}}>
-                    <div style={{width:'100%', marginTop:'20px'}}>
+                    {this.state.loggedIn ? (<div style={{width:'100%', marginTop:'20px'}}>
                         <div style={{display:'flex', flexDirection:'row'}}>
                             <i className="fa fa-comments"/><p style={{marginLeft:10}}>{this.state.comment_number}</p><p style={{marginLeft:10}}>Comments</p>
                         </div>
@@ -473,7 +483,10 @@ const repliesNum = [];
     
                         onClick={this.postComment.bind(this)}
                         >Post</button>
-                    </div>
+                    </div>):(
+                        <div style={{color:'black'}}>Not logged in</div>
+                    )}
+                    
                     <ul style={{width:'100%'}} id="main-comments">
                         { 
                             this.state.dummyComments.map((obj)=> {

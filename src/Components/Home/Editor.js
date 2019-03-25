@@ -443,26 +443,26 @@ class Editor extends Component {
     }
     resizeFunc(event) {
         
-        // let resizeHeight = document.getElementById('resizable-box').clientHeight;
-        // this.setState((prevState, props) => {
-        //     return {
-        //         resizeableCurrentHeight:resizeHeight,
-        //         rotateTriangles:true
-        //     }
-        // });
-        // if(resizeHeight > 220) {
-        //     this.setState((prevState, props) => { return { rotateTriangles:-90 } });
-        // } else if(resizeHeight < 200) {
-        //     this.setState((prevState, props) => { return { rotateTriangles: 0 } });
-        // } else if(this.state.showSubComponent === true && resizeHeight > 400) {
-        //     this.setState((prevState, props) => { return { rotateTriangles:-90 } });
-        // } else if(resizeHeight < 400) {
-        //     this.setState((prevState, props) => { return { rotateTriangles: 0 } });
-        // }
+        let resizeHeight = document.getElementById('resizable-box').clientHeight;
+        this.setState((prevState, props) => {
+            return {
+                resizeableCurrentHeight:resizeHeight,
+                rotateTriangles:true
+            }
+        });
+        if(resizeHeight > 20) {
+            this.setState((prevState, props) => { return { rotateTriangles:-90 } });
+        } else if(resizeHeight < 200) {
+            this.setState((prevState, props) => { return { rotateTriangles: 0 } });
+        } else if(this.state.showSubComponent === true && resizeHeight > 400) {
+            this.setState((prevState, props) => { return { rotateTriangles:-90 } });
+        } else if(resizeHeight < 400) {
+            this.setState((prevState, props) => { return { rotateTriangles: 0 } });
+        }
         
-        // let codeTriangle1 = document.getElementsByClassName('down-editor-3x')[0];
-        // let codeTriangle2 = document.getElementsByClassName('down-editor-3x')[1];
-        // let codeTriangle3 = document.getElementsByClassName('down-editor-3x')[2];
+        let codeTriangle1 = document.getElementsByClassName('down-editor-3x')[0];
+        let codeTriangle2 = document.getElementsByClassName('down-editor-3x')[1];
+        let codeTriangle3 = document.getElementsByClassName('down-editor-3x')[2];
 
     }
     resizeAnimationComplete () {
