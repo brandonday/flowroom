@@ -1093,14 +1093,6 @@
         //  list.appendChild(item);
 
     },
-        datGUI:function() {
-            localStorage.setItem("FR_REMIX_LIST", "");
-
-            let gui = new dat.GUI({ autoPlace: false });
-            var customContainer = parent.document.getElementById('frmenu');
-            customContainer.appendChild(gui.domElement);
-            return gui;
-        },
 
     remix(){
         //parent

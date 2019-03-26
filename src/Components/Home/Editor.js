@@ -25,7 +25,7 @@ import AppModal from './AppModal';
 import { firebase } from '../firebase/firebase';
 import * as dat from 'dat.gui';
 
-const gui = new dat.GUI();
+// const gui = new dat.GUI();
 
 const Desktop = props => <Responsive {...props} minWidth={992} />;
 const Tablet = props => <Responsive {...props} minWidth={768} maxWidth={991} />;
