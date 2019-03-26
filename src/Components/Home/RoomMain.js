@@ -35,6 +35,7 @@ const Default = props => <Responsive {...props} minWidth={768} />;
  
 let Loaded = false;
 let isMenuOpen = false;
+
 class RoomMain extends Component {
     constructor() {
         super();
@@ -66,10 +67,25 @@ class RoomMain extends Component {
        if(firebase.auth().currentUser !== null) {
         that.setState({user:firebase.auth().currentUser.displayName});
        }
-        
        
-
-
+       window.datGUI = function(obj) {
+        let t = this;
+        // let createDatGUI = function() {
+        //   for(let i = 0; i < obj.length; i++) {
+        //     this[Object.keys(obj[i])[0]] = obj[i][Object.keys(obj[i])[0]];
+        //   }
+        // }
+        // let text = new createDatGUI();
+        // let gui = new dat.GUI();
+        // var customContainer = document.getElementById('main-menu');
+        // customContainer.appendChild(gui.domElement);
+        // for(let i = 0; i < obj.length; i++) {
+        //  gui.add(text, `${obj[i][Object.keys(obj[i])[0]]}`);
+        //     // console.log(Object.keys(obj[i])[0])
+        // }
+        
+        
+      }
         function myFunction(x) {
             if (x.matches) { // If media query matches
                 if(isMenuOpen === false) {
@@ -269,7 +285,24 @@ class RoomMain extends Component {
           }
         }})
       }
-
+      dropDownAnimate() {
+   
+        var elem = document.getElementById("resizable-box"); 
+        var pos = 0;
+        var id = setInterval(frame, 0);
+        function frame() {
+          if (pos == 300) {
+            clearInterval(id);
+          } else {
+            pos++; 
+            elem.style.height = pos + 'px'; 
+          
+          }
+        }                           
+                                           
+                                             
+      }
+    
     menuSelect() {
         if(this.state.details === true) {
             return (<p>jkjkkj</p>)
@@ -900,6 +933,18 @@ class RoomMain extends Component {
                             position:'absolute',
                             right:'0px'
                             }}>
+                        <button id="open-code-editor" onClick={this.dropDownAnimate.bind(this)} style={{fontWeight:'bold',
+                                color:'white',
+                                fontSize:'15px',
+                                width:'50px',
+                                height:'27px',
+                                backgroundColor:'rgb(179, 0, 254)',
+                                border:'none',
+                                borderRadius:'5px',
+                                justifyContent:'space-between',
+                                display:'flex',
+                                padding:'0px 9px'}}>
+                                Open Code Editor</button>
                         <button id="openCloseBtn" onClick={()=>{
                               const element = document.querySelector('#main-menu');
                               const tabs = document.getElementById('tab-menu');

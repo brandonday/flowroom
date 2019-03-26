@@ -322,6 +322,9 @@
             this.remixCallback = callback;
 
         },
+        GUI:function(obj) {
+            parent.datGUI(obj);
+        },
         replaceString:function(searchString, replaceWith) {
            
             let str = JSON.parse(localStorage.getItem("dhtml")).js;

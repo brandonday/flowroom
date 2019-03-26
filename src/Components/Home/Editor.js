@@ -20,9 +20,12 @@ import { connect } from 'react-redux';
 import { OPEN_MODAL } from '../../actions/entireApp';
 import { Update_Editor } from '../../actions/updateEditor';
 import { Store } from './store.js';
-
+import { tween, styler } from 'popmotion';
 import AppModal from './AppModal';
 import { firebase } from '../firebase/firebase';
+import * as dat from 'dat.gui';
+
+const gui = new dat.GUI();
 
 const Desktop = props => <Responsive {...props} minWidth={992} />;
 const Tablet = props => <Responsive {...props} minWidth={768} maxWidth={991} />;
@@ -72,7 +75,8 @@ class Editor extends Component {
         
      }
     componentDidMount() {
-       
+  
+  
       document.getElementById('out-cover').style.display = 'none';
         localStorage.setItem("dhtml",JSON.stringify({html:"w",css:"w",js:"d"}));
         this.renderContent();
@@ -509,6 +513,7 @@ closeDescription() {
 injectJS() {
        
 }
+
 
     render() {
 
