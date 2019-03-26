@@ -152,6 +152,23 @@ class RoomPosts extends Component {
     }
     componentDidMount() {
 
+      function myFunction(x) {
+        if (x.matches) { // If media query matches
+        
+
+        } else {
+            
+          
+     
+
+
+        }
+      }
+      
+      var x = window.matchMedia("(max-width: 1284px)")
+      myFunction(x) // Call listener function at run time
+      x.addListener(myFunction) // Attach listener function on state changes
+
         let database = firebase.database();
         let that = this;
         let store = Store;
@@ -399,7 +416,7 @@ class RoomPosts extends Component {
 
                                             <StackGrid
 
-                                            columnWidth={width <= 800 ? '100%' : '33.33%'}
+                                            columnWidth={width >= 1024 ? 420 : (width >= 768 ? 290 : (width > 320 ? 320 : 280))}
                                             gutterWidth={30}
                                             gutterHeight={20}
                                             horizontal={false}

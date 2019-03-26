@@ -39,6 +39,11 @@ class RoomPost extends Component {
         if(tags.length > 3) {
             this.setState({showMoreTag:true});
         }
+
+        var d = document.getElementById('description-text');
+        if (0 > d.clientWidth - d.scrollWidth) {
+            alert("Overflow")
+        }
     }
     incrementViews() {
         let database = firebase.database();
@@ -337,8 +342,26 @@ class RoomPost extends Component {
                        
 
 
-                <p style={{fontSize:'12px', color:'white',marginTop:12}}>{`${this.props.id.description}`}<span onClick={this.expandText.bind(this)} style={{color:'#5c5c5c'}}>... [Read More]</span>
-</p>
+                <div id="description-text" style={{
+  display:'-webkit-box',
+  maxWidth:'100%',
+  height:'auto',
+  margin:'0 auto',
+  fontSize:'14px',
+  lineHeight:'1',
+  webkitLineClamp:'2',
+  webkitBoxOrient:'vertical',
+  overflow:'hidden',
+  color:'white'
+    }}>
+                    {`${this.props.id.description}`}
+                </div>
+                    
+                <span onClick={this.expandText.bind(this)} style={{color:'#5c5c5c',
+    position:'absolute',
+    right:'19px',
+    bottom:'71px',
+    background:'#242424'}}>... [Read More]</span>
 
 
 
