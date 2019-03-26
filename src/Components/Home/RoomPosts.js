@@ -156,7 +156,7 @@ class RoomPosts extends Component {
         let that = this;
         let store = Store;
         let counter = 0;
-                database.ref('categorizations/Regular/').orderByChild('date').limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
+                database.ref('rooms').orderByChild('date').limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
 
                     snapshot.forEach((childSnapShot) => {
                         counter++;
@@ -187,7 +187,7 @@ class RoomPosts extends Component {
                                 isVR:childSnapShot.val().isVR,
                                 pic:childSnapShot.val().pic,
                                 views:childSnapShot.val().views,
-                                comments:childSnapShot.val().comments,
+                                commentsCount:childSnapShot.val().commentsCount,
                                 likes:childSnapShot.val().likes,
                                 description:childSnapShot.val().description,
                                 objectNum:childSnapShot.val().objectNum,
@@ -221,6 +221,7 @@ class RoomPosts extends Component {
 
 
     }
+
 
 
 
@@ -266,7 +267,7 @@ class RoomPosts extends Component {
                         isVR:childSnapShot.val().isVR,
                         pic:childSnapShot.val().pic,
                         views:childSnapShot.val().views,
-                        comments:childSnapShot.val().comments,
+                        commentsCount:childSnapShot.val().commentsCount,
                         likes:childSnapShot.val().likes,
                         description:childSnapShot.val().description,
                         objectNum:childSnapShot.val().objectNum,
@@ -344,7 +345,6 @@ class RoomPosts extends Component {
                             isVR:childSnapShot.val().isVR,
                             pic:childSnapShot.val().pic,
                             views:childSnapShot.val().views,
-                            comments:childSnapShot.val().comments,
                             likes:childSnapShot.val().likes,
                             description:childSnapShot.val().description,
                             objectNum:childSnapShot.val().objectNum,
@@ -354,7 +354,7 @@ class RoomPosts extends Component {
                             username:childSnapShot.val().userName,
                             shortID:childSnapShot.val().shortID,
                             room_title:childSnapShot.val().room_title,
-                            
+                            commentsCount:childSnapShot.val().commentsCount,
                         ...childSnapShot
                     });
                   }
@@ -443,7 +443,7 @@ class RoomPosts extends Component {
                                 //     /></div>)
                                 // }
                                 if (i.roomType === 'other') {
-                                  console.log('room obj', i);
+                                  console.log('room obj: ', i);
                                     return (<div><RoomPost id={i}
                                         description={i.description}
                                         isRemixable={i.isRemixable}

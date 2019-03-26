@@ -338,6 +338,25 @@ const repliesNum = [];
         //});
         
     }
+    incrementCommentsCount() {
+        //database.ref(`rooms/${this.props.shortID}/commentsCount`).set({commentsCount:0}).then(() => { 
+           
+           let name = window.location.pathname;
+        // name = name.replace(/\//g, "");
+        //name = name.substr(0, name.lastIndexOf("room/"));
+        var str = name;
+        var tmp = str.split("room/");
+        let shortID = tmp.pop();
+           
+            database.ref(`rooms/${shortID}/commentsCount`).transaction(function(commentsCount) {
+                // If node/clicks has never been set, currentRank will be `null`.
+                console.log('comments Count :', commentsCount)
+                return (commentsCount || 0) + 1;
+              })
+
+        //})
+       
+    }
     postComment() {
         // // dummyComments.push(commentObj);
         // let hashids = new Hashids(uuid(), 10);
@@ -407,6 +426,7 @@ const repliesNum = [];
                         date:theDate,
                         replyNum:0});
                     this.setState({dummyComments:dummyComments.reverse()})
+                    this.incrementCommentsCount();
                     //alert('saved')
                     //comment.value = '';
 

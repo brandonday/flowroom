@@ -3,10 +3,12 @@ import Responsive from 'react-responsive';
 import {Link} from 'react-router-dom';
 import Fullscreen from "react-full-screen";
 import Tag from './Tag';
-const Desktop = props => <Responsive {...props} minWidth={992} />;
-const Tablet = props => <Responsive {...props} minWidth={768} maxWidth={991} />;
-const Mobile = props => <Responsive {...props} maxWidth={767} />;
-const Default = props => <Responsive {...props} minWidth={768} />;
+import { firebase } from '.././firebase/firebase';
+//import createHistory from 'history/createBrowserHistory';
+
+// let history = createHistory();
+
+
 
 let tagsLengthArray = [];
 let tagCounter = 0;
@@ -38,6 +40,22 @@ class RoomPost extends Component {
             this.setState({showMoreTag:true});
         }
     }
+    incrementViews() {
+        let database = firebase.database();
+        database.ref(`rooms/${this.props.shortID}/views`).transaction(function(currentViews) {
+            // If node/clicks has never been set, currentRank will be `null`.
+            return (currentViews || 0) + 1;
+          }).then(()=> {
+            window.location.replace(`room/${this.props.shortID}`)
+          });
+    }
+    incrementViewsFull() {
+        let database = firebase.database();
+        database.ref(`rooms/${this.props.shortID}/views`).transaction(function(currentViews) {
+            // If node/clicks has never been set, currentRank will be `null`.
+            return (currentViews || 0) + 1;
+          });
+    }
     mouseHover() {
         // if(this.props.id.id !== null) {
         //     document.getElementById(this.props.id.id).style.display = 'flex';
@@ -65,9 +83,12 @@ class RoomPost extends Component {
         <div style={{display:'flex',
             position:'relative', height:'34px',width:188,justifyContent:'space-between',marginTop:'10px'}}>
             
-            <a href={`room/${this.props.shortID}`}>
+            {/* <a href={`room/${this.props.shortID}`}> */}
                 
-                <div style={{display:'flex',
+                <div onClick={()=>{
+                     this.incrementViews();
+                   
+                }} style={{display:'flex',
                     justifyContent:'space-around',
                     alignItems:'center',
                     outline:'none',
@@ -87,7 +108,8 @@ class RoomPost extends Component {
                         <i class="fas fa-play" style={{fontSize:10, width:0}}></i>
                         <p style={{fontSize:13, with:20}}>Enter</p>
                       
-                </div></a>
+                </div>
+                {/* </a> */}
                 <a href={`room/${this.props.shortID}`}>
                 
                 <div style={{display:'flex',
@@ -210,7 +232,7 @@ class RoomPost extends Component {
 
     }
     goFull = () => {
-
+        this.incrementViewsFull();
         document.fullscreenEnabled = false
         if(document.fullscreenEnabled === true) {
         let iframe = document.getElementById(`${this.props.id.id}`);
@@ -278,7 +300,7 @@ class RoomPost extends Component {
                     </div>
                 
                     {this.displayExtraInfo()}
-
+                    {console.log('commentsCount :', this.props.commentsCount)}
                     <div style={{display:'flex',
                         justifyContent:'space-between',
                         height:'39px',
