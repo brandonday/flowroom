@@ -472,16 +472,7 @@ class Editor extends Component {
     resizeAnimationComplete () {
 
     }
-    convertLikes() {
-        let likes = this.props.likes;
-        if(likes > 9999) {
-           return likes > 9999 ? (likes/1000).toFixed(1) + 'K' : likes
-        } else if(likes > 999) {
-           return likes > 999 ? (likes/10000).toFixed(1) + 'K' : likes
-        } else {
-            return likes
-        } 
-    }
+   
 
     remix() {
         var iframe = document.getElementById("output_frame");

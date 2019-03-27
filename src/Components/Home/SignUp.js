@@ -256,18 +256,18 @@ const thumb = {
                 
                 <div style={{flex:'1',display:'flex'}}>
                 
-                    <Default>
+                
                         <div style={{flex:'1',display:'flex'}}>
                             <div className="main-section-wrap-signup-screen">
                                 <p className="signup-screen-label">{'{sign up}'}</p>
                                 <div className="main-section-signup-box">
                                     <p className="signup-section-p">Fill in all the fields below</p>
                                     <div className="signup-section-fields">
-                                        <div>
+                                        <div style={{marginRight:20}}>
                                             <p className="signup-screen-lbl">Name</p>
                                             <input type="text" id="fullname" style={{marginRight:'16px'}} className="signup-section-input-field" placeholder="Name"/>
                                         </div>
-                                        <div>
+                                        <div style={{marginRight:20}}>
                                             <p className="signup-screen-lbl">Email</p>
                                             <input type="text" id="email" className="signup-section-input-field" placeholder="email@address.com"/>
                                         </div>
@@ -283,43 +283,11 @@ const thumb = {
                                         </div>
                                     </div>
                                     <button onClick={()=>this.createUserAccount(this.props)} className="signup-section-signup-button">Sign Up</button>
-                                    <p style={{display:'flex'}} className="signup-section-p">Already have an account? <Link to="/login">{this.LoginHere.bind(this)}</Link></p>
+                                    <p style={{display:'flex'}} className="signup-section-p">Already have an account? <Link to="/login">{'login here'}</Link></p>
                                 </div>
                             </div>
                         </div>
-                    </Default>
-                    <Mobile>
-                        <div style={{flex:'1',display:'flex'}}>
-                            <div className="main-section-wrap-signup-screen-mobile">
-                                <p className="signup-screen-label-mobile">{'{sign up}'}</p>
-                                <div className="main-section-signup-box-mobile">
-                                    <p className="signup-section-p-mobile">Fill in all the fields below</p>
-                                    <div className="signup-section-fields-mobile">
-                                        <div>
-                                            <p className="signup-screen-lbl-mobile">Name</p>
-                                            <input type="text" style={{marginRight:'16px'}} className="signup-section-input-field-mobile" placeholder="Name"/>
-                                        </div>
-                                        <div style={{marginTop:'2px'}}>
-                                            <p className="signup-screen-lbl-mobile">Email</p>
-                                            <input type="text" className="signup-section-input-field-mobile" placeholder="email@address.com"/>
-                                        </div>
-                                    </div>
-                                    <div className="signup-section-fields-mobile">
-                                        <div style={{marginTop:'-2px'}}>
-                                            <p className="signup-screen-lbl-mobile">Username</p>
-                                            <input type="text" style={{marginRight:'16px'}} className="signup-section-input-field-mobile" placeholder="15 characters"/>
-                                        </div>
-                                        <div style={{marginTop:'1px'}}>
-                                            <p className="signup-screen-lbl-mobile">Password</p>
-                                            <input type="text"  className="signup-section-input-field-mobile" placeholder="8+ Characters"/>
-                                        </div>
-                                    </div>
-                                    <button onClick={()=>this.createUserAccount(this.props)} className="signup-section-signup-button-mobile">Sign Up</button>
-                                    <p style={{display:'flex'}} className="signup-section-p">Already have an account? <Link to="/login">{this.LoginHere.bind(this)}</Link></p>
-                                </div>
-                            </div>
-                        </div>
-                    </Mobile>
+                     
                 </div>
             )
         } else {

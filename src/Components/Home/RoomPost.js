@@ -4,10 +4,13 @@ import {Link} from 'react-router-dom';
 import Fullscreen from "react-full-screen";
 import Tag from './Tag';
 import { firebase } from '.././firebase/firebase';
+import { connect } from 'react-redux';
 //import createHistory from 'history/createBrowserHistory';
 
 // let history = createHistory();
+import { OPEN_MODAL } from '../../actions/entireApp';
 
+import SignInSignUpModal from './SignInSignUpModal';
 
 
 let tagsLengthArray = [];
@@ -23,12 +26,30 @@ class RoomPost extends Component {
             dElem:'',
             showMoreTag:false,
             tags:[],
-            tagColor:''
+            tagColor:'',
+            likes:0
         }
     }
     componentDidMount() {
+        function myFunction(x) {
+            if (x.matches) { // If media query matches
+            
+    
+            } else {
+                
+              
+         
+    
+    
+            }
+          }
+          
+          var x = window.matchMedia("(max-width: 1284px)")
+          myFunction(x) // Call listener function at run time
+          x.addListener(myFunction) // Attach listener function on state changes
+
         let tags = this.props.tags;
-        
+        this.setState({likes:this.props.likes})
         tags.map((tag)=> {
             if(tagsLengthArray.length < 3) {
                 tagsLengthArray.push(tag);
@@ -45,6 +66,24 @@ class RoomPost extends Component {
             alert("Overflow")
         }
     }
+    openModal(post = true) {
+       
+        this.props.openModal({isModalOpen:true, modalType:'signupsignin', post:post, customStyles:{
+          overlay: {
+            backgroundColor: 'none',
+          },
+          content: {
+          top                   : '50%',
+          left                  : '50%',
+          right                 : '0',
+          bottom                : 'auto',
+          marginRight           : '0%',
+          transform             : 'translate(-50%, -50%)',
+          height:'50%',
+          width:'50%',
+          }
+        }})
+    }
     incrementViews() {
         let database = firebase.database();
         database.ref(`rooms/${this.props.shortID}/views`).transaction(function(currentViews) {
@@ -52,6 +91,14 @@ class RoomPost extends Component {
             return (currentViews || 0) + 1;
           }).then(()=> {
             window.location.replace(`room/${this.props.shortID}`)
+          });
+    }
+    incrementLikes() {
+        let database = firebase.database();
+        this.setState({likes:this.state.likes + 1});
+        database.ref(`rooms/${this.props.shortID}/likes`).transaction(function(currentLikes) {
+            // If node/clicks has never been set, currentRank will be `null`.
+            return (currentLikes || 0) + 1;
           });
     }
     incrementViewsFull() {
@@ -82,11 +129,24 @@ class RoomPost extends Component {
             return(<div></div>)
        }
     }
-
+    getNumberToString(num) {
+        if(num > 999999) {
+            return (num/1000000).toFixed(num >= 10000000 ? 0 : 1) + 'M';
+        } else if(num > 999) {
+            return (num/1000).toFixed(num >= 10000 ? 0 : 1) + 'K';
+        } else {
+            return num
+        } 
+    }
+    getTruncatedString(stringIn) {
+        
+        return {isReadMore: stringIn.length >= 120,
+                string: stringIn.length < 120 ? stringIn : stringIn.substring(0,120)};
+    }
     display() {
         return (
         <div style={{display:'flex',
-            position:'relative', height:'34px',width:188,justifyContent:'space-between',marginTop:'10px'}}>
+            position:'relative', height:'34px',justifyContent:'space-between',marginTop:'10px'}}>
             
             {/* <a href={`room/${this.props.shortID}`}> */}
                 
@@ -102,6 +162,7 @@ class RoomPost extends Component {
                     borderRadius:'40px',
                     height:'25px',
                     width:'78px',
+                    marginRight:10,
                     backgroundColor:'#49A540',
                     fontFamily:"Source Sans Pro",
                     color:'white',
@@ -115,29 +176,7 @@ class RoomPost extends Component {
                       
                 </div>
                 {/* </a> */}
-                <a href={`room/${this.props.shortID}`}>
-                
-                <div style={{display:'flex',
-                    justifyContent:'space-around',
-                    alignItems:'center',
-                    outline:'none',
-                    cursor:'pointer',
-                    border:'1px solid #429DCE',
-                    borderRadius:'40px',
-                    height:'25px',
-                    width:'78px',
-                    backgroundColor:'#429DCE',
-                    fontFamily:"Source Sans Pro",
-                    color:'white',
-                    fontSize:'14px',
-                    fontWeight:'600',
-                    padding:'0 8px',
-                    position:'relative',
-                    transition:'color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, width 0.3s ease, opacity 0.3s ease'}}>
-                        <i class="fas fa-infinity" style={{color:'white'}}></i>
-                        <p style={{fontSize:13, with:20}}>Remix</p>
-                      
-                </div></a>
+              
                 <div onClick={this.goFull} style={{display:'flex'}}>
                             <i className="fas fa-expand" style={{fontSize:15, color:'#B846F6',margin:'5px 4px'}}></i>
                         </div>
@@ -319,17 +358,24 @@ class RoomPost extends Component {
                             <div style={{border:'0px solid red',overflow:'hidden',height:'50px',display:'flex',
                                 alignItems:'center',
                                 margin:'10px 5px 0px'}}>
-                            {/* <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',marginRight:'18px',flexDirection:'column',height:'37px'}}>
-                            <i class="far fa-eye" style={{fontSize:20, color:'white'}}></i>
-                                <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.props.views}</p>
-                            </div> */}
+                         
                             <div style={{display:'flex',width:'auto',alignItems:'center', marginRight:'18px',flexDirection:'row',height:'37px'}}>
-                            <i class="far fa-heart" style={{fontSize:13, color:'white',marginRight:6.5}}></i>
-                                <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.props.likes}</p>
+                            <i class="far fa-heart" onClick={()=>{
+                                firebase.auth().onAuthStateChanged((user)=> {
+                                    console.log("firebase.auth user: ",user);
+                                    if(user) {
+                                      this.incrementLikes();
+                                    } else {
+                                      this.openModal(true);
+                                    }
+                                });
+                               
+                            }} style={{fontSize:13, color:'white',marginRight:6.5}}></i>
+                                <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.getNumberToString(this.state.likes)}</p>
                             </div>
                             <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',flexDirection:'row',height:'37px',marginRight:'18px'}}>
                             <i className="far fa-comment-alt" style={{fontSize:13, color:'white',marginRight:6.5}}></i>
-                            <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.props.commentsCount}</p>
+                            <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.getNumberToString(this.props.commentsCount)}</p>
                             </div>
                             {/* <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',flexDirection:'column',height:'37px'}}>
                             <i class="far fa-share-square" style={{fontSize:20, color:'white'}}></i>
@@ -354,19 +400,17 @@ class RoomPost extends Component {
   overflow:'hidden',
   color:'white'
     }}>
-                    {`${this.props.id.description}`}
+                    {`${this.getTruncatedString(this.props.id.description).string}`}
+                    {this.getTruncatedString(this.props.id.description).isReadMore ? (<span style={{color:'white',marginLeft:2}}>...[Read More]</span>) :''}
                 </div>
                     
-                <span onClick={this.expandText.bind(this)} style={{color:'#5c5c5c',
-    position:'absolute',
-    right:'19px',
-    bottom:'71px',
-    background:'#242424'}}>... [Read More]</span>
+                
 
 
 
                          
                 </div>
+                <div style={{display:'flex'}}>
                 <div id="tags-area" style={{display:'flex',height:26,width:'100%',paddingLeft:'11px',marginBottom:20}}>
                             {
                           
@@ -396,11 +440,30 @@ class RoomPost extends Component {
                             }
                     <div style={{display:this.state.showMoreTag ? 'block':'none',color:'#C7524D', border:'1px solid #C7524D', borderRadius:'12px', padding:'0 8px'}}><p>{'+10'}</p></div>
                 </div>
+                <div style={{display:'flex',alignItems:'center',marginRight:'18px',flexDirection:'row',height:'37px'}}>
+                            <i class="fas fa-play" style={{fontSize:10, color:'white',marginRight:10}}></i>
+                                <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.getNumberToString(this.props.views)}</p>
+                            </div>
+                </div>  
             </div>
         )
     }
 }
 
+const mapStateToProps = (state, ownProps) => {
+    return {
+        isLoggedIn:state.isLoggedIn,
+        props:ownProps,
+        state:state
+    }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+    openModal: (modal) => dispatch(OPEN_MODAL(modal))
+  });
+
+const ConnectedRoomPost = connect(mapStateToProps,mapDispatchToProps)(RoomPost)
+
+export default ConnectedRoomPost;
 
 
-export default RoomPost;

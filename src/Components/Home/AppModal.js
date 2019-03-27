@@ -14,7 +14,7 @@ import Create from './Create';
 import { WithContext as ReactTags } from 'react-tag-input';
 import FileUploader from "react-firebase-file-uploader";
 import Convo from './Convo';
-import SignInSignUpModal from './SignInSignUpModal';
+import SignUp from './SignUp';
 
 var moment = require('moment');
 
@@ -415,6 +415,11 @@ const KeyCodes = {
 
 
     }
+    LoginHere() {
+        return (
+            <p className="signup-section-log-in-here-p">Log in here</p>
+        )
+    }
     selectPr = (i) => {
         if(i !== null) {
             let elID = i;
@@ -616,39 +621,12 @@ const KeyCodes = {
                     <Create/>
                 </div>
             )
-        } else if(this.state.showSignInSignUp === true) {
+        } else if(this.props.state.entireApp.modalType === 'signupsignin') {
 
             return (
-                <div style={{height:'100%', width:'100%'}} onClick={this.closeModal}>
-                                   <div className="main-section-wrap-signup-screen">
-                                <p className="signup-screen-label">{'{sign up}'}</p>
-                                <div className="main-section-signup-box">
-                                    <p className="signup-section-p">Fill in all the fields below</p>
-                                    <div className="signup-section-fields">
-                                        <div>
-                                            <p className="signup-screen-lbl">Name</p>
-                                            <input type="text" id="fullname" style={{marginRight:'16px'}} className="signup-section-input-field" placeholder="Name"/>
-                                        </div>
-                                        <div>
-                                            <p className="signup-screen-lbl">Email</p>
-                                            <input type="text" id="email" className="signup-section-input-field" placeholder="email@address.com"/>
-                                        </div>
-                                    </div>
-                                    <div className="signup-section-fields">
-                                        <div>
-                                            <p className="signup-screen-lbl">Password</p>
-                                            <input type="text" id="password" type="password" style={{marginRight:'16px'}} className="signup-section-input-field" placeholder="Password"/>
-                                        </div>
-                                        <div>
-                                            <p className="signup-screen-lbl">Confirm Password</p>
-                                            <input type="text" id="confirmPassword" type="password" className="signup-section-input-field" placeholder="Confirm Password"/>
-                                        </div>
-                                    </div>
-                                    <button onClick={()=>this.createUserAccount(this.props)} className="signup-section-signup-button">Sign Up</button>
-                                    {/* <p style={{display:'flex'}} className="signup-section-p">Already have an account? <Link to="/login">{this.LoginHere.bind(this)}</Link></p> */}
-                                </div>
-                            </div>
-                        </div>
+                <div style={{height:'100%', width:'100%'}}>
+                   <iframe src="/signup" style={{height:'100%', width:'100%'}}></iframe>
+                </div>
                
             )
         } else {
