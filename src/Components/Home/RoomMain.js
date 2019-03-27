@@ -35,7 +35,8 @@ const Default = props => <Responsive {...props} minWidth={768} />;
  
 let Loaded = false;
 let isMenuOpen = false;
-
+ let gui = new dat.GUI();
+ let addedBefore = false;
 class RoomMain extends Component {
     constructor() {
         super();
@@ -67,23 +68,41 @@ class RoomMain extends Component {
        if(firebase.auth().currentUser !== null) {
         that.setState({user:firebase.auth().currentUser.displayName});
        }
-       
+      
        window.datGUI = function(obj) {
-        let t = this;
-        // let createDatGUI = function() {
-        //   for(let i = 0; i < obj.length; i++) {
-        //     this[Object.keys(obj[i])[0]] = obj[i][Object.keys(obj[i])[0]];
-        //   }
-        // }
-        // let text = new createDatGUI();
-        // let gui = new dat.GUI();
-        // var customContainer = document.getElementById('main-menu');
-        // customContainer.appendChild(gui.domElement);
-        // for(let i = 0; i < obj.length; i++) {
-        //  gui.add(text, `${obj[i][Object.keys(obj[i])[0]]}`);
-        //     // console.log(Object.keys(obj[i])[0])
-        // }
+        let output = document.getElementById('output_frame').contentWindow;
+        let text;
+        let createDatGUI = function() {
+          
+          for(let i = 0; i < obj.length; i++) {
+            this[Object.keys(obj[i])[0]] = obj[i][Object.keys(obj[i])[0]];
+            // this.message = 'hello'
+          }
+        }
+        text = new createDatGUI();
         
+
+        // console.log(gui.domElement)
+        console.log(document.getElementsByClassName('dg')[0]);
+
+        var customContainer = document.getElementById('main-menu');
+        customContainer.appendChild(gui.domElement);
+        document.getElementsByClassName('close-button')[0].style.display = 'none';
+       
+        for(let i = 0; i < obj.length; i++) {
+            
+            gui.add(text, Object.keys(obj[i])[0]).onChange(setValue);
+        }
+        setValue();
+        function setValue() {
+           
+           
+            for(let i = 0; i < obj.length; i++) {
+                 //text[Object.keys(obj[i])[0]]
+                 output[Object.keys(obj[i])[0]].innerHTML = text[Object.keys(obj[i])[0]];
+                console.log(obj[i].remix)
+            }
+        }
         
       }
         function myFunction(x) {
@@ -832,7 +851,7 @@ class RoomMain extends Component {
                             </div> */}
                         </div>
             
-                        <div id="main-menu" style={{width:'600px', borderRight:'1px solid #181818',background:'#FCFDFF',overflow:'hidden',overflowY:'scroll',backgroundColor:'#181818',flexDirection:'column'}}>
+                        <div id="main-menu" style={{width:'600px', borderRight:'1px solid #181818',background:'#FCFDFF',overflow:'hidden',overflowY:'scroll',backgroundColor:'#181818',flexDirection:'column',alignItems:'center'}}>
                         <div style={{display:'flex', justifyContent:'flex-end', height:'30px', width:'100%', border:'1px solid #202020', color:'white', fontSize:20,}}>
                             <i id="close-menu" className="far fa-window-close" style={{margin:'3px', color:'rgb(95, 95, 95)'}} onClick={()=>{
                                    const element = document.querySelector('#main-menu');

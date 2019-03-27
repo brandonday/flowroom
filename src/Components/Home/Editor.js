@@ -25,7 +25,7 @@ import AppModal from './AppModal';
 import { firebase } from '../firebase/firebase';
 import * as dat from 'dat.gui';
 
-// const gui = new dat.GUI();
+
 
 const Desktop = props => <Responsive {...props} minWidth={992} />;
 const Tablet = props => <Responsive {...props} minWidth={768} maxWidth={991} />;
@@ -49,6 +49,8 @@ let calledRenderC = false;
 let HTML_EDITOR;
 let CSS_EDITOR;
 let JS_EDITOR;
+
+
 class Editor extends Component {
     constructor() {
         super();
