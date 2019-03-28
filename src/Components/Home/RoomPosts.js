@@ -121,7 +121,7 @@ let currentPage = 1;
 let roomsPerPage = 6;
 let nextDate = '';
 let previousDate = '';
-let tagsArray = ['Funny', 'Game', 'Meme','Meme','Meme','Meme','Meme','Meme','Meme','Meme']
+
 class RoomPosts extends Component {
     constructor() {
         super();
@@ -159,6 +159,7 @@ class RoomPosts extends Component {
         let that = this;
         let store = Store;
         let counter = 0;
+        
                 database.ref('rooms').orderByChild('date').limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
 
                     snapshot.forEach((childSnapShot) => {
@@ -174,6 +175,12 @@ class RoomPosts extends Component {
                               previousDate = childSnapShot.val().date;
                               console.log('rooms: previous date', childSnapShot.val().shortID + ' ', previousDate);
                             }
+                           let tagsArray = [];
+                            if(childSnapShot.val().tags !== undefined) {
+                              Object.keys(childSnapShot.val().tags).forEach((key) => {
+                                tagsArray.push(childSnapShot.val().tags[key].text);
+                              });
+                            } 
                             rooms.unshift({
                                 id:childSnapShot.key,
                                 date:childSnapShot.val().date,
@@ -200,6 +207,7 @@ class RoomPosts extends Component {
                                 username:childSnapShot.val().userName,
                                 shortID:childSnapShot.val().shortID,
                                 room_title:childSnapShot.val().room_title,
+                                tags:tagsArray,
                                 ...childSnapShot
                             });
 
@@ -216,6 +224,7 @@ class RoomPosts extends Component {
                     that.setState({roomsLoaded:true});
                   
                     rooms = [];
+                    
                });
            
 
@@ -317,6 +326,7 @@ class RoomPosts extends Component {
                         username:childSnapShot.val().userName,
                         shortID:childSnapShot.val().shortID,
                         room_title:childSnapShot.val().room_title,
+                        tags:childSnapShot.val().tags,
                         ...childSnapShot
                     });
 
@@ -395,6 +405,7 @@ class RoomPosts extends Component {
                             shortID:childSnapShot.val().shortID,
                             room_title:childSnapShot.val().room_title,
                             commentsCount:childSnapShot.val().commentsCount,
+                            tags:childSnapShot.val().tags,
                         ...childSnapShot
                     });
                   }
@@ -500,8 +511,8 @@ class RoomPosts extends Component {
                                         key={i}
                                         shortID={i.shortID}
                                         room_title={i.room_title}
-                                        tags={tagsArray}
-                                        numTags={this.getNumTags(tagsArray)}
+                                        tags={i.tags}
+                                        numTags={this.getNumTags(i.tags)}
                                         
                                     /></div>)
                                }

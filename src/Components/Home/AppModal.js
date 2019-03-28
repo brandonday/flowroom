@@ -870,13 +870,13 @@ const KeyCodes = {
                     /> */}
 
                     <p style={{marginTop:10, marginBottom:10}}>Tags (Optional)</p>
-                     {/* <ReactTags style={{marginBottom:10}} tags={this.state.tags}
+                     <ReactTags style={{marginBottom:10}} tags={this.state.tags}
                         suggestions={this.state.suggestionsTags}
                         handleDelete={this.handleDeleteTags}
                         handleAddition={this.handleAdditionTags}
                         handleDrag={this.handleDragTags}
                         placeholder={'Any additional tags (optional)'}
-                        delimiters={delimiters4} /> */}
+                        delimiters={delimiters4} />
 
                       {/* <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none',marginBottom:10}}>
                         <div onClick={()=>{this.selectPr('web-btn')}} id="web-btn" className={this.state.webBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Web</p></div>

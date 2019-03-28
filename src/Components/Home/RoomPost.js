@@ -50,7 +50,7 @@ class RoomPost extends Component {
 
         let tags = this.props.tags;
         this.setState({likes:this.props.likes});
-
+        tagsLengthArray = [];
         tags.map((tag)=> {
             if(tagsLengthArray.length < this.props.numTags) {
                 tagsLengthArray.push(tag);
@@ -58,7 +58,7 @@ class RoomPost extends Component {
         })
         
         this.setState({tags:tagsLengthArray});
-        if(tags.length > 3) {
+        if(tags.length > this.props.numTags) {
             this.setState({showMoreTag:true});
         }
 
