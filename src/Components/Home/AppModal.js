@@ -634,43 +634,7 @@ const KeyCodes = {
                 <div style={{display:'flex', flexDirection:'column'}}>
                     <h2 ref={subtitle => this.subtitle = subtitle}>Post Room</h2>
                     <div onClick={this.closeModal} style={{position:'absolute',right:20,fontSize:20, marginBottom:20}}>X</div>
-                        <button style={{
-                            outline:'none',
-                            cursor:'pointer',
-                            border:'1px solid rgb(10, 127, 41)',
-                            borderRadius:'17.5px',
-                            height:'36px',
-                            width:'100%',
-                            backgroundColor:'rgb(27, 178, 67)',
-                            fontFamily:"Source Sans Pro",
-                            color:'white',
-                            fontWeight:'100',
-                            fontSize:'14px',
-                            marginTop:20
-                        }} onClick={this.saveRoom.bind(this)}>Post</button>
-                        <div style={{width:'100%', display:'flex', justifyContent:'center', marginTop:20}}><p>Type of Post</p></div>
-                        <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none',marginTop:20}}>
-                        <div onClick={()=>{this.selectPr('room-post-btn')}} id="room-post-btn" className={this.state.roomPostBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Room</p></div>
-
-                        <label onClick={()=>{this.selectPr('room-post-image-btn')}} id="room-post-image-btn" className={this.state.imagePostBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}>
-                            <p>Image</p>
-                            {/* {this.state.postedPicURL ? '':(<FileUploader
-                            hidden
-                            accept="image/*"
-                            name="pic"
-                            randomizeFilename
-                            storageRef={firebase.storage().ref("images")}
-                            onUploadStart={this.handleUploadStart}
-                            onUploadError={this.handleUploadError}
-                            onUploadSuccess={this.handleUploadSuccess}
-                            onProgress={this.handleProgress}
-                            />)
-                            } */}
-
-                        </label>
-                        <div onClick={()=>{this.selectPr('room-post-text-btn')}} id="unlisted-btn" className={this.state.textPostBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Text</p></div>
-                    </div>
-                    <div id="thumbnail-pic-box" style={{display:this.state.thumbnailPicBox, flexDirection:'column'}}>
+                    {/* <div id="thumbnail-pic-box" style={{display:this.state.thumbnailPicBox, flexDirection:'column'}}>
                         <div style={{display:'flex'}}>
                             <p style={{marginTop:10,marginBottom:10}}>Thumbnail pic for Room (Optional) (?)</p>
                         </div>
@@ -709,7 +673,7 @@ const KeyCodes = {
                                 }}/>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     <input id="room-title" className="room-title" style={{
                         height:'50px',
                         width:'100%',
@@ -748,6 +712,14 @@ const KeyCodes = {
                         marginBottom:20,
                         display:this.state.descriptionD
                     }} value={this.state.description} onChange={this.descriptionhandleChange} placeholder={this.state.placeholder}></textarea>
+                     <p style={{marginTop:10, marginBottom:10}}>Tags (Optional)</p>
+                     <ReactTags style={{marginBottom:10}} tags={this.state.tags}
+                        suggestions={this.state.suggestionsTags}
+                        handleDelete={this.handleDeleteTags}
+                        handleAddition={this.handleAdditionTags}
+                        handleDrag={this.handleDragTags}
+                        placeholder={'Any additional tags (optional)'}
+                        delimiters={delimiters4} />
                     <textarea id="image-text" className="image-text" style={{
                         height:'50px',
                         width:'100%',
@@ -830,7 +802,7 @@ const KeyCodes = {
                     </div>
 
 
-                    <p style={{marginTop:10}}>Community to post this room in (optional)</p>
+                    {/* <p style={{marginTop:10}}>Community to post this room in (optional)</p>
                     <input style={{
                         border:'1px solid #DDE0EB',
                         borderRadius:'6px',
@@ -846,9 +818,9 @@ const KeyCodes = {
                         width:'100%',
                         marginTop:'14px',
                         height:'35px'
-                    }} value={this.state.communityApartOf} onChange={this.communityhandleChange} placeholder='Type community name here'/>
+                    }} value={this.state.communityApartOf} onChange={this.communityhandleChange} placeholder='Type community name here'/> */}
 
-                     <p style={{marginBottom:10}}>Credits (optional) (?)</p>
+                     {/* <p style={{marginBottom:10}}>Credits (optional) (?)</p> */}
                      {/* <ReactTags tags={this.state.creditsTags}
                         suggestions={this.state.suggestionscredits}
                         handleDelete={this.handleDeletecredits}
@@ -859,7 +831,7 @@ const KeyCodes = {
                     /> */}
 
 
-                    <p style={{marginTop:10, marginBottom:10}}>Compatability</p>
+                    {/* <p style={{marginTop:10, marginBottom:10}}>Compatability</p> */}
                     {/* <ReactTags tags={this.state.compatibleTags}
                         suggestions={this.state.suggestionsCompatibleTags}
                         handleDelete={this.handleDeleteCompatibleTags}
@@ -868,15 +840,20 @@ const KeyCodes = {
                         delimiters={delimiters3}
                         placeholder={'Any browsers and OS compatible with (optional)'}
                     /> */}
-
-                    <p style={{marginTop:10, marginBottom:10}}>Tags (Optional)</p>
-                     <ReactTags style={{marginBottom:10}} tags={this.state.tags}
-                        suggestions={this.state.suggestionsTags}
-                        handleDelete={this.handleDeleteTags}
-                        handleAddition={this.handleAdditionTags}
-                        handleDrag={this.handleDragTags}
-                        placeholder={'Any additional tags (optional)'}
-                        delimiters={delimiters4} />
+                          <button style={{
+                            outline:'none',
+                            cursor:'pointer',
+                            border:'1px solid rgb(10, 127, 41)',
+                            borderRadius:'17.5px',
+                            height:'36px',
+                            width:'100%',
+                            backgroundColor:'rgb(27, 178, 67)',
+                            fontFamily:"Source Sans Pro",
+                            color:'white',
+                            fontWeight:'100',
+                            fontSize:'14px',
+                            marginTop:20
+                        }} onClick={this.saveRoom.bind(this)}>Post</button>
 
                       {/* <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none',marginBottom:10}}>
                         <div onClick={()=>{this.selectPr('web-btn')}} id="web-btn" className={this.state.webBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Web</p></div>
@@ -890,7 +867,7 @@ const KeyCodes = {
 
                     </div> */}
 
-                    <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none', flexDirection:'column', justifyContent:'center', alignItems:'center', width:'100%'}}>
+                    {/* <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none', flexDirection:'column', justifyContent:'center', alignItems:'center', width:'100%'}}>
                         <p>Is this Room remixable (?)</p>
                         <div style={{display:'flex', flexDirection:'row', width:'100%'}}>
                             <div onClick={()=>{this.selectPr('not-remixable')}} id="not-remixable" className={this.state.rmxBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Not Remixable</p></div>
@@ -928,7 +905,6 @@ const KeyCodes = {
                      <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
                      <p>Select devices best viewed with</p>
                      <div style={{display:'flex', flexDirection:'row', width:'100%'}}>
-                     {/* <div onClick={()=>{this.selectPr('all-res-btn')}} id="all-res-btn" className={this.state.allResBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>All</p></div> */}
                         <div onClick={()=>{this.selectPr('mobile-btn')}} id="mobile-btn" className={this.state.mobileBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Mobile</p></div>
                         <div onClick={()=>{this.selectPr('tablet-btn')}} id="tablet-btn" className={this.state.tabletBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Tablet</p></div>
                         <div onClick={()=>{this.selectPr('desktop-btn')}} id="desktop-btn" className={this.state.desktopBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Desktop</p></div>
@@ -940,7 +916,7 @@ const KeyCodes = {
                             <div onClick={()=>{this.selectPr('object-no-btn')}} id="object-no-btn" className={this.state.notObjectClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>No</p></div>
                             <div onClick={()=>{this.selectPr('object-yes-btn')}} id="object-yes-btn" className={this.state.objectBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Yes</p></div>
                         </div>
-                    </div>
+                    </div> */}
                     
                 </div>
             )

@@ -299,7 +299,7 @@ class RoomMain extends Component {
           bottom                : 'auto',
           marginRight           : '0%',
           transform             : 'translate(-50%, -50%)',
-          height:'50%',
+          height:'70%',
           width:'50%',
           }
         }})
