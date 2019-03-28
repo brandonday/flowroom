@@ -36,6 +36,7 @@ const Default = props => <Responsive {...props} minWidth={768} />;
 let Loaded = false;
 let isMenuOpen = false;
  let gui = new dat.GUI();
+ document.getElementsByClassName('close-button close-bottom')[0].style.display = 'none';
  let addedBefore = false;
 class RoomMain extends Component {
     constructor() {

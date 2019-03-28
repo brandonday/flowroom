@@ -188,7 +188,8 @@ const KeyCodes = {
             theMessages:true,
             room_title:'',
             shortID:'',
-            showSignInSignUp:false
+            showSignInSignUp:false,
+            cardHeight:0
 
       }
 
@@ -366,9 +367,9 @@ const KeyCodes = {
                 real_time:[],
                 data:[],
                 room_title:this.state.room_title,
-                room_card_height:''
-                
-                
+                room_card_height:this.state.cardHeight,
+               
+
         });
         document.getElementById('postbtn').style.display = 'none';
         document.getElementById('savechanges').style.display = 'flex';
@@ -419,6 +420,9 @@ const KeyCodes = {
         return (
             <p className="signup-section-log-in-here-p">Log in here</p>
         )
+    }
+    handleCardHeight(e) {
+        this.setState({cardHeight: e.target.value});
     }
     selectPr = (i) => {
         if(i !== null) {
@@ -675,7 +679,7 @@ const KeyCodes = {
                         </div>
                     </div> */}
                     <input id="room-title" className="room-title" style={{
-                        height:'50px',
+                        height:'30px',
                         width:'100%',
                         border:'1px solid #DDE0EB',
                         borderRadius:'6px',
@@ -688,14 +692,14 @@ const KeyCodes = {
                         backgroundColor:'#F9FAFA',
                         webkitFontSmoothing:'antialiased',
                         resize:'none',
-                        marginTop:20,
-                        marginBottom:20,
+                        marginTop:0,
+                        marginBottom:0,
                        
                     }}   onLoad={()=>{
                         
                     }} onChange={this.titlehandleChange} value={this.state.room_title} placeholder={'Title (optional)'}/>
                     <textarea id="description" className="description" style={{
-                        height:'100px',
+                        height:'50px',
                         width:'100%',
                         border:'1px solid #DDE0EB',
                         borderRadius:'6px',
@@ -854,6 +858,7 @@ const KeyCodes = {
                             fontSize:'14px',
                             marginTop:20
                         }} onClick={this.saveRoom.bind(this)}>Post</button>
+                        <input onChange={this.handleCardHeight.bind(this)} id="card-height" type="number" value={this.state.cardHeight} placeholder="height"/>
 
                       {/* <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none',marginBottom:10}}>
                         <div onClick={()=>{this.selectPr('web-btn')}} id="web-btn" className={this.state.webBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Web</p></div>

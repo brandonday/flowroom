@@ -181,6 +181,7 @@ class RoomPosts extends Component {
                                 tagsArray.push(childSnapShot.val().tags[key].text);
                               });
                             } 
+                            console.log('room height :', childSnapShot.val().room_card_height)
                             rooms.unshift({
                                 id:childSnapShot.key,
                                 date:childSnapShot.val().date,
@@ -208,6 +209,7 @@ class RoomPosts extends Component {
                                 shortID:childSnapShot.val().shortID,
                                 room_title:childSnapShot.val().room_title,
                                 tags:tagsArray,
+                                room_card_height:childSnapShot.val().room_card_height !== '' ? parseInt(childSnapShot.val().room_card_height):246,
                                 ...childSnapShot
                             });
 
@@ -300,6 +302,12 @@ class RoomPosts extends Component {
                
                   console.log('rooms: previous date', childSnapShot.val().shortID + ' ', previousDate);
                 }
+                let tagsArray = [];
+                if(childSnapShot.val().tags !== undefined) {
+                  Object.keys(childSnapShot.val().tags).forEach((key) => {
+                    tagsArray.push(childSnapShot.val().tags[key].text);
+                  });
+                } 
                     rooms.unshift({
                         id:childSnapShot.key,
                         date:childSnapShot.val().date,
@@ -326,7 +334,8 @@ class RoomPosts extends Component {
                         username:childSnapShot.val().userName,
                         shortID:childSnapShot.val().shortID,
                         room_title:childSnapShot.val().room_title,
-                        tags:childSnapShot.val().tags,
+                        tags:tagsArray,
+                        room_card_height:childSnapShot.val().room_card_height !== '' ? parseInt(childSnapShot.val().room_card_height):246,
                         ...childSnapShot
                     });
 
@@ -379,6 +388,14 @@ class RoomPosts extends Component {
                      
                         console.log('rooms: previous date', childSnapShot.val().shortID + ' ', previousDate);
                       }
+                      let tagsArray = [];
+                      if(childSnapShot.val().tags !== undefined) {
+                        Object.keys(childSnapShot.val().tags).forEach((key) => {
+                          tagsArray.push(childSnapShot.val().tags[key].text);
+                        });
+                      } 
+
+                      console.log('room height :', childSnapShot.val().room_card_height)
                         rooms.unshift({
                             id:childSnapShot.key,
                             date:childSnapShot.val().date,
@@ -405,7 +422,8 @@ class RoomPosts extends Component {
                             shortID:childSnapShot.val().shortID,
                             room_title:childSnapShot.val().room_title,
                             commentsCount:childSnapShot.val().commentsCount,
-                            tags:childSnapShot.val().tags,
+                            tags:tagsArray,
+                            room_card_height:childSnapShot.val().room_card_height !== '' ? parseInt(childSnapShot.val().room_card_height):246,
                         ...childSnapShot
                     });
                   }
@@ -501,7 +519,7 @@ class RoomPosts extends Component {
                                         postedPicURL={i.postedPicURL}
                                         roomType={i.roomType}
                                         pic={i.pic}
-                                        roomHeight={'auto'}
+                                        roomHeight={i.room_card_height}
                                         roomWidth={width}
                                         username={i.username}
                                         points = {i.hasOwnProperty("points") ? i.points : 0}

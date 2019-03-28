@@ -250,7 +250,7 @@ class RoomPost extends Component {
                             </div>
                             
                         </div>
-                        <div className="full-screenable-node" style={{height:246}}>
+                        <div className="full-screenable-node" style={{height:this.props.roomHeight}}>
                             <iframe id={`${this.props.id.id}`} src={"/full/" + this.props.id.id} style={{
                                 height:'200%', border:'1px solid red',
                                 width:'200%',
@@ -321,7 +321,7 @@ class RoomPost extends Component {
 
         return  (
             <div style={{position:'relative'}} onMouseEnter={this.mouseHover.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} className="room-post" style={{
-                height:this.props.roomHeight
+                height:'auto'
             }}>
 
                 <div style={{height:this.props.roomType === 'image'? '100%':'78%',
