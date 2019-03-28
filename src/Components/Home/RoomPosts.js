@@ -121,6 +121,7 @@ let currentPage = 1;
 let roomsPerPage = 6;
 let nextDate = '';
 let previousDate = '';
+let tagsArray = ['Funny', 'Game', 'Meme','Meme','Meme','Meme','Meme','Meme','Meme','Meme']
 class RoomPosts extends Component {
     constructor() {
         super();
@@ -241,8 +242,29 @@ class RoomPosts extends Component {
       }})
     }
 
+    getNumTags(tagsArray) {
+    console.log('inner width :', window.innerWidth);
+     let maxLength = window.innerWidth >= 1024 ? 20 : 12;
+      if(tagsArray.length <= 1) {
+        return tagsArray.length;
+      } else if(tagsArray.length === 2) {
+        if(tagsArray[0].length + tagsArray[1].length > maxLength) {
+          return 1;
+        } else {
+          return 2;
+        }         
+      } else {
+        if(tagsArray[0].length > 12 || tagsArray[0].length + tagsArray[1].length > maxLength) {
+          return 1;
+        }
+        if(tagsArray[0].length + tagsArray[1].length + tagsArray[2].length > maxLength) {
+          return 2;
+        } else {
+          return 3;
+        }   
+      } 
 
-
+    }
     prevPage() {
         currentPage = currentPage === 1 ? 1 : currentPage - 1;
         rooms = [];
@@ -469,6 +491,7 @@ class RoomPosts extends Component {
                                         roomType={i.roomType}
                                         pic={i.pic}
                                         roomHeight={'auto'}
+                                        roomWidth={width}
                                         username={i.username}
                                         points = {i.hasOwnProperty("points") ? i.points : 0}
                                         views = {i.hasOwnProperty("views") ? i.views : 0}
@@ -477,7 +500,9 @@ class RoomPosts extends Component {
                                         key={i}
                                         shortID={i.shortID}
                                         room_title={i.room_title}
-                                        tags={['Fun', 'Game', 'Meme','Meme','Meme','Meme','Meme','Meme','Meme','Meme']}
+                                        tags={tagsArray}
+                                        numTags={this.getNumTags(tagsArray)}
+                                        
                                     /></div>)
                                }
                                 // if (i.roomType === 'text') {
