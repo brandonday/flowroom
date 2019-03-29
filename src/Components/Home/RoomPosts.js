@@ -196,7 +196,6 @@ class RoomPosts extends Component {
                     tagsArray.push(childSnapShot.val().tags[key].text);
                   });
                 } 
-                console.log('room comment count : comment Count', childSnapShot.val().commentsCount)
                 rooms.unshift({
                     id:childSnapShot.key,
                     date:childSnapShot.val().date,
@@ -296,7 +295,7 @@ getSearchFromFilter(id) {
       }})
     }
 
-    getNumTags(tagsArray) {
+  getNumTags(tagsArray) {
     console.log('inner width :', window.innerWidth);
      let maxLength = window.innerWidth >= 1024 ? 20 : 12;
       if(tagsArray.length <= 1) {
@@ -407,7 +406,7 @@ getSearchFromFilter(id) {
             
              
 
-                    rooms = [];
+                   
 
            
 
@@ -505,7 +504,7 @@ getSearchFromFilter(id) {
             }
                 console.log('rooms: next',rooms)
                 this.setState({rooms:rooms, roomsLoaded:true});
-                rooms = [];
+                
 
               
         });

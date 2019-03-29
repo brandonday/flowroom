@@ -9,8 +9,17 @@ import { Store } from './store.js';
 import sizeMe from 'react-sizeme';
 import ReactResizeDetector from 'react-resize-detector';
 
+let name;
 let rooms = [];
 let roomsFilter = [];
+let roomsBackUp = [];
+let currentPage = 1;
+let roomsPerPage = 6;
+let nextRoomIndex = '';
+let previousRoomIndex = '';
+let roomFilter = 'date';
+let navSelected;
+let database = firebase.database();
 
 class ProfilePage extends Component {
     constructor() {
@@ -20,7 +29,7 @@ class ProfilePage extends Component {
             myusername:'',
             loading:(<div style={{display:'flex',flex:'1'}}>loading...</div>),
             name:'',
-            bio:'sddssdssdsdsd',
+            bio:'',
             pic:'',
             displayIfOwn:'none',
             followlbl:'follow',
@@ -28,66 +37,157 @@ class ProfilePage extends Component {
             followingNum:0,
             verified:'none',
             roomsLoaded:false,
-            lastRoom:'',
-            commmunitiesFilter:{},
-            filters:{},
             roomFilters:{},
-            mobile:false
+            mobile:false,
+            mobile:false,
+            rooms:[],
+            filter:'date'
         }
     }
     componentDidMount() {
-        let database = firebase.database();
-        let name = this.props.match.params.id.toLowerCase();
+      
         //let getRooms = (filtering) => {
-            database.ref(`UsersRooms/${name}/`).orderByChild('date').limitToFirst(6).once('value').then((snapshot) => {
-                //alert(`categorizations/${regular}${allres}${mobile}${tablet}${desktop}${live}${remixable}${aiType}${arType}${vrType}${three60Type}`)
-                snapshot.forEach((childSnapShot) => {
-                    if(rooms.length != 6) {
-                       
-                   
-                    rooms.push({
-                        id:childSnapShot.key,
-                        date:childSnapShot.val().date,
-                        isAR:childSnapShot.val().isAR,
-                        isDevelopmental:childSnapShot.val().isDevelopmental,
-                        is360:childSnapShot.val().is360,
-                        isAI:childSnapShot.val().isAI,
-                        isDesktop:childSnapShot.val().isDesktop,
-                        isDeveloper:childSnapShot.val().isDeveloper,
-                        isLive:childSnapShot.val().isLive,
-                        isLocked:childSnapShot.val().isLocked,
-                        isMobile:childSnapShot.val().isMobile,
-                        isNSFW:childSnapShot.val().isNSFW,
-                        isVR:childSnapShot.val().isVR,
-                        pic:childSnapShot.val().pic,
-                        views:childSnapShot.val().views,
-                        comments:childSnapShot.val().comments,
-                        likes:childSnapShot.val().likes,
-                        description:childSnapShot.val().description,
-                        objectNum:childSnapShot.val().objectNum,
-                        postedPicURL:childSnapShot.val().postedPicURL,
-                        isRemixable:childSnapShot.val().isRemixable,
-                        roomType:childSnapShot.val().roomType,
-                        username:childSnapShot.val().userName,
-                        shortID:childSnapShot.val().shortID,
-                        room_title:childSnapShot.val().room_title,
-                        ...childSnapShot
-                    });
-    
-                }
-    
-                });
-                this.setState({roomsLoaded:true});
-                let lastRoom = rooms.length;
-                console.log('last room', rooms[lastRoom - 1])
-                this.setState({lastRoom:lastRoom});
-                //if(filtering === true) {
-                    //rooms = []; 
-                //}
-                
-            });
-          //}
+            name = this.props.match.params.id.toLowerCase();
+            this.loadRooms();
+
     }
+    loadRooms() {
+        
+        let counter = 0;
+  
+        let that = this;
+        database.ref(`UsersRooms/${name}`).orderByChild(roomFilter).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
+  
+          snapshot.forEach((childSnapShot) => {
+              counter++;
+             
+              if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
+                if(counter == 1) {
+                  if(roomFilter == 'weight') {
+                    nextRoomIndex = childSnapShot.val().weight;
+                  } else if(roomFilter == 'likes') {
+                    nextRoomIndex = childSnapShot.val().likes;
+                  } else {
+                    nextRoomIndex = childSnapShot.val().date;
+                  }
+                  
+                  console.log('rooms: next date', childSnapShot.val().shortID + ' ',  nextRoomIndex);
+                } else {
+                  if(counter == roomsPerPage + 1) {
+                    if(roomFilter == 'weight') {
+                      previousRoomIndex = childSnapShot.val().weight;
+                    } else if(roomFilter == 'likes') {
+                      previousRoomIndex = childSnapShot.val().likes;
+                    } else {
+                      previousRoomIndex = childSnapShot.val().date;
+                    }
+                  }
+                 let tagsArray = [];
+                  if(childSnapShot.val().tags !== undefined) {
+                    Object.keys(childSnapShot.val().tags).forEach((key) => {
+                      tagsArray.push(childSnapShot.val().tags[key].text);
+                    });
+                  } 
+                  rooms.unshift({
+                      id:childSnapShot.key,
+                      date:childSnapShot.val().date,
+                      isAR:childSnapShot.val().isAR,
+                      isDevelopmental:childSnapShot.val().isDevelopmental,
+                      is360:childSnapShot.val().is360,
+                      isAI:childSnapShot.val().isAI,
+                      isDesktop:childSnapShot.val().isDesktop,
+                      isDeveloper:childSnapShot.val().isDeveloper,
+                      isLive:childSnapShot.val().isLive,
+                      isLocked:childSnapShot.val().isLocked,
+                      isMobile:childSnapShot.val().isMobile,
+                      isNSFW:childSnapShot.val().isNSFW,
+                      isVR:childSnapShot.val().isVR,
+                      pic:childSnapShot.val().pic,
+                      views:childSnapShot.val().views,
+                      commentsCount:childSnapShot.val().commentsCount === undefined ? 0:childSnapShot.val().commentsCount,
+                      likes:childSnapShot.val().likes === undefined ? 0 : childSnapShot.val().likes,
+                      description:childSnapShot.val().description,
+                      objectNum:childSnapShot.val().objectNum,
+                      postedPicURL:childSnapShot.val().postedPicURL,
+                      isRemixable:childSnapShot.val().isRemixable,
+                      roomType:childSnapShot.val().roomType,
+                      username:childSnapShot.val().userName,
+                      shortID:childSnapShot.val().shortID,
+                      room_title:childSnapShot.val().room_title,
+                      tags:tagsArray,
+                      room_card_height:childSnapShot.val().room_card_height !== '' && !isNaN(childSnapShot.val().room_card_height) ? parseInt(childSnapShot.val().room_card_height):246,
+                      ...childSnapShot
+                  });
+  
+  
+                }
+              
+          }
+  
+  
+          });
+          console.log('rooms: loading',rooms)
+          
+          that.setState({rooms:rooms})
+          that.setState({roomsLoaded:true});
+        
+          //rooms = [];
+          
+        });
+  
+      }
+      getSearchFromFilter(id) {
+        switch(id) {
+            case 'featured':
+                return 'weight';
+            case 'trending':
+                return 'likes';
+            case 'recent':
+                return 'date';
+            default: 
+                return 'date';
+        }
+    }
+    selection(id) {
+        document.getElementById(id).className = 'selected';
+       let getSelected = document.getElementsByClassName('selected');
+      
+       for(let i = 0; i < getSelected.length; i++) {
+           if(getSelected[i].id !== id) {
+              
+               getSelected[i].className = '';
+           } else {
+            
+              getSelected[i].className = 'selected';
+           }
+       }
+       console.log('search filters :', this.getSearchFromFilter(id))
+       
+       roomFilter = this.getSearchFromFilter(id);
+  
+        this.loadRooms();
+        
+  
+    }
+    openModal(post = true) {
+        this.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles:{
+          overlay: {
+            backgroundColor: 'none',
+          },
+          content: {
+          top                   : '50%',
+          left                  : '50%',
+          right                 : '0',
+          bottom                : 'auto',
+          marginRight           : '0%',
+          transform             : 'translate(-50%, -50%)',
+          height:'50%',
+          width:'50%',
+          }
+        }})
+      }
+
+
     componentWillMount() {
         let that = this;
         firebase.auth().onAuthStateChanged(function(user) {
@@ -102,6 +202,220 @@ class ProfilePage extends Component {
    
     
     }
+    getNumTags(tagsArray) {
+        console.log('inner width :', window.innerWidth);
+         let maxLength = window.innerWidth >= 1024 ? 20 : 12;
+          if(tagsArray.length <= 1) {
+            return tagsArray.length;
+          } else if(tagsArray.length === 2) {
+            if(tagsArray[0].length + tagsArray[1].length > maxLength) {
+              return 1;
+            } else {
+              return 2;
+            }         
+          } else {
+            if(tagsArray[0].length > 12 || tagsArray[0].length + tagsArray[1].length > maxLength) {
+              return 1;
+            }
+            if(tagsArray[0].length + tagsArray[1].length + tagsArray[2].length > maxLength) {
+              return 2;
+            } else {
+              return 3;
+            }   
+          } 
+    
+        }
+        prevPage() {
+            currentPage = currentPage === 1 ? 1 : currentPage - 1;
+            rooms = [];
+            let database = firebase.database();
+            let that = this;
+            let counter = 0;
+            
+            database.ref(`UsersRooms/${name}`).orderByChild(roomFilter).startAt(previousRoomIndex).limitToFirst(roomsPerPage + 1).once('value').then((snapshot) => {
+            
+             
+               snapshot.forEach((childSnapShot) => {
+    
+                    //if(rooms.length != 7) {
+                if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
+                
+                  counter++;
+                  if(counter == 1) {
+                    if(roomFilter == 'weight') {
+                      nextRoomIndex = childSnapShot.val().weight;
+                    } else if(roomFilter == 'likes') {
+                      nextRoomIndex = childSnapShot.val().likes;
+                    } else {
+                      nextRoomIndex = childSnapShot.val().date;
+                    }
+                  } else {
+                    if(counter == roomsPerPage + 1) {
+                      if(roomFilter == 'weight') {
+                        previousRoomIndex = childSnapShot.val().weight;
+                      } else if(roomFilter == 'likes') {
+                        previousRoomIndex = childSnapShot.val().likes;
+                      } else {
+                        previousRoomIndex = childSnapShot.val().date;
+                      }
+                    }
+                    let tagsArray = [];
+                    if(childSnapShot.val().tags !== undefined) {
+                      Object.keys(childSnapShot.val().tags).forEach((key) => {
+                        tagsArray.push(childSnapShot.val().tags[key].text);
+                      });
+                    } 
+                        rooms.unshift({
+                            id:childSnapShot.key,
+                            date:childSnapShot.val().date,
+                            isAR:childSnapShot.val().isAR,
+                            isDevelopmental:childSnapShot.val().isDevelopmental,
+                            is360:childSnapShot.val().is360,
+                            isAI:childSnapShot.val().isAI,
+                            isDesktop:childSnapShot.val().isDesktop,
+                            isDeveloper:childSnapShot.val().isDeveloper,
+                            isLive:childSnapShot.val().isLive,
+                            isLocked:childSnapShot.val().isLocked,
+                            isMobile:childSnapShot.val().isMobile,
+                            isNSFW:childSnapShot.val().isNSFW,
+                            isVR:childSnapShot.val().isVR,
+                            pic:childSnapShot.val().pic,
+                            views:childSnapShot.val().views,
+                            commentsCount:childSnapShot.val().commentsCount === undefined ? 0:childSnapShot.val().commentsCount,
+                            likes:childSnapShot.val().likes === undefined ? 0:childSnapShot.val().likes,
+                            description:childSnapShot.val().description,
+                            objectNum:childSnapShot.val().objectNum,
+                            postedPicURL:childSnapShot.val().postedPicURL,
+                            isRemixable:childSnapShot.val().isRemixable,
+                            roomType:childSnapShot.val().roomType,
+                            username:childSnapShot.val().userName,
+                            shortID:childSnapShot.val().shortID,
+                            room_title:childSnapShot.val().room_title,
+                            tags:tagsArray,
+                            room_card_height:childSnapShot.val().room_card_height !== '' ? parseInt(childSnapShot.val().room_card_height):246,
+                            ...childSnapShot
+                        });
+    
+                      }
+                    //alert(childSnapShot.val().shortID)
+                //}
+                }
+    
+                });
+                console.log('rooms: counter', counter)
+                if(counter == 1) {
+                  return;
+                }
+                  console.log('rooms previous',rooms)
+                    this.setState({rooms:rooms});
+                    this.setState({roomsLoaded:true});
+                   
+                
+                 
+    
+                        rooms = [];
+    
+               
+    
+    
+            });
+        }
+        nextPage() {
+        
+            rooms = [];
+            let database = firebase.database();
+            let that = this;
+            let counter = 0;
+            console.log('next page nextRoomIndex:', nextRoomIndex);
+            console.log('next page prevRoomIndex:', previousRoomIndex);
+            database.ref(`UsersRooms/${name}`).orderByChild(roomFilter).limitToLast(roomsPerPage + 1).endAt(nextRoomIndex).once('value').then((snapshot) => {
+              if(snapshot.length == 0) {
+                return;
+              }  
+            
+              snapshot.forEach((childSnapShot) => {
+                    if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
+                      
+                      
+                        counter++;
+                        if(counter == 1) {
+                          if(roomFilter == 'weight') {
+                            nextRoomIndex = childSnapShot.val().weight;
+                          } else if(roomFilter == 'likes') {
+                            nextRoomIndex = childSnapShot.val().likes;
+                          } else {
+                            nextRoomIndex = childSnapShot.val().date;
+                          }
+    
+                        } else {
+                          if(counter == roomsPerPage + 1) {
+                            if(roomFilter == 'weight') {
+                              previousRoomIndex = childSnapShot.val().weight;
+                            } else if(roomFilter == 'likes') {
+                              previousRoomIndex = childSnapShot.val().likes;
+                            } else {
+                              previousRoomIndex = childSnapShot.val().date;
+                            }
+                          }
+                          let tagsArray = [];
+                          if(childSnapShot.val().tags !== undefined) {
+                            Object.keys(childSnapShot.val().tags).forEach((key) => {
+                              tagsArray.push(childSnapShot.val().tags[key].text);
+                            });
+                          } 
+    
+                         
+                            rooms.unshift({
+                                id:childSnapShot.key,
+                                date:childSnapShot.val().date,
+                                isAR:childSnapShot.val().isAR,
+                                isDevelopmental:childSnapShot.val().isDevelopmental,
+                                is360:childSnapShot.val().is360,
+                                isAI:childSnapShot.val().isAI,
+                                isDesktop:childSnapShot.val().isDesktop,
+                                isDeveloper:childSnapShot.val().isDeveloper,
+                                isLive:childSnapShot.val().isLive,
+                                isLocked:childSnapShot.val().isLocked,
+                                isMobile:childSnapShot.val().isMobile,
+                                isNSFW:childSnapShot.val().isNSFW,
+                                isVR:childSnapShot.val().isVR,
+                                pic:childSnapShot.val().pic,
+                                views:childSnapShot.val().views,
+                                commentsCount:childSnapShot.val().commentsCount === undefined ? 0 : childSnapShot.val().commentsCount,
+                                likes:childSnapShot.val().likes === undefined ? 0:childSnapShot.val().likes,
+                                description:childSnapShot.val().description,
+                                objectNum:childSnapShot.val().objectNum,
+                                postedPicURL:childSnapShot.val().postedPicURL,
+                                isRemixable:childSnapShot.val().isRemixable,
+                                roomType:childSnapShot.val().roomType,
+                                username:childSnapShot.val().userName,
+                                shortID:childSnapShot.val().shortID,
+                                room_title:childSnapShot.val().room_title,
+                                tags:tagsArray,
+                                room_card_height:childSnapShot.val().room_card_height !== '' ? parseInt(childSnapShot.val().room_card_height):246,
+                            ...childSnapShot
+                        });
+                      }
+    
+                    //alert(childSnapShot.val().shortID)
+                  
+    
+                }
+    
+                });
+                console.log('next page after nextRoomIndex :', nextRoomIndex);
+         
+                console.log('next page after prevRoomIndex:', previousRoomIndex);
+                if(counter == 1) {
+                  return;
+                }
+                    console.log('rooms: next',rooms)
+                    this.setState({rooms:rooms, roomsLoaded:true});
+                    rooms = [];
+    
+                  
+            });
+        }
     getProfileInfo(myusername) {
         let name = this.props.match.params.id.toLowerCase();
         let ref = firebase.database().ref("users");
@@ -266,7 +580,7 @@ class ProfilePage extends Component {
     }
     render() {
      
-        if(this.state.hasName === 'found') {
+        //if(this.state.hasName === 'found') {
     
         return (
             <div style={{height:'100%',
@@ -365,13 +679,14 @@ class ProfilePage extends Component {
                                     /></div>)
                                 } 
                                 if (i.roomType === 'other') {
-                                    return (<div><RoomPost id={i} 
+                                    return (<div><RoomPost id={i}
                                         description={i.description}
                                         isRemixable={i.isRemixable}
                                         postedPicURL={i.postedPicURL}
                                         roomType={i.roomType}
                                         pic={i.pic}
-                                        roomHeight={'auto'}
+                                        roomHeight={i.room_card_height}
+                                        roomWidth={width}
                                         username={i.username}
                                         points = {i.hasOwnProperty("points") ? i.points : 0}
                                         views = {i.hasOwnProperty("views") ? i.views : 0}
@@ -380,6 +695,9 @@ class ProfilePage extends Component {
                                         key={i}
                                         shortID={i.shortID}
                                         room_title={i.room_title}
+                                        tags={i.tags}
+                                        numTags={this.getNumTags(i.tags)}
+                                        
                                     /></div>)
                                }   
                                 if (i.roomType === 'text') {
@@ -413,10 +731,7 @@ class ProfilePage extends Component {
                 </div>
             </div>
         )
-    } else {
-        return (this.state.loading)
-        
-    }
+    
 
     }
 }
