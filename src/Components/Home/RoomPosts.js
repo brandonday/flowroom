@@ -326,7 +326,7 @@ getSearchFromFilter(id) {
         let that = this;
         let counter = 0;
         
-        database.ref('rooms').orderByChild(roomFilter).startAt(previousRoomIndex).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
+        database.ref('rooms').orderByChild(roomFilter).startAt(previousRoomIndex).limitToFirst(roomsPerPage + 1).once('value').then((snapshot) => {
         
          
            snapshot.forEach((childSnapShot) => {
