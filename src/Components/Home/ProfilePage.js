@@ -51,6 +51,14 @@ class ProfilePage extends Component {
             this.loadRooms();
 
     }
+    isShortIDExists(shortID) {
+        for(let i = 0; i < rooms.length; i++) {
+            if(rooms[i].shortID == shortID) {
+                return true;
+            }
+        }
+        return false;
+    }
     loadRooms() {
         
         let counter = 0;
@@ -60,7 +68,9 @@ class ProfilePage extends Component {
   
           snapshot.forEach((childSnapShot) => {
               counter++;
-             
+
+              if(!this.isShortIDExists(childSnapShot.val().shortID)) {
+
               if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
                 if(counter == 1) {
                   if(roomFilter == 'weight') {
@@ -123,6 +133,8 @@ class ProfilePage extends Component {
                 }
               
           }
+
+        }
   
   
           });
@@ -313,7 +325,7 @@ class ProfilePage extends Component {
                 
                  
     
-                        rooms = [];
+               
     
                
     
@@ -411,7 +423,7 @@ class ProfilePage extends Component {
                 }
                     console.log('rooms: next',rooms)
                     this.setState({rooms:rooms, roomsLoaded:true});
-                    rooms = [];
+             
     
                   
             });

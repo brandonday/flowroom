@@ -160,6 +160,14 @@ class RoomPosts extends Component {
 
 
     }
+    isShortIDExists(shortID) {
+      for(let i = 0; i < rooms.length; i++) {
+          if(rooms[i].shortID == shortID) {
+              return true;
+          }
+      }
+      return false;
+  }
     loadRooms() {
       let counter = 0;
 
@@ -168,7 +176,7 @@ class RoomPosts extends Component {
 
         snapshot.forEach((childSnapShot) => {
             counter++;
-           
+            if(!this.isShortIDExists(childSnapShot.val().shortID)) {
             if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
               if(counter == 1) {
                 if(roomFilter == 'weight') {
@@ -232,14 +240,14 @@ class RoomPosts extends Component {
             
         }
 
-
+        }
         });
         console.log('rooms: loading',rooms)
         
         that.setState({rooms:rooms})
         that.setState({roomsLoaded:true});
       
-        rooms = [];
+        
         
       });
 
@@ -257,6 +265,7 @@ getSearchFromFilter(id) {
       }
   }
   selection(id) {
+   
       document.getElementById(id).className = 'selected';
      let getSelected = document.getElementsByClassName('selected');
     
@@ -272,7 +281,7 @@ getSearchFromFilter(id) {
      console.log('search filters :', this.getSearchFromFilter(id))
      
      roomFilter = this.getSearchFromFilter(id);
-
+     rooms = [];
       this.loadRooms();
       
 
