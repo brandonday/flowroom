@@ -26,27 +26,12 @@ class RoomPost extends Component {
             dElem:'',
             showMoreTag:false,
             tags:[],
-            tagColor:'',
-            likes:0
+            tagColor:''
         }
     }
     componentDidMount() {
-        function myFunction(x) {
-            if (x.matches) { // If media query matches
+   
             
-    
-            } else {
-                
-              
-         
-    
-    
-            }
-          }
-          
-          var x = window.matchMedia("(max-width: 1284px)")
-          myFunction(x) // Call listener function at run time
-          x.addListener(myFunction) // Attach listener function on state changes
 
         let tags = this.props.tags;
         this.setState({likes:this.props.likes});
@@ -131,6 +116,9 @@ class RoomPost extends Component {
        }
     }
     getNumberToString(num) {
+        if(num === undefined) {
+            return 0;
+        }
         if(num > 999999) {
             return (num/1000000).toFixed(num >= 10000000 ? 0 : 1) + 'M';
         } else if(num > 999) {
@@ -372,7 +360,7 @@ class RoomPost extends Component {
                                 });
                                
                             }} style={{fontSize:13, color:'white',marginRight:6.5}}></i>
-                                <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.getNumberToString(this.state.likes)}</p>
+                                <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.getNumberToString(this.props.likes)}</p>
                             </div>
                             <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',flexDirection:'row',height:'37px',marginRight:'18px'}}>
                             <i className="far fa-comment-alt" style={{fontSize:13, color:'white',marginRight:6.5}}></i>

@@ -121,14 +121,11 @@ let roomsFilter = [];
 let roomsBackUp = [];
 let currentPage = 1;
 let roomsPerPage = 6;
-let nextDate = '';
-let previousDate = '';
-let roomFilter = '';
+let nextRoomIndex = '';
+let previousRoomIndex = '';
+let roomFilter = 'weight';
 let navSelected;
 let database = firebase.database();
-
-
-let counter = 0;
 class RoomPosts extends Component {
     constructor() {
         super();
@@ -150,7 +147,7 @@ class RoomPosts extends Component {
         
         
           
-         console.log('filters :', this.state.filter)
+         console.log('filters :', roomFilter)
        
         
        this.loadRooms()
@@ -164,22 +161,34 @@ class RoomPosts extends Component {
 
     }
     loadRooms() {
-      console.log('rooms loaded:' )
+      let counter = 0;
+
       let that = this;
-      database.ref('rooms').orderByChild(this.state.filter).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
+      database.ref('rooms').orderByChild(roomFilter).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
 
         snapshot.forEach((childSnapShot) => {
             counter++;
            
             if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
               if(counter == 1) {
-                nextDate = childSnapShot.val().date;
-              
-                console.log('rooms: next date', childSnapShot.val().shortID + ' ',  nextDate);
+                if(roomFilter == 'weight') {
+                  nextRoomIndex = childSnapShot.val().weight;
+                } else if(roomFilter == 'likes') {
+                  nextRoomIndex = childSnapShot.val().likes;
+                } else {
+                  nextRoomIndex = childSnapShot.val().date;
+                }
+                
+                console.log('rooms: next date', childSnapShot.val().shortID + ' ',  nextRoomIndex);
               } else {
                 if(counter == roomsPerPage + 1) {
-                  previousDate = childSnapShot.val().date;
-                  console.log('rooms: previous date', childSnapShot.val().shortID + ' ', previousDate);
+                  if(roomFilter == 'weight') {
+                    previousRoomIndex = childSnapShot.val().weight;
+                  } else if(roomFilter == 'likes') {
+                    previousRoomIndex = childSnapShot.val().likes;
+                  } else {
+                    previousRoomIndex = childSnapShot.val().date;
+                  }
                 }
                let tagsArray = [];
                 if(childSnapShot.val().tags !== undefined) {
@@ -187,7 +196,7 @@ class RoomPosts extends Component {
                     tagsArray.push(childSnapShot.val().tags[key].text);
                   });
                 } 
-                console.log('room height :', childSnapShot.val().room_card_height)
+                console.log('room comment count : comment Count', childSnapShot.val().commentsCount)
                 rooms.unshift({
                     id:childSnapShot.key,
                     date:childSnapShot.val().date,
@@ -204,8 +213,8 @@ class RoomPosts extends Component {
                     isVR:childSnapShot.val().isVR,
                     pic:childSnapShot.val().pic,
                     views:childSnapShot.val().views,
-                    commentsCount:childSnapShot.val().commentsCount,
-                    likes:childSnapShot.val().likes,
+                    commentsCount:childSnapShot.val().commentsCount === undefined ? 0:childSnapShot.val().commentsCount,
+                    likes:childSnapShot.val().likes === undefined ? 0 : childSnapShot.val().likes,
                     description:childSnapShot.val().description,
                     objectNum:childSnapShot.val().objectNum,
                     postedPicURL:childSnapShot.val().postedPicURL,
@@ -263,7 +272,8 @@ getSearchFromFilter(id) {
      }
      console.log('search filters :', this.getSearchFromFilter(id))
      
-      this.setState({filter:this.getSearchFromFilter(id)});
+     roomFilter = this.getSearchFromFilter(id);
+
       this.loadRooms();
       
 
@@ -316,7 +326,7 @@ getSearchFromFilter(id) {
         let that = this;
         let counter = 0;
         
-        database.ref('categorizations/Regular').orderByChild(this.props.state.filter).startAt(previousDate).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
+        database.ref('rooms').orderByChild(roomFilter).startAt(previousRoomIndex).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
         
          
            snapshot.forEach((childSnapShot) => {
@@ -326,14 +336,22 @@ getSearchFromFilter(id) {
             
               counter++;
               if(counter == 1) {
-                nextDate = childSnapShot.val().date;
-        
-                console.log('rooms: next date', childSnapShot.val().shortID + ' ', nextDate);
+                if(roomFilter == 'weight') {
+                  nextRoomIndex = childSnapShot.val().weight;
+                } else if(roomFilter == 'likes') {
+                  nextRoomIndex = childSnapShot.val().likes;
+                } else {
+                  nextRoomIndex = childSnapShot.val().date;
+                }
               } else {
                 if(counter == roomsPerPage + 1) {
-                  previousDate = childSnapShot.val().date;
-               
-                  console.log('rooms: previous date', childSnapShot.val().shortID + ' ', previousDate);
+                  if(roomFilter == 'weight') {
+                    previousRoomIndex = childSnapShot.val().weight;
+                  } else if(roomFilter == 'likes') {
+                    previousRoomIndex = childSnapShot.val().likes;
+                  } else {
+                    previousRoomIndex = childSnapShot.val().date;
+                  }
                 }
                 let tagsArray = [];
                 if(childSnapShot.val().tags !== undefined) {
@@ -357,8 +375,8 @@ getSearchFromFilter(id) {
                         isVR:childSnapShot.val().isVR,
                         pic:childSnapShot.val().pic,
                         views:childSnapShot.val().views,
-                        commentsCount:childSnapShot.val().commentsCount,
-                        likes:childSnapShot.val().likes,
+                        commentsCount:childSnapShot.val().commentsCount === undefined ? 0:childSnapShot.val().commentsCount,
+                        likes:childSnapShot.val().likes === undefined ? 0:childSnapShot.val().likes,
                         description:childSnapShot.val().description,
                         objectNum:childSnapShot.val().objectNum,
                         postedPicURL:childSnapShot.val().postedPicURL,
@@ -402,7 +420,9 @@ getSearchFromFilter(id) {
         let database = firebase.database();
         let that = this;
         let counter = 0;
-        database.ref('categorizations/Regular/').orderByChild(this.props.state.filter).limitToLast(roomsPerPage + 1).endAt(nextDate).once('value').then((snapshot) => {
+        console.log('next page nextRoomIndex:', nextRoomIndex);
+        console.log('next page prevRoomIndex:', previousRoomIndex);
+        database.ref('rooms').orderByChild(roomFilter).limitToLast(roomsPerPage + 1).endAt(nextRoomIndex).once('value').then((snapshot) => {
           if(snapshot.length == 0) {
             return;
           }  
@@ -413,13 +433,23 @@ getSearchFromFilter(id) {
                   
                     counter++;
                     if(counter == 1) {
-                      nextDate = childSnapShot.val().date;
-                      console.log('rooms: next date', childSnapShot.val().shortID + ' ', nextDate);
+                      if(roomFilter == 'weight') {
+                        nextRoomIndex = childSnapShot.val().weight;
+                      } else if(roomFilter == 'likes') {
+                        nextRoomIndex = childSnapShot.val().likes;
+                      } else {
+                        nextRoomIndex = childSnapShot.val().date;
+                      }
+
                     } else {
                       if(counter == roomsPerPage + 1) {
-                        previousDate = childSnapShot.val().date;
-                     
-                        console.log('rooms: previous date', childSnapShot.val().shortID + ' ', previousDate);
+                        if(roomFilter == 'weight') {
+                          previousRoomIndex = childSnapShot.val().weight;
+                        } else if(roomFilter == 'likes') {
+                          previousRoomIndex = childSnapShot.val().likes;
+                        } else {
+                          previousRoomIndex = childSnapShot.val().date;
+                        }
                       }
                       let tagsArray = [];
                       if(childSnapShot.val().tags !== undefined) {
@@ -428,7 +458,7 @@ getSearchFromFilter(id) {
                         });
                       } 
 
-                      console.log('room height :', childSnapShot.val().room_card_height)
+                     
                         rooms.unshift({
                             id:childSnapShot.key,
                             date:childSnapShot.val().date,
@@ -445,7 +475,8 @@ getSearchFromFilter(id) {
                             isVR:childSnapShot.val().isVR,
                             pic:childSnapShot.val().pic,
                             views:childSnapShot.val().views,
-                            likes:childSnapShot.val().likes,
+                            commentsCount:childSnapShot.val().commentsCount === undefined ? 0 : childSnapShot.val().commentsCount,
+                            likes:childSnapShot.val().likes === undefined ? 0:childSnapShot.val().likes,
                             description:childSnapShot.val().description,
                             objectNum:childSnapShot.val().objectNum,
                             postedPicURL:childSnapShot.val().postedPicURL,
@@ -454,7 +485,6 @@ getSearchFromFilter(id) {
                             username:childSnapShot.val().userName,
                             shortID:childSnapShot.val().shortID,
                             room_title:childSnapShot.val().room_title,
-                            commentsCount:childSnapShot.val().commentsCount,
                             tags:tagsArray,
                             room_card_height:childSnapShot.val().room_card_height !== '' ? parseInt(childSnapShot.val().room_card_height):246,
                         ...childSnapShot
@@ -467,6 +497,9 @@ getSearchFromFilter(id) {
             }
 
             });
+            console.log('next page after nextRoomIndex :', nextRoomIndex);
+     
+            console.log('next page after prevRoomIndex:', previousRoomIndex);
             if(counter == 1) {
               return;
             }

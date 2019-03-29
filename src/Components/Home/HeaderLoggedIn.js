@@ -18,7 +18,7 @@ class HeaderLoggedIn extends Component {
     render() {
         return (
             <div>    
-                <header className="header">
+                <header id="header" className="header">
                     <div className="content-container">
                         <div className="header-content">
                             <div className="left-section">
