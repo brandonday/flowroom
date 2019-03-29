@@ -401,7 +401,7 @@ class RoomMain extends Component {
                                         return response.json();
                                     })
                                     .then(function(myJson) {
-                                        console.log(myJson);
+                                        console.log('images',myJson);
                                         for(let i =0; i < myJson.hits.length; i++) {
                                             // alert(myJson.hits[i].previewURL)
                                             var node = document.createElement("div");                 
@@ -416,11 +416,11 @@ class RoomMain extends Component {
                                                 canvas.width = img.width;
                                                 canvas.height = img.height;
                                                 ctx.drawImage( img, 0, 0 );
-                                                // localStorage.setItem( `savedImageData${j}`, canvas.toDataURL("image/png") );
-                                                //let getImageSaved = canvas.toDataURL("image/png"); //localStorage.getItem(`savedImageData${j}`);
-                                                //alert(getImageSaved);
-                                                //document.getElementById('menu-wrap').style.display = 'block';
-                                                //document.getElementById('menu').style.display = 'block';
+                                                localStorage.setItem( `savedImageData${i}`, canvas.toDataURL("image/png") );
+                                                let getImageSaved = canvas.toDataURL("image/png"); //localStorage.getItem(`savedImageData${j}`);
+                                                alert(getImageSaved);
+                                                document.getElementById('menu-wrap').style.display = 'block';
+                                                document.getElementById('menu').style.display = 'block';
                                             });
                                             img.src = myJson.hits[i].previewURL; 
                                             node.appendChild(img);   
@@ -944,7 +944,7 @@ class RoomMain extends Component {
                     <Comments/>
                     <div style={{height:'100%',width:'400px',background:'white'}}>
                         <div style={{height:'42px',
-                            width:'320px',
+                            width:'429px',
                             background:'#202020',
                             border:'0px solid red',
                             display:'flex',
@@ -956,7 +956,7 @@ class RoomMain extends Component {
                         <button id="open-code-editor" onClick={this.dropDownAnimate.bind(this)} style={{fontWeight:'bold',
                                 color:'white',
                                 fontSize:'15px',
-                                width:'50px',
+                                width:'129px',
                                 height:'27px',
                                 backgroundColor:'rgb(179, 0, 254)',
                                 border:'none',

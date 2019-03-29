@@ -8,7 +8,7 @@ import Hashids from 'hashids';
 import Profile from '../Profile.js';
 var moment = require('moment');
 const database = firebase.database();
-
+let commentLoaded = [];
 const dummyComments = [];
 const replies = [];
 const repliesNum = [];
@@ -25,6 +25,13 @@ const repliesNum = [];
             description:'',
             loggedIn:false
          }
+    }
+    isComment(id) {
+        for(let i = 0; i < commentLoaded.length; i++) {
+            if(commentLoaded[i] === id) {
+                return true;
+            }
+        }
     }
     test(id, comment) {
         const database = firebase.database();
@@ -107,11 +114,13 @@ const repliesNum = [];
                 
         //     });
         //     this.setState({dummyComments:dummyComments});
+       
+      
             database.ref(`CommentReplies/${shortID}`).once('value').then((snapshot) => {
                 snapshot.forEach((childSnapShot) => {
-                   //alert(childSnapShot.val().date)
+                    if(!this.isComment(childSnapShot.val().commentID)) {
                     var ul = document.getElementById(childSnapShot.val().commentIDReplyingTo);
-                    //alert(childSnapShot.val().commentIDReplyingTo)
+                  
                     
                     if(ul !== null) {
                     ul.style.display = 'block';
@@ -201,6 +210,7 @@ const repliesNum = [];
                     ProfilePic.style.backgroundRepeat = 'no-repeat';
                     ProfilePic.style.backgroundSize = 'cover';
                     ProfilePic.style.borderRadius = '20px';
+                    ProfilePic.style.marginRight = '15px';
 
                     wrapComment.style.display = 'flex';
                     wrapComment.style.flexDirection = 'column';
@@ -326,15 +336,18 @@ const repliesNum = [];
                       } );
 
                     }
-
+                    
+                    }
+                    commentLoaded.push(childSnapShot.val().commentID)
                 });
 
              
-             
+                
             });
             
+           
 
-            
+        
         //});
         
     }
@@ -466,10 +479,11 @@ const repliesNum = [];
                     </div>
                     <div style={{height:'100%',width:'100%',borderTop:'1px solid black',marginBottom:'10px'}}>
                     {this.state.loggedIn ? (<div style={{width:'100%', marginTop:'20px'}}>
-                        <div style={{display:'flex', flexDirection:'row'}}>
+                        <div style={{display:'flex', flexDirection:'column', marginBottom:20, position:'relative', height:160}}>
+                            <div style={{display:'flex',flexDirection:'row',marginBottom:25}}>
                             <i className="fa fa-comments"/><p style={{marginLeft:10}}>{this.state.comment_number}</p><p style={{marginLeft:10}}>Comments</p>
-                        </div>
-                        <textarea id="comment" 
+                            </div>
+                            <textarea id="comment" 
                             style={{
                                 border:'1px solid #DDE0EB',
                                 borderRadius:'6px',
@@ -482,7 +496,7 @@ const repliesNum = [];
                                 outline:'none',
                                 backgroundColor:'#F9FAFA',
                                 webkitFontSmoothing:'antialiased',
-                                height:'100px',
+                                height:'150px',
                                 width:'100%',
                                 resize:'none',
                                 position:'relative'
@@ -496,13 +510,16 @@ const repliesNum = [];
                             width:'50px',
                             fontFamily:'Source Sans Pro',
                             fontWeight:'800',
-                            top:'910px',
-                            right:'436px',
+                            bottom:25,
+                            right:'10px',
                             position:'absolute'
                         }} 
     
                         onClick={this.postComment.bind(this)}
                         >Post</button>
+                        </div>
+                       
+                       
                     </div>):(
                         <div style={{color:'black'}}>Not logged in</div>
                     )}
