@@ -47,7 +47,6 @@ document.getElementById('default-modal').addEventListener('click', ()=>{
 });
 
 
-store.dispatch({type:'SAVE_DHTML', html:'',css:'',js:''});
 
 
 const history = createHistory();
@@ -87,16 +86,16 @@ const jsx = (
 
 
 
-window.callUpdate = function(before, updateHTML, updateCSS, updateJS) {
-    store.dispatch(updateEditor({before:before, updateHTML:updateHTML, updateCSS:updateCSS, updateJS:updateJS}));
-}
+// window.callUpdate = function(before, updateHTML, updateCSS, updateJS) {
+//     store.dispatch(updateEditor({before:before, updateHTML:updateHTML, updateCSS:updateCSS, updateJS:updateJS}));
+// }
 
-window.calledAlready = function(bool, before) {
-    //alert(bool);
-    store.dispatch(calledAlready({calledAlready:bool}));
-    //store.dispatch(updateEditor({before:before}));
+// window.calledAlready = function(bool, before) {
+//     //alert(bool);
+//     store.dispatch(calledAlready({calledAlready:bool}));
+//     //store.dispatch(updateEditor({before:before}));
 
-}
+// }
 let hasRendered = false;
 const renderApp = () => {
   /*conditional here. if path is / or any path names then*/

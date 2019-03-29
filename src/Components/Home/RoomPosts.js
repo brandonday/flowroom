@@ -11,6 +11,8 @@ import { connect } from 'react-redux';
 import { Store } from './store.js';
 import sizeMe from 'react-sizeme';
 import ReactResizeDetector from 'react-resize-detector';
+import { roomsFiltersOne } from '../../actions/filters';
+const store = Store;
 
 const Desktop = props => <Responsive {...props} minWidth={992} />;
 const Tablet = props => <Responsive {...props} minWidth={768} maxWidth={991} />;
@@ -121,7 +123,12 @@ let currentPage = 1;
 let roomsPerPage = 6;
 let nextDate = '';
 let previousDate = '';
+let roomFilter = '';
+let navSelected;
+let database = firebase.database();
 
+
+let counter = 0;
 class RoomPosts extends Component {
     constructor() {
         super();
@@ -129,112 +136,138 @@ class RoomPosts extends Component {
             roomsLoaded:false,
             lastRoom:'',
             firstRoom:'',
-            commmunitiesFilter:{},
-            filters:{},
-            roomFilters:{},
             mobile:false,
             lastRoomNum:'',
-            isAllRes:false,
-            isTable:false,
-            isDesktop:false,
-            isLive:false,
-            isRemixable:'',
-            isAI:false,
-            isVR:false,
-            is360:false,
-            isProduction:false,
-            isUnlisted:false,
-            isPrivate:false,
-            isWeb:false,
-            isNative:false,
-            isWebNative:false,
-            rooms:[]
+            rooms:[],
+            filter:'weight'
         }
+        this.selection = this.selection.bind(this)
     }
     componentDidMount() {
 
- 
-
-        let database = firebase.database();
-        let that = this;
-        let store = Store;
-        let counter = 0;
+      
+      
         
-                database.ref('rooms').orderByChild('date').limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
-
-                    snapshot.forEach((childSnapShot) => {
-                        counter++;
-                       
-                        if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
-                          if(counter == 1) {
-                            nextDate = childSnapShot.val().date;
-                          
-                            console.log('rooms: next date', childSnapShot.val().shortID + ' ',  nextDate);
-                          } else {
-                            if(counter == roomsPerPage + 1) {
-                              previousDate = childSnapShot.val().date;
-                              console.log('rooms: previous date', childSnapShot.val().shortID + ' ', previousDate);
-                            }
-                           let tagsArray = [];
-                            if(childSnapShot.val().tags !== undefined) {
-                              Object.keys(childSnapShot.val().tags).forEach((key) => {
-                                tagsArray.push(childSnapShot.val().tags[key].text);
-                              });
-                            } 
-                            console.log('room height :', childSnapShot.val().room_card_height)
-                            rooms.unshift({
-                                id:childSnapShot.key,
-                                date:childSnapShot.val().date,
-                                isAR:childSnapShot.val().isAR,
-                                isDevelopmental:childSnapShot.val().isDevelopmental,
-                                is360:childSnapShot.val().is360,
-                                isAI:childSnapShot.val().isAI,
-                                isDesktop:childSnapShot.val().isDesktop,
-                                isDeveloper:childSnapShot.val().isDeveloper,
-                                isLive:childSnapShot.val().isLive,
-                                isLocked:childSnapShot.val().isLocked,
-                                isMobile:childSnapShot.val().isMobile,
-                                isNSFW:childSnapShot.val().isNSFW,
-                                isVR:childSnapShot.val().isVR,
-                                pic:childSnapShot.val().pic,
-                                views:childSnapShot.val().views,
-                                commentsCount:childSnapShot.val().commentsCount,
-                                likes:childSnapShot.val().likes,
-                                description:childSnapShot.val().description,
-                                objectNum:childSnapShot.val().objectNum,
-                                postedPicURL:childSnapShot.val().postedPicURL,
-                                isRemixable:childSnapShot.val().isRemixable,
-                                roomType:childSnapShot.val().roomType,
-                                username:childSnapShot.val().userName,
-                                shortID:childSnapShot.val().shortID,
-                                room_title:childSnapShot.val().room_title,
-                                tags:tagsArray,
-                                room_card_height:childSnapShot.val().room_card_height !== '' ? parseInt(childSnapShot.val().room_card_height):246,
-                                ...childSnapShot
-                            });
+        
+          
+         console.log('filters :', this.state.filter)
+       
+        
+       this.loadRooms()
+       
+        
+        
 
 
-                          }
-                        
-                    }
-
-
-                    });
-                    console.log('rooms: loading',rooms)
-                    
-                    that.setState({rooms:rooms})
-                    that.setState({roomsLoaded:true});
-                  
-                    rooms = [];
-                    
-               });
-           
-
-
-        store.dispatch({type:'SAVE_DHTML', html:'',css:'',js:''});
+        //store.dispatch({type:'SAVE_DHTML', html:'',css:'',js:''});
 
 
     }
+    loadRooms() {
+      console.log('rooms loaded:' )
+      let that = this;
+      database.ref('rooms').orderByChild(this.state.filter).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
+
+        snapshot.forEach((childSnapShot) => {
+            counter++;
+           
+            if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
+              if(counter == 1) {
+                nextDate = childSnapShot.val().date;
+              
+                console.log('rooms: next date', childSnapShot.val().shortID + ' ',  nextDate);
+              } else {
+                if(counter == roomsPerPage + 1) {
+                  previousDate = childSnapShot.val().date;
+                  console.log('rooms: previous date', childSnapShot.val().shortID + ' ', previousDate);
+                }
+               let tagsArray = [];
+                if(childSnapShot.val().tags !== undefined) {
+                  Object.keys(childSnapShot.val().tags).forEach((key) => {
+                    tagsArray.push(childSnapShot.val().tags[key].text);
+                  });
+                } 
+                console.log('room height :', childSnapShot.val().room_card_height)
+                rooms.unshift({
+                    id:childSnapShot.key,
+                    date:childSnapShot.val().date,
+                    isAR:childSnapShot.val().isAR,
+                    isDevelopmental:childSnapShot.val().isDevelopmental,
+                    is360:childSnapShot.val().is360,
+                    isAI:childSnapShot.val().isAI,
+                    isDesktop:childSnapShot.val().isDesktop,
+                    isDeveloper:childSnapShot.val().isDeveloper,
+                    isLive:childSnapShot.val().isLive,
+                    isLocked:childSnapShot.val().isLocked,
+                    isMobile:childSnapShot.val().isMobile,
+                    isNSFW:childSnapShot.val().isNSFW,
+                    isVR:childSnapShot.val().isVR,
+                    pic:childSnapShot.val().pic,
+                    views:childSnapShot.val().views,
+                    commentsCount:childSnapShot.val().commentsCount,
+                    likes:childSnapShot.val().likes,
+                    description:childSnapShot.val().description,
+                    objectNum:childSnapShot.val().objectNum,
+                    postedPicURL:childSnapShot.val().postedPicURL,
+                    isRemixable:childSnapShot.val().isRemixable,
+                    roomType:childSnapShot.val().roomType,
+                    username:childSnapShot.val().userName,
+                    shortID:childSnapShot.val().shortID,
+                    room_title:childSnapShot.val().room_title,
+                    tags:tagsArray,
+                    room_card_height:childSnapShot.val().room_card_height !== '' && !isNaN(childSnapShot.val().room_card_height) ? parseInt(childSnapShot.val().room_card_height):246,
+                    ...childSnapShot
+                });
+
+
+              }
+            
+        }
+
+
+        });
+        console.log('rooms: loading',rooms)
+        
+        that.setState({rooms:rooms})
+        that.setState({roomsLoaded:true});
+      
+        rooms = [];
+        
+      });
+
+    }
+getSearchFromFilter(id) {
+      switch(id) {
+          case 'featured':
+              return 'weight';
+          case 'trending':
+              return 'likes';
+          case 'recent':
+              return 'date';
+          default: 
+              return 'date';
+      }
+  }
+  selection(id) {
+      document.getElementById(id).className = 'selected';
+     let getSelected = document.getElementsByClassName('selected');
+    
+     for(let i = 0; i < getSelected.length; i++) {
+         if(getSelected[i].id !== id) {
+            
+             getSelected[i].className = '';
+         } else {
+          
+            getSelected[i].className = 'selected';
+         }
+     }
+     console.log('search filters :', this.getSearchFromFilter(id))
+     
+      this.setState({filter:this.getSearchFromFilter(id)});
+      this.loadRooms();
+      
+
+  }
     openModal(post = true) {
       this.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles:{
         overlay: {
@@ -283,7 +316,7 @@ class RoomPosts extends Component {
         let that = this;
         let counter = 0;
         
-        database.ref('categorizations/Regular').orderByChild('date').startAt(previousDate).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
+        database.ref('categorizations/Regular').orderByChild(this.props.state.filter).startAt(previousDate).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
         
          
            snapshot.forEach((childSnapShot) => {
@@ -369,7 +402,7 @@ class RoomPosts extends Component {
         let database = firebase.database();
         let that = this;
         let counter = 0;
-        database.ref('categorizations/Regular/').orderByChild('date').limitToLast(roomsPerPage + 1).endAt(nextDate).once('value').then((snapshot) => {
+        database.ref('categorizations/Regular/').orderByChild(this.props.state.filter).limitToLast(roomsPerPage + 1).endAt(nextDate).once('value').then((snapshot) => {
           if(snapshot.length == 0) {
             return;
           }  
@@ -460,7 +493,45 @@ class RoomPosts extends Component {
                         <section style={{flex:1}}>
                             <div className="main" style={{flex:1}}>
                                 <div style={{display:'flex', flex:1, flexWrap:'wrap', justifyContent:'space-between', margin:'20px 0px 20px auto',fontSize:'16px'}}>
-                                    <Nav/>
+                                <nav className="main-nav">
+                    <ul id="nav-lists">
+                        <li id="featured" className="selected" onClick={()=>{
+                           this.selection('featured');
+
+                        }} style={{ textDecoration: 'none', color:'#979AA1' }} >Featured</li> 
+                        <li id="trending" onClick={()=> {
+                            this.selection('trending')
+                            }} style={{ textDecoration: 'none', color:'#979AA1' }}  activeClassName="is-active">Trending</li>
+                        <li id="recent" onClick={()=> {
+                            this.selection('recent')
+                            }} style={{ textDecoration: 'none', color:'#979AA1' }}  activeClassName="is-active">Recent</li> 
+                              
+                        {/* <li id="popular" onClick={()=>{
+                            this.selection('popular');
+                            
+                        }} style={{ textDecoration: 'none', color:'#979AA1' }} >Popular</li> */}
+                        
+                        {/* <li id="random" onClick={()=>{
+                            this.selection('random')
+                        }} style={{ textDecoration: 'none', color:'#979AA1' }} >Random</li> 
+                        <li id="recent" onClick={()=>{
+                            this.selection('recent')
+                        }} style={{ textDecoration: 'none', color:'#979AA1' }} >Recent</li>
+                        <li id="myrooms" onClick={()=>{
+                            this.selection('myrooms')
+                        }} style={{ textDecoration: 'none', color:'#979AA1' }} >My Rooms</li> 
+                        <li id="favorited" onClick={()=>{
+                            this.selection('favorited')
+                        }} style={{ textDecoration: 'none', color:'#979AA1' }} >Favorited</li> 
+                        <li id="followers" onClick={()=>{
+                            this.selection('followers')
+                        }} style={{ textDecoration: 'none', color:'#979AA1' }} >Followers</li>
+                         <li id="following" onClick={()=>{
+                            this.selection('following')
+                        }} style={{ textDecoration: 'none', color:'#979AA1' }} >Following</li>   */}
+                    </ul>
+                     {/* <a href="" className="drop-down-arrow my-communities-down-3x"></a>  */}
+                </nav>
                                     <RoomFilters/>
                                 </div>
                                 <div style={{position:'relative'}}>
@@ -587,7 +658,8 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 
-const ConnectedRoomPosts = connect(undefined)(RoomPosts)
+
+const ConnectedRoomPosts = connect(mapStateToProps)(RoomPosts)
 
 //export default sizeMe()(ConnectedRoomPosts);
 export default ConnectedRoomPosts;

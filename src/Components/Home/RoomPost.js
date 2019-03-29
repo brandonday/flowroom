@@ -390,14 +390,13 @@ class RoomPost extends Component {
 
 
                 <div id="description-text" style={{
-  display:'-webkit-box',
+
   maxWidth:'100%',
   height:'auto',
   margin:'0 auto',
   fontSize:'14px',
   lineHeight:'1',
-  webkitLineClamp:'2',
-  webkitBoxOrient:'vertical',
+ 
   overflow:'hidden',
   color:'white'
     }}>

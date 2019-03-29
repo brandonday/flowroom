@@ -18,48 +18,48 @@ class Communities extends Component {
 
     componentDidMount() {
 
-        let database = firebase.database();
-        let that = this;
-        database.ref('Communities').orderByChild('date').limitToFirst(10).once('value').then((snapshot) => {
-        if(communities.length < 10) {
-            snapshot.forEach((childSnapShot) => {
-                if (communities.indexOf({community:childSnapShot.val().community})==-1)  {
-                    communities.push({
-                        id:childSnapShot.key,
-                        date:childSnapShot.val().date,
-                        shortTitle:childSnapShot.val().shortTitle,
-                        sidebarText:childSnapShot.val().SideBarText,
-                        community:childSnapShot.val().community,
-                        ...childSnapShot
-                    });
-                }
+        // let database = firebase.database();
+        // let that = this;
+        // database.ref('Communities').orderByChild('date').limitToFirst(10).once('value').then((snapshot) => {
+        // if(communities.length < 10) {
+        //     snapshot.forEach((childSnapShot) => {
+        //         if (communities.indexOf({community:childSnapShot.val().community})==-1)  {
+        //             communities.push({
+        //                 id:childSnapShot.key,
+        //                 date:childSnapShot.val().date,
+        //                 shortTitle:childSnapShot.val().shortTitle,
+        //                 sidebarText:childSnapShot.val().SideBarText,
+        //                 community:childSnapShot.val().community,
+        //                 ...childSnapShot
+        //             });
+        //         }
 
 
-            });
-        }
+        //     });
+        // }
 
-            let lastcom = communities.length;
-            console.log('last room', communities[lastcom - 1])
-            //this.setState({lastcom:lastcom});
+        //     let lastcom = communities.length;
+        //     console.log('last room', communities[lastcom - 1])
+        //     //this.setState({lastcom:lastcom});
 
-           //communities = [];
+        //    //communities = [];
 
-           //alert(communities)
-        });
+        //    //alert(communities)
+        // });
 
     }
 
     selectCommunity = (i) => {
-        let elID = i;
-        document.getElementById(elID).className = 'selected';
-        let classElements = document.getElementsByClassName('selected');
-        console.log(classElements)
-        for(i = 0; i < classElements.length; i++) {
-            if(elID != classElements[i].id) {
-                classElements[i].className = '';
-            }
-        }
-        this.props.filterSelection({communitySelected:elID});
+        // let elID = i;
+        // document.getElementById(elID).className = 'selected';
+        // let classElements = document.getElementsByClassName('selected');
+        // console.log(classElements)
+        // for(i = 0; i < classElements.length; i++) {
+        //     if(elID != classElements[i].id) {
+        //         classElements[i].className = '';
+        //     }
+        // }
+        // this.props.filterSelection({communitySelected:elID});
     }
     onResize() {
 

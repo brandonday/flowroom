@@ -49,131 +49,131 @@ class RoomFilters extends Component {
    
     selection(key) {
         
-      if (key === 'mobile') {
-            if (this.state.mobile != true) {
-                document.getElementById('Mobile').style.color = 'green';
-                mobile = true;
-                this.setState({mobile:true});
-            } else {
-                document.getElementById('Mobile').style.color = '';
-                mobile = false;
-                this.setState({mobile:false});
-            }
+    //   if (key === 'mobile') {
+    //         if (this.state.mobile != true) {
+    //             document.getElementById('Mobile').style.color = 'green';
+    //             mobile = true;
+    //             this.setState({mobile:true});
+    //         } else {
+    //             document.getElementById('Mobile').style.color = '';
+    //             mobile = false;
+    //             this.setState({mobile:false});
+    //         }
             
-        } 
-        if (key === 'tablet') {
-            if (this.state.tablet != true) {
-                document.getElementById('Tablet').style.color = 'green';
-                tablet = true;
-                this.setState({tablet:true});
-            } else {
-                document.getElementById('Tablet').style.color = '';
-                tablet = false;
-                this.setState({tablet:false});
-            }
+    //     } 
+    //     if (key === 'tablet') {
+    //         if (this.state.tablet != true) {
+    //             document.getElementById('Tablet').style.color = 'green';
+    //             tablet = true;
+    //             this.setState({tablet:true});
+    //         } else {
+    //             document.getElementById('Tablet').style.color = '';
+    //             tablet = false;
+    //             this.setState({tablet:false});
+    //         }
 
-        } 
+    //     } 
         
-        if (key === 'desktop') {
-            if (this.state.desktop != true) {
-                document.getElementById('Desktop').style.color = 'green';
-                desktop = true;
-                this.setState({desktop:true});
-            } else {
-                document.getElementById('Desktop').style.color = '';
-                desktop = false;
-                this.setState({desktop:false});
-            }
+    //     if (key === 'desktop') {
+    //         if (this.state.desktop != true) {
+    //             document.getElementById('Desktop').style.color = 'green';
+    //             desktop = true;
+    //             this.setState({desktop:true});
+    //         } else {
+    //             document.getElementById('Desktop').style.color = '';
+    //             desktop = false;
+    //             this.setState({desktop:false});
+    //         }
 
-        } 
+    //     } 
         
-        if (key === 'liveYes') {
+    //     if (key === 'liveYes') {
             
-            if (this.state.live != true) {
-                document.getElementById('liveYes').style.color = 'green';
-                live = true;
-                this.setState({live:true});
-            } else {
-                document.getElementById('liveYes').style.color = '';
-                live = false;
-                this.setState({live:false});
-            }
+    //         if (this.state.live != true) {
+    //             document.getElementById('liveYes').style.color = 'green';
+    //             live = true;
+    //             this.setState({live:true});
+    //         } else {
+    //             document.getElementById('liveYes').style.color = '';
+    //             live = false;
+    //             this.setState({live:false});
+    //         }
 
 
-        } 
+    //     } 
         
-        if (key === 'remixableYes') {
+    //     if (key === 'remixableYes') {
 
-            if (this.state.remixable != true) {
-                document.getElementById('remixableYes').style.color = 'green';
-                remixable = true;
-                this.setState({remixable:true});
-            } else {
-                document.getElementById('remixableYes').style.color = '';
-                remixable = false;
-                this.setState({remixable:false});
-            }
-        } 
-        if (key === 'aiYes') {
-            if (this.state.aiType != true) {
-                document.getElementById('AIYes').style.color = 'green';
-                aiType = true;
-                this.setState({aiType:true});
-            } else {
-                document.getElementById('AIYes').style.color = '';
-                aiType = false;
-                this.setState({aiType:false});
-            }
-        }
+    //         if (this.state.remixable != true) {
+    //             document.getElementById('remixableYes').style.color = 'green';
+    //             remixable = true;
+    //             this.setState({remixable:true});
+    //         } else {
+    //             document.getElementById('remixableYes').style.color = '';
+    //             remixable = false;
+    //             this.setState({remixable:false});
+    //         }
+    //     } 
+    //     if (key === 'aiYes') {
+    //         if (this.state.aiType != true) {
+    //             document.getElementById('AIYes').style.color = 'green';
+    //             aiType = true;
+    //             this.setState({aiType:true});
+    //         } else {
+    //             document.getElementById('AIYes').style.color = '';
+    //             aiType = false;
+    //             this.setState({aiType:false});
+    //         }
+    //     }
     
 
-        if (key === 'ar') {
-            if (this.state.arType != true) {
-                document.getElementById('AR').style.color = 'green';
-                arType = true;
-                this.setState({arType:true});
-            } else {
-                document.getElementById('AR').style.color = '';
-                arType = false;
-                this.setState({arType:false});
-            }
-        }  else if (key === 'vr') {
-            if (this.state.vrType != true) {
-                document.getElementById('VR').style.color = 'green';
-                vrType = true;
-                this.setState({vrType:true});
-            } else {
-                document.getElementById('VR').style.color = '';
-                vrType = false;
-                this.setState({vrType:false});
-            }
+    //     if (key === 'ar') {
+    //         if (this.state.arType != true) {
+    //             document.getElementById('AR').style.color = 'green';
+    //             arType = true;
+    //             this.setState({arType:true});
+    //         } else {
+    //             document.getElementById('AR').style.color = '';
+    //             arType = false;
+    //             this.setState({arType:false});
+    //         }
+    //     }  else if (key === 'vr') {
+    //         if (this.state.vrType != true) {
+    //             document.getElementById('VR').style.color = 'green';
+    //             vrType = true;
+    //             this.setState({vrType:true});
+    //         } else {
+    //             document.getElementById('VR').style.color = '';
+    //             vrType = false;
+    //             this.setState({vrType:false});
+    //         }
 
-        } else if (key === '360') {
+    //     } else if (key === '360') {
 
-            if (this.state.three60Type != true) {
-                document.getElementById('three60').style.color = 'green';
-                three60Type = true;
-                this.setState({three60Type:true});
-            } else {
-                document.getElementById('three60').style.color = '';
-                three60Type = false;
-                this.setState({three60Type:false});
-            }
+    //         if (this.state.three60Type != true) {
+    //             document.getElementById('three60').style.color = 'green';
+    //             three60Type = true;
+    //             this.setState({three60Type:true});
+    //         } else {
+    //             document.getElementById('three60').style.color = '';
+    //             three60Type = false;
+    //             this.setState({three60Type:false});
+    //         }
 
-        } 
+    //     } 
          
 
-        this.props.filterSelection({
-            mobile:mobile,
-            tablet:tablet,
-            desktop:desktop,
-            live:live,
-            remixable:remixable,
-            ai:aiType,
-            ar:arType,
-            vr:vrType,
-            three60:three60Type
-        });
+    //     this.props.filterSelection({
+    //         mobile:mobile,
+    //         tablet:tablet,
+    //         desktop:desktop,
+    //         live:live,
+    //         remixable:remixable,
+    //         ai:aiType,
+    //         ar:arType,
+    //         vr:vrType,
+    //         three60:three60Type
+    //     });
 
     }
     render() {

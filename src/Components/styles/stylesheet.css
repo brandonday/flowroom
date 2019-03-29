@@ -433,7 +433,10 @@ body {
   color:#474747;
 }
 
-
+.selected {
+  border-bottom: 2px solid white;
+  padding-bottom: 5px;
+}
 
 @media (max-width: 830px) {
     .header {
