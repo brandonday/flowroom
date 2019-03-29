@@ -96,8 +96,9 @@ const jsx = (
 //     //store.dispatch(updateEditor({before:before}));
 
 // }
-let hasRendered = false;
-const renderApp = () => {
+let hasRenderedRoot = false;
+let hasRenderedHeader = false;
+const renderApp = (id, hasRendered) => {
   /*conditional here. if path is / or any path names then*/
   /*are params just easy way get whats after the forward slash
   and didnt page rely on firebase checking users anyway*/
@@ -130,7 +131,7 @@ const renderApp = () => {
 //   } else {
 
     if(hasRendered === false) {
-        ReactDOM.render([jsx], document.getElementById('root'));
+        ReactDOM.render([jsx], document.getElementById(id));
         hasRendered = true;
      }
 
@@ -140,23 +141,23 @@ const renderApp = () => {
 
         //render normal showing Profile componenet
 
-//renderApp();
+renderApp('root', hasRenderedRoot);
 firebase.auth().onAuthStateChanged((user)=> {
     console.log("firebase.auth user: ",user);
     if(user) {
-        if(hasRendered === false) {
-            renderApp();
-            hasRendered = true;
+        if(hasRenderedHeader === false) {
+            renderApp('header', hasRenderedHeader);
+            hasRenderedHeader = true;
          }
         //history.push('/');
         store.dispatch(isLoggedIn({isLoggedIn:true}));
         store.dispatch(userStore({username:user.displayName}));
     } else {
         //hasRendered = false;
-        store.dispatch(logout());
-        if(hasRendered === false) {
-            renderApp();
-            hasRendered = true;
+        //store.dispatch(logout());
+        if(hasRenderedHeader === false) {
+            renderApp('header', hasRenderedHeader);
+            hasRenderedHeader = true;
         }
         // TODO: error message
         store.dispatch(userStore({username:null}));

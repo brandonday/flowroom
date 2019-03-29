@@ -28,23 +28,23 @@ const unsubscribe = store.subscribe(()=>{
 });
 
 
-store.dispatch({
-    type:'INCREMENT'
-});
+// store.dispatch({
+//     type:'INCREMENT'
+// });
 
-unsubscribe();
+// unsubscribe();
 
-store.dispatch({
-    type:'INCREMENT'
-});
+// store.dispatch({
+//     type:'INCREMENT'
+// });
 
-store.dispatch({
-    type: 'RESET'
-});
+// store.dispatch({
+//     type: 'RESET'
+// });
 
-store.dispatch({
-    type:'DECREMENT'
-});
+// store.dispatch({
+//     type:'DECREMENT'
+// });
 
 }
 

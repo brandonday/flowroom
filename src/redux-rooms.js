@@ -11,14 +11,3 @@ import uuid from 'uuid';
 
 
 
-store.subscribe(() => {
-    console.log(store.getState());
-});
-
-const roomOne = store.dispatch(createRoom({description:'sss'}))
-const roomTwo = store.dispatch(createRoom({description:'sddsds'}))
-
-store.dispatch(removeRoom({id: roomOne.room.id}));
-
-
-store.dispatch(setTextFilter('funny'))

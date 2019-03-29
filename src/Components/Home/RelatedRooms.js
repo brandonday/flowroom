@@ -440,7 +440,7 @@ class RelatedRooms extends Component {
 
 
         // });
-        store.dispatch({type:'SAVE_DHTML', html:'',css:'',js:''});
+       // store.dispatch({type:'SAVE_DHTML', html:'',css:'',js:''});
 
 
     }
