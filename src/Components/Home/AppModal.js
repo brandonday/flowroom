@@ -15,6 +15,7 @@ import { WithContext as ReactTags } from 'react-tag-input';
 import FileUploader from "react-firebase-file-uploader";
 import Convo from './Convo';
 import SignUp from './SignUp';
+import { snap } from '@popmotion/popcorn';
 
 var moment = require('moment');
 
@@ -189,7 +190,8 @@ const KeyCodes = {
             room_title:'',
             shortID:'',
             showSignInSignUp:false,
-            cardHeight:0
+            room_card_height:246,
+            room_aspect_ratio:1.3
 
       }
 
@@ -245,31 +247,40 @@ const KeyCodes = {
         let that = this;
         if (user != null) {
             name = user.displayName;
-            that.setState({username:name});
             email = user.email;
             photoUrl = user.photoURL;
+            console.log('photo :',photoUrl)
             emailVerified = user.emailVerified;
             fullname = user.fullname;
             uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
                      // this value to authenticate with your backend server, if
                      // you have one. Use User.getToken() instead.
-            that.setState({picForMessage:photoUrl, fullname:fullname});
+
             database.ref(`/follows/${name}/following`).once('value').then((snapshot) => {
                 snapshot.forEach((childSnapShot) => {
                     names.push({id:`${childSnapShot.val()}`,text:`${childSnapShot.val()}`});
                 })
-                this.setState({suggestionNamesTags:names, myusername:name})
-                console.log(this.state.suggestionNamesTags);
+                that.setState({username:name, 
+                    pic:photoUrl, 
+                    fullname:fullname,
+                    suggestionNamesTags:names, 
+                    myusername:name
+                });
 
             });
 
             
            database.ref(`rooms/${shortID}`).once('value').then(function(snapshot) {
-        
-        
-                that.setState({room_title:snapshot.val() !== null ? snapshot.val().room_title :'',
-                description:snapshot.val() !== null ? snapshot.val().description : ''});
-
+                
+                if(snapshot.val() == null) {
+                    return;
+                }
+                that.setState({room_title:snapshot.val().room_title,
+                description:snapshot.val().description, 
+                tags:snapshot.val().tags,
+                room_card_height:snapshot.val().room_card_height
+                });
+                
             });
 
         }
@@ -300,7 +311,7 @@ const KeyCodes = {
                 html:this.props.state.dhtml.dhtml.html,
                 css:this.props.state.dhtml.dhtml.css,
                 js:this.props.state.dhtml.dhtml.js,
-                pic:'',
+                pic:this.state.pic,
                 objectNum:'',
                 date: new Date(),
                 filterGroup:'',
@@ -367,8 +378,8 @@ const KeyCodes = {
                 real_time:[],
                 data:[],
                 room_title:this.state.room_title,
-                room_card_height:this.state.cardHeight,
-               
+                room_aspect_ratio:this.state.room_aspect_ratio,
+                room_card_height:this.state.room_card_height
 
         });
         document.getElementById('postbtn').style.display = 'none';
@@ -421,8 +432,11 @@ const KeyCodes = {
             <p className="signup-section-log-in-here-p">Log in here</p>
         )
     }
+    handleCardAspectRatio(e) {
+        this.setState({room_aspect_ratio: e.target.value});
+    }
     handleCardHeight(e) {
-        this.setState({cardHeight: e.target.value});
+        this.setState({room_card_height: e.target.value});
     }
     selectPr = (i) => {
         if(i !== null) {
@@ -716,7 +730,7 @@ const KeyCodes = {
                         marginBottom:20,
                         display:this.state.descriptionD
                     }} value={this.state.description} onChange={this.descriptionhandleChange} placeholder={this.state.placeholder}></textarea>
-                     <p style={{marginTop:10, marginBottom:10}}>Tags (Optional)</p>
+                     <p style={{marginTop:10, marginBottom:10}}>Tags</p>
                      <ReactTags style={{marginBottom:10}} tags={this.state.tags}
                         suggestions={this.state.suggestionsTags}
                         handleDelete={this.handleDeleteTags}
@@ -858,8 +872,8 @@ const KeyCodes = {
                             fontSize:'14px',
                             marginTop:20
                         }} onClick={this.saveRoom.bind(this)}>Post</button>
-                        <input onChange={this.handleCardHeight.bind(this)} id="card-height" type="number" value={this.state.cardHeight} placeholder="height"/>
-
+                        {/* <input onChange={this.handleCardAspectRatio.bind(this)} id="room_aspect_ratio" type="number" value={this.state.room_aspect_ratio} placeholder="height"/> */}
+                        <input onChange={this.handleCardHeight.bind(this)} id="room_card_height" type="number" value={this.state.room_card_height} placeholder="height"/>
                       {/* <div style={{display:'flex',border:'1px solid rgb(221, 224, 235)',listStyle:'none',marginBottom:10}}>
                         <div onClick={()=>{this.selectPr('web-btn')}} id="web-btn" className={this.state.webBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Web</p></div>
                         <div onClick={()=>{this.selectPr('native-btn')}} id="native-btn" className={this.state.nativeBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Native</p></div>

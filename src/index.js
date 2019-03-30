@@ -68,7 +68,7 @@ const Routes = () => (
             <PrivateRoute path="/login" component={Login}></PrivateRoute>
             <PrivateRoute path="/about" component={About}></PrivateRoute>
             <PrivateRoute exact path="/:id" component={ProfilePage}></PrivateRoute>
-            <EditRoute exact path="/:id/edit" component={Profile}></EditRoute>
+            <PrivateRoute exact path="/:id/edit" component={Profile}></PrivateRoute>
 
             <PrivateRoute component={NotFound}></PrivateRoute>
         </Switch>

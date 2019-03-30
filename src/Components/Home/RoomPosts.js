@@ -126,6 +126,7 @@ let previousRoomIndex = '';
 let roomFilter = 'weight';
 let navSelected;
 let database = firebase.database();
+let ROOM_ASPECT_RATIO = 1;
 class RoomPosts extends Component {
     constructor() {
         super();
@@ -231,7 +232,8 @@ class RoomPosts extends Component {
                     shortID:childSnapShot.val().shortID,
                     room_title:childSnapShot.val().room_title,
                     tags:tagsArray,
-                    room_card_height:childSnapShot.val().room_card_height !== '' && !isNaN(childSnapShot.val().room_card_height) ? parseInt(childSnapShot.val().room_card_height):246,
+                    room_aspect_ratio:childSnapShot.val().room_aspect_ratio !== '' && !isNaN(childSnapShot.val().room_aspect_ratio) ? childSnapShot.val().room_aspect_ratio : ROOM_ASPECT_RATIO,
+                    room_card_height:childSnapShot.val().room_card_height !== '' && !isNaN(childSnapShot.val().room_card_height) ? parseInt(childSnapShot.val().room_card_height) : 246,
                     ...childSnapShot
                 });
 
@@ -394,7 +396,8 @@ getSearchFromFilter(id) {
                         shortID:childSnapShot.val().shortID,
                         room_title:childSnapShot.val().room_title,
                         tags:tagsArray,
-                        room_card_height:childSnapShot.val().room_card_height !== '' ? parseInt(childSnapShot.val().room_card_height):246,
+                        room_aspect_ratio:childSnapShot.val().room_aspect_ratio !== '' ? childSnapShot.val().room_aspect_ratio :ROOM_ASPECT_RATIO,
+                        room_card_height:childSnapShot.val().room_card_height !== '' && !isNaN(childSnapShot.val().room_card_height) ? parseInt(childSnapShot.val().room_card_height) : 246,
                         ...childSnapShot
                     });
 
@@ -494,7 +497,8 @@ getSearchFromFilter(id) {
                             shortID:childSnapShot.val().shortID,
                             room_title:childSnapShot.val().room_title,
                             tags:tagsArray,
-                            room_card_height:childSnapShot.val().room_card_height !== '' ? parseInt(childSnapShot.val().room_card_height):246,
+                            room_aspect_ratio:childSnapShot.val().room_aspect_ratio !== '' ? childSnapShot.val().room_aspect_ratio:ROOM_ASPECT_RATIO,
+                            room_card_height:childSnapShot.val().room_card_height !== '' && !isNaN(childSnapShot.val().room_card_height) ? parseInt(childSnapShot.val().room_card_height) : 246,
                         ...childSnapShot
                     });
                   }

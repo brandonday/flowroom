@@ -607,8 +607,7 @@ class ProfilePage extends Component {
                                 backgroundImage:`url(${this.state.pic})`,
                                 backgroundRepeat:'no-repeat',
                                 backgroundSize:'cover',
-
-                                
+                                backgroundPosition:'center'
                                 }}>
                             </div>
                         </div>

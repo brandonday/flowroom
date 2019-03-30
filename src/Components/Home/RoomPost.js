@@ -26,13 +26,14 @@ class RoomPost extends Component {
             dElem:'',
             showMoreTag:false,
             tags:[],
-            tagColor:''
+            tagColor:'',
+            likes:''
         }
     }
     componentDidMount() {
    
             
-
+        this.setState({likes:this.getNumberToString(this.props.likes)})
         let tags = this.props.tags;
         this.setState({likes:this.props.likes});
         tagsLengthArray = [];
@@ -212,7 +213,14 @@ class RoomPost extends Component {
                             marginTop:10,
                             marginLeft:'9px',
                             position:'relative'}}>
-                            <div style={{height:'40px',width:'40px',borderRadius:30,backgroundColor:'black', backgroundImage:`url(${this.props.pic})`, marginRight:'10px'}}></div>
+                            <div style={{height:'40px',
+                                width:'40px',
+                                borderRadius:30,
+                                backgroundColor:'black', 
+                                backgroundImage:`url(${this.props.pic})`, 
+                                backgroundSize:'cover',
+                                backgroundPosition:'center',
+                                marginRight:'10px'}}></div>
                             <div style={{display:'flex',flexDirection:'column'}}>
                             <p className="room-card-title" style={{color:'white'}}>{this.props.room_title}</p>
 
@@ -312,7 +320,7 @@ class RoomPost extends Component {
                 height:'auto'
             }}>
 
-                <div style={{height:this.props.roomType === 'image'? '100%':'78%',
+                <div style={{
                     background:'#F9F9F9',
                     overflow:'hidden',
                     position:'relative',
@@ -360,7 +368,7 @@ class RoomPost extends Component {
                                 });
                                
                             }} style={{fontSize:13, color:'white',marginRight:6.5}}></i>
-                                <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.getNumberToString(this.props.likes)}</p>
+                                <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.state.likes}</p>
                             </div>
                             <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',flexDirection:'row',height:'37px',marginRight:'18px'}}>
                             <i className="far fa-comment-alt" style={{fontSize:13, color:'white',marginRight:6.5}}></i>

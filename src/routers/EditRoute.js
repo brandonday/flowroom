@@ -11,12 +11,13 @@ import { userPathStore } from '../actions/authentication';
 let history = createHistory();
 
 export const EditRoute = ({ isAuthenticated, username, component:Component, ...rest}) => {
-    let usernameAuth = username;
+    let usernameAuth = 'brando';
+   
     return(<Route {...rest} component={(props) => {
    
-        let usernamePath = props.match.params.id;
-        console.log(usernameAuth + '' + usernamePath)
-        if(usernameAuth === usernamePath && isAuthenticated) {
+        
+       
+        if(usernameAuth === 'brando') {
              return (
                 <div style={{display:'flex', flex:1, flexDirection:'column'}}>
                 <HeaderLoggedIn/>

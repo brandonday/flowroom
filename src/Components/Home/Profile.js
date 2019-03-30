@@ -1,9 +1,36 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
+import { firebase } from '../firebase/firebase';
 
- const Profile = () => (
-    <div style={{flex:'1',display:'flex'}}>
-        <div className="main-section-wrap-community-screen" style={{padding:'31px 73px 30px'}}>
+  class Profile extends Component {
+      constructor() {
+        super();
+        this.state = {
+            pic:'',
+            bio:'',
+            name:'',
+            email:''
+        }
+      }
+      componentDidMount() {
+        this.getProfileInfo()
+      }
+      getProfileInfo(myusername) {
+        let that = this;
+        let name = this.props.match.params.id.toLowerCase();
+        
+        let ref = firebase.database().ref(`users/${name}`);
+        ref.once("value")
+          .then((snapshot) => {
+            console.log('snapshot :',snapshot.val())
+            that.setState({pic:snapshot.val().pic});
+
+          });
+        } 
+      render() {
+
+        return(<div style={{flex:'1',display:'flex'}}>
+            <div className="main-section-wrap-community-screen" style={{padding:'31px 73px 30px'}}>
             <div style={{
                 width:'100%',
                 /* max-width: 600px; */
@@ -26,7 +53,18 @@ import {Link} from 'react-router-dom';
                 flex:'1 1',
                 padding:'31px 16px 26px'
             }}>
-                <div style={{height:'100px', width:'100px', backgroundColor:'orange', borderRadius:'50px', marginBottom:'20px'}}></div>
+                <div style={{height:'100px', 
+                    width:'100px', 
+                    backgroundColor:'grey', 
+                    borderRadius:'50px', 
+                    marginBottom:'20px',
+                    backgroundImage:`url(${this.state.pic})`,
+                    backgroundSize:'cover',
+                    backgroundRepeat:'no-repeat',
+                    backgroundPosition:'center'
+                }}>
+                
+                </div>
                 <div style={{width:'500px',
                     maxWidth:'500px',
                     justifyContent:'center',
@@ -63,11 +101,9 @@ import {Link} from 'react-router-dom';
                         </div>
                         <div style={{display:'flex', justifyContent:'space-between', flexDirection:'row', marginBottom:'5px', marginTop:'18px', width:'100%'}}>
                             <div style={{display:'flex', flexDirection:'column',marginTop:'7px', width:'100%', marginRight:25}}>
-                                <input id="username" type="text" className="signup-section-input-field" style={{height:35}} placeholder="Name"/>
+                                <input id="fullname" type="text" className="signup-section-input-field" style={{height:35}} placeholder="Full Name"/>
                             </div>
-                            <div style={{display:'flex', flexDirection:'column', marginTop:'7px', width:'100%',marginLeft:25}}>
-                                <input id="location" type="text" className="signup-section-input-field" style={{height:35}} placeholder="Email"/>
-                            </div>
+                           
                         </div>
                         <div style={{width:'100%'}}>
                             <textarea className="community-side-bar-text" style={{height:'100px',width:'100%',resize:'none'}} placeholder="Enter a bio here..."/>
@@ -90,7 +126,8 @@ import {Link} from 'react-router-dom';
                 </div>
             </div>
         </div>
-    </div>
-)
+    </div>)
+      }
+                        }
 
 export default Profile;

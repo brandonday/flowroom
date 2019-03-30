@@ -90,6 +90,7 @@ export const startCreateRoom = (roomData = {}) => {
             real_time = [],
             data = [],
             room_title = '',
+            room_aspect_ratio = '',
             room_card_height = ''
         } = roomData;
 
@@ -166,6 +167,7 @@ export const startCreateRoom = (roomData = {}) => {
             real_time,
             data,
             room_title,
+            room_aspect_ratio,
             room_card_height
         }
       

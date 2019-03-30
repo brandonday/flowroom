@@ -1043,7 +1043,7 @@ class RoomMain extends Component {
                                 <button id="deletebtn" onClick={()=>{
                                      let currentRoomID = window.location.pathname.split("room/").pop();
                                      firebase.database().ref(`rooms/${currentRoomID}`).remove();
-                                     firebase.database().ref(`categorizations/Regular/${currentRoomID}`).remove();
+                                     firebase.database().ref(`UsersRooms/${currentRoomID}/${that.state.user}`).remove();
                                      firebase.database().ref(`${that.state.user}/${currentRoomID}`).remove();
                                      window.location.replace('/');
 
