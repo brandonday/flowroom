@@ -148,7 +148,7 @@ class Editor extends Component {
         };
 
         let renderDHTML = () => {
-          
+          // alert('called')
           let source = prepareSource();
           let iframe = document.querySelector('.output_frame');
           let iframe_doc = iframe.contentDocument;
@@ -231,9 +231,9 @@ class Editor extends Component {
       let isCSSREADY = false;
       let isJSREADY= false;
   
-      window.updateJSCode = function(code) {
-        JS_EDITOR.setValue(code)
-      }
+      // window.updateJSCode = function(code) {
+      //   JS_EDITOR.setValue(code)
+      // }
        
 
         HTML_EDITOR.on('change', (inst, changes) => {

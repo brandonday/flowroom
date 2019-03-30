@@ -131,8 +131,9 @@ const renderApp = (id, hasRendered) => {
 //   } else {
 
     if(hasRendered === false) {
-        ReactDOM.render([jsx], document.getElementById(id));
         hasRendered = true;
+        ReactDOM.render([jsx], document.getElementById(id));
+        
      }
 
 
@@ -146,21 +147,25 @@ firebase.auth().onAuthStateChanged((user)=> {
     console.log("firebase.auth user: ",user);
     if(user) {
         if(hasRenderedHeader === false) {
-            renderApp('header', hasRenderedHeader);
             hasRenderedHeader = true;
+            store.dispatch(isLoggedIn({isLoggedIn:true}));
+        store.dispatch(userStore({username:user.displayName}));
+            renderApp('header', hasRenderedHeader);
+            
          }
         //history.push('/');
-        store.dispatch(isLoggedIn({isLoggedIn:true}));
-        store.dispatch(userStore({username:user.displayName}));
+       
     } else {
-        //hasRendered = false;
-        //store.dispatch(logout());
+        
+        store.dispatch(logout());
         if(hasRenderedHeader === false) {
+            hasRenderedHeader = false;
+            store.dispatch(userStore({username:null}));
+            store.dispatch(isLoggedIn({isLoggedIn:false}))
             renderApp('header', hasRenderedHeader);
-            hasRenderedHeader = true;
+           
         }
         // TODO: error message
-        store.dispatch(userStore({username:null}));
-        store.dispatch(isLoggedIn({isLoggedIn:false}))
+        
     }
 });
