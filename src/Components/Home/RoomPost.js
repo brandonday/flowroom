@@ -34,17 +34,10 @@ class RoomPost extends Component {
    
             
         this.setState({likes:this.getNumberToString(this.props.likes)})
-        let tags = this.props.tags;
-        this.setState({likes:this.props.likes});
-        tagsLengthArray = [];
-        tags.map((tag)=> {
-            if(tagsLengthArray.length < this.props.numTags) {
-                tagsLengthArray.push(tag);
-            }
-        })
+       
         
-        this.setState({tags:tagsLengthArray});
-        if(tags.length > this.props.numTags) {
+        this.setState({tags:this.props.tags});
+        if(this.props.numTagsAll > this.props.numTags) {
             this.setState({showMoreTag:true});
         }
 
@@ -410,7 +403,7 @@ class RoomPost extends Component {
                 <div id="tags-area" style={{display:'flex',height:26,width:'100%',paddingLeft:'11px',marginBottom:20}}>
                             {
                           
-                            this.state.tags.map((tag)=> {
+                            this.props.tags.map((tag)=> {
                                 
                                 let tagColor;
                                 if(tagCounter === 0) {
@@ -423,7 +416,7 @@ class RoomPost extends Component {
                                     tagColor = '#C96D4E'
                                 }
                                 tagCounter++;
-                                if(tagCounter == this.state.tags.length) {
+                                if(tagCounter == this.props.tags.length) {
                                     tagCounter = 0;
                                 }
                                 

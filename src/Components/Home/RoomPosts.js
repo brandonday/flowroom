@@ -199,12 +199,7 @@ class RoomPosts extends Component {
                     previousRoomIndex = childSnapShot.val().date;
                   }
                 }
-               let tagsArray = [];
-                if(childSnapShot.val().tags !== undefined) {
-                  Object.keys(childSnapShot.val().tags).forEach((key) => {
-                    tagsArray.push(childSnapShot.val().tags[key].text);
-                  });
-                } 
+                
                 rooms.unshift({
                     id:childSnapShot.key,
                     date:childSnapShot.val().date,
@@ -231,7 +226,7 @@ class RoomPosts extends Component {
                     username:childSnapShot.val().userName,
                     shortID:childSnapShot.val().shortID,
                     room_title:childSnapShot.val().room_title,
-                    tags:tagsArray,
+                    tags:childSnapShot.val().tags,
                     room_aspect_ratio:childSnapShot.val().room_aspect_ratio !== '' && !isNaN(childSnapShot.val().room_aspect_ratio) ? childSnapShot.val().room_aspect_ratio : ROOM_ASPECT_RATIO,
                     room_card_height:childSnapShot.val().room_card_height !== '' && !isNaN(childSnapShot.val().room_card_height) ? parseInt(childSnapShot.val().room_card_height) : 246,
                     ...childSnapShot
@@ -305,10 +300,21 @@ getSearchFromFilter(id) {
         }
       }})
     }
-
+  getTagsArray(tags) {
+    let tagsArray = [];
+    if(tags !== undefined) {
+      Object.keys(tags).forEach((key) => {
+        tagsArray.push(tags[key].text);
+      });
+    } 
+      return tagsArray;
+  }
   getNumTags(tagsArray) {
-    console.log('inner width :', window.innerWidth);
+    if(tagsArray == null || tagsArray == undefined || tagsArray.length == 0 ) {
+      return 0;
+    }
      let maxLength = window.innerWidth >= 1024 ? 20 : 12;
+    try {
       if(tagsArray.length <= 1) {
         return tagsArray.length;
       } else if(tagsArray.length === 2) {
@@ -326,9 +332,38 @@ getSearchFromFilter(id) {
         } else {
           return 3;
         }   
+
+
       } 
 
+    } catch(error) {
+      console.log('error :', error);
     }
+    return 0;
+
+    }
+    getTags(tags) {
+      if(tags == null) {
+        return [];
+      }
+      console.log("tags :", tags);
+      
+      let tagsArray = this.getTagsArray(tags);
+      console.log("tagsArray :", tagsArray);
+      let numTags = this.getNumTags(tagsArray);
+      console.log("numTags :", numTags);
+     
+      let tagsLengthArray = [];
+      
+      
+      tagsArray.map((tag)=> {
+          if(tagsLengthArray.length < numTags) {
+              tagsLengthArray.push(tag);
+          }
+      });
+      return tagsLengthArray;
+    }
+
     prevPage() {
         currentPage = currentPage === 1 ? 1 : currentPage - 1;
         rooms = [];
@@ -363,12 +398,7 @@ getSearchFromFilter(id) {
                     previousRoomIndex = childSnapShot.val().date;
                   }
                 }
-                let tagsArray = [];
-                if(childSnapShot.val().tags !== undefined) {
-                  Object.keys(childSnapShot.val().tags).forEach((key) => {
-                    tagsArray.push(childSnapShot.val().tags[key].text);
-                  });
-                } 
+
                     rooms.unshift({
                         id:childSnapShot.key,
                         date:childSnapShot.val().date,
@@ -395,7 +425,7 @@ getSearchFromFilter(id) {
                         username:childSnapShot.val().userName,
                         shortID:childSnapShot.val().shortID,
                         room_title:childSnapShot.val().room_title,
-                        tags:tagsArray,
+                        tags:childSnapShot.val().tags,
                         room_aspect_ratio:childSnapShot.val().room_aspect_ratio !== '' ? childSnapShot.val().room_aspect_ratio :ROOM_ASPECT_RATIO,
                         room_card_height:childSnapShot.val().room_card_height !== '' && !isNaN(childSnapShot.val().room_card_height) ? parseInt(childSnapShot.val().room_card_height) : 246,
                         ...childSnapShot
@@ -462,14 +492,7 @@ getSearchFromFilter(id) {
                           previousRoomIndex = childSnapShot.val().date;
                         }
                       }
-                      let tagsArray = [];
-                      if(childSnapShot.val().tags !== undefined) {
-                        Object.keys(childSnapShot.val().tags).forEach((key) => {
-                          tagsArray.push(childSnapShot.val().tags[key].text);
-                        });
-                      } 
 
-                     
                         rooms.unshift({
                             id:childSnapShot.key,
                             date:childSnapShot.val().date,
@@ -496,7 +519,7 @@ getSearchFromFilter(id) {
                             username:childSnapShot.val().userName,
                             shortID:childSnapShot.val().shortID,
                             room_title:childSnapShot.val().room_title,
-                            tags:tagsArray,
+                            tags:childSnapShot.val().tags,
                             room_aspect_ratio:childSnapShot.val().room_aspect_ratio !== '' ? childSnapShot.val().room_aspect_ratio:ROOM_ASPECT_RATIO,
                             room_card_height:childSnapShot.val().room_card_height !== '' && !isNaN(childSnapShot.val().room_card_height) ? parseInt(childSnapShot.val().room_card_height) : 246,
                         ...childSnapShot
@@ -593,40 +616,7 @@ getSearchFromFilter(id) {
 
                             this.state.rooms.map((i)=> {
                               
-                              console.log('main rendered',i)
-                                // if(i.isRemixable === true) {
-                                //     return (<div><RoomPost id={i}
-                                //         description={i.description}
-                                //         isRemixable={i.isRemixable}
-                                //         postedPicURL={i.postedPicURL}
-                                //         roomType={i.roomType}
-                                //         pic={i.pic}
-                                //         roomHeight={'auto'}
-                                //         username={i.username}
-                                //         points = {i.hasOwnProperty("points") ? i.points : 0}
-                                //         views = {i.hasOwnProperty("views") ? i.views : 0}
-                                //         likes = {i.hasOwnProperty("likes") ? i.likes : 0}
-                                //         commentsCount = {i.hasOwnProperty("commentsCount") ? i.commentsCount : 0}
-                                //         key={i}
-                                //     />
-                                //     </div>)
-                                // }
-                                // if (i.roomType === 'image') {
-                                //     return (<div><RoomPost id={i}
-                                //         description={i.description}
-                                //         isRemixable={i.isRemixable}
-                                //         postedPicURL={i.postedPicURL}
-                                //         roomType={i.roomType}
-                                //         pic={i.pic}
-                                //         roomHeight={'auto'}
-                                //         username={i.username}
-                                //         points = {i.hasOwnProperty("points") ? i.points : 0}
-                                //         views = {i.hasOwnProperty("views") ? i.views : 0}
-                                //         likes = {i.hasOwnProperty("likes") ? i.likes : 0}
-                                //         commentsCount = {i.hasOwnProperty("commentsCount") ? i.commentsCount : 0}
-                                //         key={i}
-                                //     /></div>)
-                                // }
+                           
                                 if (i.roomType === 'other') {
                                   console.log('room obj: ', i);
                                     return (<div><RoomPost id={i}
@@ -635,7 +625,7 @@ getSearchFromFilter(id) {
                                         postedPicURL={i.postedPicURL}
                                         roomType={i.roomType}
                                         pic={i.pic}
-                                        roomHeight={i.room_card_height}
+                                        roomHeight={(window.innerWidth >= 1024 ? 1 : (window.innerWidth >= 768 ? 0.9 : (window.innerWidth > 320 ? 0.9 : 0.9))) * i.room_card_height}
                                         roomWidth={width}
                                         username={i.username}
                                         points = {i.hasOwnProperty("points") ? i.points : 0}
@@ -645,27 +635,12 @@ getSearchFromFilter(id) {
                                         key={i}
                                         shortID={i.shortID}
                                         room_title={i.room_title}
-                                        tags={i.tags}
-                                        numTags={this.getNumTags(i.tags)}
-                                        
+                                        tags={this.getTags(i.tags)}
+                                        numTags={this.getNumTags(this.getTagsArray(i.tags))}
+                                        numTagsAll={this.getTagsArray(i.tags).length}
                                     /></div>)
                                }
-                                // if (i.roomType === 'text') {
-                                //     return (<div><RoomPost id={i}
-                                //         description={i.description}
-                                //         isRemixable={i.isRemixable}
-                                //         postedPicURL={i.postedPicURL}
-                                //         roomType={i.roomType}
-                                //         pic={i.pic}
-                                //         roomHeight={'340px'}
-                                //         username={i.username}
-                                //         points = {i.hasOwnProperty("points") ? i.points : 0}
-                                //         views = {i.hasOwnProperty("views") ? i.views : 0}
-                                //         likes = {i.hasOwnProperty("likes") ? i.likes : 0}
-                                //         commentsCount = {i.hasOwnProperty("commentsCount") ? i.commentsCount : 0}
-                                //         key={i}
-                                //     /></div>)
-                                // }
+                           
 
                                 })
 
