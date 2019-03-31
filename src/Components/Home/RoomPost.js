@@ -427,7 +427,7 @@ class RoomPost extends Component {
                             })
                            
                             }
-                    <div style={{display:this.state.showMoreTag ? 'block':'none',color:'#C7524D', border:'1px solid #C7524D', borderRadius:'12px', padding:'0 8px'}}><p>{this.props.tags.length > this.props.numTags ? '+' + (this.props.tags.length - this.props.numTags) : ''}</p></div>
+                    <div style={{display:this.state.showMoreTag ? 'block':'none',color:'#C7524D', border:'1px solid #C7524D', borderRadius:'12px', padding:'0 8px'}}><p>{this.props.numTagsAll - this.props.numTags}</p></div>
                 </div>
                 <div style={{display:'flex',alignItems:'center',marginRight:'18px',flexDirection:'row',height:'37px'}}>
                             <i class="fas fa-play" style={{fontSize:10, color:'white',marginRight:10}}></i>
