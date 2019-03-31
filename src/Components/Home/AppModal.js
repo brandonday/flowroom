@@ -275,10 +275,11 @@ const KeyCodes = {
                 if(snapshot.val() == null) {
                     return;
                 }
+                console.log('snapshot :', snapshot.val())
                 that.setState({room_title:snapshot.val().room_title,
-                description:snapshot.val().description, 
-                tags:snapshot.val().tags,
-                room_card_height:snapshot.val().room_card_height
+                    description:snapshot.val().description, 
+                    tags:snapshot.val().tags !== ''? snapshot.val().tags : [],
+                    room_card_height:snapshot.val().room_card_height
                 });
                 
             });
