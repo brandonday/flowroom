@@ -493,7 +493,34 @@ class RoomMain extends Component {
                             borderRadius:'5px',
                             fontSize:'20px'
                         }}>
-                         <i class="fas fa-shapes"></i>
+                         <i class="fas fa-shapes" onClick={()=>{
+                             const element = document.querySelector('#main-add-section #menu-sel-wrap');
+                             const ball = styler(element); 
+
+                             tween({ from:600, to: -1081, duration: 200 })
+                             .start(v => ball.set('x', v));
+                            let myJson = ['square']
+                             for(let i =0; i < myJson.length; i++) {
+                                // alert(myJson.hits[i].previewURL)
+                                var node = document.createElement("div");                 
+                                //var img = document.createElement('img');    
+                                //img.src = myJson.hits[i].previewURL;   
+                                node.style.height = "100px";
+                                node.style.width = "100px";
+                                node.style.border = '1px solid black';
+                                node.style.margin = '10px';
+                                node.style.position = 'absolute';
+                                node.addEventListener('click', ()=> {
+                                    
+                                    document.getElementById('menu-wrap').style.display = 'block';
+                                    document.getElementById('menu').style.display = 'block';
+                                });
+                               
+                                document.getElementById("main-add-section").appendChild(node); 
+
+                            }
+
+                         }}></i>
                             <p>Shapes</p>
                         </div>
                         <div style={{
