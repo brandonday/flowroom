@@ -27,7 +27,7 @@ class ProfilePic extends Component {
         that.setState({pic:user.photoURL})
       } else {
         // No user is signed in.
-        that.getProfileInfo('nousername')
+        //that.getProfileInfo('nousername')
       }
     });
 

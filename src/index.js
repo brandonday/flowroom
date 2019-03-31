@@ -161,12 +161,13 @@ firebase.auth().onAuthStateChanged((user)=> {
         if(hasRenderedHeader === false) {
             hasRenderedHeader = false;
             store.dispatch(userStore({username:null}));
-            store.dispatch(isLoggedIn({isLoggedIn:false}))
-            renderApp('header', hasRenderedHeader);
+           
+            //renderApp('header', hasRenderedHeader);
+            //window.location.reload()
            
         }
         // TODO: error message
-        
+        store.dispatch(isLoggedIn({isLoggedIn:false}))
     }
     
 });
