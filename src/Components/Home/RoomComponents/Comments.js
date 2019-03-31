@@ -209,6 +209,7 @@ const repliesNum = [];
                     ProfilePic.style.width = '39px';
                     ProfilePic.style.backgroundRepeat = 'no-repeat';
                     ProfilePic.style.backgroundSize = 'cover';
+                    ProfilePic.style.backgroundPosition = 'center';
                     ProfilePic.style.borderRadius = '20px';
                     ProfilePic.style.marginRight = '15px';
 
@@ -507,7 +508,7 @@ const repliesNum = [];
                             borderRadius:'4px',
                             background:'rgb(221, 224, 235)',
                             height:'25px',
-                            width:'50px',
+                            width:'129px',
                             fontFamily:'Source Sans Pro',
                             fontWeight:'800',
                             bottom:25,

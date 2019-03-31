@@ -652,46 +652,7 @@ const KeyCodes = {
                 <div style={{display:'flex', flexDirection:'column'}}>
                     <h2 ref={subtitle => this.subtitle = subtitle}>Post Room</h2>
                     <div onClick={this.closeModal} style={{position:'absolute',right:20,fontSize:20, marginBottom:20}}>X</div>
-                    {/* <div id="thumbnail-pic-box" style={{display:this.state.thumbnailPicBox, flexDirection:'column'}}>
-                        <div style={{display:'flex'}}>
-                            <p style={{marginTop:10,marginBottom:10}}>Thumbnail pic for Room (Optional) (?)</p>
-                        </div>
-                        <div style={{display:this.state.thumbnailPicBox, height:'100px',border:'1px solid black', display:'flex'}}>
-                            <div style={{backgroundImage:`url(${this.state.thumbPicURL})`,
-                                backgroundSize:'contain',
-                                height:'100%',
-                                flex:1,
-                                backgroundRepeat:'no-repeat',
-                                overflow:'hidden',
-                                border:'1px solid black'
-                            }}>
-                            </div>
-                            <div style={{flex:2, display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',border:'1px solid black'}}>
-                                <label style={{height:20, width:50, marginTop:10, border:'1px solid black',zIndex:99999999}}>
-                                    <p style={{display:'flex',fontSize:12,justifyContent:'center',alignItems:'center'}}>Browse</p>
-
-
-                                    {<FileUploader
-                                        hidden
-                                        accept="image/*"
-                                        name="thumbnail"
-                                        randomizeFilename
-                                        storageRef={firebase.storage().ref("images")}
-                                        onUploadStart={this.handleUploadStart}
-                                        onUploadError={this.handleUploadError}
-                                        onUploadSuccess={this.handleUploadSuccess2}
-                                        onProgress={this.handleProgress}
-                                    />
-                                    }
-
-                                </label>
-                                <p> or URL </p>
-                                <input type="text" placeholder="image URL here" value={this.state.thumbPicURL} onChange={(event)=>{
-                                    this.setState({thumbPicURL: event.target.value });
-                                }}/>
-                            </div>
-                        </div>
-                    </div> */}
+                   
                     <input id="room-title" className="room-title" style={{
                         height:'30px',
                         width:'100%',
@@ -818,7 +779,46 @@ const KeyCodes = {
                         <div onClick={()=>{this.selectPr('private-btn')}} id="private-btn" className={this.state.privateBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Private</p></div>
                         <div onClick={()=>{this.selectPr('unlisted-btn')}} id="unlisted-btn" className={this.state.unlistedBtnClass} style={{height:30,display:'flex', flex:1, justifyContent:'center', alignItems:'center'}}><p>Unlisted</p></div>
                     </div>
+                    <div id="thumbnail-pic-box" style={{display:this.state.thumbnailPicBox, flexDirection:'column'}}>
+                        <div style={{display:'flex'}}>
+                            <p style={{marginTop:10,marginBottom:10}}>Thumbnail pic for Room (Optional) (?)</p>
+                        </div>
+                        <div style={{display:this.state.thumbnailPicBox, height:'100px',border:'1px solid black', display:'flex'}}>
+                            <div style={{backgroundImage:`url(${this.state.thumbPicURL})`,
+                                backgroundSize:'contain',
+                                height:'100%',
+                                flex:1,
+                                backgroundRepeat:'no-repeat',
+                                overflow:'hidden',
+                                border:'1px solid black'
+                            }}>
+                            </div>
+                            <div style={{flex:2, display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',border:'1px solid black'}}>
+                                <label style={{height:20, width:50, marginTop:10, border:'1px solid black',zIndex:99999999}}>
+                                    <p style={{display:'flex',fontSize:12,justifyContent:'center',alignItems:'center'}}>Browse</p>
 
+
+                                    {<FileUploader
+                                        hidden
+                                        accept="image/*"
+                                        name="thumbnail"
+                                        randomizeFilename
+                                        storageRef={firebase.storage().ref("images")}
+                                        onUploadStart={this.handleUploadStart}
+                                        onUploadError={this.handleUploadError}
+                                        onUploadSuccess={this.handleUploadSuccess2}
+                                        onProgress={this.handleProgress}
+                                    />
+                                    }
+
+                                </label>
+                                <p> or URL </p>
+                                <input type="text" placeholder="image URL here" value={this.state.thumbPicURL} onChange={(event)=>{
+                                    this.setState({thumbPicURL: event.target.value });
+                                }}/>
+                            </div>
+                        </div>
+                    </div>
 
                     {/* <p style={{marginTop:10}}>Community to post this room in (optional)</p>
                     <input style={{
@@ -1221,13 +1221,16 @@ const KeyCodes = {
             .child(filename)
             .getDownloadURL()
             .then(url => {
-                this.setState({ postedPicURL: url });
+                //this.setState({ postedPicURL: url });
 
             alert(url)
         });
 
     };
 
+    handleUploadStart() {
+        alert('daad')
+    }
     handleUploadSuccess2 = filename => {
         this.setState({ avatar: filename, progress: 100, isUploading: false });
         firebase
