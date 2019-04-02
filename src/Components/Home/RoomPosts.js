@@ -19,102 +19,6 @@ const Tablet = props => <Responsive {...props} minWidth={768} maxWidth={991} />;
 const Mobile = props => <Responsive {...props} maxWidth={767} />;
 const Default = props => <Responsive {...props} minWidth={768} />;
 
-// let rooms = [{
-//     id:312321,
-//     date: new Date(),
-//     html:'',
-//     css:'',
-//     js:'',
-//     pic:'',
-//     views:'',
-//     comments:'',
-//     likes:'',
-//     description:'A remixable space game example',
-//     objectNum:0,
-//     postedPicURL:'',
-//     isRemixable:true,
-//     roomType:'other'
-// },
-// {
-//     id:34321,
-//     date: new Date(),
-//     html:'',
-//     css:'',
-//     js:'',
-//     pic:'',
-//     views:'',
-//     comments:'',
-//     likes:'',
-//     description:'Before and after slider',
-//     objectNum:0,
-//     postedPicURL:'',
-//     isRemixable:false,
-//     roomType:'text'
-// },
-// {
-//     id:34529921,
-//     date: new Date(),
-//     html:'',
-//     css:'',
-//     js:'',
-//     pic:'',
-//     views:'',
-//     comments:'',
-//     likes:'',
-//     description:'Virtual Reality Room demo',
-//     objectNum:0,
-//     postedPicURL:'',
-//     isRemixable:false,
-//     roomType:'other'
-// },
-// {
-//     id:34554989321,
-//     date: new Date(),
-//     html:'',
-//     css:'',
-//     js:'',
-//     pic:'',
-//     views:'',
-//     comments:'',
-//     likes:'',
-//     description:'website theme demo',
-//     objectNum:0,
-//     postedPicURL:'https://akns-images.eonline.com/eol_images/Entire_Site/2018718/rs_634x1024-180818125317-634-kim-kardashian.cm.81818.jpg?fit=inside|900:auto&output-quality=90',
-//     isRemixable:false,
-//     roomType:'image'
-// },
-// {
-//     id:3453094095321,
-//     date: new Date(),
-//     html:'',
-//     css:'',
-//     js:'',
-//     pic:'',
-//     views:'',
-//     comments:'',
-//     likes:'',
-//     description:' A Candle Object',
-//     objectNum:0,
-//     postedPicURL:'',
-//     isRemixable:true,
-//     roomType:'other'
-// },
-// {
-//     id:34553254501,
-//     date: new Date(),
-//     html:'',
-//     css:'',
-//     js:'',
-//     pic:'',
-//     views:'',
-//     comments:'',
-//     likes:'',
-//     description:'Slideshow app',
-//     objectNum:0,
-//     postedPicURL:'',
-//     isRemixable:true,
-//     roomType:'other'
-// }];
 
 let rooms = [];
 let roomsFilter = [];
@@ -142,24 +46,8 @@ class RoomPosts extends Component {
         this.selection = this.selection.bind(this)
     }
     componentDidMount() {
-
-      
-      
-        
-        
-          
-         console.log('filters :', roomFilter)
-       
-        
        this.loadRooms()
-       
-        
-        
-
-
-        //store.dispatch({type:'SAVE_DHTML', html:'',css:'',js:''});
-
-
+        // store.dispatch({type:'SAVE_DHTML', html:'',css:'',js:''});
     }
     isShortIDExists(shortID) {
       for(let i = 0; i < rooms.length; i++) {
@@ -168,16 +56,14 @@ class RoomPosts extends Component {
           }
       }
       return false;
-  }
+    }
     loadRooms() {
       let counter = 0;
-
       let that = this;
       database.ref('rooms').orderByChild(roomFilter).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
-
         snapshot.forEach((childSnapShot) => {
-            counter++;
-            if(!this.isShortIDExists(childSnapShot.val().shortID)) {
+          counter++;
+          if(!this.isShortIDExists(childSnapShot.val().shortID)) {
             if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
               if(counter == 1) {
                 if(roomFilter == 'weight') {
@@ -187,7 +73,6 @@ class RoomPosts extends Component {
                 } else {
                   nextRoomIndex = childSnapShot.val().date;
                 }
-                
                 console.log('rooms: next date', childSnapShot.val().shortID + ' ',  nextRoomIndex);
               } else {
                 if(counter == roomsPerPage + 1) {
@@ -232,24 +117,17 @@ class RoomPosts extends Component {
                     ...childSnapShot
                 });
 
-
               }
             
-        }
+            }
 
-        }
+          }
         });
-        console.log('rooms: loading',rooms)
-        
         that.setState({rooms:rooms})
         that.setState({roomsLoaded:true});
-      
-        
-        
       });
-
     }
-getSearchFromFilter(id) {
+    getSearchFromFilter(id) {
       switch(id) {
           case 'featured':
               return 'weight';
@@ -260,102 +138,83 @@ getSearchFromFilter(id) {
           default: 
               return 'date';
       }
-  }
-  selection(id) {
-   
+    }
+    selection(id) {
       document.getElementById(id).className = 'selected';
-     let getSelected = document.getElementsByClassName('selected');
-    
-     for(let i = 0; i < getSelected.length; i++) {
-         if(getSelected[i].id !== id) {
-            
-             getSelected[i].className = '';
-         } else {
-          
+      let getSelected = document.getElementsByClassName('selected');
+      for(let i = 0; i < getSelected.length; i++) {
+        if(getSelected[i].id !== id) {
+          getSelected[i].className = '';
+        } else {
             getSelected[i].className = 'selected';
          }
-     }
-     console.log('search filters :', this.getSearchFromFilter(id))
-     
-     roomFilter = this.getSearchFromFilter(id);
-     rooms = [];
+      }
+      roomFilter = this.getSearchFromFilter(id);
+      rooms = [];
       this.loadRooms();
-      
-
-  }
+    }
     openModal(post = true) {
       this.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles:{
         overlay: {
           backgroundColor: 'none',
         },
-        content: {
-        top                   : '50%',
-        left                  : '50%',
-        right                 : '0',
-        bottom                : 'auto',
-        marginRight           : '0%',
-        transform             : 'translate(-50%, -50%)',
-        height:'50%',
-        width:'50%',
+          content: {
+          top                   : '50%',
+          left                  : '50%',
+          right                 : '0',
+          bottom                : 'auto',
+          marginRight           : '0%',
+          transform             : 'translate(-50%, -50%)',
+          height:'50%',
+          width:'50%',
         }
       }})
     }
-  getTagsArray(tags) {
-    let tagsArray = [];
-    if(tags !== undefined) {
-      Object.keys(tags).forEach((key) => {
-        tagsArray.push(tags[key].text);
-      });
-    } 
-      return tagsArray;
-  }
-  getNumTags(tagsArray) {
-    if(tagsArray == null || tagsArray == undefined || tagsArray.length == 0 ) {
-      return 0;
-    }
-     let maxLength = window.innerWidth >= 1024 ? 20 : 12;
-    try {
-      if(tagsArray.length <= 1) {
-        return tagsArray.length;
-      } else if(tagsArray.length === 2) {
-        if(tagsArray[0].length + tagsArray[1].length > maxLength) {
-          return 1;
-        } else {
-          return 2;
-        }         
-      } else {
-        if(tagsArray[0].length > 12 || tagsArray[0].length + tagsArray[1].length > maxLength) {
-          return 1;
-        }
-        if(tagsArray[0].length + tagsArray[1].length + tagsArray[2].length > maxLength) {
-          return 2;
-        } else {
-          return 3;
-        }   
-
-
+    getTagsArray(tags) {
+      let tagsArray = [];
+      if(tags !== undefined) {
+        Object.keys(tags).forEach((key) => {
+          tagsArray.push(tags[key].text);
+        });
       } 
-
-    } catch(error) {
-      console.log('error :', error);
+      return tagsArray;
     }
-    return 0;
-
+    getNumTags(tagsArray) {
+      if(tagsArray == null || tagsArray == undefined || tagsArray.length == 0 ) {
+        return 0;
+      }
+      let maxLength = window.innerWidth >= 1024 ? 20 : 12;
+      try {
+        if(tagsArray.length <= 1) {
+          return tagsArray.length;
+        } else if(tagsArray.length === 2) {
+          if(tagsArray[0].length + tagsArray[1].length > maxLength) {
+            return 1;
+          } else {
+            return 2;
+          }         
+        } else {
+          if(tagsArray[0].length > 12 || tagsArray[0].length + tagsArray[1].length > maxLength) {
+            return 1;
+          }
+          if(tagsArray[0].length + tagsArray[1].length + tagsArray[2].length > maxLength) {
+            return 2;
+          } else {
+            return 3;
+          }   
+        } 
+      } catch(error) {
+        
+        }
+        return 0;
     }
     getTags(tags) {
       if(tags == null) {
         return [];
       }
-      console.log("tags :", tags);
-      
       let tagsArray = this.getTagsArray(tags);
-      console.log("tagsArray :", tagsArray);
       let numTags = this.getNumTags(tagsArray);
-      console.log("numTags :", numTags);
-     
-      let tagsLengthArray = [];
-      
-      
+      let tagsLengthArray = [];  
       tagsArray.map((tag)=> {
           if(tagsLengthArray.length < numTags) {
               tagsLengthArray.push(tag);
@@ -365,20 +224,14 @@ getSearchFromFilter(id) {
     }
 
     prevPage() {
-        currentPage = currentPage === 1 ? 1 : currentPage - 1;
+      currentPage = currentPage === 1 ? 1 : currentPage - 1;
         rooms = [];
         let database = firebase.database();
         let that = this;
         let counter = 0;
-        
         database.ref('rooms').orderByChild(roomFilter).startAt(previousRoomIndex).limitToFirst(roomsPerPage + 1).once('value').then((snapshot) => {
-        
-         
-           snapshot.forEach((childSnapShot) => {
-
-                //if(rooms.length != 7) {
+          snapshot.forEach((childSnapShot) => {
             if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
-            
               counter++;
               if(counter == 1) {
                 if(roomFilter == 'weight') {
@@ -389,177 +242,143 @@ getSearchFromFilter(id) {
                   nextRoomIndex = childSnapShot.val().date;
                 }
               } else {
-                if(counter == roomsPerPage + 1) {
-                  if(roomFilter == 'weight') {
-                    previousRoomIndex = childSnapShot.val().weight;
-                  } else if(roomFilter == 'likes') {
-                    previousRoomIndex = childSnapShot.val().likes;
-                  } else {
-                    previousRoomIndex = childSnapShot.val().date;
-                  }
-                }
-
-                    rooms.unshift({
-                        id:childSnapShot.key,
-                        date:childSnapShot.val().date,
-                        isAR:childSnapShot.val().isAR,
-                        isDevelopmental:childSnapShot.val().isDevelopmental,
-                        is360:childSnapShot.val().is360,
-                        isAI:childSnapShot.val().isAI,
-                        isDesktop:childSnapShot.val().isDesktop,
-                        isDeveloper:childSnapShot.val().isDeveloper,
-                        isLive:childSnapShot.val().isLive,
-                        isLocked:childSnapShot.val().isLocked,
-                        isMobile:childSnapShot.val().isMobile,
-                        isNSFW:childSnapShot.val().isNSFW,
-                        isVR:childSnapShot.val().isVR,
-                        pic:childSnapShot.val().pic,
-                        views:childSnapShot.val().views,
-                        commentsCount:childSnapShot.val().commentsCount === undefined ? 0:childSnapShot.val().commentsCount,
-                        likes:childSnapShot.val().likes === undefined ? 0:childSnapShot.val().likes,
-                        description:childSnapShot.val().description,
-                        objectNum:childSnapShot.val().objectNum,
-                        postedPicURL:childSnapShot.val().postedPicURL,
-                        isRemixable:childSnapShot.val().isRemixable,
-                        roomType:childSnapShot.val().roomType,
-                        username:childSnapShot.val().userName,
-                        shortID:childSnapShot.val().shortID,
-                        room_title:childSnapShot.val().room_title,
-                        tags:childSnapShot.val().tags,
-                        room_aspect_ratio:childSnapShot.val().room_aspect_ratio !== '' ? childSnapShot.val().room_aspect_ratio :ROOM_ASPECT_RATIO,
-                        room_card_height:childSnapShot.val().room_card_height !== '' && !isNaN(childSnapShot.val().room_card_height) ? parseInt(childSnapShot.val().room_card_height) : 246,
-                        ...childSnapShot
-                    });
-
-                  }
-                //alert(childSnapShot.val().shortID)
-            //}
-            }
-
-            });
-            console.log('rooms: counter', counter)
-            if(counter == 1) {
-              return;
-            }
-              console.log('rooms previous',rooms)
-                this.setState({rooms:rooms});
-                this.setState({roomsLoaded:true});
-               
-            
-             
-
-                   
-
-           
-
-
-        });
-    }
-    nextPage() {
-        
-        rooms = [];
-        let database = firebase.database();
-        let that = this;
-        let counter = 0;
-        console.log('next page nextRoomIndex:', nextRoomIndex);
-        console.log('next page prevRoomIndex:', previousRoomIndex);
-        database.ref('rooms').orderByChild(roomFilter).limitToLast(roomsPerPage + 1).endAt(nextRoomIndex).once('value').then((snapshot) => {
-          if(snapshot.length == 0) {
-            return;
-          }  
-        
-          snapshot.forEach((childSnapShot) => {
-                if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
-                  
-                  
-                    counter++;
-                    if(counter == 1) {
-                      if(roomFilter == 'weight') {
-                        nextRoomIndex = childSnapShot.val().weight;
-                      } else if(roomFilter == 'likes') {
-                        nextRoomIndex = childSnapShot.val().likes;
-                      } else {
-                        nextRoomIndex = childSnapShot.val().date;
-                      }
-
+                  if(counter == roomsPerPage + 1) {
+                    if(roomFilter == 'weight') {
+                      previousRoomIndex = childSnapShot.val().weight;
+                    } else if(roomFilter == 'likes') {
+                      previousRoomIndex = childSnapShot.val().likes;
                     } else {
-                      if(counter == roomsPerPage + 1) {
-                        if(roomFilter == 'weight') {
-                          previousRoomIndex = childSnapShot.val().weight;
-                        } else if(roomFilter == 'likes') {
-                          previousRoomIndex = childSnapShot.val().likes;
-                        } else {
-                          previousRoomIndex = childSnapShot.val().date;
-                        }
-                      }
-
-                        rooms.unshift({
-                            id:childSnapShot.key,
-                            date:childSnapShot.val().date,
-                            isAR:childSnapShot.val().isAR,
-                            isDevelopmental:childSnapShot.val().isDevelopmental,
-                            is360:childSnapShot.val().is360,
-                            isAI:childSnapShot.val().isAI,
-                            isDesktop:childSnapShot.val().isDesktop,
-                            isDeveloper:childSnapShot.val().isDeveloper,
-                            isLive:childSnapShot.val().isLive,
-                            isLocked:childSnapShot.val().isLocked,
-                            isMobile:childSnapShot.val().isMobile,
-                            isNSFW:childSnapShot.val().isNSFW,
-                            isVR:childSnapShot.val().isVR,
-                            pic:childSnapShot.val().pic,
-                            views:childSnapShot.val().views,
-                            commentsCount:childSnapShot.val().commentsCount === undefined ? 0 : childSnapShot.val().commentsCount,
-                            likes:childSnapShot.val().likes === undefined ? 0:childSnapShot.val().likes,
-                            description:childSnapShot.val().description,
-                            objectNum:childSnapShot.val().objectNum,
-                            postedPicURL:childSnapShot.val().postedPicURL,
-                            isRemixable:childSnapShot.val().isRemixable,
-                            roomType:childSnapShot.val().roomType,
-                            username:childSnapShot.val().userName,
-                            shortID:childSnapShot.val().shortID,
-                            room_title:childSnapShot.val().room_title,
-                            tags:childSnapShot.val().tags,
-                            room_aspect_ratio:childSnapShot.val().room_aspect_ratio !== '' ? childSnapShot.val().room_aspect_ratio:ROOM_ASPECT_RATIO,
-                            room_card_height:childSnapShot.val().room_card_height !== '' && !isNaN(childSnapShot.val().room_card_height) ? parseInt(childSnapShot.val().room_card_height) : 246,
-                        ...childSnapShot
-                    });
+                      previousRoomIndex = childSnapShot.val().date;
+                    }
                   }
+                  rooms.unshift({
+                    id:childSnapShot.key,
+                    date:childSnapShot.val().date,
+                    isAR:childSnapShot.val().isAR,
+                    isDevelopmental:childSnapShot.val().isDevelopmental,
+                    is360:childSnapShot.val().is360,
+                    isAI:childSnapShot.val().isAI,
+                    isDesktop:childSnapShot.val().isDesktop,
+                    isDeveloper:childSnapShot.val().isDeveloper,
+                    isLive:childSnapShot.val().isLive,
+                    isLocked:childSnapShot.val().isLocked,
+                    isMobile:childSnapShot.val().isMobile,
+                    isNSFW:childSnapShot.val().isNSFW,
+                    isVR:childSnapShot.val().isVR,
+                    pic:childSnapShot.val().pic,
+                    views:childSnapShot.val().views,
+                    commentsCount:childSnapShot.val().commentsCount === undefined ? 0:childSnapShot.val().commentsCount,
+                    likes:childSnapShot.val().likes === undefined ? 0:childSnapShot.val().likes,
+                    description:childSnapShot.val().description,
+                    objectNum:childSnapShot.val().objectNum,
+                    postedPicURL:childSnapShot.val().postedPicURL,
+                    isRemixable:childSnapShot.val().isRemixable,
+                    roomType:childSnapShot.val().roomType,
+                    username:childSnapShot.val().userName,
+                    shortID:childSnapShot.val().shortID,
+                    room_title:childSnapShot.val().room_title,
+                    tags:childSnapShot.val().tags,
+                    room_aspect_ratio:childSnapShot.val().room_aspect_ratio !== '' ? childSnapShot.val().room_aspect_ratio :ROOM_ASPECT_RATIO,
+                    room_card_height:childSnapShot.val().room_card_height !== '' && !isNaN(childSnapShot.val().room_card_height) ? parseInt(childSnapShot.val().room_card_height) : 246,
+                    ...childSnapShot
+                  });
 
-                //alert(childSnapShot.val().shortID)
-              
-
-            }
+                }
+              }
 
             });
-            console.log('next page after nextRoomIndex :', nextRoomIndex);
-     
-            console.log('next page after prevRoomIndex:', previousRoomIndex);
             if(counter == 1) {
               return;
             }
-                console.log('rooms: next',rooms)
-                this.setState({rooms:rooms, roomsLoaded:true});
-                
-
+          this.setState({rooms:rooms});
+          this.setState({roomsLoaded:true});
+        });
+      }
+    nextPage() {
+      rooms = [];
+      let database = firebase.database();
+      let that = this;
+      let counter = 0;
+      database.ref('rooms').orderByChild(roomFilter).limitToLast(roomsPerPage + 1).endAt(nextRoomIndex).once('value').then((snapshot) => {
+        if(snapshot.length == 0) {
+          return;
+        }  
+        snapshot.forEach((childSnapShot) => {
+          if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
+            counter++;
+            if(counter == 1) {
+              if(roomFilter == 'weight') {
+                nextRoomIndex = childSnapShot.val().weight;
+              } else if(roomFilter == 'likes') {
+                nextRoomIndex = childSnapShot.val().likes;
+              } else {
+                nextRoomIndex = childSnapShot.val().date;
+              }
+            } else {
+              if(counter == roomsPerPage + 1) {
+                if(roomFilter == 'weight') {
+                  previousRoomIndex = childSnapShot.val().weight;
+                } else if(roomFilter == 'likes') {
+                  previousRoomIndex = childSnapShot.val().likes;
+                } else {
+                  previousRoomIndex = childSnapShot.val().date;
+                }
+              }
+              rooms.unshift({
+                id:childSnapShot.key,
+                date:childSnapShot.val().date,
+                isAR:childSnapShot.val().isAR,
+                isDevelopmental:childSnapShot.val().isDevelopmental,
+                is360:childSnapShot.val().is360,
+                isAI:childSnapShot.val().isAI,
+                isDesktop:childSnapShot.val().isDesktop,
+                isDeveloper:childSnapShot.val().isDeveloper,
+                isLive:childSnapShot.val().isLive,
+                isLocked:childSnapShot.val().isLocked,
+                isMobile:childSnapShot.val().isMobile,
+                isNSFW:childSnapShot.val().isNSFW,
+                isVR:childSnapShot.val().isVR,
+                pic:childSnapShot.val().pic,
+                views:childSnapShot.val().views,
+                commentsCount:childSnapShot.val().commentsCount === undefined ? 0 : childSnapShot.val().commentsCount,
+                likes:childSnapShot.val().likes === undefined ? 0:childSnapShot.val().likes,
+                description:childSnapShot.val().description,
+                objectNum:childSnapShot.val().objectNum,
+                postedPicURL:childSnapShot.val().postedPicURL,
+                isRemixable:childSnapShot.val().isRemixable,
+                roomType:childSnapShot.val().roomType,
+                username:childSnapShot.val().userName,
+                shortID:childSnapShot.val().shortID,
+                room_title:childSnapShot.val().room_title,
+                tags:childSnapShot.val().tags,
+                room_aspect_ratio:childSnapShot.val().room_aspect_ratio !== '' ? childSnapShot.val().room_aspect_ratio:ROOM_ASPECT_RATIO,
+                room_card_height:childSnapShot.val().room_card_height !== '' && !isNaN(childSnapShot.val().room_card_height) ? parseInt(childSnapShot.val().room_card_height) : 246,
+                  ...childSnapShot
+              });
+            }
+                //alert(childSnapShot.val().shortID)
+            }
+          });
+          if(counter == 1) {
+            return;
+          }
+          this.setState({rooms:rooms, roomsLoaded:true});
               
         });
-    }
-    render() {
-
-         if(this.state.roomsLoaded) {
-        //     let theHeight;
-            return  (
-              <ReactResizeDetector
-  handleWidth
-  handleHeight
-  render={({ width, height }) => (
+      }
+      render() {
+        if(this.state.roomsLoaded) {
+          return  (
+            <ReactResizeDetector
+              handleWidth
+              handleHeight
+              render={({ width, height }) => (
                 <div style={{padding:'0px 10px', height:'100%'}}>
-                    <div id="body-padding" style={{
+                    {/* <div id="body-padding" style={{
                         flex:1
-                    }}>
-                        <section style={{flex:1}}>
-                            <div className="main" style={{flex:1}}>
+                    }}> */}
+                        {/* <section style={{flex:1}}> */}
+                            {/* <div className="main" style={{flex:1}}> */}
                                 <div style={{display:'flex', flex:1, flexWrap:'wrap', justifyContent:'space-between', margin:'20px 0px 20px auto',fontSize:'16px'}}>
                                 <nav className="main-nav">
                     <ul id="nav-lists">
@@ -649,14 +468,14 @@ getSearchFromFilter(id) {
 
 
                                 </div>
-                            </div>
+                            {/* </div> */}
 
-                        </section>
+                        {/* </section> */}
                         <nav  style={{flex:1}} className="pagination-buttons-wrap">
                             <span onClick={this.prevPage.bind(this)} className="pagination-button"><span style={{display:'inline-block', background: "url('/images/sprite.png') no-repeat", overflow:'hidden',textIndent:'-9999px', textAlign:'left',backgroundSize:'89px 248px',backgroundPosition:'-75px -184px',width:'10px',height:'18px', marginRight:'15px', transform: 'rotate(179deg)'}}></span>Previous Page</span>
                             <span onClick={this.nextPage.bind(this)} className="pagination-button">Next Page<span style={{display:'inline-block', background: "url('/images/sprite.png') no-repeat", overflow:'hidden',textIndent:'-9999px', textAlign:'left',backgroundSize:'89px 248px',backgroundPosition:'-75px -184px',width:'10px',height:'18px',marginLeft:'15px'}}></span></span>
                         </nav>
-                    </div>
+                    {/* </div> */}
                 </div>
                 )}
                 />

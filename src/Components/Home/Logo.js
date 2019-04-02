@@ -9,13 +9,14 @@ const Default = props => <Responsive {...props} minWidth={768} />;
  const Logo = () => (
     <div>
         {/* <Desktop> */}
-        <div className="logo-wrap">
-            <a href="/" style={{color:'white',
-  fontFamily:'Arial',
-  fontSize:'35px',
-  fontWeight:'700',
-  lineHeight:'42px',
-  textAlign:'left'}}>flowroom</a>
+        <div className="logo-wrap" style={{marginRight:'17px'}}>
+            <div style={{backgroundImage:'url(./public/logo.svg)',
+                backgroundImage:'url(../logo.svg)',
+                height:'31px',
+                width:'136px',
+                backgroundSize:'contain',
+                backgroundRepeat:'no-repeat'
+            }}></div>
         </div>
         {/* </Desktop> */}
         {/* <Tablet>

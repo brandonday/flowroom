@@ -43,16 +43,84 @@ let that;
          }
         
        
-    
+        
         let that = this;
+        let remixImageListOptions = ['Actors', 'Elements', 'Effects'];
         let list = document.getElementById('main-menu');
         let getList = JSON.parse(localStorage.getItem( "FR_REMIX_LIST"));
-        let remixList = document.createElement('div');
-                    remixList.setAttribute("id", "remix-list");
-                    remixList.style.display = 'flex';
-                    remixList.style.flexDirection = 'row';
-                  remixList.style.flexWrap = 'wrap';
-                 
+        let remixImageList = document.createElement('div');
+                    remixImageList.setAttribute("id", "remix-list");
+                    remixImageList.style.display = 'flex';
+                    remixImageList.style.flexDirection = 'row';
+                  remixImageList.style.flexWrap = 'wrap';
+        let remixImageTitle = document.createElement('div');
+        let imgtitle = document.createElement('p');
+        let remixImageListNav = document.createElement('div');
+        let remixImageListNavArrows = document.createElement('div');
+        remixImageListNavArrows.style.display = 'flex';
+        remixImageListNavArrows.style.position = 'absolute';
+        remixImageListNavArrows.style.right = '14px';
+        remixImageListNavArrows.style.width = '19px';
+        remixImageListNavArrows.style.justifyContent = 'space-between';
+        remixImageListNavArrows.style.fontSize = '14px';
+
+        let backArrow = document.createElement('i');
+        let forwardArrow = document.createElement('i');
+        backArrow.className = 'fas fa-chevron-left';
+        forwardArrow.className = 'fas fa-chevron-right';
+        backArrow.style.color = '#6a6a6a';
+        forwardArrow.style.color = '#6a6a6a';
+        backArrow.style.fontSize = '12px';
+        forwardArrow.style.fontSize = '12px';
+        backArrow.style.fontWeight = '800';
+        forwardArrow.style.fontWeight = '800';
+        remixImageListNavArrows.appendChild(backArrow);
+        remixImageListNavArrows.appendChild(forwardArrow);
+        
+        remixImageListNav.style.height = '37px';
+        remixImageListNav.style.width = '100%';
+        remixImageListNav.style.border = '1px solid white';
+        remixImageListNav.style.paddingLeft = '10px';
+        remixImageListNav.style.display = 'flex';
+        remixImageListNav.style.flexDirection = 'row';
+        remixImageListNav.style.color = 'rgb(64, 255, 232)';
+        remixImageListNav.style.fontSize = '12px';
+        remixImageListNav.style.alignItems = 'center';
+        remixImageListNav.style.listStyleType = 'none';
+        let remixImageListNavUL = document.createElement('ul');
+        remixImageListNav.appendChild(remixImageListNavUL);
+       
+         for(let i = 0; i < remixImageListOptions.length; i++) {
+          let remixImageListItem = document.createElement('li');
+            remixImageListItem.style.marginRight = '20px';
+            remixImageListItem.setAttribute("id", `${remixImageListOptions[i]}`)
+            remixImageListItem.appendChild(document.createTextNode(remixImageListOptions[i]));
+            remixImageListItem.addEventListener('click', ()=>{
+              let getsel = document.getElementsByClassName('selected');
+              for(let i =0; i < getsel.length; i++) {
+                if(getsel[i].id == remixImageListOptions[i]) {
+                  remixImageListItem.className = 'selected';
+                } else {
+                  remixImageListItem.className = '';
+                }
+              }
+            })
+            remixImageListNav.appendChild(remixImageListItem);
+            remixImageListNav.appendChild(remixImageListNavArrows);
+         }
+        imgtitle.appendChild(document.createTextNode('Images'));
+        imgtitle.style.color = '#787878';
+        imgtitle.style.fontSize = '13px';
+        imgtitle.style.marginLeft = '10px';
+        imgtitle.style.fontWeight = '900';
+        imgtitle.style.marginTop = '4px';
+        remixImageTitle.style.height = '28px';
+        remixImageTitle.style.width = '282px';
+        remixImageTitle.style.backgroundColor = '#141414';
+        remixImageTitle.style.alignItems = 'center';
+        remixImageTitle.appendChild(imgtitle);
+        remixImageList.appendChild(remixImageListNav);
+
                   if(getList != null) {
                     let overlay = document.createElement('div');
                     overlay.setAttribute("id","remix-overlay");
@@ -105,7 +173,7 @@ let that;
                     item.appendChild(bgImg);
                     
                    
-                    remixList.appendChild(item);
+                    remixImageList.appendChild(item);
               
                     if(getList[j].type === 'url') {
                       item.addEventListener('click', ()=> {
@@ -196,7 +264,8 @@ let that;
                     }
 
                   }
-                  list.appendChild(remixList);
+                  list.appendChild(remixImageTitle);
+                  list.appendChild(remixImageList);
 
 
 

@@ -60,9 +60,25 @@ class NewButton extends Component {
         <div style={{position:'relative'}}>
             <div onClick={this.newclicked.bind(this)} id="new-button-dropdown" className="new-button-dropdown">
                 <div className="new-btn">
-                    <button style={{fontWeight:'bold',color:'white',fontSize:15,width:'96px',
-  height:'40px',backgroundColor:'#B300FE', border:'none',borderRadius:'5px'}}>
-                            CREATE
+                    <button style={{
+                            fontWeight:'bold',
+                            color:'rgb(64, 255, 232)',
+                            fontSize:'13px',
+                            width:'81px',
+                            height:'29px',
+                            backgroundColor:'transparent',
+                            border:'1px solid rgb(64, 255, 232)',
+                            borderRadius:'5px',
+                            paddingRight:'3px',
+                            position:'relative',
+                            left:'10px',
+                            display:'flex',
+                            marginRight:8
+                            }}>
+    <i className="fa fa-plus" style={{marginRight:6,position:'relative',left:'8px',top:'3px'}}></i>
+                            <p style={{top:'0px',fontSize:'13px',
+    position:'relative',
+    left:'8px'}}>CREATE</p>
                     </button>
                 </div>
                 <div id="newbtn" className="new-button-dropdown-content">

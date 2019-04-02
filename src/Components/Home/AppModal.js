@@ -16,6 +16,7 @@ import FileUploader from "react-firebase-file-uploader";
 import Convo from './Convo';
 import SignUp from './SignUp';
 import { snap } from '@popmotion/popcorn';
+import html2canvas from 'html2canvas';
 
 var moment = require('moment');
 
@@ -238,7 +239,8 @@ const KeyCodes = {
         var user = firebase.auth().currentUser;
         var name, email, photoUrl, uid, emailVerified, fullname;
         var shortID = window.location.pathname.split("room/").pop();
-        
+        let flow = document.getElementById('output_frame');
+      
     
 
         this.setState({newMessage:'message-screen', shortID:shortID});
@@ -255,17 +257,18 @@ const KeyCodes = {
             uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
                      // this value to authenticate with your backend server, if
                      // you have one. Use User.getToken() instead.
-
+                     that.setState({username:name, 
+                        pic:photoUrl, 
+                        fullname:fullname,
+                        suggestionNamesTags:names, 
+                        myusername:name
+                    });
+                    
             database.ref(`/follows/${name}/following`).once('value').then((snapshot) => {
                 snapshot.forEach((childSnapShot) => {
                     names.push({id:`${childSnapShot.val()}`,text:`${childSnapShot.val()}`});
                 })
-                that.setState({username:name, 
-                    pic:photoUrl, 
-                    fullname:fullname,
-                    suggestionNamesTags:names, 
-                    myusername:name
-                });
+                
 
             });
 

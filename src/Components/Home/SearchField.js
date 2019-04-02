@@ -14,7 +14,7 @@ const Default = props => <Responsive {...props} minWidth={768} />;
         justifyContent:'center',
         alignItems:'center'
     }}>
-        <div className="search-box">
+        <div className="search-box" style={{borderRadius:'3px', height:'30px'}}>
             <i style={{color:'rgb(95, 95, 95)',
     width:'30px',
     height:'30px',
@@ -22,9 +22,14 @@ const Default = props => <Responsive {...props} minWidth={768} />;
     alignItems:'center',
     display:'flex',
     justifyContent:'center',
-    margin:'0px 10px 0'
+    margin:'0px 10px 0',
+    fontSize:'13px'
  }} className="fas fa-search"></i>
-            <input className="search-input" type="text" autoCapitalize="none" placeholder="Search for rooms, users and tags"/>
+            <input className="search-input" 
+            style={{color:'rgb(64, 255, 232)'}}
+            type="text" 
+            autoCapitalize="none" 
+            placeholder="Search for rooms, users and tags"/>
         </div>
     </div>
 )

@@ -17,7 +17,7 @@ import { startCreateRoom } from '../../actions/rooms';
 import axios from 'axios';
 import * as dat from 'dat.gui';
 
-
+import html2canvas from 'html2canvas';
 // import ImageEdit from './ImageEdit.js';
 
 import ImageEdit from './ImageEdit.js';
@@ -118,7 +118,7 @@ class RoomMain extends Component {
               }
           
               document.getElementById('main-menu').style.position = 'absolute';
-              document.getElementById('main-menu').style.height = '583px';
+              document.getElementById('main-menu').style.height = '380px';
               document.getElementById('main-menu').style.width = '67%';
               document.getElementById('main-menu').style.zIndex = '999994';
               document.getElementById('main-menu').style.top = '0px';
@@ -128,7 +128,7 @@ class RoomMain extends Component {
 
               document.getElementById('tab-menu').style.position = 'absolute';
               document.getElementById('tab-menu').style.zIndex = '999999';
-              document.getElementById('tab-menu').style.height = '583px';
+              document.getElementById('tab-menu').style.height = '380px';
               
             
                document.getElementById('close-menu').addEventListener('click',function(){
@@ -143,7 +143,7 @@ class RoomMain extends Component {
                tabMenu.style.display = 'block';
                document.getElementById('tab-menu').style.transform = 0;
               
-              main.style.width = '600px';
+              main.style.width = '380px';
               main.style.borderRight = '1px solid rgb(24, 24, 24)';
               main.style.background = 'rgb(24, 24, 24)';
               main.style.overflow = 'hidden scroll';
@@ -608,8 +608,8 @@ class RoomMain extends Component {
             <div style={{display:'flex',flexDirection:'column', height:'100%',width:'100%'}}>
                 <div style={{display:'flex',flex:'0 583px'}}>
                     <div id="tab-menu" style={{
-                        width:'60px', 
-                        background:'#202020'
+                        width:'48px', 
+                        background:'#0e0e0e'
                     }}>
                         <div id="details" onClick={()=> {
                          
@@ -644,17 +644,21 @@ class RoomMain extends Component {
                             
 
                             }} style={{
-                            height:'70px',
-                            width:'59px',
                             display:'flex',
+                            color:'rgb(64, 255, 232)',
+                            height:'52px',
+                            width:'48px',
                             flexDirection:'column',
-                            justifyContent:'center',
                             alignItems:'center',
                             borderRight:'1px solid #181818',
-                            borderBottom:'1px solid #181818'}} className="menu-bg-border">
-                                <i className="fas fa-infinity" style={{fontSize:15, color:'white'}}/>
-                                <p id="details-text" className="details-text" style={{fontSize:11,fontWeight:'bold',color:'white'}}>Remix</p>
-                                <p style={{fontSize:11,fontWeight:'bold',color:'white'}}>Content</p>
+                            borderBottom:'1px solid #181818',
+                            justifyContent:'center'
+                            }} className="menu-bg-border">
+                                <i className="fas fa-infinity" style={{fontSize:15, color:'white',
+    fontSize:'15px',
+    color:'white'}}/>
+                                <p id="details-text" className="details-text" style={{fontSize:11,fontWeight:'bold',color:'white',width:'33px'}}>REMIX</p>
+                               
                         </div>
 
 
@@ -695,7 +699,7 @@ class RoomMain extends Component {
                                       
                                         tagstoRemove[i].remove()
                                     }
-                             }} style={{height:'70px',width:'59px',display:'flex',
+                             }} style={{height:'50px',width:'48px',display:'flex',
                                     flexDirection:'column',
                                     justifyContent:'center',
                                     alignItems:'center',
@@ -879,8 +883,15 @@ class RoomMain extends Component {
                             </div> */}
                         </div>
             
-                        <div id="main-menu" style={{width:'600px', borderRight:'1px solid #181818',background:'#FCFDFF',overflow:'hidden',overflowY:'scroll',backgroundColor:'#181818',flexDirection:'column',alignItems:'center'}}>
-                        <div style={{display:'flex', justifyContent:'flex-end', height:'30px', width:'100%', border:'1px solid #202020', color:'white', fontSize:20,}}>
+                        <div id="main-menu" style={{width:'378px', borderRight:'1px solid #181818',background:'#FCFDFF',overflow:'hidden',overflowY:'scroll',backgroundColor:'#181818',flexDirection:'column',alignItems:'center'}}>
+                        <div style={{height:'170px', width:'259px'}}>
+                        <div style={{border:'1px solid #222222',
+    height:'147px',
+    width:'259px',
+    borderRadius:'3px',
+    marginTop:'11px'}}></div>
+    </div>
+                        {/* <div style={{display:'flex', justifyContent:'flex-end', height:'30px', width:'100%', border:'1px solid #202020', color:'white', fontSize:20,}}>
                             <i id="close-menu" className="far fa-window-close" style={{margin:'3px', color:'rgb(95, 95, 95)'}} onClick={()=>{
                                    const element = document.querySelector('#main-menu');
                                    const tabs = document.getElementById('tab-menu');
@@ -929,7 +940,7 @@ class RoomMain extends Component {
 
                                 //this.setState({isMenuOpen:false})
                             }}></i>
-                        </div>
+                        </div> */}
                             {
                                 this.menuSelect()  
                             }

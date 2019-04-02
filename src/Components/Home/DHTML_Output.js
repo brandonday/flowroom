@@ -23,7 +23,6 @@ let fabricA = [];
         let that = this;
         const targetElement = document.querySelector("#output-container");
         let element = document.getElementById('draggable-box');
-        //document.getElementById('items-overlay').style.pointerEvents = 'auto';
         // document.getElementById('fabricCanvas').addEventListener('mouseup',(e)=>{
         //     var rect = element.getBoundingClientRect();
         //     fabricA = [];
@@ -94,16 +93,14 @@ let fabricA = [];
         <div id="out-cover">
        
         </div>
-        {/* { 
+         {/* { 
                 objects.map((i)=> {
                 return (<FR_OBJECT id={i}/>)
                         })
-            } */}
-            {/* <canvas id="fabricCanvas">
+            } 
+            <canvas id="fabricCanvas">
             </canvas> */}
-            {/* <div id="items-overlay" style={{height:'100%',width:'100%',border:'1px solid red',position:'absolute'}}> */}
-           
-            {/* </div> */}
+         
         
             
         {/* <div id="preferences-bottom" className="preferences-bottom">

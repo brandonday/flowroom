@@ -188,7 +188,8 @@ database.ref(`Messages/${this.props.To}`).on("child_added", function(snapshot, p
             var li = document.createElement("li");
             var div = document.createElement("div");
             var date = document.createTextNode(moment(childSnapShot.val().date).format('LT'));
-            var fullname = document.createTextNode(`${childSnapShot.val().fullname}`)
+            var fullname = document.createTextNode(`${childSnapShot.val().id}`)
+            alert(fullname)
             var pwrap = document.createElement('div');
             var pElement = document.createElement('p');
             var pMessage = document.createElement('p');
