@@ -332,6 +332,20 @@
             str = str.replace(searchString, replaceWith);
             parent.window.updateJSCode(str);
         },
+        SaveScreenShot() {
+            
+            html2canvas(document.body,{allowTaint:true, removeContainer:false}).then(function(canvas) {
+               
+                let newCanvas = document.createElement('canvas');
+                let ctx = newCanvas.getContext("2d");
+                var img = new Image();
+                img.onload = function () {
+                    ctx.drawImage(img, 0, 0);
+                }
+                img.src = canvas.toDataURL();            
+                localStorage.setItem("thumbnail", newCanvas.toDataURL());
+            });
+        },
         RemixText:function(elId, options) {
 
             this.elId = elId;

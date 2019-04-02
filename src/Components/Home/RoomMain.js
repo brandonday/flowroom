@@ -130,10 +130,7 @@ class RoomMain extends Component {
               document.getElementById('tab-menu').style.zIndex = '999999';
               document.getElementById('tab-menu').style.height = '380px';
               
-            
-               document.getElementById('close-menu').addEventListener('click',function(){
-                document.getElementById('tab-menu').style.display = 'none';
-               })
+
 
             } else {
                 
@@ -289,6 +286,9 @@ class RoomMain extends Component {
         document.getElementById('details-text').className = 'details-text'; 
     }
     openModal(post = true) {
+
+        document.getElementById('output_frame').contentWindow.flowroom.SaveScreenShot();
+
         this.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles:{
           overlay: {
             backgroundColor: 'none',

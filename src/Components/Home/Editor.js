@@ -66,7 +66,7 @@ class Editor extends Component {
             showMoreSection:false,
             isMobileHeightForResize:0,
             descriptionOverflows:false,
-            libraries:[],
+            libraries:['https://html2canvas.hertzen.com/dist/html2canvas.min.js'],
             cssStyles:['../darkroom.css'],
             postVisible:'block',
             saveVisible:'block',
