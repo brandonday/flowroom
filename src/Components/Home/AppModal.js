@@ -650,11 +650,10 @@ const KeyCodes = {
             )
         } else {
            // setTimeout(function() {
-            this.setState({thumbPicURL:'./load.png'});
             setTimeout(()=> {
                 let getImg = localStorage.getItem('thumbnail');
                 this.setState({thumbPicURL:getImg});
-            },1000);  
+            },2000);  
               
             // },5000)
             let that = this;
