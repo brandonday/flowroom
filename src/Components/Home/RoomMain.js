@@ -21,7 +21,7 @@ import html2canvas from 'html2canvas';
 // import ImageEdit from './ImageEdit.js';
 
 import ImageEdit from './ImageEdit.js';
-
+const WebSocket = require('ws');
 
 const bodyScrollLock = require('body-scroll-lock');
 const disableBodyScroll = bodyScrollLock.disableBodyScroll;
@@ -61,7 +61,14 @@ class RoomMain extends Component {
         this.closeModal = this.closeModal.bind(this);
     }
     componentDidMount() {
+
+        
         let that = this;
+
+      
+
+
+
         document.getElementById('main-menu').style.display = 'none';
         document.getElementById('tab-menu').style.height = 'none';
         
@@ -286,7 +293,7 @@ class RoomMain extends Component {
         document.getElementById('details-text').className = 'details-text'; 
     }
     openModal(post = true) {
-      
+        //let iframe = document.getElementById
         this.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles:{
           overlay: {
             backgroundColor: 'none',
@@ -1100,7 +1107,11 @@ class RoomMain extends Component {
                                 display:that.state.openBtnVisible ? 'flex' : 'none',
                                 padding:'0px 9px'}}>
                                 {isMenuOpen ? 'Close Remix Menu' : 'Open Remix Menu'}</button> */}
-                            {/* <button id="postbtn" onClick={()=>{this.openModal(true)}} style={{fontWeight:'bold',
+                            <button id="postbtn" onClick={()=>{
+                                // this.openModal(true)
+                                
+                            
+                            }} style={{fontWeight:'bold',
                                 color:'white',
                                 fontSize:'15px',
                                 width:'50px',
@@ -1111,7 +1122,7 @@ class RoomMain extends Component {
                                 justifyContent:'space-between',
                                 display:that.state.postBtnVisible ? 'flex' : 'none',
                                 padding:'0px 9px'}}>
-                                Post</button> */}
+                                Post</button>
                                 <button id="savechanges" onClick={()=>{this.openModal(false)}} style={{fontWeight:'bold',
                                 color:'white',
                                 fontSize:'15px',

@@ -333,18 +333,14 @@
             parent.window.updateJSCode(str);
         },
         SaveScreenShot() {
-            
+            alert('called')
             html2canvas(document.body,{allowTaint:true, removeContainer:false}).then(function(canvas) {
-               
-                let newCanvas = document.createElement('canvas');
-                let ctx = newCanvas.getContext("2d");
-                var img = new Image();
-                img.onload = function () {
-                    ctx.drawImage(img, 0, 0);
-                }
-                img.src = canvas.toDataURL();            
-                localStorage.setItem("thumbnail", newCanvas.toDataURL());
-            });
+                alert(canvas.toDataURL())                  
+           localStorage.setItem("thumbnail", canvas.toDataURL());
+          
+           let getImg = localStorage.getItem('thumbnail');
+           console.log('thumbnail :',getImg);
+           });
         },
         RemixText:function(elId, options) {
 
