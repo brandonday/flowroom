@@ -239,10 +239,9 @@ const KeyCodes = {
         var user = firebase.auth().currentUser;
         var name, email, photoUrl, uid, emailVerified, fullname;
         var shortID = window.location.pathname.split("room/").pop();
-        let flow = document.getElementById('output_frame');
-      
-    
-
+        let getImg = localStorage.getItem('thumbnail');
+        console.log('get img :', getImg)
+        this.setState({thumbPicURL:getImg});
         this.setState({newMessage:'message-screen', shortID:shortID});
         Modal.setAppElement('#root');
         const database = firebase.database();
@@ -652,6 +651,12 @@ const KeyCodes = {
                
             )
         } else {
+           // setTimeout(function() {
+  
+               
+              
+            // },5000)
+    
             return (
                 <div style={{display:'flex', flexDirection:'column'}}>
                     <h2 ref={subtitle => this.subtitle = subtitle}>Post Room</h2>
@@ -788,15 +793,14 @@ const KeyCodes = {
                             <p style={{marginTop:10,marginBottom:10}}>Thumbnail pic for Room (Optional) (?)</p>
                         </div>
                         <div style={{display:this.state.thumbnailPicBox, height:'100px',border:'1px solid black', display:'flex'}}>
-                            <div id="thumbnail-pic-display" style={{
-                                backgroundSize:'contain',
-                                height:'100%',
-                                flex:1,
-                                backgroundRepeat:'no-repeat',
-                                overflow:'hidden',
-                                border:'1px solid black'
-                            }}>
-                            </div>
+                            <div id="thumbnail-pic-display"
+                                style={{
+                                    backgroundImage:`url(${this.state.thumbPicURL})`,
+                                    backgroundSize:'contain',
+                                    height:100,
+                                    width:100
+                            }}
+                            ></div>
                             <div style={{flex:2, display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',border:'1px solid black'}}>
                                 <label style={{height:20, width:50, marginTop:10, border:'1px solid black',zIndex:99999999}}>
                                     <p style={{display:'flex',fontSize:12,justifyContent:'center',alignItems:'center'}}>Browse</p>

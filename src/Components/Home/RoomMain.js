@@ -293,16 +293,10 @@ class RoomMain extends Component {
         document.getElementById('details-text').className = 'details-text'; 
     }
     openModal(post = true) {
+        
         let iframe = document.getElementById('output_frame');
         iframe.contentWindow.flowroom.SaveScreenShot();
-        setTimeout(function() {
-            let getImg = localStorage.getItem('thumbnail');
-            console.log('get img :', getImg)
-            document.getElementById('thumbnail-pic-display').style.backgroundImage = `url(${getImg})`;
-            document.getElementById('thumbnail-pic-display').style.backgroundSize = 'contain';
-            document.getElementById('thumbnail-pic-display').style.backgroundRepeat = 'no-repeat';
-            document.getElementById('thumbnail-pic-display').style.backgroundPosition = 'center';
-        },5000)
+   
         
         this.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles:{
           overlay: {
