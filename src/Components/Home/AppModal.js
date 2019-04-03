@@ -796,10 +796,11 @@ const KeyCodes = {
                             <div id="thumbnail-pic-display"
                                 style={{
                                     backgroundImage:`url(${this.state.thumbPicURL})`,
-                                    backgroundSize:'contain',
-                                    height:150,
+                                    backgroundSize:'cover',
                                     width:150,
-                                    backgroundRepeat:'no-repeat'
+                                    backgroundRepeat:'no-repeat',
+                                    overflow:'hidden',
+                                    backgroundPosition:'center'
                             }}
                             ></div>
                             <div style={{flex:2, display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',border:'1px solid black'}}>
