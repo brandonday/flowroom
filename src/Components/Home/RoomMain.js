@@ -293,7 +293,8 @@ class RoomMain extends Component {
         document.getElementById('details-text').className = 'details-text'; 
     }
     openModal(post = true) {
-        //let iframe = document.getElementById
+        let iframe = document.getElementById('output_frame');
+        iframe.contentWindow.flowroom.SaveScreenShot();
         this.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles:{
           overlay: {
             backgroundColor: 'none',
