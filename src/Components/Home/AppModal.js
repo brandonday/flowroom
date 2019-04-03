@@ -788,7 +788,7 @@ const KeyCodes = {
                             <p style={{marginTop:10,marginBottom:10}}>Thumbnail pic for Room (Optional) (?)</p>
                         </div>
                         <div style={{display:this.state.thumbnailPicBox, height:'100px',border:'1px solid black', display:'flex'}}>
-                            <div id="thumbnail-pic-display" style={{backgroundImage:`url(${this.state.thumbPicURL})`,
+                            <div id="thumbnail-pic-display" style={{
                                 backgroundSize:'contain',
                                 height:'100%',
                                 flex:1,
