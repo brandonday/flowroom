@@ -955,7 +955,7 @@ const KeyCodes = {
         //document.getElementById('create').className = 'create-hide';
         //document.getElementById('default-modal').style.display = 'none';
         localStorage.setItem('thumbnail','');
-        this.setState({thumbPicURL:getImg});
+        this.setState({thumbPicURL:''});
         this.props.closeModal({isModalOpen:false, modalType:'message'});
 
     }
