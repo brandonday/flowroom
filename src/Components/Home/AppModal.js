@@ -41,6 +41,7 @@ let messageList = [];
 let preventDuplicateArray = []; //keeps track
 let postData = [];
 let callOnce = false;
+let isUploaded = false;
 // {
 //     userName:'Brandon',
 //     pic:'',
@@ -696,18 +697,19 @@ const KeyCodes = {
                
             )
         } else {
-            if(timer !== null) {
-                clearTimeout(timer);
-            }
-            timer = setTimeout(()=> {
-                let imageData = localStorage.getItem('thumbnail');
-                this.setState({thumbPicURL:imageData});
-                this.putObject(imageData, (url) => {
+            if(isUploaded == false) {
+                if(timer !== null) {
+                    clearTimeout(timer);
+                } 
+                timer = setTimeout(()=> {
+                    let imageData = localStorage.getItem('thumbnail');
+                    this.setState({thumbPicURL:imageData});
+                    this.putObject(imageData, (url) => {
                     this.setState({thumbPicURL:url});
-
                 });
             },2000);  
-        
+            isUploaded = true;
+        }
   
             let that = this;
             return (
@@ -1006,6 +1008,7 @@ const KeyCodes = {
         //document.getElementById('create').className = 'create-hide';
         //document.getElementById('default-modal').style.display = 'none';
         //let getImg = localStorage.setItem('thumbnail','');
+        isUploaded = false;
         this.setState({thumbPicURL:'./load.png'});
         this.props.closeModal({isModalOpen:false, modalType:'message'});
 
