@@ -650,7 +650,7 @@ const KeyCodes = {
             )
         } else {
            // setTimeout(function() {
-  
+            this.setState({thumbPicURL:'./load.png'});
             setTimeout(()=> {
                 let getImg = localStorage.getItem('thumbnail');
                 this.setState({thumbPicURL:getImg});
@@ -954,7 +954,7 @@ const KeyCodes = {
         //document.getElementById('create').className = 'create-hide';
         //document.getElementById('default-modal').style.display = 'none';
         //let getImg = localStorage.setItem('thumbnail','');
-        this.setState({thumbPicURL:'./load.png'});
+        
         this.props.closeModal({isModalOpen:false, modalType:'message'});
 
     }
