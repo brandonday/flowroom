@@ -62,7 +62,7 @@ const KeyCodes = {
   const delimiters3 = [KeyCodes.comma, KeyCodes.enter];
   const delimiters4 = [KeyCodes.comma, KeyCodes.enter];
   const delimiters5 = [KeyCodes.comma, KeyCodes.enter];
-
+ let thumbPicURL;
  class AppModal extends Component {
     constructor(props) {
       super(props);
@@ -656,7 +656,7 @@ const KeyCodes = {
                
               
             // },5000)
-    
+            let that = this;
             return (
                 <div style={{display:'flex', flexDirection:'column'}}>
                     <h2 ref={subtitle => this.subtitle = subtitle}>Post Room</h2>
@@ -802,7 +802,7 @@ const KeyCodes = {
                                     overflow:'hidden',
                                     backgroundPosition:'center'
                             }}
-                            ></div>
+                            >{()=>{that.setState({thumbPicURL:''})}}</div>
                             <div style={{flex:2, display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',border:'1px solid black'}}>
                                 <label style={{height:20, width:50, marginTop:10, border:'1px solid black',zIndex:99999999}}>
                                     <p style={{display:'flex',fontSize:12,justifyContent:'center',alignItems:'center'}}>Browse</p>
