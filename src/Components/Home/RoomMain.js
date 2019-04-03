@@ -7,6 +7,8 @@ import RoomPosts from './RoomPosts.js';
 import RelatedRooms from './RoomPosts.js';
 import Editor from './Editor.js';
 import Responsive from 'react-responsive';
+import uuid from 'uuid';
+import Hashids from 'hashids';
 import EditorOptionsDesktop from './EditorOptionsDesktop.js';
 import EditorOptionsTablet from './EditorOptionsTablet.js';
 import { OPEN_MODAL } from '../../actions/entireApp';
@@ -16,12 +18,23 @@ import { tween, styler } from 'popmotion';
 import { startCreateRoom } from '../../actions/rooms';
 import axios from 'axios';
 import * as dat from 'dat.gui';
-
 import html2canvas from 'html2canvas';
 // import ImageEdit from './ImageEdit.js';
-
+import AWS from 'aws-sdk';
 import ImageEdit from './ImageEdit.js';
-const WebSocket = require('ws');
+import * as S3 from 'aws-sdk/clients/s3';
+
+
+
+AWS.config.update({
+  region: 'us-west-2',
+  credentials: new AWS.CognitoIdentityCredentials({
+    IdentityPoolId: 'us-west-2:5df2511a-5595-416c-b148-aba28893c3f3'
+  })
+});
+
+const s3 = new S3();
+
 
 const bodyScrollLock = require('body-scroll-lock');
 const disableBodyScroll = bodyScrollLock.disableBodyScroll;
