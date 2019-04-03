@@ -381,7 +381,7 @@ const KeyCodes = {
                 uid:uid,
                 postedPicURL:this.state.postedPicURL,
                 roomType:this.state.roomType,
-                thumbnail:this.state.thumbPicURL,
+                thumbnail:localStorage.getItem("thumbnail_url"),
                 objectOptions:{},
                 textPosted:this.state.textPosted,
                 roomPrivacy:this.state.roomPrivacy,
@@ -443,39 +443,7 @@ const KeyCodes = {
 
 
     }
-    async putObject(imageData, callback) {
-        if(imageData == null) {
-            return; 
-        }
-        let hashids = new Hashids(uuid(), 6);
-        let fileName = hashids.encode(1, 2, 3) + '.png';
-        
-        let buffer = new Buffer(imageData.replace(/^data:image\/\w+;base64,/, ""),'base64')
-      
-        let params = { 
-            Bucket: 'test.flowroom.com',
-            Key:'uploads/' + fileName,
-            ContentEncoding: 'base64',
-            ContentType: 'image/png',
-            Body: buffer,
-            
-          }
-      
-        s3.putObject(params, function(err, data) {
-          console.log('err: ', err)
-          if (err) {
-            console.log('error :',err);
-          } else {
-            let url = `http://test.flowroom.com/uploads/${fileName}`;
-            console.log('url :', url);
-            callback(url);
-            
-           
-          }
-        });
 
-
-      }
     LoginHere() {
         return (
             <p className="signup-section-log-in-here-p">Log in here</p>
@@ -698,21 +666,18 @@ const KeyCodes = {
             )
         } else {
 
-            let that = this;
-            if(isUploaded == false) {
-                console.log('isUploaded called')
+          
+                console.log('load thumbnail')
                 if(timer !== null) {
                     clearTimeout(timer);
                 } 
                 timer = setTimeout(()=> {
                     let imageData = localStorage.getItem('thumbnail');
                         that.setState({thumbPicURL:imageData});
-                        that.putObject(imageData, (url) => {
-                        that.setState({thumbPicURL:url});
-                    });
+                       
                 },2000);  
-            isUploaded = true;
-        }
+  
+        
   
       
             return (

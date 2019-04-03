@@ -32,7 +32,7 @@ const Desktop = props => <Responsive {...props} minWidth={992} />;
 const Tablet = props => <Responsive {...props} minWidth={768} maxWidth={991} />;
 const Mobile = props => <Responsive {...props} maxWidth={767} />;
 const Default = props => <Responsive {...props} minWidth={768} />;
- 
+
 let Loaded = false;
 let isMenuOpen = false;
  let gui = new dat.GUI();
@@ -292,11 +292,54 @@ class RoomMain extends Component {
         document.getElementById('details').className = 'details-3x'; 
         document.getElementById('details-text').className = 'details-text'; 
     }
+    async putObject(imageData, callback) {
+        if(imageData == null) {
+            return; 
+        }
+        let hashids = new Hashids(uuid(), 6);
+        let fileName = hashids.encode(1, 2, 3) + '.png';
+        
+        let buffer = new Buffer(imageData.replace(/^data:image\/\w+;base64,/, ""),'base64')
+      
+        let params = { 
+            Bucket: 'test.flowroom.com',
+            Key:'uploads/' + fileName,
+            ContentEncoding: 'base64',
+            ContentType: 'image/png',
+            Body: buffer,
+            
+          }
+      
+        s3.putObject(params, function(err, data) {
+          console.log('err: ', err)
+          if (err) {
+            console.log('error :',err);
+          } else {
+            let url = `http://test.flowroom.com/uploads/${fileName}`;
+            console.log('url :', url);
+            callback(url);
+            
+           
+          }
+        });
+
+
+      }
     openModal(post = true) {
         
         let iframe = document.getElementById('output_frame');
         iframe.contentWindow.flowroom.SaveScreenShot();
-   
+         
+        let imageData = localStorage.getItem("thumbnail");
+        
+        setTimeout(()=> { 
+
+            this.putObject(imageData, (url) => { 
+
+                localStorage.setItem("thumbnail_url", url);
+            })
+
+        },2000)
         
         this.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles:{
           overlay: {
