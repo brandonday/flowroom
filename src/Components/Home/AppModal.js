@@ -18,19 +18,7 @@ import SignUp from './SignUp';
 import { snap } from '@popmotion/popcorn';
 import html2canvas from 'html2canvas';
 
-import AWS from 'aws-sdk';
-import * as S3 from 'aws-sdk/clients/s3';
 
-
-
-AWS.config.update({
-  region: 'us-west-2',
-  credentials: new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: 'us-west-2:5df2511a-5595-416c-b148-aba28893c3f3'
-  })
-});
-
-const s3 = new S3();
 
 var moment = require('moment');
 let timer = null; 
