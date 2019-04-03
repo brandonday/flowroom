@@ -59,7 +59,7 @@ class ProfilePic extends Component {
             left:'-31px',
             background:'white',
             borderRadius:'6px',
-            zIndex:'99999',
+            zIndex:'999999',
             display:this.state.menuVisible ? 'flex' : 'none',
             flexDirection:'column'
           }}>

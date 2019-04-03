@@ -18,6 +18,19 @@ import SignUp from './SignUp';
 import { snap } from '@popmotion/popcorn';
 import html2canvas from 'html2canvas';
 
+import AWS from 'aws-sdk';
+import * as S3 from 'aws-sdk/clients/s3';
+
+
+AWS.config.update({
+  region: 'us-west-2',
+  credentials: new AWS.CognitoIdentityCredentials({
+    IdentityPoolId: 'us-west-2:5df2511a-5595-416c-b148-aba28893c3f3'
+  })
+});
+
+const s3 = new S3();
+
 var moment = require('moment');
 
 const messages = [];
@@ -428,6 +441,39 @@ const KeyCodes = {
 
 
     }
+    async putObject(imageData, callback) {
+        if(imageData == null) {
+            return; 
+        }
+        let hashids = new Hashids(uuid(), 6);
+        let fileName = hashids.encode(1, 2, 3) + '.png';
+        
+        let buffer = new Buffer(imageData.replace(/^data:image\/\w+;base64,/, ""),'base64')
+      
+        let params = { 
+            Bucket: 'test.flowroom.com',
+            Key:'uploads/' + fileName,
+            ContentEncoding: 'base64',
+            ContentType: 'image/png',
+            Body: buffer,
+            
+          }
+      
+        s3.putObject(params, function(err, data) {
+          console.log('err: ', err)
+          if (err) {
+            console.log('error :',err);
+          } else {
+            let url = `http://test.flowroom.com/uploads/${fileName}`;
+            console.log('url :', url);
+            callback(url);
+            
+           
+          }
+        });
+
+
+      }
     LoginHere() {
         return (
             <p className="signup-section-log-in-here-p">Log in here</p>
@@ -649,13 +695,16 @@ const KeyCodes = {
                
             )
         } else {
-           // setTimeout(function() {
+        
             setTimeout(()=> {
-                let getImg = localStorage.getItem('thumbnail');
-                this.setState({thumbPicURL:getImg});
+                let imageData = localStorage.getItem('thumbnail');
+                this.setState({thumbPicURL:imageData});
+                this.putObject(imageData, (url) => {
+                    this.setState({thumbPicURL:url});
+                });
             },2000);  
               
-            // },5000)
+  
             let that = this;
             return (
                 <div style={{display:'flex', flexDirection:'column'}}>
