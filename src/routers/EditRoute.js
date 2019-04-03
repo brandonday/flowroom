@@ -15,6 +15,14 @@ export const EditRoute = ({ isAuthenticated, username, component:Component, ...r
    
     return(<Route {...rest} component={(props) => {
    
+        firebase.auth().onAuthStateChanged((user)=> {
+            console.log("firebase.auth user: ",user);
+            if(user) {
+               
+            } else {
+               
+            }
+        });
         
        
         if(usernameAuth === 'brando') {

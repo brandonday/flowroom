@@ -286,9 +286,7 @@ class RoomMain extends Component {
         document.getElementById('details-text').className = 'details-text'; 
     }
     openModal(post = true) {
-
-        document.getElementById('output_frame').contentWindow.flowroom.SaveScreenShot();
-
+      
         this.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles:{
           overlay: {
             backgroundColor: 'none',
@@ -611,18 +609,13 @@ class RoomMain extends Component {
                         width:'48px', 
                         background:'#0e0e0e'
                     }}>
-                        <div id="details" onClick={()=> {
+                        <div id="remix-tab" onClick={()=> {
                          
-                                let remixid = document.getElementById('details');
+                                let remixid = document.getElementById('remix-tab');
                                 remixid.className = 'menubg';
                                 remixid.style.borderRight = '0px solid #181818';
 
-                                let objectsid = document.getElementById('objects');
-                                objectsid.className = '';
-                                objectsid.style.borderRight = '0px solid #181818';
-
-
-                                let getclasses = document.getElementsByClassName('menubg');
+                              
                                 this.setState({
                                     details:false,
                                     objects:false,
@@ -635,13 +628,7 @@ class RoomMain extends Component {
                                 });
                                 document.getElementById('main-menu').style.display = 'flex';
                                 isMenuOpen = true;
-                                // for(let i=0; i < getclasses.length; i++) {
-                                //     if(getclasses[i].id !== 'remix') {
-                                //         getclasses[i].style.borderRight = '1px solid #181818';
-                                //         getclasses[i].className = '';
-                                //     }
-                                // }
-                            
+                              
 
                             }} style={{
                             display:'flex',
@@ -654,13 +641,142 @@ class RoomMain extends Component {
                             borderBottom:'1px solid #181818',
                             justifyContent:'center'
                             }} className="menu-bg-border">
-                                <i className="fas fa-infinity" style={{fontSize:15, color:'white',
-    fontSize:'15px',
-    color:'white'}}/>
-                                <p id="details-text" className="details-text" style={{fontSize:11,fontWeight:'bold',color:'white',width:'33px'}}>REMIX</p>
+                                <div style={{
+                                    fontSize:15, 
+                                    color:'white',
+                                    backgroundImage:'url(../infinity.png)',
+                                    backgroundSize:'100% 92%',
+                                    backgroundRepeat:'no-repeat',
+                                    height:9,
+                                    width:22
+                                    }}></div>
+                                <p style={{fontSize:10.2,fontWeight:'bold',color:'#40FFE8',width:'26px'}}>REMIX</p>
                                
                         </div>
 
+
+
+
+                                        <div id="comments" onClick={()=> {
+           
+                                            // let commentsid = document.getElementById('comments');
+                                            // commentsid.className = 'menubg';
+                                            // commentsid.style.borderRight = '0px solid #181818';
+                                            // let getclasses = document.getElementsByClassName('menubg');
+                                            // this.setState({
+                                            //     details:false,
+                                            //     objects:false,
+                                            //     comments:true,
+                                            //     draw:false,
+                                            //     remix:false,
+                                            //     preferences:false,
+                                            //     record:false
+                                            // });
+                                            // document.getElementById('main-menu').style.display = 'flex';
+                                            // for(let i=0; i < getclasses.length; i++) {
+                                            //     if(getclasses[i].id !== 'comments') {
+                                            //         getclasses[i].style.borderRight = '1px solid #181818';
+                                            //         getclasses[i].className = '';
+                        
+                                            //     }
+                                            // }
+                                        }} style={{
+                                            display:'flex',
+                            color:'rgb(64, 255, 232)',
+                            height:'52px',
+                            width:'48px',
+                            flexDirection:'column',
+                            alignItems:'center',
+                            borderRight:'1px solid #181818',
+                            borderBottom:'1px solid #181818',
+                            justifyContent:'center'}} className="menu-bg-border">
+                                                <div style={{
+                                    fontSize:'15px',
+                                    color:'white',
+                                    backgroundImage:'url(../code.svg)',
+                                    backgroundSize:'100% 100%',
+                                    backgroundRepeat:'no-repeat',
+                                    height:'14px',
+                                    width:'16px',
+                                    marginBottom:'3px'
+                                    }}></div>
+                                                    <p id="details-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252',width:'26px'}}>SCRIPT</p>
+                                    </div>
+                                        
+                                     <div id="draw" onClick={()=> {
+                                       
+                                            this.openModal(true)
+                                    
+                                    }} style={{
+                            display:'flex',
+                            color:'rgb(64, 255, 232)',
+                            height:'52px',
+                            width:'48px',
+                            flexDirection:'column',
+                            alignItems:'center',
+                            borderRight:'1px solid #181818',
+                            borderBottom:'1px solid #181818',
+                            justifyContent:'center'
+                                    }} 
+                                    className="menu-bg-border">
+                                         <div style={{
+                                    fontSize:'15px',
+                                    color:'white',
+                                    backgroundImage:'url(../save-regular-grey.svg)',
+                                    backgroundSize:'100% 100%',
+                                    backgroundRepeat:'no-repeat',
+                                    height:'14px',
+                                    width:'16px',
+                                    marginBottom:'3px'
+                                    }}></div>
+                                        <p id="details-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252',width:'38px'}}>PUBLISH</p>
+                            </div>
+
+                            <div id="draw" onClick={()=> {
+                                        // let drawid = document.getElementById('draw');
+                                        // drawid.className = 'menubg';
+                                        // drawid.style.borderRight = '0px solid #181818';
+                                        // let getclasses = document.getElementsByClassName('menubg');
+                                        // this.setState({
+                                        //     details:false,
+                                        //     objects:false,
+                                        //     comments:false,
+                                        //     draw:true,
+                                        //     remix:false,
+                                        //     preferences:false,
+                                        //     record:false
+                                        // });
+                                        // document.getElementById('main-menu').style.display = 'flex';
+                                        // for(let i=0; i < getclasses.length; i++) {
+                                        //     if(getclasses[i].id !== 'draw') {
+                                        //         getclasses[i].style.borderRight = '1px solid #181818';
+                                        //         getclasses[i].className = '';
+                                        //     }
+                                        // }
+                                    }} style={{
+                            display:'flex',
+                            color:'rgb(64, 255, 232)',
+                            height:'52px',
+                            width:'48px',
+                            flexDirection:'column',
+                            alignItems:'center',
+                            borderRight:'1px solid #181818',
+                            borderBottom:'1px solid #181818',
+                            justifyContent:'center'
+                                    }} 
+                                    className="menu-bg-border">
+                                         <div style={{
+                                    fontSize:'15px',
+                                    color:'white',
+                                    backgroundImage:'url(../fullscreen_icon.png)',
+                                    backgroundSize:'100% 100%',
+                                    backgroundRepeat:'no-repeat',
+                                    height:'14px',
+                                    width:'16px',
+                                    marginBottom:'3px'
+                                    }}></div>
+                                        <p id="details-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252',width:'22px'}}>FULL</p>
+                            </div>
 
                                  <div id="objects" onClick={()=> {
                                     let objectsid = document.getElementById('objects');
@@ -705,81 +821,11 @@ class RoomMain extends Component {
                                     alignItems:'center',
                                     borderRight:'1px solid #181818',
                                     borderBottom:'1px solid #181818'}} className="menu-bg-border">
-                                <p id="details-text" className="details-text" style={{fontSize:11,fontWeight:'bold',color:'white'}}>Add New</p>
-                                <p style={{fontSize:11,fontWeight:'bold',color:'white'}}>Content</p>
+                                {/* <p id="details-text" className="details-text" style={{fontSize:11,fontWeight:'bold',color:'white'}}>Add New</p>
+                                <p style={{fontSize:11,fontWeight:'bold',color:'white'}}>Content</p> */}
                                 </div> 
 
-
-                                        {/* <div id="comments" onClick={()=> {
-           
-                                            let commentsid = document.getElementById('comments');
-                                            commentsid.className = 'menubg';
-                                            commentsid.style.borderRight = '0px solid #181818';
-                                            let getclasses = document.getElementsByClassName('menubg');
-                                            this.setState({
-                                                details:false,
-                                                objects:false,
-                                                comments:true,
-                                                draw:false,
-                                                remix:false,
-                                                preferences:false,
-                                                record:false
-                                            });
-                                            document.getElementById('main-menu').style.display = 'flex';
-                                            for(let i=0; i < getclasses.length; i++) {
-                                                if(getclasses[i].id !== 'comments') {
-                                                    getclasses[i].style.borderRight = '1px solid #181818';
-                                                    getclasses[i].className = '';
-                        
-                                                }
-                                            }
-                                        }} style={{
-                                            height:'55px',
-                                            width:'59px',
-                                            display:'flex',
-                                            flexDirection:'column',
-                                            justifyContent:'center',
-                                            alignItems:'center',
-                                            borderRight:'1px solid #181818',
-                                            borderBottom:'1px solid #181818'}} className="menu-bg-border">
-                                                <div id="comments-icon" className="comments-3x"></div>
-                                                    <p id="details-text" className="details-text">Add Apps</p>
-                                    </div> */}
-                                    {/* <div id="draw" onClick={()=> {
-                                        let drawid = document.getElementById('draw');
-                                        drawid.className = 'menubg';
-                                        drawid.style.borderRight = '0px solid #181818';
-                                        let getclasses = document.getElementsByClassName('menubg');
-                                        this.setState({
-                                            details:false,
-                                            objects:false,
-                                            comments:false,
-                                            draw:true,
-                                            remix:false,
-                                            preferences:false,
-                                            record:false
-                                        });
-                                        document.getElementById('main-menu').style.display = 'flex';
-                                        for(let i=0; i < getclasses.length; i++) {
-                                            if(getclasses[i].id !== 'draw') {
-                                                getclasses[i].style.borderRight = '1px solid #181818';
-                                                getclasses[i].className = '';
-                                            }
-                                        }
-                                    }} style={{
-                                        height:'55px',
-                                        width:'59px',
-                                        display:'flex',
-                                        flexDirection:'column',
-                                        justifyContent:'center',
-                                        alignItems:'center',
-                                        borderRight:'1px solid #181818',
-                                        borderBottom:'1px solid #181818'
-                                    }} 
-                                    className="menu-bg-border">
-                                        <div id="draw-icon" className="draw-3x"></div>
-                                        <p id="details-text" className="details-text">Add Templates</p>
-                            </div> */}
+                                   
                             {/* <div id="remix" onClick={()=> {
                                 let remixid = document.getElementById('remix');
                                 remixid.className = 'menubg';
@@ -991,7 +1037,7 @@ class RoomMain extends Component {
                             position:'absolute',
                             right:'0px'
                             }}>
-                        <button id="open-code-editor" onClick={this.dropDownAnimate.bind(this)} style={{fontWeight:'bold',
+                        {/* <button id="open-code-editor" onClick={this.dropDownAnimate.bind(this)} style={{fontWeight:'bold',
                                 color:'white',
                                 fontSize:'15px',
                                 width:'129px',
@@ -1002,8 +1048,8 @@ class RoomMain extends Component {
                                 justifyContent:'space-between',
                                 display:'flex',
                                 padding:'0px 9px'}}>
-                                Open Code Editor</button>
-                        <button id="openCloseBtn" onClick={()=>{
+                                Open Code Editor</button> */}
+                        {/* <button id="openCloseBtn" onClick={()=>{
                               const element = document.querySelector('#main-menu');
                               const tabs = document.getElementById('tab-menu');
                               const ball = styler(element);
@@ -1053,8 +1099,8 @@ class RoomMain extends Component {
                                 justifyContent:'space-between',
                                 display:that.state.openBtnVisible ? 'flex' : 'none',
                                 padding:'0px 9px'}}>
-                                {isMenuOpen ? 'Close Remix Menu' : 'Open Remix Menu'}</button>
-                            <button id="postbtn" onClick={()=>{this.openModal(true)}} style={{fontWeight:'bold',
+                                {isMenuOpen ? 'Close Remix Menu' : 'Open Remix Menu'}</button> */}
+                            {/* <button id="postbtn" onClick={()=>{this.openModal(true)}} style={{fontWeight:'bold',
                                 color:'white',
                                 fontSize:'15px',
                                 width:'50px',
@@ -1065,7 +1111,7 @@ class RoomMain extends Component {
                                 justifyContent:'space-between',
                                 display:that.state.postBtnVisible ? 'flex' : 'none',
                                 padding:'0px 9px'}}>
-                                Post</button>
+                                Post</button> */}
                                 <button id="savechanges" onClick={()=>{this.openModal(false)}} style={{fontWeight:'bold',
                                 color:'white',
                                 fontSize:'15px',
@@ -1097,7 +1143,7 @@ class RoomMain extends Component {
                                 display:that.state.postBtnVisible ? 'none' : 'flex',
                                 padding:'0px 9px'}}>
                                 Delete</button>
-                                <i className="fas fa-expand" style={{fontSize:30, color:'rgb(179, 0, 254)', marginRight:25}}></i>
+                                {/* <i className="fas fa-expand" style={{fontSize:30, color:'rgb(179, 0, 254)', marginRight:25}}></i> */}
                         </div>
                         
                         {/* <RelatedRooms/> */}

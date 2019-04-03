@@ -435,7 +435,13 @@ body {
   border-bottom: 2px solid white;
   padding-bottom: 5px;
 }
-
+.selectedRM {
+  border-bottom: 1px solid;
+  padding-bottom: 1px;
+}
+.notSelectedRM {
+  color: rgb(82, 82, 82);
+}
 @media (max-width: 830px) {
     .header {
       height:119px;

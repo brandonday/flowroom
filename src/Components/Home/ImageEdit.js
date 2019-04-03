@@ -49,14 +49,14 @@ let that;
         let list = document.getElementById('main-menu');
         let getList = JSON.parse(localStorage.getItem( "FR_REMIX_LIST"));
         let remixImageList = document.createElement('div');
-                    remixImageList.setAttribute("id", "remix-list");
-                    remixImageList.style.display = 'flex';
-                    remixImageList.style.flexDirection = 'row';
-                  remixImageList.style.flexWrap = 'wrap';
+            remixImageList.setAttribute("id", "remix-list");
+            remixImageList.style.flexDirection = 'column';
+            remixImageList.style.width = '100%';
         let remixImageTitle = document.createElement('div');
         let imgtitle = document.createElement('p');
         let remixImageListNav = document.createElement('div');
         let remixImageListNavArrows = document.createElement('div');
+        let remixImageWrap = document.createElement('div');
         remixImageListNavArrows.style.display = 'flex';
         remixImageListNavArrows.style.position = 'absolute';
         remixImageListNavArrows.style.right = '14px';
@@ -79,7 +79,6 @@ let that;
         
         remixImageListNav.style.height = '37px';
         remixImageListNav.style.width = '100%';
-        remixImageListNav.style.border = '1px solid white';
         remixImageListNav.style.paddingLeft = '10px';
         remixImageListNav.style.display = 'flex';
         remixImageListNav.style.flexDirection = 'row';
@@ -87,21 +86,36 @@ let that;
         remixImageListNav.style.fontSize = '12px';
         remixImageListNav.style.alignItems = 'center';
         remixImageListNav.style.listStyleType = 'none';
+
         let remixImageListNavUL = document.createElement('ul');
         remixImageListNav.appendChild(remixImageListNavUL);
        
          for(let i = 0; i < remixImageListOptions.length; i++) {
           let remixImageListItem = document.createElement('li');
             remixImageListItem.style.marginRight = '20px';
+            remixImageListItem.style.height = '20px';
+ 
+            remixImageListItem.style.textAlign = 'center';
+            remixImageListItem.style.alignItems = '38px';
+            remixImageListItem.style.display = 'flex';
+            remixImageListItem.style.justifyContent = 'center';
+            remixImageListItem.style.paddingLeft = '6px';
+            remixImageListItem.style.paddingRight = '6px';
+            remixImageListItem.style.marginRight = '20px';
+            remixImageListItem.className = 'notSelectedRM';
             remixImageListItem.setAttribute("id", `${remixImageListOptions[i]}`)
             remixImageListItem.appendChild(document.createTextNode(remixImageListOptions[i]));
+            if(remixImageListItem.id === remixImageListOptions[0]) {
+              remixImageListItem.className = 'selectedRM';
+            }
             remixImageListItem.addEventListener('click', ()=>{
-              let getsel = document.getElementsByClassName('selected');
-              for(let i =0; i < getsel.length; i++) {
-                if(getsel[i].id == remixImageListOptions[i]) {
-                  remixImageListItem.className = 'selected';
-                } else {
-                  remixImageListItem.className = '';
+              remixImageListItem.className = 'selectedRM';
+              
+              let getsel = document.getElementsByClassName('selectedRM');
+              
+              for(let i = 0; i < getsel.length; i++) {
+                if(getsel[i].id !== remixImageListItem.id) {
+                  getsel[i].className = 'notSelectedRM';
                 }
               }
             })
@@ -141,40 +155,98 @@ let that;
                     for(let j = 0; j < uniqueArray.length; j++) {
                  
                       let item = document.createElement('li');
-                        
+                      
                 
-                      let bgImg = document.createElement('div');       
+                      let bgImgWrap = document.createElement('div');       
+                      let bgImg = document.createElement('div'); 
+                      let itemInfoWrap = document.createElement('div');
+                      let itemInfo = document.createElement('p');
+                      let itemInfot = document.createElement('p');
+                      let itemInfoh = document.createElement('p');
+                      let itemInfoEdit = document.createElement('p');
+                      
+                      itemInfo.appendChild(document.createTextNode('Pac-man'));
+                      itemInfot.appendChild(document.createTextNode('Hero'));
+                      itemInfoh.appendChild(document.createTextNode('100px x 100px'));
+                      itemInfoEdit.appendChild(document.createTextNode('Edit'));
+
+                     
+
+                      itemInfoWrap.style.height = '62px';
+                      itemInfo.style.fontSize = '12px';
+                      itemInfo.style.color = '#767676';
+                      itemInfo.style.fontWeight = '0';
+                      itemInfo.style.marginLeft = '7px';
+                      itemInfo.style.marginTop = '4px';
+                      itemInfo.style.height = '14px';
+
+                      itemInfot.style.fontSize = '10px';
+                      itemInfot.style.color = '#2b2b2b';
+                      itemInfot.style.height = '14px';
+                      itemInfot.style.fontWeight = '0';
+                      itemInfot.style.marginLeft = '7px';
                 
-                    bgImg.style.backgroundImage = `url(${getList[j].image})`;
-                    bgImg.style.height = '50px';
-                    bgImg.style.width = '50px';
-                    bgImg.style.backgroundSize = 'cover';
+
+                      itemInfo.style.fontSize = '12px';
+
+                      itemInfoh.style.fontSize = '10px';
+                      itemInfoh.style.color = '#2b2b2b';
+                      itemInfoh.style.height = '13px';
+                      itemInfoh.style.fontWeight = '0';
+                      itemInfoh.style.marginLeft = '7px';
+                      
+                      itemInfoEdit.style.fontSize = '11px';
+                      itemInfoEdit.style.color = '#767676';
+                      itemInfoEdit.style.fontWeight = '0';
+                      itemInfoEdit.style.marginLeft = '7px';
+
+                      itemInfoWrap.appendChild(itemInfo);
+                      itemInfoWrap.appendChild(itemInfot);
+                      itemInfoWrap.appendChild(itemInfoh);
+                      itemInfoWrap.appendChild(itemInfoEdit);
+
+                      bgImg.style.backgroundImage = `url(${getList[j].image})`;
+                      bgImg.style.height = '45px';
+                      bgImg.style.width = '45px';
+                      bgImg.style.backgroundSize = 'cover';
+                      bgImg.style.backgroundPosition = 'center';
+
+                    bgImgWrap.style.height = '62px';
+                    bgImgWrap.style.width = '62px';
+                    bgImgWrap.style.display = 'flex';
+                    bgImgWrap.style.justifyContent = 'center';
+                    bgImgWrap.style.alignItems = 'center';
+                    bgImgWrap.style.marginLeft = '6px';
+                    bgImgWrap.style.borderRadius = '6px';
+                    bgImgWrap.style.backgroundColor = '#252525';
            
-                    item.style.height = '100px';
-                    item.style.width = '100px';
+                    item.style.height = '73px';
+                    item.style.width = '249px';
 
-                    item.style.marginTop = '10px';
-                    item.style.marginBottom = '10px';
+                    item.style.margin = '3px 6px 5px 7px';
 
-                    item.style.marginLeft = '10px';
-                    item.style.marginRight = '10px';
-
-                    item.style.border = '1px solid #DDE0EB';
+    
                     item.style.display = 'flex';
                     item.style.alignItems = 'center';
-                    item.style.borderRadius = '0px';
+                    item.style.borderRadius = '3px';
+                    item.style.backgroundColor = '#1f1f1f';
 
-                    bgImg.style.marginRight = '5px';
-                    bgImg.style.marginLeft = '7px';
-                    bgImg.style.position = 'relative';
+                  
+                    bgImgWrap.style.position = 'relative';
                     item.style.display = 'flex';
-                    item.style.justifyContent = 'center';
-                    bgImg.style.right = '0px';
-                    item.appendChild(bgImg);
+                 
                     
+                    bgImgWrap.appendChild(bgImg)
+                    item.appendChild(bgImgWrap);
+                    item.appendChild(itemInfoWrap);
                    
-                    remixImageList.appendChild(item);
-              
+                    remixImageList.appendChild(remixImageWrap);
+                    remixImageList.style.height = '250px';
+                    remixImageWrap.style.height = '250px';
+                    remixImageWrap.style.overflowY = 'scroll';
+                    
+                    remixImageWrap.appendChild(item);
+
                     if(getList[j].type === 'url') {
                       item.addEventListener('click', ()=> {
 

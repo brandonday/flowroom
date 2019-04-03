@@ -124,8 +124,11 @@ recreateList() {
   let remixList = document.createElement('div');
   remixList.setAttribute("id", "remix-list");
   remixList.style.display = 'flex';
-  remixList.style.flexDirection = 'row';
-  remixList.style.flexWrap = 'wrap';
+  remixList.style.flexDirection = 'column';
+  remixList.style.width = '100%';
+  // remixList.style.flexDirection = 'row';
+  // remixList.style.flexWrap = 'wrap';
+
   if(getList != null) {
   let overlay = document.createElement('div');
               overlay.setAttribute("id","remix-overlay");
