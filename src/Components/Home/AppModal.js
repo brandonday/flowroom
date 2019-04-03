@@ -797,8 +797,9 @@ const KeyCodes = {
                                 style={{
                                     backgroundImage:`url(${this.state.thumbPicURL})`,
                                     backgroundSize:'contain',
-                                    height:100,
-                                    width:100
+                                    height:150,
+                                    width:150,
+                                    backgroundRepeat:'no-repeat'
                             }}
                             ></div>
                             <div style={{flex:2, display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',border:'1px solid black'}}>
