@@ -333,20 +333,8 @@
             parent.window.updateJSCode(str);
         },
         SaveScreenShot() {
-       
-            html2canvas(document.body,{allowTaint:true, removeContainer:false}).then(function(canvas) {
-                alert(canvas.toDataURL())                  
-           localStorage.setItem("thumbnail", canvas.toDataURL());
-          
-           let getImg = localStorage.getItem('thumbnail');
-           console.log('thumbnail :',getImg);
-
-            let img = document.createElement('img');
-            img.onload = function() {
-                document.body.appendChild(img)
-            }
-            img.src = getImg;
-                
+            html2canvas(document.body,{allowTaint:true, removeContainer:false}).then(function(canvas) {            
+                localStorage.setItem("thumbnail", canvas.toDataURL());                
            });
         },
         RemixText:function(elId, options) {
