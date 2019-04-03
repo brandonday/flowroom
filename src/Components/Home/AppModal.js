@@ -22,6 +22,7 @@ import AWS from 'aws-sdk';
 import * as S3 from 'aws-sdk/clients/s3';
 
 
+
 AWS.config.update({
   region: 'us-west-2',
   credentials: new AWS.CognitoIdentityCredentials({
@@ -32,7 +33,7 @@ AWS.config.update({
 const s3 = new S3();
 
 var moment = require('moment');
-
+let timer = null; 
 const messages = [];
 let names = [];
 let messagesSent = [];
@@ -695,15 +696,18 @@ const KeyCodes = {
                
             )
         } else {
-        
-            setTimeout(()=> {
+            if(timer !== null) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(()=> {
                 let imageData = localStorage.getItem('thumbnail');
                 this.setState({thumbPicURL:imageData});
                 this.putObject(imageData, (url) => {
                     this.setState({thumbPicURL:url});
+
                 });
             },2000);  
-              
+        
   
             let that = this;
             return (
