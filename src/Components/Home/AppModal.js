@@ -369,7 +369,7 @@ const KeyCodes = {
                 uid:uid,
                 postedPicURL:this.state.postedPicURL,
                 roomType:this.state.roomType,
-                thumbnail:localStorage.getItem("thumbnail_url") === null? '' : localStorage.getItem("thumbnail_url"),
+                thumbnail:localStorage.getItem("thumbnailUrl") === null? '' : localStorage.getItem("thumbnailUrl"),
                 objectOptions:{},
                 textPosted:this.state.textPosted,
                 roomPrivacy:this.state.roomPrivacy,
@@ -654,7 +654,7 @@ const KeyCodes = {
             )
         } else {
 
-          
+        
                 console.log('load thumbnail')
                 if(timer !== null) {
                     clearTimeout(timer);
