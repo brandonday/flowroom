@@ -381,7 +381,7 @@ const KeyCodes = {
                 uid:uid,
                 postedPicURL:this.state.postedPicURL,
                 roomType:this.state.roomType,
-                thumbnail:localStorage.getItem("thumbnail_url"),
+                thumbnail:localStorage.getItem("thumbnail_url") === null? '' : localStorage.getItem("thumbnail_url"),
                 objectOptions:{},
                 textPosted:this.state.textPosted,
                 roomPrivacy:this.state.roomPrivacy,

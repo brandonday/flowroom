@@ -331,9 +331,10 @@ class RoomMain extends Component {
         iframe.contentWindow.flowroom.SaveScreenShot();
          
         let imageData = localStorage.getItem("thumbnail");
-        
-        setTimeout(()=> { 
+        localStorage.setItem("thumbnail_url", "");
 
+        setTimeout(()=> { 
+            
             this.putObject(imageData, (url) => { 
 
                 localStorage.setItem("thumbnail_url", url);
