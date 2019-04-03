@@ -952,6 +952,7 @@ const KeyCodes = {
     closeModal() {
         //document.getElementById('create').className = 'create-hide';
         //document.getElementById('default-modal').style.display = 'none';
+        this.LoginHere.setState({thumbPicURL:''});
         this.props.closeModal({isModalOpen:false, modalType:'message'});
 
     }
