@@ -697,8 +697,10 @@ const KeyCodes = {
                
             )
         } else {
+
             let that = this;
             if(isUploaded == false) {
+                console.log('isUploaded called')
                 if(timer !== null) {
                     clearTimeout(timer);
                 } 
