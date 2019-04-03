@@ -697,21 +697,22 @@ const KeyCodes = {
                
             )
         } else {
+            let that = this;
             if(isUploaded == false) {
                 if(timer !== null) {
                     clearTimeout(timer);
                 } 
                 timer = setTimeout(()=> {
                     let imageData = localStorage.getItem('thumbnail');
-                    this.setState({thumbPicURL:imageData});
-                    this.putObject(imageData, (url) => {
-                    this.setState({thumbPicURL:url});
-                });
-            },2000);  
+                        that.setState({thumbPicURL:imageData});
+                        that.putObject(imageData, (url) => {
+                        that.setState({thumbPicURL:url});
+                    });
+                },2000);  
             isUploaded = true;
         }
   
-            let that = this;
+      
             return (
                 <div style={{display:'flex', flexDirection:'column'}}>
                     <h2 ref={subtitle => this.subtitle = subtitle}>Post Room</h2>
@@ -1008,10 +1009,10 @@ const KeyCodes = {
         //document.getElementById('create').className = 'create-hide';
         //document.getElementById('default-modal').style.display = 'none';
         //let getImg = localStorage.setItem('thumbnail','');
-        isUploaded = false;
-        this.setState({thumbPicURL:'./load.png'});
+      
+        this.setState({thumbPicURL:'http://test.flowroom.com/images/blank.png'});
         this.props.closeModal({isModalOpen:false, modalType:'message'});
-
+        isUploaded = false;
     }
 
     getUnique(arr, comp) {
