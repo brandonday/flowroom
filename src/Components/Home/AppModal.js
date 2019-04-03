@@ -816,9 +816,9 @@ const KeyCodes = {
 
                                 </label>
                                 <p> or URL </p>
-                                <input type="text" placeholder="image URL here" value={this.state.thumbPicURL} onChange={(event)=>{
+                                {/* <input type="text" placeholder="image URL here" value={this.state.thumbPicURL} onChange={(event)=>{
                                     this.setState({thumbPicURL: event.target.value });
-                                }}/>
+                                }}/> */}
                             </div>
                         </div>
                     </div>
