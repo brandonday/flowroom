@@ -793,16 +793,9 @@ const KeyCodes = {
                             <p style={{marginTop:10,marginBottom:10}}>Thumbnail pic for Room (Optional) (?)</p>
                         </div>
                         <div style={{display:this.state.thumbnailPicBox, height:'100px',border:'1px solid black', display:'flex'}}>
-                            <div id="thumbnail-pic-display"
-                                style={{
-                                    backgroundImage:`url(${this.state.thumbPicURL})`,
-                                    backgroundSize:'cover',
-                                    width:150,
-                                    backgroundRepeat:'no-repeat',
-                                    overflow:'hidden',
-                                    backgroundPosition:'center'
-                            }}
-                            >{()=>{that.setState({thumbPicURL:''})}}</div>
+                            <img id="thumbnail-pic-display"
+                                
+                             width={150} src={`url(${this.state.thumbPicURL})`}/>
                             <div style={{flex:2, display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',border:'1px solid black'}}>
                                 <label style={{height:20, width:50, marginTop:10, border:'1px solid black',zIndex:99999999}}>
                                     <p style={{display:'flex',fontSize:12,justifyContent:'center',alignItems:'center'}}>Browse</p>
