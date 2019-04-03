@@ -954,8 +954,8 @@ const KeyCodes = {
     closeModal() {
         //document.getElementById('create').className = 'create-hide';
         //document.getElementById('default-modal').style.display = 'none';
-        // let getImg = localStorage.getItem('thumbnail');
-        // this.setState({thumbPicURL:getImg});
+        localStorage.setItem('thumbnail','');
+        this.setState({thumbPicURL:getImg});
         this.props.closeModal({isModalOpen:false, modalType:'message'});
 
     }
