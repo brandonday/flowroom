@@ -114,6 +114,7 @@ class RoomPosts extends Component {
                     tags:childSnapShot.val().tags,
                     room_aspect_ratio:childSnapShot.val().room_aspect_ratio !== '' && !isNaN(childSnapShot.val().room_aspect_ratio) ? childSnapShot.val().room_aspect_ratio : ROOM_ASPECT_RATIO,
                     room_card_height:childSnapShot.val().room_card_height !== '' && !isNaN(childSnapShot.val().room_card_height) ? parseInt(childSnapShot.val().room_card_height) : 246,
+                    thumbnail:childSnapShot.val().thumbnail,
                     ...childSnapShot
                 });
 
@@ -280,6 +281,7 @@ class RoomPosts extends Component {
                     tags:childSnapShot.val().tags,
                     room_aspect_ratio:childSnapShot.val().room_aspect_ratio !== '' ? childSnapShot.val().room_aspect_ratio :ROOM_ASPECT_RATIO,
                     room_card_height:childSnapShot.val().room_card_height !== '' && !isNaN(childSnapShot.val().room_card_height) ? parseInt(childSnapShot.val().room_card_height) : 246,
+                    thumbnail:childSnapShot.val().thumbnail,
                     ...childSnapShot
                   });
 
@@ -353,6 +355,7 @@ class RoomPosts extends Component {
                 tags:childSnapShot.val().tags,
                 room_aspect_ratio:childSnapShot.val().room_aspect_ratio !== '' ? childSnapShot.val().room_aspect_ratio:ROOM_ASPECT_RATIO,
                 room_card_height:childSnapShot.val().room_card_height !== '' && !isNaN(childSnapShot.val().room_card_height) ? parseInt(childSnapShot.val().room_card_height) : 246,
+                thumbnail:childSnapShot.val().thumbnail,
                   ...childSnapShot
               });
             }
@@ -457,6 +460,7 @@ class RoomPosts extends Component {
                                         tags={this.getTags(i.tags)}
                                         numTags={this.getNumTags(this.getTagsArray(i.tags))}
                                         numTagsAll={this.getTagsArray(i.tags).length}
+                                        thumbnail={i.thumbnail}
                                     /></div>)
                                }
                            

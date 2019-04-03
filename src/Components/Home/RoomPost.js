@@ -31,7 +31,7 @@ class RoomPost extends Component {
         }
     }
     componentDidMount() {
-   
+
             
         this.setState({likes:this.getNumberToString(this.props.likes)})
        
@@ -240,7 +240,7 @@ class RoomPost extends Component {
                             
                         </div>
                         <div className="full-screenable-node" style={{height:this.props.roomHeight}}>
-                            <iframe id={`${this.props.id.id}`} src={"/full/" + this.props.id.id} style={{
+                            {/* <iframe id={`${this.props.id.id}`} src={"/full/" + this.props.id.id} style={{
                                 height:'200%', border:'1px solid red',
                                 width:'200%',
                                 border:0,
@@ -252,7 +252,15 @@ class RoomPost extends Component {
                                 transform:'scale(0.5)',
                                 WebkitTransformOrigin:'top left',
                                 transformOrigin:'top left'
-                            }} />
+                            }} /> */}
+                            <div style={{
+                                height:'100%', 
+                                width:'100%',
+                                backgroundImage:`url(${this.props.thumbnail})`,
+                                backgroundSize:'cover',
+                                backgroundRepeat:'no-repeat',
+                                backgroundPosition:'center'
+                            }}></div>
                         </div>
                 </Fullscreen>
             )
