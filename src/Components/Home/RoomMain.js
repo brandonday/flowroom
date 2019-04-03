@@ -295,6 +295,14 @@ class RoomMain extends Component {
     openModal(post = true) {
         let iframe = document.getElementById('output_frame');
         iframe.contentWindow.flowroom.SaveScreenShot();
+        setTimeout(function() {
+            let getImg = localStorage.getItem('thumbnail');
+            document.getElementById('thumbnail-pic-display').style.backgroundImage`url(${getImg})`;
+            document.getElementById('thumbnail-pic-display').style.backgroundSize = 'contain';
+            document.getElementById('thumbnail-pic-display').style.backgroundRepeat = 'no-repeat';
+            document.getElementById('thumbnail-pic-display').style.backgroundPosition = 'center';
+        },1000)
+        
         this.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles:{
           overlay: {
             backgroundColor: 'none',
