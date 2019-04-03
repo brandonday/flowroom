@@ -239,11 +239,7 @@ const KeyCodes = {
         var user = firebase.auth().currentUser;
         var name, email, photoUrl, uid, emailVerified, fullname;
         var shortID = window.location.pathname.split("room/").pop();
-        setTimeout(()=> {
-            let getImg = localStorage.getItem('thumbnail');
-            console.log('get img :', getImg)
-            this.setState({thumbPicURL:getImg});
-        },2000);    
+       
         this.setState({newMessage:'message-screen', shortID:shortID});
         Modal.setAppElement('#root');
         const database = firebase.database();
@@ -655,7 +651,11 @@ const KeyCodes = {
         } else {
            // setTimeout(function() {
   
-               
+            setTimeout(()=> {
+                let getImg = localStorage.getItem('thumbnail');
+                console.log('get img :', getImg)
+                this.setState({thumbPicURL:getImg});
+            },2000);  
               
             // },5000)
             let that = this;
@@ -954,7 +954,7 @@ const KeyCodes = {
     closeModal() {
         //document.getElementById('create').className = 'create-hide';
         //document.getElementById('default-modal').style.display = 'none';
-        localStorage.setItem('thumbnail','');
+        //let getImg = localStorage.setItem('thumbnail','');
         this.setState({thumbPicURL:''});
         this.props.closeModal({isModalOpen:false, modalType:'message'});
 
