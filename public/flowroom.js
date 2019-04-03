@@ -333,9 +333,7 @@
             parent.window.updateJSCode(str);
         },
         SaveScreenShot() {
-            
-            html2canvas(document.body,{allowTaint:true, removeContainer:false}).then(function(canvas) {   
-                alert(canvas.toDataURL());         
+            html2canvas(document.body,{allowTaint:true, removeContainer:false}).then(function(canvas) {          
                 localStorage.setItem("thumbnail", canvas.toDataURL());                
            });
         },
