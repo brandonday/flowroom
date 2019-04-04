@@ -329,7 +329,7 @@ class RoomMain extends Component {
             console.log('error :',err);
           } else {
             let url = `http://test.flowroom.com/uploads/${fileName}`;
-            console.log('url :', url);
+            console.log(' s3 url :', url);
             callback(url);
             
            
