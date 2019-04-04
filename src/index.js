@@ -46,6 +46,9 @@ document.getElementById('default-modal').addEventListener('click', ()=>{
     document.getElementById('create-box').style.display = 'none';
 });
 
+window.addEventListener('scroll', function(e){
+    console.log('scrolling :', e)
+})
 
 
 

@@ -43,12 +43,20 @@ class RoomPosts extends Component {
             rooms:[],
             filter:'weight'
         }
-        this.selection = this.selection.bind(this)
+        this.selection = this.selection.bind(this);
+        
     }
     componentDidMount() {
+      window.addEventListener('scroll', this.handleScroll);
        this.loadRooms()
         // store.dispatch({type:'SAVE_DHTML', html:'',css:'',js:''});
     }
+    componentWillUnmount() {
+      window.removeEventListener('scroll', this.handleScroll);
+    };
+    handleScroll(event) {
+      alert('the scroll things', event)
+    };
     isShortIDExists(shortID) {
       for(let i = 0; i < rooms.length; i++) {
           if(rooms[i].shortID == shortID) {

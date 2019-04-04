@@ -334,7 +334,15 @@
         },
         SaveScreenShot() {
             html2canvas(document.body,{allowTaint:true, removeContainer:false}).then(function(canvas) {          
-                localStorage.setItem("thumbnail", canvas.toDataURL());                
+                
+                var extra_canvas = document.createElement("canvas");
+                extra_canvas.setAttribute('width',canvas.width/4);
+                extra_canvas.setAttribute('height',canvas.height/4);
+                var ctx = extra_canvas.getContext('2d');
+                ctx.drawImage(canvas,0,0,canvas.width, canvas.height,0,0,canvas.width/4,canvas.height/4);
+                var dataURL = extra_canvas.toDataURL();
+                
+                localStorage.setItem("thumbnail", dataURL);                
            });
         },
         RemixText:function(elId, options) {
