@@ -343,16 +343,16 @@ class RoomMain extends Component {
         let iframe = document.getElementById('output_frame');
         iframe.contentWindow.flowroom.SaveScreenShot();
          
-        let imageData = localStorage.getItem("thumbnail");
-        localStorage.setItem("thumbnailUrl", "");
+      
 
         setTimeout(()=> { 
-            
+            let imageData = localStorage.getItem("thumbnail");
+            localStorage.setItem("thumbnailUrl", "");
             this.putObject(imageData, (url) => { 
                 console.log('thumbnail url', url)
                 localStorage.setItem("thumbnailUrl", url);
                 console.log('thumbnail URL: ',localStorage.getItem("thumbnailUrl"))
-            })
+            });
 
         },2000)
         
