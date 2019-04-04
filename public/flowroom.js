@@ -332,7 +332,7 @@
             str = str.replace(searchString, replaceWith);
             parent.window.updateJSCode(str);
         },
-        SaveScreenShot() {
+        SaveScreenShot(callback) {
             html2canvas(document.body,{allowTaint:true, removeContainer:false}).then(function(canvas) {          
                 
                 var extra_canvas = document.createElement("canvas");
@@ -342,7 +342,8 @@
                 ctx.drawImage(canvas,0,0,canvas.width, canvas.height,0,0,canvas.width/4,canvas.height/4);
                 var dataURL = extra_canvas.toDataURL('image/jpeg', 0.8);
                 
-                localStorage.setItem("thumbnail", dataURL);                
+                localStorage.setItem("thumbnail", dataURL); 
+                callback();
            });
         },
         RemixText:function(elId, options) {
