@@ -340,7 +340,7 @@
                 extra_canvas.setAttribute('height',canvas.height/4);
                 var ctx = extra_canvas.getContext('2d');
                 ctx.drawImage(canvas,0,0,canvas.width, canvas.height,0,0,canvas.width/4,canvas.height/4);
-                var dataURL = extra_canvas.toDataURL('image/jpeg', 0.5);
+                var dataURL = extra_canvas.toDataURL('image/jpeg', 0.8);
                 
                 localStorage.setItem("thumbnail", dataURL);                
            });
