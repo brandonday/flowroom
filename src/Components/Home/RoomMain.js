@@ -310,7 +310,7 @@ class RoomMain extends Component {
             return; 
         }
         let hashids = new Hashids(uuid(), 6);
-        let fileName = hashids.encode(1, 2, 3) + '.png';
+        let fileName = hashids.encode(1, 2, 3) + '.jpg';
         
         let buffer = new Buffer(imageData.replace(/^data:image\/\w+;base64,/, ""),'base64')
       
@@ -318,7 +318,7 @@ class RoomMain extends Component {
             Bucket: 'test.flowroom.com',
             Key:'uploads/' + fileName,
             ContentEncoding: 'base64',
-            ContentType: 'image/png',
+            ContentType: 'image/jpeg',
             Body: buffer,
             
           }
