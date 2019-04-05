@@ -31,6 +31,8 @@ let roomFilter = 'weight';
 let navSelected;
 let database = firebase.database();
 let ROOM_ASPECT_RATIO = 1;
+let timer = null;
+
 class RoomPosts extends Component {
     constructor() {
         super();
@@ -47,7 +49,7 @@ class RoomPosts extends Component {
         
     }
     componentDidMount() {
-      window.addEventListener('scroll', this.handleScroll);
+      window.addEventListener('scroll', this.handleScroll, true);
        this.loadRooms()
         // store.dispatch({type:'SAVE_DHTML', html:'',css:'',js:''});
     }
@@ -55,7 +57,26 @@ class RoomPosts extends Component {
       window.removeEventListener('scroll', this.handleScroll);
     };
     handleScroll(event) {
-      alert('the scroll things', event)
+      console.log('scrolling :', event)
+      let roomPosts = document.getElementsByClassName('room-post');
+      let countVisible = 0;
+      for(let i = 0; i < roomPosts.length; i++) {
+        let rect = roomPosts[i].getBoundingClientRect();
+        let midY = (rect.top + rect.bottom)/2 + window.scrollY;
+        if(midY >= 0 && midY < window.innerHeight) {
+          console.log('scroll Y :', i, 'visible');
+          countVisible++;
+        }
+        if(countVisible >= 2) {
+          break;
+        } 
+      }
+      if(timer !== null) {
+        clearTimeout(timer);        
+      }
+      timer = setTimeout(function() {
+        console.log('scrolling ended :', event)
+      }, 150);
     };
     isShortIDExists(shortID) {
       for(let i = 0; i < rooms.length; i++) {
@@ -436,7 +457,7 @@ class RoomPosts extends Component {
 
 
                                             <StackGrid
-
+                                            duration={0}
                                             columnWidth={width >= 1024 ? 420 : (width >= 768 ? 290 : (width > 320 ? 320 : 280))}
                                             gutterWidth={30}
                                             gutterHeight={20}
@@ -469,6 +490,7 @@ class RoomPosts extends Component {
                                         numTags={this.getNumTags(this.getTagsArray(i.tags))}
                                         numTagsAll={this.getTagsArray(i.tags).length}
                                         thumbnail={i.thumbnail}
+                                   
                                     /></div>)
                                }
                            
