@@ -15,6 +15,7 @@ import SignInSignUpModal from './SignInSignUpModal';
 
 let tagsLengthArray = [];
 let tagCounter = 0;
+let timer = null;
 class RoomPost extends Component {
     constructor(){
         super();
@@ -35,7 +36,8 @@ class RoomPost extends Component {
     }
     componentDidMount() {
 
-       
+        // window.addEventListener('scroll', this.handleScroll, true);
+
             
         this.setState({likes:this.getNumberToString(this.props.likes)})
        
@@ -50,7 +52,31 @@ class RoomPost extends Component {
             alert("Overflow")
         }
     }
-  
+    componentWillUnmount() {
+        //window.removeEventListener('scroll', this.handleScroll);
+      };
+      handleScroll(event) {
+    
+        // if(timer !== null) {
+        //   clearTimeout(timer);        
+        // }
+        // timer = setTimeout(function() {
+        //     let roomPosts = document.getElementsByClassName('room-post');
+        //     let countVisible = 0;
+        //     for(let i = 0; i < roomPosts.length; i++) {
+        //         let rect = roomPosts[i].getBoundingClientRect();
+        //         let midY = (rect.top + rect.bottom)/2 + window.scrollY;
+        //         if(midY >= 0 && midY < window.innerHeight) {
+        //           console.log('scroll Y :', i, 'visible');
+        //           countVisible++;
+        //         }
+        //         if(countVisible >= 2) {
+        //           break;
+        //         } 
+        //       }
+        //   console.log('scrolling ended :', event)
+        // }, 150);
+      };
     openModal(post = true) {
        
         this.props.openModal({isModalOpen:true, modalType:'signupsignin', post:post, customStyles:{
@@ -245,7 +271,17 @@ class RoomPost extends Component {
                             
                         </div>
                         <div className="full-screenable-node" style={{height:this.props.roomHeight}}>
-                            {this.state.isShowFrame ? (<iframe id={`${this.props.id.id}`} src={"/full/" + this.props.id.id} style={{
+                        <div id={`thumbnail_${this.props.id.id}`} style={{
+                                height:'100%', 
+                                width:'100%',
+                                backgroundImage:`url(${this.props.thumbnail})`,
+                                backgroundSize:'cover',
+                                backgroundRepeat:'no-repeat',
+                                backgroundPosition:'center',
+                                zIndex:3,
+                                position:'absolute'
+                            }}></div>
+                            <iframe id={`${this.props.id.id}`} src={"/full/" + this.props.id.id} style={{
                                 height:'200%', border:'1px solid red',
                                 width:'200%',
                                 border:0,
@@ -256,16 +292,9 @@ class RoomPost extends Component {
                                 WebkitTransform:'scale(0.5)',
                                 transform:'scale(0.5)',
                                 WebkitTransformOrigin:'top left',
-                                transformOrigin:'top left'
-                            }} />):
-                            (<div style={{
-                                height:'100%', 
-                                width:'100%',
-                                backgroundImage:`url(${this.props.thumbnail})`,
-                                backgroundSize:'cover',
-                                backgroundRepeat:'no-repeat',
-                                backgroundPosition:'center'
-                            }}></div>)}
+                                transformOrigin:'top left',
+                                display:'none'
+                            }} />
                         </div>
                 </Fullscreen>
             )
@@ -322,8 +351,12 @@ class RoomPost extends Component {
     render() {
 
         return  (
-            <div style={{position:'relative'}} onMouseEnter={this.mouseHover.bind(this)} onMouseLeave={this.mouseLeave.bind(this)} className="room-post" style={{
-                height:'auto'
+            <div 
+            id={`room_${this.props.id.id}`}
+                onMouseEnter={this.mouseHover.bind(this)} 
+                onMouseLeave={this.mouseLeave.bind(this)} 
+                className="room-post" style={{
+                height:'auto', position:'relative'
             }}>
 
                 <div style={{
@@ -338,7 +371,7 @@ class RoomPost extends Component {
 
                         {this.post()}
 
-                        <div id={this.props.id.id} className={this.props.roomType === 'image'? '':"room-overlay"}></div>
+                        <div  className={this.props.roomType === 'image'? '':"room-overlay"}></div>
                         {/* <Link to={"/room/" + this.props.id.id} >
                             <div id={this.props.id.id + "description"} className={this.props.roomType === 'image'?'': "description-overlay"}>
                                 <p>{this.props.roomType === 'image'?''}</p>

@@ -49,33 +49,48 @@ class RoomPosts extends Component {
         
     }
     componentDidMount() {
-      window.addEventListener('scroll', this.handleScroll, true);
-       this.loadRooms()
+      window.addEventListener('scroll', this.handleScroll.bind(this), true);
+       this.loadRooms();
+       
         // store.dispatch({type:'SAVE_DHTML', html:'',css:'',js:''});
     }
     componentWillUnmount() {
-      window.removeEventListener('scroll', this.handleScroll);
+      window.removeEventListener('scroll', this.handleScroll.bind(this));
     };
-    handleScroll(event) {
-      console.log('scrolling :', event)
+    setRoomVisibility() {
       let roomPosts = document.getElementsByClassName('room-post');
       let countVisible = 0;
+ 
       for(let i = 0; i < roomPosts.length; i++) {
         let rect = roomPosts[i].getBoundingClientRect();
         let midY = (rect.top + rect.bottom)/2 + window.scrollY;
-        if(midY >= 0 && midY < window.innerHeight) {
+        let shortID = roomPosts[i].id.replace('room_', '');
+
+        let frame = document.getElementById(shortID);
+        let thumbnail = document.getElementById(`thumbnail_${shortID}`)
+        if(midY >= 0 && midY < window.innerHeight && countVisible < 2) {
           console.log('scroll Y :', i, 'visible');
+    
+          //frame.style.visibility = 'visible';
+          frame.style.display = 'block';
+          thumbnail.style.display = 'none';
           countVisible++;
+        } else {
+          //frame.style.visibility = 'hidden';
+          frame.style.display = 'none';
+          thumbnail.style.display = 'block';
         }
-        if(countVisible >= 2) {
-          break;
-        } 
       }
+      
+    }
+    handleScroll(event) {
+      let that = this;
       if(timer !== null) {
         clearTimeout(timer);        
       }
-      timer = setTimeout(function() {
-        console.log('scrolling ended :', event)
+      timer = setTimeout(()=> {
+        console.log('scrolling ended :');
+        that.setRoomVisibility();
       }, 150);
     };
     isShortIDExists(shortID) {
@@ -147,6 +162,7 @@ class RoomPosts extends Component {
                     ...childSnapShot
                 });
 
+
               }
             
             }
@@ -155,6 +171,7 @@ class RoomPosts extends Component {
         });
         that.setState({rooms:rooms})
         that.setState({roomsLoaded:true});
+        that.setRoomVisibility();
       });
     }
     getSearchFromFilter(id) {
@@ -490,7 +507,6 @@ class RoomPosts extends Component {
                                         numTags={this.getNumTags(this.getTagsArray(i.tags))}
                                         numTagsAll={this.getTagsArray(i.tags).length}
                                         thumbnail={i.thumbnail}
-                                   
                                     /></div>)
                                }
                            
