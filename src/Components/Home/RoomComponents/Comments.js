@@ -467,23 +467,78 @@ const repliesNum = [];
                 </div>
                 {/* <div style={{height:'200px',width:'100%'}}></div> */}
                 <div className="main-section-wrap-comments-box">
-                    <div style={{height:'100px',width:'100%', display:'flex', justifyContent:'space-between'}}>
-                        <p>{this.state.room_title}</p>
-                        <div style={{display:'flex'}}>
-                        {/* <i className="fa fa-heart">Reactions</i>
-                        <i className="fa fa-share">Share</i> */}
+                    <div style={{backgroundColor:'#1f1f1f',borderRadius:'6px',height:'242px',width:'100%'}}>
+                    <div style={{height:'76px',width:'100%', display:'flex', borderBottom:'1px solid #373737', justifyContent:'space-between'}}>
+                        <div style={{height:47,marginLeft:17,marginTop:9}}>
+                        <p style={{color:'#fafafa',fontSize:20,marginBottom:6}}>{this.state.room_title ? this.state.room_title: 'Trump Pac-Man Game'}</p>
+                        <div style={{display:'flex',alignItems:'center'}}>
+                            <i className="fa fa-play" style={{fontSize:11,marginRight:10,color:'white'}}></i>
+                            <p style={{fontSize:'13px',fontWeight:'500',color:'white'}}>{'49,866'}</p>
                         </div>
+                        </div>
+        <div style={{display:'flex', width:198}}>
+                        <div style={{display:'flex',
+                            width:'172px',
+                            justifyContent:'space-between',
+                            color:'white',
+                            marginRight:18,
+                            alignItems:'flex-end', 
+                        fontSize:'14px'}}>  
+                        <div style={{display:'flex',
+                            alignItems:'center',
+                            justifyContent:'space-between',
+                            width:'50px'
+                        }}>
+                            <i class="far fa-heart"></i>
+                            <p>Like</p>
+                        </div>
+                        </div>
+
+                        <div style={{display:'flex',
+        
+                            justifyContent:'space-between',
+                            color:'white',
+              
+                            alignItems:'flex-end', 
+                        fontSize:'14px'}}>  
+                        <div style={{display:'flex',
+                            alignItems:'center',
+                            justifyContent:'space-between',
+                            width:'39px',
+                            marginLeft:'29px'
+                        }}>
+                            <i class="far fa-heart"></i>
+                            <p>Like</p>
+                        </div>
+                        </div>
+
+                        <div style={{display:'flex',
+                            width:'80px',
+                            justifyContent:'space-between',
+                            color:'white',
+                            alignItems:'flex-end', 
+                        fontSize:'14px'}}>  
+                        <div style={{display:'flex',
+                            alignItems:'center',
+                            justifyContent:'space-between',
+                            width:'50px'
+                        }}>
+                            <i class="fas fa-ellipsis-h"></i>
+                        </div>
+                        </div>
+
+                    </div>
+
                     </div>
 
                     <div style={{display:'flex',height:'58px',width:'100%'}}>
                         <p style={{color:'#000',fontSize:14}}>{this.state.description}</p>
                     </div>
+                    </div>
                     <div style={{height:'100%',width:'100%',borderTop:'1px solid black',marginBottom:'10px'}}>
                     {this.state.loggedIn ? (<div style={{width:'100%', marginTop:'20px'}}>
-                        <div style={{display:'flex', flexDirection:'column', marginBottom:20, position:'relative', height:160}}>
-                            <div style={{display:'flex',flexDirection:'row',marginBottom:25}}>
-                            <i className="fa fa-comments"/><p style={{marginLeft:10}}>{this.state.comment_number}</p><p style={{marginLeft:10}}>Comments</p>
-                            </div>
+                        <div style={{display:'flex', flexDirection:'column', marginBottom:20, position:'relative',}}>
+     
                             <textarea id="comment" 
                             style={{
                                 border:'1px solid #DDE0EB',
@@ -497,7 +552,7 @@ const repliesNum = [];
                                 outline:'none',
                                 backgroundColor:'#F9FAFA',
                                 webkitFontSmoothing:'antialiased',
-                                height:'150px',
+                                height:'80px',
                                 width:'100%',
                                 resize:'none',
                                 position:'relative'
@@ -519,7 +574,9 @@ const repliesNum = [];
                         onClick={this.postComment.bind(this)}
                         >Post</button>
                         </div>
-                       
+                        <div style={{display:'flex',flexDirection:'row',marginBottom:25}}>
+                            <i className="fa fa-comments"/><p style={{marginLeft:10}}>{this.state.comment_number}</p><p style={{marginLeft:10}}>Comments</p>
+                            </div>
                        
                     </div>):(
                         <div style={{color:'black'}}>Not logged in</div>

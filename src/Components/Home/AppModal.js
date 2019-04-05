@@ -391,6 +391,16 @@ const KeyCodes = {
         document.getElementById('deletebtn').style.display = 'flex';
         this.closeModal();
     }
+
+    loadScreenShot() {
+        console.log('load thumbnail')
+            let imageData = localStorage.getItem('thumbnail');
+            if(imageData !== null) {
+                this.setState({thumbPicURL:imageData})
+            }
+
+    }
+
     sendMessage() {
         const database = firebase.database();
         var theDate = new Date().getTime();
@@ -655,23 +665,7 @@ const KeyCodes = {
         } else {
 
         
-                console.log('load thumbnail')
-                if(timer !== null) {
-                    clearTimeout(timer);
-                } else {
-                    console.log('null')
-                }
-                timer = setTimeout(()=> {
-                    let imageData = localStorage.getItem('thumbnail');
-                        let thumbnailPicDisplay = document.getElementById('thumbnail-pic-display');
-                        if(thumbnailPicDisplay !== null) {
-                            thumbnailPicDisplay.src = imageData
-                        }
-                       
-                       
-                },2000);  
-  
-        
+              
   
       
             return (
@@ -811,7 +805,7 @@ const KeyCodes = {
                         </div>
                         <div style={{display:this.state.thumbnailPicBox, height:'100px',border:'1px solid black', display:'flex'}}>
                             <img id="thumbnail-pic-display"
-                                
+                             src={this.state.thumbPicURL}
                              width={150}/>
                             <div style={{flex:2, display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',border:'1px solid black'}}>
                                 <label style={{height:20, width:50, marginTop:10, border:'1px solid black',zIndex:99999999}}>

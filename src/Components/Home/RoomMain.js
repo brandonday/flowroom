@@ -343,20 +343,16 @@ class RoomMain extends Component {
         let iframe = document.getElementById('output_frame');
         iframe.contentWindow.flowroom.SaveScreenShot(function() {
             console.log('screen shot callback')
-        });
-         
-      
-
-        setTimeout(()=> { 
             let imageData = localStorage.getItem("thumbnail");
             localStorage.setItem("thumbnailUrl", "");
+            
             this.putObject(imageData, (url) => { 
                 console.log('thumbnail url', url)
                 localStorage.setItem("thumbnailUrl", url);
                 console.log('thumbnail URL: ',localStorage.getItem("thumbnailUrl"))
             });
-
-        },2000)
+        });
+         
         
         this.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles:{
           overlay: {
@@ -678,7 +674,8 @@ class RoomMain extends Component {
                 <div style={{display:'flex',flex:'0 583px'}}>
                     <div id="tab-menu" style={{
                         width:'48px', 
-                        background:'#0e0e0e'
+                        background:'rgb(14, 14, 14)',
+                        height:'100%'
                     }}>
                         <div id="remix-tab" onClick={()=> {
                          
@@ -1099,8 +1096,8 @@ class RoomMain extends Component {
                     <Comments/>
                     <div style={{height:'100%',width:'400px',background:'white'}}>
                         <div style={{height:'42px',
-                            width:'429px',
-                            background:'#202020',
+                            width:'100%',
+                            background:'rgb(14, 14, 14)',
                             border:'0px solid red',
                             display:'flex',
                             alignItems:'center',
@@ -1171,7 +1168,7 @@ class RoomMain extends Component {
                                 display:that.state.openBtnVisible ? 'flex' : 'none',
                                 padding:'0px 9px'}}>
                                 {isMenuOpen ? 'Close Remix Menu' : 'Open Remix Menu'}</button> */}
-                            <button id="postbtn" onClick={()=>{
+                            {/* <button id="postbtn" onClick={()=>{
                                 // this.openModal(true)
                                 
                             
@@ -1186,8 +1183,8 @@ class RoomMain extends Component {
                                 justifyContent:'space-between',
                                 display:that.state.postBtnVisible ? 'flex' : 'none',
                                 padding:'0px 9px'}}>
-                                Post</button>
-                                <button id="savechanges" onClick={()=>{this.openModal(false)}} style={{fontWeight:'bold',
+                                Post</button> */}
+                                {/* <button id="savechanges" onClick={()=>{this.openModal(false)}} style={{fontWeight:'bold',
                                 color:'white',
                                 fontSize:'15px',
                                 width:'105px',
@@ -1198,8 +1195,8 @@ class RoomMain extends Component {
                                 justifyContent:'space-between',
                                 display:that.state.postBtnVisible ? 'none' : 'flex',
                                 padding:'0px 9px'}}>
-                                Save Changes</button>
-                                <button id="deletebtn" onClick={()=>{
+                                Save Changes</button> */}
+                                {/* <button id="deletebtn" onClick={()=>{
                                      let currentRoomID = window.location.pathname.split("room/").pop();
                                      firebase.database().ref(`rooms/${currentRoomID}`).remove();
                                      firebase.database().ref(`UsersRooms/${currentRoomID}/${that.state.user}`).remove();
@@ -1217,7 +1214,7 @@ class RoomMain extends Component {
                                 justifyContent:'space-between',
                                 display:that.state.postBtnVisible ? 'none' : 'flex',
                                 padding:'0px 9px'}}>
-                                Delete</button>
+                                Delete</button> */}
                                 {/* <i className="fas fa-expand" style={{fontSize:30, color:'rgb(179, 0, 254)', marginRight:25}}></i> */}
                         </div>
                         
