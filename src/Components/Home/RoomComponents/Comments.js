@@ -476,20 +476,20 @@ const repliesNum = [];
                             <p style={{fontSize:'13px',fontWeight:'500',color:'white'}}>{'49,866'}</p>
                         </div>
                         </div>
-        <div style={{display:'flex', width:198}}>
+        <div style={{display:'flex', width:196, justifyContent:'space-between',height:63}}>
                         <div style={{display:'flex',
-                            width:'172px',
+                           
                             justifyContent:'space-between',
                             color:'white',
-                            marginRight:18,
+                       
                             alignItems:'flex-end', 
                         fontSize:'14px'}}>  
                         <div style={{display:'flex',
                             alignItems:'center',
                             justifyContent:'space-between',
-                            width:'50px'
+                     
                         }}>
-                            <i class="far fa-heart"></i>
+                            <i class="far fa-heart" style={{marginRight:10}}></i>
                             <p>Like</p>
                         </div>
                         </div>
@@ -504,16 +504,15 @@ const repliesNum = [];
                         <div style={{display:'flex',
                             alignItems:'center',
                             justifyContent:'space-between',
-                            width:'39px',
-                            marginLeft:'29px'
+                            
                         }}>
-                            <i class="far fa-heart"></i>
-                            <p>Like</p>
+                            <i class="fas fa-share-alt" style={{marginRight:10}}></i>
+                            <p>Share</p>
                         </div>
                         </div>
 
                         <div style={{display:'flex',
-                            width:'80px',
+
                             justifyContent:'space-between',
                             color:'white',
                             alignItems:'flex-end', 
@@ -530,15 +529,31 @@ const repliesNum = [];
                     </div>
 
                     </div>
-
+                    <div style={{height:40,padding:'5px 10px',display:'flex'}}>
+                        <div style={{backgroundColor:'black',height:45,width:45,borderRadius:25,marginTop:3}}></div>
+                        <div style={{height:100}}>
+                            <div style={{display:'flex', marginTop:7, flexDirection:'column'}}>
+                                <div style={{display:'flex'}}>
+                                <p style={{fontWeight:0,fontSize:13,marginLeft:10}}>Remixed by</p><p style={{fontWeight:0,fontSize:13,color:'white',marginLeft:5,marginRight:10}}>@daltonperiera</p>
+                                <div style={{display:'flex', alignItems:'center', justifyContent:'center', border:'1px solid rgb(64, 255, 232)', height:22,width:65,borderRadius:6, color:'rgb(64, 255, 232)'}}>
+                                <p style={{fontSize:10,marginRight:2}}>+</p>
+                                <p style={{fontSize:10}}>FOLLOW</p>
+                                </div>
+                                </div>
+                                <p style={{marginLeft:10, fontSize:10}}> Published on April 10 2019</p>
+                            </div>
+                        </div>
+                    </div>
                     <div style={{display:'flex',height:'58px',width:'100%'}}>
-                        <p style={{color:'#000',fontSize:14}}>{this.state.description}</p>
+                        <p style={{color:'#fff',fontSize:14,margin:15}}>{this.state.description}</p>
                     </div>
                     </div>
                     <div style={{height:'100%',width:'100%',borderTop:'1px solid black',marginBottom:'10px'}}>
                     {this.state.loggedIn ? (<div style={{width:'100%', marginTop:'20px'}}>
-                        <div style={{display:'flex', flexDirection:'column', marginBottom:20, position:'relative',}}>
-     
+                        <div style={{display:'flex', flexDirection:'column', marginBottom:20, position:'relative',background:'#1f1f1f',padding:10, height:166,borderRadius:5}}>
+                            <p style={{color:'white', padding:'5px 0px 10px'}}>Leave a comment</p>
+                            <div style={{display:'flex', padding:0}}>
+                                <div style={{height:35,width:35,backgroundColor:'black',borderRadius:30,marginRight:10}}></div>
                             <textarea id="comment" 
                             style={{
                                 border:'1px solid #DDE0EB',
@@ -552,31 +567,37 @@ const repliesNum = [];
                                 outline:'none',
                                 backgroundColor:'#F9FAFA',
                                 webkitFontSmoothing:'antialiased',
-                                height:'80px',
+                                height:'60px',
                                 width:'100%',
                                 resize:'none',
                                 position:'relative'
                             }} placeholder="Write a new comment here...">
    
                         </textarea>
+                        </div>
+                        <div style={{display:'flex',width:144,position:'absolute',right:'10px',bottom:17,alignItems:'center',justifyContent:'space-between'}}>
+                        <p style={{fontSize:11,color:'white'}}>CANCEL</p>
                         <button style={{border:'1px solid gray',
                             borderRadius:'4px',
-                            background:'rgb(221, 224, 235)',
+                            background:'#3fffe8',
                             height:'25px',
-                            width:'129px',
+                            width:'100px',
                             fontFamily:'Source Sans Pro',
-                            fontWeight:'800',
+                            fontWeight:'bold',
+                            fontSize:10,
                             bottom:25,
-                            right:'10px',
-                            position:'absolute'
+                            right:'10px'
                         }} 
     
                         onClick={this.postComment.bind(this)}
-                        >Post</button>
+                        >POST COMMENT</button>
+                        </div>
                         </div>
                         <div style={{display:'flex',flexDirection:'row',marginBottom:25}}>
-                            <i className="fa fa-comments"/><p style={{marginLeft:10}}>{this.state.comment_number}</p><p style={{marginLeft:10}}>Comments</p>
-                            </div>
+                            <i className="fa fa-comments"/>
+                            <p style={{marginLeft:10}}>Comments</p>
+                            <p style={{marginLeft:10}}>{this.state.comment_number}</p>
+                        </div>
                        
                     </div>):(
                         <div style={{color:'black'}}>Not logged in</div>
