@@ -435,7 +435,9 @@ class RoomPosts extends Component {
           }
         }
       });
-      rooms = [...nextRooms];
+      nextRooms.forEach((room) => {
+        rooms.push(room);
+      });
       if(counter == 1) {
         return;
       }
