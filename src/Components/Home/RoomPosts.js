@@ -74,17 +74,29 @@ class RoomPosts extends Component {
         if(midY >= 0 && midY < window.innerHeight && countVisible < 2) {
           console.log('scroll Y :', i, 'visible');
     
-        
+          
+          if (frame.attachEvent){
+            frame.attachEvent("onload", function(){
+              console.log("Local iframe is now loaded.(IE)");
+              thumbnail.style.display = 'none';
+            });
+          } else {
+            frame.onload = function(){
+              console.log("Local iframe is now loaded.(non-IE)");
+              thumbnail.style.display = 'none';
+            };
+          }
+          thumbnail.style.display = 'block';
           frame.style.display = 'block';
     
             frame.src = `/full/${shortID}`;
          
-          thumbnail.style.display = 'none';
+          
           countVisible++;
         } else {
    
           
-          frame.src = 'http://test.flowroom.com/test';
+          //frame.src = 'http://test.flowroom.com/test';
           
           frame.style.display = 'none';
           thumbnail.style.display = 'block';

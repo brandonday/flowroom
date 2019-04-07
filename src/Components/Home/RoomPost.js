@@ -288,7 +288,7 @@ class RoomPost extends Component {
                                 // position:'absolute',
                                 top:0,
                                 left: 0,
-                                background:'white',
+                                background:'black',
                                 WebkitTransform:'scale(0.5)',
                                 transform:'scale(0.5)',
                                 WebkitTransformOrigin:'top left',

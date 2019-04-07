@@ -322,6 +322,9 @@
             this.remixCallback = callback;
 
         },
+        menu() {
+
+        },
         GUI:function(obj) {
             parent.datGUI(obj);
         },
@@ -333,6 +336,7 @@
             parent.window.updateJSCode(str);
         },
         SaveScreenShot(callback) {
+            alert('save screen shot called')
             html2canvas(document.body,{allowTaint:true, removeContainer:false}).then(function(canvas) {          
                 
                 var extra_canvas = document.createElement("canvas");
