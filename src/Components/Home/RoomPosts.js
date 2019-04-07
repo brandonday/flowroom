@@ -64,44 +64,44 @@ class RoomPosts extends Component {
       let roomPosts = document.getElementsByClassName('room-post');
       let countVisible = 0;
  
-      // for(let i = 0; i < roomPosts.length; i++) {
-      //   let rect = roomPosts[i].getBoundingClientRect();
-      //   let midY = (rect.top + rect.bottom)/2 + window.scrollY;
-      //   let shortID = roomPosts[i].id.replace('room_', '');
+      for(let i = 0; i < roomPosts.length; i++) {
+        let rect = roomPosts[i].getBoundingClientRect();
+        let midY = (rect.top + rect.bottom)/2 + window.scrollY;
+        let shortID = roomPosts[i].id.replace('room_', '');
 
-      //   let frame = document.getElementById(shortID);
-      //   let thumbnail = document.getElementById(`thumbnail_${shortID}`)
-      //   if(midY >= 0 && midY < window.innerHeight && countVisible < 2) {
-      //     console.log('scroll Y :', i, 'visible');
+        let frame = document.getElementById(shortID);
+        let thumbnail = document.getElementById(`thumbnail_${shortID}`)
+        if(midY >= 0 && midY < window.innerHeight && countVisible < 2) {
+          console.log('scroll Y :', i, 'visible');
     
           
-      //     if (frame.attachEvent){
-      //       frame.attachEvent("onload", function(){
-      //         console.log("Local iframe is now loaded.(IE)");
-      //         thumbnail.style.display = 'none';
-      //       });
-      //     } else {
-      //       frame.onload = function(){
-      //         console.log("Local iframe is now loaded.(non-IE)");
-      //         thumbnail.style.display = 'none';
-      //       };
-      //     }
-      //     thumbnail.style.display = 'block';
-      //     frame.style.display = 'block';
+          if (frame.attachEvent){
+            frame.attachEvent("onload", function(){
+              console.log("Local iframe is now loaded.(IE)");
+              thumbnail.style.display = 'none';
+            });
+          } else {
+            frame.onload = function(){
+              console.log("Local iframe is now loaded.(non-IE)");
+              thumbnail.style.display = 'none';
+            };
+          }
+          thumbnail.style.display = 'block';
+          frame.style.display = 'block';
     
-      //       frame.src = `/full/${shortID}`;
+            frame.src = `/full/${shortID}`;
          
           
-      //     countVisible++;
-      //   } else {
+          countVisible++;
+        } else {
    
           
-      //     //frame.src = 'http://test.flowroom.com/test';
+          //frame.src = 'http://test.flowroom.com/test';
           
-      //     frame.style.display = 'none';
-      //     thumbnail.style.display = 'block';
-      //   }
-      // }
+          frame.style.display = 'none';
+          thumbnail.style.display = 'block';
+        }
+      }
       
     }
     handleScroll(event) {

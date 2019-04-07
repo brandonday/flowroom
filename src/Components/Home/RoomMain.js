@@ -339,7 +339,7 @@ class RoomMain extends Component {
 
       }
     openModal(post = true) {
-        
+        console.log('this open modal')
         let iframe = document.getElementById('output_frame');
         iframe.contentWindow.flowroom.SaveScreenShot(function() {
             console.log('screen shot callback')
