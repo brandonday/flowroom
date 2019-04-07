@@ -129,7 +129,7 @@ const replies = [];
                         
                     </div>
                     <div style={{flex:1, border:'1px solid red', wordWrap:'break-word'}}>
-                        <p style={{fontSize:'13px',fontFamily: "Source Sans Pro",fontWeight:'500',color:'black'}}>{this.props.comment}</p>
+                        <p style={{fontSize:'13px',fontFamily: "Source Sans Pro",fontWeight:'500',color:'white'}}>{this.props.comment}</p>
                         <div><p>REPLY</p></div>
                         <div style={{display:'flex'}}>
                         <textarea id="commentTxt" style={{resize:'none'}}></textarea>

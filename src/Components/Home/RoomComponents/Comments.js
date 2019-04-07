@@ -129,6 +129,7 @@ const repliesNum = [];
                     li.style.marginTop = '8px';
                     li.style.marginLeft = '19px';
                     li.style.flexDirection = 'column';
+                    li.style.background = 'rgb(30, 30, 30)';
                     var div = document.createElement('div');
                     var div2 = document.createElement('div');
                     var div3 = document.createElement('div');
@@ -191,11 +192,13 @@ const repliesNum = [];
                     time.style.marginLeft = '10px';
                     time.style.marginTop = '2px';
                     time.style.fontWeight = '300';
+                    time.style.color = 'white'; 
 
                     comment.style.fontSize = '13px';
                     comment.style.fontFamily = 'Source Sans Pro';
                     comment.style.fontWeight = '500';
-                    comment.style.color = 'black';
+                    comment.style.color = 'white';
+                    comment.style.background = 'rgb(31, 31, 31)';
 
                     textarea.style.resize = 'none';
                     textarea.style.width = '100%';
@@ -216,6 +219,8 @@ const repliesNum = [];
                     wrapComment.style.display = 'flex';
                     wrapComment.style.flexDirection = 'column';
                     wrapComment.style.marginLeft = '20px';
+                    //wrapComment.style.background = '#1e1e1e';
+                    wrapComment.style.marginBottom = '10px';
                     
                     let commentIn = document.createElement('div');
                     commentIn.appendChild(ProfilePic);
@@ -226,7 +231,10 @@ const repliesNum = [];
                     li.appendChild(wrapComment);
                     commentIn.style.display = 'flex';
                     commentIn.style.flexDirection = 'row';
-                    
+                    commentIn.style.background = '#1e1e1e';
+                    commentIn.style.marginBottom = '10px';
+                    commentIn.style.padding = '15px 10px';
+                    commentIn.style.borderRadius = '6px';
                     wrapComment.appendChild(commentIn);
                   
                    
@@ -236,6 +244,7 @@ const repliesNum = [];
                     div5.appendChild(name);
                     div5.appendChild(time);
                     name.appendChild(document.createTextNode(childSnapShot.val().fullname));
+                    name.style.color = 'white';
                     time.appendChild(document.createTextNode(moment(childSnapShot.val().date).fromNow()));
                     div4.appendChild(div6);
                     comment.appendChild(document.createTextNode(childSnapShot.val().comment))
@@ -269,7 +278,7 @@ const repliesNum = [];
                     
                     let that = this;
                
-                    replyDiv.appendChild(document.createTextNode(`+ ${childSnapShot.val().replyNum} replies`));
+                    replyDiv.appendChild(document.createTextNode(`SHOW ${childSnapShot.val().replyNum} REPLIES`));
                 
 
                     document.body.addEventListener( 'click', function ( event ) {
@@ -320,14 +329,14 @@ const repliesNum = [];
                                 
                                 document.getElementById(`bottomWrap${childSnapShot.val().commentID}`).style.display = 'block'
                                 that.setState({repliesShow:true});
-                                replyDiv.innerHTML = `- ${childSnapShot.val().replyNum} replies`;
+                                replyDiv.innerHTML = `SHOW ${childSnapShot.val().replyNum} REPLIES`;
 
                                 
                             } else {
                              
                                 document.getElementById(`bottomWrap${childSnapShot.val().commentID}`).style.display = 'none';
                                 that.setState({repliesShow:false});
-                                replyDiv.innerHTML = `+ ${childSnapShot.val().replyNum} replies`;
+                                replyDiv.innerHTML = `SHOW ${childSnapShot.val().replyNum} REPLIES`;
                       
                             }
 
