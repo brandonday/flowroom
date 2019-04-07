@@ -43,7 +43,10 @@ class RoomPosts extends Component {
             mobile:false,
             lastRoomNum:'',
             rooms:[],
-            filter:'weight'
+            filter:'weight',
+            error: false,
+            hasMore: true,
+            isLoading: false
         }
         this.selection = this.selection.bind(this);
         
@@ -90,13 +93,15 @@ class RoomPosts extends Component {
       
     }
     handleScroll(event) {
+      
       let that = this;
       if(timer !== null) {
         clearTimeout(timer);        
       }
       timer = setTimeout(()=> {
-        console.log('scrolling ended :');
+       
         that.setRoomVisibility();
+        that.processLoadMore();
       }, 150);
     };
     isShortIDExists(shortID) {
@@ -107,9 +112,21 @@ class RoomPosts extends Component {
       }
       return false;
     }
+    processLoadMore() {
+      if (this.state.error || this.state.isLoading || !this.state.hasMore) return;
+      if (
+        window.innerHeight + document.documentElement.scrollTop
+        === document.documentElement.offsetHeight
+      ) {
+        
+        this.nextPage();
+
+      }
+    }
     loadRooms() {
       let counter = 0;
       let that = this;
+      console.log('load rooms');
       database.ref('rooms').orderByChild(roomFilter).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
         snapshot.forEach((childSnapShot) => {
           counter++;
@@ -349,7 +366,7 @@ class RoomPosts extends Component {
         });
       }
     nextPage() {
-      rooms = [];
+      let nextRooms = [];
       let database = firebase.database();
       let that = this;
       let counter = 0;
@@ -360,6 +377,8 @@ class RoomPosts extends Component {
         snapshot.forEach((childSnapShot) => {
           if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
             counter++;
+            if(!this.isShortIDExists(childSnapShot.val().shortID)) {
+            
             if(counter == 1) {
               if(roomFilter == 'weight') {
                 nextRoomIndex = childSnapShot.val().weight;
@@ -378,7 +397,7 @@ class RoomPosts extends Component {
                   previousRoomIndex = childSnapShot.val().date;
                 }
               }
-              rooms.unshift({
+              nextRooms.unshift({
                 id:childSnapShot.key,
                 date:childSnapShot.val().date,
                 isAR:childSnapShot.val().isAR,
@@ -410,18 +429,21 @@ class RoomPosts extends Component {
                 thumbnail:childSnapShot.val().thumbnail,
                   ...childSnapShot
               });
-            }
-                //alert(childSnapShot.val().shortID)
-            }
-          });
-          if(counter == 1) {
-            return;
-          }
-          this.setState({rooms:rooms, roomsLoaded:true});
+
               
-        });
+            }
+          }
+        }
+      });
+      rooms = [...nextRooms];
+      if(counter == 1) {
+        return;
       }
-      render() {
+      this.setState({rooms:rooms, roomsLoaded:true});
+              
+    });
+  }
+    render() {
         if(this.state.roomsLoaded) {
           return  (
             <ReactResizeDetector
@@ -527,10 +549,10 @@ class RoomPosts extends Component {
                             {/* </div> */}
 
                         {/* </section> */}
-                        <nav  style={{flex:1}} className="pagination-buttons-wrap">
+                        {/* <nav  style={{flex:1}} className="pagination-buttons-wrap">
                             <span onClick={this.prevPage.bind(this)} className="pagination-button"><span style={{display:'inline-block', background: "url('/images/sprite.png') no-repeat", overflow:'hidden',textIndent:'-9999px', textAlign:'left',backgroundSize:'89px 248px',backgroundPosition:'-75px -184px',width:'10px',height:'18px', marginRight:'15px', transform: 'rotate(179deg)'}}></span>Previous Page</span>
                             <span onClick={this.nextPage.bind(this)} className="pagination-button">Next Page<span style={{display:'inline-block', background: "url('/images/sprite.png') no-repeat", overflow:'hidden',textIndent:'-9999px', textAlign:'left',backgroundSize:'89px 248px',backgroundPosition:'-75px -184px',width:'10px',height:'18px',marginLeft:'15px'}}></span></span>
-                        </nav>
+                        </nav> */}
                     {/* </div> */}
                 </div>
                 )}

@@ -251,7 +251,7 @@ const repliesNum = [];
                     pdiv6.appendChild(document.createTextNode('REPLY'));
                     pdiv6.setAttribute("id", `replybtn${childSnapShot.val().commentID}`);
                     div6.appendChild(comment);
-                    div7.appendChild(pdiv6);
+                    //div7.appendChild(pdiv6);
                     div6.appendChild(div7);
                     div7.appendChild(div8);
                     div8.appendChild(textarea);
@@ -279,7 +279,7 @@ const repliesNum = [];
                     let that = this;
                
                     replyDiv.appendChild(document.createTextNode(`SHOW ${childSnapShot.val().replyNum} REPLIES`));
-                
+                    
 
                     document.body.addEventListener( 'click', function ( event ) {
                         if( event.srcElement.id == `btn${childSnapShot.val().commentID}btn` ) {

@@ -145,7 +145,7 @@ const renderApp = (id, hasRendered) => {
 
         //render normal showing Profile componenet
 
-renderApp('root', hasRenderedRoot);
+        renderApp('root', hasRenderedRoot);
 firebase.auth().onAuthStateChanged((user)=> {
     console.log("firebase.auth user: ",user);
     if(user) {
@@ -155,6 +155,7 @@ firebase.auth().onAuthStateChanged((user)=> {
             store.dispatch(userStore({username:user.displayName}));
             renderApp('header', hasRenderedHeader);
             
+         
          }
         //history.push('/');
        
