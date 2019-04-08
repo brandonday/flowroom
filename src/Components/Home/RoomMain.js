@@ -342,6 +342,7 @@ class RoomMain extends Component {
         console.log('this open modal')
         let that = this;
         let iframe = document.getElementById('output_frame');
+        try{
         iframe.contentWindow.flowroom.SaveScreenShot(function() {
             console.log('screen shot callback')
             let imageData = localStorage.getItem("thumbnail");
@@ -377,6 +378,23 @@ class RoomMain extends Component {
             
             
         });
+    } catch(error) {
+        that.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles:{
+            overlay: {
+              backgroundColor: 'none',
+            },
+            content: {
+            top                   : '50%',
+            left                  : '50%',
+            right                 : '0',
+            bottom                : 'auto',
+            marginRight           : '0%',
+            transform             : 'translate(-50%, -50%)',
+            height:'70%',
+            width:'50%',
+            }
+          }});
+    }
          
         
         
