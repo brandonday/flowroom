@@ -347,7 +347,7 @@ class RoomMain extends Component {
             let imageData = localStorage.getItem("thumbnail");
 
             localStorage.setItem("thumbnailUrl", "");
-            this.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles:{
+            that.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles:{
                 overlay: {
                   backgroundColor: 'none',
                 },
