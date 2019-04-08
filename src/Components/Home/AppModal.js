@@ -968,10 +968,12 @@ const KeyCodes = {
         //document.getElementById('create').className = 'create-hide';
         //document.getElementById('default-modal').style.display = 'none';
         //let getImg = localStorage.setItem('thumbnail','');
-      
+        
         this.setState({thumbPicURL:'http://test.flowroom.com/images/blank.png'});
         this.props.closeModal({isModalOpen:false, modalType:'message'});
         isUploaded = false;
+        let mountNode = React.findDOMNode(this.refs.modal);
+        React.unmountComponentAtNode(mountNode);
     }
 
     getUnique(arr, comp) {
@@ -1273,6 +1275,7 @@ const KeyCodes = {
                 <div className="modal-box-background"></div>
 
                     <Modal
+                        refs="modal"
                         isOpen={this.props.state.entireApp.isModalOpen}
                         onAfterOpen={this.afterOpenModal}
                         onRequestClose={this.closeModal}
