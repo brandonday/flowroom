@@ -352,11 +352,10 @@ class RoomMain extends Component {
                 localStorage.setItem("thumbnailUrl", url);
                 console.log('thumbnail URL: ',localStorage.getItem("thumbnailUrl"));
             });
-            let thumbnail = document.getElementById('thumbnail-pic-box');
-            thumbnail.style.backgroundImage = `url(${imageData})`;
-            thumbnail.style.backgroundSize = 'cover';
-            thumbnail.style.backgroundRepeat = 'no-repeat';
-            thumbnail.style.backgroundPosition = 'center';
+            let thumbnail = document.getElementById('thumbnail-pic-display');
+            thumbnail.src = `url(${imageData})`;
+            thumbnail.setAttribute("height", "100%");
+            thumbnail.setAttribute("width", "100%");
         });
          
         
