@@ -324,7 +324,7 @@ class RoomMain extends Component {
           }
       
         s3.putObject(params, function(err, data) {
-          console.log('err: ', err)
+          
           if (err) {
             console.log('error :',err);
           } else {
@@ -348,7 +348,7 @@ class RoomMain extends Component {
             let imageData = localStorage.getItem("thumbnail");
 
             localStorage.setItem("thumbnailUrl", "");
-            that.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles:{
+            that.props.openModal({isModalOpen:true, modalType:'room', post:post, image:imageData, customStyles:{
                 overlay: {
                   backgroundColor: 'none',
                 },
@@ -368,11 +368,11 @@ class RoomMain extends Component {
             console.log('thumbnail set: ',thumbnail)
             thumbnail.setAttribute("height", "100%");
             thumbnail.setAttribute("width", "100%");
-            // that.putObject(imageData, (url) => { 
-            //     console.log('thumbnail url', url)
-            //     localStorage.setItem("thumbnailUrl", url);
-            //     console.log('thumbnail URL: ',localStorage.getItem("thumbnailUrl"));
-            // });
+            that.putObject(imageData, (url) => { 
+                console.log('thumbnail url', url)
+                localStorage.setItem("thumbnailUrl", url);
+                console.log('thumbnail URL: ',localStorage.getItem("thumbnailUrl"));
+            });
             
             
             

@@ -809,7 +809,7 @@ const KeyCodes = {
                         </div>
                         <div style={{display:'block', height:'100px',border:'1px solid black', display:'flex'}}>
                             <img id="thumbnail-pic-display"
-                             src={this.state.thumbPicURL}
+                             src={this.props.state.entireApp.image}
                              width={150}/>
                             <div style={{flex:2, display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center',border:'1px solid black'}}>
                                 <label style={{height:20, width:50, marginTop:10, border:'1px solid black',zIndex:99999999}}>
@@ -972,8 +972,7 @@ const KeyCodes = {
         this.setState({thumbPicURL:'http://test.flowroom.com/images/blank.png'});
         this.props.closeModal({isModalOpen:false, modalType:'message'});
         isUploaded = false;
-        let mountNode = React.findDOMNode(this.refs.modal);
-        React.unmountComponentAtNode(mountNode);
+       
     }
 
     getUnique(arr, comp) {
