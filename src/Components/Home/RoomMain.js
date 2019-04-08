@@ -364,7 +364,7 @@ class RoomMain extends Component {
                 }
               }});
               let thumbnail = document.getElementById('thumbnail-pic-display');
-            thumbnail.src = ${imageData};
+            thumbnail.src = imageData;
             console.log('thumbnail set: ',thumbnail)
             thumbnail.setAttribute("height", "100%");
             thumbnail.setAttribute("width", "100%");
