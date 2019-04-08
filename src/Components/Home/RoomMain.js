@@ -340,13 +340,14 @@ class RoomMain extends Component {
       }
     openModal(post = true) {
         console.log('this open modal')
+        let that = this;
         let iframe = document.getElementById('output_frame');
         iframe.contentWindow.flowroom.SaveScreenShot(function() {
             console.log('screen shot callback')
             let imageData = localStorage.getItem("thumbnail");
             localStorage.setItem("thumbnailUrl", "");
             
-            this.putObject(imageData, (url) => { 
+            that.putObject(imageData, (url) => { 
                 console.log('thumbnail url', url)
                 localStorage.setItem("thumbnailUrl", url);
                 console.log('thumbnail URL: ',localStorage.getItem("thumbnailUrl"))
