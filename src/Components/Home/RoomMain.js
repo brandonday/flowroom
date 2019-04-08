@@ -345,35 +345,41 @@ class RoomMain extends Component {
         iframe.contentWindow.flowroom.SaveScreenShot(function() {
             console.log('screen shot callback')
             let imageData = localStorage.getItem("thumbnail");
+
             localStorage.setItem("thumbnailUrl", "");
-            
+            this.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles:{
+                overlay: {
+                  backgroundColor: 'none',
+                },
+                content: {
+                top                   : '50%',
+                left                  : '50%',
+                right                 : '0',
+                bottom                : 'auto',
+                marginRight           : '0%',
+                transform             : 'translate(-50%, -50%)',
+                height:'70%',
+                width:'50%',
+                }
+              }});
+              let thumbnail = document.getElementById('thumbnail-pic-display');
+            thumbnail.src = `url(${imageData})`;
+            console.log('thumbnail set: ',thumbnail)
+            thumbnail.setAttribute("height", "100%");
+            thumbnail.setAttribute("width", "100%");
             that.putObject(imageData, (url) => { 
                 console.log('thumbnail url', url)
                 localStorage.setItem("thumbnailUrl", url);
                 console.log('thumbnail URL: ',localStorage.getItem("thumbnailUrl"));
             });
-            let thumbnail = document.getElementById('thumbnail-pic-display');
-            thumbnail.src = `url(${imageData})`;
-            thumbnail.setAttribute("height", "100%");
-            thumbnail.setAttribute("width", "100%");
+            
+            
+            
+            
         });
          
         
-        this.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles:{
-          overlay: {
-            backgroundColor: 'none',
-          },
-          content: {
-          top                   : '50%',
-          left                  : '50%',
-          right                 : '0',
-          bottom                : 'auto',
-          marginRight           : '0%',
-          transform             : 'translate(-50%, -50%)',
-          height:'70%',
-          width:'50%',
-          }
-        }})
+        
       }
       dropDownAnimate() {
    
