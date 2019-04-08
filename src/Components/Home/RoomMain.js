@@ -368,11 +368,11 @@ class RoomMain extends Component {
             console.log('thumbnail set: ',thumbnail)
             thumbnail.setAttribute("height", "100%");
             thumbnail.setAttribute("width", "100%");
-            that.putObject(imageData, (url) => { 
-                console.log('thumbnail url', url)
-                localStorage.setItem("thumbnailUrl", url);
-                console.log('thumbnail URL: ',localStorage.getItem("thumbnailUrl"));
-            });
+            // that.putObject(imageData, (url) => { 
+            //     console.log('thumbnail url', url)
+            //     localStorage.setItem("thumbnailUrl", url);
+            //     console.log('thumbnail URL: ',localStorage.getItem("thumbnailUrl"));
+            // });
             
             
             
