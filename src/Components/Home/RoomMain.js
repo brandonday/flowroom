@@ -350,8 +350,13 @@ class RoomMain extends Component {
             that.putObject(imageData, (url) => { 
                 console.log('thumbnail url', url)
                 localStorage.setItem("thumbnailUrl", url);
-                console.log('thumbnail URL: ',localStorage.getItem("thumbnailUrl"))
+                console.log('thumbnail URL: ',localStorage.getItem("thumbnailUrl"));
             });
+            let thumbnail = document.getElementById('thumbnail-pic-box');
+            thumbnail.style.backgroundImage = `url(${imageData})`;
+            thumbnail.style.backgroundSize = 'cover';
+            thumbnail.style.backgroundRepeat = 'no-repeat';
+            thumbnail.style.backgroundPosition = 'center';
         });
          
         
