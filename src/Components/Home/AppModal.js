@@ -685,7 +685,7 @@ const KeyCodes = {
                         fontFamily:'Helvetica, Arial, sans-serif',
                         outline:'none',
                         backgroundColor:'#F9FAFA',
-                        webkitFontSmoothing:'antialiased',
+                    
                         resize:'none',
                         marginTop:0,
                         marginBottom:0,
