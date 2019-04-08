@@ -302,6 +302,9 @@ const KeyCodes = {
         });
 
     }
+    componentWillUnmount() {
+        this.setState({thumbPicURL:''});
+    }
     saveRoom () {
         let hashids = new Hashids(uuid(), 6);
    
