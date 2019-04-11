@@ -287,8 +287,8 @@ class RoomMain extends Component {
                     postVisible:'block',
                     remixVisible:'block',
                     isRemix:false,
-                    remixRoomID:false,
-                    remixUserName:false
+                    remixRoomID:'',
+                    remixUserName:''
                 });
                 
             } 
