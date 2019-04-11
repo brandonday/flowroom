@@ -50,7 +50,7 @@ let isMenuOpen = false;
  let gui = new dat.GUI();
  document.getElementsByClassName('close-button close-bottom')[0].style.display = 'none';
 let addedBefore = false;
-let roomsPerPage = 3;
+let roomsPerPage = 4;
 let roomFilter = 'weight';
 let relatedRooms = [];
 class RoomMain extends Component {
