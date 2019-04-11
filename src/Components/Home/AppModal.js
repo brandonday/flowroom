@@ -405,9 +405,17 @@ const KeyCodes = {
                 remixUserName:this.props.state.entireApp.remixUserName,
 
         });
-        document.getElementById('postbtn').style.display = 'none';
-        document.getElementById('savechanges').style.display = 'flex';
-        document.getElementById('deletebtn').style.display = 'flex';
+        if(document.getElementById('postbtn')) {
+            document.getElementById('postbtn').style.display = 'none';
+        }
+        
+     
+        if(document.getElementById('savechanges')) {
+            document.getElementById('savechanges').style.display = 'flex';
+        }
+        if(document.getElementById('deletebtn')) {
+            document.getElementById('deletebtn').style.display = 'flex';
+        }
         this.closeModal();
     }
 
