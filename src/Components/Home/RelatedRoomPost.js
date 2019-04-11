@@ -181,7 +181,7 @@ class RelatedRoomPost extends Component {
                     position:'relative',
                     margin:0,
                     color:'white'
-                }}>{'remixed by @' +this.props.createdBy}</p>
+                }}>{this.props.isRemix ? 'Remixed by ' :  'Created by ' + `@${this.props.userName}`}</p>
             </div>
             <div style={{
                 height:118, 

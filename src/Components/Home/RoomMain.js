@@ -23,7 +23,7 @@ import ImageEdit from './ImageEdit.js';
 import * as S3 from 'aws-sdk/clients/s3';
 import RelatedRoomPost from './RelatedRoomPost.js';
 
-
+let database = firebase.database();
 
 AWS.config.update({
   region: 'us-west-2',
@@ -49,8 +49,10 @@ let Loaded = false;
 let isMenuOpen = false;
  let gui = new dat.GUI();
  document.getElementsByClassName('close-button close-bottom')[0].style.display = 'none';
- let addedBefore = false;
-
+let addedBefore = false;
+let roomsPerPage = 3;
+let roomFilter = 'weight';
+let relatedRooms = [];
 class RoomMain extends Component {
     constructor() {
         super();
@@ -84,32 +86,7 @@ class RoomMain extends Component {
         
         let that = this;
 
-        let dummy = [{
-            shortID:'0esmik', 
-            title:'Crossing the Bridge', 
-            createdBy:'daltonpereira', 
-            remixedBy:'daltonpereira',
-            repostedBy:'daltonpereira', 
-            views:0,
-            thumbnail:'http://test.flowroom.com/uploads/M0sZuL.jpg'
-        },{
-            shortID:'0esmik', 
-            title:'Crossing the Bridge', 
-            createdBy:'daltonpereira', 
-            remixedBy:'daltonpereira',
-            repostedBy:'daltonpereira', 
-            views:0,
-            thumbnail:'http://test.flowroom.com/uploads/M0sZuL.jpg'
-        },{
-            shortID:'0esmik', 
-            title:'Crossing the Bridge', 
-            createdBy:'daltonpereira', 
-            remixedBy:'daltonpereira',
-            repostedBy:'daltonpereira', 
-            views:0,
-            thumbnail:'http://test.flowroom.com/uploads/M0sZuL.jpg'
-        }];
-        this.setState({relatedRooms:dummy});
+     
 
 
         document.getElementById('main-menu').style.display = 'none';
@@ -243,15 +220,7 @@ class RoomMain extends Component {
          // this.setState({isLoaded:true})
        
         
-        const targetElement = document.querySelector("#room-main-page");
-        disableBodyScroll(targetElement);
-
-        if(window.location.pathname === '/room/spacegame') {
-            this.setState({descriptionText:'A simple remixable space game I made'});
-        } else if (window.location.pathname === '/room/slider') {
-            this.setState({descriptionText:'A slider showing before and after'});
-        }
-
+    
         
         var parts = window.location.pathname.split('/');
         var lastSegment = parts.pop() || parts.pop();  // handle potential trailing slash
@@ -259,7 +228,7 @@ class RoomMain extends Component {
 
         firebase.database().ref(`/rooms/${lastSegment}`).once('value').then((snapshot)=> {
             if(snapshot.val() !== null) {
-              
+            
               //console.log(snapshot.val())
               let uid = snapshot.val().uid;
               that.setState({
@@ -267,7 +236,8 @@ class RoomMain extends Component {
                 remixRoomID:snapshot.val().remixRoomID,
                 remixUserName:snapshot.val().remixUserName,
                 userName:snapshot.val().userName,
-                shortID:snapshot.val().shortID
+                shortID:snapshot.val().shortID,
+                // relatedRooms
               })
              
               //console.log(firebase.auth())
@@ -305,16 +275,77 @@ class RoomMain extends Component {
           console.log(error)
         });
 
-        //this.setState({isLoaded:true});
-        //     Loaded = true;
-        //  }
+            // let dummy = [{
+                //     shortID:'0esmik', 
+                //     title:'Crossing the Bridge', 
+                //     createdBy:'daltonpereira', 
+                //     remixedBy:'daltonpereira',
+                //     repostedBy:'daltonpereira', 
+                //     views:0,
+                //     thumbnail:'http://test.flowroom.com/uploads/M0sZuL.jpg'
+                // },{
+                //     shortID:'0esmik', 
+                //     title:'Crossing the Bridge', 
+                //     createdBy:'daltonpereira', 
+                //     remixedBy:'daltonpereira',
+                //     repostedBy:'daltonpereira', 
+                //     views:0,
+                //     thumbnail:'http://test.flowroom.com/uploads/M0sZuL.jpg'
+                // },{
+                //     shortID:'0esmik', 
+                //     title:'Crossing the Bridge', 
+                //     createdBy:'daltonpereira', 
+                //     remixedBy:'daltonpereira',
+                //     repostedBy:'daltonpereira', 
+                //     views:0,
+                //     thumbnail:'http://test.flowroom.com/uploads/M0sZuL.jpg'
+                // }];
+
+
+                let counter = 0;
+                console.log('load rooms');
+                database.ref('rooms').orderByChild(roomFilter).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
+                  snapshot.forEach((childSnapShot) => {
+                    counter++;
+                    if(!this.isShortIDExists(childSnapShot.val().shortID)) {
+                      if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
+                        if(counter !== 1) {
+                          
+                          
+                          relatedRooms.unshift({
+                              id:childSnapShot.key,
+                              date:childSnapShot.val().date,
+                              views:childSnapShot.val().views,
+                              isRemix:childSnapShot.val().isRemix,
+                              roomType:childSnapShot.val().roomType,
+                              userName:childSnapShot.val().userName,
+                              shortID:childSnapShot.val().shortID,
+                              title:childSnapShot.val().room_title,
+                              tags:childSnapShot.val().tags,
+                              thumbnail:childSnapShot.val().thumbnail,
+                              ...childSnapShot
+                          });
+          
+          
+                        }
+                      
+                      }
+          
+                    }
+                  });
+                  that.setState({relatedRooms:relatedRooms});
+                });
+                
     }
 
-    remix() {
-
-    }
-
-    
+    isShortIDExists(shortID) {
+        for(let i = 0; i < relatedRooms.length; i++) {
+            if(relatedRooms[i].shortID == shortID) {
+                return true;
+            }
+        }
+        return false;
+      }
       afterOpenModal() {
         // references are now sync'd and can be accessed.
         this.subtitle.style.color = '#f00';
@@ -1271,13 +1302,12 @@ class RoomMain extends Component {
                                     return(<RelatedRoomPost 
                                         shortID={i.shortID}
                                         title={i.title} 
-                                        createdBy={i.createdBy}  
-                                        remixedBy={i.remixedBy}
-                                        repostedBy={i.repostedBy}  
+                                        userName={i.userName}    
                                         views={i.views} 
                                         thumbnail={i.thumbnail}   
                                         roomHeight={118} 
                                         roomWidth={225}
+                                        isRemix={i.isRemix}
                                         
                                         />)
                                 })
