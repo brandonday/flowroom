@@ -316,6 +316,7 @@ const KeyCodes = {
         let hashids = new Hashids(uuid(), 6);
    
         let uid = firebase.auth().currentUser.uid;
+
         console.log('dhtml :',this.props.state.dhtml);
         console.log('dhtml.dhtml :', this.props.state.dhtml.dhtml);
         let currentRoomID = window.location.pathname.split("room/").pop();
@@ -324,9 +325,9 @@ const KeyCodes = {
                 description:this.state.description,
                 views:0,
                 likes:0,
-                html:this.props.state.dhtml.dhtml.html,
-                css:this.props.state.dhtml.dhtml.css,
-                js:this.props.state.dhtml.dhtml.js,
+                html:this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.html : '',
+                css:this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.css: '',
+                js:this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.js: '',
                 pic:this.state.pic,
                 objectNum:'',
                 date: new Date(),
