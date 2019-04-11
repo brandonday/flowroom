@@ -69,7 +69,7 @@ class RoomMain extends Component {
            openBtnVisible:true,
            postBtnVisible:true,
            isLoaded:false,
-           user:'',
+           userNameSelf:'',
            relatedRooms:[],
            isRemix:false,
            remixRoomID:'',
@@ -94,7 +94,7 @@ class RoomMain extends Component {
         
        //if(Loaded === false) {
        if(firebase.auth().currentUser !== null) {
-        that.setState({user:firebase.auth().currentUser.displayName
+        that.setState({userNameSelf:firebase.auth().currentUser.displayName
         
         });
        }
@@ -886,7 +886,7 @@ class RoomMain extends Component {
                                        this.openModal(false)
                                
                                }} style={{
-                                    display:that.state.postBtnVisible ? 'none' : 'flex',
+                                    display:that.state.userNameSelf === that.state.userName ? 'flex' : 'none',
                                     color:'rgb(64, 255, 232)',
                                     height:'52px',
                                     width:'48px',
@@ -914,12 +914,12 @@ class RoomMain extends Component {
                                        
                                        let currentRoomID = window.location.pathname.split("room/").pop();
                                      firebase.database().ref(`rooms/${currentRoomID}`).remove();
-                                     firebase.database().ref(`UsersRooms/${currentRoomID}/${that.state.user}`).remove();
-                                     firebase.database().ref(`${that.state.user}/${currentRoomID}`).remove();
+                                     firebase.database().ref(`UsersRooms/${currentRoomID}/${that.state.userNameSelf}`).remove();
+                                     firebase.database().ref(`${that.state.userNameSelf}/${currentRoomID}`).remove();
                                      window.location.replace('/');
                                
                                }} style={{
-                       display:that.state.postBtnVisible ? 'none' : 'flex',
+                       display:that.state.userNameSelf === that.state.userName ? 'flex' : 'none',
                        color:'rgb(64, 255, 232)',
                        height:'52px',
                        width:'48px',
