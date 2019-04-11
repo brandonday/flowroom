@@ -316,7 +316,8 @@ const KeyCodes = {
         let hashids = new Hashids(uuid(), 6);
    
         let uid = firebase.auth().currentUser.uid;
-      
+        console.log('dhtml :',this.props.state.dhtml);
+        console.log('dhtml.dhtml :', this.props.state.dhtml.dhtml);
         let currentRoomID = window.location.pathname.split("room/").pop();
         this.props.startCreateRoom(
             {
