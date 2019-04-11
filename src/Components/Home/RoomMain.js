@@ -430,7 +430,7 @@ class RoomMain extends Component {
             
         });
     } catch(error) {
-        that.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles:{
+        that.props.openModal({isModalOpen:true, modalType:'room', post:isPostAsNew, customStyles:{
             overlay: {
               backgroundColor: 'none',
             },
