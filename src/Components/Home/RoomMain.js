@@ -383,7 +383,7 @@ class RoomMain extends Component {
 
 
       }
-    openModal(post = true) {
+    openModal(isPostAsNew = true) {
         console.log('this open modal')
         let that = this;
         let iframe = document.getElementById('output_frame');
@@ -391,12 +391,12 @@ class RoomMain extends Component {
         iframe.contentWindow.flowroom.SaveScreenShot(function() {
             console.log('screen shot callback')
             let imageData = localStorage.getItem("thumbnail");
-            let isRemix = that.state.isRemix;
-            let remixRoomID = that.state.remixRoomID;
-            let remixUserName = that.state.remixUserName;
+            let isRemix = isPostAsNew;
+            let remixRoomID = isPostAsNew ? that.state.shortID : that.state.remixRoomID;
+            let remixUserName = isPostAsNew ? that.state.userName : that.state.remixUserName;
 
             localStorage.setItem("thumbnailUrl", "");
-            that.props.openModal({isModalOpen:true, modalType:'room', post:post, image:imageData, isRemix:isRemix, remixRoomID:remixRoomID, remixUserName:remixUserName, customStyles:{
+            that.props.openModal({isModalOpen:true, modalType:'room', post:isPostAsNew, image:imageData, isRemix:isRemix, remixRoomID:remixRoomID, remixUserName:remixUserName, customStyles:{
                 overlay: {
                   backgroundColor: 'none',
                 },
