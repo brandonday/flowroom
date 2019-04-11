@@ -71,7 +71,8 @@ class RoomMain extends Component {
            relatedRooms:[],
            isRemix:false,
            remixRoomID:'',
-           remixUserName:''
+           remixUserName:'',
+           userName:''
         };
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -115,7 +116,9 @@ class RoomMain extends Component {
         
        //if(Loaded === false) {
        if(firebase.auth().currentUser !== null) {
-        that.setState({user:firebase.auth().currentUser.displayName});
+        that.setState({user:firebase.auth().currentUser.displayName
+        
+        });
        }
       
        window.datGUI = function(obj) {
@@ -261,7 +264,8 @@ class RoomMain extends Component {
               that.setState({
                 isRemix:snapshot.val().isRemix,
                 remixRoomID:snapshot.val().remixRoomID,
-                remixUserName:snapshot.val().remixUserName
+                remixUserName:snapshot.val().remixUserName,
+                userName:snapshot.val().userName
               })
              
               //console.log(firebase.auth())
@@ -287,8 +291,9 @@ class RoomMain extends Component {
                     postVisible:'block',
                     remixVisible:'block',
                     isRemix:false,
-                    remixRoomID:'',
-                    remixUserName:''
+                    openModalomID:'',
+                    remixUserName:'',
+                    userName:''
                 });
                 
             } 
@@ -1225,8 +1230,12 @@ class RoomMain extends Component {
                         </div>
                     </div>
                 </div>
-                <div style={{display:'flex',flex:1, border:'0px solid red'}}>
-                    <Comments/>
+                <div style={{display:this.state.userName == ''? 'none':'flex',flex:1, border:'0px solid red'}}>
+                    <Comments isRemix={this.state.isRemix} 
+                        remixRoomID={this.state.remixRoomID} 
+                        remixUserName={this.state.remixUserName}
+                        userName={this.state.userName}
+                    />
                     <div style={{height:'42px',
                             width:'100%',
                             background:'rgb(14, 14, 14)',
@@ -1247,7 +1256,7 @@ class RoomMain extends Component {
                         flexDirection:'column'
                     }}>
                     
-                    <div style={{display:'flex', alignItems:'center',height:40,width:'100%',background:'#0f0f0f'}}>
+                    <div style={{display:this.state.userName == ''? 'none':'flex', alignItems:'center',height:40,width:'100%',background:'#0f0f0f'}}>
                         <p style={{color:'white',fontSize:17,fontWeight:900}}>Recommended Flows</p>
                     </div>
                     <div style={{height:'100%', width:'100%',background:'#0f0f0f'}}>
