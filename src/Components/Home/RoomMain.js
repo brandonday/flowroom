@@ -852,7 +852,7 @@ class RoomMain extends Component {
                                     </div>
                                     <div id="save-tab" onClick={()=> {
                                        
-                                       this.openModal(true)
+                                       this.openModal(false)
                                
                                }} style={{
                                     display:that.state.postBtnVisible ? 'none' : 'flex',
