@@ -72,7 +72,8 @@ class RoomMain extends Component {
            isRemix:false,
            remixRoomID:'',
            remixUserName:'',
-           userName:''
+           userName:'',
+           shortID:''
         };
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -265,7 +266,8 @@ class RoomMain extends Component {
                 isRemix:snapshot.val().isRemix,
                 remixRoomID:snapshot.val().remixRoomID,
                 remixUserName:snapshot.val().remixUserName,
-                userName:snapshot.val().userName
+                userName:snapshot.val().userName,
+                shortID:snapshot.val().shortID
               })
              
               //console.log(firebase.auth())
@@ -293,7 +295,8 @@ class RoomMain extends Component {
                     isRemix:false,
                     openModalomID:'',
                     remixUserName:'',
-                    userName:''
+                    userName:'',
+                    shortID:''
                 });
                 
             } 
