@@ -240,6 +240,9 @@ class Editor extends Component {
           let html = HTML_EDITOR.getValue() || null;
       let css = CSS_EDITOR.getValue() || null;
       let js = JS_EDITOR.getValue() || null;
+      html = html === undefined || html === null ? '' : html;
+      css = css === undefined || css === null ? '' : css; 
+      js = js === undefined || js === null ? '' : js;
           that.props.saveDHTML({html, css, js});
           if(!isHTMLREADY) {
             renderDHTML();
