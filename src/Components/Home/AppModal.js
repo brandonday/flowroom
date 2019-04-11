@@ -195,7 +195,14 @@ const KeyCodes = {
             shortID:'',
             showSignInSignUp:false,
             room_card_height:246,
-            room_aspect_ratio:1.3
+            room_aspect_ratio:1.3,
+            repostedBy:'',
+            repostedByArray:[],
+            remixedByArray:[],
+            isRemix:false, 
+            remixRoomID:'', 
+            remixUserName:''
+            
 
       }
 
@@ -387,7 +394,13 @@ const KeyCodes = {
                 data:[],
                 room_title:this.state.room_title,
                 room_aspect_ratio:this.state.room_aspect_ratio,
-                room_card_height:this.state.room_card_height
+                room_card_height:this.state.room_card_height,
+                repostedBy:this.state.repostedBy,
+                repostedByArray:this.state.remixedByArray,
+                remixedByArray:this.state.remixedByArray,
+                isRemix:this.props.state.entireApp.isRemix, 
+                remixRoomID:this.props.state.entireApp.remixRoomID, 
+                remixUserName:this.props.state.entireApp.remixUserName,
 
         });
         document.getElementById('postbtn').style.display = 'none';

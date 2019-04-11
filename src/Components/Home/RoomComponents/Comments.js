@@ -23,6 +23,7 @@ const repliesNum = [];
             plus:'+',
             room_title:'',
             description:'',
+            views:'',
             loggedIn:false
          }
     }
@@ -82,9 +83,11 @@ const repliesNum = [];
         let shortID = tmp.pop();
         let that = this;
         database.ref(`rooms/${shortID}`).once('value').then(function(snapshot) {
-        
+            
             that.setState({room_title:snapshot.val() !== null ? snapshot.val().room_title :'',
-                description:snapshot.val() !== null ? snapshot.val().description : ''});
+                description:snapshot.val() !== null ? snapshot.val().description : '',
+                views:snapshot.val() !== null ? snapshot.val().views : ''
+            });
 
         });
 
@@ -479,10 +482,10 @@ const repliesNum = [];
                     <div style={{backgroundColor:'#1f1f1f',borderRadius:'6px',height:'242px',width:'100%'}}>
                     <div style={{height:'76px',width:'100%', display:'flex', borderBottom:'1px solid #373737', justifyContent:'space-between'}}>
                         <div style={{height:47,marginLeft:17,marginTop:9}}>
-                        <p style={{color:'#fafafa',fontSize:20,marginBottom:6}}>{this.state.room_title ? this.state.room_title: 'Trump Pac-Man Game'}</p>
+                        <p style={{color:'#fafafa',fontSize:20,marginBottom:6}}>{this.state.room_title ? this.state.room_title: ''}</p>
                         <div style={{display:'flex',alignItems:'center'}}>
                             <i className="fa fa-play" style={{fontSize:11,marginRight:10,color:'white'}}></i>
-                            <p style={{fontSize:'13px',fontWeight:'500',color:'white'}}>{'49,866'}</p>
+                            <p style={{fontSize:'13px',fontWeight:'500',color:'white'}}>{this.state.views}</p>
                         </div>
                         </div>
         <div style={{display:'flex', width:196, justifyContent:'space-between',height:63}}>

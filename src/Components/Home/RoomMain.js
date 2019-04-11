@@ -3,8 +3,6 @@ import { Resizable, ResizableBox } from 'react-resizable';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import * as CodeMirror from 'codemirror';
 import Comments from './RoomComponents/Comments.js';
-import RoomPosts from './RoomPosts.js';
-import RelatedRooms from './RoomPosts.js';
 import Editor from './Editor.js';
 import Responsive from 'react-responsive';
 import uuid from 'uuid';
@@ -23,6 +21,7 @@ import html2canvas from 'html2canvas';
 import AWS from 'aws-sdk';
 import ImageEdit from './ImageEdit.js';
 import * as S3 from 'aws-sdk/clients/s3';
+import RelatedRoomPost from './RelatedRoomPost.js';
 
 
 
@@ -51,6 +50,7 @@ let isMenuOpen = false;
  let gui = new dat.GUI();
  document.getElementsByClassName('close-button close-bottom')[0].style.display = 'none';
  let addedBefore = false;
+
 class RoomMain extends Component {
     constructor() {
         super();
@@ -68,6 +68,10 @@ class RoomMain extends Component {
            postBtnVisible:true,
            isLoaded:false,
            user:'',
+           relatedRooms:[],
+           isRemix:false,
+           remixRoomID:'',
+           remixUserName:''
         };
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -78,8 +82,32 @@ class RoomMain extends Component {
         
         let that = this;
 
-      
-
+        let dummy = [{
+            shortID:'0esmik', 
+            title:'Crossing the Bridge', 
+            createdBy:'daltonpereira', 
+            remixedBy:'daltonpereira',
+            repostedBy:'daltonpereira', 
+            views:0,
+            thumbnail:'http://test.flowroom.com/uploads/M0sZuL.jpg'
+        },{
+            shortID:'0esmik', 
+            title:'Crossing the Bridge', 
+            createdBy:'daltonpereira', 
+            remixedBy:'daltonpereira',
+            repostedBy:'daltonpereira', 
+            views:0,
+            thumbnail:'http://test.flowroom.com/uploads/M0sZuL.jpg'
+        },{
+            shortID:'0esmik', 
+            title:'Crossing the Bridge', 
+            createdBy:'daltonpereira', 
+            remixedBy:'daltonpereira',
+            repostedBy:'daltonpereira', 
+            views:0,
+            thumbnail:'http://test.flowroom.com/uploads/M0sZuL.jpg'
+        }];
+        this.setState({relatedRooms:dummy});
 
 
         document.getElementById('main-menu').style.display = 'none';
@@ -230,6 +258,11 @@ class RoomMain extends Component {
               
               //console.log(snapshot.val())
               let uid = snapshot.val().uid;
+              that.setState({
+                isRemix:snapshot.val().isRemix,
+                remixRoomID:snapshot.val().remixRoomID,
+                remixUserName:snapshot.val().remixUserName
+              })
              
               //console.log(firebase.auth())
               if(firebase.auth().currentUser !== null) {
@@ -249,8 +282,15 @@ class RoomMain extends Component {
               }
             } else {
               //alert('not');
-                that.setState({saveVisible:'block',postVisible:'block',remixVisible:'block'});
-  
+                that.setState({
+                    saveVisible:'block',
+                    postVisible:'block',
+                    remixVisible:'block',
+                    isRemix:false,
+                    remixRoomID:false,
+                    remixUserName:false
+                });
+                
             } 
         
         }).catch((error) => {
@@ -346,9 +386,12 @@ class RoomMain extends Component {
         iframe.contentWindow.flowroom.SaveScreenShot(function() {
             console.log('screen shot callback')
             let imageData = localStorage.getItem("thumbnail");
+            let isRemix = that.state.isRemix;
+            let remixRoomID = that.state.remixRoomID;
+            let remixUserName = that.state.remixUserName;
 
             localStorage.setItem("thumbnailUrl", "");
-            that.props.openModal({isModalOpen:true, modalType:'room', post:post, image:imageData, customStyles:{
+            that.props.openModal({isModalOpen:true, modalType:'room', post:post, image:imageData, isRemix:isRemix, remixRoomID:remixRoomID, remixUserName:remixUserName, customStyles:{
                 overlay: {
                   backgroundColor: 'none',
                 },
@@ -754,7 +797,7 @@ class RoomMain extends Component {
 
 
 
-                                        <div id="comments" onClick={()=> {
+                                        <div id="script-tag" onClick={()=> {
            
                                             // let commentsid = document.getElementById('comments');
                                             // commentsid.className = 'menubg';
@@ -799,13 +842,73 @@ class RoomMain extends Component {
                                     }}></div>
                                                     <p id="details-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252',width:'26px'}}>SCRIPT</p>
                                     </div>
-                                        
-                                     <div id="draw" onClick={()=> {
+                                    <div id="save-tab" onClick={()=> {
+                                       
+                                       this.openModal(true)
+                               
+                               }} style={{
+                                    display:that.state.postBtnVisible ? 'none' : 'flex',
+                                    color:'rgb(64, 255, 232)',
+                                    height:'52px',
+                                    width:'48px',
+                                    flexDirection:'column',
+                                    alignItems:'center',
+                                    borderRight:'1px solid #181818',
+                                    borderBottom:'1px solid #181818',
+                                    justifyContent:'center'
+                               }} 
+                               className="menu-bg-border">
+                                    <div style={{
+                                        fontSize:'15px',
+                                        color:'white',
+                                        backgroundImage:'url(../save-regular-grey.svg)',
+                                        backgroundSize:'100% 100%',
+                                        backgroundRepeat:'no-repeat',
+                                        height:'14px',
+                                        width:'16px',
+                                        marginBottom:'3px'
+                            
+                               }}></div>
+                                   <p id="save-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252'}}>SAVE</p>
+                       </div>
+                       <div id="del-tab" onClick={()=> {
+                                       
+                                       let currentRoomID = window.location.pathname.split("room/").pop();
+                                     firebase.database().ref(`rooms/${currentRoomID}`).remove();
+                                     firebase.database().ref(`UsersRooms/${currentRoomID}/${that.state.user}`).remove();
+                                     firebase.database().ref(`${that.state.user}/${currentRoomID}`).remove();
+                                     window.location.replace('/');
+                               
+                               }} style={{
+                       display:that.state.postBtnVisible ? 'none' : 'flex',
+                       color:'rgb(64, 255, 232)',
+                       height:'52px',
+                       width:'48px',
+                       flexDirection:'column',
+                       alignItems:'center',
+                       borderRight:'1px solid #181818',
+                       borderBottom:'1px solid #181818',
+                       justifyContent:'center'
+                               }} 
+                               className="menu-bg-border">
+                                    <div style={{
+                               fontSize:'15px',
+                               color:'white',
+                               backgroundImage:'url(../save-regular-grey.svg)',
+                               backgroundSize:'100% 100%',
+                               backgroundRepeat:'no-repeat',
+                               height:'14px',
+                               width:'16px',
+                               marginBottom:'3px'
+                               }}></div>
+                                   <p id="publish-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252'}}>DELETE</p>
+                       </div>
+                                     <div id="post-tab" onClick={()=> {
                                        
                                             this.openModal(true)
                                     
                                     }} style={{
-                            display:'flex',
+                            display:that.state.postBtnVisible ? 'flex' : 'none',
                             color:'rgb(64, 255, 232)',
                             height:'52px',
                             width:'48px',
@@ -826,10 +929,11 @@ class RoomMain extends Component {
                                     width:'16px',
                                     marginBottom:'3px'
                                     }}></div>
-                                        <p id="details-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252',width:'38px'}}>PUBLISH</p>
+                                        <p id="publish-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252',width:'38px'}}>PUBLISH</p>
                             </div>
 
-                            <div id="draw" onClick={()=> {
+
+                            <div id="full-screen" onClick={()=> {
                                         // let drawid = document.getElementById('draw');
                                         // drawid.className = 'menubg';
                                         // drawid.style.borderRight = '0px solid #181818';
@@ -872,7 +976,7 @@ class RoomMain extends Component {
                                     width:'16px',
                                     marginBottom:'3px'
                                     }}></div>
-                                        <p id="details-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252',width:'22px'}}>FULL</p>
+                                        <p id="full-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252',width:'22px'}}>FULL</p>
                             </div>
 
                                  <div id="objects" onClick={()=> {
@@ -1123,8 +1227,7 @@ class RoomMain extends Component {
                 </div>
                 <div style={{display:'flex',flex:1, border:'0px solid red'}}>
                     <Comments/>
-                    <div style={{height:'100%',width:'400px',background:'white'}}>
-                        <div style={{height:'42px',
+                    <div style={{height:'42px',
                             width:'100%',
                             background:'rgb(14, 14, 14)',
                             border:'0px solid red',
@@ -1133,7 +1236,43 @@ class RoomMain extends Component {
                             justifyContent:'space-between',
                             position:'absolute',
                             right:'0px'
-                            }}>
+                            }}></div>
+                    <div style={{
+                        height:'100vh',
+                        width:'400px',
+                        background:'white',
+                        justifyContent:'center',
+                        marginTop:'32px',
+                        display:'flex',
+                        flexDirection:'column'
+                    }}>
+                    
+                    <div style={{display:'flex', alignItems:'center',height:40,width:'100%',background:'#0f0f0f'}}>
+                        <p style={{color:'white',fontSize:17,fontWeight:900}}>Recommended Flows</p>
+                    </div>
+                    <div style={{height:'100%', width:'100%',background:'#0f0f0f'}}>
+
+
+                        
+                            {
+                                that.state.relatedRooms.map((i)=>{
+                                    return(<RelatedRoomPost 
+                                        shortID={i.shortID}
+                                        title={i.title} 
+                                        createdBy={i.createdBy}  
+                                        remixedBy={i.remixedBy}
+                                        repostedBy={i.repostedBy}  
+                                        views={i.views} 
+                                        thumbnail={i.thumbnail}   
+                                        roomHeight={118} 
+                                        roomWidth={225}
+                                        
+                                        />)
+                                })
+                            }
+                        
+                    </div>
+                            
                         {/* <button id="open-code-editor" onClick={this.dropDownAnimate.bind(this)} style={{fontWeight:'bold',
                                 color:'white',
                                 fontSize:'15px',
@@ -1245,7 +1384,7 @@ class RoomMain extends Component {
                                 padding:'0px 9px'}}>
                                 Delete</button> */}
                                 {/* <i className="fas fa-expand" style={{fontSize:30, color:'rgb(179, 0, 254)', marginRight:25}}></i> */}
-                        </div>
+                       
                         
                         {/* <RelatedRooms/> */}
                     </div>

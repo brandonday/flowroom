@@ -91,7 +91,14 @@ export const startCreateRoom = (roomData = {}) => {
             data = [],
             room_title = '',
             room_aspect_ratio = '',
-            room_card_height = ''
+            room_card_height = '',
+            repostedBy = '',
+            repostedbyArray = [],
+            remixedByArray = [],
+            isRemix = false, 
+            remixRoomID = '', 
+            remixUserName = ''
+            
         } = roomData;
 
         const room = {
@@ -168,7 +175,13 @@ export const startCreateRoom = (roomData = {}) => {
             data,
             room_title,
             room_aspect_ratio,
-            room_card_height
+            room_card_height,
+            repostedBy,
+            repostedbyArray,
+            remixedByArray,
+            isRemix, 
+            remixRoomID, 
+            remixUserName
         }
       
         firebase.auth().onAuthStateChanged(function(user) {

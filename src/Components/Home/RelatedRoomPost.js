@@ -156,79 +156,47 @@ class RelatedRoomPost extends Component {
 
         return  (
             <div style={{position:'relative'}} onMouseEnter={this.mouseHover.bind(this)} onMouseLeave={this.mouseLeave.bind(this)}  style={{
-                height:this.props.roomHeight
+                height:159, width:232,
+                background:'#1f1f1f',
+                display:'flex',
+                justifyContent:'center',
+                alignItems:'flex-end',
+                padding:5,
+                margin:'0px 0px 15px',
+                flexDirection:'column'
             }}>
-
-                <div style={{height:this.props.roomType === 'image'? '100%':'78%',
-                    background:'#F9F9F9',
-                    overflow:'hidden',
+            <div style={{width:232}}>
+                <p style={{
+                    fontSize:'12px',
+                    left:'11px',
+                    top:'-7px',
                     position:'relative',
-                    WebkitBoxSizing:'border-box',
-                    MozBoxSizing:'border-box',
-                    boxSizing:'border-box'}}>
-
-                        {this.post()}
-
-                        <div id={this.props.id.id} className={this.props.roomType === 'image'? '':"room-overlay"}></div>
-                        {/* <Link to={"/room/" + this.props.id.id} >
-                            <div id={this.props.id.id + "description"} className={this.props.roomType === 'image'?'': "description-overlay"}>
-                                <p>{this.props.roomType === 'image'?''}</p>
-                            </div>
-                        </Link> */}
-                    </div>
-                    {this.display()}
-                    {this.displayExtraInfo()}
-
-                    <div style={{display:'flex',
-                        justifyContent:'space-between',
-                        height:'39px',
-                        width:'100%',
-                        padding:'0px 10px',
-                        alignItems:'center',
-                        position:'relative'
-                        }}>
-                            <div style={{display:'flex',
-                                alignItems:'center'}}>
-                                <div style={{height:'20px',width:'20px',borderRadius:20,backgroundColor:'black', marginRight:'10px'}}></div>
-                                <p style={{overflow:'hidden',
-                                    textOverflow:'ellipsis',
-                                    textAlign:'left',
-                                    width:'97px',
-                                    fontSize:'14px',
-                                    color:'rgb(128, 132, 140)'
-                                }}>{this.props.username}</p>
-                            </div>
-                            <div style={{border:'0px solid red',overflow:'hidden',height:'31px',display:'flex',
-                                alignItems:'center'}}>
-                            <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',marginRight:'18px'}}>
-                                <div className="view-3x"></div>
-                                <p style={{fontFamily:'Source Sans Pro',color:'#80848C',fontSize:'14px',marginLeft:"4px",lineHeight:0}}>{this.props.views}</p>
-                            </div>
-                            <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center', marginRight:'18px'}}>
-                                <div className="likes-3x"></div>
-                                <p style={{fontFamily:'Source Sans Pro',color:'#80848C',fontSize:'14px',marginLeft:"4px",lineHeight:0}}>{this.props.likes}</p>
-                            </div>
-                            <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center'}}>
-                                <div className="comments-preview-3x"></div>
-                            <p style={{fontFamily:'Source Sans Pro',color:'#80848C',fontSize:'14px',marginLeft:"4px", lineHeight:0}}>{this.props.commentsCount}</p>
-
-                        </div>
-                        <div onClick={this.goFull} style={{padding:'0px 10px',display:'flex', justifyContent:'center', alignItems:'center'}}>
-                            <i className="fas fa-expand" style={{marginRight:'10px',fontSize:20, color:'rgb(48, 184, 82)'}}></i>
-                        </div>
-                    </div>
-                </div>
-                <div id="descriptionWrapText" style={{fontSize:'16px', padding:'0px 10px 10px'}}>
-                        <p id="descriptionText" style={{wordBreak:'break-all', fontSize:'12px', color:'rgb(128, 132, 140)'}}>
-
-{/*
-                            <b style={{marginRight:'4px'}}>{`${this.props.username}`}</b>
-                            <span onClick={this.expandText.bind(this)} style={{position:'relative',height:'20px', width:'41px', float:'right', overflow:'hidden',top:'18px'}}>... more</span> */}
-
-                            {`${this.props.id.description}`}
-                            </p>
-                    </div>
+                    margin:0,
+                    color:'white'
+                }}>{this.props.title}</p>
+                <p style={{
+                    fontSize:'8px',
+                    left:'11px',
+                    top:'-9px',
+                    position:'relative',
+                    margin:0,
+                    color:'white'
+                }}>{'remixed by @' +this.props.createdBy}</p>
             </div>
+            <div style={{
+                height:118, 
+                width:221, 
+                backgroundSize:'175% 117%',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition:'-83px 0px',
+                backgroundImage:`url(${this.props.thumbnail})`,
+                backgroundRepeat:'no-repeat',
+            
+            }}></div>
+                
+            </div>
+                
+            
         )
     }
 }

@@ -7,6 +7,9 @@ export default (state = {}, action) => {
                 modalType:action.modalType,
                 post:action.post,
                 image:action.image,
+                isRemix:action.isRemix,
+                remixRoomID:action.remixRoomID, 
+                RemixUserName:action.RemixUserName,
                 customStyles:action.customStyles
             };
         default:
