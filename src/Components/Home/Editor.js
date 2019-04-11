@@ -279,9 +279,12 @@ class Editor extends Component {
           }
         });
         JS_EDITOR.on('change', function(inst, changes) {
-          let html = HTML_EDITOR.getValue() || null;
-          let css = CSS_EDITOR.getValue() || null;
-          let js = JS_EDITOR.getValue() || null;
+          let html = HTML_EDITOR.getValue();
+          let css = CSS_EDITOR.getValue();
+          let js = JS_EDITOR.getValue();
+          html = html === undefined || html === null ? '' : html;
+          css = css === undefined || css === null ? '' : css; 
+          js = js === undefined || js === null ? '' : js;
           that.props.saveDHTML({html, css, js});
           if(!isJSREADY) {
             renderDHTML();
@@ -312,6 +315,9 @@ class Editor extends Component {
               let html = snapshot.val().html;
               let css = snapshot.val().css;
               let js = snapshot.val().js;
+              html = html === undefined || html === null ? '' : html;
+              css = css === undefined || css === null ? '' : css; 
+              js = js === undefined || js === null ? '' : js;
               HTML_EDITOR.setValue(html);
               CSS_EDITOR.setValue(css);
               JS_EDITOR.setValue(js);
