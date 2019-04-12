@@ -186,12 +186,12 @@ class RelatedRoomPost extends Component {
             <div style={{
                 height:118, 
                 width:221, 
-                backgroundSize:'175% 117%',
+                backgroundSize:'contain',
                 backgroundRepeat: 'no-repeat',
-                backgroundPosition:'-83px 0px',
+                backgroundPosition:'center',
                 backgroundImage:`url(${this.props.thumbnail})`,
                 backgroundRepeat:'no-repeat',
-            
+                transform:'scale(1)'
             }}></div>
                 
             </div>

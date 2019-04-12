@@ -930,7 +930,7 @@ class RoomMain extends Component {
                     <div style={{display:this.state.userName == ''? 'none':'flex', alignItems:'center',height:40,width:'100%',background:'#0f0f0f'}}>
                         <p style={{color:'white',fontSize:17,fontWeight:900}}>Recommended Flows</p>
                     </div>
-                    <div style={{height:'100%', width:'100%',background:'#0f0f0f'}}>
+                    <div style={{height:'100vh', width:'100%',background:'#0f0f0f'}}>
 
 
                         
@@ -950,6 +950,8 @@ class RoomMain extends Component {
                                 })
                             }
                         
+                    </div>
+                    <div style={{height:'100vh', width:'100%',background:'#0f0f0f'}}>
                     </div>
                     </div>
                 </div>

@@ -560,7 +560,7 @@ const repliesNum = [];
                         <p style={{color:'#fff',fontSize:14,margin:15}}>{this.state.description}</p>
                     </div>
                     </div>
-                    <div style={{height:'100%',width:'100%',borderTop:'1px solid black',marginBottom:'10px'}}>
+                    <div style={{height:'100vh',width:'100%',borderTop:'1px solid black',marginBottom:'10px'}}>
                     {this.state.loggedIn ? (<div style={{width:'100%', marginTop:'20px'}}>
                         <div style={{display:'flex', flexDirection:'column', marginBottom:20, position:'relative',background:'#1f1f1f',padding:10, height:166,borderRadius:5}}>
                             <p style={{color:'white', padding:'5px 0px 10px'}}>Leave a comment</p>
