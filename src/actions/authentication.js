@@ -1,5 +1,6 @@
 
 import { firebase } from '../Components/firebase/firebase';
+import { Store } from '../Components/Home/store.js';
 
 export const logIn = (text = '') => ({
    
@@ -62,6 +63,7 @@ export const logout = () => ({
 });
 
 export const logOut = () => {
+  
     return () => {
         return firebase.auth().signOut();
     }

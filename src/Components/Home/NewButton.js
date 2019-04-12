@@ -89,11 +89,11 @@ class NewButton extends Component {
                     </a>
                     <a href="#" className="new-button-dropdown-sel-room">
                         <div className="hoverdrop">
-                            <Link to="/community">
+                      
                                 <div className="drop-menu-wrap">
                                     <p className="drop-menu-newroom">New Community</p>
                                 </div>
-                            </Link>
+                           
                         </div>
                     </a>
                 </div>

@@ -120,16 +120,16 @@ class RoomPost extends Component {
           });
     }
     mouseHover() {
-        // if(this.props.id.id !== null) {
-        //     document.getElementById(this.props.id.id).style.display = 'flex';
-        //     document.getElementById(this.props.id.id + "description").style.display = 'flex';
+        // if(this.props.shortID !== null) {
+        //     document.getElementById(this.props.shortID).style.display = 'flex';
+        //     document.getElementById(this.props.shortID + "description").style.display = 'flex';
         // }
     }
 
     mouseLeave() {
-        // if(this.props.id.id !== null) {
-        // document.getElementById(this.props.id.id).style.display = 'none';
-        // document.getElementById(this.props.id.id + "description").style.display = 'none';
+        // if(this.props.shortID !== null) {
+        // document.getElementById(this.props.shortID).style.display = 'none';
+        // document.getElementById(this.props.shortID + "description").style.display = 'none';
         // }
     }
 
@@ -153,9 +153,10 @@ class RoomPost extends Component {
         } 
     }
     getTruncatedString(stringIn) {
-        
-        return {isReadMore: stringIn.length >= 120,
-                string: stringIn.length < 120 ? stringIn : stringIn.substring(0,120)};
+        return {
+            isReadMore: stringIn.length >= 120,
+            string: stringIn.length < 120 ? stringIn : stringIn.substring(0, 120)
+        };
     }
     display() {
         return (
@@ -185,7 +186,7 @@ class RoomPost extends Component {
                     padding:'0 8px',
                     position:'relative',
                     transition:'color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, width 0.3s ease, opacity 0.3s ease'}}>
-                        <i class="fas fa-play" style={{fontSize:10, width:0}}></i>
+                        <i className="fas fa-play" style={{fontSize:10, width:0}}></i>
                         <p style={{fontSize:13, with:20}}>Enter</p>
                       
                 </div>
@@ -213,7 +214,7 @@ class RoomPost extends Component {
                         let toptitle = document.getElementsByClassName('top-title');
                         let roomtitlecard = document.getElementsByClassName('room-card-title');
                   
-                        let iframe = document.getElementById(`${this.props.id.id}`);
+                        let iframe = document.getElementById(`${this.props.shortID}`);
                         iframe.style.transform = 'scale(0.5)';
                         iframe.style.height = '200%';
                         iframe.style.width = '200%';
@@ -266,12 +267,12 @@ class RoomPost extends Component {
                                 fontSize:'20px',
                                 marginRight:'17px',
                                 marginTop:'17px'}}>
-                                <i class="fas fa-ellipsis-v" style={{color:'white'}}></i>
+                                <i className="fas fa-ellipsis-v" style={{color:'white'}}></i>
                             </div>
                             
                         </div>
                         <div className="full-screenable-node" style={{height:this.props.roomHeight}}>
-                        <div id={`thumbnail_${this.props.id.id}`} style={{
+                        <div id={`thumbnail_${this.props.shortID}`} style={{
                                 height:'100%', 
                                 width:'100%',
                                 backgroundImage:`url(${this.props.thumbnail})`,
@@ -281,7 +282,7 @@ class RoomPost extends Component {
                                 zIndex:3,
                                 position:'absolute'
                             }}></div>
-                            <iframe id={`${this.props.id.id}`} src={"/full/" + this.props.id.id} style={{
+                            <iframe id={`${this.props.shortID}`} src={"/full/" + this.props.shortID} style={{
                                 height:'200%', border:'1px solid red',
                                 width:'200%',
                                 border:0,
@@ -311,8 +312,8 @@ class RoomPost extends Component {
         this.incrementViewsFull();
         document.fullscreenEnabled = false
         if(document.fullscreenEnabled === true) {
-        let iframe = document.getElementById(`${this.props.id.id}`);
-        // alert(this.props.id.id)
+        let iframe = document.getElementById(`${this.props.shortID}`);
+        // alert(this.props.shortID)
         let fullscreennode = document.getElementsByClassName('full-screenable-node');
         let toptitle = document.getElementsByClassName('top-title');
         let roomtitlecard = document.getElementsByClassName('room-card-title');
@@ -352,7 +353,7 @@ class RoomPost extends Component {
 
         return  (
             <div 
-            id={`room_${this.props.id.id}`}
+            id={`room_${this.props.shortID}`}
                 onMouseEnter={this.mouseHover.bind(this)} 
                 onMouseLeave={this.mouseLeave.bind(this)} 
                 className="room-post" style={{
@@ -372,8 +373,8 @@ class RoomPost extends Component {
                         {this.post()}
 
                         <div  className={this.props.roomType === 'image'? '':"room-overlay"}></div>
-                        {/* <Link to={"/room/" + this.props.id.id} >
-                            <div id={this.props.id.id + "description"} className={this.props.roomType === 'image'?'': "description-overlay"}>
+                        {/* <Link to={"/room/" + this.props.shortID} >
+                            <div id={this.props.shortID + "description"} className={this.props.roomType === 'image'?'': "description-overlay"}>
                                 <p>{this.props.roomType === 'image'?''}</p>
                             </div>
                         </Link> */}
@@ -396,7 +397,7 @@ class RoomPost extends Component {
                                 margin:'10px 5px 0px'}}>
                          
                             <div style={{display:'flex',width:'auto',alignItems:'center', marginRight:'18px',flexDirection:'row',height:'37px'}}>
-                            <i class="far fa-heart" onClick={()=>{
+                            <i className="far fa-heart" onClick={()=>{
                                 firebase.auth().onAuthStateChanged((user)=> {
                                     console.log("firebase.auth user: ",user);
                                     if(user) {
@@ -414,7 +415,7 @@ class RoomPost extends Component {
                             <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.getNumberToString(this.props.commentsCount)}</p>
                             </div>
                             {/* <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',flexDirection:'column',height:'37px'}}>
-                            <i class="far fa-share-square" style={{fontSize:20, color:'white'}}></i>
+                            <i className="far fa-share-square" style={{fontSize:20, color:'white'}}></i>
                             </div> */}
                     </div>
                     {this.display()}
@@ -435,8 +436,8 @@ class RoomPost extends Component {
   overflow:'hidden',
   color:'white'
     }}>
-                    {`${this.getTruncatedString(this.props.id.description).string}`}
-                    {this.getTruncatedString(this.props.id.description).isReadMore ? (<span style={{color:'white',marginLeft:2}}>...[Read More]</span>) :''}
+                    {`${this.getTruncatedString(this.props.description).string}`}
+                    {this.getTruncatedString(this.props.description).isReadMore ? (<span style={{color:'white',marginLeft:2}}>...[Read More]</span>) :''}
                 </div>
                     
                 
@@ -468,7 +469,7 @@ class RoomPost extends Component {
                                 
                               
                                 return (
-                                  <Tag tagColor={tagColor} tag={tag}/>
+                                  <Tag key={`tag_${tag}`} tagColor={tagColor} tag={tag}/>
                                 )   
                             })
                            
@@ -476,7 +477,7 @@ class RoomPost extends Component {
                     <div style={{display:this.state.showMoreTag ? 'block':'none',color:'#C7524D', border:'1px solid #C7524D', borderRadius:'12px', padding:'0 8px'}}><p>{this.props.numTagsAll - this.props.numTags}</p></div>
                 </div>
                 <div style={{display:'flex',alignItems:'center',marginRight:'18px',flexDirection:'row',height:'37px'}}>
-                            <i class="fas fa-play" style={{fontSize:10, color:'white',marginRight:10}}></i>
+                            <i className="fas fa-play" style={{fontSize:10, color:'white',marginRight:10}}></i>
                                 <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.getNumberToString(this.props.views)}</p>
                             </div>
                 </div>  

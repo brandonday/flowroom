@@ -5,6 +5,7 @@ import { logOut } from '../../actions/authentication';
 import createHistory from 'history/createBrowserHistory';
 import { firebase } from '.././firebase/firebase';
 
+
 let history = createHistory();
 
 class ProfilePic extends Component {

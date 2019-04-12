@@ -144,34 +144,36 @@ const renderApp = (id, hasRendered) => {
 
 
         //render normal showing Profile componenet
-
         renderApp('root', hasRenderedRoot);
-firebase.auth().onAuthStateChanged((user)=> {
-    console.log("firebase.auth user: ",user);
-    if(user) {
-        if(hasRenderedHeader === false) {
-            hasRenderedHeader = true;
-            store.dispatch(isLoggedIn({isLoggedIn:true}));
-            store.dispatch(userStore({username:user.displayName}));
-            renderApp('header', hasRenderedHeader);
+        
+// firebase.auth().onAuthStateChanged((user)=> {
+//     console.log("firebase.auth user: ",user);
+//     if(user) {
+//         if(hasRenderedHeader === false) {
+//             hasRenderedHeader = true;
+//             console.log('isLoggedin :')
+//             store.dispatch(isLoggedIn({isLoggedIn:true}));
+//             console.log('user store:')
+//             store.dispatch(userStore({username:user.displayName}));
+//             console.log('render :')
+//             renderApp('root', hasRenderedRoot);
             
          
-         }
-        //history.push('/');
+//          }
+//         //history.push('/');
        
-    } else {
-        
-        store.dispatch(logout());
-        if(hasRenderedHeader === false) {
-            hasRenderedHeader = false;
-            store.dispatch(userStore({username:null}));
+//     } else {
+     
+//         store.dispatch(logout());
+//         if(hasRenderedHeader === false) {
+//             hasRenderedHeader = false;
+//             renderApp('root', hasRenderedRoot);
+//             //renderApp('header', hasRenderedHeader);
+//             //window.location.reload()
            
-            //renderApp('header', hasRenderedHeader);
-            //window.location.reload()
-           
-        }
-        // TODO: error message
-        store.dispatch(isLoggedIn({isLoggedIn:false}))
-    }
+//         }
+//         // TODO: error message
+       
+//     }
     
-});
+// });

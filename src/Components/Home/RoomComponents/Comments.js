@@ -501,7 +501,7 @@ const repliesNum = [];
                             justifyContent:'space-between',
                      
                         }}>
-                            <i class="far fa-heart" style={{marginRight:10}}></i>
+                            <i className="far fa-heart" style={{marginRight:10}}></i>
                             <p>Like</p>
                         </div>
                         </div>
@@ -518,7 +518,7 @@ const repliesNum = [];
                             justifyContent:'space-between',
                             
                         }}>
-                            <i class="fas fa-share-alt" style={{marginRight:10}}></i>
+                            <i className="fas fa-share-alt" style={{marginRight:10}}></i>
                             <p>Share</p>
                         </div>
                         </div>
@@ -534,7 +534,7 @@ const repliesNum = [];
                             justifyContent:'space-between',
                             width:'50px'
                         }}>
-                            <i class="fas fa-ellipsis-h"></i>
+                            <i className="fas fa-ellipsis-h"></i>
                         </div>
                         </div>
 

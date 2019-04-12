@@ -480,7 +480,7 @@ class RoomMain extends Component {
                             borderRadius:'5px',
                             fontSize:'20px'
                         }}>
-                         <i class="fas fa-font"></i>
+                         <i className="fas fa-font"></i>
                             <p>Text</p>
                         </div>
                         <div style={{
@@ -528,7 +528,7 @@ class RoomMain extends Component {
                             borderRadius:'5px',
                             fontSize:'20px'
                         }}>
-                         <i class="fas fa-shapes" onClick={()=>{
+                         <i className="fas fa-shapes" onClick={()=>{
                              const element = document.querySelector('#main-add-section #menu-sel-wrap');
                              const ball = styler(element); 
 

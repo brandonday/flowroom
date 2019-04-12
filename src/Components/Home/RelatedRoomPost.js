@@ -72,7 +72,7 @@ class RelatedRoomPost extends Component {
             position:'relative',
             right:'10px',
             transition:'color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, width 0.3s ease, opacity 0.3s ease'}}>
-          <i class="fas fa-random" style={{color:'rgb(10, 127, 41)'}}></i>
+          <i className="fas fa-random" style={{color:'rgb(10, 127, 41)'}}></i>
           <p style={{fontSize:12}}>Remix This</p>
         </div>): ''}
 

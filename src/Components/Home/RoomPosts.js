@@ -52,8 +52,10 @@ class RoomPosts extends Component {
         
     }
     componentDidMount() {
+      console.log('room posts called');
       window.addEventListener('scroll', this.handleScroll.bind(this), true);
-       this.loadRooms();
+      this.loadRooms();
+      
        
         // store.dispatch({type:'SAVE_DHTML', html:'',css:'',js:''});
     }
@@ -61,6 +63,7 @@ class RoomPosts extends Component {
       window.removeEventListener('scroll', this.handleScroll.bind(this));
     };
     setRoomVisibility() {
+      console.log('set room visibility');
       let roomPosts = document.getElementsByClassName('room-post');
       let countVisible = 0;
  
@@ -105,7 +108,7 @@ class RoomPosts extends Component {
       
     }
     handleScroll(event) {
-      
+      console.log('handleScroll');
       let that = this;
       if(timer !== null) {
         clearTimeout(timer);        
@@ -125,6 +128,7 @@ class RoomPosts extends Component {
       return false;
     }
     processLoadMore() {
+      console.log('process load more');
       if (this.state.error || this.state.isLoading || !this.state.hasMore) return;
       if (
         window.innerHeight + document.documentElement.scrollTop
@@ -136,9 +140,9 @@ class RoomPosts extends Component {
       }
     }
     loadRooms() {
+      console.log('load rooms');
       let counter = 0;
       let that = this;
-      console.log('load rooms');
       database.ref('rooms').orderByChild(roomFilter).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
         snapshot.forEach((childSnapShot) => {
           counter++;
@@ -378,6 +382,7 @@ class RoomPosts extends Component {
         });
       }
     nextPage() {
+      console.log('next page');
       let nextRooms = [];
       let database = firebase.database();
       let that = this;
@@ -463,6 +468,7 @@ class RoomPosts extends Component {
             <ReactResizeDetector
               handleWidth
               handleHeight
+              
               render={({ width, height }) => (
                 <div style={{padding:'0px 10px', height:'100%'}}>
                     {/* <div id="body-padding" style={{
@@ -479,10 +485,10 @@ class RoomPosts extends Component {
                         }} style={{ textDecoration: 'none', color:'#979AA1' }} >Featured</li> 
                         <li id="trending" onClick={()=> {
                             this.selection('trending')
-                            }} style={{ textDecoration: 'none', color:'#979AA1' }}  activeClassName="is-active">Trending</li>
+                            }} style={{ textDecoration: 'none', color:'#979AA1' }} >Trending</li>
                         <li id="recent" onClick={()=> {
                             this.selection('recent')
-                            }} style={{ textDecoration: 'none', color:'#979AA1' }}  activeClassName="is-active">Recent</li> 
+                            }} style={{ textDecoration: 'none', color:'#979AA1' }}>Recent</li> 
                               
                         {/* <li id="popular" onClick={()=>{
                             this.selection('popular');
@@ -528,9 +534,11 @@ class RoomPosts extends Component {
                               
                            
                                 if (i.roomType === 'other') {
-                                  console.log('room obj: ', i);
-                                    return (<div><RoomPost id={i}
-                                        description={i.description}
+                                 
+                                    return (<div
+                                      key={i.shortID}
+                                     ><RoomPost 
+                                        description={i.description === undefined || i.description === null  ? '' : i.description}
                                         isRemixable={i.isRemixable}
                                         postedPicURL={i.postedPicURL}
                                         roomType={i.roomType}
@@ -542,7 +550,6 @@ class RoomPosts extends Component {
                                         views = {i.hasOwnProperty("views") ? i.views : 0}
                                         likes = {i.hasOwnProperty("likes") ? i.likes : 0}
                                         commentsCount = {i.hasOwnProperty("commentsCount") ? i.commentsCount : 0}
-                                        key={i}
                                         shortID={i.shortID}
                                         room_title={i.room_title}
                                         tags={this.getTags(i.tags)}

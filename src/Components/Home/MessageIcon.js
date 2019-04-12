@@ -33,7 +33,7 @@ import { OPEN_MODAL } from '../../actions/entireApp';
     render() {
       return (
         <div onClick={this.openModal} className="message-icon">
-          <i class="far fa-envelope" style={{color:'#40ffe8',fontSize:17}}></i>
+          <i className="far fa-envelope" style={{color:'#40ffe8',fontSize:17}}></i>
         </div>
       )
     }
