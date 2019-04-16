@@ -535,6 +535,7 @@ injectJS() {
                     complete={this.resizeAnimationComplete.bind(this)}>
                     <ResizableBox id="resizable-box" 
                         height={this.state.resizeableHeight} 
+                        width={'100%'}
                         onResize={this.resizeFunc.bind(this)} 
                         onResizeStart={this.editorDragStart.bind(this)} 
                         onResizeStop={this.editorDragStop.bind(this)} 

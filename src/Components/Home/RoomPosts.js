@@ -74,10 +74,12 @@ class RoomPosts extends Component {
 
         let frame = document.getElementById(shortID);
         let thumbnail = document.getElementById(`thumbnail_${shortID}`)
-        if(midY >= 0 && midY < window.innerHeight && countVisible < 2) {
+        if(midY >= 0 && midY < window.innerHeight) {
           console.log('scroll Y :', i, 'visible');
-    
-          
+          if(thumbnail.style.display == 'none') {
+            countVisible++;
+            continue;
+          }
           if (frame.attachEvent){
             frame.attachEvent("onload", function(){
               console.log("Local iframe is now loaded.(IE)");
