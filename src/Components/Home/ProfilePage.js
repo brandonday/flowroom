@@ -48,6 +48,7 @@ class ProfilePage extends Component {
       
         //let getRooms = (filtering) => {
             name = this.props.match.params.id.toLowerCase();
+         
             this.loadRooms();
 
     }

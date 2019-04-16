@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-import HeaderLoggedOut from '../Components/Home/HeaderLoggedOut';
-import HeaderLoggedIn from '../Components/Home/HeaderLoggedIn';
+import Header from '../Components/Home/Header';
 import Footer from '../Components/Home/Footer';
 import { userExists } from '../actions/authentication';
 import { firebase } from '../Components/firebase/firebase';
@@ -13,7 +12,7 @@ export const PrivateRoute = ({isAuthenticated, userExists, component:Component, 
         if(isAuthenticated) {
              return (
                 <div style={{display:'flex', flex:1, flexDirection:'column'}}>
-                <HeaderLoggedIn/>
+                <Header isLoggedIn={true}/>
                     <Component {...props}/>
                 {/* <Footer/> */}
                 </div>
@@ -21,7 +20,7 @@ export const PrivateRoute = ({isAuthenticated, userExists, component:Component, 
         } else if(!isAuthenticated) {
             return  (<div style={{display:'flex', flex:1, flexDirection:'column'}}>
 
-                <HeaderLoggedOut/>
+                <Header isLoggedIn={false}/>
                 <Component {...props}/>
                 {/* <Footer/> */}
             </div>)

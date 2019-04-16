@@ -17,8 +17,7 @@ class HeaderLoggedIn extends Component {
     }
     render() {
         return (
-            <div>    
-                <header id="header" className="header">
+            <div style={{width:'100%'}}>    
                     <div className="content-container">
                         <div className="header-content">
                             <div className="left-section">
@@ -43,7 +42,7 @@ class HeaderLoggedIn extends Component {
                             </div>
                         </div>
                     </div>
-                </header>
+            
             </div>
         )
     }

@@ -68,7 +68,8 @@ class RoomMain extends Component {
            remixRoomID:'',
            remixUserName:'',
            userName:'',
-           shortID:''
+           shortID:'',
+           dateCreated:''
         };
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -164,6 +165,7 @@ class RoomMain extends Component {
                 remixUserName:snapshot.val().remixUserName,
                 userName:snapshot.val().userName,
                 shortID:snapshot.val().shortID,
+                dateCreated:snapshot.val().date
               });
               if(firebase.auth().currentUser !== null) {
                 let currentUser = firebase.auth().currentUser.uid;
@@ -528,7 +530,7 @@ class RoomMain extends Component {
                             borderRadius:'5px',
                             fontSize:'20px'
                         }}>
-                         <i className="fas fa-shapes" onClick={()=>{
+                         <i class="fas fa-shapes" onClick={()=>{
                              const element = document.querySelector('#main-add-section #menu-sel-wrap');
                              const ball = styler(element); 
 
@@ -906,6 +908,7 @@ class RoomMain extends Component {
                         remixRoomID={this.state.remixRoomID} 
                         remixUserName={this.state.remixUserName}
                         userName={this.state.userName}
+                        dateCreated={this.state.dateCreated}
                     />
                     <div style={{height:'42px',
                             width:'100%',

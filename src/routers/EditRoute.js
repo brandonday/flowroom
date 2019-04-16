@@ -11,35 +11,28 @@ import { userPathStore } from '../actions/authentication';
 let history = createHistory();
 
 export const EditRoute = ({ isAuthenticated, username, component:Component, ...rest}) => {
-    let usernameAuth = 'brando';
+    //let usernameAuth = 'brando';
    
     return(<Route {...rest} component={(props) => {
    
-        firebase.auth().onAuthStateChanged((user)=> {
-            console.log("firebase.auth user: ",user);
-            if(user) {
-               
-            } else {
-               
-            }
-        });
+       
         
        
-        if(usernameAuth === 'brando') {
-             return (
-                <div style={{display:'flex', flex:1, flexDirection:'column'}}>
-                <HeaderLoggedIn/>
-                    <Component {...props}/>
-                {/* <Footer/> */}
-                </div>
-            )
+        // if(usernameAuth === 'brando') {
+        //      return (
+        //         <div style={{display:'flex', flex:1, flexDirection:'column'}}>
+        //         <HeaderLoggedIn/>
+        //             <Component {...props}/>
+        //         {/* <Footer/> */}
+        //         </div>
+        //     )
 
-        } else {
-            //history.push('/');
-            return(<div>
-                <h1>not found</h1>
-            </div>)
-        } 
+        // } else {
+        //     //history.push('/');
+        //     return(<div>
+        //         <h1>not found</h1>
+        //     </div>)
+        // } 
          
     }}/>)
 

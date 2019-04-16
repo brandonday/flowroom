@@ -24,7 +24,14 @@ const repliesNum = [];
             room_title:'',
             description:'',
             views:'',
-            loggedIn:false
+            loggedIn:false,
+            displayNameSelf:'',
+            followersNum:0,
+            followlbl:'FOLLOW',
+            roomCreator:'',
+            roomCreatorPic:'',
+            userPic:'',
+            charCount:0
          }
     }
     isComment(id) {
@@ -49,6 +56,7 @@ const repliesNum = [];
         firebase.auth().onAuthStateChanged((user)=> {
             if(user) {
                 var theDate = new Date().getTime();
+                
                 database.ref(`CommentReplies/${shortID}`).push({
                     commentID:hashids.encode(1, 2, 3),
                     commentIDReplyingTo:id,
@@ -86,10 +94,19 @@ const repliesNum = [];
             
             that.setState({room_title:snapshot.val() !== null ? snapshot.val().room_title :'',
                 description:snapshot.val() !== null ? snapshot.val().description : '',
-                views:snapshot.val() !== null ? snapshot.val().views : ''
+                views:snapshot.val() !== null ? snapshot.val().views : '',roomCreator:snapshot.val().userName
+            });
+
+            database.ref(`users/${that.state.roomCreator}`).once('value').then(function(snapshot) {
+            
+                that.setState({
+                    roomCreatorPic:snapshot.val().pic
+                });
+    
             });
 
         });
+      
 
         database.ref(`CommentReplies/${shortID}`).once('value').then(function(snapshot) {
           
@@ -101,7 +118,17 @@ const repliesNum = [];
 
         firebase.auth().onAuthStateChanged((user)=> {
             if(user) {
-                this.setState({loggedIn:true})
+                this.setState({
+                    loggedIn:true,
+                    displayNameSelf:user.displayName
+                });
+                database.ref(`users/${this.state.displayNameSelf}`).once('value').then(function(snapshot) {
+            
+                    that.setState({
+                        userPic:snapshot.val().pic
+                    });
+        
+                });
 
             } else {
 
@@ -383,6 +410,48 @@ const repliesNum = [];
         //})
        
     }
+    follow() {
+        
+        if(this.state.followlbl === 'FOLLOW') {
+        firebase.database().ref(`follows/${this.props.userName}/followers/`).update({
+            [this.state.displayNameSelf]:this.state.displayNameSelf
+        }).then(() => {
+
+            firebase.database().ref(`follows/${this.state.displayNameSelf}/following/`).update({
+                [this.props.userName]:this.props.userName
+            }).then(() => {
+           
+                this.setState({followlbl:'UNFOLLOW',followersNum:++this.state.followersNum});
+                
+            }).catch((error) => {
+    
+            });
+            
+        }).catch((error) => {
+
+        });
+        
+        } else {
+            firebase.database().ref(`follows/${this.props.userName}/followers/${this.state.displayNameSelf}`).remove().then(() => {
+           
+                firebase.database().ref(`follows/${this.state.displayNameSelf}/following/${this.props.userName}`).remove().then(() => {
+           
+                    this.setState({followlbl:'FOLLOW',followersNum:--this.state.followersNum});
+                    
+                }).catch((error) => {
+        
+                });
+            }).catch((error) => {
+    
+            });
+
+
+
+
+
+        }
+    
+    }  
     postComment() {
         // // dummyComments.push(commentObj);
         // let hashids = new Hashids(uuid(), 10);
@@ -473,8 +542,11 @@ const repliesNum = [];
         return(<div style={{height:'100%',width:'100%'}}>
             <div className="main-section-wrap-comments-screen">
                 <div style={{height:'42px', position:'relative', width:'100%'}}>
-                    <div style={{display:'flex', height:42, border:'0px solid red',background:'rgb(32, 32, 32)'}}>
-                       
+                    <div style={{
+                        display:'flex', 
+                        height:42, 
+                        border:'0px solid red',
+                        }}>
                     </div>
                 </div>
                 {/* <div style={{height:'200px',width:'100%'}}></div> */}
@@ -483,7 +555,7 @@ const repliesNum = [];
                     <div style={{height:'76px',width:'100%', display:'flex', borderBottom:'1px solid #373737', justifyContent:'space-between'}}>
                         <div style={{height:47,marginLeft:17,marginTop:9}}>
                         <p style={{color:'#fafafa',fontSize:20,marginBottom:6}}>{this.state.room_title ? this.state.room_title: ''}</p>
-                        <div style={{display:'flex',alignItems:'center'}}>
+                        <div style={{display:'flex',alignItems:'center', marginLeft:'1px'}}>
                             <i className="fa fa-play" style={{fontSize:11,marginRight:10,color:'white'}}></i>
                             <p style={{fontSize:'13px',fontWeight:'500',color:'white'}}>{this.state.views}</p>
                         </div>
@@ -541,31 +613,37 @@ const repliesNum = [];
                     </div>
 
                     </div>
-                    <div style={{height:40,padding:'5px 10px',display:'flex'}}>
-                        <div style={{backgroundColor:'black',height:45,width:45,borderRadius:25,marginTop:3}}></div>
-                        <div style={{height:100}}>
-                            <div style={{display:'flex', marginTop:7, flexDirection:'column'}}>
+                    <div style={{height:61,padding:'5px 15px',display:'flex'}}>
+                        <div style={{
+                            backgroundImage:`url(${this.state.roomCreatorPic})`,
+                            backgroundSize:'cover',
+                            backgroundRepeat:'no-repeat',
+                            backgroundPosition:'center',
+                            height:43,width:43,borderRadius:25,marginTop:3}}></div>
+                        <div style={{height:50}}>
+                            <div style={{display:'flex', marginTop:7, flexDirection:'column',marginLeft:12}}>
                                 <div style={{display:'flex'}}>
-                                <p style={{fontWeight:0,fontSize:13,color:'white',marginLeft:5,marginRight:10}}>{`${this.props.isRemix ? 'Remixed by ' + '@' + this.props.userName : 'Created by ' + '@' + this.props.userName}`}</p>
-                                <div style={{display:'flex', alignItems:'center', justifyContent:'center', border:'1px solid rgb(64, 255, 232)', height:22,width:65,borderRadius:6, color:'rgb(64, 255, 232)'}}>
+                                <Link to={`/${this.props.userName}`}><p style={{fontWeight:0,fontSize:13,color:'white',marginRight:10}}>{`${this.props.isRemix ? 'Remixed by ' + '@' + this.props.userName : 'Created by ' + '@' + this.props.userName}`}</p></Link>
+                                <div onClick={this.follow.bind(this)} style={{display:'flex', alignItems:'center', justifyContent:'center', border:'1px solid rgb(64, 255, 232)', height:22,width:65,borderRadius:6, color:'rgb(64, 255, 232)'}}>
                                 <p style={{fontSize:10,marginRight:2}}>+</p>
-                                <p style={{fontSize:10}}>FOLLOW</p>
+                                <p style={{fontSize:10}}>{this.state.followlbl}</p>
                                 </div>
                                 </div>
-                                <p style={{marginLeft:10, fontSize:10}}> Published on April 10 2019</p>
+                                <p style={{fontSize:12, position:'relative', top:'-4px'}}>{moment(this.props.dateCreated).format("LL")}</p>
                             </div>
                         </div>
                     </div>
                     <div style={{display:'flex',height:'58px',width:'100%'}}>
-                        <p style={{color:'#fff',fontSize:14,margin:15}}>{this.state.description}</p>
+                        <p style={{color:'#fff',fontSize:14,margin:'2px 15px'}}>{this.state.description}</p>
                     </div>
                     </div>
-                    <div style={{height:'100vh',width:'100%',borderTop:'1px solid black',marginBottom:'10px'}}>
+                    <div style={{height:'100%',width:'100%',borderTop:'1px solid black',marginBottom:'10px'}}>
                     {this.state.loggedIn ? (<div style={{width:'100%', marginTop:'20px'}}>
                         <div style={{display:'flex', flexDirection:'column', marginBottom:20, position:'relative',background:'#1f1f1f',padding:10, height:166,borderRadius:5}}>
                             <p style={{color:'white', padding:'5px 0px 10px'}}>Leave a comment</p>
                             <div style={{display:'flex', padding:0}}>
-                                <div style={{height:35,width:35,backgroundColor:'black',borderRadius:30,marginRight:10}}></div>
+                                <div style={{backgroundImage:`url(${this.state.userPic}`,backgroundSize:'cover',backgroundRepeat:'no-repeat',backgroundPosition:'center',height:35,width:35,backgroundColor:'black',borderRadius:30,marginRight:10}}></div>
+                                <div style={{position:'absolute'}}><p>{this.state.charCount}</p></div>
                             <textarea id="comment" 
                             style={{
                                 border:'1px solid #DDE0EB',

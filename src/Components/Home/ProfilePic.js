@@ -18,13 +18,12 @@ class ProfilePic extends Component {
 
   }
   componentDidMount() {
-    let user = firebase.auth().currentUser.displayName;
+  
     let that = this;
  
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        let myusername = user.displayName;
-        console.log()
+  
         that.setState({pic:user.photoURL})
       } else {
         // No user is signed in.

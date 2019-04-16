@@ -14,8 +14,8 @@ import { connect } from 'react-redux';
 
  const HeaderLoggedOut = (props) => {
     return (
-        <div>    
-            <header id="header" className="header">
+        <div style={{width:'100%'}}>    
+           
                 <div className="content-container">
                     <div className="header-content">
                         <div className="left-section">
@@ -35,7 +35,7 @@ import { connect } from 'react-redux';
                         </div>
                     </div>
                 </div>
-            </header>    
+             
         </div>
     )
 }

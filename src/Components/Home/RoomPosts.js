@@ -89,17 +89,17 @@ class RoomPosts extends Component {
               thumbnail.style.display = 'none';
             };
           }
-          thumbnail.style.display = 'none';
+          thumbnail.style.display = 'block';
           frame.style.display = 'block';
     
             frame.src = `/full/${shortID}`;
-         
+            
           
           countVisible++;
         } else {
    
           
-          frame.src = 'http://test.flowroom.com/test';
+         // frame.src = 'http://test.flowroom.com/test';
           
           frame.style.display = 'none';
           thumbnail.style.display = 'block';
