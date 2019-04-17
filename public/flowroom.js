@@ -337,7 +337,7 @@
         },
         SaveScreenShot(callback) {
           
-            html2canvas(document.body,{allowTaint:true, removeContainer:false}).then(function(canvas) {          
+            html2canvas(document.body,{background:'black', allowTaint:true, removeContainer:false}).then(function(canvas) {          
                 
                 var extra_canvas = document.createElement("canvas");
                 extra_canvas.setAttribute('width',canvas.width/4);

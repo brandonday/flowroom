@@ -37,121 +37,8 @@ class RelatedRoomPost extends Component {
         // }
     }
 
-    displayExtraInfo() {
-        if(this.props.isRemixable === true || this.props.roomType === 'other' ) {
+    
 
-
-        return ( <div style={{display:'flex', width:'100%',justifyContent:'center',flexDirection:'column'}}>
-    </div>)
-       } else {
-
-           return(<div></div>)
-       }
-    }
-
-    display() {
-
-        return ( <div style={{display:'flex',
-        width:'100%',
-        position:'relative', height:'34px'}}>
-        {this.props.isRemixable ? (<div style={{display:'flex',
-            justifyContent:'space-around',
-            alignItems:'center',
-            outline:'none',
-            cursor:'pointer',
-            border:'1px solid rgb(10, 127, 41)',
-            borderRadius:'40px',
-            height:'32px',
-            width:'99px',
-            backgroundColor:'rgb(27, 178, 67)',
-            fontFamily:"Source Sans Pro",
-            color:'white',
-            fontSize:'14px',
-            fontWeight:'600',
-            padding:'0 8px',
-            position:'relative',
-            right:'10px',
-            transition:'color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, width 0.3s ease, opacity 0.3s ease'}}>
-          <i className="fas fa-random" style={{color:'rgb(10, 127, 41)'}}></i>
-          <p style={{fontSize:12}}>Remix This</p>
-        </div>): ''}
-
-    </div>)
-
-    }
-    post() {
-        if(this.props.roomType === 'other') {
-            return (
-                <Fullscreen
-                    enabled={this.state.isFull}
-                    onChange={(isFull) => {
-                        this.setState({isFull,fullscreen:true});
-
-                    }}>
-
-
-                    <div className="full-screenable-node" style={{height:246}}>
-                        <iframe src={"/full/" + this.props.id.id} style={{
-                            height:'200%', border:'1px solid red',
-                            width:'200%',
-                            border:0,
-                            position:'absolute',
-                            top:0,
-                            left: 0,
-                            background:'white',
-                            WebkitTransform:'scale(0.5)',
-                            transform:'scale(0.5)',
-                            WebkitTransformOrigin:'top left',
-                            transformOrigin:'top left'
-                }} />
-                </div>
-                </Fullscreen>)
-        } else if(this.props.roomType === 'image') {
-            return (<img style={{height:'auto', width:'100%'}} src={this.props.postedPicURL}/>)
-        } else {
-            return (<p>{this.props.postText}</p>)
-        }
-
-
-
-    }
-    goFull = () => {
-
-        this.setState({ isFull: true });
-        if(this.state.fullscreen === true) {
-           // this.setState({fullscreen:false});
-        } else {
-            // let full = document.getElementById('full-screen-fallback');
-            // let body = document.getElementsByTagName('body')[0];
-            // full.style.position = 'absolute';
-
-
-
-            // full.style.height = '100%';
-            //           full.style.width = '100%';
-            //           full.style.zIndex = '999999999';
-            //           full.style.backgroundColor = 'white';
-            //           full.style.display = 'flex';
-            //           body.style.overflow = 'hidden';
-
-
-
-        }
-
-    }
-    expandText() {
-        let that = this;
-        var pos = 0;
-        var id = setInterval(frame, 0);
-        function frame() {
-          if (pos == that.state.pHeight) {
-            clearInterval(id);
-          } else {
-            pos++;
-            that.state.dElem.style.height = pos + "px";
-          }
-        }
-    }
     render() {
 
         return  (
@@ -166,22 +53,22 @@ class RelatedRoomPost extends Component {
                 flexDirection:'column'
             }}>
             <div style={{width:232}}>
-                <p style={{
+                <Link to={`/room/${this.props.shortID}`}><p style={{
                     fontSize:'12px',
                     left:'11px',
                     top:'-7px',
                     position:'relative',
                     margin:0,
                     color:'white'
-                }}>{this.props.title}</p>
-                <p style={{
+                }}>{this.props.title}</p></Link>
+                <Link to={`/${this.props.userName}`}><p style={{
                     fontSize:'8px',
                     left:'11px',
                     top:'-9px',
                     position:'relative',
                     margin:0,
                     color:'white'
-                }}>{this.props.isRemix ? 'Remixed by ' :  'Created by ' + `@${this.props.userName}`}</p>
+                }}>{this.props.isRemix ? 'Remixed by ' :  'Created by ' + `@${this.props.userName}`}</p></Link>
             </div>
             <div style={{
                 height:118, 

@@ -122,7 +122,7 @@ class Editor extends Component {
         "<meta charset=\"utf-8\">\n\t\t" +
         "<title>Test</title>\n\n\t\t\n\t" +
         "</head>\n\t" +
-        "<body class='preview'>\n\t\n\t" +
+        "<body>\n\t\n\t" +
         "</body>\n" +
         "</html>";
         
@@ -140,6 +140,7 @@ class Editor extends Component {
           js = '<script>' + js + '<\/script>';
           src = src.replace('</body>', js + '</body>');
           let dhtmlObj = {html:html, js:js, css:css}
+          
          // alert(htmlObj.html);
           localStorage.setItem("dhtml", JSON.stringify(dhtmlObj));
           localStorage.setItem("css", JSON.stringify(css));

@@ -31,7 +31,7 @@ const repliesNum = [];
             roomCreator:'',
             roomCreatorPic:'',
             userPic:'',
-            charCount:0
+            value:0
          }
     }
     isComment(id) {
@@ -94,7 +94,8 @@ const repliesNum = [];
             
             that.setState({room_title:snapshot.val() !== null ? snapshot.val().room_title :'',
                 description:snapshot.val() !== null ? snapshot.val().description : '',
-                views:snapshot.val() !== null ? snapshot.val().views : '',roomCreator:snapshot.val().userName
+                views:snapshot.val() !== null ? snapshot.val().views : '',
+                roomCreator:snapshot.val() !== null ? snapshot.val().userName : ''
             });
 
             database.ref(`users/${that.state.roomCreator}`).once('value').then(function(snapshot) {
@@ -277,7 +278,8 @@ const repliesNum = [];
                     name.style.color = 'white';
                     time.appendChild(document.createTextNode(moment(childSnapShot.val().date).fromNow()));
                     div4.appendChild(div6);
-                    comment.appendChild(document.createTextNode(childSnapShot.val().comment))
+                    comment.appendChild(document.createTextNode(childSnapShot.val().comment));
+                    comment.style.margin ='4px 1px 16px';
                     pdiv6.appendChild(document.createTextNode('REPLY'));
                     pdiv6.setAttribute("id", `replybtn${childSnapShot.val().commentID}`);
                     div6.appendChild(comment);
@@ -539,6 +541,7 @@ const repliesNum = [];
         
     }
     render() {
+        let that = this;
         return(<div style={{height:'100%',width:'100%'}}>
             <div className="main-section-wrap-comments-screen">
                 <div style={{height:'42px', position:'relative', width:'100%'}}>
@@ -643,7 +646,7 @@ const repliesNum = [];
                             <p style={{color:'white', padding:'5px 0px 10px'}}>Leave a comment</p>
                             <div style={{display:'flex', padding:0}}>
                                 <div style={{backgroundImage:`url(${this.state.userPic}`,backgroundSize:'cover',backgroundRepeat:'no-repeat',backgroundPosition:'center',height:35,width:35,backgroundColor:'black',borderRadius:30,marginRight:10}}></div>
-                                <div style={{position:'absolute'}}><p>{this.state.charCount}</p></div>
+                                <div style={{position:'absolute', right:'15px',zIndex:9,top:'55px'}}><p style={{fontSize:14}}>{that.state.value}</p></div>
                             <textarea id="comment" 
                             style={{
                                 border:'1px solid #DDE0EB',
@@ -660,8 +663,17 @@ const repliesNum = [];
                                 height:'60px',
                                 width:'100%',
                                 resize:'none',
-                                position:'relative'
-                            }} placeholder="Write a new comment here...">
+                                position:'relative',
+                                paddingTop:'7px',
+                                paddingLeft:'11px',
+                                paddingRight:'28px',
+                                paddingBottom:'20px'
+                            }} 
+                            multiline = {true}
+                            numberOfLines = {6}
+                            maxLength = {140}
+                            onChange={(event)=>that.setState({value:event.target.value.length})}
+                            placeholder="Write a new comment here...">
    
                         </textarea>
                         </div>

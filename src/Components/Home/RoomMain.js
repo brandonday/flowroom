@@ -925,13 +925,13 @@ class RoomMain extends Component {
                         width:'400px',
                         background:'white',
                         justifyContent:'center',
-                        marginTop:'32px',
+                        marginTop:'45px',
                         display:'flex',
                         flexDirection:'column'
                     }}>
                     
                     <div style={{display:this.state.userName == ''? 'none':'flex', alignItems:'center',height:40,width:'100%',background:'#0f0f0f'}}>
-                        <p style={{color:'white',fontSize:17,fontWeight:900}}>Recommended Flows</p>
+                        <p style={{color:'white',fontSize:17,fontWeight:900,marginTop:45,marginBottom:50}}>Recommended Flows</p>
                     </div>
                     <div style={{height:'100vh', width:'100%',background:'#0f0f0f'}}>
 
