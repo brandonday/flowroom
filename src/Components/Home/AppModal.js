@@ -1044,7 +1044,7 @@ const KeyCodes = {
 
                     snapshot.forEach((childSnapShot) => {
                         //alert(childSnapShot.val().message.To)
-                        if(!(childSnapShot.val().message.fullname === undefined || childSnapShot.val().message.To === undefined)) {
+                        if(childSnapShot.val().message !== undefined && childSnapShot.val().message.To !== undefined) {
                             //preventDuplicateArray.push(`${childSnapShot.val().message.fullname}`);
 
                             if(childSnapShot.val().message.To !== this.state.myusername) {
@@ -1123,7 +1123,7 @@ const KeyCodes = {
                             <p style={{fontFamily:"Source Sans Pro", fontWeight:'800',marginTop:'10px',fontSize:'14px', color:"black"}}>{i.name}</p>
                             <p style={{fontFamily:"Source Sans Pro", fontWeight:'800',marginTop:'10px',fontSize:'14px', color:"black", marginLeft:10, fontSize:14, fontWeight:500}}>{moment(i.date).fromNow()}</p>
                          </div>
-                         {i.you === true ? (<p style={{fontFamily:"Source Sans Pro", color:"black"}}>You:{i.message}</p>):(<p style={{fontFamily:"Source Sans Pro", color:"black"}}>{i.message}</p>)}
+                         {i.you === true ? (<p style={{fontFamily:"Source Sans Pro", color:"black"}}>You: {i.message}</p>):(<p style={{fontFamily:"Source Sans Pro", color:"black"}}>{i.message}</p>)}
                          </div>
                          </div>
                         </li> )

@@ -664,50 +664,8 @@ body {
   padding-right: 1px;
 }
 
-.new-button-dropdown-sel-room {
-  text-decoration: none;
-  font-weight: 600;
-  color: rgb(255, 255, 255);
-  margin-bottom: -10.8px;
-  color: white;
-  height: 38px;
-  text-decoration: none;
-  background-color: #0A7F29;
-  font-family: Source Sans Pro;
-  font-size: 12px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  font-weight: 100 !important;
-}
 
-.new-button-dropdown-sel-community {
-  text-decoration: none;
-  font-weight: 600;
-  color: rgb(255, 255, 255);
-  margin-bottom: -10.8px;
-  color: white;
-  height: 38px;
-  text-decoration: none;
-  background-color: #0A7F29;
-  font-family: Source Sans Pro;
-  font-size: 12px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  font-weight: 100 !important;
-}
 
-.new-button  {
-  background-color: #B300FE;
-  border-radius: 5px;
-  opacity: 0.6961495535714286;
-  width: 96px;
-  height: 40px;
-
-}
-
-.new-button:hover {
-  background-color: rgb(30, 192, 73); 
-}
 
 .signup-button-wrap {
   margin-left: 16px;

@@ -22,7 +22,7 @@ const NewMessageButton = () => {
                 className="new-button-dropdown">
                 <div className="new-btn">
                     <button className="new-button" style={{width:'134px'}}>
-               
+                        <p>New Message</p>
                     </button>
                 </div>
             </div>
