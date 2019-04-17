@@ -23,7 +23,7 @@ class ProfilePic extends Component {
  
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-  
+        console.log('user object :',user)
         that.setState({pic:user.photoURL})
       } else {
         // No user is signed in.
