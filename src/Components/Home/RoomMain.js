@@ -79,13 +79,7 @@ class RoomMain extends Component {
         let that = this;
         document.getElementById('main-menu').style.display = 'none';
         document.getElementById('tab-menu').style.height = 'none';
-        if(firebase.auth().currentUser !== null) {
-            that.setState (
-                {
-                 userNameSelf:firebase.auth().currentUser.displayName
-                }
-            );
-        }
+        
         window.datGUI = function(obj) {
             let output = document.getElementById('output_frame').contentWindow;
             let text;
@@ -167,7 +161,13 @@ class RoomMain extends Component {
                 shortID:snapshot.val().shortID,
                 dateCreated:snapshot.val().date
               });
+              
               if(firebase.auth().currentUser !== null) {
+                that.setState (
+                    {
+                     userNameSelf:firebase.auth().currentUser.displayName
+                    }
+                );
                 let currentUser = firebase.auth().currentUser.uid;
                 if(currentUser === uid) {
                   that.setState({display:'flex', postBtnVisible:false});
