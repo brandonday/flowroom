@@ -276,7 +276,7 @@ class RoomPost extends Component {
                                 height:'100%', 
                                 width:'100%',
                                 backgroundImage:`url(${this.props.thumbnail})`,
-                                backgroundSize:'contain',
+                                backgroundSize:'cover',
                                 backgroundRepeat:'no-repeat',
                                 backgroundPosition:'center',
                                 zIndex:3,
