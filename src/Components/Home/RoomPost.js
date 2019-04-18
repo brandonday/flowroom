@@ -273,8 +273,8 @@ class RoomPost extends Component {
                         </div>
                         <div className="full-screenable-node" style={{height:this.props.roomHeight}}>
                         <div id={`thumbnail_${this.props.shortID}`} style={{
-                                height:'100%', 
-                                width:'100%',
+                                height:'200%', 
+                                width:'200%',
                                 backgroundImage:`url(${this.props.thumbnail})`,
                                 backgroundSize:'cover',
                                 backgroundRepeat:'no-repeat',
