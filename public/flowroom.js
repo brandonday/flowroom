@@ -340,7 +340,11 @@
             if(bodyBackgroundColor !== undefined) {
                 document.body.style.backgroundColor = 'black';
             } 
-            html2canvas(document.body,{ allowTaint:true, removeContainer:false}).then(function(canvas) {          
+            let html = document.getElementsByTagName('canvas');
+            if(html == null) {
+                html = document.body;
+            }
+            html2canvas(html,{ allowTaint:true, removeContainer:false}).then(function(canvas) {          
                 
                 var extra_canvas = document.createElement("canvas");
                 extra_canvas.setAttribute('width',canvas.width/4);
