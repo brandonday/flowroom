@@ -76,6 +76,7 @@ class RoomPosts extends Component {
         let thumbnail = document.getElementById(`thumbnail_${shortID}`)
         if(midY >= 0 && midY < window.innerHeight) {
           console.log('scroll Y :', i, 'visible');
+
           if(thumbnail.style.display == 'none') {
             countVisible++;
             continue;
@@ -94,7 +95,7 @@ class RoomPosts extends Component {
           thumbnail.style.display = 'block';
           frame.style.display = 'block';
     
-            frame.src = `/full/${shortID}`;
+          frame.src = `/full/${shortID}`;
             
           
           countVisible++;
