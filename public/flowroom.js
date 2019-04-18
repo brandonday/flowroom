@@ -341,7 +341,7 @@
                 document.body.style.backgroundColor = 'black';
             } 
             let html = document.getElementsByTagName('canvas');
-            console.log('canvases : ', html)
+            //alert('canvases:', JSON.stringify(html))
             if(html == null) {
                 html = document.body;
             } else {
