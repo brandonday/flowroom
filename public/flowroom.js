@@ -341,8 +341,11 @@
                 document.body.style.backgroundColor = 'black';
             } 
             let html = document.getElementsByTagName('canvas');
+            console.log('canvases : ', html)
             if(html == null) {
                 html = document.body;
+            } else {
+                html = html[0];
             }
             html2canvas(html,{ allowTaint:true, removeContainer:false}).then(function(canvas) {          
                 
