@@ -280,7 +280,11 @@ class RoomPost extends Component {
                                 backgroundRepeat:'no-repeat',
                                 backgroundPosition:'center',
                                 zIndex:3,
-                                position:'absolute'
+                                position:'absolute',
+                                WebkitTransform:'scale(0.5)',
+                                transform:'scale(0.5)',
+                                WebkitTransformOrigin:'top left',
+                                transformOrigin:'top left',
                             }}></div>
                             <iframe id={`${this.props.shortID}`} src={"/full/" + this.props.shortID} style={{
                                 height:'200%', border:'1px solid red',
