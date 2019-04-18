@@ -6,13 +6,18 @@ import { connect } from 'react-redux';
 import uuid from 'uuid';
 import Hashids from 'hashids';
 import Profile from '../Profile.js';
+import RelatedRoomPost from '../RelatedRoomPost.js';
+import RelatedRoomPostTop from '../RelatedRoomPostTop.js';
+
 var moment = require('moment');
 const database = firebase.database();
 let commentLoaded = [];
 const dummyComments = [];
 const replies = [];
 const repliesNum = [];
-
+let relatedRooms = [];
+let roomsPerPage = 4;
+let roomFilter = 'weight';
  class Comments extends Component {
      constructor() {
          super();
@@ -31,8 +36,11 @@ const repliesNum = [];
             roomCreator:'',
             roomCreatorPic:'',
             userPic:'',
-            value:0
+            value:0,
+            displayIfOwn:'none',
+            relatedRooms:[]
          }
+         this.getProfileInfo = this.getProfileInfo.bind(this)
     }
     isComment(id) {
         for(let i = 0; i < commentLoaded.length; i++) {
@@ -106,6 +114,32 @@ const repliesNum = [];
     
             });
 
+            firebase.auth().onAuthStateChanged((user)=> {
+                if(user) {
+                    that.setState({
+                        loggedIn:true,
+                        displayNameSelf:user.displayName
+                    });
+                    database.ref(`users/${that.state.displayNameSelf}`).once('value').then(function(snapshot) {
+                
+                        that.setState({
+                            userPic:snapshot.val().pic
+                        });
+            
+                    });
+    
+                    
+                    that.getProfileInfo(that.state.displayNameSelf)
+    
+                  
+    
+                } else {
+    
+                    that.setState({loggedIn:false});
+                    that.getProfileInfo('notsignedin');
+                }
+            });
+
         });
       
 
@@ -117,25 +151,7 @@ const repliesNum = [];
 
         });
 
-        firebase.auth().onAuthStateChanged((user)=> {
-            if(user) {
-                this.setState({
-                    loggedIn:true,
-                    displayNameSelf:user.displayName
-                });
-                database.ref(`users/${this.state.displayNameSelf}`).once('value').then(function(snapshot) {
-            
-                    that.setState({
-                        userPic:snapshot.val().pic
-                    });
-        
-                });
-
-            } else {
-
-                this.setState({loggedIn:false})
-            }
-        });
+       
        
         
         // database.ref(`Comments/${shortID}`).once('value').then((snapshot) => {
@@ -311,7 +327,6 @@ const repliesNum = [];
                     let that = this;
                
                     replyDiv.appendChild(document.createTextNode(`SHOW ${childSnapShot.val().replyNum} REPLIES`));
-                    
 
                     document.body.addEventListener( 'click', function ( event ) {
                         if( event.srcElement.id == `btn${childSnapShot.val().commentID}btn` ) {
@@ -386,13 +401,41 @@ const repliesNum = [];
              
                 
             });
+            let counter = 0;
+            database.ref('rooms').orderByChild(roomFilter).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
+                snapshot.forEach((childSnapShot) => {
+                    counter++;
+                    if(!this.isShortIDExists(childSnapShot.val().shortID)) {
+                        if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
+                            if(counter !== 1) {
+                                relatedRooms.unshift({
+                                    id:childSnapShot.key,
+                                    date:childSnapShot.val().date,
+                                    views:childSnapShot.val().views,
+                                    isRemix:childSnapShot.val().isRemix,
+                                    roomType:childSnapShot.val().roomType,
+                                    userName:childSnapShot.val().userName,
+                                    shortID:childSnapShot.val().shortID,
+                                    title:childSnapShot.val().room_title,
+                                    tags:childSnapShot.val().tags,
+                                    thumbnail:childSnapShot.val().thumbnail,
+                                    ...childSnapShot
+                                });
             
+                            }
+                          
+                        }
+                    }
+                });
+                that.setState({relatedRooms:relatedRooms});
+            });
            
 
         
         //});
         
     }
+   
     incrementCommentsCount() {
         //database.ref(`rooms/${this.props.shortID}/commentsCount`).set({commentsCount:0}).then(() => { 
            
@@ -412,6 +455,75 @@ const repliesNum = [];
         //})
        
     }
+     incrementLikes() {
+        let database = firebase.database();
+        this.setState({likes:this.state.likes + 1});
+        database.ref(`rooms/${this.props.shortID}/likes`).transaction(function(currentLikes) {
+            // If node/clicks has never been set, currentRank will be `null`.
+            return (currentLikes || 0) + 1;
+          });
+    }
+    isShortIDExists(shortID) {
+        for(let i = 0; i < relatedRooms.length; i++) {
+            if(relatedRooms[i].shortID == shortID) {
+                return true;
+            }
+        }
+        return false;
+    }
+    getProfileInfo(myusername) {
+        
+        let name = this.state.roomCreator;
+     
+        let ref = firebase.database().ref("users");
+        ref.once("value").then((snapshot) => {
+             
+            let hasName = snapshot.hasChild(`${name}`); // true
+            
+            if(hasName) {
+       
+                if(myusername !== name) {
+                    this.setState({displayIfOwn:'flex'});
+                    this.isFollowing(myusername);
+                    this.Followers(name);
+                } else {
+                   this.setState({displayIfOwn:'none'});
+                    this.isFollowing(myusername);
+                    this.Followers(name);
+                }
+             
+            }
+          });
+    } 
+    isFollowing(myusername) {
+        
+        let name = this.state.roomCreator;
+        let ref = firebase.database().ref(`follows/${name}/followers`);
+        ref.once("value")
+          .then((snapshot) => {
+              console.log('f',snapshot.numChildren())
+            this.setState({followersNum:snapshot.numChildren()})
+            let hasName = snapshot.hasChild(`${myusername}`); // true
+            
+            if(hasName) {
+                //shown when following
+                this.setState({followlbl:'UNFOLLOW'});
+           
+            } else {
+                this.setState({followlbl:'FOLLOW'});
+            }
+          });
+    } 
+    Followers(name) {
+      
+        let ref = firebase.database().ref(`follows/${name}/following`);
+        ref.once("value")
+          .then((snapshot) => {
+    
+            this.setState({followingNum:snapshot.numChildren()})
+         
+          });
+    } 
     follow() {
         
         if(this.state.followlbl === 'FOLLOW') {
@@ -543,15 +655,63 @@ const repliesNum = [];
     render() {
         let that = this;
         return(<div style={{height:'100%',width:'100%'}}>
+
+
+                    <div id="rf-top" style={{
+                        height:'412px',
+                        width:'100%',
+                        background:'white',
+                        justifyContent:'center',
+                        marginTop:'45px',
+                        display:'none',
+                        flexDirection:'column',
+                        marginLeft:20
+                    }}>
+                    
+                    <div style={{display:this.state.userName == ''? 'none':'flex', alignItems:'center',height:40,width:'100%',background:'#0f0f0f'}}>
+                        <p style={{color:'white',fontSize:17,fontWeight:900,marginTop:45,marginBottom:50}}>Recommended Flows</p>
+                    </div>
+                    <div style={{height:'100vh', width:'100%',background:'#0f0f0f'}}>
+
+
+                        
+                            {
+                                that.state.relatedRooms.map((i)=>{
+                                    return(<RelatedRoomPostTop
+                                        shortID={i.shortID}
+                                        title={i.title} 
+                                        userName={i.userName}    
+                                        views={i.views} 
+                                        thumbnail={i.thumbnail}   
+                                        roomHeight={118} 
+                                        roomWidth={225}
+                                        isRemix={i.isRemix}
+                                        
+                                        />)
+                                })
+                            }
+                        
+                    </div>
+                    <div style={{height:'100vh', width:'100%',background:'#0f0f0f'}}>
+                    </div>
+                    </div>
+
+            <div style={{display:'flex',position:'relative',top:42}}>
+            
+
+        
+
+
+
             <div className="main-section-wrap-comments-screen">
-                <div style={{height:'42px', position:'relative', width:'100%'}}>
+                {/* <div style={{height:'42px', position:'relative', width:'100%'}}>
                     <div style={{
                         display:'flex', 
                         height:42, 
                         border:'0px solid red',
                         }}>
                     </div>
-                </div>
+                </div> */}
                 {/* <div style={{height:'200px',width:'100%'}}></div> */}
                 <div className="main-section-wrap-comments-box">
                     <div style={{backgroundColor:'#1f1f1f',borderRadius:'6px',height:'242px',width:'100%'}}>
@@ -563,7 +723,7 @@ const repliesNum = [];
                             <p style={{fontSize:'13px',fontWeight:'500',color:'white'}}>{this.state.views}</p>
                         </div>
                         </div>
-        <div style={{display:'flex', width:196, justifyContent:'space-between',height:63}}>
+                    <div style={{display:'flex', width:196, justifyContent:'space-between',height:63}}>
                         <div style={{display:'flex',
                            
                             justifyContent:'space-between',
@@ -576,7 +736,17 @@ const repliesNum = [];
                             justifyContent:'space-between',
                      
                         }}>
-                            <i className="far fa-heart" style={{marginRight:10}}></i>
+                            <i className="far fa-heart" onClick={()=>{
+                                firebase.auth().onAuthStateChanged((user)=> {
+                                    console.log("firebase.auth user: ",user);
+                                    if(user) {
+                                      this.incrementLikes();
+                                    } else {
+                                      this.openModal(true);
+                                    }
+                                });
+                               
+                            }} style={{marginRight:10}}></i>
                             <p>Like</p>
                         </div>
                         </div>
@@ -607,7 +777,8 @@ const repliesNum = [];
                         <div style={{display:'flex',
                             alignItems:'center',
                             justifyContent:'space-between',
-                            width:'50px'
+                            width:'50px',
+                            marginBottom:3
                         }}>
                             <i className="fas fa-ellipsis-h"></i>
                         </div>
@@ -627,7 +798,7 @@ const repliesNum = [];
                             <div style={{display:'flex', marginTop:7, flexDirection:'column',marginLeft:12}}>
                                 <div style={{display:'flex'}}>
                                 <Link to={`/${this.props.userName}`}><p style={{fontWeight:0,fontSize:13,color:'white',marginRight:10}}>{`${this.props.isRemix ? 'Remixed by ' + '@' + this.props.userName : 'Created by ' + '@' + this.props.userName}`}</p></Link>
-                                <div onClick={this.follow.bind(this)} style={{display:'flex', alignItems:'center', justifyContent:'center', border:'1px solid rgb(64, 255, 232)', height:22,width:65,borderRadius:6, color:'rgb(64, 255, 232)'}}>
+                                <div onClick={this.follow.bind(this)} style={{display:this.state.displayIfOwn, alignItems:'center', justifyContent:'center', border:'1px solid rgb(64, 255, 232)', height:22,width:65,borderRadius:6, color:'rgb(64, 255, 232)'}}>
                                 <p style={{fontSize:10,marginRight:2}}>+</p>
                                 <p style={{fontSize:10}}>{this.state.followlbl}</p>
                                 </div>
@@ -640,71 +811,73 @@ const repliesNum = [];
                         <p style={{color:'#fff',fontSize:14,margin:'2px 15px'}}>{this.state.description}</p>
                     </div>
                     </div>
-                    <div style={{height:'100%',width:'100%',borderTop:'1px solid black',marginBottom:'10px'}}>
-                    {this.state.loggedIn ? (<div style={{width:'100%', marginTop:'20px'}}>
-                        <div style={{display:'flex', flexDirection:'column', marginBottom:20, position:'relative',background:'#1f1f1f',padding:10, height:166,borderRadius:5}}>
-                            <p style={{color:'white', padding:'5px 0px 10px'}}>Leave a comment</p>
-                            <div style={{display:'flex', padding:0}}>
-                                <div style={{backgroundImage:`url(${this.state.userPic}`,backgroundSize:'cover',backgroundRepeat:'no-repeat',backgroundPosition:'center',height:35,width:35,backgroundColor:'black',borderRadius:30,marginRight:10}}></div>
-                                <div style={{position:'absolute', right:'15px',zIndex:9,top:'55px'}}><p style={{fontSize:14}}>{that.state.value}</p></div>
-                            <textarea id="comment" 
-                            style={{
-                                border:'1px solid #DDE0EB',
-                                borderRadius:'6px',
-                                color:'#333333',
-                                resize:'100%',
-                                fontSize:'1.4rem',
-                                marginBottom:'1.4rem',
-                                padding:'1rem',
-                                fontFamily:'Helvetica, Arial, sans-serif',
-                                outline:'none',
-                                backgroundColor:'#F9FAFA',
-                                webkitFontSmoothing:'antialiased',
-                                height:'60px',
-                                width:'100%',
-                                resize:'none',
-                                position:'relative',
-                                paddingTop:'7px',
-                                paddingLeft:'11px',
-                                paddingRight:'28px',
-                                paddingBottom:'20px'
-                            }} 
-                            multiline = {true}
-                            numberOfLines = {6}
-                            maxLength = {140}
-                            onChange={(event)=>that.setState({value:event.target.value.length})}
-                            placeholder="Write a new comment here...">
+                    <div style={{display:'flex', width:'100%'}}>
+                    <div style={{width:'100%'}}>
+                        <div style={{height:'100%',width:'100%',borderTop:'1px solid black',marginBottom:'10px'}}>
+                            {this.state.loggedIn ? (<div style={{width:'100%', marginTop:'20px'}}>
+                            <div style={{display:'flex', flexDirection:'column', marginBottom:20, position:'relative',background:'#1f1f1f',padding:10, height:166,borderRadius:5}}>
+                                <p style={{color:'white', padding:'5px 0px 10px'}}>Leave a comment</p>
+                                <div style={{display:'flex', padding:0}}>
+                                    <div style={{backgroundImage:`url(${this.state.userPic}`,backgroundSize:'cover',backgroundRepeat:'no-repeat',backgroundPosition:'center',height:35,width:35,backgroundColor:'black',borderRadius:30,marginRight:10}}></div>
+                                    <div style={{position:'absolute', right:'15px',zIndex:9,top:'55px'}}><p style={{fontSize:14}}>{that.state.value}</p></div>
+                                    <textarea id="comment" 
+                                        style={{
+                                            border:'1px solid #DDE0EB',
+                                            borderRadius:'6px',
+                                            color:'#333333',
+                                            resize:'100%',
+                                            fontSize:'1.4rem',
+                                            marginBottom:'1.4rem',
+                                            padding:'1rem',
+                                            fontFamily:'Helvetica, Arial, sans-serif',
+                                            outline:'none',
+                                            backgroundColor:'#F9FAFA',
+                                            webkitFontSmoothing:'antialiased',
+                                            height:'60px',
+                                            width:'100%',
+                                            resize:'none',
+                                            position:'relative',
+                                            paddingTop:'7px',
+                                            paddingLeft:'11px',
+                                            paddingRight:'28px',
+                                            paddingBottom:'20px'
+                                        }} 
+                                        multiline = {true}
+                                        numberOfLines = {6}
+                                        maxLength = {140}
+                                        onChange={(event)=>that.setState({value:event.target.value.length})}
+                                        placeholder="Write a new comment here...">
    
-                        </textarea>
-                        </div>
-                        <div style={{display:'flex',width:144,position:'absolute',right:'10px',bottom:17,alignItems:'center',justifyContent:'space-between'}}>
-                        <p style={{fontSize:11,color:'white'}}>CANCEL</p>
-                        <button style={{border:'1px solid gray',
-                            borderRadius:'4px',
-                            background:'#3fffe8',
-                            height:'25px',
-                            width:'100px',
-                            fontFamily:'Source Sans Pro',
-                            fontWeight:'bold',
-                            fontSize:10,
-                            bottom:25,
-                            right:'10px'
-                        }} 
+                                    </textarea>
+                                </div>
+                                <div style={{display:'flex',width:144,position:'absolute',right:'10px',bottom:17,alignItems:'center',justifyContent:'space-between'}}>
+                                    <p style={{fontSize:11,color:'white'}}>CANCEL</p>
+                                    <button style={{border:'1px solid gray',
+                                        borderRadius:'4px',
+                                        background:'#3fffe8',
+                                        height:'25px',
+                                        width:'100px',
+                                        fontFamily:'Source Sans Pro',
+                                        fontWeight:'bold',
+                                        fontSize:10,
+                                        bottom:25,
+                                        right:'10px'
+                                    }} 
     
-                        onClick={this.postComment.bind(this)}
-                        >POST COMMENT</button>
-                        </div>
-                        </div>
-                        <div style={{display:'flex',flexDirection:'row',marginBottom:25}}>
-                            <i className="fa fa-comments"/>
-                            <p style={{marginLeft:10}}>Comments</p>
-                            <p style={{marginLeft:10}}>{this.state.comment_number}</p>
-                        </div>
+                                    onClick={this.postComment.bind(this)}>POST COMMENT</button>
+                                </div>
+                            </div>
+                            <div style={{display:'flex',flexDirection:'row',marginBottom:25}}>
+                                <i className="fa fa-comments"/>
+                                <p style={{marginLeft:10}}>Comments</p>
+                                <p style={{marginLeft:10}}>{this.state.comment_number}</p>
+                            </div>
                        
-                    </div>):(
+                        </div>
+                        ):(
                         <div style={{color:'black'}}>Not logged in</div>
                     )}
-                    
+                  
                     <ul style={{width:'100%'}} id="main-comments">
                         { 
                             this.state.dummyComments.map((obj)=> {
@@ -713,10 +886,62 @@ const repliesNum = [];
                             
                         }
                     </ul>
+                  
+                    </div>
 
                     </div>
+
+
+              
+
+
+
+
+
+
+                    </div>
+
+
                 </div>
             </div>  
+                  <div id="rf-right" style={{
+                        height:'100vh',
+                        width:'306px',
+                        background:'white',
+                        justifyContent:'center',
+
+                        display:'flex',
+                        flexDirection:'column'
+                    }}>
+                    
+                    <div style={{display:this.state.userName == ''? 'none':'flex', alignItems:'center',height:40,width:'100%',background:'#0f0f0f'}}>
+                        <p style={{color:'white',fontSize:17,fontWeight:900,marginTop:45,marginBottom:50}}>Recommended Flows</p>
+                    </div>
+                    <div style={{height:'100vh', width:'100%',background:'#0f0f0f'}}>
+
+
+                        
+                            {
+                                that.state.relatedRooms.map((i)=>{
+                                    return(<RelatedRoomPost 
+                                        shortID={i.shortID}
+                                        title={i.title} 
+                                        userName={i.userName}    
+                                        views={i.views} 
+                                        thumbnail={i.thumbnail}   
+                                        roomHeight={118} 
+                                        roomWidth={225}
+                                        isRemix={i.isRemix}
+                                        
+                                        />)
+                                })
+                            }
+                        
+                    </div>
+                    <div style={{height:'100vh', width:'100%',background:'#0f0f0f'}}>
+                    </div>
+                    </div>
+                </div>
         </div>)
 
         }

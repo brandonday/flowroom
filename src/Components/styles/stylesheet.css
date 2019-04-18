@@ -2568,36 +2568,39 @@ body {
   display: flex;
   -ms-flex-direction: column;
   flex-direction: column;
-  background: #F9FAFA;
+  background: rgb(15, 15, 15);
   align-items: center;
 
 }
 
 .main-section-wrap-comments-box {
-  height: 100%;
-  width: 100%;
-  -ms-flex-align: center;
-  align-items: center;
-  background: #0f0f0f;
-  /* margin: auto; */
- 
-  background: #0f0f0f;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  font-family: "Source Sans Pro";
-  color: #80848C;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 0px 21px;
-  -ms-flex: 1 1;
-  flex: 1 1;
-  padding-left: 75px;
-    padding-right: 44px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  
+    /* height: 100%; */
+    width: 100%;
+    /* -webkit-align-items: center; */
+    /* align-items: center; */
+    background: #0f0f0f;
+    /* margin: auto; */
+    background: #0f0f0f;
+    /* display: -webkit-flex; */
+    /* display: flex; */
+    -webkit-flex-direction: column;
+    /* flex-direction: column; */
+    font-family: "Source Sans Pro";
+    color: #80848C;
+    font-size: 12px;
+    font-weight: 600;
+    /* padding: 0px 21px; */
+    -webkit-flex: 1 1;
+    flex: 1 1;
+    padding-left: 10px;
+    padding-right: 10px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding-left: 77px;
+    padding-right: 36px;
 }
+
 
 .react-tabs__tab--selected {
   background: #1BB243;

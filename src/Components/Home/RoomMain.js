@@ -115,7 +115,7 @@ class RoomMain extends Component {
                 }
           
                 document.getElementById('main-menu').style.position = 'absolute';
-                document.getElementById('main-menu').style.height = '380px';
+                document.getElementById('main-menu').style.height = '100%';
                 document.getElementById('main-menu').style.width = '67%';
                 document.getElementById('main-menu').style.zIndex = '999994';
                 document.getElementById('main-menu').style.top = '0px';
@@ -125,7 +125,11 @@ class RoomMain extends Component {
 
                 document.getElementById('tab-menu').style.position = 'absolute';
                 document.getElementById('tab-menu').style.zIndex = '999999';
-                document.getElementById('tab-menu').style.height = '380px';
+                document.getElementById('tab-menu').style.height = '100%';
+                document.getElementById('rf-right').style.display = 'none';
+                document.getElementById('rf-top').style.display = 'flex';
+                document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingLeft = '10px';
+                document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingRight = '10px';
             } else {
                 let main = document.getElementById('main-menu');
                 let tabMenu = document.getElementById('tab-menu');
@@ -143,6 +147,10 @@ class RoomMain extends Component {
                 }
                 main.style.position = 'relative';
                 main.style.left = '0px';
+                document.getElementById('rf-right').style.display = 'flex';
+                document.getElementById('rf-top').style.display = 'none';
+                document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingLeft = '77px';
+                document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingRight = '36px';
             }
         }
         let x = window.matchMedia("(max-width: 768px)");
@@ -192,34 +200,7 @@ class RoomMain extends Component {
         }).catch((error) => {
           console.log(error)
         });
-        let counter = 0;
-        database.ref('rooms').orderByChild(roomFilter).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
-            snapshot.forEach((childSnapShot) => {
-                counter++;
-                if(!this.isShortIDExists(childSnapShot.val().shortID)) {
-                    if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
-                        if(counter !== 1) {
-                            relatedRooms.unshift({
-                                id:childSnapShot.key,
-                                date:childSnapShot.val().date,
-                                views:childSnapShot.val().views,
-                                isRemix:childSnapShot.val().isRemix,
-                                roomType:childSnapShot.val().roomType,
-                                userName:childSnapShot.val().userName,
-                                shortID:childSnapShot.val().shortID,
-                                title:childSnapShot.val().room_title,
-                                tags:childSnapShot.val().tags,
-                                thumbnail:childSnapShot.val().thumbnail,
-                                ...childSnapShot
-                            });
-        
-                        }
-                      
-                    }
-                }
-            });
-            that.setState({relatedRooms:relatedRooms});
-        });
+   
                 
     }
     isShortIDExists(shortID) {
@@ -236,6 +217,63 @@ class RoomMain extends Component {
     }
     closeModal() {
         this.setState({modalIsOpen: false});
+    }
+    getProfileInfo(myusername) {
+        let name = this.props.match.params.id.toLowerCase();
+        let ref = firebase.database().ref("users");
+        ref.once("value")
+          .then((snapshot) => {
+              console.log(snapshot.val())
+            let hasName = snapshot.hasChild(`${name}`); // true
+            
+            if(hasName) {
+                let snap = snapshot.val();
+                let bio = snap[name].bio;
+                let pic = snap[name].pic;
+                if(myusername !== name) {
+                    this.setState({displayIfOwn:'block'});
+                    this.isFollowing(myusername);
+                    this.Followers(name);
+                } else {
+                    this.setState({displayIfOwn:'none'});
+                    this.isFollowing(myusername);
+                    this.Followers(name);
+                }
+                this.setState({hasName:'found', name:name, bio:bio, pic:pic});
+            } else {
+                this.setState({hasName:'notfound',loading:(<div style={{display:'flex',flex:'1'}}>not found</div>)});
+    
+            }
+          });
+    } 
+    isFollowing(myusername) {
+        
+        let name = this.props.match.params.id.toLowerCase();
+        let ref = firebase.database().ref(`follows/${name}/followers`);
+        ref.once("value")
+          .then((snapshot) => {
+              console.log('f',snapshot.numChildren())
+            this.setState({followersNum:snapshot.numChildren()})
+            let hasName = snapshot.hasChild(`${myusername}`); // true
+            
+            if(hasName) {
+                //shown when following
+                this.setState({followlbl:'unfollow'});
+           
+            } else {
+                this.setState({followlbl:'follow'});
+            }
+          });
+    } 
+    Followers(name) {
+      
+        let ref = firebase.database().ref(`follows/${name}/following`);
+        ref.once("value")
+          .then((snapshot) => {
+    
+            this.setState({followingNum:snapshot.numChildren()})
+         
+          });
     }
     tabDetailsClicked() {
         document.getElementById('details').className = 'details-sel-3x'; 
@@ -813,31 +851,6 @@ class RoomMain extends Component {
                             </div>
 
 
-                            <div id="full-screen" onClick={()=> {
-                                    }} style={{
-                            display:'flex',
-                            color:'rgb(64, 255, 232)',
-                            height:'52px',
-                            width:'48px',
-                            flexDirection:'column',
-                            alignItems:'center',
-                            borderRight:'1px solid #181818',
-                            borderBottom:'1px solid #181818',
-                            justifyContent:'center'
-                                    }} 
-                                    className="menu-bg-border">
-                                         <div style={{
-                                    fontSize:'15px',
-                                    color:'white',
-                                    backgroundImage:'url(../fullscreen_icon.png)',
-                                    backgroundSize:'100% 100%',
-                                    backgroundRepeat:'no-repeat',
-                                    height:'14px',
-                                    width:'16px',
-                                    marginBottom:'3px'
-                                    }}></div>
-                                        <p id="full-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252',width:'22px'}}>FULL</p>
-                            </div>
 
                                  <div id="objects" onClick={()=> {
                                     let objectsid = document.getElementById('objects');
@@ -903,13 +916,14 @@ class RoomMain extends Component {
                         </div>
                     </div>
                 </div>
-                <div style={{display:this.state.userName == ''? 'none':'flex',flex:1, border:'0px solid red'}}>
+                <div style={{display:this.state.userName == ''? 'none':'flex',flex:1, border:'0px solid red',background:'rgb(15, 15, 15)'}}>
                     <Comments isRemix={this.state.isRemix} 
                         remixRoomID={this.state.remixRoomID} 
                         remixUserName={this.state.remixUserName}
                         userName={this.state.userName}
                         dateCreated={this.state.dateCreated}
                     />
+                    
                     <div style={{height:'42px',
                             width:'100%',
                             background:'rgb(14, 14, 14)',
@@ -919,44 +933,37 @@ class RoomMain extends Component {
                             justifyContent:'space-between',
                             position:'absolute',
                             right:'0px'
-                            }}></div>
-                    <div style={{
-                        height:'100vh',
-                        width:'400px',
-                        background:'white',
-                        justifyContent:'center',
-                        marginTop:'45px',
-                        display:'flex',
-                        flexDirection:'column'
-                    }}>
-                    
-                    <div style={{display:this.state.userName == ''? 'none':'flex', alignItems:'center',height:40,width:'100%',background:'#0f0f0f'}}>
-                        <p style={{color:'white',fontSize:17,fontWeight:900,marginTop:45,marginBottom:50}}>Recommended Flows</p>
-                    </div>
-                    <div style={{height:'100vh', width:'100%',background:'#0f0f0f'}}>
+                            }}>
+                            
 
-
-                        
-                            {
-                                that.state.relatedRooms.map((i)=>{
-                                    return(<RelatedRoomPost 
-                                        shortID={i.shortID}
-                                        title={i.title} 
-                                        userName={i.userName}    
-                                        views={i.views} 
-                                        thumbnail={i.thumbnail}   
-                                        roomHeight={118} 
-                                        roomWidth={225}
-                                        isRemix={i.isRemix}
-                                        
-                                        />)
-                                })
-                            }
-                        
-                    </div>
-                    <div style={{height:'100vh', width:'100%',background:'#0f0f0f'}}>
-                    </div>
-                    </div>
+                            <div id="full-screen" onClick={()=> {
+                                    }} style={{
+                            display:'flex',
+                            color:'white',
+                            height:'52px',
+                            width:'48px',
+                            flexDirection:'row',
+                            alignItems:'center',
+                            borderRight:'1px solid #181818',
+                            borderBottom:'1px solid #181818',
+                            justifyContent:'center',
+                            position:'absolute',
+                            right:'69px'
+                                    }} 
+                                    className="menu-bg-border">
+                                     
+                                    <i class="fas fa-expand" style={{
+                                    fontSize:'15px',
+                                    color:'white',
+                                    marginBottom:'3px',
+                                    position:'relative',
+                                    left:'-8px'
+                                    }}></i>
+                                        <p id="full-text" style={{fontSize:15,fontWeight:'bold',color:'white',width:'22px'}}>Full</p>
+                            </div>
+                            
+                            </div>
+                   
                 </div>
             </div>
         </div>)
