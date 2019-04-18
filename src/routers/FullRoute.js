@@ -10,8 +10,6 @@ export const FullRoute = ({isAuthenticated, component:Component, ...rest}) => (
     }}/>
 );
 
-const mapStateToProps = (state) => ({
-    isAuthenticated:state.isLoggedIn.isLoggedIn
-});
 
-export default connect(mapStateToProps)(FullRoute)
+
+export default FullRoute;
