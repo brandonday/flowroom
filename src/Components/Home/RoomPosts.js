@@ -18,7 +18,7 @@ let rooms = [];
 let roomsFilter = [];
 let roomsBackUp = [];
 let currentPage = 1;
-let roomsPerPage = 6;
+let roomsPerPage = 4;
 let nextRoomIndex = '';
 let previousRoomIndex = '';
 let roomFilter = 'weight';
@@ -63,12 +63,16 @@ class RoomPosts extends Component {
       let shortID = roomPosts[i].id.replace('room_', '');
       let frame = document.getElementById(shortID);
       let thumbnail = document.getElementById(`thumbnail_${shortID}`)
+      if(frame == null) {
+        continue;
+      } 
       if(midY >= 0 && midY < window.innerHeight) {
         console.log('scroll Y :', i, 'visible');
         if(thumbnail.style.display == 'none') {
           countVisible++;
             continue;
         }
+       
         if(frame.attachEvent) {
           frame.attachEvent("onload", function(){
             console.log("Local iframe is now loaded.(IE)");
@@ -112,7 +116,7 @@ class RoomPosts extends Component {
   }
   processLoadMore() {
     console.log('process load more');
-    if (this.state.error || this.state.isLoading || !this.state.hasMore) return;
+    if (this.state.error || this.state.isLoading || !this.state.hasMore ) return;
     if (
       window.innerHeight + document.documentElement.scrollTop
       === document.documentElement.offsetHeight
@@ -191,8 +195,7 @@ class RoomPosts extends Component {
 
           }
         });
-        that.setState({rooms:rooms})
-        that.setState({roomsLoaded:true});
+        that.setState({rooms:rooms,roomsLoaded:true})
         that.setRoomVisibility();
       });
   }
@@ -223,21 +226,21 @@ class RoomPosts extends Component {
     this.loadRooms();
   }
   openModal(post = true) {
-    this.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles: {
-      overlay: {
-        backgroundColor: 'none',
-      },
-      content: {
-        top                   : '50%',
-        left                  : '50%',
-        right                 : '0',
-        bottom                : 'auto',
-        marginRight           : '0%',
-        transform             : 'translate(-50%, -50%)',
-        height:'50%',
-        width:'50%',
-      }
-    }})
+    // this.props.openModal({isModalOpen:true, modalType:'room', post:post, customStyles: {
+    //   overlay: {
+    //     backgroundColor: 'none',
+    //   },
+    //   content: {
+    //     top                   : '50%',
+    //     left                  : '50%',
+    //     right                 : '0',
+    //     bottom                : 'auto',
+    //     marginRight           : '0%',
+    //     transform             : 'translate(-50%, -50%)',
+    //     height:'50%',
+    //     width:'50%',
+    //   }
+    // }})
   }
   getTagsArray(tags) {
     let tagsArray = [];
@@ -361,8 +364,7 @@ class RoomPosts extends Component {
         if(counter == 1) {
           return;
         }
-        this.setState({rooms:rooms});
-        this.setState({roomsLoaded:true});
+        this.setState({rooms:rooms,roomsLoaded:true});
       }
     );
   }

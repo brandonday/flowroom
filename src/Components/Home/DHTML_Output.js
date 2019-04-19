@@ -138,7 +138,7 @@ let fabricA = [];
                                     }} 
                                     className="menu-bg-border">
                                      
-                                    <i class="fas fa-expand" style={{
+                                    <i className="fas fa-expand" style={{
                                     fontSize:'15px',
                                     color:'white',
                                     marginBottom:'3px',

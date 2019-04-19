@@ -33,8 +33,8 @@ export const ProfileRoute = ({isAuthenticated, component:Component, ...rest}) =>
     }}/>
 );
 
-const mapStateToProps = (state) => ({
-    isAuthenticated:state.isLoggedIn.isLoggedIn
-});
+// const mapStateToProps = (state) => ({
+//     isAuthenticated:state.isLoggedIn.isLoggedIn
+// });
 
-export default connect(mapStateToProps)(ProfileRoute)
+export default ProfileRoute //connect(mapStateToProps)()

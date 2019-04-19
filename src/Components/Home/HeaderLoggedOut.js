@@ -40,12 +40,5 @@ import { connect } from 'react-redux';
     )
 }
 
-const ConnectedHeader = connect((state, ownProps) => {
-    console.log('state', state);
-    return {
-        isLoggedIn:state.isLoggedIn,
-        props:ownProps
-    }
-})(HeaderLoggedOut)
 
-export default ConnectedHeader;
+export default HeaderLoggedOut;

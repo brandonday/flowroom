@@ -29,12 +29,12 @@ export const PrivateRoute = ({isAuthenticated, userExists, component:Component, 
     }}/>
 );
 
-const mapStateToProps = (state) => ({
-    isAuthenticated:state.isLoggedIn.isLoggedIn
-});
+// const mapStateToProps = (state) => ({
+//     isAuthenticated:state.isLoggedIn.isLoggedIn
+// });
 
-const mapDispatchToProps = (dispatch) => ({
-    userExists: (user) => dispatch(userExists(user))
-})
+// const mapDispatchToProps = (dispatch) => ({
+//     userExists: (user) => dispatch(userExists(user))
+// })
 
-export default connect(mapStateToProps, mapDispatchToProps)(PrivateRoute)
+export default PrivateRoute //connect(mapStateToProps, mapDispatchToProps)()

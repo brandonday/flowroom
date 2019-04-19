@@ -39,11 +39,11 @@ export const EditRoute = ({ isAuthenticated, username, component:Component, ...r
 
 };
 
-const mapStateToProps = (state, ownProps) => ({
-    isAuthenticated:state.isLoggedIn.isLoggedIn,
-    username:state.auth.username,
-    props:ownProps
-});
+// const mapStateToProps = (state, ownProps) => ({
+//     isAuthenticated:state.isLoggedIn.isLoggedIn,
+//     username:state.auth.username,
+//     props:ownProps
+// });
 
 
-export default connect(mapStateToProps)(EditRoute)
+export default EditRoute //connect(mapStateToProps)()

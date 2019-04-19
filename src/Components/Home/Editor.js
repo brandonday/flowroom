@@ -26,11 +26,6 @@ import { firebase } from '../firebase/firebase';
 import * as dat from 'dat.gui';
 
 
-
-const Desktop = props => <Responsive {...props} minWidth={992} />;
-const Tablet = props => <Responsive {...props} minWidth={768} maxWidth={991} />;
-const Mobile = props => <Responsive {...props} maxWidth={767} />;
-const Default = props => <Responsive {...props} minWidth={768} />;
 require('velocity-animate');
 require('velocity-animate/velocity.ui');
 var VelocityComponent = require('velocity-react/src/velocity-component');
@@ -343,26 +338,22 @@ class Editor extends Component {
                 if(currentUser === uid) {
                   //alert('the same');
                   console.log(that.state.saveVisible)
-                  that.setState({saveVisible:'block'});
-                  that.setState({postVisible:'block'});
-                  that.setState({remixVisible:'block'});
+                  that.setState({saveVisible:'block',postVisible:'block',remixVisible:'block'});
+           
                   
                 } else {
                   //alert('not');
-                  that.setState({saveVisible:'block'});
-                  that.setState({postVisible:'block'});
-                  that.setState({remixVisible:'block'});
+                  that.setState({saveVisible:'block',postVisible:'block',remixVisible:'block'});
+                  
                 }
               } else {
-                  that.setState({saveVisible:'block'});
-                  that.setState({postVisible:'block'});
-                  that.setState({remixVisible:'block'});
+                that.setState({saveVisible:'block',postVisible:'block',remixVisible:'block'});
+
               }
             } else {
               //alert('not');
-                that.setState({saveVisible:'block'});
-                that.setState({postVisible:'block'});
-                that.setState({remixVisible:'block'});
+              that.setState({saveVisible:'block',postVisible:'block',remixVisible:'block'});
+
                 HTML_EDITOR.setValue('');
                 CSS_EDITOR.setValue('');
                 JS_EDITOR.setValue('');
@@ -536,7 +527,7 @@ injectJS() {
                     complete={this.resizeAnimationComplete.bind(this)}>
                     <ResizableBox id="resizable-box" 
                         height={this.state.resizeableHeight} 
-                        width='100%'
+                        width={'100%'}
                         onResize={this.resizeFunc.bind(this)} 
                         onResizeStart={this.editorDragStart.bind(this)} 
                         onResizeStop={this.editorDragStop.bind(this)} 
@@ -561,7 +552,7 @@ injectJS() {
                             overflowchange={this.handleOverflowChange.bind(this)}
                             overflow={this.state.OverflowDetector}
                         /> */}
-                        <Default>
+                      
                         {/* <div className="show-more-preview-bar-wrap">
                             <ShowMore 
                                 tags={this.props.tags} 
@@ -571,7 +562,7 @@ injectJS() {
                             <PreviewBar/> 
                         </div> */}
                         {/* <ReactResizeDetector handleWidth handleHeight onResize={this.isResizing.bind(this)} /> */}
-                        </Default>
+                  
                         {/* <Mobile>
                             <div className="show-more-preview-bar-wrap-mobile">
                                 <ShowMore 

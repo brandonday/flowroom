@@ -678,6 +678,7 @@ let roomFilter = 'weight';
                             {
                                 that.state.relatedRooms.map((i)=>{
                                     return(<RelatedRoomPostTop
+                                        
                                         shortID={i.shortID}
                                         title={i.title} 
                                         userName={i.userName}    
@@ -686,7 +687,7 @@ let roomFilter = 'weight';
                                         roomHeight={118} 
                                         roomWidth={225}
                                         isRemix={i.isRemix}
-                                        
+                                        key={i.shortID}
                                         />)
                                 })
                             }
@@ -887,11 +888,11 @@ let roomFilter = 'weight';
 
                             }}>
                             <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
-                            <p style={{color:'rgb(64, 255, 232);',display:'flex'}}>
+                            <span style={{color:'rgb(64, 255, 232)',display:'flex'}}>
                                 <a href="/signup" style={{color:'rgb(64, 255, 232)',marginRight:4}}>
                                     Sign up
                                 </a> <p style={{marginRight:4}}> or</p> 
-                                <a href="/login" style={{color:'rgb(64, 255, 232)',marginRight:4}}>Sign in</a> to leave a comment</p>
+                                <a href="/login" style={{color:'rgb(64, 255, 232)',marginRight:4}}>Sign in</a> to leave a comment</span>
                             </div>
                         </div>
                     )}
@@ -950,7 +951,7 @@ let roomFilter = 'weight';
                                         roomHeight={118} 
                                         roomWidth={225}
                                         isRemix={i.isRemix}
-                                        
+                                        key={i.shortID}
                                         />)
                                 })
                             }

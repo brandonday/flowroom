@@ -39,12 +39,13 @@ class RoomPost extends Component {
         // window.addEventListener('scroll', this.handleScroll, true);
 
             
-        this.setState({likes:this.getNumberToString(this.props.likes)})
        
         
-        this.setState({tags:this.props.tags});
+    
         if(this.props.numTagsAll > this.props.numTags) {
-            this.setState({showMoreTag:true});
+            this.setState({showMoreTag:true,likes:this.getNumberToString(this.props.likes),tags:this.props.tags});
+        } else {
+            this.setState({likes:this.getNumberToString(this.props.likes),tags:this.props.tags});
         }
 
         var d = document.getElementById('description-text');
@@ -133,13 +134,7 @@ class RoomPost extends Component {
         // }
     }
 
-    displayExtraInfo() {
-        if(this.props.isRemixable === true || this.props.roomType === 'other' ) {
-            return ( <div style={{display:'flex', width:'100%',justifyContent:'center',flexDirection:'column'}}></div>)
-       } else {
-            return(<div></div>)
-       }
-    }
+  
     getNumberToString(num) {
         if(num === undefined) {
             return 0;
@@ -286,7 +281,7 @@ class RoomPost extends Component {
                                 WebkitTransformOrigin:'top left',
                                 transformOrigin:'top left',
                             }}></div>
-                            <iframe id={`${this.props.shortID}`} src={"/full/" + this.props.shortID} style={{
+                            <iframe id={`${this.props.shortID}`}  style={{
                                 height:'200%', border:'1px solid red',
                                 width:'200%',
                                 border:0,
@@ -384,7 +379,6 @@ class RoomPost extends Component {
                         </Link> */}
                     </div>
                 
-                    {this.displayExtraInfo()}
                     {console.log('commentsCount :', this.props.commentsCount)}
                     <div style={{display:'flex',
                         justifyContent:'space-between',
@@ -490,20 +484,20 @@ class RoomPost extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        isLoggedIn:state.isLoggedIn,
-        props:ownProps,
-        state:state
-    }
-}
+// const mapStateToProps = (state, ownProps) => {
+//     return {
+//         isLoggedIn:state.isLoggedIn,
+//         props:ownProps,
+//         state:state
+//     }
+// }
 
-const mapDispatchToProps = (dispatch) => ({
-    openModal: (modal) => dispatch(OPEN_MODAL(modal))
-  });
+// const mapDispatchToProps = (dispatch) => ({
+//     openModal: (modal) => dispatch(OPEN_MODAL(modal))
+//   });
 
-const ConnectedRoomPost = connect(mapStateToProps,mapDispatchToProps)(RoomPost)
+// const ConnectedRoomPost = connect(mapStateToProps,mapDispatchToProps)()
 
-export default ConnectedRoomPost;
+export default RoomPost;
 
 

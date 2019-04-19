@@ -29,13 +29,13 @@ class HeaderLoggedIn extends Component {
                                 {/* <NewButton props={this.props}/> */}
                                 <div className="button-box"></div>
                                 <div className="message-icon-profile-pic-wrap-mobile">
-                                    <MessageIcon/> 
-                                    <ProfilePic/> {/* contains menu for profile */}
+                                    {/* <MessageIcon/>  */}
+                                    <ProfilePic /> {/* contains menu for profile */}
                                 </div>
                                 <Search/>
                                 <div>
                                     <div className="message-icon-profile-pic-wrap">
-                                        <MessageIcon onClick={this.openModal}/>
+                                        {/* <MessageIcon onClick={this.openModal}/> */}
                                         <ProfilePic/>
                                     </div>
                                 </div>
@@ -49,11 +49,6 @@ class HeaderLoggedIn extends Component {
 
 }
 
-const ConnectedHeader = connect((state, ownProps) => {
-    return {
-        isLoggedIn:state.isLoggedIn,
-        props:ownProps
-    }
-})(HeaderLoggedIn)
 
-export default ConnectedHeader;
+
+export default HeaderLoggedIn;
