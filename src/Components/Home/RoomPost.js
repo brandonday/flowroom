@@ -193,7 +193,7 @@ class RoomPost extends Component {
                 {/* </a> */}
               
                 <div onClick={this.goFull} style={{display:'flex'}}>
-                            <i className="fas fa-expand" style={{fontSize:15, color:'#B846F6',margin:'5px 4px'}}></i>
+                            <i className="fas fa-expand" style={{fontSize:15, color:'white',margin:'5px 4px'}}></i>
                         </div>
              
                 

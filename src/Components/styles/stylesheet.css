@@ -179,6 +179,8 @@ h1 a:focus {
 
 .main-nav {
   display:flex;
+  position: relative;
+  left: -330px;
 }
 
 .main-nav ul {
@@ -743,7 +745,7 @@ body {
 
 .search-box {
 
-  width:100%;
+  width:90%;
   height: 42px;
   display: -ms-flexbox;
   display: flex;

@@ -15,7 +15,7 @@ const SignUpButton = () => (
     fontWeight:'bold',
     fontSize:'12px'
   }}>
-                                Sign Up
+                                SIGN UP
                         </button>
                </Link>
         </div>

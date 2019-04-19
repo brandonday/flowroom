@@ -875,7 +875,25 @@ let roomFilter = 'weight';
                        
                         </div>
                         ):(
-                        <div style={{color:'black'}}>Not logged in</div>
+                        <div style={{display:'flex',
+                            justifyContent:'center',
+                            marginBottom:'20px',
+                            position:'relative',
+                            background:'rgb(31, 31, 31)',
+                            padding:'10px',
+                            height:'166px',
+                            borderRadius:'5px',
+                            marginTop:'20px',
+
+                            }}>
+                            <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+                            <p style={{color:'rgb(64, 255, 232);',display:'flex'}}>
+                                <a href="/signup" style={{color:'rgb(64, 255, 232)',marginRight:4}}>
+                                    Sign up
+                                </a> <p style={{marginRight:4}}> or</p> 
+                                <a href="/login" style={{color:'rgb(64, 255, 232)',marginRight:4}}>Sign in</a> to leave a comment</p>
+                            </div>
+                        </div>
                     )}
                   
                     <ul style={{width:'100%'}} id="main-comments">
