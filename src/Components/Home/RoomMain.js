@@ -77,6 +77,7 @@ class RoomMain extends Component {
     }
     componentDidMount() {
         let that = this;
+        //this.incrementViews();
         document.getElementById('main-menu').style.display = 'none';
         document.getElementById('tab-menu').style.height = 'none';
         
@@ -106,12 +107,12 @@ class RoomMain extends Component {
         function myFunction(x) {
             if (x.matches) { // If media query matches
                 if(isMenuOpen === false) {
-                    document.getElementById('tab-menu').style.display = 'none';
+                    //document.getElementById('tab-menu').style.display = 'none';
                 } else {
-                    document.getElementById('tab-menu').style.display = 'block';
+                    //document.getElementById('tab-menu').style.display = 'block';
                 }
                 if(isMenuOpen === true) {
-                    document.getElementById('main-menu').style.display = 'block';
+                    //document.getElementById('main-menu').style.display = 'block';
                 }
           
                 document.getElementById('main-menu').style.position = 'absolute';
@@ -143,7 +144,7 @@ class RoomMain extends Component {
                 main.style.overflow = 'hidden scroll';
                 main.style.flexDirection = 'column';
                 if(isMenuOpen === true) {
-                    document.getElementById('main-menu').style.display = 'flex';
+                    //document.getElementById('main-menu').style.display = 'flex';
                 }
                 main.style.position = 'relative';
                 main.style.left = '0px';
@@ -202,6 +203,15 @@ class RoomMain extends Component {
         });
    
                 
+    }
+    incrementViews() {
+        let database = firebase.database();
+        database.ref(`rooms/${this.props.shortID}/views`).transaction(function(currentViews) {
+            // If node/clicks has never been set, currentRank will be `null`.
+            return (currentViews || 0) + 1;
+          }).then(()=> {
+            
+          });
     }
     isShortIDExists(shortID) {
         for(let i = 0; i < relatedRooms.length; i++) {
@@ -917,6 +927,20 @@ class RoomMain extends Component {
                     </div>
                 </div>
                 <div style={{display:this.state.userName == ''? 'none':'flex',flex:1, border:'0px solid red',background:'rgb(15, 15, 15)'}}>
+                {/* <button
+                style={{
+                    position:'absolute',
+                    background:'black',
+                    height:'24px',
+                    width:'68px',
+                    zIndex:'9999999',
+                    bottom:'3px',
+                    right:'145px',
+                    border:'1px solid rgb(64, 255, 232)',
+                    color:'rgb(64, 255, 232)',
+                    borderRadius:3
+                }}
+                >MENU</button> */}
                     <Comments isRemix={this.state.isRemix} 
                         remixRoomID={this.state.remixRoomID} 
                         remixUserName={this.state.remixUserName}
@@ -936,32 +960,7 @@ class RoomMain extends Component {
                             }}>
                             
 
-                            <div id="full-screen" onClick={()=> {
-                                    }} style={{
-                            display:'flex',
-                            color:'white',
-                            height:'52px',
-                            width:'48px',
-                            flexDirection:'row',
-                            alignItems:'center',
-                            borderRight:'1px solid #181818',
-                            borderBottom:'1px solid #181818',
-                            justifyContent:'center',
-                            position:'absolute',
-                            right:'69px'
-                                    }} 
-                                    className="menu-bg-border">
-                                     
-                                    <i class="fas fa-expand" style={{
-                                    fontSize:'15px',
-                                    color:'white',
-                                    marginBottom:'3px',
-                                    position:'relative',
-                                    left:'-8px'
-                                    }}></i>
-                                        <p id="full-text" style={{fontSize:15,fontWeight:'bold',color:'white',width:'22px'}}>Full</p>
-                            </div>
-                            
+                          
                             </div>
                    
                 </div>
