@@ -321,7 +321,7 @@ class RoomPost extends Component {
     }
     goFull = () => {
         this.incrementViewsFull();
-        document.fullscreenEnabled = false
+        //document.fullscreenEnabled = false
         if(document.fullscreenEnabled === true) {
         let iframe = document.getElementById(`${this.props.shortID}`);
         // alert(this.props.shortID)
