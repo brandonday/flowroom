@@ -17,6 +17,8 @@ let tagsLengthArray = [];
 let tagCounter = 0;
 let timer = null;
 class RoomPost extends Component {
+
+      
     constructor(){
         super();
         this.state = {
@@ -34,6 +36,16 @@ class RoomPost extends Component {
        
 
     }
+    static getColumnSpanFromProps = ({ isFeatured }, getState) => {
+        if (isFeatured) {
+          return 2;
+        }
+        return 1;
+      }
+      static getHeightFromProps = (getState, props, columnSpan, columnGutter) => {
+       // return IMAGE_HEIGHT + TITLE_HEIGHT + FOOTER_HEIGHT;
+       return 500 + 100 + 100;
+      }
     componentDidMount() {
 
         // window.addEventListener('scroll', this.handleScroll, true);
@@ -155,7 +167,7 @@ class RoomPost extends Component {
     }
     display() {
         return (
-        <div style={{display:'flex',
+        <div className="masonry" style={{display:'flex',
             position:'relative', height:'34px',justifyContent:'space-between',marginTop:'10px'}}>
             
             {/* <a href={`room/${this.props.shortID}`}> */}
@@ -271,9 +283,9 @@ class RoomPost extends Component {
                                 height:'200%', 
                                 width:'200%',
                                 backgroundImage:`url(${this.props.thumbnail})`,
-                                backgroundSize:'cover',
+                                backgroundSize:'contain',
                                 backgroundRepeat:'no-repeat',
-                                backgroundPosition:'center',
+                                backgroundPosition:'top center',
                                 zIndex:3,
                                 position:'absolute',
                                 WebkitTransform:'scale(0.5)',

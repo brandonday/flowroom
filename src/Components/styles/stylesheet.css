@@ -11,6 +11,28 @@ body {
   align-items: center;
   overflow-y:scroll;
 }
+
+.grid {
+  margin: 0 auto !important;
+}
+
+.masonryContainer{
+	width: 80%;
+	margin: auto;
+	margin-top: 10px;
+	border: 1px solid rgba(0,0,0,.1);
+	
+}
+
+.roomContainer{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-content: stretch;
+	width: 100%;
+	margin: auto;
+	
+}
 /* .CodeMirror-sizer {
 margin-left: 30px !important; 
 margin-bottom: 0px !important;
@@ -1193,6 +1215,8 @@ body {
   flex: 1 1;
   width: 100%;
 }
+
+
 
 .signup-section-signup-button {
   background-color: rgb(64, 255, 232);
