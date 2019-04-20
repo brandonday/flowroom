@@ -554,9 +554,7 @@ body {
       font-weight: 600; 
     }
    
-    .login-section-login-button {
-      width:100% !important ;
-    }
+   
     .email-address-label {
       display:block;
     }
@@ -566,9 +564,7 @@ body {
     .forgot-button {
       display:flex;
     }
-    .login-section-login-button {
-      height: 35px !important;
-    }
+    
     .login-section-input-field-password {
       margin-right: 0px !important;
       width: 100%;
@@ -1366,7 +1362,7 @@ body {
   width: 100%;
   max-width: 415px;
  
-  height: 200px;
+  height: 229px;
   background: white;
   /* margin: auto; */
   border: 1px solid #DDE0EB;
@@ -1379,7 +1375,7 @@ body {
   color: #80848C;
   font-size: 12px;
   padding: 0px 20px;
-  
+  position:relative;
 }
 
 .login-section-p {
@@ -1450,6 +1446,7 @@ body {
   margin-bottom: 10px;
   /* margin-left: 177px; */
   position: absolute;
+  bottom:5px;
 }
 
 
@@ -2787,7 +2784,7 @@ body {
   max-width: 400px;
 }
 
-@media (max-width: 830px) {
+/* @media (max-width: 830px) {
   .name-badge-follow-wrap {
     display: flex;
     -ms-flex-direction: row;
@@ -2799,7 +2796,7 @@ body {
     width: 50px;
   }
 
-}
+} */
 
 /*----------------------Profile----------------------*/
 .footer {
