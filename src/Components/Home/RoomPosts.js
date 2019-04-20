@@ -45,7 +45,8 @@ class RoomPosts extends Component {
     this.selection = this.selection.bind(this);   
   }
   componentDidMount() {
-    console.log('room posts called');
+    console.log('[RoomPosts] componentDidMount');
+   
     window.addEventListener('scroll', this.handleScroll.bind(this), true);
     this.loadRooms();
         // store.dispatch({type:'SAVE_DHTML', html:'',css:'',js:''});
@@ -54,7 +55,7 @@ class RoomPosts extends Component {
     window.removeEventListener('scroll', this.handleScroll.bind(this));
   }
   setRoomVisibility() {
-    console.log('set room visibility');
+    console.log('setRoomVisibility');
     let roomPosts = document.getElementsByClassName('room-post');
     let countVisible = 0;
     for(let i = 0; i < roomPosts.length; i++) {
@@ -96,7 +97,7 @@ class RoomPosts extends Component {
     }
   }
   handleScroll(event) {
-    console.log('handleScroll');
+    console.log('[RoomPosts] handleScroll');
     let that = this;
     if(timer !== null) {
       clearTimeout(timer);        
@@ -131,11 +132,12 @@ class RoomPosts extends Component {
     let counter = 0;
     let that = this;
     database.ref('rooms').orderByChild(roomFilter).limitToLast(roomsPerPage + 1).once('value').then((snapshot) => {
-      snapshot.forEach((childSnapShot) => {
-        counter++;
-        if(!this.isShortIDExists(childSnapShot.val().shortID)) {
-          if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
-            if(counter == 1) {
+      snapshot.forEach(
+        (childSnapShot) => {
+          counter++;
+          if(!this.isShortIDExists(childSnapShot.val().shortID)) {
+            if(!(childSnapShot.key === 'Mobile' || childSnapShot.key === 'Remixable')) {
+              if(counter == 1) {
               if(roomFilter == 'weight') {
                 nextRoomIndex = childSnapShot.val().weight;
               } else if(roomFilter == 'likes') {
@@ -197,7 +199,8 @@ class RoomPosts extends Component {
         });
         that.setState({rooms:rooms,roomsLoaded:true})
         that.setRoomVisibility();
-      });
+      }
+    );
   }
   getSearchFromFilter(id) {
     switch(id) {
@@ -455,7 +458,9 @@ class RoomPosts extends Component {
     );
   }
   render() {
+    
     if(this.state.roomsLoaded) {
+      console.log('[RoomPosts] render')
       return (
         <ReactResizeDetector
           handleWidth
@@ -508,12 +513,12 @@ class RoomPosts extends Component {
                 <RoomFilters/>
               </div>
               <div style={{position:'relative'}}>
-                <StackGrid
+                {/* <StackGrid
                   duration={0}
                   columnWidth={width >= 1024 ? 420 : (width >= 768 ? 290 : (width > 320 ? 320 : 280))}
                   gutterWidth={30}
                   gutterHeight={20}
-                  horizontal={false}>
+                  horizontal={false}> */}
                     {
                       this.state.rooms.map (
                         (i)=> {
@@ -545,7 +550,7 @@ class RoomPosts extends Component {
                         }
                       )
                     }
-                </StackGrid>
+                {/* </StackGrid> */}
               </div>
               {/* </div> */}
               {/* </section> */}

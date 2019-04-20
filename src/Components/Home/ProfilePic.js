@@ -25,15 +25,16 @@ class ProfilePic extends Component {
   componentDidMount() {
   
     let that = this;
- 
+    this.setState({isLoading:true});
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-  
+        
         database.ref(`users/${user.displayName}`).once('value').then(function(snapshot) {
                 
           that.setState({
               pic:snapshot.val().pic,
-              username:user.displayName
+              username:user.displayName,
+              isLoading:false
           });
 
       });
