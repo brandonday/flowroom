@@ -1361,21 +1361,20 @@ body {
 .main-section-login-box {
   width: 100%;
   max-width: 415px;
- 
   height: 229px;
   background: white;
   /* margin: auto; */
   border: 1px solid #DDE0EB;
   border-radius: 6px;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: column;
+  /* display: -webkit-flex; */
+  /* display: flex; */
+  -webkit-flex-direction: column;
   flex-direction: column;
   font-family: "Source Sans Pro";
   color: #80848C;
   font-size: 12px;
   padding: 0px 20px;
-  position:relative;
+  /* position: relative; */
 }
 
 .login-section-p {
@@ -1441,12 +1440,11 @@ body {
   height: 25px;
   border-radius: 3px;
   font-weight: 600;
-  right: 21px;
-  /* position: relative; */
+
   margin-bottom: 10px;
   /* margin-left: 177px; */
-  position: absolute;
-  bottom:5px;
+  float:right;
+
 }
 
 
