@@ -513,12 +513,12 @@ class RoomPosts extends Component {
                 <RoomFilters/>
               </div>
               <div style={{position:'relative'}}>
-                {/* <StackGrid
+                <StackGrid
                   duration={0}
                   columnWidth={width >= 1024 ? 420 : (width >= 768 ? 290 : (width > 320 ? 320 : 280))}
                   gutterWidth={30}
                   gutterHeight={20}
-                  horizontal={false}> */}
+                  horizontal={false}>
                     {
                       this.state.rooms.map (
                         (i)=> {
@@ -550,7 +550,7 @@ class RoomPosts extends Component {
                         }
                       )
                     }
-                {/* </StackGrid> */}
+                </StackGrid>
               </div>
               {/* </div> */}
               {/* </section> */}
