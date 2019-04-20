@@ -343,7 +343,7 @@ class RoomPost extends Component {
         }
         this.setState({ isFull: true });
         } else {
-            alert('no ')
+        
         }
 
     }
