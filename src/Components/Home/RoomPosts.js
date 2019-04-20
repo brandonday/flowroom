@@ -481,7 +481,7 @@ class RoomPosts extends Component {
               postedPicURL={i.postedPicURL}
               roomType={i.roomType}
               pic={i.pic}
-              roomHeight={(window.innerWidth >= 1024 ? 1 : (window.innerWidth >= 768 ? 0.9 : (window.innerWidth > 320 ? 0.9 : 0.9))) * i.room_card_height}
+              roomHeight={(window.innerWidth >= 1024 ? 1 : (window.innerWidth >= 768 ? 1 : (window.innerWidth > 320 ? 1 : 1))) * i.room_card_height}
               roomWidth={width}
               username={i.username}
               points = {i.hasOwnProperty("points") ? i.points : 0}
