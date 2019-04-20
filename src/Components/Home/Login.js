@@ -30,35 +30,40 @@ const loginUserAccount = ({ loginAccount }) => {
             backgroundColor: '#202020',
             border:'none',
             flexDirection:'row',
-            justifyContent:'space-between',
             alignItems:'center'
         }}>
             <div style={{display:'flex',
                 backgroundColor:'#4267b2',
                 height:38,
-                width:117,
+                width:'100%',
+                maxWidth:117,
                 borderRadius:3,
                 justifyContent:'center',
                 alignItems:'center',
-                fontSize:'17px'
+                fontSize:'17px',
+                marginRight:10
             }}><i class="fab fa-facebook-f" style={{color:'white'}}></i></div>
             <div style={{display:'flex',
                 backgroundColor:'#38A1F3',
                 height:38,
-                width:117,
+                width:'100%',
+        maxWidth:117,
                 borderRadius:3,
                 justifyContent:'center',
                 alignItems:'center',
-                fontSize:'17px'
+                fontSize:'17px',
+                marginRight:10
             }}><i class="fab fa-twitter" style={{color:'white'}}></i></div>
             <div style={{display:'flex',
                 backgroundColor:'#d34836',
                 height:38,
-                width:117,
+                width:'100%',
+        maxWidth:117,
                 borderRadius:3,
                 justifyContent:'center',
                 alignItems:'center',
-                fontSize:'17px'
+                fontSize:'17px',
+                marginRight:10
             }}><i class="fab fa-google" style={{color:'white'}}></i></div>
         </div>
 

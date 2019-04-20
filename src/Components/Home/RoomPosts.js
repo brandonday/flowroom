@@ -468,13 +468,13 @@ class RoomPosts extends Component {
   }
   render() {
  
-    const width = (window.innerWidth >= 1024 ? 1 : (window.innerWidth >= 768 ? 0.9 : (window.innerWidth > 320 ? 0.9 : 0.9))) * 320;
+    const width = (window.innerWidth >= 1024 ? 1 : (window.innerWidth >= 768 ? 1 : (window.innerWidth > 320 ? 1 : 0.9))) * 320;
     const childElements = this.state.rooms.map (
       (i)=> {
        
           return (<div className="image-element-class">
             <div className="roomContainer">
-            <div key={i.shortID} style={{width:width, margin:20}} >
+            <div className="roomPostContainer" key={i.shortID} style={{width:width}} >
               <RoomPost  
               description={i.description === undefined || i.description === null  ? '' : i.description}
               isRemixable={i.isRemixable}
@@ -507,7 +507,7 @@ class RoomPosts extends Component {
       console.log('[RoomPosts] render')
       return (
         
-            <div style={{padding:'0px 10px', height:'100%'}}>
+            <div style={{padding:'0px', height:'100%'}}>
               {/* <div id="body-padding" style={{
                         flex:1
               }}> */}

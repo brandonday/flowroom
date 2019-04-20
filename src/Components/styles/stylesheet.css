@@ -21,7 +21,6 @@ body {
 	margin: auto;
 	margin-top: 10px;
 	border: 1px solid rgba(0,0,0,.1);
-	
 }
 
 .roomContainer{
@@ -31,7 +30,59 @@ body {
 	align-content: stretch;
 	width: 100%;
 	margin: auto;
-	
+}
+
+.roomPostContainer {
+  margin: 20px;  
+}
+
+
+@media only screen and (max-width: 320px) {
+
+  .masonryContainer {
+    width: 288px;
+  }
+
+  .roomPostContainer {
+    margin: 20px 0;
+  }
+
+}
+
+@media only screen and (min-width: 321px) and (max-width: 767px) {
+
+  .masonryContainer{
+    width: 320px;
+  }
+
+  .roomPostContainer {
+    margin: 20px 0;
+  }
+
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+
+  .masonryContainer{
+    width: 722px;
+  }
+
+  .roomPostContainer {
+    margin: 20px 20px;
+  }
+
+}
+
+@media only screen and (min-width: 1024px) {
+
+  .masonryContainer {
+    width: 1024px;
+  }
+
+  .roomPostContainer {
+    margin: 10px 10px;
+  }
+
 }
 /* .CodeMirror-sizer {
 margin-left: 30px !important; 
@@ -502,9 +553,7 @@ body {
       font-size:15px !important;
       font-weight: 600; 
     }
-    .main-section-login-box {
-      height: 400px !important;
-    }
+   
     .login-section-login-button {
       width:100% !important ;
     }
@@ -1114,21 +1163,24 @@ body {
 }
 
 .main-section-signup-box {
-  
-   
-    align-items: center;
-    height: 247px;
+  -webkit-align-items: center;
+    /* align-items: center; */
+    height: 325px;
     background-color: rgb(32, 32, 32);
     /* margin: auto; */
     border: 0px solid #DDE0EB;
     border-radius: 6px;
-    display: flex;
+    /* display: -webkit-flex; */
+    /* display: flex; */
+    -webkit-flex-direction: column;
     flex-direction: column;
     font-family: "Source Sans Pro";
     color: #80848C;
     font-size: 12px;
     padding: 0px 21px;
-
+    width: 100%;
+    max-width: 413px;
+    position: relative;
 }
 
 .main-section-signup-box-mobile {
@@ -1173,7 +1225,8 @@ body {
   display:flex;
   width: 100%;
   justify-content: center;
-  margin-right: 20px;
+  flex-direction: column;
+  margin-top: 10px;
 }
 
 .signup-section-fields-mobile {
@@ -1186,17 +1239,18 @@ body {
 }
 
 .signup-section-input-field {
-  border: 1px solid #DDE0EB;
-  border-radius: 6px;
+  border: 0px solid #DDE0EB;
+  border-radius: 3px;
   color: #333333;
   font-size: 1.4rem;
   margin-bottom: 1.4rem;
-  padding: 1rem;
+  padding: 6px;
   font-family: Helvetica, Arial, sans-serif;
   outline: none;
   background-color: #F9FAFA;
   -webkit-font-smoothing: antialiased;
-  flex:1;
+  -webkit-flex: 1 1;
+  flex: 1 1;
   width: 100%;
 }
 
@@ -1231,11 +1285,12 @@ body {
   width: 70px;
   height: 25px;
   border-radius: 3px;
-  margin: 10px 11px 6px;
   font-weight: 600;
-  left:294px;
-  position: relative;
-  margin-bottom:20px;
+  right: 21px;
+  /* position: relative; */
+  margin-bottom: 10px;
+  /* margin-left: 177px; */
+  position: absolute;
 }
 
 .signup-section-signup-button-mobile {
@@ -1256,7 +1311,10 @@ body {
 }
 
 .signup-screen-lbl {
-  font-size:12px !important;
+  font-size:14px !important;
+  color:white;
+  margin-top: 10;
+  margin-bottom: 5;
 }
 
 .signup-screen-lbl-mobile {
@@ -1386,11 +1444,12 @@ body {
   width: 70px;
   height: 25px;
   border-radius: 3px;
-  margin: 10px 11px 6px;
   font-weight: 600;
-  left:294px;
-  position: relative;
-  margin-bottom:20px;
+  right: 21px;
+  /* position: relative; */
+  margin-bottom: 10px;
+  /* margin-left: 177px; */
+  position: absolute;
 }
 
 

@@ -267,45 +267,50 @@ const thumb = {
     backgroundColor: '#202020',
     border:'none',
     flexDirection:'row',
-    justifyContent:'space-between',
     alignItems:'center'
 }}>
     <div style={{display:'flex',
         backgroundColor:'#4267b2',
         height:38,
-        width:117,
+        width:'100%',
+        maxWidth:117,
         borderRadius:3,
         justifyContent:'center',
         alignItems:'center',
-        fontSize:'17px'
+        fontSize:'17px',
+        marginRight:10
     }}><i class="fab fa-facebook-f" style={{color:'white'}}></i></div>
     <div style={{display:'flex',
         backgroundColor:'#38A1F3',
         height:38,
-        width:117,
+        width:'100%',
+        maxWidth:117,
         borderRadius:3,
         justifyContent:'center',
         alignItems:'center',
-        fontSize:'17px'
+        fontSize:'17px',
+        marginRight:10
     }}><i class="fab fa-twitter" style={{color:'white'}}></i></div>
     <div style={{display:'flex',
         backgroundColor:'#d34836',
         height:38,
-        width:117,
+        width:'100%',
+        maxWidth:117,
         borderRadius:3,
         justifyContent:'center',
         alignItems:'center',
-        fontSize:'17px'
+        fontSize:'17px',
+        marginRight:10
     }}><i class="fab fa-google" style={{color:'white'}}></i></div>
-</div>
+</div><p style={{color:'white',marginBottom:10}}>Or Sign Up with flowroom</p>
                                 <div className="main-section-signup-box">
-                                    <p className="signup-section-p">Fill in all the fields below</p>
+                                
                                     <div className="signup-section-fields">
-                                        <div style={{marginRight:20}}>
-                                            <p className="signup-screen-lbl">Name</p>
+                                        <div>
+                                            <p className="signup-screen-lbl">Username</p>
                                             <input type="text" id="fullname" style={{marginRight:'16px'}} className="signup-section-input-field" placeholder="Name"/>
                                         </div>
-                                        <div style={{marginRight:20}}>
+                                        <div>
                                             <p className="signup-screen-lbl">Email</p>
                                             <input type="text" id="email" className="signup-section-input-field" placeholder="email@address.com"/>
                                         </div>
@@ -316,12 +321,12 @@ const thumb = {
                                             <input type="text" id="password" type="password" style={{marginRight:'16px'}} className="signup-section-input-field" placeholder="Password"/>
                                         </div>
                                         <div>
-                                            <p className="signup-screen-lbl">Confirm Password</p>
+                                            <p className="signup-screen-lbl">Retype Password</p>
                                             <input type="text" id="confirmPassword" type="password" className="signup-section-input-field" placeholder="Confirm Password"/>
                                         </div>
                                     </div>
-                                    <button onClick={()=>this.createUserAccount(this.props)} className="signup-section-signup-button">Sign Up</button>
-                                    <p style={{display:'flex'}} className="signup-section-p">Already have an account? <Link to="/login">{'login here'}</Link></p>
+                                    <button onClick={()=>this.createUserAccount(this.props)} className="signup-section-signup-button">SIGN UP</button>
+                                    {/* <p style={{display:'flex'}} className="signup-section-p">Already have an account? <Link to="/login">{'login here'}</Link></p> */}
                                 </div>
                             </div>
                         </div>
