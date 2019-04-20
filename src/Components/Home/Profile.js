@@ -30,7 +30,7 @@ import { firebase } from '../firebase/firebase';
       render() {
 
         return(<div style={{flex:'1',display:'flex'}}>
-            <div className="main-section-wrap-community-screen" style={{padding:'31px 73px 30px'}}>
+            <div className="main-section-wrap-community-screen" style={{padding:'31px 73px 30px',background:'black'}}>
             <div style={{
                 width:'100%',
                 /* max-width: 600px; */
@@ -39,7 +39,7 @@ import { firebase } from '../firebase/firebase';
                 height:'205px',
                 background:'white',
                 /* margin: auto; */
-                border:'1px solid #DDE0EB',
+                border:'0px solid #DDE0EB',
                 borderRadius:'6px',
                 display:'-ms-flexbox',
                 display:'flex',
@@ -51,7 +51,8 @@ import { firebase } from '../firebase/firebase';
                 padding:'0px 21px',
                 msFlex:'1 1',
                 flex:'1 1',
-                padding:'31px 16px 26px'
+                padding:'31px 16px 26px',
+                background:'#0f0f0f'
             }}>
                 <div style={{height:'100px', 
                     width:'100px', 
@@ -73,54 +74,61 @@ import { firebase } from '../firebase/firebase';
                     flexDirection:'column'}}>
                         <div style={{display:'flex',flexDirection:'row'}}>
                             <button style={{
-                                border:'1px solid light-gray',
-                                color:'gray',
-                                cursor:'pointer',
-                                fontSize:'1.4rem',
-                                fontFamily: 'Source Sans Pro',
-                                /* margin-bottom: 10px; */
-                                padding:'1rem',
-                                lineHeight:'0',
-                                width:'140px',
-                                height:'35px',
-                                borderRadius:'6px',
-                                margin:'10px 22px 6px 0px'}}>Upload Photo</button>
+                                    cursor: 'pointer',
+                                    fontSize:'1.4rem',
+                                    fontFamily: "Source Sans Pro",
+                                    padding:'1rem',
+                                    lineHeight:'0',
+                                    width:'140px',
+                                    height:'35px',
+                                    borderRadius:'6px',
+                                    margin:'10px 22px 6px 0px',
+                                    color:'rgb(64, 255, 232)',
+                                    fontSize:'13px',
+                                    backgroundColor:'transparent',
+                                    border:'1px solid rgb(64, 255, 232)'}}>Upload Photo</button>
                                     <button style={{
-                                        border:'1px solid light-gray',
-                                        color:'gray',
-                                        cursor:'pointer',
+                                        cursor: 'pointer',
                                         fontSize:'1.4rem',
-                                        fontFamily: 'Source Sans Pro',
-                                        /* margin-bottom: 10px; */
+                                        fontFamily: "Source Sans Pro",
                                         padding:'1rem',
                                         lineHeight:'0',
                                         width:'140px',
                                         height:'35px',
                                         borderRadius:'6px',
-                                        margin:'10px 0px 6px 0px'}}>Remove Photo</button>
+                                        margin:'10px 22px 6px 0px',
+                                        color:'rgb(64, 255, 232)',
+                                        fontSize:'13px',
+                  
+                                        backgroundColor:'transparent',
+                                        border:'1px solid rgb(64, 255, 232)'}}>Remove Photo</button>
                         </div>
                         <div style={{display:'flex', justifyContent:'space-between', flexDirection:'row', marginBottom:'5px', marginTop:'18px', width:'100%'}}>
-                            <div style={{display:'flex', flexDirection:'column',marginTop:'7px', width:'100%', marginRight:25}}>
-                                <input id="fullname" type="text" className="signup-section-input-field" style={{height:35}} placeholder="Full Name"/>
+                            <div style={{display:'flex', flexDirection:'column',marginTop:'7px', width:'100%', }}>
+                                <input id="fullname" type="text" className="signup-section-input-field" style={{border:'none',height:35,backgroundColor:'#202020',color:'rgb(64, 255, 232)'}} placeholder="Full Name"/>
                             </div>
                            
                         </div>
                         <div style={{width:'100%'}}>
-                            <textarea className="community-side-bar-text" style={{height:'100px',width:'100%',resize:'none'}} placeholder="Enter a bio here..."/>
+                            <textarea className="community-side-bar-text" style={{height:'100px',width:'100%',resize:'none',border:'none',backgroundColor:'#202020',color:'rgb(64, 255, 232)'}} placeholder="Enter a bio here..."/>
                         </div>
                         <button style={{
-                            outline:'none',
-                            cursor:'pointer',
-                            border:'1px solid rgb(10, 127, 41)',
+                            cursor: 'pointer',
+                            fontSize:'1.4rem',
+                            fontFamily: "Source Sans Pro",
+                            padding:'1rem',
+                            lineHeight:'0',
                             borderRadius:'17.5px',
                             height:'36px',
                             width:'150px',
-                            backgroundColor:'rgb(27, 178, 67)',
+                            backgroundColor:'transparent',
                             fontFamily: "Source Sans Pro",
-                            color:'white',
+                            color:'rgb(64, 255, 232)',
                             fontWeight:'100',
                             marginTop:20,
-                            fontSize:'14px'}}>
+                            fontSize:'14px',
+                            border:'1px solid rgb(64, 255, 232)'
+                            }}>
                                 Save Settings
                         </button>
                 </div>

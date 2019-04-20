@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 const SignUpButton = () => (
         <div className="signup-button-wrap">
                 <Link to="/signup">
-                        <button style={{backgroundColor:'rgb(179, 0, 254)',
+                        <button style={{backgroundColor:'rgb(64, 255, 232)',
     borderRadius:'2px',
     width:'85px',
     height:'30px',
     border:'0px',
     fontSize:'16px',
-    color:'rgb(198, 198, 198)',
+    color:'black',
     fontWeight:'bold',
     fontSize:'12px'
   }}>

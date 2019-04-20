@@ -259,7 +259,45 @@ const thumb = {
                 
                         <div style={{flex:'1',display:'flex'}}>
                             <div className="main-section-wrap-signup-screen">
-                                <p className="signup-screen-label">{'{sign up}'}</p>
+                            <p style={{color:'white',marginBottom:10, marginTop:80}}>Sign In with</p>
+
+<div className="main-section-login-box" style={{display:'flex',
+    height:70, 
+    marginBottom:20,
+    backgroundColor: '#202020',
+    border:'none',
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center'
+}}>
+    <div style={{display:'flex',
+        backgroundColor:'#4267b2',
+        height:38,
+        width:117,
+        borderRadius:3,
+        justifyContent:'center',
+        alignItems:'center',
+        fontSize:'17px'
+    }}><i class="fab fa-facebook-f" style={{color:'white'}}></i></div>
+    <div style={{display:'flex',
+        backgroundColor:'#38A1F3',
+        height:38,
+        width:117,
+        borderRadius:3,
+        justifyContent:'center',
+        alignItems:'center',
+        fontSize:'17px'
+    }}><i class="fab fa-twitter" style={{color:'white'}}></i></div>
+    <div style={{display:'flex',
+        backgroundColor:'#d34836',
+        height:38,
+        width:117,
+        borderRadius:3,
+        justifyContent:'center',
+        alignItems:'center',
+        fontSize:'17px'
+    }}><i class="fab fa-google" style={{color:'white'}}></i></div>
+</div>
                                 <div className="main-section-signup-box">
                                     <p className="signup-section-p">Fill in all the fields below</p>
                                     <div className="signup-section-fields">

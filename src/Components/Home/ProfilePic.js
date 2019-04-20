@@ -4,16 +4,21 @@ import { connect } from 'react-redux';
 import { logOut } from '../../actions/authentication';
 import createHistory from 'history/createBrowserHistory';
 import { firebase } from '.././firebase/firebase';
+import { isFulfilled } from 'q';
 
 
 let history = createHistory();
+
+let database = firebase.database();
 
 class ProfilePic extends Component {
   constructor() {
     super();
       this.state = {
         menuVisible:false,
-        pic:''
+        pic:'',
+        isLoading:false,
+        username:''
      }
 
   }
@@ -23,8 +28,15 @@ class ProfilePic extends Component {
  
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        console.log('user object :',user)
-        that.setState({pic:user.photoURL})
+  
+        database.ref(`users/${user.displayName}`).once('value').then(function(snapshot) {
+                
+          that.setState({
+              pic:snapshot.val().pic,
+              username:user.displayName
+          });
+
+      });
       } else {
         // No user is signed in.
         //that.getProfileInfo('nousername')
@@ -33,9 +45,12 @@ class ProfilePic extends Component {
 
   }
   render() {
-    let pic = this.props.state.auth.pic;
+    const {isLoading} = this.state;
     return (
-      <div onClick={()=> {
+      <div>
+    {
+        isLoading ? <div>.</div> :
+      (<div onClick={()=> {
         if(this.state.menuVisible === false) {
           this.setState({menuVisible:true});
         } else {
@@ -64,15 +79,18 @@ class ProfilePic extends Component {
             flexDirection:'column'
           }}>
             <div onClick={()=> {
-              window.location.replace(`/${this.props.state.auth.username}`)
+              window.location.replace(`/${this.state.username}`)
             }} style={{display:'flex', borderBottom:'1px solid #E2E2E2', height:'35px', textAlign:'center', justifyContent:'center', alignItems:'center'}}>View Profile</div>
             <div onClick={()=> {
-              window.location.replace(`/${this.props.state.auth.username}/edit`)
+              window.location.replace(`/${this.state.username}/edit`)
             }} style={{display:'flex', borderBottom:'1px solid #E2E2E2', height:'35px', textAlign:'center', justifyContent:'center', alignItems:'center'}}>Edit Profile</div>
             <div onClick={logOut()} style={{display:'flex', borderBottom:'1px solid #E2E2E2', height:'35px', textAlign:'center', justifyContent:'center', alignItems:'center'}}>Log Out</div>
           </div>
         </div>
-      </div>
+      </div>)
+
+          }
+          </div>
     )
   }
 };

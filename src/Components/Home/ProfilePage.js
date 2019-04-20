@@ -623,12 +623,12 @@ class ProfilePage extends Component {
                                 </div>
                                 <div className="profile-followers">
                                     <div><p className="profile-follower-num">{this.state.followersNum} Followers</p></div>
-                                    <div style={{marginLeft:16}}><p style={{fontSize:13, fontWeight:600}}>{this.state.followingNum} Following</p></div>
+                                    <div style={{marginLeft:16}}><p style={{fontSize:13, fontWeight:600, color:'white'}}>{this.state.followingNum} Following</p></div>
                                 </div>
                             </div>
 
                             <div className="bio-info">
-                                <p style={{fontSize:14}}>{this.state.bio}
+                                <p style={{fontSize:14,color:'rgb(64, 255, 232);'}}>{this.state.bio}
                                 </p>
                             </div>
                         </div>
@@ -637,7 +637,7 @@ class ProfilePage extends Component {
                 </div>  
                 <div style={{
                     padding:'30px 20px',
-                    height:'100%'
+                    background:'black'
                 }}>
             <ReactResizeDetector
   handleWidth

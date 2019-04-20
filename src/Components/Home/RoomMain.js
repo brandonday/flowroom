@@ -61,7 +61,7 @@ class RoomMain extends Component {
            record:false,
            openBtnVisible:true,
            postBtnVisible:true,
-           isLoaded:false,
+           isLoading:false,
            userNameSelf:'',
            relatedRooms:[],
            isRemix:false,
@@ -687,7 +687,7 @@ class RoomMain extends Component {
      
     render() {
         let that = this;
-        const {isLoaded} = this.state;
+        const {isLoading} = this.state;
         
         return (<div id="room-main-page" className="page-wrap twilight room-main-page-wrap">
             <div style={{display:'flex',flexDirection:'column', height:'100%',width:'100%'}}>
