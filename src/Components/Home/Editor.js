@@ -510,15 +510,15 @@ injectJS() {
     
         return (<div id="full-page" className="full-page">
             <div className="top-boxes editor-parent">
-                {/* <VelocityComponent 
+                <VelocityComponent 
                     id="velocity-box" 
                     height={'100%'} 
                     animation={{ 
                         height:this.state.showSubComponent ? 0 : this.state.isMobileHeightForResize
                     }} 
                     duration={0} 
-                    complete={this.resizeAnimationComplete.bind(this)}> */}
-                    {/* <ResizableBox id="resizable-box" 
+                    complete={this.resizeAnimationComplete.bind(this)}>
+                    <ResizableBox id="resizable-box" 
                         height={this.state.resizeableHeight} 
                         width={'100%'}
                         onResize={this.resizeFunc.bind(this)} 
@@ -527,7 +527,7 @@ injectJS() {
                         draggableOpts={{}} 
                         minConstraints= {
                             [0,0]
-                    }> */}
+                    }>
                         <EditorOptionsMobile/>
                         {/* <RoomInfo 
                             name={this.props.name} 
@@ -568,9 +568,9 @@ injectJS() {
                             </div>
                         </Mobile> */}
                         <DHTML_Labels RotateTriangles={this.state.rotateTriangles}/>
-                        <DHTML_Boxes height={0}/>
-                    {/* </ResizableBox> */}
-                {/* </VelocityComponent> */}
+                        <DHTML_Boxes height={this.state.resizeableCurrentHeight }/>
+                    </ResizableBox>
+                </VelocityComponent>
             </div>
             <DHTML_Output/>
             <AppModal/>
