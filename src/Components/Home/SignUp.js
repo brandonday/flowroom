@@ -12,6 +12,7 @@ import { OPEN_MODAL } from '../../actions/entireApp';
 import AppModal from './AppModal';
 import FileUploader from "react-firebase-file-uploader";
 import { WithContext as ReactTags } from 'react-tag-input';
+import Logo from './Logo.js';
 
 const KeyCodes = {
     comma: 188,
@@ -255,11 +256,12 @@ const thumb = {
             return ( 
                 
                 <div style={{flex:'1',display:'flex'}}>
-                
+        
                 
                         <div style={{flex:'1',display:'flex'}}>
                             <div className="main-section-wrap-signup-screen">
-                            <p style={{color:'white',marginBottom:10, marginTop:80}}>Sign In with</p>
+                            <div style={{backgroundImage:'url("../logo.svg")', height:'31px', width:'136px', backgroundSize:'contain', backgroundRepeat:'no-repeat', top:40, position:'relative'}}></div>
+                            <p style={{color:'white',marginBottom:10, marginTop:56}}>Sign In with</p>
 
 <div className="main-section-login-box" style={{display:'flex',
     height:70, 

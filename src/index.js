@@ -67,8 +67,8 @@ const Routes = () => (
             <FullRoute path="/full/:id" component={Full}></FullRoute>
             <FullRoute path="/full/" component={Full}></FullRoute>
             <PrivateRoute path="/community" component={Community}></PrivateRoute>
-            <PrivateRoute exact path="/signup" component={SignUp}></PrivateRoute>
-            <PrivateRoute path="/login" component={Login}></PrivateRoute>
+            <FullRoute exact path="/signup" component={SignUp}></FullRoute>
+            <FullRoute path="/login" component={Login}></FullRoute>
             <PrivateRoute path="/about" component={About}></PrivateRoute>
             <PrivateRoute exact path="/:id" component={ProfilePage}></PrivateRoute>
             <PrivateRoute exact path="/:id/edit" component={Profile}></PrivateRoute>
