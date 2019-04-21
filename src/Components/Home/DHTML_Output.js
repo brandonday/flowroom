@@ -90,7 +90,7 @@ let fabricA = [];
         
         this.setState({ isFull: true });
         } else {
-            alert('no ')
+            
         }
 
     }
