@@ -114,7 +114,7 @@ class RoomPost extends Component {
             // If node/clicks has never been set, currentRank will be `null`.
             return (currentViews || 0) + 1;
           }).then(()=> {
-            window.location.replace(`room/${this.props.shortID}`)
+            window.location.href = `/room/${this.props.shortID}`
           });
     }
     incrementLikes() {
