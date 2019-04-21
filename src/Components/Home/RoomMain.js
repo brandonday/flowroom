@@ -32,9 +32,6 @@ AWS.config.update({
 const s3 = new S3();
 
 
-const bodyScrollLock = require('body-scroll-lock');
-const disableBodyScroll = bodyScrollLock.disableBodyScroll;
-const enableBodyScroll = bodyScrollLock.enableBodyScroll;
 
 
 

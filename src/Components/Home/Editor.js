@@ -35,9 +35,7 @@ require('codemirror/mode/htmlmixed/htmlmixed.js');
 require('codemirror/mode/css/css.js');
 require('codemirror/mode/javascript/javascript.js');
 
-const bodyScrollLock = require('body-scroll-lock');
-const disableBodyScroll = bodyScrollLock.disableBodyScroll;
-const enableBodyScroll = bodyScrollLock.enableBodyScroll;
+
 let updateHTML;
 let update_html;
 let calledRenderC = false;

@@ -6,9 +6,6 @@ import * as dat from 'dat.gui';
 import {fabric} from 'fabric';
 import Fullscreen from "react-full-screen";
 
-const bodyScrollLock = require('body-scroll-lock');
-const disableBodyScroll = bodyScrollLock.disableBodyScroll;
-const enableBodyScroll = bodyScrollLock.enableBodyScroll;
 
 const objects = [{}];
 let fabricA = [];
@@ -46,8 +43,7 @@ let fabricA = [];
         //         }
         //     }
         // })
-        disableBodyScroll(targetElement);
-
+ 
         localStorage.removeItem("FR_REMIX_LIST");
         localStorage.removeItem("remixhead");
         localStorage.removeItem("remixhead2");
