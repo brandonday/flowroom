@@ -22,7 +22,7 @@ const loginUserAccount = ({ loginAccount }) => {
     <div className="login-screen-wrap">
             
         <div className="main-section-wrap-login-screen">
-        <div style={{backgroundImage:'url("../logo.svg")', height:'31px', width:'136px', backgroundSize:'contain', backgroundRepeat:'no-repeat', top:40, position:'relative'}}></div>
+        <a href="/"><div style={{backgroundImage:'url("../logo.svg")', height:'31px', width:'136px', backgroundSize:'contain', backgroundRepeat:'no-repeat', top:40, position:'relative'}}></div></a>
         <p style={{color:'white',marginBottom:10, marginTop:56}}>Sign In with</p>
 
         <div className="main-section-login-box" style={{display:'flex',

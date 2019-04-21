@@ -8,7 +8,7 @@ const Default = props => <Responsive {...props} minWidth={768} />;
 
  const Logo = () => (
     <div>
-        <Link to="/">
+        <a href="/">
         {/* <Desktop> */}
         <div className="logo-wrap" style={{marginRight:'17px'}}>
             <div style={{backgroundImage:'url(./public/logo.svg)',
@@ -30,7 +30,7 @@ const Default = props => <Responsive {...props} minWidth={768} />;
                 <a href="/" className="large-logo-mobile">flowroom</a>
             </div>
         </Mobile> */}
-        </Link>
+        </a>
     </div>
 )
 
