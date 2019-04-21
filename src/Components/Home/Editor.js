@@ -81,12 +81,7 @@ class Editor extends Component {
         //localStorage.getItem("html");
 
     
-            const targetElement = document.querySelector("#full-page");
-            disableBodyScroll(targetElement);
-          
-           
-           
-
+        
         
     }
     componentDidUpdate() {
