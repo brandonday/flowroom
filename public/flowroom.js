@@ -340,12 +340,13 @@
             if(bodyBackgroundColor !== undefined) {
                 document.body.style.backgroundColor = 'black';
             } 
-            let html = document.getElementsByTagName('canvas');
-            //alert('canvases:', JSON.stringify(html))
-            if(html == null) {
+            let arrayHTML = document.getElementsByTagName('canvas');
+            if(arrayHTML.length === 0) {
+                //alert('no canvas');
                 html = document.body;
             } else {
-                html = html[0];
+                //alert('canvas');
+                html = arrayHTML[0];
             }
             html2canvas(html,{ allowTaint:true, removeContainer:false}).then(function(canvas) {          
                 

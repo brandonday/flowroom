@@ -38,7 +38,7 @@ class Full extends Component {
               }).then((data)=> {
                 html = data;
                 html = html === undefined || html === null ? '' : html;
-                console.log('html full:', html);
+         
                 return fetch(urlCSS);
               }).then(function(response) {
                 if (!response.ok) {
@@ -48,7 +48,7 @@ class Full extends Component {
               }).then(function(data){
                 css = data;
                 css = css === undefined || css === null ? '' : css;
-                console.log('css full:', css);
+              
                 return fetch(urlJS);
               }).then(function(response){
                 if (!response.ok) {
@@ -58,7 +58,7 @@ class Full extends Component {
               }).then(function(data){
                 js = data;
                 js = js === undefined || js === null ? '' : js; 
-                console.log('js full:', js);
+               
                 script = "<script src='../flowroom.js'></script>";
                 src = '';
                 src = base_tpl.replace('</body>', html + '</body>');
