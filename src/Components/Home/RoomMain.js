@@ -113,12 +113,12 @@ class RoomMain extends Component {
                 }
           
                 document.getElementById('main-menu').style.position = 'absolute';
-                document.getElementById('main-menu').style.height = '100%';
-                document.getElementById('main-menu').style.width = '67%';
+                document.getElementById('main-menu').style.height = '583px';
+                document.getElementById('main-menu').style.width = '82%';
                 document.getElementById('main-menu').style.zIndex = '999994';
                 document.getElementById('main-menu').style.top = '0px';
                 document.getElementById('main-menu').style.zIndex = '999999';
-                document.getElementById('main-menu').style.left = '60px';
+                document.getElementById('main-menu').style.left = '48px';
                 document.getElementById('main-menu').style.display = 'none';
 
                 document.getElementById('tab-menu').style.position = 'absolute';
@@ -688,7 +688,7 @@ class RoomMain extends Component {
         
         return (<div id="room-main-page" className="page-wrap twilight room-main-page-wrap">
             <div style={{display:'flex',flexDirection:'column', height:'100%',width:'100%'}}>
-                <div style={{display:'flex',flex:'0 583px'}}>
+                <div style={{display:'flex',flex:'0 583px',position:'relative',overflow:'hidden'}}>
                     <div id="tab-menu" style={{
                         width:'48px', 
                         background:'rgb(14, 14, 14)',

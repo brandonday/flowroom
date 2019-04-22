@@ -69,7 +69,7 @@ import { roomsFiltersOne } from '../../actions/filters';
                             
                         }} style={{ textDecoration: 'none', color:'#979AA1' }} >Popular</li> */}
                         
-                        {/* <li id="random" onClick={()=>{
+                        <li id="random" onClick={()=>{
                             this.selection('random')
                         }} style={{ textDecoration: 'none', color:'#979AA1' }} >Random</li> 
                         <li id="recent" onClick={()=>{
@@ -86,7 +86,7 @@ import { roomsFiltersOne } from '../../actions/filters';
                         }} style={{ textDecoration: 'none', color:'#979AA1' }} >Followers</li>
                          <li id="following" onClick={()=>{
                             this.selection('following')
-                        }} style={{ textDecoration: 'none', color:'#979AA1' }} >Following</li>   */}
+                        }} style={{ textDecoration: 'none', color:'#979AA1' }} >Following</li>   
                     </ul>
                      {/* <a href="" className="drop-down-arrow my-communities-down-3x"></a>  */}
                 </nav>

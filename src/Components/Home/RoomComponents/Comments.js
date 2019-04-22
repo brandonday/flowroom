@@ -655,23 +655,27 @@ let roomFilter = 'weight';
     render() {
         let that = this;
         return(<div style={{height:'100%',width:'100%'}}>
-
-
                     <div id="rf-top" style={{
-                        height:'412px',
-                        width:'100%',
-                        background:'white',
-                        justifyContent:'center',
-                        marginTop:'45px',
-                        display:'none',
-                        flexDirection:'column',
-                        marginLeft:20
+                            height:'500px',
+                            width:'100%',
+                            justifyContent:'center',
+                            marginTop:'45px',
+                            display:'flex',
+                            flexDirection:'column'
                     }}>
-                    
+                    <div style={{
+                        height:'470px',
+                        width:'95.2%',
+                        /* padding: 10px; */
+                        overflow:'hidden',
+                        borderRadius:'6px',
+                        margin:'10px',
+                        marginRight:'10px'
+                    }}>
                     <div style={{display:this.state.userName == ''? 'none':'flex', alignItems:'center',height:40,width:'100%',background:'#0f0f0f'}}>
                         <p style={{color:'white',fontSize:17,fontWeight:900,marginTop:45,marginBottom:50}}>Recommended Flows</p>
                     </div>
-                    <div style={{height:'100vh', width:'100%',background:'#0f0f0f'}}>
+                    {/* <div style={{height:'100vh', width:'100%',background:'#0f0f0f'}}> */}
 
 
                         
@@ -692,12 +696,15 @@ let roomFilter = 'weight';
                                 })
                             }
                         
-                    </div>
+                    {/* </div> */}
                     <div style={{height:'100vh', width:'100%',background:'#0f0f0f'}}>
                     </div>
+
                     </div>
 
-            <div style={{display:'flex',position:'relative',top:42}}>
+                    </div>
+
+            <div style={{display:'flex',position:'relative',top:10}}>
             
 
         

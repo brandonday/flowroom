@@ -41,13 +41,14 @@ class RelatedRoomPostTop extends Component {
                 height:100, width:'100%',
                 background:'rgb(15, 15, 15)',
                 display:'flex',
-                flexDirection:'row'
+                flexDirection:'row',
+                margin:10
             }}>
         
             <div style={{
                 height:'93px', 
                 width:'168px', 
-                backgroundSize:'contain',
+                backgroundSize:'cover',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition:'center',
                 backgroundImage:`url(${this.props.thumbnail})`,
