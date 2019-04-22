@@ -336,18 +336,16 @@
             parent.window.updateJSCode(str);
         },
         SaveScreenShot(callback) {
+            let html = document.body;
             let bodyBackgroundColor = document.body.style.backgroundColor;
             if(bodyBackgroundColor !== undefined) {
                 document.body.style.backgroundColor = 'black';
             } 
             let arrayHTML = document.getElementsByTagName('canvas');
-            if(arrayHTML.length === 0) {
+            if(arrayHTML.length > 0) {
                 //alert('no canvas');
-                html = document.body;
-            } else {
-                //alert('canvas');
                 html = arrayHTML[0];
-            }
+            } 
             html2canvas(html,{ allowTaint:true, removeContainer:false}).then(function(canvas) {          
                 
                 var extra_canvas = document.createElement("canvas");
