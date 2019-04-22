@@ -320,7 +320,6 @@ class Editor extends Component {
               let urlHTML = snapshot.val().urlHTML;
               let urlCSS = snapshot.val().urlCSS;
               let urlJS = snapshot.val().urlJS;
-              console.log('urlHTML : ',urlHTML);
               
               
               if(urlHTML !== undefined && urlHTML !== '') {
@@ -328,10 +327,8 @@ class Editor extends Component {
                   if (!response.ok) {
                     return;
                   }
-                  console.log('clone :',response.clone().text());
                   return response.text();
                 }).then((data)=> {
-                  console.log('html data :', data);
                   html = data;
                   html = html === undefined || html === null ? '' : html;
                   HTML_EDITOR.setValue(html);

@@ -24,6 +24,59 @@ class Full extends Component {
             html =  snapshot.val().html;
             css = snapshot.val().css;
             js = snapshot.val().js;
+
+            let urlHTML = snapshot.val().urlHTML;
+            let urlCSS = snapshot.val().urlCSS;
+            let urlJS = snapshot.val().urlJS;
+                
+            if(urlHTML !== undefined && urlHTML !== '') {
+              fetch(urlHTML).then((response)=> {
+                if (!response.ok) {
+                  return;
+                }
+                return response.text();
+              }).then((data)=> {
+                html = data;
+                html = html === undefined || html === null ? '' : html;
+                console.log('html full:', html);
+                return fetch(urlCSS);
+              }).then(function(response) {
+                if (!response.ok) {
+                  return;
+                }
+                return response.text();
+              }).then(function(data){
+                css = data;
+                css = css === undefined || css === null ? '' : css;
+                console.log('css full:', css);
+                return fetch(urlJS);
+              }).then(function(response){
+                if (!response.ok) {
+                  return;
+                }
+                return response.text();
+              }).then(function(data){
+                js = data;
+                js = js === undefined || js === null ? '' : js; 
+                console.log('js full:', js);
+                script = "<script src='../flowroom.js'></script>";
+                src = '';
+                src = base_tpl.replace('</body>', html + '</body>');
+                css = '<style>' + css + '</style>';
+                src = src.replace('</head>', css + script + '</head>');
+                js = '<script>' + js + '<\/script>';
+                src = src.replace('</body>', js + '</body>');
+                let frame = document;
+                frame.open();
+                frame.write(src);
+                frame.close();
+              });
+              return '';
+            } else {
+              html = html === undefined || html === null ? '' : html;
+              css = css === undefined || css === null ? '' : css;
+              js = js === undefined || js === null ? '' : js; 
+            }                 
           } else {
             html = '';
             css = '';
@@ -39,10 +92,13 @@ class Full extends Component {
           return src;
         };
         let source = prepareSource();
-        let frame = document;
-        frame.open();
-        frame.write(source);
-        frame.close();
+        if(source !== '') {
+          let frame = document;
+          frame.open();
+          frame.write(source);
+          frame.close();
+        }
+        
       });
     }
     render() {
