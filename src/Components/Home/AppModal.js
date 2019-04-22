@@ -17,7 +17,19 @@ import Convo from './Convo';
 import SignUp from './SignUp';
 import { snap } from '@popmotion/popcorn';
 import html2canvas from 'html2canvas';
+import axios from 'axios';
+import AWS from 'aws-sdk';
+import * as S3 from 'aws-sdk/clients/s3';
 
+
+AWS.config.update({
+  region: 'us-west-2',
+  credentials: new AWS.CognitoIdentityCredentials({
+    IdentityPoolId: 'us-west-2:5df2511a-5595-416c-b148-aba28893c3f3'
+  })
+});
+
+const s3 = new S3();
 
 
 var moment = require('moment');
@@ -229,6 +241,10 @@ const KeyCodes = {
 
       this.closeModal = this.closeModal.bind(this)
       this.selectPr.bind(this)
+
+      this.getFileName = this.getFileName.bind(this);
+      this.putObject = this.putObject.bind(this);
+      this.getMimeType = this.getMimeType.bind(this);
     }
     descriptionhandleChange(event) {
         this.setState({description: event.target.value});
@@ -314,8 +330,22 @@ const KeyCodes = {
     }
     saveRoom () {
         let hashids = new Hashids(uuid(), 6);
-   
         let uid = firebase.auth().currentUser.uid;
+        let html = this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.html : '';
+        let css = this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.css: '';
+        let js = this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.js: '';
+
+        let fileNameHTML = this.getFileName('html');
+        let fileNameCSS = this.getFileName('css');
+        let fileNameJS = this.getFileName('js');
+
+        const urlHTML = `http://test.flowroom.com/uploads/${fileNameHTML}`;
+        const urlCSS = `http://test.flowroom.com/uploads/${fileNameCSS}`;
+        const urlJS = `http://test.flowroom.com/uploads/${fileNameJS}`;
+
+        this.putObject('html', fileNameHTML, html);
+        this.putObject('css', fileNameCSS, css);
+        this.putObject('js', fileNameJS, js);
 
         console.log('dhtml :',this.props.state.dhtml);
         console.log('dhtml.dhtml :', this.props.state.dhtml.dhtml);
@@ -325,9 +355,12 @@ const KeyCodes = {
                 description:this.state.description,
                 views:0,
                 likes:0,
-                html:this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.html : '',
-                css:this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.css: '',
-                js:this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.js: '',
+                html:'',
+                css:'',
+                js:'',
+                urlHTML: urlHTML,
+                urlCSS: urlCSS,
+                urlJS: urlJS,
                 pic:this.state.pic,
                 objectNum:'',
                 date: new Date(),
@@ -418,7 +451,67 @@ const KeyCodes = {
         }
         this.closeModal();
     }
+    async putObject(type, fileName, data) {
+   
+        let params = { 
+            Bucket: 'test.flowroom.com',
+            Key:'uploads/' + fileName,
+            ContentEncoding: 'base64',
+            ContentType: this.getMimeType(type),
+            Body: data,
+            
+          }
+      
+        
+        let that = this;
+        s3.putObject(params, function(err, data) {
+          console.log('err: ', err)
+          if (err) {
+            console.log('error :',err);
+          } else {
+            console.log('data :', data);
+            let obj = {
+              url:`http://test.flowroom.com/uploads/${fileName}`
+            }
+            console.log('obj :', obj);
+            
+          }
+        });
+      }
+    getMimeType(type) {
+        let mimeType = '';
+        switch (type) {
+          case 'html':
+            mimeType = 'text/html';
+            break;
+          case 'css':
+            mimeType = 'text/css';
+            break;
+          case 'js':  
+            mimeType = 'text/javascript';
+            break;
+        }
 
+        return mimeType;
+    }
+    getFileName(type) {
+        let extension = '';
+        switch (type) {
+          case 'html':
+            extension = '.html';
+            break;
+          case 'css':
+            extension = '.css';
+            break;
+          case 'js': 
+            extension = '.js'; 
+            break;
+        }
+        let hashids = new Hashids(uuid(), 6);
+        let fileName = hashids.encode(1, 2, 3) + extension;
+        return fileName;
+    }
+    
     loadScreenShot() {
         console.log('load thumbnail')
             let imageData = localStorage.getItem('thumbnail');

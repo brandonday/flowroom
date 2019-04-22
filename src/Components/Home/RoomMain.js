@@ -743,7 +743,7 @@ class RoomMain extends Component {
 
 
                                         <div id="script-tag" onClick={()=> {
-           
+                                            document.getElementById('resizable-box').style.height = '300px';
                                     
                                         }} style={{
                                             display:'flex',

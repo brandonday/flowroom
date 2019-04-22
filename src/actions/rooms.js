@@ -24,6 +24,9 @@ export const startCreateRoom = (roomData = {}) => {
             html = null,
             css = null,
             js = null,
+            urlHTML = '',
+            urlCSS = '',
+            urlJS = '',
             pic = '',
             objectNum = 0,
             date,
@@ -108,6 +111,9 @@ export const startCreateRoom = (roomData = {}) => {
             html,
             css,
             js,
+            urlHTML,
+            urlCSS,
+            urlJS,
             pic,
             objectNum,
             date,
@@ -337,7 +343,7 @@ export const startCreateRoom = (roomData = {}) => {
                 database.ref(`categorizations/${regular}${shortID}/`).update(room).then(() => {
                   database.ref(`categorizations/${regular}${live}${remixable}${aiType}${arType}${vrType}${three60Type}${shortID}/`).update(room).then(() => {
                 database.ref(`UsersRooms/${userName}/${shortID}/`).update(room).then(() => {
-                  history.push(`${shortID}`)
+                  history.push(`/room/${shortID}`)
                 });
               })
               });

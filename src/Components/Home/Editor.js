@@ -26,6 +26,7 @@ import { firebase } from '../firebase/firebase';
 import * as dat from 'dat.gui';
 
 
+
 require('velocity-animate');
 require('velocity-animate/velocity.ui');
 var VelocityComponent = require('velocity-react/src/velocity-component');
@@ -292,81 +293,101 @@ class Editor extends Component {
               typingTimer = setTimeout(doneTyping, doneTypingInterval);
           }
         });
-        
-
-        
-
-        
-      
         var parts = window.location.pathname.split('/');
         let that = this;
         var lastSegment = parts.pop() || parts.pop();  // handle potential trailing slash
         if(lastSegment !== 'room') {
-            firebase.database().ref(`/rooms/${lastSegment}`).once('value').then(function(snapshot) {
+          firebase.database().ref(`/rooms/${lastSegment}`).once('value').then(function(snapshot) {
             if(snapshot.val() !== null) {
-              let html = snapshot.val().html;
-              let css = snapshot.val().css;
-              let js = snapshot.val().js;
-              html = html === undefined || html === null ? '' : html;
-              css = css === undefined || css === null ? '' : css; 
-              js = js === undefined || js === null ? '' : js;
-              HTML_EDITOR.setValue(html);
-              CSS_EDITOR.setValue(css);
-              JS_EDITOR.setValue(js);
-
-
-
-            //   if(poor !== '') {
-            //     HTML_EDITOR.setValue(poor);
-            //   }
-           
-              //console.log(snapshot.val())
+              
               let uid = snapshot.val().uid;
-             
-              //console.log(firebase.auth())
+            
               if(firebase.auth().currentUser !== null) {
                 let currentUser = firebase.auth().currentUser.uid;
-                //alert(currentUser)
-                
                 if(currentUser === uid) {
-                  //alert('the same');
-                  console.log(that.state.saveVisible)
                   that.setState({saveVisible:'block',postVisible:'block',remixVisible:'block'});
-           
-                  
                 } else {
-                  //alert('not');
                   that.setState({saveVisible:'block',postVisible:'block',remixVisible:'block'});
-                  
                 }
               } else {
                 that.setState({saveVisible:'block',postVisible:'block',remixVisible:'block'});
-
               }
+
+              
+              let html = snapshot.val().html;
+              let css = snapshot.val().css;
+              let js = snapshot.val().js;
+              let urlHTML = snapshot.val().urlHTML;
+              let urlCSS = snapshot.val().urlCSS;
+              let urlJS = snapshot.val().urlJS;
+              console.log('urlHTML : ',urlHTML);
+              
+              
+              if(urlHTML !== undefined && urlHTML !== '') {
+                fetch(urlHTML).then((response)=> {
+                  if (!response.ok) {
+                    return;
+                  }
+                  console.log('clone :',response.clone().text());
+                  return response.text();
+                }).then((data)=> {
+                  console.log('html data :', data);
+                  html = data;
+                  html = html === undefined || html === null ? '' : html;
+                  HTML_EDITOR.setValue(html);
+                });
+      
+              } else {
+                html = html === undefined || html === null ? '' : html;
+                HTML_EDITOR.setValue(html);
+              }
+
+              if(urlCSS !== undefined && urlCSS!== '') {
+                fetch(urlCSS).then(function(response) {
+                  if (!response.ok) {
+                    return;
+                  }
+                 return response.text();
+                }).then(function(data){
+                  css = data;
+                  css = css === undefined || css === null ? '' : css;
+                  CSS_EDITOR.setValue(css);
+                });
+      
+              } else {
+                css = css === undefined || css === null ? '' : css;
+                CSS_EDITOR.setValue(css);
+              }
+
+              if(urlJS !== undefined && urlJS !== '') {
+                fetch(urlJS).then(function(response) {
+                  if (!response.ok) {
+                    return;
+                  }
+                  return response.text();
+                }).then(function(data){
+                  js = data;
+                  js = js === undefined || js === null ? '' : js;
+                  JS_EDITOR.setValue(js);
+                });
+      
+              } else {
+                js = js === undefined || js === null ? '' : js;
+                JS_EDITOR.setValue(js);
+              }
+
             } else {
-              //alert('not');
               that.setState({saveVisible:'block',postVisible:'block',remixVisible:'block'});
-
-                HTML_EDITOR.setValue('');
-                CSS_EDITOR.setValue('');
-                JS_EDITOR.setValue('');
-
-                
+              HTML_EDITOR.setValue('');
+              CSS_EDITOR.setValue('');
+              JS_EDITOR.setValue('');
             } 
-
-          
         
-        }).catch((error) => {
-          console.log(error)
-        });
-        
-        }
-     
-
-
-        
+          }).catch((error) => {
+            console.log(error)
+          });
+        }  
     }
-
     renderContent2(before = null, htmlUpdate = null, cssUpdate = null, jsUpdate = null) {
   
 
@@ -386,6 +407,7 @@ class Editor extends Component {
        }
         
     }
+    
     editorDragStart() {
         document.getElementById('out-cover').style.display = 'block';
     }

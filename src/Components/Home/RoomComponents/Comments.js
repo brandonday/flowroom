@@ -474,11 +474,14 @@ let roomFilter = 'weight';
     getProfileInfo(myusername) {
         
         let name = this.state.roomCreator;
+        if(name == '') {
+            return;
+        }
      
         let ref = firebase.database().ref("users");
         ref.once("value").then((snapshot) => {
              
-            let hasName = snapshot.hasChild(`${name}`); // true
+            let hasName =  snapshot.hasChild(`${name}`); // true
             
             if(hasName) {
        
