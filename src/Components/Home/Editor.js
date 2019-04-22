@@ -221,9 +221,9 @@ class Editor extends Component {
       let isCSSREADY = false;
       let isJSREADY= false;
   
-      // window.updateJSCode = function(code) {
-      //   JS_EDITOR.setValue(code)
-      // }
+      window.updateJSCode = function(code) {
+        JS_EDITOR.setValue(code)
+      }
        
 
         HTML_EDITOR.on('change', (inst, changes) => {
