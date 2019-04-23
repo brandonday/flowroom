@@ -99,7 +99,9 @@ let fabricA = [];
      render() {
         return (
             <div id="output-container" className="output-container">
+            
                 <div id="result-div" className="result">
+             
                 <Fullscreen
                     enabled={this.state.isFull}
                     onChange={(isFull) => {
@@ -113,36 +115,12 @@ let fabricA = [];
                     }}>
                     <iframe id="output_frame" className="output_frame" src=""></iframe>
                     </Fullscreen>
+                    
                 </div>
                 <div id="out-cover">
-       
+                    
                 </div>
-                <div id="full-screen" onClick={this.goFull.bind(this)} style={{
-                            display:'flex',
-                            color:'white',
-                            height:'52px',
-                            width:'48px',
-                            flexDirection:'row',
-                            alignItems:'center',
-                            borderRight:'1px solid #181818',
-                            borderBottom:'1px solid #181818',
-                            justifyContent:'center',
-                            position:'absolute',
-                            right:'69px',
-                            bottom:'-51px',
-                            zIndex:'99999'
-                                    }} 
-                                    className="menu-bg-border">
-                                     
-                                    <i className="fas fa-expand" style={{
-                                    fontSize:'15px',
-                                    color:'white',
-                                    marginBottom:'3px',
-                                    position:'relative',
-                                    left:'-8px'
-                                    }}></i>
-                                        <p id="full-text" style={{fontSize:15,fontWeight:'bold',color:'white',width:'22px'}}>Full</p>
-                            </div>
+          
                             
          {/* { 
                 objects.map((i)=> {

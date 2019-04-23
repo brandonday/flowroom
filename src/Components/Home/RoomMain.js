@@ -120,10 +120,11 @@ class RoomMain extends Component {
                 document.getElementById('main-menu').style.zIndex = '999999';
                 document.getElementById('main-menu').style.left = '48px';
                 document.getElementById('main-menu').style.display = 'none';
-
+                document.getElementById('main-section-wrap-comments-screen-wrap').style.top = '10px';
                 document.getElementById('tab-menu').style.position = 'absolute';
                 document.getElementById('tab-menu').style.zIndex = '999999';
                 document.getElementById('tab-menu').style.height = '100%';
+                document.getElementById('tab-menu').style.display = 'none';
                 document.getElementById('rf-right').style.display = 'none';
                 document.getElementById('rf-top').style.display = 'flex';
                 document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingLeft = '10px';
@@ -146,9 +147,10 @@ class RoomMain extends Component {
                 main.style.position = 'relative';
                 main.style.left = '0px';
                 document.getElementById('rf-right').style.display = 'flex';
-                document.getElementById('rf-top').style.display = 'none';
+                document.getElementById('rf-top').style.display = 'flex';
                 document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingLeft = '77px';
                 document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingRight = '36px';
+                //document.getElementById('main-section-wrap-comments-screen-wrap').style.top = '60px';
             }
         }
         let x = window.matchMedia("(max-width: 768px)");
@@ -957,7 +959,32 @@ class RoomMain extends Component {
                             }}>
                             
 
-                          
+                            <div id="full-screen" onClick={this.toggleFullScreen} style={{
+                            display:'flex',
+                            color:'white',
+                            height:'52px',
+                            width:'48px',
+                            flexDirection:'row',
+                            alignItems:'center',
+                            borderRight:'1px solid #181818',
+                            borderBottom:'1px solid #181818',
+                            justifyContent:'center',
+                            position:'absolute',
+                            right:'69px',
+                            bottom:'0px',
+                            zIndex:'99999'
+                                    }} 
+                                    className="menu-bg-border">
+                                     
+                                    <i className="fas fa-expand" style={{
+                                    fontSize:'15px',
+                                    color:'white',
+                                    marginBottom:'3px',
+                                    position:'relative',
+                                    left:'-8px'
+                                    }}></i>
+                                        <p id="full-text" style={{fontSize:15,fontWeight:'bold',color:'white',width:'22px'}}>Full</p>
+                            </div>
                             </div>
                    
                 </div>

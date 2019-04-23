@@ -655,6 +655,15 @@ let roomFilter = 'weight';
         });
         
     }
+    toggleFullScreen() {
+        if (!document.fullscreenElement) {
+            document.getElementById('output_frame').requestFullscreen();
+        } else {
+          if (document.exitFullscreen) {
+            document.getElementById('output_frame').exitFullscreen(); 
+          }
+        }
+      }
     render() {
         let that = this;
         return(<div style={{height:'100%',width:'100%'}}>
@@ -666,6 +675,7 @@ let roomFilter = 'weight';
                             display:'flex',
                             flexDirection:'column'
                     }}>
+                    
                     <div style={{
                         height:'470px',
                         width:'95.2%',
@@ -675,6 +685,7 @@ let roomFilter = 'weight';
                         margin:'10px',
                         marginRight:'10px'
                     }}>
+                  
                     <div style={{display:this.state.userName == ''? 'none':'flex', alignItems:'center',height:40,width:'100%',background:'#0f0f0f'}}>
                         <p style={{color:'white',fontSize:17,fontWeight:900,marginTop:45,marginBottom:50}}>Recommended Flows</p>
                     </div>
@@ -701,13 +712,14 @@ let roomFilter = 'weight';
                         
                     {/* </div> */}
                     <div style={{height:'100vh', width:'100%',background:'#0f0f0f'}}>
+                    
                     </div>
 
                     </div>
 
                     </div>
 
-            <div style={{display:'flex',position:'relative',top:10}}>
+            <div id="main-section-wrap-comments-screen-wrap" style={{display:'flex',position:'relative'}}>
             
 
         

@@ -24,7 +24,7 @@ import { tween, styler } from 'popmotion';
 import AppModal from './AppModal';
 import { firebase } from '../firebase/firebase';
 import * as dat from 'dat.gui';
-
+import Fullscreen from "react-full-screen";
 
 
 require('velocity-animate');
@@ -522,7 +522,22 @@ closeDescription() {
 injectJS() {
        
 }
+goFull = () => {
+ 
+  //document.fullscreenEnabled = false
+  if(document.fullscreenEnabled === true) {
+  let iframe = document.getElementById('output_frame');
 
+  iframe.style.height = '100%';
+  iframe.style.width = '100%';
+  iframe.style.transform = 'none';
+  
+  this.setState({ isFull: true });
+  } else {
+      
+  }
+
+}
 
     render() {
 
@@ -591,7 +606,10 @@ injectJS() {
                     </ResizableBox>
                 </VelocityComponent>
             </div>
+           
             <DHTML_Output/>
+           
+        
             <AppModal/>
         </div>)
     }
