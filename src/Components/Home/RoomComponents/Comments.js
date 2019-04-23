@@ -109,7 +109,7 @@ let roomFilter = 'weight';
             database.ref(`users/${that.state.roomCreator}`).once('value').then(function(snapshot) {
             
                 that.setState({
-                    roomCreatorPic:snapshot.val().pic
+                    roomCreatorPic:snapshot.val() !== null? snapshot.val().pic: ''
                 });
     
             });
@@ -666,15 +666,17 @@ let roomFilter = 'weight';
       }
     render() {
         let that = this;
-        return(<div style={{height:'100%',width:'100%'}}>
-                    <div id="rf-top" style={{
-                            height:'500px',
-                            width:'100%',
-                            justifyContent:'center',
-                            marginTop:'45px',
-                            display:'flex',
-                            flexDirection:'column'
-                    }}>
+        return (
+            <div style={{height:'100%',width:'100%'}}>
+                <div id="rf-top" 
+                    style={{
+                        height:'500px',
+                        width:'100%',
+                        justifyContent:'center',
+                        marginTop:'45px',
+                        display:'flex',
+                        flexDirection:'column'
+                }}>
                     
                     <div style={{
                         height:'470px',
@@ -719,7 +721,15 @@ let roomFilter = 'weight';
 
                     </div>
 
-            <div id="main-section-wrap-comments-screen-wrap" style={{display:'flex',position:'relative'}}>
+            <div id="main-section-wrap-comments-screen-wrap" style={{
+                display:'flex',position:'relative',
+                width:'100%',
+                maxWidth:'1200px',
+                margin:'0 auto',
+                position:'relative',
+                padding:'0 20px'
+                
+                }}>
             
 
         

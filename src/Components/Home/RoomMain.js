@@ -124,7 +124,6 @@ class RoomMain extends Component {
                 document.getElementById('tab-menu').style.position = 'absolute';
                 document.getElementById('tab-menu').style.zIndex = '999999';
                 document.getElementById('tab-menu').style.height = '100%';
-                document.getElementById('tab-menu').style.display = 'none';
                 document.getElementById('rf-right').style.display = 'none';
                 document.getElementById('rf-top').style.display = 'flex';
                 document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingLeft = '10px';
@@ -147,10 +146,10 @@ class RoomMain extends Component {
                 main.style.position = 'relative';
                 main.style.left = '0px';
                 document.getElementById('rf-right').style.display = 'flex';
-                document.getElementById('rf-top').style.display = 'flex';
+                document.getElementById('rf-top').style.display = 'none';
                 document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingLeft = '77px';
                 document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingRight = '36px';
-                //document.getElementById('main-section-wrap-comments-screen-wrap').style.top = '60px';
+                document.getElementById('main-section-wrap-comments-screen-wrap').style.top = '60px';
             }
         }
         let x = window.matchMedia("(max-width: 768px)");
@@ -957,8 +956,22 @@ class RoomMain extends Component {
                             position:'absolute',
                             right:'0px'
                             }}>
-                            
-
+                            <button style={{fontWeight:'bold',
+    color:'rgb(64, 255, 232)',
+    fontSize:'13px',
+    width:'65px',
+    height:'23px',
+    backgroundColor:'transparent',
+    border:'1px solid rgb(64, 255, 232)',
+    borderRadius:'5px',
+    paddingRight:'3px',
+    position:'absolute',
+    right:'171px',
+    display:'flex',
+    textAlign:'center',
+    justifyContent:'center',
+    alignItems:'center',
+    marginRight:'8px'}}>MENU</button>
                             <div id="full-screen" onClick={this.toggleFullScreen} style={{
                             display:'flex',
                             color:'white',
@@ -985,6 +998,7 @@ class RoomMain extends Component {
                                     }}></i>
                                         <p id="full-text" style={{fontSize:15,fontWeight:'bold',color:'white',width:'22px'}}>Full</p>
                             </div>
+                          
                             </div>
                    
                 </div>

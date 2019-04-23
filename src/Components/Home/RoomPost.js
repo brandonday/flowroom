@@ -180,12 +180,12 @@ class RoomPost extends Component {
                     alignItems:'center',
                     outline:'none',
                     cursor:'pointer',
-                    border:'1px solid #49A540',
+                    border:'0px solid #49A540',
                     borderRadius:'40px',
                     height:'25px',
                     width:'78px',
                     marginRight:10,
-                    backgroundColor:'#49A540',
+                    backgroundColor:'rgb(49, 51, 51)',
                     fontFamily:"Source Sans Pro",
                     color:'white',
                     fontSize:'14px',
@@ -245,18 +245,18 @@ class RoomPost extends Component {
                             marginTop:10,
                             marginLeft:'9px',
                             position:'relative'}}>
-                            <div style={{height:'40px',
+                            <a href={`/${this.props.username}`}><div style={{height:'40px',
                                 width:'40px',
                                 borderRadius:30,
                                 backgroundColor:'black', 
                                 backgroundImage:`url(${this.props.pic})`, 
                                 backgroundSize:'cover',
                                 backgroundPosition:'center',
-                                marginRight:'10px'}}></div>
+                                marginRight:'10px'}}></div></a>
                             <div style={{display:'flex',flexDirection:'column'}}>
-                            <p className="room-card-title" style={{color:'white'}}>{this.props.room_title}</p>
+                            <a href={`/room/${this.props.shortID}`}><p className="room-card-title" style={{color:'white'}}>{this.props.room_title}</p></a>
 
-                                <p style={{overflow:'hidden',
+                            <a href={`/${this.props.username}`}><p style={{overflow:'hidden',
                                     textOverflow:'ellipsis',
                                     textAlign:'left',
                                     width:'97px',
@@ -264,7 +264,7 @@ class RoomPost extends Component {
                                     color:'white',
                                     position:'relative',
                                     top:'-4px'
-                                }}>{`@${this.props.username}`}</p>
+                                }}>{`@${this.props.username}`}</p></a>
                             </div>
                             </div>
                             <div style={{flex:1,
@@ -402,11 +402,11 @@ class RoomPost extends Component {
                     
                         }}>
                         
-                            <div style={{border:'0px solid red',overflow:'hidden',height:'50px',display:'flex',
+                            <div style={{border:'0px solid red',overflow:'hidden',display:'flex',
                                 alignItems:'center',
                                 margin:'10px 5px 0px'}}>
                          
-                            <div style={{display:'flex',width:'auto',alignItems:'center', marginRight:'18px',flexDirection:'row',height:'37px'}}>
+                            <div style={{display:'flex',width:'auto',alignItems:'center', marginRight:'18px',flexDirection:'row'}}>
                             <i className="far fa-heart" onClick={()=>{
                                 firebase.auth().onAuthStateChanged((user)=> {
                                     console.log("firebase.auth user: ",user);
@@ -417,12 +417,12 @@ class RoomPost extends Component {
                                     }
                                 });
                                
-                            }} style={{fontSize:13, color:'white',marginRight:6.5}}></i>
-                                <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.state.likes}</p>
+                            }} style={{fontSize:13, color:'white',marginRight:6.5,marginLeft:'1px',marginBottom:'2px'}}></i>
+                                <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px',marginBottom:4}}>{this.state.likes}</p>
                             </div>
-                            <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',flexDirection:'row',height:'37px',marginRight:'18px'}}>
+                            <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',flexDirection:'row',marginRight:'18px'}}>
                             <i className="far fa-comment-alt" style={{fontSize:13, color:'white',marginRight:6.5}}></i>
-                            <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.getNumberToString(this.props.commentsCount)}</p>
+                            <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px',marginBottom:4}}>{this.getNumberToString(this.props.commentsCount)}</p>
                             </div>
                             {/* <div style={{display:'flex',width:'auto',justifyContent:'space-between',alignItems:'center',flexDirection:'column',height:'37px'}}>
                             <i className="far fa-share-square" style={{fontSize:20, color:'white'}}></i>
@@ -431,7 +431,7 @@ class RoomPost extends Component {
                     {this.display()}
                    
                 </div>
-                <div id="descriptionWrapText" style={{fontSize:'16px', padding:'0px 10px 10px',marginBottom:'15px'}}>
+                <div id="descriptionWrapText" style={{fontSize:'16px', padding:'0px 10px 0px'}}>
                        
 
 
@@ -439,15 +439,22 @@ class RoomPost extends Component {
 
   maxWidth:'100%',
   height:'auto',
-  margin:'0 auto',
   fontSize:'14px',
-  lineHeight:'1',
- 
+  lineHeight:'1.2',
+  position:'relative',
+  top:'5px',
   overflow:'hidden',
-  color:'white'
+  color:'white',
+  marginLeft:3,
+  paddingBottom:20
     }}>
                     {`${this.getTruncatedString(this.props.description).string}`}
-                    {this.getTruncatedString(this.props.description).isReadMore ? (<span style={{color:'white',marginLeft:2}}>...[Read More]</span>) :''}
+                    {this.getTruncatedString(this.props.description).isReadMore ? (<span style={{color:'white',marginLeft:2}}>...[Read More]
+                    <div style={{display:'flex',alignItems:'center',marginRight:'18px',flexDirection:'row', marginTop:7}}>
+                            {/* <i className="fas fa-play" style={{fontSize:10, color:'white',marginRight:10}}></i> */}
+                                <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.getNumberToString(this.props.views)} Views</p>
+                            </div>
+                    </span>) :''}
                 </div>
                     
                 
@@ -457,7 +464,7 @@ class RoomPost extends Component {
                          
                 </div>
                 <div style={{display:'flex'}}>
-                <div id="tags-area" style={{display:'flex',height:26,width:'100%',paddingLeft:'11px',marginBottom:20}}>
+                <div id="tags-area" style={{display:'flex',width:'100%',paddingLeft:'11px',marginBottom:0}}>
                             {
                           
                             this.props.tags.map((tag)=> {
@@ -486,10 +493,7 @@ class RoomPost extends Component {
                             }
                     <div style={{display:this.state.showMoreTag ? 'block':'none',color:'#C7524D', border:'1px solid #C7524D', borderRadius:'12px', padding:'0 8px'}}><p>{this.props.numTagsAll - this.props.numTags}</p></div>
                 </div>
-                <div style={{display:'flex',alignItems:'center',marginRight:'18px',flexDirection:'row',height:'37px'}}>
-                            <i className="fas fa-play" style={{fontSize:10, color:'white',marginRight:10}}></i>
-                                <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.getNumberToString(this.props.views)}</p>
-                            </div>
+                
                 </div>  
             </div>
         )

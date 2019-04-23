@@ -628,7 +628,7 @@ class ProfilePage extends Component {
                             </div>
 
                             <div className="bio-info">
-                                <p style={{fontSize:14,color:'rgb(64, 255, 232);'}}>{this.state.bio}
+                                <p style={{fontSize:14,color:'white',marginTop:5}}>{this.state.bio}
                                 </p>
                             </div>
                         </div>
