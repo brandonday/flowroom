@@ -50,6 +50,18 @@ class RoomPost extends Component {
 
         // window.addEventListener('scroll', this.handleScroll, true);
 
+            document.getElementById(`heart_${this.props.shortID}`).addEventListener('click', ()=> {
+                
+                if(document.getElementById(`heart_${this.props.shortID}`).style.color === 'rgb(64, 255, 232)') {
+                    document.getElementById(`heart_${this.props.shortID}`).style.color = 'white';
+                    document.getElementById(`heart_${this.props.shortID}`).className = 'far fa-heart';
+                } else {
+                    document.getElementById(`heart_${this.props.shortID}`).style.color = 'rgb(64, 255, 232)';
+                    document.getElementById(`heart_${this.props.shortID}`).className = 'fas fa-heart';
+                    
+                }
+
+            })
             
        
         
@@ -407,7 +419,7 @@ class RoomPost extends Component {
                                 margin:'10px 5px 0px'}}>
                          
                             <div style={{display:'flex',width:'auto',alignItems:'center', marginRight:'18px',flexDirection:'row'}}>
-                            <i className="far fa-heart" onClick={()=>{
+                            <i id={`heart_${this.props.shortID}`} className="far fa-heart" onClick={()=>{
                                 firebase.auth().onAuthStateChanged((user)=> {
                                     console.log("firebase.auth user: ",user);
                                     if(user) {

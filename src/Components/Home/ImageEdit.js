@@ -54,6 +54,7 @@ let that;
             remixImageList.style.width = '100%';
         let remixImageTitle = document.createElement('div');
         let imgtitle = document.createElement('p');
+        let imgclose = document.createElement('p');
         let remixImageListNav = document.createElement('div');
         let remixImageListNavArrows = document.createElement('div');
         let remixImageWrap = document.createElement('div');
@@ -123,16 +124,23 @@ let that;
             remixImageListNav.appendChild(remixImageListNavArrows);
          }
         imgtitle.appendChild(document.createTextNode('Images'));
-        imgtitle.style.color = '#787878';
+        imgclose.appendChild(document.createTextNode('Close'));
+        imgtitle.style.color = 'white';
         imgtitle.style.fontSize = '13px';
         imgtitle.style.marginLeft = '10px';
         imgtitle.style.fontWeight = '900';
         imgtitle.style.marginTop = '4px';
+        imgclose.style.color = 'white';
+        imgclose.style.fontSize = '10px';
         remixImageTitle.style.height = '28px';
-        remixImageTitle.style.width = '282px';
+        remixImageTitle.style.width = '100%';
         remixImageTitle.style.backgroundColor = '#141414';
         remixImageTitle.style.alignItems = 'center';
+        remixImageTitle.style.display = 'flex';
+        remixImageTitle.style.justifyContent = 'space-between';
         remixImageTitle.appendChild(imgtitle);
+        remixImageTitle.appendChild(imgclose);
+
         remixImageList.appendChild(remixImageListNav);
 
                   if(getList != null) {
@@ -173,6 +181,7 @@ let that;
                      
 
                       itemInfoWrap.style.height = '62px';
+                      itemInfoWrap.style.width = '120px';
                       itemInfo.style.fontSize = '12px';
                       itemInfo.style.color = '#767676';
                       itemInfo.style.fontWeight = '0';
@@ -206,13 +215,13 @@ let that;
                       itemInfoWrap.appendChild(itemInfoEdit);
 
                       bgImg.style.backgroundImage = `url(${getList[j].image})`;
-                      bgImg.style.height = '45px';
-                      bgImg.style.width = '45px';
+                      bgImg.style.height = '99px';
+                      bgImg.style.width = '111px';
                       bgImg.style.backgroundSize = 'cover';
                       bgImg.style.backgroundPosition = 'center';
 
-                    bgImgWrap.style.height = '62px';
-                    bgImgWrap.style.width = '62px';
+                    bgImgWrap.style.height = '120px';
+                    bgImgWrap.style.width = '113px';
                     bgImgWrap.style.display = 'flex';
                     bgImgWrap.style.justifyContent = 'center';
                     bgImgWrap.style.alignItems = 'center';
@@ -220,8 +229,8 @@ let that;
                     bgImgWrap.style.borderRadius = '6px';
                     bgImgWrap.style.backgroundColor = '#252525';
            
-                    item.style.height = '73px';
-                    item.style.width = '249px';
+                    item.style.height = '120px';
+                    item.style.width = '113px';
 
                     item.style.margin = '3px 6px 5px 7px';
 
@@ -230,11 +239,16 @@ let that;
                     item.style.alignItems = 'center';
                     item.style.borderRadius = '3px';
                     item.style.backgroundColor = '#1f1f1f';
-
+                    
                   
                     bgImgWrap.style.position = 'relative';
+                    bgImgWrap.style.border = '1px solid red';
                     item.style.display = 'flex';
-                 
+                    item.style.flexDirection = 'column';
+                    item.style.height = '203px';
+                    item.style.width = '113px';
+
+
                     
                     bgImgWrap.appendChild(bgImg)
                     item.appendChild(bgImgWrap);
@@ -244,6 +258,8 @@ let that;
                     remixImageList.style.height = '250px';
                     remixImageWrap.style.height = '250px';
                     remixImageWrap.style.overflowY = 'scroll';
+                    remixImageWrap.style.display = 'flex';
+                    remixImageWrap.style.flexWrap = 'wrap';
                     
                     remixImageWrap.appendChild(item);
 
@@ -336,8 +352,15 @@ let that;
                     }
 
                   }
-                  list.appendChild(remixImageTitle);
-                  list.appendChild(remixImageList);
+                  let remixImageBox = document.createElement('div');
+                  remixImageBox.style.border = '1px solid red';
+                  remixImageBox.style.height = '330px';
+                  remixImageBox.style.width = '269px';
+                  remixImageBox.style.overflow = 'hidden';
+                  
+                  remixImageBox.appendChild(remixImageTitle);
+                  remixImageBox.appendChild(remixImageList);
+                  list.appendChild(remixImageBox)
 
 
 

@@ -114,7 +114,7 @@ class RoomMain extends Component {
           
                 document.getElementById('main-menu').style.position = 'absolute';
                 document.getElementById('main-menu').style.height = '583px';
-                document.getElementById('main-menu').style.width = '82%';
+                document.getElementById('main-menu').style.width = '68%';
                 document.getElementById('main-menu').style.zIndex = '999994';
                 document.getElementById('main-menu').style.top = '0px';
                 document.getElementById('main-menu').style.zIndex = '999999';
@@ -124,10 +124,15 @@ class RoomMain extends Component {
                 document.getElementById('tab-menu').style.position = 'absolute';
                 document.getElementById('tab-menu').style.zIndex = '999999';
                 document.getElementById('tab-menu').style.height = '100%';
+                document.getElementById('tab-menu').style.display = 'none';
+                document.getElementById('menu-btn-mobile').style.display = 'flex';
                 document.getElementById('rf-right').style.display = 'none';
                 document.getElementById('rf-top').style.display = 'flex';
                 document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingLeft = '10px';
                 document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingRight = '10px';
+                document.getElementById('main-menu').style.display = 'flex';
+                document.getElementById('main-menu').style.position = 'absolute';
+                document.getElementById('main-menu').style.left = '-330px';
             } else {
                 let main = document.getElementById('main-menu');
                 let tabMenu = document.getElementById('tab-menu');
@@ -147,6 +152,7 @@ class RoomMain extends Component {
                 main.style.left = '0px';
                 document.getElementById('rf-right').style.display = 'flex';
                 document.getElementById('rf-top').style.display = 'none';
+                document.getElementById('menu-btn-mobile').style.display = 'none';
                 document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingLeft = '77px';
                 document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingRight = '36px';
                 document.getElementById('main-section-wrap-comments-screen-wrap').style.top = '60px';
@@ -512,160 +518,154 @@ class RoomMain extends Component {
                                         }
                                     });
                                 }} className="ball">
-                            <i className="fas fa-images"></i>
-                            <p>Images</p>
-                        </div>
-                        <div style={{
-                            height:'100px',
-                            width:'100px', 
-                            margin:'10px',
-                            display:'flex',
-                            justifyContent:'center',
-                            alignItems:'center',
-                            flexDirection:'column',
-                            color:'white',
-                            background:'#01AADC',
-                            borderRadius:'5px',
-                            fontSize:'20px'
-                        }}>
-                         <i className="fas fa-font"></i>
-                            <p>Text</p>
-                        </div>
-                        <div style={{
-                            height:'100px',
-                            width:'100px', 
-                            margin:'10px',
-                            display:'flex',
-                            justifyContent:'center',
-                            alignItems:'center',
-                            flexDirection:'column',
-                            color:'white',
-                            background:'#01AADC',
-                            borderRadius:'5px',
-                            fontSize:'20px'
-                        }}>
-                         <i className="fas fa-images"></i>
-                            <p>GIFS</p>
-                        </div>
-                        <div style={{
-                            height:'100px',
-                            width:'100px', 
-                            margin:'10px',
-                            display:'flex',
-                            justifyContent:'center',
-                            alignItems:'center',
-                            flexDirection:'column',
-                            color:'white',
-                            background:'#01AADC',
-                            borderRadius:'5px',
-                            fontSize:'20px'
-                        }}>
-                         <i className="fas fa-images"></i>
-                            <p>Stickers</p>
-                        </div>
-                        <div style={{
-                            height:'100px',
-                            width:'100px', 
-                            margin:'10px',
-                            display:'flex',
-                            justifyContent:'center',
-                            alignItems:'center',
-                            flexDirection:'column',
-                            color:'white',
-                            background:'#01AADC',
-                            borderRadius:'5px',
-                            fontSize:'20px'
-                        }}>
-                         <i class="fas fa-shapes" onClick={()=>{
-                             const element = document.querySelector('#main-add-section #menu-sel-wrap');
-                             const ball = styler(element); 
+                                    <i className="fas fa-images"></i>
+                                    <p>Images</p>
+                            </div>
+                            <div style={{
+                                height:'100px',
+                                width:'100px', 
+                                margin:'10px',
+                                display:'flex',
+                                justifyContent:'center',
+                                alignItems:'center',
+                                flexDirection:'column',
+                                color:'white',
+                                background:'#01AADC',
+                                borderRadius:'5px',
+                                fontSize:'20px'
+                            }}>
+                                <i className="fas fa-font"></i>
+                                <p>Text</p>
+                            </div>
+                            <div style={{
+                                height:'100px',
+                                width:'100px', 
+                                margin:'10px',
+                                display:'flex',
+                                justifyContent:'center',
+                                alignItems:'center',
+                                flexDirection:'column',
+                                color:'white',
+                                background:'#01AADC',
+                                borderRadius:'5px',
+                                fontSize:'20px'
+                            }}>
+                                <i className="fas fa-images"></i>
+                                <p>GIFS</p>
+                            </div>
+                            <div style={{
+                                height:'100px',
+                                width:'100px', 
+                                margin:'10px',
+                                display:'flex',
+                                justifyContent:'center',
+                                alignItems:'center',
+                                flexDirection:'column',
+                                color:'white',
+                                background:'#01AADC',
+                                borderRadius:'5px',
+                                fontSize:'20px'
+                            }}>
+                                <i className="fas fa-images"></i>
+                                <p>Stickers</p>
+                            </div>
+                            <div style={{
+                                height:'100px',
+                                width:'100px', 
+                                margin:'10px',
+                                display:'flex',
+                                justifyContent:'center',
+                                alignItems:'center',
+                                flexDirection:'column',
+                                color:'white',
+                                background:'#01AADC',
+                                borderRadius:'5px',
+                                fontSize:'20px'
+                            }}>
+                                <i class="fas fa-shapes" onClick={()=> {
+                                    const element = document.querySelector('#main-add-section #menu-sel-wrap');
+                                    const ball = styler(element); 
 
-                             tween({ from:600, to: -1081, duration: 200 })
-                             .start(v => ball.set('x', v));
-                            let myJson = ['square']
-                             for(let i =0; i < myJson.length; i++) {
-                                // alert(myJson.hits[i].previewURL)
-                                var node = document.createElement("div");                 
-                                //var img = document.createElement('img');    
-                                //img.src = myJson.hits[i].previewURL;   
-                                node.style.height = "100px";
-                                node.style.width = "100px";
-                                node.style.border = '1px solid black';
-                                node.style.margin = '10px';
-                                node.style.position = 'absolute';
-                                node.addEventListener('click', ()=> {
+                                    tween({ from:600, to: -1081, duration: 200 }).start(v => ball.set('x', v));
+                                    let myJson = ['square']
+                                    for(let i =0; i < myJson.length; i++) {
+                                        // alert(myJson.hits[i].previewURL)
+                                        var node = document.createElement("div");                 
+                                        //var img = document.createElement('img');    
+                                        //img.src = myJson.hits[i].previewURL;   
+                                        node.style.height = "100px";
+                                        node.style.width = "100px";
+                                        node.style.border = '1px solid black';
+                                        node.style.margin = '10px';
+                                        node.style.position = 'absolute';
+                                        node.addEventListener('click', ()=> {
                                     
-                                    document.getElementById('menu-wrap').style.display = 'block';
-                                    document.getElementById('menu').style.display = 'block';
-                                });
+                                        document.getElementById('menu-wrap').style.display = 'block';
+                                        document.getElementById('menu').style.display = 'block';
+                                    });
                                
-                                document.getElementById("main-add-section").appendChild(node); 
+                                    document.getElementById("main-add-section").appendChild(node); 
 
-                            }
+                                    }
 
-                         }}></i>
-                            <p>Shapes</p>
-                        </div>
-                        <div style={{
-                            height:'100px',
-                            width:'100px', 
-                            margin:'10px',
-                            display:'flex',
-                            justifyContent:'center',
-                            alignItems:'center',
-                            flexDirection:'column',
-                            color:'white',
-                            background:'#01AADC',
-                            borderRadius:'5px',
-                            fontSize:'20px'
-                        }}>
-                         <i className="fas fa-images"></i>
-                            <p>Icons</p>
-                        </div>
-                        <div style={{
-                            height:'100px',
-                            width:'100px', 
-                            margin:'10px',
-                            display:'flex',
-                            justifyContent:'center',
-                            alignItems:'center',
-                            flexDirection:'column',
-                            color:'white',
-                            background:'#01AADC',
-                            borderRadius:'5px',
-                            fontSize:'20px'
-                        }}>
-                         <i className="fas fa-images"></i>
-                            <p>Video</p>
-                        </div>
-                        <div style={{
-                            height:'100px',
-                            width:'100px', 
-                            margin:'10px',
-                            display:'flex',
-                            justifyContent:'center',
-                            alignItems:'center',
-                            flexDirection:'column',
-                            color:'white',
-                            background:'#01AADC',
-                            borderRadius:'5px',
-                            fontSize:'20px'
-                            
-                        }}>
-                         <i className="fas fa-images"></i>
-                            <p>Audio</p>
-                        </div>
+                                }}></i>
+                                <p>Shapes</p>
                             </div>
-
-                            <div id="selection" style={{ width:'299px',marginLeft:'100%',height:'100%',background:'black'}}>
-                                <div id="innerSel" style={{justifyContent:'center',display:'flex', flexWrap:'wrap', height:'100%',width:'100%', alignItems:'center', background:'rgb(24, 24, 24)'}}>
-
-                                </div>
-    
+                            <div style={{
+                                height:'100px',
+                                width:'100px', 
+                                margin:'10px',
+                                display:'flex',
+                                justifyContent:'center',
+                                alignItems:'center',
+                                flexDirection:'column',
+                                color:'white',
+                                background:'#01AADC',
+                                borderRadius:'5px',
+                                fontSize:'20px'
+                            }}>
+                                <i className="fas fa-images"></i>
+                                <p>Icons</p>
                             </div>
+                            <div style={{
+                                height:'100px',
+                                width:'100px', 
+                                margin:'10px',
+                                display:'flex',
+                                justifyContent:'center',
+                                alignItems:'center',
+                                flexDirection:'column',
+                                color:'white',
+                                background:'#01AADC',
+                                borderRadius:'5px',
+                                fontSize:'20px'
+                            }}>
+                                <i className="fas fa-images"></i>
+                                <p>Video</p>
+                            </div>
+                            <div style={{
+                                height:'100px',
+                                width:'100px', 
+                                margin:'10px',
+                                display:'flex',
+                                justifyContent:'center',
+                                alignItems:'center',
+                                flexDirection:'column',
+                                color:'white',
+                                background:'#01AADC',
+                                borderRadius:'5px',
+                                fontSize:'20px'
+                            }}>
+                                <i className="fas fa-images"></i>
+                                <p>Audio</p>
+                            </div>
+                        </div>
+                        <div id="selection" style={{ width:'299px',marginLeft:'100%',height:'100%',background:'black'}}>
+                            <div id="innerSel" style={{justifyContent:'center',display:'flex', flexWrap:'wrap', height:'100%',width:'100%', alignItems:'center', background:'rgb(24, 24, 24)'}}></div>
                         </div>
                     </div>
                 </div>
+            </div>
             )
         } else if(this.state.comments === true) {
             return (<Comments />)
@@ -686,22 +686,21 @@ class RoomMain extends Component {
     render() {
         let that = this;
         const {isLoading} = this.state;
-        
-        return (<div id="room-main-page" className="page-wrap twilight room-main-page-wrap">
-            <div style={{display:'flex',flexDirection:'column', height:'100%',width:'100%'}}>
-                <div style={{display:'flex',flex:'0 583px',position:'relative',overflow:'hidden'}}>
-                    <div id="tab-menu" style={{
-                        width:'48px', 
-                        background:'rgb(14, 14, 14)',
-                        height:'100%'
-                    }}>
-                        <div id="remix-tab" onClick={()=> {
-                         
+
+        return (
+            <div id="room-main-page" className="page-wrap twilight room-main-page-wrap">
+                <div style={{display:'flex',flexDirection:'column', height:'100%',width:'100%'}}>
+                    <div style={{display:'flex',flex:'0 583px',position:'relative',overflow:'hidden'}}>
+                        <div id="tab-menu" style={{
+                            width:'48px', 
+                            background:'rgb(14, 14, 14)',
+                            height:'100%'
+                        }}>
+                        <div id="remix-tab" onClick={()=> { 
                                 let remixid = document.getElementById('remix-tab');
                                 remixid.className = 'menubg';
-                                remixid.style.borderRight = '0px solid #181818';
-
-                              
+                                remixid.style.borderRight = '0px solid #181818';  
+                                remixid.style.overflowY = 'scroll';       
                                 this.setState({
                                     details:false,
                                     objects:false,
@@ -714,18 +713,17 @@ class RoomMain extends Component {
                                 });
                                 document.getElementById('main-menu').style.display = 'flex';
                                 isMenuOpen = true;
-                              
-
-                            }} style={{
-                            display:'flex',
-                            color:'rgb(64, 255, 232)',
-                            height:'52px',
-                            width:'48px',
-                            flexDirection:'column',
-                            alignItems:'center',
-                            borderRight:'1px solid #181818',
-                            borderBottom:'1px solid #181818',
-                            justifyContent:'center'
+                            }} 
+                            style={{
+                                display:'flex',
+                                color:'rgb(64, 255, 232)',
+                                height:'52px',
+                                width:'48px',
+                                flexDirection:'column',
+                                alignItems:'center',
+                                borderRight:'1px solid #181818',
+                                borderBottom:'1px solid #181818',
+                                justifyContent:'center'
                             }} className="menu-bg-border">
                                 <div style={{
                                     fontSize:15, 
@@ -739,15 +737,11 @@ class RoomMain extends Component {
                                 <p style={{fontSize:10.2,fontWeight:'bold',color:'#40FFE8',width:'26px'}}>REMIX</p>
                                
                         </div>
-
-
-
-
-                                        <div id="script-tag" onClick={()=> {
-                                            document.getElementById('resizable-box').style.height = '300px';
+                        <div id="script-tag" onClick={()=> {
+                            document.getElementById('resizable-box').style.height = '300px';
                                     
-                                        }} style={{
-                                            display:'flex',
+                        }} style={{
+                            display:'flex',
                             color:'rgb(64, 255, 232)',
                             height:'52px',
                             width:'48px',
@@ -755,33 +749,63 @@ class RoomMain extends Component {
                             alignItems:'center',
                             borderRight:'1px solid #181818',
                             borderBottom:'1px solid #181818',
-                            justifyContent:'center'}} className="menu-bg-border">
-                                                <div style={{
-                                    fontSize:'15px',
-                                    color:'white',
-                                    backgroundImage:'url(../code.svg)',
-                                    backgroundSize:'100% 100%',
-                                    backgroundRepeat:'no-repeat',
-                                    height:'14px',
-                                    width:'16px',
-                                    marginBottom:'3px'
-                                    }}></div>
-                                                    <p id="details-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252',width:'26px'}}>SCRIPT</p>
-                                    </div>
-                                    <div id="save-tab" onClick={()=> {
-                                       
-                                       this.openModal(false)
-                               
-                               }} style={{
-                                    display:that.state.userNameSelf === that.state.userName ? 'flex' : 'none',
-                                    color:'rgb(64, 255, 232)',
-                                    height:'52px',
-                                    width:'48px',
-                                    flexDirection:'column',
-                                    alignItems:'center',
-                                    borderRight:'1px solid #181818',
-                                    borderBottom:'1px solid #181818',
-                                    justifyContent:'center'
+                            justifyContent:'center'
+                        }} className="menu-bg-border">
+                            <div style={{
+                                fontSize:'15px',
+                                color:'white',
+                                backgroundImage:'url(../code.svg)',
+                                backgroundSize:'100% 100%',
+                                backgroundRepeat:'no-repeat',
+                                height:'14px',
+                                width:'16px',
+                                marginBottom:'3px'
+                            }}></div>
+                            <p id="details-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252',width:'26px'}}>SCRIPT</p>
+                        </div>
+                        <div id="save-tab" onClick={()=> {
+                            this.openModal(false)
+                        }} style={{
+                            display:that.state.userNameSelf === that.state.userName ? 'flex' : 'none',
+                            color:'rgb(64, 255, 232)',
+                            height:'52px',
+                            width:'48px',
+                            flexDirection:'column',
+                            alignItems:'center',
+                            borderRight:'1px solid #181818',
+                            borderBottom:'1px solid #181818',
+                            justifyContent:'center'
+                        }} 
+                        className="menu-bg-border">
+                            <div style={{
+                                fontSize:'15px',
+                                color:'white',
+                                backgroundImage:'url(../save-regular-grey.svg)',
+                                backgroundSize:'100% 100%',
+                                backgroundRepeat:'no-repeat',
+                                height:'14px',
+                                width:'16px',
+                                marginBottom:'3px'
+                            
+                               }}></div>
+                                <p id="save-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252'}}>SAVE</p>
+                        </div>
+                        <div id="del-tab" onClick={()=> {
+                            let currentRoomID = window.location.pathname.split("room/").pop();
+                            firebase.database().ref(`rooms/${currentRoomID}`).remove();
+                            firebase.database().ref(`UsersRooms/${currentRoomID}/${that.state.userNameSelf}`).remove();
+                            firebase.database().ref(`${that.state.userNameSelf}/${currentRoomID}`).remove();
+                                window.location.replace('/');
+                            }} style={{
+                                display:that.state.userNameSelf === that.state.userName ? 'flex' : 'none',
+                                color:'rgb(64, 255, 232)',
+                                height:'52px',
+                                width:'48px',
+                                flexDirection:'column',
+                                alignItems:'center',
+                                borderRight:'1px solid #181818',
+                                borderBottom:'1px solid #181818',
+                                justifyContent:'center'
                                }} 
                                className="menu-bg-border">
                                     <div style={{
@@ -793,47 +817,14 @@ class RoomMain extends Component {
                                         height:'14px',
                                         width:'16px',
                                         marginBottom:'3px'
-                            
-                               }}></div>
-                                   <p id="save-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252'}}>SAVE</p>
-                       </div>
-                       <div id="del-tab" onClick={()=> {
+                                    }}></div>
+                            <p id="publish-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252'}}>DELETE</p>
+                        </div>
+                        <div id="post-tab" onClick={()=> {
                                        
-                                       let currentRoomID = window.location.pathname.split("room/").pop();
-                                     firebase.database().ref(`rooms/${currentRoomID}`).remove();
-                                     firebase.database().ref(`UsersRooms/${currentRoomID}/${that.state.userNameSelf}`).remove();
-                                     firebase.database().ref(`${that.state.userNameSelf}/${currentRoomID}`).remove();
-                                     window.location.replace('/');
-                               
-                               }} style={{
-                       display:that.state.userNameSelf === that.state.userName ? 'flex' : 'none',
-                       color:'rgb(64, 255, 232)',
-                       height:'52px',
-                       width:'48px',
-                       flexDirection:'column',
-                       alignItems:'center',
-                       borderRight:'1px solid #181818',
-                       borderBottom:'1px solid #181818',
-                       justifyContent:'center'
-                               }} 
-                               className="menu-bg-border">
-                                    <div style={{
-                               fontSize:'15px',
-                               color:'white',
-                               backgroundImage:'url(../save-regular-grey.svg)',
-                               backgroundSize:'100% 100%',
-                               backgroundRepeat:'no-repeat',
-                               height:'14px',
-                               width:'16px',
-                               marginBottom:'3px'
-                               }}></div>
-                                   <p id="publish-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252'}}>DELETE</p>
-                       </div>
-                                     <div id="post-tab" onClick={()=> {
-                                       
-                                            this.openModal(true)
+                            this.openModal(true)
                                     
-                                    }} style={{
+                        }} style={{
                             display:that.state.postBtnVisible ? 'flex' : 'none',
                             color:'rgb(64, 255, 232)',
                             height:'52px',
@@ -843,73 +834,81 @@ class RoomMain extends Component {
                             borderRight:'1px solid #181818',
                             borderBottom:'1px solid #181818',
                             justifyContent:'center'
-                                    }} 
-                                    className="menu-bg-border">
-                                         <div style={{
-                                    fontSize:'15px',
-                                    color:'white',
-                                    backgroundImage:'url(../save-regular-grey.svg)',
-                                    backgroundSize:'100% 100%',
-                                    backgroundRepeat:'no-repeat',
-                                    height:'14px',
-                                    width:'16px',
-                                    marginBottom:'3px'
-                                    }}></div>
-                                        <p id="publish-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252',width:'38px'}}>PUBLISH</p>
-                            </div>
-
-
-
-                                 <div id="objects" onClick={()=> {
-                                    let objectsid = document.getElementById('objects');
-                                    objectsid.className = 'menubg';
-                                    objectsid.style.borderRight = '0px solid #181818';
-                                    document.getElementById('objects').className = 'menubg'
-                                    let remixid = document.getElementById('details');
-                                    remixid.className = '';
-                                    remixid.style.borderRight = '0px solid #181818';
-                                    let getclasses = document.getElementsByClassName('menubg');
-                                    this.setState({details:false,
-                                        objects:true,
-                                        comments:false,
-                                        draw:false,
-                                        remix:false,
-                                        preferences:false,
-                                        record:false
-                                    });
+                        }} 
+                        className="menu-bg-border">
+                            <div style={{
+                                fontSize:'15px',
+                                color:'white',
+                                backgroundImage:'url(../save-regular-grey.svg)',
+                                backgroundSize:'100% 100%',
+                                backgroundRepeat:'no-repeat',
+                                height:'14px',
+                                width:'16px',
+                                marginBottom:'3px'
+                            }}></div>
+                            <p id="publish-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252',width:'38px'}}>PUBLISH</p>
+                        </div>
+                        <div id="objects" onClick={()=> {
+                            let objectsid = document.getElementById('objects');
+                            objectsid.className = 'menubg';
+                            objectsid.style.borderRight = '0px solid #181818';
+                            document.getElementById('objects').className = 'menubg'
+                            let remixid = document.getElementById('details');
+                            remixid.className = '';
+                            remixid.style.borderRight = '0px solid #181818';
+                            let getclasses = document.getElementsByClassName('menubg');
+                            this.setState({details:false,
+                                objects:true,
+                                comments:false,
+                                draw:false,
+                                remix:false,
+                                preferences:false,
+                                record:false
+                            });
                                     
-                                    if(document.getElementById('remixhead') !== null) {
-                                        document.getElementById('remixhead').style.display = 'none';
-                                    }
+                            if(document.getElementById('remixhead') !== null) {
+                                document.getElementById('remixhead').style.display = 'none';
+                            }
                                    
-                                    document.getElementById('main-menu').style.display = 'flex';
-                                     let tagstoRemove = document.querySelectorAll('#main-menu li');
+                            document.getElementById('main-menu').style.display = 'flex';
+                            let tagstoRemove = document.querySelectorAll('#main-menu li');
                                      
-                                    for(let i = 0; i < tagstoRemove.length; i++) {
+                            for(let i = 0; i < tagstoRemove.length; i++) {
                                       
-                                        tagstoRemove[i].remove()
-                                    }
-                             }} style={{height:'50px',width:'48px',display:'flex',
+                                tagstoRemove[i].remove()
+                            }
+                             }} style={{
+                                    height:'50px',width:'48px',display:'flex',
                                     flexDirection:'column',
                                     justifyContent:'center',
                                     alignItems:'center',
                                     borderRight:'1px solid #181818',
-                                    borderBottom:'1px solid #181818'}} className="menu-bg-border">
+                                    borderBottom:'1px solid #181818'
+                                    }} className="menu-bg-border">
                         
-                                </div> 
-
-                                   
-                     
+                            </div> 
                         </div>
             
-                        <div id="main-menu" style={{width:'378px', borderRight:'1px solid #181818',background:'#FCFDFF',overflow:'hidden',overflowY:'scroll',backgroundColor:'#181818',flexDirection:'column',alignItems:'center'}}>
-                        <div style={{height:'170px', width:'259px'}}>
-                        <div style={{border:'1px solid #222222',
-    height:'147px',
-    width:'259px',
-    borderRadius:'3px',
-    marginTop:'11px'}}></div>
-    </div>
+                        <div id="main-menu" 
+                            style={{
+                                width:'378px', 
+                                borderRight:'1px solid #181818',
+                                background:'#FCFDFF',
+                                overflow:'hidden',
+                                overflowY:'scroll',
+                                backgroundColor:'#181818',
+                                flexDirection:'column',
+                                alignItems:'center'
+                        }}>
+                            <div style={{height:'170px', width:'259px'}}>
+                                <div style={{
+                                    border:'1px solid #222222',
+                                    height:'147px',
+                                    width:'259px',
+                                    borderRadius:'3px',
+                                    marginTop:'11px'}}>
+                                </div>
+                            </div>
             
                             {
                                 this.menuSelect()  
@@ -920,13 +919,13 @@ class RoomMain extends Component {
                         <div style={{display:'flex', flexDirection:'column', background:'white', width:'100%', position:'relative', border:'0px solid red'}}>
                             <Editor/>
                             <div style={{width:'100%', borderBottom:'1px solid black',background:'rgb(24, 24, 24)'}}>
-                            <div className="tabs-wrap"></div>        
+                                <div className="tabs-wrap"></div>        
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div style={{display:this.state.userName == ''? 'none':'flex',flex:1, border:'0px solid red',background:'rgb(15, 15, 15)'}}>
-                {/* <button
-                style={{
+                    <div style={{display:this.state.userName == ''? 'none':'flex',flex:1, border:'0px solid red',background:'rgb(15, 15, 15)'}}>
+                    {/* <button
+                    style={{
                     position:'absolute',
                     background:'black',
                     height:'24px',
@@ -937,16 +936,16 @@ class RoomMain extends Component {
                     border:'1px solid rgb(64, 255, 232)',
                     color:'rgb(64, 255, 232)',
                     borderRadius:3
-                }}
-                >MENU</button> */}
-                    <Comments isRemix={this.state.isRemix} 
-                        remixRoomID={this.state.remixRoomID} 
-                        remixUserName={this.state.remixUserName}
-                        userName={this.state.userName}
-                        dateCreated={this.state.dateCreated}
-                    />
+                    }}
+                    >MENU</button> */}
+                        <Comments isRemix={this.state.isRemix} 
+                            remixRoomID={this.state.remixRoomID} 
+                            remixUserName={this.state.remixUserName}
+                            userName={this.state.userName}
+                            dateCreated={this.state.dateCreated}
+                        />
                     
-                    <div style={{height:'42px',
+                        <div style={{height:'42px',
                             width:'100%',
                             background:'rgb(14, 14, 14)',
                             border:'0px solid red',
@@ -956,51 +955,65 @@ class RoomMain extends Component {
                             position:'absolute',
                             right:'0px'
                             }}>
-                            <button style={{fontWeight:'bold',
-    color:'rgb(64, 255, 232)',
-    fontSize:'13px',
-    width:'65px',
-    height:'23px',
-    backgroundColor:'transparent',
-    border:'1px solid rgb(64, 255, 232)',
-    borderRadius:'5px',
-    paddingRight:'3px',
-    position:'absolute',
-    right:'171px',
-    display:'flex',
-    textAlign:'center',
-    justifyContent:'center',
-    alignItems:'center',
-    marginRight:'8px'}}>MENU</button>
+                            <div style={{
+                                position:'absolute', 
+                                height:'100%', 
+                                width:'100px',
+                                display:'flex',
+                                justifyContent:'space-between',
+                                alignItems:'center',
+                                right:'59px'
+                            }}>
+                                <button id="menu-btn-mobile" onClick={()=>{
+                                    
+                                  
+                                   
+                                    const element = document.querySelector('#main-menu');
+                                    const ball = styler(element); 
+                                    
+                                    tween({ from:-330, to: 378, duration: 200 })
+                                    .start(v => ball.set('x', v));
+                                    document.getElementById('tab-menu').style.display = 'block';
+                                }} style={{
+                                    fontWeight:'bold',
+                                    color:'rgb(64, 255, 232)',
+                                    fontSize:'11px',
+                                    backgroundColor:'transparent',
+                                    border:'1px solid rgb(64, 255, 232)',
+                                    borderRadius:'5px',
+                                    padding:'3px',
+
+                                    right:'10px',
+                                    display:'none',
+                                    marginRight:'8px'
+                            }}>MENU</button>
                             <div id="full-screen" onClick={this.toggleFullScreen} style={{
-                            display:'flex',
-                            color:'white',
-                            height:'52px',
-                            width:'48px',
-                            flexDirection:'row',
-                            alignItems:'center',
-                            borderRight:'1px solid #181818',
-                            borderBottom:'1px solid #181818',
-                            justifyContent:'center',
-                            position:'absolute',
-                            right:'69px',
-                            bottom:'0px',
-                            zIndex:'99999'
-                                    }} 
-                                    className="menu-bg-border">
-                                     
-                                    <i className="fas fa-expand" style={{
+                                display:'flex',
+                                color:'white',
+                        
+                                flexDirection:'row',
+                                alignItems:'center',
+                                borderRight:'1px solid #181818',
+                                borderBottom:'1px solid #181818',
+                                justifyContent:'center',
+                           
+                                right:'69px',
+                                bottom:'0px',
+                                zIndex:'99999',
+                                overflow:'hidden',
+                                width:'63px',
+                                justifyContent:'space-around'
+                            }} 
+                            className="menu-bg-border">
+                                <i className="fas fa-expand" style={{
                                     fontSize:'15px',
                                     color:'white',
-                                    marginBottom:'3px',
                                     position:'relative',
-                                    left:'-8px'
                                     }}></i>
-                                        <p id="full-text" style={{fontSize:15,fontWeight:'bold',color:'white',width:'22px'}}>Full</p>
+                                    <p id="full-text" style={{fontSize:15,fontWeight:'bold',color:'white',width:'22px'}}>Full</p>
                             </div>
-                          
-                            </div>
-                   
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>)
