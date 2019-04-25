@@ -87,8 +87,56 @@ class RoomMain extends Component {
                 }
             }
             text = new createDatGUI();
-            let customContainer = document.getElementById('main-menu');
-            customContainer.appendChild(gui.domElement);
+            let mainmenu = document.getElementById('main-menu');
+            let remixTextBox = document.createElement('div');
+            remixTextBox.style.border = '1px solid red';
+            remixTextBox.style.height = '330px';
+            remixTextBox.style.width = '269px';
+            remixTextBox.style.overflow = 'hidden';
+            remixTextBox.style.marginTop = '20px';
+            let remixTextTitle = document.createElement('div');
+            let imgtitle = document.createElement('p');
+            let imgclose = document.createElement('p');
+
+            let imgico = document.createElement('i');
+            imgico.className = 'fas fa-font';
+            imgtitle.appendChild(imgico);
+            imgtitle.appendChild(document.createTextNode('Text'));
+            imgclose.appendChild(document.createTextNode('Close'));
+            imgtitle.style.color = 'white';
+            imgtitle.style.fontSize = '13px';
+            imgtitle.style.marginLeft = '10px';
+            imgtitle.style.fontWeight = '900';
+            imgtitle.style.marginTop = '4px';
+            imgclose.style.color = 'white';
+            imgclose.style.fontSize = '10px';
+            imgclose.style.marginRight = '20px'
+            imgclose.addEventListener('click', function() {
+              if(imgclose.innerText === 'Close') {
+                remixTextBox.style.height = '33px';
+                imgclose.innerText = 'Open';
+              } else {
+                remixTextBox.style.height = '330px';
+                imgclose.innerText = 'Close';
+                
+              }
+              
+            });
+            remixTextTitle.style.height = '28px';
+            remixTextTitle.style.width = '100%';
+            remixTextTitle.style.backgroundColor = '#141414';
+            remixTextTitle.style.alignItems = 'center';
+            remixTextTitle.style.display = 'flex';
+            remixTextTitle.style.justifyContent = 'space-between';
+            imgico.style.marginRight = '7px';
+            remixTextTitle.appendChild(imgtitle);
+            remixTextTitle.appendChild(imgclose);
+
+            remixTextBox.appendChild(remixTextTitle);
+            //gui.domElement
+            remixTextBox.appendChild(gui.domElement);
+            mainmenu.appendChild(remixTextBox);
+
             document.getElementsByClassName('close-button')[0].style.display = 'none';
             for(let i = 0; i < obj.length; i++) {
                 gui.add(text, Object.keys(obj[i])[0]).onChange(setValue);

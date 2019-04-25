@@ -73,7 +73,8 @@ const thumb = {
            progress: 0,
            avatarURL: "",
            postedPicURL:'',
-           fullname:''
+           fullname:'',
+           isLoggedIn:false
        }
        this.createUserAccount = this.createUserAccount.bind(this);
        this.updateProfile = this.updateProfile.bind(this);
@@ -90,6 +91,7 @@ const thumb = {
   }
 
     createUserAccount ({createAccount, userStore}) {
+        let that = this;
         let email = document.getElementById('email').value;
         let password = document.getElementById('password').value;
         let fullname = document.getElementById('fullname').value;
@@ -99,7 +101,7 @@ const thumb = {
         
                 createAccount(email, password).then(() => {
                     
-
+                    that.setState({isLoggedIn:true});
                 }).catch((error)=> {
                     alert(error.message)
                 });  
@@ -252,7 +254,7 @@ const thumb = {
         //     </div>
         //   ));
 
-        if(!this.props.isLoggedIn.isLoggedIn) {    
+        if(!this.stateisLoggedIn) {    
             return ( 
                 
                 <div style={{flex:'1',display:'flex'}}>

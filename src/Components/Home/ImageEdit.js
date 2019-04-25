@@ -49,7 +49,7 @@ let that;
         let list = document.getElementById('main-menu');
         let getList = JSON.parse(localStorage.getItem( "FR_REMIX_LIST"));
         let remixImageList = document.createElement('div');
-            remixImageList.setAttribute("id", "remix-list");
+            remixImageList.setAttribute("id", "remix-image-list");
             remixImageList.style.flexDirection = 'column';
             remixImageList.style.width = '100%';
         let remixImageTitle = document.createElement('div');
@@ -64,6 +64,11 @@ let that;
         remixImageListNavArrows.style.width = '19px';
         remixImageListNavArrows.style.justifyContent = 'space-between';
         remixImageListNavArrows.style.fontSize = '14px';
+        let remixImageBox = document.createElement('div');
+        remixImageBox.style.border = '1px solid red';
+        remixImageBox.style.height = '330px';
+        remixImageBox.style.width = '269px';
+        remixImageBox.style.overflow = 'hidden';
 
         let backArrow = document.createElement('i');
         let forwardArrow = document.createElement('i');
@@ -123,6 +128,9 @@ let that;
             remixImageListNav.appendChild(remixImageListItem);
             remixImageListNav.appendChild(remixImageListNavArrows);
          }
+        let imgico = document.createElement('i');
+        imgico.className = 'fas fa-image';
+        imgtitle.appendChild(imgico);
         imgtitle.appendChild(document.createTextNode('Images'));
         imgclose.appendChild(document.createTextNode('Close'));
         imgtitle.style.color = 'white';
@@ -132,12 +140,27 @@ let that;
         imgtitle.style.marginTop = '4px';
         imgclose.style.color = 'white';
         imgclose.style.fontSize = '10px';
+        imgclose.style.marginRight = '20px'
+        imgclose.addEventListener('click', function() {
+          if(imgclose.innerText === 'Close') {
+            remixImageList.style.display = 'none';
+            remixImageBox.style.height = '33px';
+            imgclose.innerText = 'Open';
+          } else {
+            remixImageList.style.display = 'block';
+            remixImageBox.style.height = '330px';
+            imgclose.innerText = 'Close';
+            
+          }
+          
+        });
         remixImageTitle.style.height = '28px';
         remixImageTitle.style.width = '100%';
         remixImageTitle.style.backgroundColor = '#141414';
         remixImageTitle.style.alignItems = 'center';
         remixImageTitle.style.display = 'flex';
         remixImageTitle.style.justifyContent = 'space-between';
+        imgico.style.marginRight = '7px';
         remixImageTitle.appendChild(imgtitle);
         remixImageTitle.appendChild(imgclose);
 
@@ -176,14 +199,15 @@ let that;
                       itemInfo.appendChild(document.createTextNode('Pac-man'));
                       itemInfot.appendChild(document.createTextNode('Hero'));
                       itemInfoh.appendChild(document.createTextNode('100px x 100px'));
-                      itemInfoEdit.appendChild(document.createTextNode('Edit'));
+                      //itemInfoEdit.appendChild(document.createTextNode('Edit'));
 
                      
 
                       itemInfoWrap.style.height = '62px';
                       itemInfoWrap.style.width = '120px';
+                      itemInfoWrap.style.backgroundColor = 'rgb(24, 24, 24)';
                       itemInfo.style.fontSize = '12px';
-                      itemInfo.style.color = '#767676';
+                      itemInfo.style.color = 'white';
                       itemInfo.style.fontWeight = '0';
                       itemInfo.style.marginLeft = '7px';
                       itemInfo.style.marginTop = '4px';
@@ -220,13 +244,13 @@ let that;
                       bgImg.style.backgroundSize = 'cover';
                       bgImg.style.backgroundPosition = 'center';
 
-                    bgImgWrap.style.height = '120px';
+                    bgImgWrap.style.height = '179px';
                     bgImgWrap.style.width = '113px';
                     bgImgWrap.style.display = 'flex';
                     bgImgWrap.style.justifyContent = 'center';
                     bgImgWrap.style.alignItems = 'center';
                     bgImgWrap.style.marginLeft = '6px';
-                    bgImgWrap.style.borderRadius = '6px';
+                    bgImgWrap.style.borderRadius = '5px';
                     bgImgWrap.style.backgroundColor = '#252525';
            
                     item.style.height = '120px';
@@ -242,10 +266,10 @@ let that;
                     
                   
                     bgImgWrap.style.position = 'relative';
-                    bgImgWrap.style.border = '1px solid red';
+                    bgImgWrap.style.border = '0px solid red';
                     item.style.display = 'flex';
                     item.style.flexDirection = 'column';
-                    item.style.height = '203px';
+                    item.style.height = '179px';
                     item.style.width = '113px';
 
 
@@ -255,7 +279,7 @@ let that;
                     item.appendChild(itemInfoWrap);
                    
                     remixImageList.appendChild(remixImageWrap);
-                    remixImageList.style.height = '250px';
+          
                     remixImageWrap.style.height = '250px';
                     remixImageWrap.style.overflowY = 'scroll';
                     remixImageWrap.style.display = 'flex';
@@ -352,11 +376,7 @@ let that;
                     }
 
                   }
-                  let remixImageBox = document.createElement('div');
-                  remixImageBox.style.border = '1px solid red';
-                  remixImageBox.style.height = '330px';
-                  remixImageBox.style.width = '269px';
-                  remixImageBox.style.overflow = 'hidden';
+              
                   
                   remixImageBox.appendChild(remixImageTitle);
                   remixImageBox.appendChild(remixImageList);
@@ -366,415 +386,14 @@ let that;
 
                    
                 }
-                    //let secondCreated = false;
-                //     item.addEventListener('click', function() {
-                      
-                //         var img = new Image,
-                //         canvas = document.createElement("canvas"),
-                //         ctx = canvas.getContext("2d"),
-                //         src = bi; // insert image url here
-                    
-                //     img.crossOrigin = "Anonymous";
-                    
-                //    img.onload = function() {
-                //         canvas.width = img.width;
-                //         canvas.height = img.height;
-                //         ctx.drawImage( img, 0, 0 );
-                //         localStorage.setItem( "savedImageData", canvas.toDataURL("image/png") );
-                //         //testFR(elId);
-                //     }
-                //     img.src = src;
-                   
-                //     //make sure the load event fires for cached images too
-                //     if ( img.complete || img.complete === undefined ) {
-                //         img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-                //         img.src = bi;
-                //     }
-
-                           
-                //             return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-                         
-                          
-                //           var base64 = getBase64Image(bi);
-                //           alert(base64)
-                        
-                     
-
-
-                //           var blob = null;
-                //           var xhr = new XMLHttpRequest(); 
-                //           xhr.open("GET", bi); 
-                //           xhr.responseType = "blob";//force the HTTP response, response-type header to be blob
-                //           xhr.onload = function() 
-                //           {
-                //               blob = xhr.response;//xhr.response is now a blob object
-                              
-                //           }
-                //           xhr.send();
-                //           var myReader = new FileReader();
-                //   myReader.readAsArrayBuffer(blob)
-                //   myReader.addEventListener("loadend", function(e)
-                //   {
-                //           var buffer = e.srcElement.result;//arraybuffer object
-                //           //that.setState({ src: buffer})
-                //   });
-
-                
-                  
-                //   var base64 = getBase64Image('https://i.pinimg.com/originals/69/64/4d/69644d2af4e6bf16fcf88a9ac1b275d6.jpg');
-
-                //           alert(base64)
-                //           testFR(base64);
-                //         window.top
-                //         alert(classorid);
-                //         if(secondCreated === false) {
-                        
-                //         overlay.style.position = 'absolute';
-                //         overlay.style.zIndex = '1';
-                //         overlay.style.height = '100%';
-                //         overlay.style.width = '100%';
-                //         overlay.style.backgroundColor = 'white';
-                //         overlay.style.visibility = 'visible';
-    
-                //         overlay.style.alignItems = 'center';
-                //         overlay.style.display = 'flex';
-                //         overlay.style.flexDirection = 'column';
-    
-                //         let oside = parent.document.getElementById('main-menu');
-                        
-                //         oside.appendChild(overlay);
-                     
-                //         let head = document.createElement('div');
-                //         let headText = document.createElement('p');
-                //         let iconContainer = document.createElement('div');
-                //         let descriptionText = document.createElement('p');
-                //         let saveBTN = document.createElement('div');
-                //         saveBTN.style.height = '30px';
-                //         saveBTN.style.width = '150px';
-                //         saveBTN.style.border = '1px solid black';
-                //         saveBTN.style.borderRadius = '6px';
-                //         saveBTN.style.marginTop = '10px';
-                //         saveBTN.appendChild(document.createTextNode('SAVE'));
-                //         saveBTN.style.display = 'flex';
-                //         saveBTN.style.justifyContent = 'center';
-                //         saveBTN.style.alignItems = 'center';
-                //         saveBTN.addEventListener('click', ()=> {
-                //             let beforeT;
-                //             if(tagType === 'textarea') {
-                //              beforeT = document.getElementById(classorid).value;
-                //             } else if(tagType === 'input') { 
-                //              beforeT = document.getElementById(classorid).value;
-                //             } else {
-                //              beforeT = document.getElementById(classorid).innerText;
-                //             }
             
-                //             if(tagType === 'textarea') {
-                //              beforeT = document.getElementById(classorid).value;
-                //             } else if(tagType === 'input') { 
-                //              beforeT = document.getElementById(classorid).value;
-                //             } else {
-                //              beforeT = document.getElementById(classorid).innerText;
-                //             }
-                //            let text = document.getElementById(classorid).innerText = singleLine.value;
-                //            parent.window.callUpdate(beforeT, text);
-                //            parent.window.calledAlready(true);
-                //         });
-                      
-                //         iconContainer.style.marginBottom = '10px';
-                      
-                //         headText.style.marginRight = '20px';
-                //         let icon = document.createElement('div');
-                //         icon.className = 'fa fa-angle-left';
-                //         icon.fontSize = '40px';
-                //         head.style.height = '35px';
-                //             head.style.width = '100%';
-                //             head.style.borderBottom = '1px solid #DDE0EB'; 
-                //         let overlaySide;
-                //         if(localStorage.getItem("remixhead3") === null) {
-                //             headText.appendChild(document.createTextNode('CHANGE IMAGE'))
-                            
-                //             head.style.display = 'flex';
-                //             head.style.justifyContent = 'center';
-                //             head.style.alignItems = 'center';
-                            
-                //             head.appendChild(iconContainer);
-                //             iconContainer.appendChild(icon);
-                //             head.appendChild(headText);
-                            
-                //             head.setAttribute("id", "remixhead3");
-                //             overlay.appendChild(head);
-                //             parent.window.croppedImageUrl = bi;
-                //             iconContainer.addEventListener('click', function() {
-                //                 //overlay.style.visibility = 'hidden';
-                //             })
-                //             localStorage.setItem("remixhead3", true);
-                //             secondCreated = true;
-                //         }
-                //         } else {
-                //             overlay.style.visibility = 'visible';
-                //         }
-                //     })
                    
     }
     testFR(elId) {
       
        
 
-        //document.getElementsByClassName('ReactCrop__image')[0].src = localStorage.getItem( "savedImageData" );
-        
-        // document.getElementById('drop-area').style.display = 'none';
-        // let overlayMenu = document.createElement('div');
-        // overlayMenu.style.height = '100%';
-        // overlayMenu.style.width = '403px';
-        // overlayMenu.style.position = 'absolute';
-        // overlayMenu.style.background = 'rgb(252, 253, 255)';
 
-        // let content = document.createElement('div');
-        // content.style.height = '100%';
-        // content.style.width = '394px';
-        // content.style.display = 'flex';
-        // content.style.borderRight = '1px solid rgb(221, 224, 235)';
-        // content.style.flexDirection = 'column';
-        // content.style.alignItems = 'center';
-        
-
-        // let remixm = document.getElementsByClassName('remix-m')[0];
-        
-        // document.getElementsByClassName('remix-m')[0].style.display = 'flex';  
-        
-        // let header = document.createElement('div');
-        // header.style.height ='33px';
-        // header.style.width ='396px';
-        // header.style.borderBottom ='1px solid rgb(221, 224, 235)';
-        // header.style.borderRight ='1px solid rgb(221, 224, 235)';
-        // let headerTitle = document.createElement('p');
-        // headerTitle.appendChild(document.createTextNode('REMIX'));
-        // header.appendChild(headerTitle);
-        // headerTitle.style.marginLeft = 'auto';
-        // headerTitle.style.marginRight = 'auto';
-        // headerTitle.style.width = '44px';
-        // headerTitle.style.position = 'relative';
-        // headerTitle.style.color = 'rgb(221, 224, 235)';
-        // headerTitle.style.top = '4px';
-        // let backArrow = document.createElement('i');
-        // backArrow.className = 'fa fa-angle-left';
-        // backArrow.style.position = 'absolute';
-        // backArrow.style.top = '6px';
-        // backArrow.style.left = '10px';
-        // backArrow.style.fontSize = '18px';
-        // backArrow.style.color = 'rgb(221, 224, 235)';
-
-        // backArrow.addEventListener('click',function(){
-        //     overlayMenu.remove();
-        // });
-
-        // let replaceBtn = document.createElement('div');
-        // let replaceIcon = document.createElement('i');
-
-        // let cropBtn = document.createElement('div');
-        // let cropIcon = document.createElement('i');
-        
-        // let eraseBtn = document.createElement('div');
-        // let eraseBtnIcon = document.createElement('i');
-
-        // let saveBtn = document.createElement('div');
-        // let saveBtnIcon = document.createElement('i');
-
-        // cropBtn.style.height = '50px';
-        // cropBtn.style.width = '348px';
-        // cropBtn.style.border = '1px solid rgb(221, 224, 235)';
-        // cropBtn.style.position = 'relative';
-        // cropBtn.style.top = '66px';
-        // cropBtn.style.borderRadius = '5px';
-        // cropBtn.style.display = 'flex';
-        // cropBtn.style.alignItems = 'center';
-        // cropBtn.style.marginBottom = '20px';
-        // cropIcon.style.marginLeft = '15px';
-        // cropIcon.style.fontSize = '20px';
-        // cropIcon.className = 'fa fa-crop';
-
-
-        // eraseBtn.style.height = '50px';
-        // eraseBtn.style.width = '348px';
-        // eraseBtn.style.border = '1px solid rgb(221, 224, 235)';
-        // eraseBtn.style.position = 'relative';
-        // eraseBtn.style.top = '66px';
-        // eraseBtn.style.borderRadius = '5px';
-        // eraseBtn.style.display = 'flex';
-        // eraseBtn.style.alignItems = 'center';
-        // eraseBtn.style.marginBottom = '20px';
-        // eraseBtnIcon.style.marginLeft = '15px';
-        // eraseBtn.style.fontSize = '20px';
-        // eraseBtnIcon.className = 'fa fa-eraser';
-
-        // eraseBtn.addEventListener('click', ()=>{
-        //     //document.getElementById('canvas').style.display = 'block';
-        // })
-
-        // replaceBtn.style.height = '50px';
-        // replaceBtn.style.width = '348px';
-        // replaceBtn.style.border = '1px solid rgb(221, 224, 235)';
-        // replaceBtn.style.position = 'relative';
-        // replaceBtn.style.top = '66px';
-        // replaceBtn.style.borderRadius = '5px';
-        // replaceBtn.style.display = 'flex';
-        // replaceBtn.style.alignItems = 'center';
-        // replaceIcon.style.marginLeft = '15px';
-        // replaceIcon.style.fontSize = '20px';
-        // replaceBtn.style.marginBottom = '20px';
-        // replaceIcon.className = 'fa fa-crop';
-
-        // saveBtn.style.height = '50px';
-        // saveBtn.style.width = '348px';
-        // saveBtn.style.border = '1px solid rgb(221, 224, 235)';
-        // saveBtn.style.position = 'relative';
-        // saveBtn.style.top = '66px';
-        // saveBtn.style.borderRadius = '5px';
-        // saveBtn.style.display = 'flex';
-        // saveBtn.style.alignItems = 'center';
-        // saveBtnIcon.style.marginLeft = '15px';
-        // saveBtnIcon.style.fontSize = '20px';
-        // saveBtn.style.marginBottom = '20px';
-        // saveBtnIcon.className = 'fa fa-floppy-o';
-
-
-        // let cropTxtEl = document.createElement('p');
-        // let cropText = document.createTextNode('Crop');
-        
-        // let replaceTxtEl = document.createElement('p');
-        // let replaceText = document.createTextNode('Replace Image');
-
-        // let eraseTxtEl = document.createElement('p');
-        // let eraseText = document.createTextNode('Erase');
-
-        // let saveTxtEl = document.createElement('p');
-        // let saveText = document.createTextNode('Save');
-
-        // replaceTxtEl.appendChild(replaceText);
-        // replaceTxtEl.style.marginLeft = '10px';
-
-        // replaceBtn.appendChild(replaceIcon);
-        // replaceBtn.appendChild(replaceTxtEl);
-        // replaceBtn.addEventListener('click', ()=>{
-        //     // document.getElementById('drop-area').style.display = 'block';
-        //     // document.getElementsByClassName('ReactCrop')[0].style.display = 'none';
-        //     // document.getElementById('canvas-load').style.display = 'block';
-        // })
-        
-        // cropTxtEl.appendChild(cropText);
-        // cropTxtEl.style.marginLeft = '10px';
-
-        // cropBtn.appendChild(cropIcon);
-        // cropBtn.appendChild(cropTxtEl);
-
-        // eraseTxtEl.appendChild(eraseText);
-        // eraseTxtEl.style.marginLeft = '10px';
-
-        // eraseBtn.appendChild(replaceIcon);
-        // eraseBtn.appendChild(eraseTxtEl);
-        
-        // saveTxtEl.appendChild(saveText);
-        // saveTxtEl.style.marginLeft = '10px';
-
-        // saveBtn.appendChild(saveBtnIcon);
-        // saveBtn.appendChild(saveTxtEl);
-        //saveBtn.addEventListener('click',()=>{
-            // document.getElementsByClassName('ReactCrop')[0].style.display = 'none'
-            // document.getElementById('canvas').style.display = 'block'
-            // let canvas = document.getElementById('canvas-load');
-            // let dataURL = canvas.toDataURL();
-          
-            // elId = elId.substring(1);
-    
-            // var iframe = document.getElementById("output_frame");
-            // var elmnt = iframe.contentWindow.document.getElementById(elId);
-            // elmnt.getElementById(elId).style.backgroundImage = `url(${dataURL})`;
-        
-       // })
-
-            
-       
-       
-
-        // header.appendChild(backArrow);
-       
-
-        // overlayMenu.appendChild(content);
- 
-        // content.appendChild(header);
-      
-        // content.appendChild(remixm);
-
-        
-        // document.getElementById('main-menu').appendChild(overlayMenu);
-
- 
-            // function createCanvas(parent, width, height) {
-            //     var canvas = {};
-            //     canvas.node = document.getElementById('canvas-load');
-            //     canvas.context = canvas.node.getContext('2d');
-            //     canvas.node.width = width || 100;
-            //     canvas.node.height = height || 100;
-            //     parent.appendChild(canvas.node);
-            //     return canvas;
-            // }
-
-            // function init(canvas, width, height, fillColor) {
-            //     var canvas = createCanvas(container, width, height);
-            //     var ctx = canvas.context;
-            //     // define a custom fillCircle method
-            //     ctx.fillCircle = function(x, y, radius, fillColor) {
-            //         this.fillStyle = fillColor;
-            //         this.beginPath();
-            //         this.moveTo(x, y);
-            //         this.arc(x, y, radius, 0, Math.PI * 2, false);
-            //         this.fill();
-            //     };
-            //     ctx.clearTo = function(fillColor) {
-            //         ctx.fillStyle = fillColor;
-            //         ctx.fillRect(0, 0, width, height);
-            //     };
-            //     //ctx.clearTo(fillColor || "#ddd");
-
-            //     function getMousePos(canvas, evt) {
-            //         var rect = canvas.getBoundingClientRect();
-            //         return {
-            //             x: evt.clientX - rect.left,
-            //             y: evt.clientY - rect.top
-            //         };
-            //     }
-            //     // bind mouse events
-            //     canvas.node.onmousemove = function(e) {
-            //         if (!canvas.isDrawing) {
-            //            return;
-            //         }
-            //         var pos = getMousePos(canvas.node, e);
-
-            //         var x = pos.x;
-            //         var y = pos.y;
-            //         var radius = 10; // or whatever
-            //         var fillColor = 'blue';
-            //         ctx.globalCompositeOperation = 'destination-out';
-            //         ctx.fillCircle(x, y, radius, fillColor);
-            //     };
-            //     canvas.node.onmousedown = function(e) {
-            //         canvas.isDrawing = true;
-            //     };
-            //     canvas.node.onmouseup = function(e) {
-            //         canvas.isDrawing = false;
-            //     };
-            // }
-        
-            // var container = document.getElementById('canvas');
-            // init(container, 300, 288, '#ddd');
-            
-
-        // const reader = new FileReader();
-        // reader.addEventListener('load', () =>
-        //   this.setState({ src: localStorage.getItem( "savedImageData" ) }),
-        // );
-        // document.getElementById('drop-area').style.display = 'none';
-        // reader.readAsDataURL(localStorage.getItem( "savedImageData" ));
       
     }
     onCropConfirm(e) {
