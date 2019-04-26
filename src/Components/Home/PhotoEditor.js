@@ -338,23 +338,24 @@ bindExportEvent() {
     // console.log('exported' + result);
     var iframe = document.getElementById("output_frame");
     if(this.props.type === 'id') {
-      if(iframe.contentWindow.document.getElementById(`${this.props.classorid}`).style == null) {
-        iframe.contentWindow.document.getElementById(`${this.props.classorid}`).src = result;
+      
+      let element = iframe.contentWindow.document.getElementById(this.props.classorid);
+      if(element.tagName.toLowerCase() == 'img') {
+        element.src = result;
       } else {
         iframe.contentWindow.document.getElementById(`${this.props.classorid}`).style.backgroundImage = `url(${result})`;
-
       }
-      // temporary
-
+     
     } else if (this.props.type === 'class') {
-      if(iframe.contentWindow.document.getElementsByClassName(`${this.props.classorid}`)[0].style == null) {
-        iframe.contentWindow.document.getElementsByClassName(`${this.props.classorid}`)[0].src = result;
-      } else {
+      let element = iframe.contentWindow.document.getElementsByClassName(this.props.classorid);
+      if(element[0].tagName.toLowerCase() == 'img') {
         for(let i = 0; i < iframe.contentWindow.document.getElementsByClassName(`${this.props.classorid}`).length; i++) {
-          iframe.contentWindow.document.getElementsByClassName(`${this.props.classorid}`)[i].style.backgroundImage = `url(${result})`;
+          element[i].src = result;
         }
+      } else {for(let i = 0; i < iframe.contentWindow.document.getElementsByClassName(`${this.props.classorid}`).length; i++) {
+        iframe.contentWindow.document.getElementsByClassName(`${this.props.classorid}`)[i].style.backgroundImage = `url(${result})`;
       }
-
+    }
     } else {
    
       

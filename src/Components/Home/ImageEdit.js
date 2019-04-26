@@ -323,7 +323,7 @@ let that;
                         close.style.width = '20px';
                         console.log('id :', getList[j].id)
                         
-                        that.setState({pic:getImageSaved, id:getList[j].id, classorid:'class', type:getList[j].type})
+                        that.setState({pic:getImageSaved, id:getList[j].id, classorid:getList[j].classorid, type:getList[j].type})
 
                         document.getElementById('menu-wrap').style.height = '583px';
                 
