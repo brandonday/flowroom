@@ -123,7 +123,7 @@ let roomFilter = 'weight';
                     database.ref(`users/${that.state.displayNameSelf}`).once('value').then(function(snapshot) {
                 
                         that.setState({
-                            userPic:snapshot.val().pic
+                            userPic:snapshot.val() !== null? snapshot.val().pic : ''
                         });
             
                     });

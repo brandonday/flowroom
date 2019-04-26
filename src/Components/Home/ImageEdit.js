@@ -196,9 +196,9 @@ let that;
                       let itemInfoh = document.createElement('p');
                       let itemInfoEdit = document.createElement('p');
                       
-                      itemInfo.appendChild(document.createTextNode('Pac-man'));
-                      itemInfot.appendChild(document.createTextNode('Hero'));
-                      itemInfoh.appendChild(document.createTextNode('100px x 100px'));
+                      // itemInfo.appendChild(document.createTextNode('Pac-man'));
+                      // itemInfot.appendChild(document.createTextNode('Hero'));
+                      // itemInfoh.appendChild(document.createTextNode('100px x 100px'));
                       //itemInfoEdit.appendChild(document.createTextNode('Edit'));
 
                      

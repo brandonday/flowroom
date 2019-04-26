@@ -17,283 +17,47 @@
        RemixImage:function(elId, contentType, btnLabel) {
 
                 this.elId = elId;
-                let FR_REMIX_LIST = JSON.parse(localStorage.getItem("FR_REMIX_LIST"));
-                if(FR_REMIX_LIST === null) {
-                    FR_REMIX_LIST = [];
-                } else {
-                    FR_REMIX_LIST = JSON.parse(localStorage.getItem("FR_REMIX_LIST"));
+                let FR_REMIX_LIST = [];
+                let list = localStorage.getItem("FR_REMIX_LIST");
+                if(list !== null) {
+                    console.log('list :', list);
+                    FR_REMIX_LIST = JSON.parse(list);
+                    
                 }
+                
+    
+                let bi = '';
+                let classorid = flowroom.elId.substring(1).toString();
+                if(this.elId.charAt(0) === '.') {
+                    
+                    var element = document.getElementsByClassName(`${classorid}`)[0];
+                    if(element.tagName.toLowerCase() == 'img') {
+                        bi = element.src;
+                    } else {
+                        let style = element.currentStyle || window.getComputedStyle(element, false);
+                        bi = style.backgroundImage.slice(4, -1).replace(/"/g, "");
+                    }
+                    FR_REMIX_LIST.push({[classorid]:classorid, id:classorid, image:bi,classorid:`${classorid}`,type:'class'});
 
+                } else if(this.elId.charAt(0) === '#') {
+                  
+                    var element = document.getElementById(`${classorid}`);
+                    if(element.tagName.toLowerCase() == 'img') {
+                        bi = element.src;
+                    } else {
+                        let style = element.currentStyle || window.getComputedStyle(element, false);
+                        bi = style.backgroundImage.slice(4, -1).replace(/"/g, "");
+                    }
+                    FR_REMIX_LIST.push({[classorid]:classorid,id:classorid,image:bi,classorid:`${classorid}`,type:'id'});
 
+                } 
+                console.log(FR_REMIX_LIST)
+                localStorage.setItem("FR_REMIX_LIST", JSON.stringify(FR_REMIX_LIST));
+    
 
-            let list = parent.document.getElementById('main-menu');
-            let item = parent.document.createElement('li');
-            if(this.elId.charAt(0) === '.') {
-                let classorid = flowroom.elId.substring(1);
-
-                classorid = classorid.toString();
-
-
-                    var img = document.getElementsByClassName(`${classorid}`)[0];
-                    let style = img.currentStyle || window.getComputedStyle(img, false);
-                    let bi = style.backgroundImage.slice(4, -1).replace(/"/g, "");
-
-
-                 if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(1)) === -1) { /*I keep (0) in case a class is an id too*/
-                    // let bgImg = document.createElement('div');
-                    // let text = document.createElement('p');
-                    // text.style.marginRight = '55px';
-
-
-                    // text.appendChild(document.createTextNode('CHANGE IMAGE'))
-                    // bgImg.style.backgroundImage = `url(${bi})`;
-                    // bgImg.style.height = '40px';
-                    // bgImg.style.width = '40px';
-                    // bgImg.style.backgroundSize = 'cover';
-
-                    // item.style.height = '50px';
-                    // item.style.width = '348px';
-
-                    // item.style.marginTop = '10px';
-                    // item.style.marginBottom = '10px';
-
-                    // item.style.marginLeft = 'auto';
-                    // item.style.marginRight = 'auto';
-
-                    // item.style.border = '1px solid #DDE0EB';
-                    // item.style.display = 'flex';
-                    // item.style.alignItems = 'center';
-
-                    // item.style.borderRadius = '5px';
-
-                    // bgImg.style.marginRight = '5px';
-                    // bgImg.style.marginLeft = '7px';
-                    // bgImg.style.position = 'relative';
-                    // item.style.display = 'flex';
-                    // //item.style.justifyContent = 'flex-end';
-
-                    // bgImg.style.right = '0px';
-                    // item.appendChild(bgImg);
-                    // item.appendChild(text);
-                    // list.appendChild(item);
-                    // item.addEventListener('click', function() {
-
-                    //     var img = new Image,
-                    //     canvas = document.createElement("canvas"),
-                    //     ctx = canvas.getContext("2d"),
-                    //     src = bi; // insert image url here
-
-                    // img.crossOrigin = "Anonymous";
-
-                    // img.onload = function() {
-                    //     canvas.width = img.width;
-                    //     canvas.height = img.height;
-                    //     ctx.drawImage( img, 0, 0 );
-                    //     localStorage.setItem( "savedImageData", canvas.toDataURL("image/png") );
-                    //     testFR(elId);
-                    // }
-                    // img.src = src;
-
-                    // make sure the load event fires for cached images too
-                    // if ( img.complete || img.complete === undefined ) {
-                    //     img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-                    //     img.src = bi;
-                    // }
-
-
-                            //return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-
-
-                        //   var base64 = getBase64Image(bi);
-                        //   alert(base64)
-
-
-
-
-                //           var blob = null;
-                //           var xhr = new XMLHttpRequest();
-                //           xhr.open("GET", bi);
-                //           xhr.responseType = "blob";//force the HTTP response, response-type header to be blob
-                //           xhr.onload = function()
-                //           {
-                //               blob = xhr.response;//xhr.response is now a blob object
-
-                //           }
-                //           xhr.send();
-                //           var myReader = new FileReader();
-                //   myReader.readAsArrayBuffer(blob)
-                //   myReader.addEventListener("loadend", function(e)
-                //   {
-                //           var buffer = e.srcElement.result;//arraybuffer object
-                //           //that.setState({ src: buffer})
-                //   });
-
-
-
-                  //var base64 = getBase64Image('https://i.pinimg.com/originals/69/64/4d/69644d2af4e6bf16fcf88a9ac1b275d6.jpg');
-
-                          //alert(base64)
-                          //testFR(base64);
-                        //window.top
-                        //alert(classorid);
-                        //if(secondCreated === false) {
-
-                        // overlay.style.position = 'absolute';
-                        // overlay.style.zIndex = '1';
-                        // overlay.style.height = '100%';
-                        // overlay.style.width = '100%';
-                        // overlay.style.backgroundColor = 'white';
-                        // overlay.style.visibility = 'visible';
-
-                        // overlay.style.alignItems = 'center';
-                        // overlay.style.display = 'flex';
-                        // overlay.style.flexDirection = 'column';
-
-                        // let oside = parent.document.getElementById('main-menu');
-
-                        // oside.appendChild(overlay);
-
-                        // let head = document.createElement('div');
-                        // let headText = document.createElement('p');
-                        // let iconContainer = document.createElement('div');
-                        // let descriptionText = document.createElement('p');
-                        // let saveBTN = document.createElement('div');
-                        // saveBTN.style.height = '30px';
-                        // saveBTN.style.width = '150px';
-                        // saveBTN.style.border = '1px solid black';
-                        // saveBTN.style.borderRadius = '6px';
-                        // saveBTN.style.marginTop = '10px';
-                        // saveBTN.appendChild(document.createTextNode('SAVE'));
-                        // saveBTN.style.display = 'flex';
-                        // saveBTN.style.justifyContent = 'center';
-                        // saveBTN.style.alignItems = 'center';
-                        // saveBTN.addEventListener('click', ()=> {
-                        //     let beforeT;
-                        //     if(tagType === 'textarea') {
-                        //      beforeT = document.getElementById(classorid).value;
-                        //     } else if(tagType === 'input') {
-                        //      beforeT = document.getElementById(classorid).value;
-                        //     } else {
-                        //      beforeT = document.getElementById(classorid).innerText;
-                        //     }
-
-                        //     if(tagType === 'textarea') {
-                        //      beforeT = document.getElementById(classorid).value;
-                        //     } else if(tagType === 'input') {
-                        //      beforeT = document.getElementById(classorid).value;
-                        //     } else {
-                        //      beforeT = document.getElementById(classorid).innerText;
-                        //     }
-                        //    let text = document.getElementById(classorid).innerText = singleLine.value;
-                        //    parent.window.callUpdate(beforeT, text);
-                        //    parent.window.calledAlready(true);
-                        // });
-
-                        // iconContainer.style.marginBottom = '10px';
-
-                        // headText.style.marginRight = '20px';
-                        // let icon = document.createElement('div');
-                        // icon.className = 'fa fa-angle-left';
-                        // icon.fontSize = '40px';
-                        // head.style.height = '35px';
-                        //     head.style.width = '100%';
-                        //     head.style.borderBottom = '1px solid #DDE0EB';
-                        // let overlaySide;
-                        // if(localStorage.getItem("remixhead3") === null) {
-                        //     headText.appendChild(document.createTextNode('CHANGE IMAGE'))
-
-                        //     head.style.display = 'flex';
-                        //     head.style.justifyContent = 'center';
-                        //     head.style.alignItems = 'center';
-
-                        //     head.appendChild(iconContainer);
-                        //     iconContainer.appendChild(icon);
-                        //     head.appendChild(headText);
-
-                        //     head.setAttribute("id", "remixhead3");
-                        //     overlay.appendChild(head);
-                        //     parent.window.croppedImageUrl = bi;
-                        //     iconContainer.addEventListener('click', function() {
-                        //         //overlay.style.visibility = 'hidden';
-                        //     })
-                        //     localStorage.setItem("remixhead3", true);
-                        //     secondCreated = true;
-                        // }
-                        // } else {
-                        //     overlay.style.visibility = 'visible';
-                        // }
-                    //})
-                    FR_REMIX_LIST.push({[classorid]:classorid,image:bi,classorid:`${classorid}`,type:'class'});
-                    console.log(FR_REMIX_LIST)
-                    localStorage.setItem("FR_REMIX_LIST", JSON.stringify(FR_REMIX_LIST));
-                 }
-                //}
-            } else if(this.elId.charAt(0) === '#') {
-                let classorid = flowroom.elId.substring(1);
-                //alert(classorid)
-                classorid = classorid.toString();
-                var img = document.getElementById(`${classorid}`);
-                let style = img.currentStyle || window.getComputedStyle(img, false);
-                let bi = style.backgroundImage.slice(4, -1).replace(/"/g, "");
-
-                // Display the url to the user
-                //alert(flowroom.elId.substring(0))
-                if(FR_REMIX_LIST.indexOf(flowroom.elId.substring(1)) === -1) {
-
-
-
-
-                        // iconContainer.style.marginBottom = '10px';
-
-                        // headText.style.marginRight = '20px';
-                        // let icon = document.createElement('div');
-                        // icon.className = 'fa fa-angle-left';
-                        // icon.fontSize = '40px';
-                        // head.style.height = '35px';
-                        //     head.style.width = '100%';
-                        //     head.style.borderBottom = '1px solid #DDE0EB';
-                        // let overlaySide;
-                        // if(localStorage.getItem("remixhead3") === null) {
-                        //     headText.appendChild(document.createTextNode('CHANGE IMAGE'))
-
-                        //     head.style.display = 'flex';
-                        //     head.style.justifyContent = 'center';
-                        //     head.style.alignItems = 'center';
-
-                        //     head.appendChild(iconContainer);
-                        //     iconContainer.appendChild(icon);
-                        //     head.appendChild(headText);
-
-                        //     head.setAttribute("id", "remixhead3");
-                        //     overlay.appendChild(head);
-                        //     parent.window.croppedImageUrl = bi;
-                        //     iconContainer.addEventListener('click', function() {
-                        //         //overlay.style.visibility = 'hidden';
-                        //     })
-                        //     localStorage.setItem("remixhead3", true);
-                        //     secondCreated = true;
-                        // }
-                        // } else {
-                        //     overlay.style.visibility = 'visible';
-                        // }
-                    //})
-                    //list.appendChild(item);
-                    FR_REMIX_LIST.push({[classorid]:classorid,image:bi, classorid:`${classorid}`, type:'id'});
-                    localStorage.setItem("FR_REMIX_LIST", JSON.stringify(FR_REMIX_LIST));
-                    console.log(localStorage.getItem("FR_REMIX_LIST"))
-                }
-
-
-            }
-
-            //  item.style.height = '50px';
-            //  item.style.width = '235px';
-            //  item.style.marginTop = '10px';
-            //  item.style.marginBottom = '10px';
-            //  item.style.border = '1px solid #DDE0EB';
-            //  item.appendChild(bi);
-            //  list.appendChild(item);
-
+        },
+        init() {
+            localStorage.removeItem("FR_REMIX_LIST");
 
         },
         remixCallback:function(obj) {
