@@ -102,6 +102,7 @@ const thumb = {
                 createAccount(email, password).then(() => {
                     
                     that.setState({isLoggedIn:true});
+                    
                 }).catch((error)=> {
                     alert(error.message)
                 });  
@@ -254,7 +255,7 @@ const thumb = {
         //     </div>
         //   ));
 
-        if(!this.stateisLoggedIn) {    
+        if(!this.state.isLoggedIn) {    
             return ( 
                 
                 <div style={{flex:'1',display:'flex'}}>

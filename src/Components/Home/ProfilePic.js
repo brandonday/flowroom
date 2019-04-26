@@ -32,7 +32,7 @@ class ProfilePic extends Component {
         database.ref(`users/${user.displayName}`).once('value').then(function(snapshot) {
                 
           that.setState({
-              pic:snapshot.val().pic,
+              pic:snapshot.val() !== null?snapshot.val().pic:'',
               username:user.displayName,
               isLoading:false
           });

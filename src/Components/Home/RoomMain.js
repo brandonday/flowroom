@@ -162,7 +162,7 @@ class RoomMain extends Component {
           
                 document.getElementById('main-menu').style.position = 'absolute';
                 document.getElementById('main-menu').style.height = '583px';
-                document.getElementById('main-menu').style.width = '68%';
+                document.getElementById('main-menu').style.width = '330px';
                 document.getElementById('main-menu').style.zIndex = '999994';
                 document.getElementById('main-menu').style.top = '0px';
                 document.getElementById('main-menu').style.zIndex = '999999';
@@ -179,7 +179,7 @@ class RoomMain extends Component {
                 document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingLeft = '10px';
                 document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingRight = '10px';
                 document.getElementById('main-menu').style.display = 'flex';
-                document.getElementById('main-menu').style.position = 'absolute';
+                // document.getElementById('main-menu').style.position = 'absolute';
                 document.getElementById('main-menu').style.left = '-330px';
             } else {
                 let main = document.getElementById('main-menu');
@@ -188,10 +188,10 @@ class RoomMain extends Component {
                 tabMenu.style.display = 'block';
                 document.getElementById('tab-menu').style.transform = 0;
               
-                main.style.width = '380px';
+                main.style.width = '330px';
                 main.style.borderRight = '1px solid rgb(24, 24, 24)';
                 main.style.background = 'rgb(24, 24, 24)';
-                main.style.overflow = 'hidden scroll';
+       
                 main.style.flexDirection = 'column';
                 if(isMenuOpen === true) {
                     //document.getElementById('main-menu').style.display = 'flex';
@@ -939,14 +939,14 @@ class RoomMain extends Component {
             
                         <div id="main-menu" 
                             style={{
-                                width:'378px', 
+                                 
                                 borderRight:'1px solid #181818',
                                 background:'#FCFDFF',
-                                overflow:'hidden',
-                                overflowY:'scroll',
+                                left:'-330px',
                                 backgroundColor:'#181818',
                                 flexDirection:'column',
-                                alignItems:'center'
+                                alignItems:'center',
+                                transform:'none'
                         }}>
                             <div style={{height:'170px', width:'259px'}}>
                                 <div style={{
@@ -1019,7 +1019,7 @@ class RoomMain extends Component {
                                     const element = document.querySelector('#main-menu');
                                     const ball = styler(element); 
                                     
-                                    tween({ from:-330, to: 378, duration: 200 })
+                                    tween({ from:0, to: 370, duration: 200 })
                                     .start(v => ball.set('x', v));
                                     document.getElementById('tab-menu').style.display = 'block';
                                 }} style={{
