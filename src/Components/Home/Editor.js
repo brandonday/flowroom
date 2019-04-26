@@ -224,6 +224,10 @@ class Editor extends Component {
       window.updateJSCode = function(code) {
         JS_EDITOR.setValue(code)
       }
+
+      window.updateHTMLCode = function(code) {
+        HTML_EDITOR.setValue(code)
+      }
        
 
         HTML_EDITOR.on('change', (inst, changes) => {

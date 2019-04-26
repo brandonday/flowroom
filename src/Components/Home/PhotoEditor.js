@@ -356,13 +356,13 @@ bindExportEvent() {
         iframe.contentWindow.document.getElementsByClassName(`${this.props.classorid}`)[i].style.backgroundImage = `url(${result})`;
       }
     }
-    } else {
+    } 
    
       
       this.putObject(this.state.id, result);
       
      
-    }
+    
   });
 
 }

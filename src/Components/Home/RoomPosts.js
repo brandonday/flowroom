@@ -28,6 +28,9 @@ let roomsFilter = [];
 let roomsBackUp = [];
 let currentPage = 1;
 let roomsPerPage = window.innerWidth >= 1024 ? 6 : 4;
+if(window.innerHeight >= 800) {
+  roomsPerPage *= 2;
+}
 // let columnsPerPage = window.innerWidth >= 1024 ? 3 : (window.innerWidth >= 768 ? 2 : (window.innerWidth > 320 ? 1 : 1));
 let nextRoomIndex = '';
 let previousRoomIndex = '';

@@ -99,6 +99,35 @@
             str = str.replace(searchString, replaceWith);
             parent.window.updateJSCode(str);
         },
+        replaceHTML:function(id, replaceWith) {   
+            let dhtml = JSON.parse(localStorage.getItem("dhtml"));        
+            let html = dhtml.html;
+            var doc = document.implementation.createHTMLDocument("");
+            if (html.toLowerCase().indexOf('<!doctype') > -1) {
+                doc.documentElement.innerHTML = html;
+              } else {
+                doc.body.innerHTML = html;
+              }
+            
+            let el = doc.getElementById(id);// or doc.querySelector('body').innerHTML
+              
+            if(el) {
+                if(el.tagName.toLowerCase() == 'img') {
+                    el.setAttribute("src", replaceWith);
+                
+                } else {
+                    el.style.backgroundImage = `url(${replaceWith})`;
+
+                }
+            }
+            dhtml.html = doc.body.innerHTML;
+
+            //alert(JSON.stringify(dhtml))
+
+            localStorage.setItem("dhtml", JSON.stringify(dhtml));
+            
+            parent.window.updateHTMLCode(dhtml.html);
+        },
         SaveScreenShot(callback) {
             let html = document.body;
             let bodyBackgroundColor = document.body.style.backgroundColor;

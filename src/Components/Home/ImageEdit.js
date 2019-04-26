@@ -58,6 +58,7 @@ let that;
         let remixImageListNav = document.createElement('div');
         let remixImageListNavArrows = document.createElement('div');
         let remixImageWrap = document.createElement('div');
+        remixImageWrap.setAttribute("id", "remix-list");
         remixImageListNavArrows.style.display = 'flex';
         remixImageListNavArrows.style.position = 'absolute';
         remixImageListNavArrows.style.right = '14px';
