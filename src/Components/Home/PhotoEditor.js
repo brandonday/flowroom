@@ -43,119 +43,106 @@ class PhotoEditor extends React.Component {
   handleLoad() {
 
   }
-
-
-
   resetEditor(e,img){
     return this.photoEditorSDK.current.ui.setImage(img);
-   
   }
 
 
-base64Encode(str) {
+  base64Encode(str) {
     var CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     var out = "", i = 0, len = str.length, c1, c2, c3;
     while (i < len) {
-        c1 = str.charCodeAt(i++) & 0xff;
-        if (i == len) {
-            out += CHARS.charAt(c1 >> 2);
-            out += CHARS.charAt((c1 & 0x3) << 4);
-            out += "==";
-            break;
-        }
-        c2 = str.charCodeAt(i++);
-        if (i == len) {
-            out += CHARS.charAt(c1 >> 2);
-            out += CHARS.charAt(((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4));
-            out += CHARS.charAt((c2 & 0xF) << 2);
-            out += "=";
-            break;
-        }
-        c3 = str.charCodeAt(i++);
+      c1 = str.charCodeAt(i++) & 0xff;
+      if (i == len) {
         out += CHARS.charAt(c1 >> 2);
-        out += CHARS.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
-        out += CHARS.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6));
-        out += CHARS.charAt(c3 & 0x3F);
+        out += CHARS.charAt((c1 & 0x3) << 4);
+        out += "==";
+        break;
+      }
+      c2 = str.charCodeAt(i++);
+      if (i == len) {
+        out += CHARS.charAt(c1 >> 2);
+        out += CHARS.charAt(((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4));
+        out += CHARS.charAt((c2 & 0xF) << 2);
+        out += "=";
+        break;
+      }
+      c3 = str.charCodeAt(i++);
+      out += CHARS.charAt(c1 >> 2);
+      out += CHARS.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
+      out += CHARS.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6));
+      out += CHARS.charAt(c3 & 0x3F);
     }
     return out;
-}
-removeBG() {
-  axios.post(`https://api.remove.bg/v1.0/removebg`, {
-    image_url: 'https://www.remove.bg/example.jpg',
-    size: 'regular',
-  },
-  {headers: {
-    'X-Api-Key': 'ZLgFThtZ8wNHWHyZKbHXdnZ4'
-  }}).then(res => {
+  }
+  removeBG() {
+    axios.post(`https://api.remove.bg/v1.0/removebg`, {
+      image_url: 'https://www.remove.bg/example.jpg',
+      size: 'regular',
+    },
+    {
+      headers: {
+        'X-Api-Key': 'ZLgFThtZ8wNHWHyZKbHXdnZ4'
+      }
+    }).then(res => {
     let img_base64_val = this.base64Encode(res.data);
     var reader = new FileReader();
     reader.onload = (function(self) {
       return function(e) {
         document.getElementById("img").src = e.target.result;
-      }
+        }
+      });
+      reader.readAsDataURL(new Blob([res.data]));
+      this.setState({image:img_base64_val});
+      console.log(img_base64_val)
     });
-    reader.readAsDataURL(new Blob([res.data]));
-    this.setState({image:img_base64_val});
-    console.log(img_base64_val)
-  });
-}
-recreateList() {
- // document.getElementsByClassName('remix-m')[0].style.display = 'none';  
+  }
+  recreateList() {
+  // document.getElementsByClassName('remix-m')[0].style.display = 'none';  
 
-  function removeDuplicates(originalArray, prop) {
-       var newArray = [];
-       var lookupObject  = {};
-  
-       for(var i in originalArray) {
-          lookupObject[originalArray[i][prop]] = originalArray[i];
-       }
-  
-       for(i in lookupObject) {
-           newArray.push(lookupObject[i]);
-       }
-        return newArray;
-   }
+    function removeDuplicates(originalArray, prop) {
+      var newArray = [];
+      var lookupObject  = {};
+      for(var i in originalArray) {
+        lookupObject[originalArray[i][prop]] = originalArray[i];
+      }
+      for(i in lookupObject) {
+        newArray.push(lookupObject[i]);
+      }
+      return newArray;
+    }
   
  
 
-  let that = this;
-  let list = document.getElementById('main-menu');
-  let getList = JSON.parse(localStorage.getItem( "FR_REMIX_LIST"));
-  let remixList = document.createElement('div');
-  remixList.setAttribute("id", "remix-list");
-  remixList.style.display = 'flex';
-  remixList.style.flexDirection = 'column';
-  remixList.style.width = '100%';
-  // remixList.style.flexDirection = 'row';
-  // remixList.style.flexWrap = 'wrap';
+    let that = this;
+    let list = document.getElementById('main-menu');
+    let getList = JSON.parse(localStorage.getItem( "FR_REMIX_LIST"));
+    let remixList = document.createElement('div');
+    remixList.setAttribute("id", "remix-list");
+    remixList.style.display = 'flex';
+    remixList.style.flexDirection = 'column';
+    remixList.style.width = '100%';
+    // remixList.style.flexDirection = 'row';
+    // remixList.style.flexWrap = 'wrap';
 
-  if(getList != null) {
-  let overlay = document.createElement('div');
-              overlay.setAttribute("id","remix-overlay");
-              //let item;
-             
-             
-              let uniqueArray;
-           
-              for(let i = 0; i < getList.length; i++) {
-                  let n = Object.getOwnPropertyNames(getList[i]);
-                  let final = n[0];
-                  uniqueArray = removeDuplicates(getList, final);
-              }
+    if(getList != null) {
+    let overlay = document.createElement('div');
+        overlay.setAttribute("id","remix-overlay");
+    let uniqueArray;
+      for(let i = 0; i < getList.length; i++) {
+        let n = Object.getOwnPropertyNames(getList[i]);
+        let final = n[0];
+          uniqueArray = removeDuplicates(getList, final);
+      }
               
-              console.log(uniqueArray)
-              this.setState({currentpic:uniqueArray[0]});
+      console.log(uniqueArray)
+      this.setState({currentpic:uniqueArray[0]});
               
-              for(let j = 0; j < uniqueArray.length; j++) {
-              let item = document.createElement('li');
-                  
-          
-              let bgImg = document.createElement('div');
+      for(let j = 0; j < uniqueArray.length; j++) {
+        let item = document.createElement('li');
+        let bgImg = document.createElement('div');
                             
-            
-
-
-              bgImg.style.backgroundImage = `url(${getList[j].image})`;
+        bgImg.style.backgroundImage = `url(${getList[j].image})`;
               bgImg.style.height = '50px';
               bgImg.style.width = '50px';
               bgImg.style.backgroundSize = 'cover';
@@ -339,6 +326,7 @@ async putObject(id, image) {
       document.getElementById('menu-wrap').style.display = 'none';
       
       that.recreateList();
+      localStorage.setItem("newPost", false); /*if it's being remixed, this is changed to false. It's not a new post*/
     }
   });
 }
@@ -350,11 +338,23 @@ bindExportEvent() {
     // console.log('exported' + result);
     var iframe = document.getElementById("output_frame");
     if(this.props.type === 'id') {
-      iframe.contentWindow.document.getElementById(`${this.props.classorid}`).style.backgroundImage = `url(${result})`;
-    } else if (this.props.type === 'class') {
-      for(let i = 0; i < iframe.contentWindow.document.getElementsByClassName(`${this.props.classorid}`).length; i++) {
-        iframe.contentWindow.document.getElementsByClassName(`${this.props.classorid}`)[i].style.backgroundImage = `url(${result})`;
+      if(iframe.contentWindow.document.getElementById(`${this.props.classorid}`).style == null) {
+        iframe.contentWindow.document.getElementById(`${this.props.classorid}`).src = result;
+      } else {
+        iframe.contentWindow.document.getElementById(`${this.props.classorid}`).style.backgroundImage = `url(${result})`;
+
       }
+      // temporary
+
+    } else if (this.props.type === 'class') {
+      if(iframe.contentWindow.document.getElementsByClassName(`${this.props.classorid}`)[0].style == null) {
+        iframe.contentWindow.document.getElementsByClassName(`${this.props.classorid}`)[0].src = result;
+      } else {
+        for(let i = 0; i < iframe.contentWindow.document.getElementsByClassName(`${this.props.classorid}`).length; i++) {
+          iframe.contentWindow.document.getElementsByClassName(`${this.props.classorid}`)[i].style.backgroundImage = `url(${result})`;
+        }
+      }
+
     } else {
    
       
