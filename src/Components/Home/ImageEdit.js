@@ -287,7 +287,7 @@ let that;
                     
                     remixImageWrap.appendChild(item);
 
-                    if(getList[j].type === 'url') {
+                    //if(getList[j].type === 'url') {
                       item.addEventListener('click', ()=> {
 
                         
@@ -338,42 +338,42 @@ let that;
                         
                     })
 
-                    } else {
+                   // } else {
 
-                    item.addEventListener('click', ()=> {
+                    // item.addEventListener('click', ()=> {
                         
-                        let img = new Image;
-                        img.setAttribute('crossOrigin', 'anonymous'); 
+                    //     let img = new Image;
+                    //     img.setAttribute('crossOrigin', 'anonymous'); 
                         
-                        let canvas = document.createElement('canvas');
-                        let ctx = canvas.getContext("2d");
+                    //     let canvas = document.createElement('canvas');
+                    //     let ctx = canvas.getContext("2d");
                         
                     
-                        img.onload = function() {
+                    //     img.onload = function() {
                        
-                        canvas.width = img.width;
-                        canvas.height = img.height;
-                        ctx.drawImage( img, 0, 0 );
-                        localStorage.setItem( `savedImageData${j}`, canvas.toDataURL("image/png") );
-                        let getImageSaved = localStorage.getItem(`savedImageData${j}`);
+                    //     canvas.width = img.width;
+                    //     canvas.height = img.height;
+                    //     ctx.drawImage( img, 0, 0 );
+                    //     localStorage.setItem( `savedImageData${j}`, canvas.toDataURL("image/png") );
+                    //     let getImageSaved = localStorage.getItem(`savedImageData${j}`);
                         
                         
-                         document.getElementById('menu-wrap').style.display = 'block';
-                        document.getElementById('menu').style.display = 'block';
-                        that.setState({pic:getImageSaved,id:getList[j].id,classorid:getList[j].classorid, type:getList[j].type})
+                    //      document.getElementById('menu-wrap').style.display = 'block';
+                    //     document.getElementById('menu').style.display = 'block';
+                    //     that.setState({pic:getImageSaved,id:getList[j].id,classorid:getList[j].classorid, type:getList[j].type})
 
                         
                         
-                        //testFR(elId);
-                        }
-                        img.src = getList[j].image;
+                    //     //testFR(elId);
+                    //     }
+                    //     img.src = getList[j].image;
                     
                         
 
                         
-                    })
+                    // })
 
-                    }
+                   // }
 
                   }
               
