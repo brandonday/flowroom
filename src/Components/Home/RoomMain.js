@@ -89,7 +89,7 @@ class RoomMain extends Component {
             text = new createDatGUI();
             let mainmenu = document.getElementById('main-menu');
             let remixTextBox = document.createElement('div');
-            remixTextBox.style.border = '1px solid red';
+            //remixTextBox.style.border = '1px solid red';
             remixTextBox.style.height = '330px';
             remixTextBox.style.width = '269px';
             remixTextBox.style.overflow = 'hidden';

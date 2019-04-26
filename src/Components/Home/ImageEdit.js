@@ -66,7 +66,7 @@ let that;
         remixImageListNavArrows.style.justifyContent = 'space-between';
         remixImageListNavArrows.style.fontSize = '14px';
         let remixImageBox = document.createElement('div');
-        remixImageBox.style.border = '1px solid red';
+        //remixImageBox.style.border = '1px solid red';
         remixImageBox.style.height = '330px';
         remixImageBox.style.width = '269px';
         remixImageBox.style.overflow = 'hidden';
