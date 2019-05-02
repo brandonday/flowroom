@@ -749,7 +749,7 @@ class RoomMain extends Component {
                         <div id="remix-tab" onClick={(e)=> { 
                                 let thisElement = document.getElementById(e.target.id);
                                 let tabsWithMenubgClass = document.getElementsByClassName('menubg');
-                            
+                            if(thisElement !== undefined) {
                                 if(thisElement.className !== 'menubg') {                            
                                    
                                    for(let i = 0; tabsWithMenubgClass.length; i++) {
@@ -761,7 +761,7 @@ class RoomMain extends Component {
                                    }
                                    thisElement.className = 'menubg'; 
                                 }  
-                               
+                            }
                                 this.setState({
                                     details:false,
                                     objects:false,
@@ -803,7 +803,7 @@ class RoomMain extends Component {
                             //document.getElementById('resizable-box').style.height = '300px';
                             let thisElement = document.getElementById(e.target.id);
                             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
-                        
+                          if(thisElement !== undefined) {
                             if(thisElement.className !== 'menubg') {                            
                                
                                for(let i = 0; tabsWithMenubgClass.length; i++) {
@@ -815,6 +815,7 @@ class RoomMain extends Component {
                                }
                                thisElement.className = 'menubg'; 
                             }
+                        }
                             
                             // let remixid = document.getElementById('remix-tab');
                             // let script = document.getElementById('script-tag');
@@ -921,19 +922,19 @@ class RoomMain extends Component {
                             // postTab.style.color = 'rgb(64, 255, 232)';
                             let thisElement = document.getElementById(e.target.id);
                             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
-                        
+                            if(thisElement != undefined) {
                             if(thisElement.className !== 'menubg') {                            
                                
                                for(let i = 0; tabsWithMenubgClass.length; i++) {
                                 if(tabsWithMenubgClass[i] != undefined) {
                                     if(tabsWithMenubgClass[i].id !== thisElement.id) {
-                                        tabsWithMenubgClass[i].className = 'menubgnot';
+                                        tabsWithMenubgClass[i].className = 'menubgnot'
                                     } 
                                 }
                                }
                                thisElement.className = 'menubg'; 
                             }
-                                    
+                        }
                         }} style={{
                             display:that.state.postBtnVisible ? 'flex' : 'none',
                            
@@ -955,9 +956,10 @@ class RoomMain extends Component {
                                 backgroundRepeat:'no-repeat',
                                 height:'14px',
                                 width:'16px',
-                                marginBottom:'3px'
+                                marginBottom:'3px',
+                                pointerEvents:'none'
                             }}></div>
-                            <p id="publish-text" style={{fontSize:10.2,fontWeight:'bold',width:'38px'}}>PUBLISH</p>
+                            <p id="publish-text" style={{fontSize:10.2,fontWeight:'bold',width:'38px', pointerEvents:'none'}}>PUBLISH</p>
                         </div>
                         <div id="objects" onClick={()=> {
                             // let objectsid = document.getElementById('objects');
@@ -1089,8 +1091,7 @@ class RoomMain extends Component {
                                     this.setState({isOpen:true});
                                     let remixid = document.getElementById('remix-tab');
                                     remixid.className = 'menubg';
-                                    remixid.style.borderRight = '0px solid #181818';  
-                                    remixid.style.overflowY = 'scroll';       
+                                     
                                     this.setState({
                                         details:false,
                                         objects:false,

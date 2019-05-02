@@ -339,12 +339,7 @@ body {
 .main {
   padding:0px 0px;
 }
-.remix {
-  border:0px solid greenyellow;
-}
-.remix :hover {
-  border:1px solid greenyellow;
-}
+
 
 @media (max-width: 505px) { 
   .main {
