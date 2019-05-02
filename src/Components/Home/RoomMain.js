@@ -922,6 +922,7 @@ class RoomMain extends Component {
                             // postTab.style.color = 'rgb(64, 255, 232)';
                             let thisElement = document.getElementById(e.target.id);
                             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
+                            let mainmenu = document.getElementById('main-menu');
                             if(thisElement != undefined) {
                             if(thisElement.className !== 'menubg') {                            
                                
@@ -933,6 +934,7 @@ class RoomMain extends Component {
                                 }
                                }
                                thisElement.className = 'menubg'; 
+                               mainmenu.innerHTML = '';
                             }
                         }
                         }} style={{
