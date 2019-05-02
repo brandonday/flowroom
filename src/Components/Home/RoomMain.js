@@ -66,7 +66,8 @@ class RoomMain extends Component {
            remixUserName:'',
            userName:'',
            shortID:'',
-           dateCreated:''
+           dateCreated:'',
+           isOpen:false
         };
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -82,9 +83,11 @@ class RoomMain extends Component {
             let output = document.getElementById('output_frame').contentWindow;
             let text;
             let createDatGUI = function() {
+                //alert('created')
                 for(let i = 0; i < obj.length; i++) {
                     this[Object.keys(obj[i])[0]] = obj[i][Object.keys(obj[i])[0]];
                 }
+              //  document.getElementsByClassName("string").firstChild.style.display = 'flex';
             }
             text = new createDatGUI();
             let mainmenu = document.getElementById('main-menu');
@@ -178,9 +181,8 @@ class RoomMain extends Component {
                 document.getElementById('rf-top').style.display = 'flex';
                 document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingLeft = '10px';
                 document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingRight = '10px';
-                document.getElementById('main-menu').style.display = 'flex';
                 // document.getElementById('main-menu').style.position = 'absolute';
-                document.getElementById('main-menu').style.left = '-330px';
+                // document.getElementById('main-menu').style.left = '-330px';
             } else {
                 let main = document.getElementById('main-menu');
                 let tabMenu = document.getElementById('tab-menu');
@@ -188,7 +190,7 @@ class RoomMain extends Component {
                 tabMenu.style.display = 'block';
                 document.getElementById('tab-menu').style.transform = 0;
               
-                main.style.width = '330px';
+                
                 main.style.borderRight = '1px solid rgb(24, 24, 24)';
                 main.style.background = 'rgb(24, 24, 24)';
        
@@ -744,11 +746,22 @@ class RoomMain extends Component {
                             background:'rgb(14, 14, 14)',
                             height:'100%'
                         }}>
-                        <div id="remix-tab" onClick={()=> { 
-                                let remixid = document.getElementById('remix-tab');
-                                remixid.className = 'menubg';
-                                remixid.style.borderRight = '0px solid #181818';  
-                                remixid.style.overflowY = 'scroll';       
+                        <div id="remix-tab" onClick={(e)=> { 
+                                let thisElement = document.getElementById(e.target.id);
+                                let tabsWithMenubgClass = document.getElementsByClassName('menubg');
+                            
+                                if(thisElement.className !== 'menubg') {                            
+                                   
+                                   for(let i = 0; tabsWithMenubgClass.length; i++) {
+                                    if(tabsWithMenubgClass[i] != undefined) {
+                                        if(tabsWithMenubgClass[i].id !== thisElement.id) {
+                                            tabsWithMenubgClass[i].className = '';
+                                        } 
+                                    }
+                                   }
+                                   thisElement.className = 'menubg'; 
+                                }  
+                               
                                 this.setState({
                                     details:false,
                                     objects:false,
@@ -764,33 +777,58 @@ class RoomMain extends Component {
                             }} 
                             style={{
                                 display:'flex',
-                                color:'rgb(64, 255, 232)',
                                 height:'52px',
                                 width:'48px',
                                 flexDirection:'column',
                                 alignItems:'center',
                                 borderRight:'1px solid #181818',
                                 borderBottom:'1px solid #181818',
-                                justifyContent:'center'
+                                justifyContent:'center',
+                                cursor:'pointer'
+                               
                             }} className="menu-bg-border">
                                 <div style={{
-                                    fontSize:15, 
-                                    color:'white',
+
                                     backgroundImage:'url(../infinity.png)',
                                     backgroundSize:'100% 92%',
                                     backgroundRepeat:'no-repeat',
                                     height:9,
-                                    width:22
+                                    width:22,
+                                    pointerEvents:'none'
                                     }}></div>
-                                <p style={{fontSize:10.2,fontWeight:'bold',color:'#40FFE8',width:'26px'}}>REMIX</p>
+                                <p style={{fontSize:10.2,fontWeight:'bold',width:'26px', pointerEvents:'none'}}>REMIX</p>
                                
                         </div>
-                        <div id="script-tag" onClick={()=> {
-                            document.getElementById('resizable-box').style.height = '300px';
-                                    
+                        <div id="script-tag" refs="script-tag" onClick={(e)=> {
+                            //document.getElementById('resizable-box').style.height = '300px';
+                            let thisElement = document.getElementById(e.target.id);
+                            let tabsWithMenubgClass = document.getElementsByClassName('menubg');
+                        
+                            if(thisElement.className !== 'menubg') {                            
+                               
+                               for(let i = 0; tabsWithMenubgClass.length; i++) {
+                                if(tabsWithMenubgClass[i] != undefined) {
+                                    if(tabsWithMenubgClass[i].id !== thisElement.id) {
+                                        tabsWithMenubgClass[i].className = 'menubgnot';
+                                    } 
+                                }
+                               }
+                               thisElement.className = 'menubg'; 
+                            }
+                            
+                            // let remixid = document.getElementById('remix-tab');
+                            // let script = document.getElementById('script-tag');
+                            // let postTab = document.getElementById('post-tab');
+                            // remixid.className = '';
+                            // remixid.style.borderRight = '0px solid #181818';  
+                            // script.className = 'menubg';
+                            // script.style.color = 'rgb(64, 255, 232)';
+                            // postTab.className = '';
+                            // postTab.style.color = 'rgb(82, 82, 82)';  
+                            // remixid.style.color = 'rgb(82, 82, 82)';   
                         }} style={{
                             display:'flex',
-                            color:'rgb(64, 255, 232)',
+                            cursor:'pointer',
                             height:'52px',
                             width:'48px',
                             flexDirection:'column',
@@ -807,15 +845,16 @@ class RoomMain extends Component {
                                 backgroundRepeat:'no-repeat',
                                 height:'14px',
                                 width:'16px',
-                                marginBottom:'3px'
+                                marginBottom:'3px',
+                                pointerEvents:'none'
                             }}></div>
-                            <p id="details-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252',width:'26px'}}>SCRIPT</p>
+                            <p id="details-text" style={{fontSize:10.2,fontWeight:'bold',width:'26px',pointerEvents:'none'}}>SCRIPT</p>
                         </div>
                         <div id="save-tab" onClick={()=> {
                             this.openModal(false)
                         }} style={{
                             display:that.state.userNameSelf === that.state.userName ? 'flex' : 'none',
-                            color:'rgb(64, 255, 232)',
+                          
                             height:'52px',
                             width:'48px',
                             flexDirection:'column',
@@ -827,7 +866,7 @@ class RoomMain extends Component {
                         className="menu-bg-border">
                             <div style={{
                                 fontSize:'15px',
-                                color:'white',
+                         
                                 backgroundImage:'url(../save-regular-grey.svg)',
                                 backgroundSize:'100% 100%',
                                 backgroundRepeat:'no-repeat',
@@ -846,7 +885,7 @@ class RoomMain extends Component {
                                 window.location.replace('/');
                             }} style={{
                                 display:that.state.userNameSelf === that.state.userName ? 'flex' : 'none',
-                                color:'rgb(64, 255, 232)',
+                               
                                 height:'52px',
                                 width:'48px',
                                 flexDirection:'column',
@@ -868,20 +907,44 @@ class RoomMain extends Component {
                                     }}></div>
                             <p id="publish-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252'}}>DELETE</p>
                         </div>
-                        <div id="post-tab" onClick={()=> {
-                                       
-                            this.openModal(true)
+                        <div id="post-tab" onClick={(e)=> {
+                                        
+                            //this.openModal(true);
+                            // let remixid = document.getElementById('remix-tab');
+                            // let script = document.getElementById('script-tag');
+                            // let postTab = document.getElementById('post-tab');
+                            // remixid.className = '';
+                            // remixid.style.borderRight = '0px solid #181818';  
+                            // script.className = '';
+                            // script.style.color = 'rgb(82, 82, 82)';
+                            // postTab.className = 'menubg';
+                            // postTab.style.color = 'rgb(64, 255, 232)';
+                            let thisElement = document.getElementById(e.target.id);
+                            let tabsWithMenubgClass = document.getElementsByClassName('menubg');
+                        
+                            if(thisElement.className !== 'menubg') {                            
+                               
+                               for(let i = 0; tabsWithMenubgClass.length; i++) {
+                                if(tabsWithMenubgClass[i] != undefined) {
+                                    if(tabsWithMenubgClass[i].id !== thisElement.id) {
+                                        tabsWithMenubgClass[i].className = 'menubgnot';
+                                    } 
+                                }
+                               }
+                               thisElement.className = 'menubg'; 
+                            }
                                     
                         }} style={{
                             display:that.state.postBtnVisible ? 'flex' : 'none',
-                            color:'rgb(64, 255, 232)',
+                           
                             height:'52px',
                             width:'48px',
                             flexDirection:'column',
                             alignItems:'center',
                             borderRight:'1px solid #181818',
                             borderBottom:'1px solid #181818',
-                            justifyContent:'center'
+                            justifyContent:'center',
+                            cursor:'pointer'
                         }} 
                         className="menu-bg-border">
                             <div style={{
@@ -894,16 +957,16 @@ class RoomMain extends Component {
                                 width:'16px',
                                 marginBottom:'3px'
                             }}></div>
-                            <p id="publish-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252',width:'38px'}}>PUBLISH</p>
+                            <p id="publish-text" style={{fontSize:10.2,fontWeight:'bold',width:'38px'}}>PUBLISH</p>
                         </div>
                         <div id="objects" onClick={()=> {
-                            let objectsid = document.getElementById('objects');
-                            objectsid.className = 'menubg';
-                            objectsid.style.borderRight = '0px solid #181818';
-                            document.getElementById('objects').className = 'menubg'
-                            let remixid = document.getElementById('details');
-                            remixid.className = '';
-                            remixid.style.borderRight = '0px solid #181818';
+                            // let objectsid = document.getElementById('objects');
+                            // objectsid.className = 'menubg';
+                            // objectsid.style.borderRight = '0px solid #181818';
+                            // document.getElementById('objects').className = 'menubg'
+                            // let remixid = document.getElementById('details');
+                            // remixid.className = '';
+                            // remixid.style.borderRight = '0px solid #181818';
                             let getclasses = document.getElementsByClassName('menubg');
                             this.setState({details:false,
                                 objects:true,
@@ -1006,7 +1069,7 @@ class RoomMain extends Component {
                             <div style={{
                                 position:'absolute', 
                                 height:'100%', 
-                                width:'100px',
+                                width:'147px',
                                 display:'flex',
                                 justifyContent:'space-between',
                                 alignItems:'center',
@@ -1015,13 +1078,41 @@ class RoomMain extends Component {
                                 <button id="menu-btn-mobile" onClick={()=>{
                                     
                                   
-                                   
+                                   if(this.state.isOpen === false) {
                                     const element = document.querySelector('#main-menu');
                                     const ball = styler(element); 
                                     
-                                    tween({ from:0, to: 370, duration: 200 })
+                                    tween({ from:0, to: 0, duration: 300 })
                                     .start(v => ball.set('x', v));
                                     document.getElementById('tab-menu').style.display = 'block';
+                                    document.getElementById('main-menu').style.width = '269px';
+                                    this.setState({isOpen:true});
+                                    let remixid = document.getElementById('remix-tab');
+                                    remixid.className = 'menubg';
+                                    remixid.style.borderRight = '0px solid #181818';  
+                                    remixid.style.overflowY = 'scroll';       
+                                    this.setState({
+                                        details:false,
+                                        objects:false,
+                                        comments:false,
+                                        draw:false,
+                                        remix:true,
+                                        preferences:false,
+                                        record:false
+                              
+                                    });
+                                    document.getElementById('main-menu').style.display = 'flex';
+                                    isMenuOpen = true;
+                                   } else {
+                                    const element = document.querySelector('#main-menu');
+                                    const ball = styler(element); 
+                                    
+                                    tween({ from:0, to: -378, duration: 200 })
+                                    .start(v => ball.set('x', v));
+                                    document.getElementById('tab-menu').style.display = 'none';
+                                    document.getElementById('main-menu').style.width = '269px';
+                                    this.setState({isOpen:false});
+                                   }
                                 }} style={{
                                     fontWeight:'bold',
                                     color:'rgb(64, 255, 232)',
@@ -1030,11 +1121,11 @@ class RoomMain extends Component {
                                     border:'1px solid rgb(64, 255, 232)',
                                     borderRadius:'5px',
                                     padding:'3px',
-
                                     right:'10px',
                                     display:'none',
-                                    marginRight:'8px'
-                            }}>MENU</button>
+                                    marginRight:'8px',
+                                    outline:'none'
+                            }}>{this.state.isOpen ? 'CLOSE MENU' : 'OPEN MENU'}</button>
                             <div id="full-screen" onClick={this.toggleFullScreen} style={{
                                 display:'flex',
                                 color:'white',

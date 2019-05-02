@@ -62,23 +62,41 @@ class NewButton extends Component {
                 <div className="new-btn">
                     <button style={{
                             fontWeight:'bold',
-                            color:'rgb(64, 255, 232)',
+                            color: 'rgb(64, 255, 232)',
                             fontSize:'13px',
-                            width:'81px',
-                            height:'29px',
                             backgroundColor:'transparent',
-                            border:'1px solid rgb(64, 255, 232)',
-                            borderRadius:'5px',
+                            border: '1px solid rgb(64, 255, 232)',
+                            borderRadius:'4px',
                             paddingRight:'3px',
                             position:'relative',
-                            left:'10px',
                             display:'flex',
-                            marginRight:8
+                            padding:'5px 7px',
+                            width:'68px',
+                            justifyContent:'space-between',
+                            alignItems:'center'
+                        
                             }}>
-    <i className="fa fa-plus" style={{marginRight:6,position:'relative',left:'8px',top:'3px'}}></i>
-                            <p style={{top:'0px',fontSize:'13px',
-    position:'relative',
-    left:'8px'}}>CREATE</p>
+                            <i className="fa fa-plus" style={{
+                                mozSsxFontSmoothing:'grayscale',
+
+                                webkitFontSmoothing:'antialiased',
+                                
+                                display: 'inline-block',
+                                
+                                fontStyle: 'normal',
+                                
+                                fontVariant:'normal',
+                                
+                                textRendering:'auto',
+                                
+                                lineHeight:0,
+                                
+                                fontSize:'11px'
+                            }}></i>
+                            <p style={{fontSize:'10px',
+                                     fontWeight:'700',
+                                     position:'relative',
+                                     left:'-4px'}}>CREATE</p>
                     </button>
                 </div>
                 <div id="newbtn" className="new-button-dropdown-content">
