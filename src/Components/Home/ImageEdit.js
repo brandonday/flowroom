@@ -53,6 +53,17 @@ let that;
             remixImageList.style.flexDirection = 'column';
             remixImageList.style.width = '100%';
         let remixImageTitle = document.createElement('div');
+        let menuinfo = document.createElement('div');
+        menuinfo.setAttribute("id", "menu-info");
+        menuinfo.style.height = '170px';
+        menuinfo.style.width = '259px';
+        let menuinfobox = document.createElement('div');
+        menuinfobox.style.border = '1px solid #222222';
+        menuinfobox.style.height = '147px';
+        menuinfobox.style.width = '259px';
+        menuinfobox.style.borderRadius = '3px';
+        menuinfobox.style.marginTop = '11px';
+        menuinfo.appendChild(menuinfobox);
         let imgtitle = document.createElement('p');
         let imgclose = document.createElement('p');
         let remixImageListNav = document.createElement('div');
@@ -70,6 +81,7 @@ let that;
         remixImageBox.style.height = '330px';
         remixImageBox.style.width = '269px';
         remixImageBox.style.overflow = 'hidden';
+        remixImageBox.setAttribute("id", "remix-image-box");
 
         let backArrow = document.createElement('i');
         let forwardArrow = document.createElement('i');
@@ -381,6 +393,7 @@ let that;
                   
                   remixImageBox.appendChild(remixImageTitle);
                   remixImageBox.appendChild(remixImageList);
+                  list.appendChild(menuinfo);
                   list.appendChild(remixImageBox)
 
 
@@ -389,6 +402,11 @@ let that;
                 }
             
                    
+    }
+    componentWillUnmount() {
+      //var myNode = document.getElementById("remix-image-box");
+      document.getElementById("remix-image-box").remove();
+      document.getElementById("menu-info").remove();
     }
     testFR(elId) {
       

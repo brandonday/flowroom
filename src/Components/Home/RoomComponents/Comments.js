@@ -919,11 +919,11 @@ let roomFilter = 'weight';
                             marginTop:'20px',
 
                             }}>
-                            <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
+                            <div style={{display:'flex',justifyContent:'center',alignItems:'center', color:'#80848C'}}>
                             <span style={{color:'rgb(64, 255, 232)',display:'flex'}}>
                                 <a href="/signup" style={{color:'rgb(64, 255, 232)',marginRight:4}}>
                                     Sign up
-                                </a> <p style={{marginRight:4}}> or</p> 
+                                </a> <p style={{marginRight:4, color:'#80848C',fontSize:12,marginBottom:3}}> or</p> 
                                 <a href="/login" style={{color:'rgb(64, 255, 232)',marginRight:4}}>Sign in</a> to leave a comment</span>
                             </div>
                         </div>

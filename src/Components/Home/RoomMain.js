@@ -67,7 +67,8 @@ class RoomMain extends Component {
            userName:'',
            shortID:'',
            dateCreated:'',
-           isOpen:false
+           isOpen:false,
+           showPublish:true
         };
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -394,6 +395,10 @@ class RoomMain extends Component {
             }
         );
     }
+    createPublish() { 
+       return(<div>testing</div>) 
+
+    }
     openModal(isPostAsNew = true) {
         let that = this;
         let iframe = document.getElementById('output_frame');
@@ -483,10 +488,7 @@ class RoomMain extends Component {
     }
     menuSelect() {
         if(this.state.details === true) {
-            return (
-                <p></p>
-            )
-        } else if(this.state.objects === true) {
+        
             return (
                 <div style={{
                     display:'flex',
@@ -717,17 +719,13 @@ class RoomMain extends Component {
                 </div>
             </div>
             )
-        } else if(this.state.comments === true) {
-            return (<Comments />)
-        } else if(this.state.draw === true) {
-            return (<p>draw</p>)
         } else if(this.state.remix === true) {
             
             return (
                 <ImageEdit/>
 )
-        } else if(this.state.preferences === true) {
-            return (<p>preferences</p>)
+        } else if(this.state.showPublish === true) {
+            return (<p style={{color:'white'}}>preferences</p>)
         } else if(this.state.record === true) {
             return (<p>record</p>)
         }
@@ -909,7 +907,7 @@ class RoomMain extends Component {
                             <p id="publish-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252'}}>DELETE</p>
                         </div>
                         <div id="post-tab" onClick={(e)=> {
-                                        
+                            let that = this;
                             //this.openModal(true);
                             // let remixid = document.getElementById('remix-tab');
                             // let script = document.getElementById('script-tag');
@@ -923,6 +921,8 @@ class RoomMain extends Component {
                             let thisElement = document.getElementById(e.target.id);
                             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
                             let mainmenu = document.getElementById('main-menu');
+                            let remixImageList = document.getElementById('remix-image-list');
+                           
                             if(thisElement != undefined) {
                             if(thisElement.className !== 'menubg') {                            
                                
@@ -934,7 +934,16 @@ class RoomMain extends Component {
                                 }
                                }
                                thisElement.className = 'menubg'; 
-                               mainmenu.innerHTML = '';
+                               
+                               that.setState({
+                                details:false,
+                                objects:false,
+                                comments:false,
+                                draw:false,
+                                remix:false,
+                                showPublish:true
+                                });
+                            
                             }
                         }
                         }} style={{
@@ -963,7 +972,7 @@ class RoomMain extends Component {
                             }}></div>
                             <p id="publish-text" style={{fontSize:10.2,fontWeight:'bold',width:'38px', pointerEvents:'none'}}>PUBLISH</p>
                         </div>
-                        <div id="objects" onClick={()=> {
+                        {/* <div id="objects" onClick={()=> {
                             // let objectsid = document.getElementById('objects');
                             // objectsid.className = 'menubg';
                             // objectsid.style.borderRight = '0px solid #181818';
@@ -1001,7 +1010,7 @@ class RoomMain extends Component {
                                     borderBottom:'1px solid #181818'
                                     }} className="menu-bg-border">
                         
-                            </div> 
+                            </div>  */}
                         </div>
             
                         <div id="main-menu" 
@@ -1015,15 +1024,7 @@ class RoomMain extends Component {
                                 alignItems:'center',
                                 transform:'none'
                         }}>
-                            <div style={{height:'170px', width:'259px'}}>
-                                <div style={{
-                                    border:'1px solid #222222',
-                                    height:'147px',
-                                    width:'259px',
-                                    borderRadius:'3px',
-                                    marginTop:'11px'}}>
-                                </div>
-                            </div>
+ 
             
                             {
                                 this.menuSelect()  
