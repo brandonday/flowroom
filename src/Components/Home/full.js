@@ -16,6 +16,20 @@ class Full extends Component {
       "<body class='preview'>\n\t\n\t" +
       "</body>\n" +
       "</html>";
+      let loaded = `<script>
+        (function() {
+          let frame = window.frameElement;
+          if(frame === null) {
+            return;
+          } 
+          let thumbnail = parent.document.getElementById('thumbnail_' + window.frameElement.id);
+          if(thumbnail === null) {
+            return;
+          }
+          thumbnail.style.display = 'none';
+          
+      })()
+      </script>`;   
       let ref = firebase.database().ref("rooms").child(this.props.match.params.id);
       ref.once("value").then((snapshot) => {
         let prepareSource = () => {
@@ -65,7 +79,7 @@ class Full extends Component {
                 css = '<style>' + css + '</style>';
                 src = src.replace('</head>', css + script + '</head>');
                 js = '<script>' + js + '<\/script>';
-                src = src.replace('</body>', js + '</body>');
+                src = src.replace('</body>', js + loaded + '</body>');
                 let frame = document;
                 frame.open();
                 frame.write(src);

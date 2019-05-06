@@ -115,7 +115,7 @@ class Editor extends Component {
         "</body>\n" +
         "</html>";
         
-        
+      
      
         let prepareSource = () => {
           let html = HTML_EDITOR.getValue(),
