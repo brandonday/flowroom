@@ -86,8 +86,18 @@ class RoomMain extends Component {
             let createDatGUI = function() {
                 //alert('created')
                 for(let i = 0; i < array.length; i++) {
+                  
+
+                    Object.keys(array[i]).forEach((key)=> {
+
+                        //alert(key);
+                        if(key !== 'color') {
+                        this[key] = array[i][Object.keys(array[i])[0]];
+                        }else {
+                        this.color = '#fff'
+                        }
+                       });
                     
-                    this[Object.keys(array[i])[0]] = array[i][Object.keys(array[i])[0]];
                     
                 }
                 //alert(this.text)
@@ -144,26 +154,28 @@ class RoomMain extends Component {
             //gui.domElement
             remixTextBox.appendChild(gui.domElement);
             mainmenu.appendChild(remixTextBox);
-
+            
             document.getElementsByClassName('close-button')[0].style.display = 'none';
+            document.getElementsByClassName('dg')[0].style.display = 'block';
+
             for(let i = 0; i < array.length; i++) {
                 
 
                     Object.keys(array[i]).forEach(function(key) {
 
-                       alert(key);
+                      // alert(key);
 
                         if(key === 'color') {
-                            
-                            //output['title'].style.color = guiProperties['color'];
+                            alert('add color',  Object.keys(array[i])[1])
                             gui.addColor(guiProperties, 'color').onChange(setValue);
                         } else if (key !== 'color') {
-                            //output[Object.keys(array[i])[0]].innerHTML = guiProperties[Object.keys(array[i])[0]];
+                            alert('add title',  Object.keys(array[i])[0])
                             gui.add(guiProperties, Object.keys(array[i])[0]).onChange(setValue);
                         }
                       
                       });
             }
+            
             setValue();
             function setValue() {
                 for(let i = 0; i < array.length; i++) {
@@ -172,13 +184,11 @@ class RoomMain extends Component {
                     // console.log(obj[i].remix)
                     Object.keys(array[i]).forEach(function(key) {
 
-                        alert(key);
-
+                       
                         if(key === 'color') {
-                            
                             output['title'].style.color = guiProperties['color'];
                         } else if (key !== 'color') {
-                            output[Object.keys(array[i])[0]].innerHTML = guiProperties[Object.keys(array[i])[0]];
+                            output[key].innerHTML = guiProperties[Object.keys(array[i])[0]];
                         }
                       
                       });
