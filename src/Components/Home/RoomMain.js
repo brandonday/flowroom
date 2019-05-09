@@ -80,17 +80,21 @@ class RoomMain extends Component {
         document.getElementById('main-menu').style.display = 'none';
         document.getElementById('tab-menu').style.height = 'none';
         
-        window.datGUI = function(obj) {
+        window.datGUI = function(array) {
             let output = document.getElementById('output_frame').contentWindow;
-            let text;
+            let guiProperties;
             let createDatGUI = function() {
                 //alert('created')
-                for(let i = 0; i < obj.length; i++) {
-                    this[Object.keys(obj[i])[0]] = obj[i][Object.keys(obj[i])[0]];
+                for(let i = 0; i < array.length; i++) {
+                    
+                    this[Object.keys(array[i])[0]] = array[i][Object.keys(array[i])[0]];
+                    
                 }
+                //alert(this.text)
+               
               //  document.getElementsByClassName("string").firstChild.style.display = 'flex';
             }
-            text = new createDatGUI();
+            guiProperties = new createDatGUI();
             let mainmenu = document.getElementById('main-menu');
             let remixTextBox = document.createElement('div');
             //remixTextBox.style.border = '1px solid red';
@@ -142,14 +146,45 @@ class RoomMain extends Component {
             mainmenu.appendChild(remixTextBox);
 
             document.getElementsByClassName('close-button')[0].style.display = 'none';
-            for(let i = 0; i < obj.length; i++) {
-                gui.add(text, Object.keys(obj[i])[0]).onChange(setValue);
+            for(let i = 0; i < array.length; i++) {
+                
+
+                    Object.keys(array[i]).forEach(function(key) {
+
+                       alert(key);
+
+                        if(key === 'color') {
+                            
+                            //output['title'].style.color = guiProperties['color'];
+                            gui.addColor(guiProperties, 'color').onChange(setValue);
+                        } else if (key !== 'color') {
+                            //output[Object.keys(array[i])[0]].innerHTML = guiProperties[Object.keys(array[i])[0]];
+                            gui.add(guiProperties, Object.keys(array[i])[0]).onChange(setValue);
+                        }
+                      
+                      });
             }
             setValue();
             function setValue() {
-                for(let i = 0; i < obj.length; i++) {
-                    output[Object.keys(obj[i])[0]].innerHTML = text[Object.keys(obj[i])[0]];
-                    console.log(obj[i].remix)
+                for(let i = 0; i < array.length; i++) {
+                    // output[Object.keys(obj[i])[0]].innerHTML = text[Object.keys(obj[i])[0]];
+                    // output[Object.keys(obj[i])[0]].style.color = text[Object.keys(obj[i])[0]];
+                    // console.log(obj[i].remix)
+                    Object.keys(array[i]).forEach(function(key) {
+
+                        alert(key);
+
+                        if(key === 'color') {
+                            
+                            output['title'].style.color = guiProperties['color'];
+                        } else if (key !== 'color') {
+                            output[Object.keys(array[i])[0]].innerHTML = guiProperties[Object.keys(array[i])[0]];
+                        }
+                      
+                      });
+                    
+                        
+                        
                 }
             }
         }
@@ -725,7 +760,19 @@ class RoomMain extends Component {
                 <ImageEdit/>
 )
         } else if(this.state.showPublish === true) {
-            return (<p style={{color:'white'}}>preferences</p>)
+            return (
+                <div style={{height:'100%', width:'259px'}}>
+                       <div style={{height:30, marginBottom:7, width:'100%', backgroundColor:'black'}}>
+                           
+                        </div>     
+                        <div style={{height:55, marginBottom:7, width:'100%', backgroundColor:'black'}}>
+
+                        </div>
+                        <div style={{height:130, width:'100%', backgroundColor:'black'}}>
+
+                        </div>
+                </div>
+            )
         } else if(this.state.record === true) {
             return (<p>record</p>)
         }
@@ -798,7 +845,7 @@ class RoomMain extends Component {
                                
                         </div>
                         <div id="script-tag" refs="script-tag" onClick={(e)=> {
-                            //document.getElementById('resizable-box').style.height = '300px';
+                            document.getElementById('resizable-box').style.height = '300px';
                             let thisElement = document.getElementById(e.target.id);
                             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
                           if(thisElement !== undefined) {
