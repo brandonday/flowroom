@@ -98,177 +98,392 @@ class PhotoEditor extends React.Component {
     });
   }
   recreateList() {
-  // document.getElementsByClassName('remix-m')[0].style.display = 'none';  
-
+    document.getElementById("remix-image-box").remove();
+    document.getElementById("menu-info").remove();
+    document.getElementsByClassName('remix-m')[0].style.display = 'none';  
+     
     function removeDuplicates(originalArray, prop) {
-      var newArray = [];
-      var lookupObject  = {};
-      for(var i in originalArray) {
-        lookupObject[originalArray[i][prop]] = originalArray[i];
-      }
-      for(i in lookupObject) {
-        newArray.push(lookupObject[i]);
-      }
-      return newArray;
-    }
-  
- 
-
+         var newArray = [];
+         var lookupObject  = {};
+    
+         for(var i in originalArray) {
+            lookupObject[originalArray[i][prop]] = originalArray[i];
+         }
+    
+         for(i in lookupObject) {
+             newArray.push(lookupObject[i]);
+         }
+          return newArray;
+     }
+    
+   
+    
     let that = this;
+    let remixImageListOptions = ['Actors', 'Elements', 'Effects'];
     let list = document.getElementById('main-menu');
     let getList = JSON.parse(localStorage.getItem( "FR_REMIX_LIST"));
-    let remixList = document.createElement('div');
-    remixList.setAttribute("id", "remix-list");
-    remixList.style.display = 'flex';
-    remixList.style.flexDirection = 'column';
-    remixList.style.width = '100%';
-    // remixList.style.flexDirection = 'row';
-    // remixList.style.flexWrap = 'wrap';
+    let remixImageList = document.createElement('div');
+        remixImageList.setAttribute("id", "remix-image-list");
+        remixImageList.style.flexDirection = 'column';
+        remixImageList.style.width = '100%';
+    let remixImageTitle = document.createElement('div');
+    let menuinfo = document.createElement('div');
+    
+    menuinfo.setAttribute("id", "menu-info");
+    menuinfo.style.height = '170px';
+    menuinfo.style.width = '259px';
+    let menuinfobox = document.createElement('div');
+    let menuinfotop = document.createElement('div');
+    menuinfotop.style.display = 'flex';
+    menuinfotop.style.justifyContent = 'space-between';
+    menuinfotop.style.height = '20px';
+    menuinfotop.style.width = '100%';
+    menuinfobox.style.border = '1px solid #222222';
+    menuinfobox.style.height = '147px';
+    menuinfobox.style.width = '259px';
+    menuinfobox.style.borderRadius = '3px';
+    menuinfobox.style.marginTop = '11px';
+    
+    menuinfobox.appendChild(menuinfotop)
 
-    if(getList != null) {
-    let overlay = document.createElement('div');
-        overlay.setAttribute("id","remix-overlay");
-    let uniqueArray;
-      for(let i = 0; i < getList.length; i++) {
-        let n = Object.getOwnPropertyNames(getList[i]);
-        let final = n[0];
-          uniqueArray = removeDuplicates(getList, final);
-      }
-              
-      console.log(uniqueArray)
-      this.setState({currentpic:uniqueArray[0]});
-              
-      for(let j = 0; j < uniqueArray.length; j++) {
-        let item = document.createElement('li');
-        let bgImg = document.createElement('div');
-                            
-        bgImg.style.backgroundImage = `url(${getList[j].image})`;
-              bgImg.style.height = '50px';
-              bgImg.style.width = '50px';
-              bgImg.style.backgroundSize = 'cover';
-     
-              item.style.height = '100px';
-              item.style.width = '100px';
+    menuinfo.appendChild(menuinfobox);
+    let imgtitle = document.createElement('p');
+    let imgclose = document.createElement('p');
+    let remixImageListNav = document.createElement('div');
+    let remixImageListNavArrows = document.createElement('div');
+    let remixImageWrap = document.createElement('div');
+    remixImageWrap.setAttribute("id", "remix-list");
+    remixImageListNavArrows.style.display = 'flex';
+    remixImageListNavArrows.style.position = 'absolute';
+    remixImageListNavArrows.style.right = '14px';
+    remixImageListNavArrows.style.width = '19px';
+    remixImageListNavArrows.style.justifyContent = 'space-between';
+    remixImageListNavArrows.style.fontSize = '14px';
+    let remixImageBox = document.createElement('div');
+    //remixImageBox.style.border = '1px solid red';
+    remixImageBox.style.height = '330px';
+    remixImageBox.style.width = '269px';
+    remixImageBox.style.overflow = 'hidden';
+    remixImageBox.setAttribute("id", "remix-image-box");
 
-              item.style.marginTop = '10px';
-              item.style.marginBottom = '10px';
+    let backArrow = document.createElement('i');
+    let forwardArrow = document.createElement('i');
+    backArrow.className = 'fas fa-chevron-left';
+    forwardArrow.className = 'fas fa-chevron-right';
+    backArrow.style.color = '#6a6a6a';
+    forwardArrow.style.color = '#6a6a6a';
+    backArrow.style.fontSize = '12px';
+    forwardArrow.style.fontSize = '12px';
+    backArrow.style.fontWeight = '800';
+    forwardArrow.style.fontWeight = '800';
+    remixImageListNavArrows.appendChild(backArrow);
+    remixImageListNavArrows.appendChild(forwardArrow);
+    
+    remixImageListNav.style.height = '37px';
+    remixImageListNav.style.width = '100%';
+    remixImageListNav.style.paddingLeft = '10px';
+    remixImageListNav.style.display = 'flex';
+    remixImageListNav.style.flexDirection = 'row';
+    remixImageListNav.style.color = 'rgb(64, 255, 232)';
+    remixImageListNav.style.fontSize = '12px';
+    remixImageListNav.style.alignItems = 'center';
+    remixImageListNav.style.listStyleType = 'none';
 
-              item.style.marginLeft = '10px';
-              item.style.marginRight = '10px';
+    let remixImageListNavUL = document.createElement('ul');
+    remixImageListNav.appendChild(remixImageListNavUL);
+   
+     for(let i = 0; i < remixImageListOptions.length; i++) {
+      let remixImageListItem = document.createElement('li');
+        remixImageListItem.style.marginRight = '20px';
+        remixImageListItem.style.height = '20px';
 
-              item.style.border = '1px solid #DDE0EB';
-              item.style.display = 'flex';
-              item.style.alignItems = 'center';
-              item.style.borderRadius = '0px';
-
-              bgImg.style.marginRight = '5px';
-              bgImg.style.marginLeft = '7px';
-              bgImg.style.position = 'relative';
-              item.style.display = 'flex';
-              item.style.justifyContent = 'center';
-              bgImg.style.right = '0px';
-              item.appendChild(bgImg);
-              
-              remixList.appendChild(item);
+        remixImageListItem.style.textAlign = 'center';
+        remixImageListItem.style.alignItems = '38px';
+        remixImageListItem.style.display = 'flex';
+        remixImageListItem.style.justifyContent = 'center';
+        remixImageListItem.style.paddingLeft = '6px';
+        remixImageListItem.style.paddingRight = '6px';
+        remixImageListItem.style.marginRight = '20px';
+        remixImageListItem.className = 'notSelectedRM';
+        remixImageListItem.setAttribute("id", `${remixImageListOptions[i]}`)
+        remixImageListItem.appendChild(document.createTextNode(remixImageListOptions[i]));
+        if(remixImageListItem.id === remixImageListOptions[0]) {
+          remixImageListItem.className = 'selectedRM';
+        }
+        remixImageListItem.addEventListener('click', ()=>{
+          remixImageListItem.className = 'selectedRM';
           
+          let getsel = document.getElementsByClassName('selectedRM');
+          
+          for(let i = 0; i < getsel.length; i++) {
+            if(getsel[i].id !== remixImageListItem.id) {
+              getsel[i].className = 'notSelectedRM';
+            }
+          }
+        })
+        remixImageListNav.appendChild(remixImageListItem);
+        remixImageListNav.appendChild(remixImageListNavArrows);
+     }
+    let imgico = document.createElement('i');
+    imgico.className = 'fas fa-image';
+    imgtitle.appendChild(imgico);
+    imgtitle.appendChild(document.createTextNode('Images'));
+    imgclose.appendChild(document.createTextNode('Close'));
+    imgtitle.style.color = 'white';
+    imgtitle.style.fontSize = '13px';
+    imgtitle.style.marginLeft = '10px';
+    imgtitle.style.fontWeight = '900';
+    imgtitle.style.marginTop = '4px';
+    imgclose.style.color = 'white';
+    imgclose.style.fontSize = '10px';
+    imgclose.style.marginRight = '20px'
+    imgclose.addEventListener('click', function() {
+      if(imgclose.innerText === 'Close') {
+        remixImageList.style.display = 'none';
+        remixImageBox.style.height = '33px';
+        imgclose.innerText = 'Open';
+      } else {
+        remixImageList.style.display = 'block';
+        remixImageBox.style.height = '330px';
+        imgclose.innerText = 'Close';
         
-              if(getList[j].type === 'url') {
-                item.addEventListener('click', ()=> {
+      }
+      
+    });
+    remixImageTitle.style.height = '28px';
+    remixImageTitle.style.width = '100%';
+    remixImageTitle.style.backgroundColor = '#141414';
+    remixImageTitle.style.alignItems = 'center';
+    remixImageTitle.style.display = 'flex';
+    remixImageTitle.style.justifyContent = 'space-between';
+    imgico.style.marginRight = '7px';
+    remixImageTitle.appendChild(imgtitle);
+    remixImageTitle.appendChild(imgclose);
 
-                  
-                  
-                  let img = new Image;
-                  img.setAttribute('crossOrigin', 'anonymous'); 
-                  
-                  let canvas = document.createElement('canvas');
-                  let ctx = canvas.getContext("2d");
-                  
-              
-                  img.onload = function() {
-                 
-                  canvas.width = img.width;
-                  canvas.height = img.height;
-                  ctx.drawImage( img, 0, 0 );
-                  localStorage.setItem( `savedImageData${j}`, canvas.toDataURL("image/png") );
-                  let getImageSaved = localStorage.getItem(`savedImageData${j}`);
-                  //alert(getImageSaved);
-                  document.getElementById('menu-wrap').style.display = 'block';
-                  document.getElementById('menu').style.display = '583px';
-                  document.getElementById('menu').style.display = 'block';
-                  let backArrow = document.createElement('i');
-                  backArrow.className = 'far fa-caret-square-left';
-                  backArrow.style.height = '20px';
-                  backArrow.style.width = '20px';
-                  let menuTitle = document.createElement('p');
-                  let menuText = document.createTextNode('REMIXABLE ITEMS');
-                  menuTitle.appendChild(menuText);
-                  let close = document.createElement('i');
-                  close.className = 'far fa-caret-square-left';
-                  close.style.height = '20px';
-                  close.style.width = '20px';
-            
-                  that.setState({pic:getImageSaved, id:getList[j].id,classorid:'class', type:getList[j].type})
+    remixImageList.appendChild(remixImageListNav);
 
-                  document.getElementById('menu-wrap').style.height = '583px';
-                   
-                  
-                  let image = new Image();
-                  image.src = getImageSaved;
-                  that.resetEditor(null, image);
-                  
-                  //testFR(elId);
-                  }
-                  
+              if(getList != null) {
+                let overlay = document.createElement('div');
+                overlay.setAttribute("id","remix-overlay");
+                //let item;
+               
+               
+                let uniqueArray;
+             
+                for(let i = 0; i < getList.length; i++) {
+                    let n = Object.getOwnPropertyNames(getList[i]);
+                    let final = n[0];
+                    uniqueArray = removeDuplicates(getList, final);
+                }
                 
-                  img.src = getList[j].image;
-              
+                console.log(uniqueArray)
+                this.setState({currentpic:uniqueArray[0]});
+                
+                for(let j = 0; j < uniqueArray.length; j++) {
+             
+                  let item = document.createElement('li');
                   
+            
+                  let bgImgWrap = document.createElement('div');       
+                  let bgImg = document.createElement('div'); 
+                  let itemInfoWrap = document.createElement('div');
+                  let itemInfo = document.createElement('p');
+                  let itemInfot = document.createElement('p');
+                  let itemInfoh = document.createElement('p');
+                  let itemInfoEdit = document.createElement('p');
+                  
+                  // itemInfo.appendChild(document.createTextNode('Pac-man'));
+                  // itemInfot.appendChild(document.createTextNode('Hero'));
+                  // itemInfoh.appendChild(document.createTextNode('100px x 100px'));
+                  //itemInfoEdit.appendChild(document.createTextNode('Edit'));
 
-                  
-              })
-
-              } else {
-
-              item.addEventListener('click', ()=> {
-                  
-                  let img = new Image;
-                  img.setAttribute('crossOrigin', 'anonymous'); 
-                  
-                  let canvas = document.createElement('canvas');
-                  let ctx = canvas.getContext("2d");
-                  
-              
-                  img.onload = function() {
                  
-                  canvas.width = img.width;
-                  canvas.height = img.height;
-                  ctx.drawImage( img, 0, 0 );
-                  localStorage.setItem( `savedImageData${j}`, canvas.toDataURL("image/png") );
-                  let getImageSaved = localStorage.getItem(`savedImageData${j}`);
-                  //alert(getImageSaved);
-                  document.getElementById('menu-wrap').style.display = 'block';
-                  document.getElementById('menu').style.display = 'block';
-                  that.setState({pic:getImageSaved,id:getList[j].id, classorid:getList[j].classorid, type:getList[j].type})
 
-              
-                  let image = new Image();
-                  image.src = getImageSaved;
-                  that.resetEditor(null, image);
-                  
-                  //testFR(elId);
-                  }
-                  img.src = getList[j].image;
-              
-                  
+                  itemInfoWrap.style.height = '62px';
+                  itemInfoWrap.style.width = '120px';
+                  itemInfoWrap.style.backgroundColor = 'rgb(24, 24, 24)';
+                  itemInfo.style.fontSize = '12px';
+                  itemInfo.style.color = 'white';
+                  itemInfo.style.fontWeight = '0';
+                  itemInfo.style.marginLeft = '7px';
+                  itemInfo.style.marginTop = '4px';
+                  itemInfo.style.height = '14px';
 
+                  itemInfot.style.fontSize = '10px';
+                  itemInfot.style.color = '#2b2b2b';
+                  itemInfot.style.height = '14px';
+                  itemInfot.style.fontWeight = '0';
+                  itemInfot.style.marginLeft = '7px';
+            
+
+                  itemInfo.style.fontSize = '12px';
+
+                  itemInfoh.style.fontSize = '10px';
+                  itemInfoh.style.color = '#2b2b2b';
+                  itemInfoh.style.height = '13px';
+                  itemInfoh.style.fontWeight = '0';
+                  itemInfoh.style.marginLeft = '7px';
                   
-              })
+                  itemInfoEdit.style.fontSize = '11px';
+                  itemInfoEdit.style.color = '#767676';
+                  itemInfoEdit.style.fontWeight = '0';
+                  itemInfoEdit.style.marginLeft = '7px';
+
+                  itemInfoWrap.appendChild(itemInfo);
+                  itemInfoWrap.appendChild(itemInfot);
+                  itemInfoWrap.appendChild(itemInfoh);
+                  itemInfoWrap.appendChild(itemInfoEdit);
+
+                  bgImg.style.backgroundImage = `url(${getList[j].image})`;
+                  bgImg.style.height = '99px';
+                  bgImg.style.width = '111px';
+                  bgImg.style.backgroundSize = 'cover';
+                  bgImg.style.backgroundPosition = 'center';
+
+                bgImgWrap.style.height = '179px';
+                bgImgWrap.style.width = '113px';
+                bgImgWrap.style.display = 'flex';
+                bgImgWrap.style.justifyContent = 'center';
+                bgImgWrap.style.alignItems = 'center';
+                bgImgWrap.style.marginLeft = '6px';
+                bgImgWrap.style.borderRadius = '5px';
+                bgImgWrap.style.backgroundColor = '#252525';
+       
+                item.style.height = '120px';
+                item.style.width = '113px';
+
+                item.style.margin = '3px 6px 5px 7px';
+
+
+                item.style.display = 'flex';
+                item.style.alignItems = 'center';
+                item.style.borderRadius = '3px';
+                item.style.backgroundColor = '#1f1f1f';
+                
+              
+                bgImgWrap.style.position = 'relative';
+                bgImgWrap.style.border = '0px solid red';
+                item.style.display = 'flex';
+                item.style.flexDirection = 'column';
+                item.style.height = '179px';
+                item.style.width = '113px';
+
+
+                
+                bgImgWrap.appendChild(bgImg)
+                item.appendChild(bgImgWrap);
+                item.appendChild(itemInfoWrap);
+               
+                remixImageList.appendChild(remixImageWrap);
+      
+                remixImageWrap.style.height = '250px';
+                remixImageWrap.style.overflowY = 'scroll';
+                remixImageWrap.style.display = 'flex';
+                remixImageWrap.style.flexWrap = 'wrap';
+                
+                remixImageWrap.appendChild(item);
+
+                //if(getList[j].type === 'url') {
+                  item.addEventListener('click', ()=> {
+
+                    
+                    
+                    let img = new Image;
+                    img.setAttribute('crossOrigin', 'anonymous'); 
+                    
+                    let canvas = document.createElement('canvas');
+                    let ctx = canvas.getContext("2d");
+                    
+                
+                    img.onload = function() {
+                   
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage( img, 0, 0 );
+                    localStorage.setItem( `savedImageData${j}`, canvas.toDataURL("image/png") );
+                    let getImageSaved = localStorage.getItem(`savedImageData${j}`);
+                    //alert(getImageSaved);
+                    document.getElementById('menu-wrap').style.display = 'block';
+                    document.getElementById('menu').style.display = '583px';
+                    document.getElementById('menu').style.display = 'block';
+                    let backArrow = document.createElement('i');
+                    backArrow.className = 'far fa-caret-square-left';
+                    backArrow.style.height = '20px';
+                    backArrow.style.width = '20px';
+                    let menuTitle = document.createElement('p');
+                    let menuText = document.createTextNode('REMIXABLE ITEMS');
+                    menuTitle.appendChild(menuText);
+                    let close = document.createElement('i');
+                    close.className = 'far fa-caret-square-left';
+                    close.style.height = '20px';
+                    close.style.width = '20px';
+                    console.log('id :', getList[j].id)
+                    
+                    that.setState({pic:getImageSaved, id:getList[j].id, classorid:getList[j].classorid, type:getList[j].type})
+
+                    document.getElementById('menu-wrap').style.height = '583px';
+            
+                    
+                    //testFR(elId);
+                    }
+                    that.setState({pic:false});
+                    img.src = getList[j].image;
+                
+                    
+
+                    
+                })
+
+               // } else {
+
+                // item.addEventListener('click', ()=> {
+                    
+                //     let img = new Image;
+                //     img.setAttribute('crossOrigin', 'anonymous'); 
+                    
+                //     let canvas = document.createElement('canvas');
+                //     let ctx = canvas.getContext("2d");
+                    
+                
+                //     img.onload = function() {
+                   
+                //     canvas.width = img.width;
+                //     canvas.height = img.height;
+                //     ctx.drawImage( img, 0, 0 );
+                //     localStorage.setItem( `savedImageData${j}`, canvas.toDataURL("image/png") );
+                //     let getImageSaved = localStorage.getItem(`savedImageData${j}`);
+                    
+                    
+                //      document.getElementById('menu-wrap').style.display = 'block';
+                //     document.getElementById('menu').style.display = 'block';
+                //     that.setState({pic:getImageSaved,id:getList[j].id,classorid:getList[j].classorid, type:getList[j].type})
+
+                    
+                    
+                //     //testFR(elId);
+                //     }
+                //     img.src = getList[j].image;
+                
+                    
+
+                    
+                // })
+
+               // }
 
               }
+          
               
+              remixImageBox.appendChild(remixImageTitle);
+              remixImageBox.appendChild(remixImageList);
+              list.appendChild(menuinfo);
+              list.appendChild(remixImageBox)
+
+
+
+               
             }
-            list.appendChild(remixList);
-          }
+        
 
 }
 async putObject(id, image) {
