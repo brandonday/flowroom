@@ -166,10 +166,10 @@ class RoomMain extends Component {
                       // alert(key);
 
                         if(key === 'color') {
-                            alert('add color',  Object.keys(array[i])[1])
+                            //alert('add color',  Object.keys(array[i])[1])
                             gui.addColor(guiProperties, 'color').onChange(setValue);
                         } else if (key !== 'color') {
-                            alert('add title',  Object.keys(array[i])[0])
+                            //alert('add title',  Object.keys(array[i])[0])
                             gui.add(guiProperties, Object.keys(array[i])[0]).onChange(setValue);
                         }
                       
