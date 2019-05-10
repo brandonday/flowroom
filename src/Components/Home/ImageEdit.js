@@ -22,7 +22,8 @@ let that;
             pic:'',
             classorid:'',
             type:'',
-            id:''
+            id:'',
+            elementId:''
         }
     }
     componentDidMount() {
@@ -54,15 +55,24 @@ let that;
             remixImageList.style.width = '100%';
         let remixImageTitle = document.createElement('div');
         let menuinfo = document.createElement('div');
+        
         menuinfo.setAttribute("id", "menu-info");
         menuinfo.style.height = '170px';
         menuinfo.style.width = '259px';
         let menuinfobox = document.createElement('div');
+        let menuinfotop = document.createElement('div');
+        menuinfotop.style.display = 'flex';
+        menuinfotop.style.justifyContent = 'space-between';
+        menuinfotop.style.height = '20px';
+        menuinfotop.style.width = '100%';
         menuinfobox.style.border = '1px solid #222222';
         menuinfobox.style.height = '147px';
         menuinfobox.style.width = '259px';
         menuinfobox.style.borderRadius = '3px';
         menuinfobox.style.marginTop = '11px';
+
+        menuinfobox.appendChild(menuinfotop)
+    
         menuinfo.appendChild(menuinfobox);
         let imgtitle = document.createElement('p');
         let imgclose = document.createElement('p');
@@ -256,6 +266,7 @@ let that;
                       bgImg.style.width = '111px';
                       bgImg.style.backgroundSize = 'cover';
                       bgImg.style.backgroundPosition = 'center';
+                      bgImg.setAttribute("id", `image_edit_${j}`)
 
                     bgImgWrap.style.height = '179px';
                     bgImgWrap.style.width = '113px';
@@ -265,7 +276,7 @@ let that;
                     bgImgWrap.style.marginLeft = '6px';
                     bgImgWrap.style.borderRadius = '5px';
                     bgImgWrap.style.backgroundColor = '#252525';
-           
+                    
                     item.style.height = '120px';
                     item.style.width = '113px';
 
@@ -276,7 +287,6 @@ let that;
                     item.style.alignItems = 'center';
                     item.style.borderRadius = '3px';
                     item.style.backgroundColor = '#1f1f1f';
-                    
                   
                     bgImgWrap.style.position = 'relative';
                     bgImgWrap.style.border = '0px solid red';
@@ -336,7 +346,7 @@ let that;
                         close.style.width = '20px';
                         console.log('id :', getList[j].id)
                         
-                        that.setState({pic:getImageSaved, id:getList[j].id, classorid:getList[j].classorid, type:getList[j].type})
+                        that.setState({pic:getImageSaved, id:getList[j].id, classorid:getList[j].classorid, type:getList[j].type, elementId:`image_edit_${j}`})
 
                         document.getElementById('menu-wrap').style.height = '583px';
                 
@@ -403,11 +413,7 @@ let that;
             
                    
     }
-    componentWillUnmount() {
-      //var myNode = document.getElementById("remix-image-box");
-      document.getElementById("remix-image-box").remove();
-      document.getElementById("menu-info").remove();
-    }
+
     testFR(elId) {
       
        
@@ -616,12 +622,12 @@ let that;
               alignItems:'center'
             }}>
               <i onClick={()=> {
-                document.getElementById('menu-wrap').style.display = 'none';
+                //document.getElementById('menu-wrap').style.display = 'none';
               }} className="fas fa-arrow-circle-left" style={{color:'white',fontSize:'20px',marginLeft:20}}></i>
               <div><p style={{color:'white'}}>Swap or Edit Image</p></div>
               <i className="fas fa-window-close" style={{color:'white', fontSize:20, marginRight:20}}/>
             </div>
-            {this.state.pic ? <PhotoEditor image={this.state.pic} 
+            {this.state.pic ? <PhotoEditor elementId={this.state.elementId} image={this.state.pic} 
             classorid={this.state.classorid}
             type={this.state.type}
             id={this.state.id}
