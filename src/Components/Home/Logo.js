@@ -7,7 +7,9 @@ const Mobile = props => <Responsive {...props} maxWidth={767} />;
 const Default = props => <Responsive {...props} minWidth={768} />;
 
  const Logo = () => (
-    <div>
+    <div style={{display:'flex',alignItems:'center'}}>
+    <i className="fas fa-bars" style={{color:'white',fontSize:18}}></i>
+
         <a href="/">
         {/* <Desktop> */}
         <div className="logo-wrap" style={{marginRight:'17px'}}>

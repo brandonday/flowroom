@@ -400,7 +400,7 @@ let that;
 
                   }
               
-                  
+                  list.style.padding = '7px 14px 2px 7px';
                   remixImageBox.appendChild(remixImageTitle);
                   remixImageBox.appendChild(remixImageList);
                   list.appendChild(menuinfo);

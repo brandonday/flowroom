@@ -25,7 +25,7 @@ import { connect } from 'react-redux';
             
                         <div className="right-section">
                             {/* <NewButton props={props.props}/> */}
-                            <div className="button-box-logged-out"></div>
+                            {/* <div className="button-box-logged-out"></div> */}
                             <Search/>
                             <div className="sign-up-log-in-wrap">
                                 <LoginButton/>

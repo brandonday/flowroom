@@ -570,6 +570,31 @@ right: 0px;
 .notSelectedRM {
   color: rgb(82, 82, 82);
 }
+
+.fa-search {
+  margin:10px;
+}
+
+.fa-bars {
+  display:none !important;
+}
+
+@media (max-width: 472px) {
+  .search-box {
+    width:100% !important;
+  }
+  .sign-up-log-in-wrap {
+    display:none !important;
+  }
+  .left-section {
+    width:100% !important;
+    justify-content: space-between;
+  }
+  .fas, .fa-bars {
+    display:block !important;
+  }
+}
+
 @media (max-width: 830px) {
     .header {
       height:119px;
@@ -2046,10 +2071,15 @@ right: 0px;
 .menubg {
   background-color:#181818;
   color:rgb(64, 255, 232) !important;
+  
+}
+
+svg, .remix-icon{
+  fill: rgb(64, 255, 232) !important;
 }
 
 .menubgnot {
-  color:rgb(82, 82, 82) !important;
+  color:rgb(82, 82, 82);
 }
 
 .menu-bg-border {
@@ -2757,7 +2787,7 @@ right: 0px;
 
 .profile-pic {
   border-radius:40px;
-  background-color:yellow;
+  background-color:black;
   height:80px;
   width:80px;
 }

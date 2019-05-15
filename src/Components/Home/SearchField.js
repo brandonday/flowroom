@@ -16,13 +16,6 @@ const Default = props => <Responsive {...props} minWidth={768} />;
     }}>
         <div className="search-box" style={{borderRadius:'3px', height:'30px'}}>
             <i style={{color:'rgb(95, 95, 95)',
-    width:'30px',
-    height:'30px',
-    /* text-align: center; */
-    alignItems:'center',
-    display:'flex',
-    justifyContent:'center',
-    margin:'0px 10px 0',
     fontSize:'13px'
  }} className="fas fa-search"></i>
             <input className="search-input" 
