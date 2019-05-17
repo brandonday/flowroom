@@ -19,7 +19,7 @@ import AWS from 'aws-sdk';
 import ImageEdit from './ImageEdit.js';
 import * as S3 from 'aws-sdk/clients/s3';
 import RelatedRoomPost from './RelatedRoomPost.js';
-
+import { WithContext as ReactTags } from 'react-tag-input';
 let database = firebase.database();
 
 AWS.config.update({
@@ -29,7 +29,21 @@ AWS.config.update({
   })
 });
 
-const s3 = new S3();
+
+  
+  const s3 = new S3();
+  
+  
+  var moment = require('moment');
+  let timer = null; 
+  const messages = [];
+  let names = [];
+  let messagesSent = [];
+  let messageList = [];
+  let preventDuplicateArray = []; //keeps track
+  let postData = [];
+  let callOnce = false;
+  let isUploaded = false;
 
 
 
@@ -43,9 +57,25 @@ let addedBefore = false;
 let roomsPerPage = 4;
 let roomFilter = 'weight';
 let relatedRooms = [];
+const KeyCodes = {
+    comma: 188,
+    enter: 13,
+  };
+
+  const delimiters1 = [KeyCodes.comma, KeyCodes.enter];
+  const delimiters2 = [KeyCodes.comma, KeyCodes.enter];
+  const delimiters3 = [KeyCodes.comma, KeyCodes.enter];
+  const delimiters4 = [KeyCodes.comma, KeyCodes.enter];
+  const delimiters5 = [KeyCodes.comma, KeyCodes.enter];
+ let thumbPicURL;
 class RoomMain extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        this.descriptionhandleChange = this.descriptionhandleChange.bind(this);
+        this.titlehandleChange = this.titlehandleChange.bind(this);
+        this.imageTextPostedhandleChange = this.imageTextPostedhandleChange.bind(this);
+        this.textPostedhandleChange = this.textPostedhandleChange.bind(this);
+        this.communityhandleChange = this.communityhandleChange.bind(this);
         this.state = {
            descriptionText:'',
            modalIsOpen:true,
@@ -68,15 +98,190 @@ class RoomMain extends Component {
            shortID:'',
            dateCreated:'',
            isOpen:false,
-           showPublish:true
+           showPublish:true,
+           modalopen:false,
+        ideaByTags: [
+
+         ],
+         creditsTags: [
+
+         ],
+         compatibleTags: [
+            { id: "IE", text: "IE" },
+            { id: "Chrome", text: "Chrome" },
+            { id: "Firefox", text: "Firefox" },
+            { id: "Opera", text: "Opera" },
+         ],
+         tags: [
+
+         ],
+         suggestionsIdeaBy: [
+
+         ],
+         suggestionscredits: [
+
+         ],
+         suggestionsCompatibleTags: [
+
+         ],
+         suggestionsTags: [
+
+         ],
+         suggestionNamesTags : [
+
+         ],
+         NamesTags : [
+
+         ],
+            isRemixable:false,
+            isLive:false,
+            isAR:false,
+            isVR:false,
+            is360:false,
+            isAI:false,
+            isDesktop:false,
+            isTable:false,
+            isMobile:false,
+            isAllRes:false,
+            isProduction:true,
+            isObject:false,
+            publicBtnClass:'',
+            privateBtnClass:'',
+            notPrivateBtnClass:'',
+            unlistedBtnClass:'',
+            notUnlistedBtnClass:'',
+            roomPostBtnClass:'',
+            imagePostBtnClass:'',
+            textPostBtnClass:'',
+            webBtnClass:'',
+            nativeBtnClass:'',
+            isWebNative:'',
+            regBtnClass:'',
+            exBtnClass:'',
+            rmxBtnClass:'',
+            notRmxBtnClass:'',
+            liveBtnClass:'',
+            notLiveBtnClass:'',
+            notArVr360Class:'',
+            arBtnClass:'',
+            notARBtnClass:'',
+            vrBtnClass:'',
+            notVRBtnClass:'',
+            three60BtnClass:'',
+            notThree60BtnClass:'',
+            aiBtnClass:'',
+            notAIBtnClass:'',
+            allResBtnClass:'',
+            mobileBtnClass:'',
+            tabletBtnClass:'',
+            desktopBtnClass:'',
+            objectBtnClass:'',
+            notObjectClass:'',
+            description:'',
+            avatar:'',
+            picURL:'',
+            thumbPicURL:'',
+            progress: 100,
+            isUploading: false,
+            descriptionD:'block',
+            thumbnailPicBox:'flex',
+            imagePost:'none',
+            imageText:'none',
+            roomType:'',
+            textPosted:'',
+            imageTextPosted:'',
+            postedPicURL:'',
+            objectOptions:{},
+            textPosted:'',
+            roomPrivacy:'',
+            compatability:'',
+            performance:'',
+            communityApartOf:'',
+            isWeb:false,
+            isNative:false,
+            isWebNative:false,
+            placeholder:'',
+            imagePostDisplay:'none',
+            username:'',
+            newMessage:'',
+            messageTo:'',
+            showBack:false,
+            myusername:'',
+            messages:[],
+            messagebox:[],
+            picForMessage:'',
+            fullname:'',
+            messageList:[],
+            messageReset:false,
+            theMessages:true,
+            room_title:'',
+            shortID:'',
+            showSignInSignUp:false,
+            room_card_height:246,
+            room_aspect_ratio:1.3,
+            repostedBy:'',
+            repostedByArray:[],
+            remixedByArray:[],
+            isRemix:false, 
+            remixRoomID:'', 
+            remixUserName:''
+            
         };
         this.openModal = this.openModal.bind(this);
         this.afterOpenModal = this.afterOpenModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+
+      this.handleDeletecredits = this.handleDeletecredits.bind(this);
+      this.handleAdditioncredits = this.handleAdditioncredits.bind(this);
+      this.handleDragcredits = this.handleDragcredits.bind(this);
+
+      this.handleDeleteNames = this.handleDeleteNames.bind(this);
+      this.handleAdditionalNames = this.handleAdditionalNames.bind(this);
+      this.handleDragNames = this.handleDragNames.bind(this);
+
+      this.handleDeleteIdeaBy = this.handleDeleteIdeaBy.bind(this);
+      this.handleAdditionIdeaBy = this.handleAdditionIdeaBy.bind(this);
+      this.handleDragIdeaBy = this.handleDragIdeaBy.bind(this);
+
+      this.handleDeleteCompatibleTags = this.handleDeleteCompatibleTags.bind(this);
+      this.handleAdditionCompatibleTags = this.handleAdditionCompatibleTags.bind(this);
+      this.handleDragIdeaBy = this.handleDragIdeaBy.bind(this);
+
+      this.handleDeleteTags = this.handleDeleteTags.bind(this);
+      this.handleAdditionTags = this.handleAdditionTags.bind(this);
+      this.handleDragTags = this.handleDragTags.bind(this);
+
+      this.closeModal = this.closeModal.bind(this)
+      this.selectPr.bind(this)
+
+      this.getFileName = this.getFileName.bind(this);
+      this.putObject = this.putObject.bind(this);
+      this.getMimeType = this.getMimeType.bind(this);
+    }
+    descriptionhandleChange(event) {
+        this.setState({description: event.target.value});
+      }
+    titlehandleChange(event) {
+        this.setState({room_title: event.target.value});
+      }
+    imageTextPostedhandleChange(event) {
+        this.setState({imageTextPosted: event.target.value});
+    }
+    textPostedhandleChange(event) {
+        this.setState({textPosted: event.target.value});
+    }
+    communityhandleChange(event) {
+        this.setState({communityApartOf: event.target.value});
+    
     }
     componentDidMount() {
         let that = this;
         //this.incrementViews();
+        var user = firebase.auth().currentUser;
+        var name, email, photoUrl, uid, emailVerified, fullname;
+        var shortID = window.location.pathname.split("room/").pop();
+        let imageData = localStorage.getItem("thumbnail");
+        this.setState({thumbPicURL:imageData});
         document.getElementById('main-menu').style.display = 'none';
         document.getElementById('tab-menu').style.height = 'none';
         
@@ -301,8 +506,396 @@ class RoomMain extends Component {
         }).catch((error) => {
           console.log(error)
         });
-   
+        
+        const database = firebase.database();
+
+        if (user != null) {
+            name = user.displayName;
+            email = user.email;
+            photoUrl = user.photoURL;
+            console.log('photo :',photoUrl)
+            emailVerified = user.emailVerified;
+            fullname = user.fullname;
+            uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
+                     // this value to authenticate with your backend server, if
+                     // you have one. Use User.getToken() instead.
+                     that.setState({username:name, 
+                        pic:photoUrl, 
+                        fullname:fullname,
+                        suggestionNamesTags:names, 
+                        myusername:name
+                    });
+                    
+            database.ref(`/follows/${name}/following`).once('value').then((snapshot) => {
+                snapshot.forEach((childSnapShot) => {
+                    names.push({id:`${childSnapShot.val()}`,text:`${childSnapShot.val()}`});
+                })
                 
+
+            });
+
+            
+           database.ref(`rooms/${shortID}`).once('value').then(function(snapshot) {
+                
+                if(snapshot.val() == null) {
+                    return;
+                }
+                console.log('snapshot :', snapshot.val())
+                that.setState({room_title:snapshot.val().room_title,
+                    description:snapshot.val().description, 
+                    tags:snapshot.val().tags !== ''? snapshot.val().tags : [],
+                    room_card_height:snapshot.val().room_card_height
+                });
+                
+            });
+
+        }
+        this.setState({publicBtnClass:'selected-background',
+            privateBtnClass:'',unlistedBtnClass:'',webBtnClass:'selected-background',
+            roomType:'other',roomPostBtnClass:'selected-background',isProduction:true,
+            regBtnClass:'selected-background',exBtnClass:'',isRemixable:false,rmxBtnClass:'selected-background',
+            notRmxBtnClass:'',isLive:false,liveBtnClass:'selected-background',notLiveBtnClass:'',
+            isAR:false,isVR:false,is360:false,notArVr360Class:'selected-background',arBtnClass:'',
+            vrBtnClass:'',three60BtnClass:'',aiBtnClass:'',notAIBtnClass:'selected-background',
+            isAI:false, mobileBtnClass:'selected-background',isDesktop:true,isTable:true,
+            isMobile:true,tabletBtnClass:'selected-background',desktopBtnClass:'selected-background',
+            isObject:false, notObjectClass:'selected-background',objectBtnClass:''
+        });
+
+                
+    }
+    componentWillUnmount() {
+        this.setState({thumbPicURL:''});
+    }
+    saveRoom () {
+        let hashids = new Hashids(uuid(), 6);
+        let uid = firebase.auth().currentUser.uid;
+        let html = this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.html : '';
+        let css = this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.css: '';
+        let js = this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.js: '';
+
+        let fileNameHTML = this.getFileName('html');
+        let fileNameCSS = this.getFileName('css');
+        let fileNameJS = this.getFileName('js');
+
+        const urlHTML = `http://test.flowroom.com/uploads/${fileNameHTML}`;
+        const urlCSS = `http://test.flowroom.com/uploads/${fileNameCSS}`;
+        const urlJS = `http://test.flowroom.com/uploads/${fileNameJS}`;
+
+        this.putObject('html', fileNameHTML, html);
+        this.putObject('css', fileNameCSS, css);
+        this.putObject('js', fileNameJS, js);
+
+        // console.log('dhtml :',this.props.state.dhtml);
+        // console.log('dhtml.dhtml :', this.props.state.dhtml.dhtml);
+        let currentRoomID = window.location.pathname.split("room/").pop();
+        this.props.startCreateRoom(
+            {
+                description:this.state.description,
+                views:0,
+                likes:0,
+                html:'',
+                css:'',
+                js:'',
+                urlHTML: urlHTML,
+                urlCSS: urlCSS,
+                urlJS: urlJS,
+                pic:this.state.pic,
+                objectNum:'',
+                date: new Date(),
+                filterGroup:'',
+                Category:'',
+                communityApartOf:this.state.communityApartOf,
+                credits:this.state.creditsTags, //objects like arrays
+                ideaBy:'', //
+                likedBy:'',
+                remixedBy:'',
+                sharedBy:'',
+                tags:this.state.tags,
+                live:this.state.isLive,
+                roomState:'',
+                banned:'',
+                objects:'',
+                preferences:'',
+                javascriptLibraries:'',
+                HTML_Libraries:'',
+                CSS_Style:'',
+                flaggedNumber:'',
+                report:'',
+                isRemixable:this.state.isRemixable,
+                isLive:this.state.isLive,
+                isAR:this.state.isAR,
+                isVR:this.state.isVR,
+                is360:this.state.is360,
+                isAI:this.state.isAI,
+                isDesktop:this.state.isDesktop,
+                isTable:this.state.isTable,
+                isMobile:this.state.isMobile,
+                isAllRes:this.state.isAllRes,
+                isProduction:this.state.isProduction,
+                isObject:this.state.isObject,
+                upvotes:0,
+                downvotes:0,
+                roomType:'',
+                isLocked:false,
+                ipAddress:'',
+                Name:'',
+                browserCompatability:'', //objects like arrays,
+                isUnlisted:false,
+                isPrivate:false,
+                isNSFW:false,
+                isVerified:false,
+                isDeveloper:false,
+                isNormalUser:this.state.isProduction,
+                userName:this.state.username,
+                emailAddress:'',
+                shortID:this.props.state.entireApp.post ? hashids.encode(1, 2, 3) : currentRoomID,
+                permissions: { },
+                uid:uid,
+                postedPicURL:this.state.postedPicURL,
+                roomType:this.state.roomType,
+                thumbnail:localStorage.getItem("thumbnailUrl") === null? '' : localStorage.getItem("thumbnailUrl"),
+                objectOptions:{},
+                textPosted:this.state.textPosted,
+                roomPrivacy:this.state.roomPrivacy,
+                compatability:this.state.compatability,
+                performance:this.state.performance,
+                isWeb:this.state.isWeb,
+                isNative:this.state.isNative,
+                isWebNative:this.state.isWebNative,
+                isPosted:false,
+                real_time:[],
+                data:[],
+                room_title:this.state.room_title,
+                room_aspect_ratio:this.state.room_aspect_ratio,
+                room_card_height:this.state.room_card_height,
+                repostedBy:this.state.repostedBy,
+                repostedByArray:this.state.remixedByArray,
+                remixedByArray:this.state.remixedByArray,
+                isRemix:this.props.state.entireApp.isRemix, 
+                remixRoomID:this.props.state.entireApp.remixRoomID, 
+                remixUserName:this.props.state.entireApp.remixUserName,
+
+        });
+        if(document.getElementById('postbtn')) {
+            document.getElementById('postbtn').style.display = 'none';
+        }
+        
+     
+        if(document.getElementById('savechanges')) {
+            document.getElementById('savechanges').style.display = 'flex';
+        }
+        if(document.getElementById('deletebtn')) {
+            document.getElementById('deletebtn').style.display = 'flex';
+        }
+    }
+    async putObject(type, fileName, data) {
+   
+        let params = { 
+            Bucket: 'test.flowroom.com',
+            Key:'uploads/' + fileName,
+            ContentEncoding: 'base64',
+            ContentType: this.getMimeType(type),
+            Body: data,
+            
+          }
+      
+        
+        let that = this;
+        s3.putObject(params, function(err, data) {
+          console.log('err: ', err)
+          if (err) {
+            console.log('error :',err);
+          } else {
+            console.log('data :', data);
+            let obj = {
+              url:`http://test.flowroom.com/uploads/${fileName}`
+            }
+            console.log('obj :', obj);
+            
+          }
+        });
+      }
+      getMimeType(type) {
+        let mimeType = '';
+        switch (type) {
+          case 'html':
+            mimeType = 'text/html';
+            break;
+          case 'css':
+            mimeType = 'text/css';
+            break;
+          case 'js':  
+            mimeType = 'text/javascript';
+            break;
+        }
+
+        return mimeType;
+    }
+    getFileName(type) {
+        let extension = '';
+        switch (type) {
+          case 'html':
+            extension = '.html';
+            break;
+          case 'css':
+            extension = '.css';
+            break;
+          case 'js': 
+            extension = '.js'; 
+            break;
+        }
+        let hashids = new Hashids(uuid(), 6);
+        let fileName = hashids.encode(1, 2, 3) + extension;
+        return fileName;
+    }
+    
+    loadScreenShot() {
+        console.log('load thumbnail')
+            let imageData = localStorage.getItem('thumbnail');
+            if(imageData !== null) {
+                this.setState({thumbPicURL:imageData})
+            }
+
+    }
+    handleCardAspectRatio(e) {
+        this.setState({room_aspect_ratio: e.target.value});
+    }
+    handleCardHeight(e) {
+        this.setState({room_card_height: e.target.value});
+    }
+    selectPr = (i) => {
+        if(i !== null) {
+            let elID = i;
+            if(elID === 'room-post-btn') {
+                this.setState({placeholder:'description...', roomPostBtnClass:'selected-background',
+                    imagePostBtnClass:'',textPostBtnClass:'',description:"",descriptionD:'block',imagePost:'none',
+                    imageText:'none',thumbnailPicBox:'flex',roomType:'other',imagePostDisplay:'none'
+                });
+            }
+            if(elID === 'room-post-image-btn') {
+
+                this.setState({descriptionD:'none',imagePost:'block',roomPostBtnClass:'',imagePostBtnClass:'selected-background',
+                    textPostBtnClass:'',imageText:'block',thumbnailPicBox:'none',roomType:'image',imagePostDisplay:'flex'
+                });
+            }
+            if(elID === 'room-post-text-btn') {
+                this.setState({placeholder:"What's up?",roomPostBtnClass:'',imagePostBtnClass:'',
+                    textPostBtnClass:'selected-background',description:"",descriptionD:'block',imagePost:'none',
+                    imageText:'none',thumbnailPicBox:'none',roomType:'text',imagePostDisplay:'none'
+                })
+            }
+            if(elID === 'public-btn') {
+                this.setState({publicBtnClass:'selected-background',privateBtnClass:'',
+                    unlistedBtnClass:'',isPrivate:false,isUnlisted:false
+                });
+
+            }
+            if(elID === 'private-btn') {
+                this.setState({publicBtnClass:'',privateBtnClass:'selected-background',
+                    unlistedBtnClass:'',isPrivate:true,isUnlisted:false
+                });
+
+            }
+            if(elID === 'unlisted-btn') {
+                this.setState({publicBtnClass:'',privateBtnClass:'', unlistedBtnClass:'selected-background',
+                    isPrivate:false, isUnlisted:true
+                });
+
+            }
+            if(elID === 'web-btn') {
+                this.setState({webBtnClass:'selected-background',
+                    nativeBtnClass:'',webNativeBtnClass:'',isWeb:true,
+                    isNative:false,isWebNative:false
+                });
+            }
+            if(elID === 'native-btn') {
+                this.setState({webBtnClass:'',nativeBtnClass:'selected-background',
+                    webNativeBtnClass:'',isWeb:false,isNative:true,isWebNative:false
+                });
+            }
+            if(elID === 'web-native-btn') {
+                this.setState({webBtnClass:'',nativeBtnClass:'',webNativeBtnClass:'selected-background',
+                    isWeb:false,isNative:false,isWebNative:true
+                });
+            }
+            if(elID === 'reg-btn') {
+                this.setState({isProduction:true,regBtnClass:'selected-background',exBtnClass:''});
+            }
+            if(elID === 'exp-btn') {
+                this.setState({isProduction:false,regBtnClass:'',exBtnClass:'selected-background'});
+            }
+            if(elID === 'not-remixable') {
+                document.getElementById('not-remixable').className = 'selected-background';
+                this.setState({isRemixable:false,rmxBtnClass:'selected-background',notRmxBtnClass:''});
+            }
+            if(elID === 'remixable-btn') {
+                document.getElementById('remixable-btn').className = 'selected-background';
+                this.setState({rmxBtnClass:'',notRmxBtnClass:'selected-background',isRemixable:true});
+            }
+            if(elID === 'not-live') {
+                this.setState({isLive:false,liveBtnClass:'selected-background',notLiveBtnClass:''});
+            }
+            if(elID === 'live-btn') {
+                this.setState({isLive:true,liveBtnClass:'',notLiveBtnClass:'selected-background'});
+            }
+            if(elID === 'no-ar-vr-360-btn') {
+                this.setState({isAR:false,isVR:false,is360:false,notArVr360Class:'selected-background',
+                    arBtnClass:'',vrBtnClass:'',three60BtnClass:''
+                });
+            }
+            if(elID === 'ar-btn') {
+                this.setState({arBtnClass:'selected-background',notArVr360Class:'',vrBtnClass:'',
+                    three60BtnClass:'',isAR:true,isVR:false,is360:false
+                });
+            }
+            if(elID === 'vr-btn') {
+                this.setState({isAR:false,vrBtnClass:'selected-background',
+                    arBtnClass:'',notArVr360Class:'',three60BtnClass:'',
+                    isVR:true,is360:false
+                });
+            }
+            if(elID === '360-btn') {
+                this.setState({arBtnClass:'',vrBtnClass:'',notArVr360Class:'',
+                    three60BtnClass:'selected-background',isAR:false,isVR:false,
+                    is360:true
+                });
+            }
+            if(elID === 'yes-ai-btn') {
+                this.setState({isAI:true,aiBtnClass:'selected-background',notAIBtnClass:''});
+            }
+            if(elID === 'no-ai-btn') {
+                this.setState({aiBtnClass:'',notAIBtnClass:'selected-background',isAI:false});
+            }
+            if(elID === 'mobile-btn') {
+                if(this.state.isMobile === false) {
+                    this.setState({mobileBtnClass:'selected-background',isMobile:true});
+                } else {
+                    this.setState({mobileBtnClass:'',isMobile:false});
+                }
+            }
+            if(elID === 'tablet-btn') {
+                if(this.state.isTable === false) {
+                    this.setState({isTable:true,tabletBtnClass:'selected-background'});
+                } else {
+                    this.setState({isTable:false,tabletBtnClass:''});
+                }
+            }
+            if(elID === 'desktop-btn') {
+                if(this.state.isDesktop === false) {
+                    this.setState({isDesktop:true,desktopBtnClass:'selected-background'});
+                } else {
+                    this.setState({isDesktop:false,desktopBtnClass:''});
+                }
+            }
+            if(elID === 'object-yes-btn') {
+                this.setState({isObject:true,objectBtnClass:'selected-background'});
+            }
+            if(elID === 'object-no-btn') {
+                this.setState({isObject:false,notObjectClass:'selected-background'});
+            }
+        }
+
     }
     incrementViews() {
         let database = firebase.database();
@@ -415,34 +1008,43 @@ class RoomMain extends Component {
         document.getElementById('details').className = 'details-3x'; 
         document.getElementById('details-text').className = 'details-text'; 
     }
-    async putObject(imageData, callback) {
-            if(imageData == null) {
-                return; 
+    async putObject(type, fileName, data) {
+   
+        let params = { 
+            Bucket: 'test.flowroom.com',
+            Key:'uploads/' + fileName,
+            ContentEncoding: 'base64',
+            ContentType: this.getMimeType(type),
+            Body: data,
+            
+          }
+      
+        
+        let that = this;
+        s3.putObject(params, function(err, data) {
+          console.log('err: ', err)
+          if (err) {
+            console.log('error :',err);
+          } else {
+            console.log('data :', data);
+            let obj = {
+              url:`http://test.flowroom.com/uploads/${fileName}`
             }
-            let hashids = new Hashids(uuid(), 6);
-            let fileName = hashids.encode(1, 2, 3) + '.jpg';
-            let buffer = new Buffer(imageData.replace(/^data:image\/\w+;base64,/, ""),'base64')
-            let params = { 
-                Bucket: 'test.flowroom.com',
-                Key:'uploads/' + fileName,
-                ContentEncoding: 'base64',
-                ContentType: 'image/jpeg',
-                Body: buffer,
-            }
-            s3.putObject(params, function(err, data) {
-                if (err) {
-                    console.log('error :',err);
-                } else {
-                    let url = `http://test.flowroom.com/uploads/${fileName}`;
-                    console.log(' s3 url :', url);
-                    callback(url);
-                }
-            }
-        );
-    }
+            console.log('obj :', obj);
+            
+          }
+        });
+      }
     createPublish() { 
        return(<div>testing</div>) 
 
+    }
+    description(e){
+        //this.setState({description:e.target.value});
+    }
+    roomTitle(e) {
+        console.log('state works', this.props.state);
+        this.setState({room_title:e.target.value});
     }
     openModal(isPostAsNew = true) {
         let that = this;
@@ -778,27 +1380,44 @@ class RoomMain extends Component {
                         </div>     
                         <div style={{height:45, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)', padding:'0px 10px'}}>
                             <p style={{color:'white',fontSize:11}}>Title</p>
-                            <input type="text" style={{height:20, width:'100%',borderRadius:3,border:'0px',backgroundColor:'rgb(37,37,37)',outline:'none'}}/>
+                            <input type="text" onChange={this.titlehandleChange.bind(this)} style={{height:20, width:'100%',borderRadius:3,border:'0px',backgroundColor:'rgb(37,37,37)',outline:'none'}}/>
                         </div>
                         <div style={{height:130, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
                             <p style={{color:'white',fontSize:11}}>Description</p>
-                            <textarea style={{border:'0px', outline:'none', height:100,width:'100%',borderRadius:3,backgroundColor:'rgb(37,37,37)',resize:'none'}}></textarea>
+                            <textarea onChange={this.descriptionhandleChange.bind(this)} style={{border:'0px', outline:'none', height:50,width:'100%',borderRadius:3,backgroundColor:'rgb(37,37,37)',resize:'none'}}></textarea>
                         </div>
                         <div style={{height:55, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
                             <p style={{color:'white',fontSize:11}}>Tags</p>
-                            <input type="text" style={{height:20, width:'100%',borderRadius:3,border:'0px', backgroundColor:'rgb(37,37,37)',outline:'none',}}/>
+                            <ReactTags style={{marginBottom:10}} tags={this.state.tags}
+                        suggestions={this.state.suggestionsTags}
+                        handleDelete={this.handleDeleteTags}
+                        handleAddition={this.handleAdditionTags}
+                        handleDrag={this.handleDragTags}
+                        placeholder={'Type any tags here'}
+                        delimiters={delimiters4} />
                         </div>
                         <div style={{height:55, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
-                            <p style={{color:'white',fontSize:11}}>Tags</p>
-                            <input type="text" style={{height:20, width:'100%',borderRadius:3,border:'0px',backgroundColor:'rgb(37, 37, 37)',outline:'none'}}/>
+                            <p style={{color:'white',fontSize:11}}>Visibility</p>
+                            <select id="dropdown">
+                                <option value="public">Public (Everyone including followers)</option>
+                                <option value="private">Private (Only me)</option>
+                                <option value="unlisted">Unlisted (Everyone you share with except followers)</option>
+                                <option value="followers">Followers</option>
+                            </select>                        
                         </div>
                         <div style={{height:147, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
                             <p style={{color:'white',fontSize:11}}>Thumbnail Preview</p>
-                            <div style={{width:'100%', height:120,backgroundColor:'rgb(37,37,37)',borderRadius:3}}></div>
+                            <div id="thumbnail-pic-box" style={{width:'100%', height:120,backgroundColor:'rgb(37,37,37)',borderRadius:3}}>
+                            <img id="thumbnail-pic-display"
+                             src={this.props.state.entireApp.image}
+                             width={150}/>
+                            </div>
                         </div>
                         <div style={{display:'flex',height:55, marginBottom:7, width:'100%', justifyContent:'center',alignItems:'center', padding:'0 10px'}}>
                             <div style={{backgroundColor:'grey',display:'flex',alignItems:'center',justifyContent:'center', height:'29px',width:'170px',marginRight:10,borderRadius:3,backgroundColor:'rgb(37, 37, 37)'}}>SAVE AS DRAFT</div>
-                            <div style={{backgroundColor:'grey',display:'flex',alignItems:'center',justifyContent:'center', height:'29px',width:'170px',borderRadius:3,backgroundColor:'rgb(54, 255, 233)',fontWeight:'bold',color:'rgb(82, 82, 82)'}}>PUBLISH ROOM</div>
+                            <div style={{backgroundColor:'grey',display:'flex',alignItems:'center',justifyContent:'center', height:'29px',width:'170px',borderRadius:3,backgroundColor:'rgb(54, 255, 233)',fontWeight:'bold',color:'rgb(82, 82, 82)'}} onClick={
+                                this.saveRoom.bind(this)
+                            }>PUBLISH ROOM</div>
                         </div>              
                 </div>
             )
@@ -806,7 +1425,154 @@ class RoomMain extends Component {
             return (<p>record</p>)
         }
      }
-     
+    
+     handleDeletecredits(i) {
+        const { creditsTags } = this.state;
+        this.setState({
+            creditsTags: creditsTags.filter((tag, index) => index !== i),
+        });
+    }
+
+    handleAdditioncredits(tag) {
+        this.setState(state => ({ creditsTags: [...state.creditsTags, tag] }));
+    }
+
+    handleDragcredits(tag, currPos, newPos) {
+        const tags = [...this.state.creditsTags];
+        const newTags = tags.slice();
+
+        newTags.splice(currPos, 1);
+        newTags.splice(newPos, 0, tag);
+
+        // re-render
+        this.setState({ creditsTags: newTags });
+    }
+
+
+
+    handleDeleteIdeaBy(i) {
+        const { ideaByTags } = this.state;
+        this.setState({
+           ideaByTags: ideaByTags.filter((tag, index) => index !== i),
+        });
+    }
+
+    handleAdditionIdeaBy(tag) {
+        this.setState(state => ({ ideaByTags: [...state.ideaByTags, tag] }));
+    }
+
+    handleDragIdeaBy(tag, currPos, newPos) {
+        const tags = [...this.state.ideaByTags];
+        const newTags = tags.slice();
+
+        newTags.splice(currPos, 1);
+        newTags.splice(newPos, 0, tag);
+
+        // re-render
+        this.setState({ ideaByTags: newTags });
+    }
+
+
+    handleDeleteCompatibleTags(i) {
+        const { compatibleTags } = this.state;
+        this.setState({
+            compatibleTags : compatibleTags.filter((tag, index) => index !== i),
+        });
+    }
+
+    handleAdditionCompatibleTags(tag) {
+        this.setState(state => ({ compatibleTags: [...state.compatibleTags, tag] }));
+    }
+
+    handleDragCompatibleTags(tag, currPos, newPos) {
+        const tags = [...this.state.compatibleTags];
+        const newTags = tags.slice();
+
+        newTags.splice(currPos, 1);
+        newTags.splice(newPos, 0, tag);
+
+        // re-render
+        this.setState({ compatibleTags: newTags });
+    }
+
+
+    handleDeleteTags(i) {
+        const { tags } = this.state;
+        this.setState({
+         tags: tags.filter((tag, index) => index !== i),
+        });
+    }
+
+    handleAdditionTags(tag) {
+        this.setState(state => ({ tags: [...state.tags, tag] }));
+    }
+
+    handleDragTags(tag, currPos, newPos) {
+        const tags = [...this.state.tags];
+        const newTags = tags.slice();
+
+        newTags.splice(currPos, 1);
+        newTags.splice(newPos, 0, tag);
+
+        // re-render
+        this.setState({ tags: newTags });
+    }
+
+
+    handleDeleteNames(i) {
+        const { NamesTags } = this.state;
+        this.setState({
+            NamesTags: NamesTags.filter((tag, index) => index !== i),
+        });
+    }
+
+    handleAdditionalNames(tag) {
+        this.setState(state => ({ NamesTags: [...state.NamesTags, tag] }));
+    }
+
+    handleDragNames(tag, currPos, newPos) {
+        const tags = [...this.state.NamesTags];
+        const newTags = tags.slice();
+
+        newTags.splice(currPos, 1);
+        newTags.splice(newPos, 0, tag);
+
+        // re-render
+        this.setState({ NamesTags: newTags });
+    }
+
+    handleUploadSuccess = filename => {
+        this.setState({ avatar: filename, progress: 100, isUploading: false });
+        firebase
+            .storage()
+            .ref("images")
+            .child(filename)
+            .getDownloadURL()
+            .then(url => {
+                //this.setState({ postedPicURL: url });
+
+            alert(url)
+        });
+
+    };
+
+    handleUploadStart() {
+        alert('daad')
+    }
+    handleUploadSuccess2 = filename => {
+        this.setState({ avatar: filename, progress: 100, isUploading: false });
+        firebase
+            .storage()
+            .ref("images")
+            .child(filename)
+            .getDownloadURL()
+            .then(url => {
+                this.setState({thumbPicURL: url });
+
+                alert(url)
+            });
+
+    }
     render() {
         let that = this;
         const {isLoading} = this.state;
@@ -1257,7 +2023,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    openModal: (modal) => dispatch(OPEN_MODAL(modal))
+    startCreateRoom: (room) => dispatch(startCreateRoom(room))
   });
 
 const ConnectedRoomMain = connect(mapStateToProps,mapDispatchToProps)(RoomMain)
