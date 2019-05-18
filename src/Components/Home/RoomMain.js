@@ -1416,9 +1416,9 @@ class RoomMain extends Component {
                             <img id="thumbnail-pic-display"
                              src={this.props.state.entireApp.image}
                              width={150}/>
-                             <div style={{position:'absolute',height:'100%',width:'320px',backgroundColor:'black',top:'0px',display:'none'}}>
+                             <div style={{position:'absolute',height:'100%',width:'320px',backgroundColor:'black',top:'0px',visibility:'hidden'}}>
                                 <div style={{height:'400px', width:'320px'}}>
-                                    <iframe id="regular-thumbnail" src={`/full/${this.state.shortID}`} style={{height:246, width:'320px',border:'1px solid red',display:'none'}}/>
+                                    <iframe id="regular-thumbnail" src={`/full/${this.state.shortID}`} style={{height:246, width:'320px',border:'1px solid red',visibility:'hidden'}}/>
                                 </div>
                              </div>
                             </div>

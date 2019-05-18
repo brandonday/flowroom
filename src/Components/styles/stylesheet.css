@@ -3428,19 +3428,21 @@ p {
 }
 
 .ReactTags__tagInputField {
-  border: 1px solid #DDE0EB;
+  border: 0px solid #DDE0EB;
   border-radius: 6px;
-  color: #333333;
-  font-size: 1.4rem;
+  color: #fff;
+  font-size: 11px;
   margin-bottom: 1.4rem;
   padding: 1rem;
   font-family: Helvetica, Arial, sans-serif;
   outline: none;
-  background-color: #F9FAFA;
+  background-color: rgb(37,37,37);
   -webkit-font-smoothing: antialiased;
+  -webkit-flex: 1 1;
   flex: 1 1;
   width: 100%;
-  margin-top: 14px;
+  margin-top: 6px;
+  height: 23px;
 }
 
 .tag-wrapper, .ReactTags__tag {
