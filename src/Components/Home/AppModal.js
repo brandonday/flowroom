@@ -265,8 +265,9 @@ const KeyCodes = {
         var user = firebase.auth().currentUser;
         var name, email, photoUrl, uid, emailVerified, fullname;
         var shortID = window.location.pathname.split("room/").pop();
-        let imageData = localStorage.getItem("thumbnail");
-        this.setState({thumbPicURL:imageData});
+        //let imageData = localStorage.getItem("thumbnail");
+        //alert(imageData);
+        //this.setState({thumbPicURL:imageData});
         this.setState({newMessage:'message-screen', shortID:shortID});
         Modal.setAppElement('#root');
         const database = firebase.database();
@@ -410,7 +411,7 @@ const KeyCodes = {
                 isNormalUser:this.state.isProduction,
                 userName:this.state.username,
                 emailAddress:'',
-                shortID:this.props.state.entireApp.post ? hashids.encode(1, 2, 3) : currentRoomID,
+                shortID:hashids.encode(1, 2, 3),
                 permissions: { },
                 uid:uid,
                 postedPicURL:this.state.postedPicURL,
@@ -433,9 +434,9 @@ const KeyCodes = {
                 repostedBy:this.state.repostedBy,
                 repostedByArray:this.state.remixedByArray,
                 remixedByArray:this.state.remixedByArray,
-                isRemix:this.props.state.entireApp.isRemix, 
-                remixRoomID:this.props.state.entireApp.remixRoomID, 
-                remixUserName:this.props.state.entireApp.remixUserName,
+                isRemix:false, 
+                remixRoomID:'', 
+                remixUserName:'',
 
         });
         if(document.getElementById('postbtn')) {

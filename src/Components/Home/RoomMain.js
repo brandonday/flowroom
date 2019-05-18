@@ -276,6 +276,11 @@ class RoomMain extends Component {
     }
     componentDidMount() {
         let that = this;
+        // alert('room loaded')
+
+      
+     
+
         //this.incrementViews();
         var user = firebase.auth().currentUser;
         var name, email, photoUrl, uid, emailVerified, fullname;
@@ -1206,7 +1211,7 @@ class RoomMain extends Component {
                                                 ctx.drawImage( img, 0, 0 );
                                                 localStorage.setItem( `savedImageData${i}`, canvas.toDataURL("image/png") );
                                                 let getImageSaved = canvas.toDataURL("image/png"); //localStorage.getItem(`savedImageData${j}`);
-                                                alert(getImageSaved);
+                                                //alert(getImageSaved);
                                                 document.getElementById('menu-wrap').style.display = 'block';
                                                 document.getElementById('menu').style.display = 'block';
                                             });
@@ -1411,6 +1416,11 @@ class RoomMain extends Component {
                             <img id="thumbnail-pic-display"
                              src={this.props.state.entireApp.image}
                              width={150}/>
+                             <div style={{position:'absolute',height:'100%',width:'320px',backgroundColor:'black',top:'0px',display:'none'}}>
+                                <div style={{height:'400px', width:'320px'}}>
+                                    <iframe id="regular-thumbnail" src={`/full/${this.state.shortID}`} style={{height:246, width:'320px',border:'1px solid red',display:'none'}}/>
+                                </div>
+                             </div>
                             </div>
                         </div>
                         <div style={{display:'flex',height:55, marginBottom:7, width:'100%', justifyContent:'center',alignItems:'center', padding:'0 10px'}}>
@@ -1794,8 +1804,37 @@ class RoomMain extends Component {
                                 remix:false,
                                 showPublish:true
                                 });
-                            
+
                             }
+                            setTimeout(()=>{
+                                let iframe = document.getElementById('regular-thumbnail');
+                              
+                                 
+                                    iframe.contentWindow.flowroom.SaveScreenShot(
+                                        ()=> {
+                                            let imageData = localStorage.getItem("thumbnail");
+                                            alert(imageData)
+                                            // let isRemix = isPostAsNew;
+                                            // let remixRoomID = isPostAsNew ? that.state.shortID : that.state.remixRoomID;
+                                            // let remixUserName = isPostAsNew ? that.state.userName : that.state.remixUserName;
+                                            localStorage.setItem("thumbnailUrl", "");
+                                            let thumbnail = document.getElementById('thumbnail-pic-display');
+                                            thumbnail.src = imageData;
+                                            thumbnail.setAttribute("height", "100%");
+                                            thumbnail.setAttribute("width", "100%");
+                                            that.putObject (
+                                                imageData, 
+                                                (url) => { 
+                                                    localStorage.setItem("thumbnailUrl", url);
+                                                }
+                                            );
+                                        }
+                                    );
+                                   
+                               
+                               
+
+                                 },10000)
                         }
                         }} style={{
                             display:that.state.postBtnVisible ? 'flex' : 'none',

@@ -73,7 +73,7 @@ class Full extends Component {
                 js = data;
                 js = js === undefined || js === null ? '' : js; 
                
-                script = "<script src='../flowroom.js'></script>";
+                script = "<script src='../flowroom.js'></script><script src='https://html2canvas.hertzen.com/dist/html2canvas.min.js'></script>";
                 src = '';
                 src = base_tpl.replace('</body>', html + '</body>');
                 css = '<style>' + css + '</style>';
