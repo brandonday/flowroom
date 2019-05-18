@@ -567,7 +567,7 @@ class RoomMain extends Component {
             isObject:false, notObjectClass:'selected-background',objectBtnClass:''
         });
 
-                
+       
     }
     componentWillUnmount() {
         this.setState({thumbPicURL:''});
@@ -1403,12 +1403,14 @@ class RoomMain extends Component {
                         </div>
                         <div style={{height:55, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
                             <p style={{color:'white',fontSize:11}}>Visibility</p>
+                            <div className="custom-select" style={{height:20, width:200}}>
                             <select id="dropdown">
-                                <option value="public">Public (Everyone including followers)</option>
-                                <option value="private">Private (Only me)</option>
-                                <option value="unlisted">Unlisted (Everyone you share with except followers)</option>
-                                <option value="followers">Followers</option>
-                            </select>                        
+                                <option value="0">Public (Everyone including followers)</option>
+                                <option value="1">Private (Only me)</option>
+                                <option value="2">Unlisted (Everyone you share with except followers)</option>
+                                <option value="3">Followers</option>
+                            </select> 
+                            </div>                       
                         </div>
                         <div style={{height:147, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
                             <p style={{color:'white',fontSize:11}}>Thumbnail Preview</p>
@@ -1835,6 +1837,79 @@ class RoomMain extends Component {
                                
 
                                  },10000)
+
+                                 var xx, ii, jj, selElmnt, aa, bb, cc;
+                                 /*look for any elements with the class "custom-select":*/
+                                 xx = document.getElementsByClassName("custom-select");
+                                 for (ii = 0; ii < xx.length; ii++) {
+                                   selElmnt = xx[ii].getElementsByTagName("select")[0];
+                                   /*for each element, create a new DIV that will act as the selected item:*/
+                                   aa = document.createElement("DIV");
+                                   aa.setAttribute("class", "select-selected");
+                                   aa.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+                                   xx[ii].appendChild(aa);
+                                   /*for each element, create a new DIV that will contain the option list:*/
+                                   bb = document.createElement("DIV");
+                                   bb.setAttribute("class", "select-items select-hide");
+                                   for (jj = 1; jj < selElmnt.length; jj++) {
+                                     /*for each option in the original select element,
+                                     create a new DIV that will act as an option item:*/
+                                     cc = document.createElement("DIV");
+                                     cc.innerHTML = selElmnt.options[jj].innerHTML;
+                                     cc.addEventListener("click", function(e) {
+                                         /*when an item is clicked, update the original select box,
+                                         and the selected item:*/
+                                         var y, i, k, s, h;
+                                         s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+                                         h = this.parentNode.previousSibling;
+                                         for (i = 0; i < s.length; i++) {
+                                           if (s.options[i].innerHTML == this.innerHTML) {
+                                             s.selectedIndex = i;
+                                             h.innerHTML = this.innerHTML;
+                                             y = this.parentNode.getElementsByClassName("same-as-selected");
+                                             for (k = 0; k < y.length; k++) {
+                                               y[k].removeAttribute("class");
+                                             }
+                                             this.setAttribute("class", "same-as-selected");
+                                             break;
+                                           }
+                                         }
+                                         h.click();
+                                     });
+                                     bb.appendChild(cc);
+                                   }
+                                   xx[ii].appendChild(bb);
+                                   aa.addEventListener("click", function(e) {
+                                       /*when the select box is clicked, close any other select boxes,
+                                       and open/close the current select box:*/
+                                       e.stopPropagation();
+                                       closeAllSelect(this);
+                                       this.nextSibling.classList.toggle("select-hide");
+                                       this.classList.toggle("select-arrow-active");
+                                     });
+                                 }
+                                 function closeAllSelect(elmnt) {
+                                   /*a function that will close all select boxes in the document,
+                                   except the current select box:*/
+                                   var x, y, i, arrNo = [];
+                                   x = document.getElementsByClassName("select-items");
+                                   y = document.getElementsByClassName("select-selected");
+                                   for (i = 0; i < y.length; i++) {
+                                     if (elmnt == y[i]) {
+                                       arrNo.push(i)
+                                     } else {
+                                       y[i].classList.remove("select-arrow-active");
+                                     }
+                                   }
+                                   for (i = 0; i < x.length; i++) {
+                                     if (arrNo.indexOf(i)) {
+                                       x[i].classList.add("select-hide");
+                                     }
+                                   }
+                                 }
+                                 /*if the user clicks anywhere outside the select box,
+                                 then close all select boxes:*/
+                                 document.addEventListener("click", closeAllSelect);
                         }
                         }} style={{
                             display:that.state.postBtnVisible ? 'flex' : 'none',
