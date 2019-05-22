@@ -8,12 +8,12 @@ const Default = props => <Responsive {...props} minWidth={768} />;
 
  const Logo = () => (
     <div style={{display:'flex',alignItems:'center'}}>
-    <i className="fas fa-bars" style={{color:'white',fontSize:18}}></i>
+    <i className="fas fa-bars" style={{color:'white',fontSize:18,marginRight:10}}></i>
 
         <a href="/">
         {/* <Desktop> */}
         <div className="logo-wrap" style={{marginRight:'17px'}}>
-            <div style={{backgroundImage:'url(./public/logo.svg)',
+            <div id="fr-logo" style={{backgroundImage:'url(./public/logo.svg)',
                 backgroundImage:'url(../logo.svg)',
                 height:'31px',
                 width:'136px',

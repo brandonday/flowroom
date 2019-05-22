@@ -475,7 +475,7 @@ class RoomPost extends Component {
 
                          
                 </div>
-                <div style={{display:'flex'}}>
+                {/* <div style={{display:'flex'}}>
                 <div id="tags-area" style={{display:'flex',width:'100%',paddingLeft:'11px',marginBottom:0}}>
                             {
                           
@@ -506,7 +506,7 @@ class RoomPost extends Component {
                     <div style={{display:this.state.showMoreTag ? 'block':'none',color:'#C7524D', border:'1px solid #C7524D', borderRadius:'12px', padding:'0 8px'}}><p>{this.props.numTagsAll - this.props.numTags}</p></div>
                 </div>
                 
-                </div>  
+                </div>   */}
             </div>
         )
     }

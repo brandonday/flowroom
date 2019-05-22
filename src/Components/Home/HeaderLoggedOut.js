@@ -20,19 +20,34 @@ import { connect } from 'react-redux';
                     <div className="header-content">
                         <div className="left-section">
                             <Logo/>
-                            <NewButton/>
+                            <div id="create-btn-wrap-left">
+                                <NewButton/>
+                            </div>
+                            
                         </div>
             
                         <div className="right-section">
                             {/* <NewButton props={props.props}/> */}
                             {/* <div className="button-box-logged-out"></div> */}
-                            <Search/>
+                            <div className="search-box-wrap-header">
+                                <Search/>
+                            </div>
+                           
+                            {/* <i id="fa-search" className="fas fa-search" style={{color: 'rgb(95, 95, 95)', fontSize:'20px',marginRight:20}}></i> */}
+                            <div id="create-btn-wrap-right">
+                                <NewButton/>
+                            </div>
+                            <i className="fas fa-user-circle" style={{color: 'white', fontSize:'20px'}}></i>
+
                             <div className="sign-up-log-in-wrap">
                                 <LoginButton/>
                                 <SignUpButton/>
                                
                             </div>
                         </div>
+                    </div>
+                    <div id="search-field-wrap" style={{position:'absolute',height:50,width:'100%',backgroundColor:'#0f0f0f',left:'0px',zIndex:'9999999'}}>
+                        <Search/>
                     </div>
                 </div>
              

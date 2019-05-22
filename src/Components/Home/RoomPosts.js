@@ -504,7 +504,7 @@ class RoomPosts extends Component {
       console.log('[RoomPosts] render')
       return (
         
-            <div style={{padding:'0px', height:'100%'}}>
+            <div style={{backgroundColor:'rgb(0,0,0)',padding:'0px', height:'100%'}}>
               {/* <div id="body-padding" style={{
                         flex:1
               }}> */}

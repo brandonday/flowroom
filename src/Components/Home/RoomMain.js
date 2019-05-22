@@ -1378,22 +1378,22 @@ class RoomMain extends Component {
 )
         } else if(this.state.showPublish === true) {
             return (
-                <div style={{height:'100%', width:'259px'}}>
+                <div style={{height:'100%', width:'259px',overflowY:'scroll',paddingBottom:70}}>
                        <div style={{height:30, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)', display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0px 10px'}}>
                            <p style={{color:'white', fontSize:12}}>Publish Room</p>
                            <i className="fas fa-times" style={{color:'white'}}></i>
                         </div>     
-                        <div style={{height:45, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)', padding:'0px 10px'}}>
+                        <div style={{height:48, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)', padding:'5px 10px'}}>
                             <p style={{color:'white',fontSize:11}}>Title</p>
                             <input type="text" onChange={this.titlehandleChange.bind(this)} style={{height:20, width:'100%',borderRadius:3,border:'0px',backgroundColor:'rgb(37,37,37)',outline:'none'}}/>
                         </div>
-                        <div style={{height:130, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
+                        <div style={{height:90, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'5px 10px'}}>
                             <p style={{color:'white',fontSize:11}}>Description</p>
-                            <textarea onChange={this.descriptionhandleChange.bind(this)} style={{border:'0px', outline:'none', height:50,width:'100%',borderRadius:3,backgroundColor:'rgb(37,37,37)',resize:'none'}}></textarea>
+                            <textarea onChange={this.descriptionhandleChange.bind(this)} style={{border:'0px', outline:'none', height:50,width:'100%',borderRadius:3,backgroundColor:'rgb(37,37,37)',resize:'none',marginTop:5}}></textarea>
                         </div>
-                        <div style={{height:55, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
+                        <div style={{height:55, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'5px 10px'}}>
                             <p style={{color:'white',fontSize:11}}>Tags</p>
-                            <ReactTags style={{marginBottom:10}} tags={this.state.tags}
+                            <ReactTags style={{marginBottom:10}} inline={false} tags={this.state.tags}
                         suggestions={this.state.suggestionsTags}
                         handleDelete={this.handleDeleteTags}
                         handleAddition={this.handleAdditionTags}
@@ -1401,23 +1401,40 @@ class RoomMain extends Component {
                         placeholder={'Type any tags here'}
                         delimiters={delimiters4} />
                         </div>
-                        <div style={{height:55, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
-                            <p style={{color:'white',fontSize:11}}>Visibility</p>
-                            <div className="custom-select" style={{height:20, width:200}}>
+                        <div style={{height:75, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
+                            <p style={{color:'white',fontSize:11,marginTop:10,marginBottom:5}}>Visibility</p>
+
+                            <div class="dropdown" style={{width:'100%'}}>
+  <input type="checkbox" id="my-dropdown" value="" name="my-checkbox" style={{width:'100%'}}/>
+  <label for="my-dropdown"
+     data-toggle="dropdown" style={{width:'100%',color:'white'}}>
+  Choose one
+  </label>
+  <ul >
+    <li style={{color:'#fff'}}>Public (Everyone including followers)</li>
+    <li style={{color:'#fff'}}>Private (Only me)</li>
+    <li style={{color:'#fff'}}>Unlisted (Everyone you share with except followers)</li>
+    <li style={{color:'#fff'}}>Followers</li>
+  </ul>
+</div>
+                            {/* <div className="custom-select" style={{height:20, width:200}}>
                             <select id="dropdown">
-                                <option value="0">Public (Everyone including followers)</option>
-                                <option value="1">Private (Only me)</option>
-                                <option value="2">Unlisted (Everyone you share with except followers)</option>
+                                <option value="0"></option>
+                                <option value="1"></option>
+                                <option value="2"></option>
                                 <option value="3">Followers</option>
                             </select> 
-                            </div>                       
+                            </div>     */}
+
+
+
                         </div>
                         <div style={{height:147, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
                             <p style={{color:'white',fontSize:11}}>Thumbnail Preview</p>
                             <div id="thumbnail-pic-box" style={{width:'100%', height:120,backgroundColor:'rgb(37,37,37)',borderRadius:3}}>
-                            <img id="thumbnail-pic-display"
-                             src={this.props.state.entireApp.image}
-                             width={150}/>
+                            <div id="thumbnail-pic-display"
+                             style={{backgroundImage:`url{${this.props.state.entireApp.image})`, backgroundSize:'cover',backgroundPosition:'center'}}
+                             width={150}></div>
                              <div style={{position:'absolute',height:'100%',width:'320px',backgroundColor:'black',top:'0px',visibility:'hidden'}}>
                                 <div style={{height:'400px', width:'320px'}}>
                                     <iframe id="regular-thumbnail" src={`/full/${this.state.shortID}`} style={{height:246, width:'320px',border:'1px solid red',visibility:'hidden'}}/>
@@ -1425,7 +1442,8 @@ class RoomMain extends Component {
                              </div>
                             </div>
                         </div>
-                        <div style={{display:'flex',height:55, marginBottom:7, width:'100%', justifyContent:'center',alignItems:'center', padding:'0 10px'}}>
+                        <div style={{display:'flex',height:55, marginBottom:7, width:'100%', justifyContent:'center',alignItems:'center', padding:'0 10px',borderTop:'1px solid white',position:'absolute',
+    bottom:'0px'}}>
                             <div style={{backgroundColor:'grey',display:'flex',alignItems:'center',justifyContent:'center', height:'29px',width:'170px',marginRight:10,borderRadius:3,backgroundColor:'rgb(37, 37, 37)'}}>SAVE AS DRAFT</div>
                             <div style={{backgroundColor:'grey',display:'flex',alignItems:'center',justifyContent:'center', height:'29px',width:'170px',borderRadius:3,backgroundColor:'rgb(54, 255, 233)',fontWeight:'bold',color:'rgb(82, 82, 82)'}} onClick={
                                 this.saveRoom.bind(this)
