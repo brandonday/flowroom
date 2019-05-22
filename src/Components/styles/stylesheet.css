@@ -571,7 +571,7 @@ right: 0px;
 #search-field-wrap {
   height:50px;
   display:none !important;
-  padding-top: 0px;
+  padding-top: 10px !important;
   align-items: center;
   justify-content: center;
 }
