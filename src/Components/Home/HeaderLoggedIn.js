@@ -23,10 +23,7 @@ class HeaderLoggedIn extends Component {
                             <div className="left-section">
                                 <Logo/>
                                 <NewButton/>
-                                <div className="message-icon-profile-pic-wrap-mobile">
-                                    {/* <MessageIcon/>  */}
-                                    <ProfilePic /> {/* contains menu for profile */}
-                                </div>
+                
                             </div>
             
                             <div className="right-section">
@@ -34,7 +31,7 @@ class HeaderLoggedIn extends Component {
                                 <div className="button-box"></div>
                               
                                 <Search/>
-                                <div>
+                                <div id="logged-in-profile">
                                     <div className="message-icon-profile-pic-wrap">
                                         {/* <MessageIcon onClick={this.openModal}/> */}
                                         <ProfilePic/>

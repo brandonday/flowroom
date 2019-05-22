@@ -393,6 +393,14 @@ body {
   margin-left: 14px;
 }
 
+#logged-in-profile {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .message-icon-profile-pic-wrap {
   display: flex;
   margin-left: 14px;
@@ -557,7 +565,9 @@ right: 0px;
   height:25px !important;
   color:white !important;
 }
-
+.search-box-wrap-header {
+  width:100% !important;
+}
 #search-field-wrap {
   height:50px;
   display:none !important;

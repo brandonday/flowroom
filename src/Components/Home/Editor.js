@@ -566,7 +566,6 @@ goFull = () => {
                         minConstraints= {
                             [0,0]
                     }>
-                        <EditorOptionsMobile/>
                         {/* <RoomInfo 
                             name={this.props.name} 
                             likes={this.convertLikes()}
