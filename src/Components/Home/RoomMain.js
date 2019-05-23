@@ -573,6 +573,7 @@ class RoomMain extends Component {
         this.setState({thumbPicURL:''});
     }
     saveRoom () {
+     
         let hashids = new Hashids(uuid(), 6);
         let uid = firebase.auth().currentUser.uid;
         let html = this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.html : '';
