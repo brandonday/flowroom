@@ -224,7 +224,8 @@ class RoomMain extends Component {
             remixedByArray:[],
             isRemix:false, 
             remixRoomID:'', 
-            remixUserName:''
+            remixUserName:'',
+            postAsNewBtnVisible:false
             
         };
         this.openModal = this.openModal.bind(this);
@@ -489,18 +490,18 @@ class RoomMain extends Component {
                 );
                 let currentUser = firebase.auth().currentUser.uid;
                 if(currentUser === uid) {
-                  that.setState({display:'flex', postBtnVisible:false});
+                  that.setState({display:'flex', postBtnVisible:false, postAsNewBtnVisible:true, saveVisible:true});
                 } else {
-                  that.setState({saveVisible:'block',postVisible:'block',remixVisible:'block'});
+                  that.setState({saveVisible:false,postBtnVisible:false, postAsNewBtnVisible:true,remixVisible:'block'});
                 }
               } else {
-                  that.setState({saveVisible:'block',postVisible:'block',remixVisible:'block'});
+                  that.setState({saveVisible:false,postBtnVisible:false, postAsNewBtnVisible:true, remixVisible:'block'});
               }
             } else {
                 that.setState({
-                    saveVisible:'block',
-                    postVisible:'block',
-                    remixVisible:'block',
+                    saveVisible:true,
+                    postVisible:true,
+                    remixVisible:true,
                     isRemix:false,
                     openModalomID:'',
                     remixUserName:'',
@@ -655,7 +656,7 @@ class RoomMain extends Component {
                 isNormalUser:this.state.isProduction,
                 userName:this.state.username,
                 emailAddress:'',
-                shortID:this.props.state.entireApp.post ? hashids.encode(1, 2, 3) : currentRoomID,
+                shortID:hashids.encode(1, 2, 3),
                 permissions: { },
                 uid:uid,
                 postedPicURL:this.state.postedPicURL,
@@ -1610,7 +1611,7 @@ class RoomMain extends Component {
         return (
             <div id="room-main-page" className="page-wrap twilight room-main-page-wrap">
                 <div style={{display:'flex',flexDirection:'column', height:'100%',width:'100%'}}>
-                    <div style={{display:'flex',flex:'0 583px',position:'relative',overflow:'hidden'}}>
+                    <div style={{display:'flex',flex:1,position:'relative',overflow:'hidden'}}>
                         <div id="tab-menu" style={{
                             width:'48px', 
                             background:'rgb(14, 14, 14)',
@@ -1751,7 +1752,7 @@ class RoomMain extends Component {
                         <div id="save-tab" onClick={()=> {
                             this.openModal(false)
                         }} style={{
-                            display:'none',
+                            display:that.state.saveVisible ? 'flex' : 'none',
                           
                             height:'52px',
                             width:'48px',
@@ -1804,6 +1805,182 @@ class RoomMain extends Component {
                                         marginBottom:'3px'
                                     }}></div>
                             <p id="publish-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252'}}>DELETE</p>
+                        </div>
+                        <div id="post-as-new-tab" onClick={(e)=> {
+                            let that = this;
+                            //this.openModal(true);
+                            // let remixid = document.getElementById('remix-tab');
+                            // let script = document.getElementById('script-tag');
+                            // let postTab = document.getElementById('post-tab');
+                            // remixid.className = '';
+                            // remixid.style.borderRight = '0px solid #181818';  
+                            // script.className = '';
+                            // script.style.color = 'rgb(82, 82, 82)';
+                            // postTab.className = 'menubg';
+                            // postTab.style.color = 'rgb(64, 255, 232)';
+                            let thisElement = document.getElementById(e.target.id);
+                            let tabsWithMenubgClass = document.getElementsByClassName('menubg');
+                            let mainmenu = document.getElementById('main-menu');
+                            let remixImageList = document.getElementById('remix-image-list');
+                           
+                            if(thisElement != undefined) {
+                            if(thisElement.className !== 'menubg') {                            
+                               
+                               for(let i = 0; tabsWithMenubgClass.length; i++) {
+                                if(tabsWithMenubgClass[i] != undefined) {
+                                    if(tabsWithMenubgClass[i].id !== thisElement.id) {
+                                        tabsWithMenubgClass[i].className = 'menubgnot'
+                                    } 
+                                }
+                               }
+                               thisElement.className = 'menubg'; 
+                               
+                              if(document.getElementById('menu-info') !== null) {
+                            //    document.getElementById('menu-info').remove();
+                                if(document.getElementById('remix-image-box')){
+                                document.getElementById('remix-image-box').remove();
+                                }
+                               document.getElementById('menu-info').remove();
+                            //    document.getElementById('remix-list').remove();
+                              }
+                               that.setState({
+                                details:false,
+                                objects:false,
+                                comments:false,
+                                draw:false,
+                                remix:false,
+                                showPublish:true
+                                });
+
+                            }
+                            setTimeout(()=>{
+                                let iframe = document.getElementById('regular-thumbnail');
+                              
+                                 
+                                    iframe.contentWindow.flowroom.SaveScreenShot(
+                                        ()=> {
+                                            let imageData = localStorage.getItem("thumbnail");
+                                            alert(imageData)
+                                            // let isRemix = isPostAsNew;
+                                            // let remixRoomID = isPostAsNew ? that.state.shortID : that.state.remixRoomID;
+                                            // let remixUserName = isPostAsNew ? that.state.userName : that.state.remixUserName;
+                                            localStorage.setItem("thumbnailUrl", "");
+                                            let thumbnail = document.getElementById('thumbnail-pic-display');
+                                            thumbnail.src = imageData;
+                                            thumbnail.setAttribute("height", "100%");
+                                            thumbnail.setAttribute("width", "100%");
+                                            that.putObject (
+                                                imageData, 
+                                                (url) => { 
+                                                    localStorage.setItem("thumbnailUrl", url);
+                                                }
+                                            );
+                                        }
+                                    );
+                                   
+                               
+                               
+
+                                 },5000)
+
+                                 var xx, ii, jj, selElmnt, aa, bb, cc;
+                                 /*look for any elements with the class "custom-select":*/
+                                 xx = document.getElementsByClassName("custom-select");
+                                 for (ii = 0; ii < xx.length; ii++) {
+                                   selElmnt = xx[ii].getElementsByTagName("select")[0];
+                                   /*for each element, create a new DIV that will act as the selected item:*/
+                                   aa = document.createElement("DIV");
+                                   aa.setAttribute("class", "select-selected");
+                                   aa.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+                                   xx[ii].appendChild(aa);
+                                   /*for each element, create a new DIV that will contain the option list:*/
+                                   bb = document.createElement("DIV");
+                                   bb.setAttribute("class", "select-items select-hide");
+                                   for (jj = 1; jj < selElmnt.length; jj++) {
+                                     /*for each option in the original select element,
+                                     create a new DIV that will act as an option item:*/
+                                     cc = document.createElement("DIV");
+                                     cc.innerHTML = selElmnt.options[jj].innerHTML;
+                                     cc.addEventListener("click", function(e) {
+                                         /*when an item is clicked, update the original select box,
+                                         and the selected item:*/
+                                         var y, i, k, s, h;
+                                         s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+                                         h = this.parentNode.previousSibling;
+                                         for (i = 0; i < s.length; i++) {
+                                           if (s.options[i].innerHTML == this.innerHTML) {
+                                             s.selectedIndex = i;
+                                             h.innerHTML = this.innerHTML;
+                                             y = this.parentNode.getElementsByClassName("same-as-selected");
+                                             for (k = 0; k < y.length; k++) {
+                                               y[k].removeAttribute("class");
+                                             }
+                                             this.setAttribute("class", "same-as-selected");
+                                             break;
+                                           }
+                                         }
+                                         h.click();
+                                     });
+                                     bb.appendChild(cc);
+                                   }
+                                   xx[ii].appendChild(bb);
+                                   aa.addEventListener("click", function(e) {
+                                       /*when the select box is clicked, close any other select boxes,
+                                       and open/close the current select box:*/
+                                       e.stopPropagation();
+                                       closeAllSelect(this);
+                                       this.nextSibling.classList.toggle("select-hide");
+                                       this.classList.toggle("select-arrow-active");
+                                     });
+                                 }
+                                 function closeAllSelect(elmnt) {
+                                   /*a function that will close all select boxes in the document,
+                                   except the current select box:*/
+                                   var x, y, i, arrNo = [];
+                                   x = document.getElementsByClassName("select-items");
+                                   y = document.getElementsByClassName("select-selected");
+                                   for (i = 0; i < y.length; i++) {
+                                     if (elmnt == y[i]) {
+                                       arrNo.push(i)
+                                     } else {
+                                       y[i].classList.remove("select-arrow-active");
+                                     }
+                                   }
+                                   for (i = 0; i < x.length; i++) {
+                                     if (arrNo.indexOf(i)) {
+                                       x[i].classList.add("select-hide");
+                                     }
+                                   }
+                                 }
+                                 /*if the user clicks anywhere outside the select box,
+                                 then close all select boxes:*/
+                                 document.addEventListener("click", closeAllSelect);
+                        }
+                        }} style={{
+                            display:that.state.postAsNewBtnVisible ? 'flex' : 'none',
+                           
+                            height:'52px',
+                            width:'48px',
+                            flexDirection:'column',
+                            alignItems:'center',
+                            borderRight:'1px solid #181818',
+                            borderBottom:'1px solid #181818',
+                            justifyContent:'center',
+                            cursor:'pointer'
+                        }} 
+                        className="menu-bg-border">
+                            <div style={{
+                                fontSize:'15px',
+                                color:'white',
+                                backgroundImage:'url(../save-regular-grey.svg)',
+                                backgroundSize:'100% 100%',
+                                backgroundRepeat:'no-repeat',
+                                height:'14px',
+                                width:'16px',
+                                marginBottom:'3px',
+                                pointerEvents:'none'
+                            }}></div>
+                            <p id="publish-text" style={{fontSize:10.2,fontWeight:'bold',width:'38px', pointerEvents:'none'}} className="menubgnot">PUBLISH AS NEW </p>
                         </div>
                         <div id="post-tab" onClick={(e)=> {
                             let that = this;
