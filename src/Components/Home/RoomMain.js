@@ -1377,7 +1377,6 @@ class RoomMain extends Component {
                 <ImageEdit/>
 )
         } else if(this.state.showPublish === true) {
-            let that = this;
             return (
                 <div style={{height:'100%', width:'259px',overflowY:'scroll',paddingBottom:70}}>
                        <div style={{height:30, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)', display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0px 10px'}}>
@@ -1443,11 +1442,10 @@ class RoomMain extends Component {
                              </div>
                             </div>
                         </div>
-                        <div style={{display:'flex',height:55, marginBottom:7, width:'100%', justifyContent:'center',alignItems:'center', padding:'0 10px',borderTop:'1px solid white',position:'absolute',
-    bottom:'0px'}}>
+                        <div style={{display:'flex',height:55, marginBottom:7, width:'100%', justifyContent:'center',alignItems:'center', padding:'0 10px',borderTop:'1px solid rgb(29,29,29)',position:'absolute',left:0,bottom:'20px'}}>
                             <div style={{backgroundColor:'grey',display:'flex',alignItems:'center',justifyContent:'center', height:'29px',width:'170px',marginRight:10,borderRadius:3,backgroundColor:'rgb(37, 37, 37)'}}>SAVE AS DRAFT</div>
                             <div style={{backgroundColor:'grey',display:'flex',alignItems:'center',justifyContent:'center', height:'29px',width:'170px',borderRadius:3,backgroundColor:'rgb(54, 255, 233)',fontWeight:'bold',color:'rgb(82, 82, 82)'}} onClick={
-                                that.saveRoom.bind(that)
+                                this.saveRoom.bind(this)
                             }>PUBLISH ROOM</div>
                         </div>              
                 </div>
@@ -1611,15 +1609,39 @@ class RoomMain extends Component {
         return (
             <div id="room-main-page" className="page-wrap twilight room-main-page-wrap">
                 <div style={{display:'flex',flexDirection:'column', height:'100%',width:'100%'}}>
-                    <div style={{display:'flex',flex:1,position:'relative',overflow:'hidden'}}>
+                    <div style={{display:'flex',flex:'0 583px',position:'relative',overflow:'hidden'}}>
                         <div id="tab-menu" style={{
                             width:'48px', 
                             background:'rgb(14, 14, 14)',
                             height:'100%'
                         }}>
                         <div id="remix-tab" onClick={(e)=> { 
+                            let list = document.getElementById('main-menu');
                                 let thisElement = document.getElementById(e.target.id);
                                 let tabsWithMenubgClass = document.getElementsByClassName('menubg');
+                                let menuinfo = document.createElement('div');
+        
+                                menuinfo.setAttribute("id", "menu-info");
+                                menuinfo.style.height = '170px';
+                                menuinfo.style.width = '259px';
+                                let menuinfobox = document.createElement('div');
+                                let menuinfotop = document.createElement('div');
+                                menuinfotop.style.display = 'flex';
+                                menuinfotop.style.justifyContent = 'space-between';
+                                menuinfotop.style.height = '20px';
+                                menuinfotop.style.width = '100%';
+                                menuinfobox.style.border = '1px solid #222222';
+                                menuinfobox.style.height = '147px';
+                                menuinfobox.style.width = '259px';
+                                menuinfobox.style.borderRadius = '3px';
+                                menuinfobox.style.marginTop = '11px';
+                        
+                                menuinfobox.appendChild(menuinfotop)
+                            
+                                menuinfo.appendChild(menuinfobox);
+                                list.style.padding = '7px 14px 2px 7px';
+                          
+                                list.appendChild(menuinfo);
                             if(thisElement !== undefined) {
                                 if(thisElement.className !== 'menubg') {                            
                                    
@@ -1728,7 +1750,7 @@ class RoomMain extends Component {
                         <div id="save-tab" onClick={()=> {
                             this.openModal(false)
                         }} style={{
-                            display:that.state.userNameSelf === that.state.userName ? 'flex' : 'none',
+                            display:'none',
                           
                             height:'52px',
                             width:'48px',
@@ -1759,7 +1781,7 @@ class RoomMain extends Component {
                             firebase.database().ref(`${that.state.userNameSelf}/${currentRoomID}`).remove();
                                 window.location.replace('/');
                             }} style={{
-                                display:that.state.userNameSelf === that.state.userName ? 'flex' : 'none',
+                                display:'none',
                                
                                 height:'52px',
                                 width:'48px',
@@ -1813,7 +1835,9 @@ class RoomMain extends Component {
                                
                               if(document.getElementById('menu-info') !== null) {
                             //    document.getElementById('menu-info').remove();
-                               document.getElementById('remix-image-box').remove();
+                                if(document.getElementById('remix-image-box')){
+                                document.getElementById('remix-image-box').remove();
+                                }
                                document.getElementById('menu-info').remove();
                             //    document.getElementById('remix-list').remove();
                               }
@@ -1855,7 +1879,7 @@ class RoomMain extends Component {
                                
                                
 
-                                 },10000)
+                                 },5000)
 
                                  var xx, ii, jj, selElmnt, aa, bb, cc;
                                  /*look for any elements with the class "custom-select":*/

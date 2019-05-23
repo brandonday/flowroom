@@ -55,6 +55,8 @@ let that;
             remixImageList.style.width = '100%';
         let remixImageTitle = document.createElement('div');
         let menuinfo = document.createElement('div');
+        if(document.getElementById('menu-info') == null) {
+        let menuinfo = document.createElement('div');
         
         menuinfo.setAttribute("id", "menu-info");
         menuinfo.style.height = '170px';
@@ -74,6 +76,8 @@ let that;
         menuinfobox.appendChild(menuinfotop)
     
         menuinfo.appendChild(menuinfobox);
+        }
+
         let imgtitle = document.createElement('p');
         let imgclose = document.createElement('p');
         let remixImageListNav = document.createElement('div');
@@ -403,7 +407,10 @@ let that;
                   list.style.padding = '7px 14px 2px 7px';
                   remixImageBox.appendChild(remixImageTitle);
                   remixImageBox.appendChild(remixImageList);
+                  if(document.getElementById('menu-info') !== null){
                   list.appendChild(menuinfo);
+                  }
+                  
                   list.appendChild(remixImageBox)
 
 
