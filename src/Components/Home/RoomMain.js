@@ -1439,7 +1439,7 @@ class RoomMain extends Component {
                              width={150}></div>
                              <div style={{position:'absolute',height:'100%',width:'320px',backgroundColor:'black',top:'0px',visibility:'hidden'}}>
                                 <div style={{height:'400px', width:'320px'}}>
-                                    <iframe id="regular-thumbnail" src={`/full/${this.state.shortID}`} style={{height:246, width:'320px',border:'1px solid red',visibility:'visible'}}/>
+                                    <iframe id="regular-thumbnail" src={`/full/${this.state.shortID}`} style={{height:246, width:'320px',border:'1px solid red',visibility:'hidden'}}/>
                                 </div>
                              </div>
                             </div>
