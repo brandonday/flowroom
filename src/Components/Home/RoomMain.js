@@ -499,7 +499,7 @@ class RoomMain extends Component {
               }
             } else {
                 that.setState({
-                    saveVisible:true,
+                    saveVisible:false,
                     postVisible:true,
                     remixVisible:true,
                     isRemix:false,
@@ -1439,7 +1439,7 @@ class RoomMain extends Component {
                              width={150}></div>
                              <div style={{position:'absolute',height:'100%',width:'320px',backgroundColor:'black',top:'0px',visibility:'hidden'}}>
                                 <div style={{height:'400px', width:'320px'}}>
-                                    <iframe id="regular-thumbnail" src={`/full/${this.state.shortID}`} style={{height:246, width:'320px',border:'1px solid red',visibility:'hidden'}}/>
+                                    <iframe id="regular-thumbnail" src={`/full/${this.state.shortID}`} style={{height:246, width:'320px',border:'1px solid red',visibility:'visible'}}/>
                                 </div>
                              </div>
                             </div>
@@ -1854,7 +1854,7 @@ class RoomMain extends Component {
 
                             }
                             setTimeout(()=>{
-                                let iframe = document.getElementById('regular-thumbnail');
+                                let iframe = document.getElementById('output_frame');
                               
                                  
                                     iframe.contentWindow.flowroom.SaveScreenShot(
@@ -1883,78 +1883,7 @@ class RoomMain extends Component {
 
                                  },5000)
 
-                                 var xx, ii, jj, selElmnt, aa, bb, cc;
-                                 /*look for any elements with the class "custom-select":*/
-                                 xx = document.getElementsByClassName("custom-select");
-                                 for (ii = 0; ii < xx.length; ii++) {
-                                   selElmnt = xx[ii].getElementsByTagName("select")[0];
-                                   /*for each element, create a new DIV that will act as the selected item:*/
-                                   aa = document.createElement("DIV");
-                                   aa.setAttribute("class", "select-selected");
-                                   aa.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-                                   xx[ii].appendChild(aa);
-                                   /*for each element, create a new DIV that will contain the option list:*/
-                                   bb = document.createElement("DIV");
-                                   bb.setAttribute("class", "select-items select-hide");
-                                   for (jj = 1; jj < selElmnt.length; jj++) {
-                                     /*for each option in the original select element,
-                                     create a new DIV that will act as an option item:*/
-                                     cc = document.createElement("DIV");
-                                     cc.innerHTML = selElmnt.options[jj].innerHTML;
-                                     cc.addEventListener("click", function(e) {
-                                         /*when an item is clicked, update the original select box,
-                                         and the selected item:*/
-                                         var y, i, k, s, h;
-                                         s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-                                         h = this.parentNode.previousSibling;
-                                         for (i = 0; i < s.length; i++) {
-                                           if (s.options[i].innerHTML == this.innerHTML) {
-                                             s.selectedIndex = i;
-                                             h.innerHTML = this.innerHTML;
-                                             y = this.parentNode.getElementsByClassName("same-as-selected");
-                                             for (k = 0; k < y.length; k++) {
-                                               y[k].removeAttribute("class");
-                                             }
-                                             this.setAttribute("class", "same-as-selected");
-                                             break;
-                                           }
-                                         }
-                                         h.click();
-                                     });
-                                     bb.appendChild(cc);
-                                   }
-                                   xx[ii].appendChild(bb);
-                                   aa.addEventListener("click", function(e) {
-                                       /*when the select box is clicked, close any other select boxes,
-                                       and open/close the current select box:*/
-                                       e.stopPropagation();
-                                       closeAllSelect(this);
-                                       this.nextSibling.classList.toggle("select-hide");
-                                       this.classList.toggle("select-arrow-active");
-                                     });
-                                 }
-                                 function closeAllSelect(elmnt) {
-                                   /*a function that will close all select boxes in the document,
-                                   except the current select box:*/
-                                   var x, y, i, arrNo = [];
-                                   x = document.getElementsByClassName("select-items");
-                                   y = document.getElementsByClassName("select-selected");
-                                   for (i = 0; i < y.length; i++) {
-                                     if (elmnt == y[i]) {
-                                       arrNo.push(i)
-                                     } else {
-                                       y[i].classList.remove("select-arrow-active");
-                                     }
-                                   }
-                                   for (i = 0; i < x.length; i++) {
-                                     if (arrNo.indexOf(i)) {
-                                       x[i].classList.add("select-hide");
-                                     }
-                                   }
-                                 }
-                                 /*if the user clicks anywhere outside the select box,
-                                 then close all select boxes:*/
-                                 document.addEventListener("click", closeAllSelect);
+                             
                         }
                         }} style={{
                             display:that.state.postAsNewBtnVisible ? 'flex' : 'none',
@@ -2030,7 +1959,7 @@ class RoomMain extends Component {
 
                             }
                             setTimeout(()=>{
-                                let iframe = document.getElementById('regular-thumbnail');
+                                let iframe = document.getElementById('output_frame');
                               
                                  
                                     iframe.contentWindow.flowroom.SaveScreenShot(
@@ -2059,79 +1988,7 @@ class RoomMain extends Component {
 
                                  },5000)
 
-                                 var xx, ii, jj, selElmnt, aa, bb, cc;
-                                 /*look for any elements with the class "custom-select":*/
-                                 xx = document.getElementsByClassName("custom-select");
-                                 for (ii = 0; ii < xx.length; ii++) {
-                                   selElmnt = xx[ii].getElementsByTagName("select")[0];
-                                   /*for each element, create a new DIV that will act as the selected item:*/
-                                   aa = document.createElement("DIV");
-                                   aa.setAttribute("class", "select-selected");
-                                   aa.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-                                   xx[ii].appendChild(aa);
-                                   /*for each element, create a new DIV that will contain the option list:*/
-                                   bb = document.createElement("DIV");
-                                   bb.setAttribute("class", "select-items select-hide");
-                                   for (jj = 1; jj < selElmnt.length; jj++) {
-                                     /*for each option in the original select element,
-                                     create a new DIV that will act as an option item:*/
-                                     cc = document.createElement("DIV");
-                                     cc.innerHTML = selElmnt.options[jj].innerHTML;
-                                     cc.addEventListener("click", function(e) {
-                                         /*when an item is clicked, update the original select box,
-                                         and the selected item:*/
-                                         var y, i, k, s, h;
-                                         s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-                                         h = this.parentNode.previousSibling;
-                                         for (i = 0; i < s.length; i++) {
-                                           if (s.options[i].innerHTML == this.innerHTML) {
-                                             s.selectedIndex = i;
-                                             h.innerHTML = this.innerHTML;
-                                             y = this.parentNode.getElementsByClassName("same-as-selected");
-                                             for (k = 0; k < y.length; k++) {
-                                               y[k].removeAttribute("class");
-                                             }
-                                             this.setAttribute("class", "same-as-selected");
-                                             break;
-                                           }
-                                         }
-                                         h.click();
-                                     });
-                                     bb.appendChild(cc);
-                                   }
-                                   xx[ii].appendChild(bb);
-                                   aa.addEventListener("click", function(e) {
-                                       /*when the select box is clicked, close any other select boxes,
-                                       and open/close the current select box:*/
-                                       e.stopPropagation();
-                                       closeAllSelect(this);
-                                       this.nextSibling.classList.toggle("select-hide");
-                                       this.classList.toggle("select-arrow-active");
-                                     });
-                                 }
-                                 function closeAllSelect(elmnt) {
-                                   /*a function that will close all select boxes in the document,
-                                   except the current select box:*/
-                                   var x, y, i, arrNo = [];
-                                   x = document.getElementsByClassName("select-items");
-                                   y = document.getElementsByClassName("select-selected");
-                                   for (i = 0; i < y.length; i++) {
-                                     if (elmnt == y[i]) {
-                                       arrNo.push(i)
-                                     } else {
-                                       y[i].classList.remove("select-arrow-active");
-                                     }
-                                   }
-                                   for (i = 0; i < x.length; i++) {
-                                     if (arrNo.indexOf(i)) {
-                                       x[i].classList.add("select-hide");
-                                     }
-                                   }
-                                 }
-                                 /*if the user clicks anywhere outside the select box,
-                                 then close all select boxes:*/
-                                 document.addEventListener("click", closeAllSelect);
-                        }
+                                }
                         }} style={{
                             display:that.state.postBtnVisible ? 'flex' : 'none',
                            
