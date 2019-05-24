@@ -1930,7 +1930,11 @@ class RoomMain extends Component {
                             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
                             let mainmenu = document.getElementById('main-menu');
                             let remixImageList = document.getElementById('remix-image-list');
-                           
+
+                            let list = document.getElementById('main-menu');
+                            list.style.padding = '7px 14px 2px 7px';
+                            list.style.display = 'block';
+                            
                             if(thisElement != undefined) {
                             if(thisElement.className !== 'menubg') {                            
                                
