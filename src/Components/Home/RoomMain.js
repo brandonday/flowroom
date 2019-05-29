@@ -2313,9 +2313,9 @@ function stopResize(e) {
                                         // let remixUserName = isPostAsNew ? that.state.userName : that.state.remixUserName;
                                         localStorage.setItem("thumbnailUrl", "");
                                         let thumbnail = document.getElementById('thumbnail-pic-display');
-                                        thumbnail.src = imageData;
-                                        thumbnail.setAttribute("height", "100%");
-                                        thumbnail.setAttribute("width", "100%");
+                                        thumbnail.style.backgroundImage = `url(${imageData})`;
+                                        thumbnail.style.backgroundRepeat = 'no-repeat';
+                                        thumbnail.style.backgroundSize = 'cover';
                                         that.putObject (
                                             imageData, 
                                             (url) => { 
