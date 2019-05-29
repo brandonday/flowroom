@@ -15,43 +15,43 @@ class FR_OBJECT extends Component {
         }
     }
     componentDidMount() {
-        let base_tpl = "<!doctype html>\n" +
-          "<html>\n\t" +
-          "<head>\n\t\t" +
-          "<meta charset=\"utf-8\">\n\t\t" +
-          "<title>Test</title>\n\n\t\t\n\t" +
-          "</head>\n\t" +
-          "<body class='preview'>\n\t\n\t" +
-          "</body>\n" +
-          "</html>";
-          let ref = firebase.database().ref("rooms").child('d8U0SR');
-          ref.once("value").then((snapshot) => {    
-            let prepareSource = () => {
-              let html, css, js, src;
-              if(snapshot.val() !== null) {
-                html =  snapshot.val().html;
-                css = snapshot.val().css;
-                js = snapshot.val().js;
-              } else {
-                html = '';
-                css = '';
-                js = '';
-              }
-              src = '';
-              src = base_tpl.replace('</body>', html + '</body>');
-              css = '<style>' + css + '</style>';
-              src = src.replace('</head>', css + '</head>');
-              js = '<script>' + js + '<\/script>';
-              src = src.replace('</body>', js + '</body>');
-              return src;
-            };
-            let source = prepareSource();
-            var objectIframe = document.getElementById('objContent');
-            objectIframe = objectIframe.contentWindow || objectIframe.contentDocument.document || objectIframe.contentDocument;
-            objectIframe.document.open();
-            objectIframe.document.write(source);
-            objectIframe.document.close();
-          });
+        // let base_tpl = "<!doctype html>\n" +
+        //   "<html>\n\t" +
+        //   "<head>\n\t\t" +
+        //   "<meta charset=\"utf-8\">\n\t\t" +
+        //   "<title>Test</title>\n\n\t\t\n\t" +
+        //   "</head>\n\t" +
+        //   "<body class='preview'>\n\t\n\t" +
+        //   "</body>\n" +
+        //   "</html>";
+        //   let ref = firebase.database().ref("rooms").child('d8U0SR');
+        //   ref.once("value").then((snapshot) => {    
+        //     let prepareSource = () => {
+        //       let html, css, js, src;
+        //       if(snapshot.val() !== null) {
+        //         html =  snapshot.val().html;
+        //         css = snapshot.val().css;
+        //         js = snapshot.val().js;
+        //       } else {
+        //         html = '';
+        //         css = '';
+        //         js = '';
+        //       }
+        //       src = '';
+        //       src = base_tpl.replace('</body>', html + '</body>');
+        //       css = '<style>' + css + '</style>';
+        //       src = src.replace('</head>', css + '</head>');
+        //       js = '<script>' + js + '<\/script>';
+        //       src = src.replace('</body>', js + '</body>');
+        //       return src;
+        //     };
+        //     let source = prepareSource();
+        //     var objectIframe = document.getElementById('objContent');
+        //     //objectIframe = objectIframe.contentWindow || objectIframe.contentDocument.document || objectIframe.contentDocument;
+        //     objectIframe.document.open();
+        //     objectIframe.document.write(source);
+        //     objectIframe.document.close();
+        //   });
         } 
     onResize = (event, {element, size}) => {
         this.setState({draggableDisabled:true});
@@ -92,10 +92,13 @@ class FR_OBJECT extends Component {
                                 </div>
                             </strong>
                             <div className="object-content-wrap">
-                                <iframe id="objContent" 
-                                className="object-content" 
-                                sandbox={"allow-same-origin allow-scripts allow-popups allow-forms"} 
-                                security="restricted"/>
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/DLB13vQNpvg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+
+
+
+
                             </div>
 
                             <div className="object-footer"></div>

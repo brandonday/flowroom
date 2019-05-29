@@ -55,7 +55,7 @@ class Editor extends Component {
             overflowConstraints:[],
             tabIndex:0,
             componentUpdated:false,
-            resizeableHeight:0,
+            resizeableHeight:300,
             rotateTriangles:false,
             showMoreSection:false,
             isMobileHeightForResize:0,
@@ -71,11 +71,14 @@ class Editor extends Component {
         
      }
     componentDidMount() {
-  
+      document.getElementById('script-tag').addEventListener('click',()=>{
+        this.setState({showSubComponent:true}) 
+        
+      })
   
       document.getElementById('out-cover').style.display = 'none';
         localStorage.setItem("dhtml",JSON.stringify({html:"w",css:"w",js:"d"}));
-        this.renderContent();
+        //this.renderContent();
        
         //hack
         //this.setState({OverflowConstraints:[177,177]});
@@ -86,10 +89,12 @@ class Editor extends Component {
         
     }
     componentDidUpdate() {
+      //alert('ff')
       
         if(this.state.tabIndex === 0) {
             if (document.querySelector('.CodeMirror') === null) {
-                this.renderContent();                 
+                this.renderContent();          
+                    
             }
              
         }
@@ -98,6 +103,7 @@ class Editor extends Component {
             if(Store.getState().calledAlready.calledAlready.calledAlready === false) {
                 let update = Store.getState().updateEditor;
                 this.renderContent2(update.before, update.before.updateHTML);
+                
                 
             } 
         } 
@@ -118,22 +124,24 @@ class Editor extends Component {
       
      
         let prepareSource = () => {
-          let html = HTML_EDITOR.getValue(),
-          css = CSS_EDITOR.getValue(),
-          js = JS_EDITOR.getValue(),
-          JSflowroom = '<script src="../flowroom.js"></script>',
-          src = '';
+          let html = HTML_EDITOR.getValue();
+          let css = CSS_EDITOR.getValue();
+          let js = JS_EDITOR.getValue();
+          let dhtmlObj = {html:html, js:js, css:css};
+          localStorage.setItem("dhtml", JSON.stringify(dhtmlObj));
+          let JSflowroom = '<script src="../flowroom.js"></script>';
+          let src = '';
           src = base_tpl.replace('</body>', html + '</body>');
           css = '<style>' + css + '</style>';
           src = src.replace('</head>', css + JSflowroom + '</head>');
           js = '<script>' + js + '<\/script>';
           src = src.replace('</body>', js + '</body>');
-          let dhtmlObj = {html:html, js:js, css:css}
+         
           
          // alert(htmlObj.html);
-          localStorage.setItem("dhtml", JSON.stringify(dhtmlObj));
-          localStorage.setItem("css", JSON.stringify(css));
-          localStorage.setItem("js", JSON.stringify(js));
+          
+          // localStorage.setItem("css", JSON.stringify(css));
+          // localStorage.setItem("js", JSON.stringify(js));
           return src;
         };
 
@@ -237,7 +245,7 @@ class Editor extends Component {
       html = html === undefined || html === null ? '' : html;
       css = css === undefined || css === null ? '' : css; 
       js = js === undefined || js === null ? '' : js;
-          that.props.saveDHTML({html, css, js});
+         // that.props.saveDHTML({html, css, js});
           if(!isHTMLREADY) {
             renderDHTML();
             
@@ -259,7 +267,7 @@ class Editor extends Component {
           html = html === undefined || html === null ? '' : html;
           css = css === undefined || css === null ? '' : css; 
           js = js === undefined || js === null ? '' : js;
-          that.props.saveDHTML({html, css, js});
+         // that.props.saveDHTML({html, css, js});
           if(!isCSSREADY) {
             renderDHTML();
           
@@ -282,7 +290,7 @@ class Editor extends Component {
           html = html === undefined || html === null ? '' : html;
           css = css === undefined || css === null ? '' : css; 
           js = js === undefined || js === null ? '' : js;
-          that.props.saveDHTML({html, css, js});
+          //that.props.saveDHTML({html, css, js});
           if(!isJSREADY) {
             renderDHTML();
             
@@ -552,9 +560,9 @@ goFull = () => {
                     id="velocity-box" 
                     height={'100%'} 
                     animation={{ 
-                        height:this.state.showSubComponent ? 0 : this.state.isMobileHeightForResize
+                        height:this.state.showSubComponent ? 300 : this.state.isMobileHeightForResize
                     }} 
-                    duration={0} 
+                    duration={100} 
                     complete={this.resizeAnimationComplete.bind(this)}>
                     <ResizableBox id="resizable-box" 
                         height={this.state.resizeableHeight} 
@@ -606,6 +614,7 @@ goFull = () => {
                         </Mobile> */}
                         <DHTML_Labels RotateTriangles={this.state.rotateTriangles}/>
                         <DHTML_Boxes height={this.state.resizeableCurrentHeight }/>
+                        
                     </ResizableBox>
                 </VelocityComponent>
             </div>
@@ -618,14 +627,14 @@ goFull = () => {
     }
     
 }
-const mapDispatchToProps = (dispatch) => ({
-  openModal: (modal) => dispatch(OPEN_MODAL(modal)),
-  saveDHTML: (dhtml) => dispatch(saveDHTML(dhtml))
-});
-const ConnectedEditor = connect((state) => {
-  return {
-    state:state
-  }
-},mapDispatchToProps)(Editor)
+// const mapDispatchToProps = (dispatch) => ({
+//   openModal: (modal) => dispatch(OPEN_MODAL(modal)),
+//   saveDHTML: (dhtml) => dispatch(saveDHTML(dhtml))
+// });
+// const ConnectedEditor = connect((state) => {
+//   return {
+//     state:state
+//   }
+// },mapDispatchToProps)(Editor)
 
-export default ConnectedEditor;
+export default Editor;

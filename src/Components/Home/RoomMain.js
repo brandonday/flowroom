@@ -278,9 +278,9 @@ class RoomMain extends Component {
     componentDidMount() {
         let that = this;
         // alert('room loaded')
-
-      
-     
+        let hashids = new Hashids(uuid(), 6);
+       
+        this.setState({shortID:hashids.encode(1, 2, 3)});
 
         //this.incrementViews();
         var user = firebase.auth().currentUser;
@@ -575,7 +575,7 @@ class RoomMain extends Component {
     }
     saveRoom () {
      
-        let hashids = new Hashids(uuid(), 6);
+       
         let uid = firebase.auth().currentUser.uid;
         let html = this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.html : '';
         let css = this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.css: '';
@@ -596,6 +596,65 @@ class RoomMain extends Component {
         // console.log('dhtml :',this.props.state.dhtml);
         // console.log('dhtml.dhtml :', this.props.state.dhtml.dhtml);
         let currentRoomID = window.location.pathname.split("room/").pop();
+        
+ 
+        let iframe = document.getElementById('output_frame');
+                              
+                                 
+     
+
+        if(document.getElementById('postbtn')) {
+            document.getElementById('postbtn').style.display = 'none';
+        }
+        
+     
+        if(document.getElementById('savechanges')) {
+            document.getElementById('savechanges').style.display = 'flex';
+        }
+        if(document.getElementById('deletebtn')) {
+            document.getElementById('deletebtn').style.display = 'flex';
+        }
+    }
+    async putObject(type, fileName, data) {
+   
+        let params = { 
+            Bucket: 'test.flowroom.com',
+            Key:'uploads/' + fileName,
+            ContentEncoding: 'base64',
+            ContentType: this.getMimeType(type),
+            Body: data,
+            
+          }
+      
+        
+        let that = this;
+        let uid = firebase.auth().currentUser.uid;
+        s3.putObject(params, function(err, data) {
+          console.log('err: ', err)
+          if (err) {
+            console.log('error :',err);
+          } else {
+            console.log('data :', data);
+            let obj = {
+              url:`http://test.flowroom.com/uploads/${fileName}`
+            }
+            console.log('obj :', obj);
+            
+          }
+        });
+
+        let html = this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.html : '';
+        let css = this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.css: '';
+        let js = this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.js: '';
+
+        let fileNameHTML = this.getFileName('html');
+        let fileNameCSS = this.getFileName('css');
+        let fileNameJS = this.getFileName('js');
+
+        const urlHTML = `http://test.flowroom.com/uploads/${fileNameHTML}`;
+        const urlCSS = `http://test.flowroom.com/uploads/${fileNameCSS}`;
+        const urlJS = `http://test.flowroom.com/uploads/${fileNameJS}`;
+
         this.props.startCreateRoom(
             {
                 description:this.state.description,
@@ -656,7 +715,7 @@ class RoomMain extends Component {
                 isNormalUser:this.state.isProduction,
                 userName:this.state.username,
                 emailAddress:'',
-                shortID:hashids.encode(1, 2, 3),
+                shortID:this.state.shortID,
                 permissions: { },
                 uid:uid,
                 postedPicURL:this.state.postedPicURL,
@@ -684,44 +743,7 @@ class RoomMain extends Component {
                 remixUserName:this.props.state.entireApp.remixUserName,
 
         });
-        if(document.getElementById('postbtn')) {
-            document.getElementById('postbtn').style.display = 'none';
-        }
-        
-     
-        if(document.getElementById('savechanges')) {
-            document.getElementById('savechanges').style.display = 'flex';
-        }
-        if(document.getElementById('deletebtn')) {
-            document.getElementById('deletebtn').style.display = 'flex';
-        }
-    }
-    async putObject(type, fileName, data) {
-   
-        let params = { 
-            Bucket: 'test.flowroom.com',
-            Key:'uploads/' + fileName,
-            ContentEncoding: 'base64',
-            ContentType: this.getMimeType(type),
-            Body: data,
-            
-          }
-      
-        
-        let that = this;
-        s3.putObject(params, function(err, data) {
-          console.log('err: ', err)
-          if (err) {
-            console.log('error :',err);
-          } else {
-            console.log('data :', data);
-            let obj = {
-              url:`http://test.flowroom.com/uploads/${fileName}`
-            }
-            console.log('obj :', obj);
-            
-          }
-        });
+
       }
       getMimeType(type) {
         let mimeType = '';
@@ -1393,7 +1415,7 @@ class RoomMain extends Component {
                             <p style={{color:'white',fontSize:11}}>Description</p>
                             <textarea onChange={this.descriptionhandleChange.bind(this)} style={{border:'0px', outline:'none', height:50,width:'100%',borderRadius:3,backgroundColor:'rgb(37,37,37)',resize:'none',marginTop:5}}></textarea>
                         </div>
-                        <div style={{height:55, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'5px 10px'}}>
+                        <div style={{marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'2px 10px'}}>
                             <p style={{color:'white',fontSize:11}}>Tags</p>
                             <ReactTags style={{marginBottom:10}} inline={false} tags={this.state.tags}
                         suggestions={this.state.suggestionsTags}
@@ -1407,18 +1429,17 @@ class RoomMain extends Component {
                             <p style={{color:'white',fontSize:11,marginTop:10,marginBottom:5}}>Visibility</p>
 
                             <div class="dropdown" style={{width:'100%'}}>
-  <input type="checkbox" id="my-dropdown" value="" name="my-checkbox" style={{width:'100%'}}/>
-  <label for="my-dropdown"
-     data-toggle="dropdown" style={{width:'100%',color:'white'}}>
-  Choose one
-  </label>
-  <ul >
-    <li style={{color:'#fff'}}>Public (Everyone including followers)</li>
-    <li style={{color:'#fff'}}>Private (Only me)</li>
-    <li style={{color:'#fff'}}>Unlisted (Everyone you share with except followers)</li>
-    <li style={{color:'#fff'}}>Followers</li>
-  </ul>
-</div>
+                                <input type="checkbox" id="my-dropdown" value="" name="my-checkbox" style={{width:'100%'}}/>
+                                    <label for="my-dropdown" data-toggle="dropdown" style={{width:'100%',color:'white'}}>
+                                        Choose one
+                                    </label>
+                                    <ul>
+                                        <li style={{color:'#fff'}}>Public (Everyone including followers)</li>
+                                        <li style={{color:'#fff'}}>Private (Only me)</li>
+                                        <li style={{color:'#fff'}}>Unlisted (Everyone you share with except followers)</li>
+                                        <li style={{color:'#fff'}}>Followers</li>
+                                    </ul>
+                            </div>
                             {/* <div className="custom-select" style={{height:20, width:200}}>
                             <select id="dropdown">
                                 <option value="0"></option>
@@ -1438,13 +1459,13 @@ class RoomMain extends Component {
                              style={{backgroundImage:`url{${this.props.state.entireApp.image})`, backgroundSize:'cover',backgroundPosition:'center'}}
                              width={150}></div>
                              <div style={{position:'absolute',height:'100%',width:'320px',backgroundColor:'black',top:'0px',visibility:'hidden'}}>
-                                <div style={{height:'400px', width:'320px'}}>
-                                    <iframe id="regular-thumbnail" src={`/full/${this.state.shortID}`} style={{height:246, width:'320px',border:'1px solid red',visibility:'hidden'}}/>
+                                <div id="iframe-wrap" style={{height:'246px', width:'320px'}}>
+                                    
                                 </div>
                              </div>
                             </div>
                         </div>
-                        <div style={{display:'flex',height:55, marginBottom:7, width:'100%', justifyContent:'center',alignItems:'center', padding:'0 10px',borderTop:'1px solid rgb(29,29,29)',position:'absolute',left:0,bottom:'20px'}}>
+                        <div style={{display:'flex',height:55, marginBottom:7, width:'100%', justifyContent:'center',alignItems:'center', padding:'0 10px',borderTop:'1px solid rgb(29,29,29)',position:'absolute',left:0,bottom:'-7px',backgroundColor:'rgb(24,24,24)',zIndex:9999999}}>
                             <div style={{backgroundColor:'grey',display:'flex',alignItems:'center',justifyContent:'center', height:'29px',width:'170px',marginRight:10,borderRadius:3,backgroundColor:'rgb(37, 37, 37)'}}>SAVE AS DRAFT</div>
                             <div style={{backgroundColor:'grey',display:'flex',alignItems:'center',justifyContent:'center', height:'29px',width:'170px',borderRadius:3,backgroundColor:'rgb(54, 255, 233)',fontWeight:'bold',color:'rgb(82, 82, 82)'}} onClick={
                                 this.saveRoom.bind(this)
@@ -1604,6 +1625,24 @@ class RoomMain extends Component {
             });
 
     }
+    getNumberToString(num) {
+        if(num === undefined) {
+            return 0;
+        }
+        if(num > 999999) {
+            return (num/1000000).toFixed(num >= 10000000 ? 0 : 1) + 'M';
+        } else if(num > 999) {
+            return (num/1000).toFixed(num >= 10000 ? 0 : 1) + 'K';
+        } else {
+            return num
+        } 
+    }
+    getTruncatedString(stringIn) {
+        return {
+            isReadMore: stringIn.length >= 120,
+            string: stringIn.length < 120 ? stringIn : stringIn.substring(0, 120)
+        };
+    }
     render() {
         let that = this;
         const {isLoading} = this.state;
@@ -1698,7 +1737,36 @@ class RoomMain extends Component {
                                
                         </div>
                         <div id="script-tag" refs="script-tag" onClick={(e)=> {
-                            document.getElementById('resizable-box').style.height = '300px';
+                            //document.getElementById('resizable-box').className = 'resize-boxes-open';
+//                             var resizer = document.createElement('div');
+// resizer.className = 'resizer';
+// resizer.style.width = '100%';
+// resizer.style.height = '15px';
+// resizer.style.background = 'rgb(54, 255, 233)';
+// resizer.style.position = 'absolute';
+// resizer.style.zIndex = '99999';
+// resizer.style.right = 0;
+// resizer.style.bottom = 0;
+// resizer.style.cursor = 'se-resize';
+
+
+// resizer.style.cursor = 'se-resize';
+// resizer.style.borderRadius = '20px';
+// document.getElementById('resizable-box').appendChild(resizer);
+// resizer.addEventListener('mousedown', initResize, false);
+
+// function initResize(e) {
+//    window.addEventListener('mousemove', Resize, false);
+//    window.addEventListener('mouseup', stopResize, false);
+// }
+// function Resize(e) {
+//     //cardWrap.style.width = (e.clientX - cardWrap.offsetLeft) + 'px';
+//     document.getElementById('resizable-box').style.height = (e.clientY + document.getElementById('resizable-box').offsetTop) + 'px';
+// }
+// function stopResize(e) {
+//     window.removeEventListener('mousemove', Resize, false);
+//     window.removeEventListener('mouseup', stopResize, false);
+// }
                             let thisElement = document.getElementById(e.target.id);
                             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
                           if(thisElement !== undefined) {
@@ -1712,6 +1780,16 @@ class RoomMain extends Component {
                                 }
                                }
                                thisElement.className = 'menubg'; 
+
+                               document.getElementById('remix-icon').style.backgroundImage = `url(../code_cyan.svg)`;
+                               document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
+
+                               document.getElementById('script-icon').style.backgroundImage = `url(../code_cyan.svg)`;
+                               document.getElementById('script-text').style.color = "rgb(54, 255, 233)";
+
+                              // document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular.svg)`;
+                               document.getElementById('publish-text').style.color = "rgb(82, 82, 82)";
+
                             }
                         }
                             
@@ -1736,7 +1814,7 @@ class RoomMain extends Component {
                             borderBottom:'1px solid #181818',
                             justifyContent:'center'
                         }} className="menu-bg-border">
-                            <div style={{
+                            <div id="script-icon" style={{
                                 fontSize:'15px',
                                 color:'white',
                                 backgroundImage:'url(../code.svg)',
@@ -1747,7 +1825,7 @@ class RoomMain extends Component {
                                 marginBottom:'3px',
                                 pointerEvents:'none'
                             }}></div>
-                            <p id="details-text" style={{fontSize:10.2,fontWeight:'bold',width:'26px',pointerEvents:'none'}} className="menubgnot">SCRIPT</p>
+                            <p id="script-text" style={{fontSize:10.2,fontWeight:'bold',width:'26px',pointerEvents:'none'}} className="menubgnot">SCRIPT</p>
                         </div>
                         <div id="save-tab" onClick={()=> {
                             this.openModal(false)
@@ -1823,73 +1901,433 @@ class RoomMain extends Component {
                             let mainmenu = document.getElementById('main-menu');
                             let remixImageList = document.getElementById('remix-image-list');
                             let list = document.getElementById('main-menu');
+                        
                             list.style.padding = '7px 14px 2px 7px';
-                            list.style.display = 'block';
                           
                             if(thisElement != undefined) {
-                            if(thisElement.className !== 'menubg') {                            
+                                if(thisElement.className !== 'menubg') {                            
                                
-                               for(let i = 0; tabsWithMenubgClass.length; i++) {
-                                if(tabsWithMenubgClass[i] != undefined) {
-                                    if(tabsWithMenubgClass[i].id !== thisElement.id) {
-                                        tabsWithMenubgClass[i].className = 'menubgnot'
-                                    } 
-                                }
-                               }
-                               thisElement.className = 'menubg'; 
-                               
-                              if(document.getElementById('menu-info') !== null) {
-                            //    document.getElementById('menu-info').remove();
-                                if(document.getElementById('remix-image-box')){
-                                document.getElementById('remix-image-box').remove();
-                                }
-                               document.getElementById('menu-info').remove();
-                            //    document.getElementById('remix-list').remove();
-                              }
-                               that.setState({
-                                details:false,
-                                objects:false,
-                                comments:false,
-                                draw:false,
-                                remix:false,
-                                showPublish:true
-                                });
-
-                            }
-                            setTimeout(()=>{
-                                let iframe = document.getElementById('output_frame');
-                              
-                                 
-                                    iframe.contentWindow.flowroom.SaveScreenShot(
-                                        ()=> {
-                                            let imageData = localStorage.getItem("thumbnail");
-                                           // alert(imageData)
-                                            // let isRemix = isPostAsNew;
-                                            // let remixRoomID = isPostAsNew ? that.state.shortID : that.state.remixRoomID;
-                                            // let remixUserName = isPostAsNew ? that.state.userName : that.state.remixUserName;
-                                            localStorage.setItem("thumbnailUrl", "");
-                                            let thumbnail = document.getElementById('thumbnail-pic-display');
-                                            thumbnail.src = imageData;
-                                            thumbnail.setAttribute("height", "100%");
-                                            thumbnail.setAttribute("width", "100%");
-                                            that.putObject (
-                                                imageData, 
-                                                (url) => { 
-                                                    localStorage.setItem("thumbnailUrl", url);
-                                                }
-                                            );
+                                    for(let i = 0; tabsWithMenubgClass.length; i++) {
+                                        if(tabsWithMenubgClass[i] != undefined) {
+                                            if(tabsWithMenubgClass[i].id !== thisElement.id) {
+                                                tabsWithMenubgClass[i].className = 'menubgnot'
+                                            } 
                                         }
-                                    );
-                                   
-                               
-                               
+                                    }
+                                    thisElement.className = 'menubg'; 
 
-                                 },5000)
+                                    document.getElementById('remix-icon').style.backgroundImage = `url(../code_cyan.svg)`;
+                                    document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
+     
+                                    document.getElementById('script-icon').style.backgroundImage = `url(../code_cyan.svg)`;
+                                    document.getElementById('script-text').style.color = "";
+     
+                                   // document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular.svg)`;
+                                    document.getElementById('publish-text').style.color = "rgb(54, 255, 233)";
+                               
+                                    if(document.getElementById('menu-info') !== null) {
+                                        //    document.getElementById('menu-info').remove();
+                                        if(document.getElementById('remix-image-box')){
+                                            document.getElementById('remix-image-box').remove();
+                                        }
+                                        document.getElementById('menu-info').remove();
+                                        //    document.getElementById('remix-list').remove();
+                                    }
+                                    that.setState({
+                                        details:false,
+                                        objects:false,
+                                        comments:false,
+                                        draw:false,
+                                        remix:false,
+                                        showPublish:true
+                                    });
 
+                                }
+                         
+                                let iframe = document.getElementById('output_frame');
+                                let dhtml = JSON.parse(localStorage.getItem("dhtml"));
+
+                              
+                                let html_ = dhtml.html;
+                                let css_ = dhtml.css;
+                                let js_ = dhtml.js;
+                           
+                                let JSflowroom = '<script src="../flowroom.js"></script>';
+
+                                 
+                                let base_tpl = "<!doctype html>\n" +
+                                 "<html>\n\t" +
+                                "<head>\n\t\t" +
+                                "<meta charset=\"utf-8\">\n\t\t" +
+                                "<title>Test</title>\n\n\t\t\n\t" +
+                                "</head>\n\t" +
+                                "<body>\n\t\n\t" +
+                                "</body>\n" +
+                                "</html>";
+        
+      
+     
+                                let prepareSource = () => {
+                                    let html = html_,
+                                    css = css_,
+                                    js = js_,
+ 
+                                    src = '';
+                                    src = base_tpl.replace('</body>', html + '</body>');
+                                    css = '<style>' + css + '</style>';
+                                    src = src.replace('</head>', css + JSflowroom + '</head>');
+                                    js = '<script>' + js + '<\/script>';
+                                    src = src.replace('</body>', js + '</body>');
+                                    let dhtmlObj = {html:html, js:js, css:css}
+          
+                                    // alert(htmlObj.html);
+                                
+                                    return src;
+                                };
+
+                                let renderDHTML = () => {
+                                     // alert('called')
+                                     
+                                    let iframeWrap = document.createElement('div');
+                                    let cardWrap = document.createElement('div');
+                                    let cardWrapWrap = document.createElement('div');
+
+                                    let profilePic = document.createElement('div');
+                                    profilePic.style.height = '40px';
+                                    profilePic.style.width = '40px';
+                                    profilePic.style.borderRadius = '20px';
+                                    profilePic.style.background = 'white';
+                                    profilePic.style.margin = '10px';
+                                    let roominfowrap = document.createElement('div');
+                                    let roomTitle = document.createElement('p');
+                                    roomTitle.style.color = 'white';
+                                    roomTitle.style.fontSize = '15px';
+                                    roomTitle.appendChild(document.createTextNode('Crossing the Bridge'));
+                                  
+
+                                    let remixedOrCreatedBy = document.createElement('p');
+                                    remixedOrCreatedBy.style.color = 'white';
+                                    remixedOrCreatedBy.style.fontSize = '10px';
+                                    remixedOrCreatedBy.appendChild(document.createTextNode('remixed by @Element'))
+
+
+                                    let profilePicAndTitleWrap = document.createElement('div');
+                                  
+                                    roominfowrap.style.display = 'flex';
+                                    roominfowrap.style.flexDirection = 'column';
+                                    roominfowrap.style.justifyContent = 'center';
+                                    profilePicAndTitleWrap.appendChild(profilePic);
+                                    profilePicAndTitleWrap.appendChild(roominfowrap);
+                                    let ellipsis = document.createElement('i');
+                                    ellipsis.className = 'fas fa-ellipsis-v';
+                                    ellipsis.style.fontSize = '18px';
+                                    ellipsis.style.float = 'right';
+                                    ellipsis.style.position = 'absolute';
+                                    ellipsis.style.top = '17px';
+                                    ellipsis.style.color = 'white';
+                                    ellipsis.style.right = '12px';
+                                    profilePicAndTitleWrap.appendChild(ellipsis)
+                                    profilePicAndTitleWrap.style.display = 'flex';
+                                    profilePicAndTitleWrap.style.flexDirection = 'row';
+                                    profilePicAndTitleWrap.style.position = 'relative';
+                                    //profilePicAndTitleWrap.style.justifyContent = 'center';
+                                    roominfowrap.appendChild(roomTitle);
+                                    roominfowrap.appendChild(remixedOrCreatedBy);
+
+                                    cardWrapWrap.appendChild(profilePicAndTitleWrap);
+                                    let handleTop = document.createElement('div');
+                                    let handleBottom = document.createElement('div');
+                                    let overlay = document.createElement('div');
+                                    let cardWrapWrapWrap = document.createElement('div');
+                                    overlay.style.position = 'absolute';
+                                    overlay.style.left = '0';
+                                    overlay.style.top = '0';
+                                    overlay.style.bottom = '0';
+                                    overlay.style.height = '100%';
+                                    overlay.style.width = '100%';
+                                    overlay.style.zIndex = '100';
                              
-                        }
+                                    cardWrapWrapWrap.style.width = '362px'; 
+                                    cardWrapWrapWrap.style.display = 'flex';
+                                    cardWrapWrapWrap.style.justifyContent = 'center';
+                                    cardWrapWrapWrap.style.backgroundColor = 'rgb(17,17,17)';
+                                    cardWrapWrapWrap.style.flexDirection = 'column';
+                                    cardWrapWrapWrap.style.padding = '30px 21px';
+              
+                                    cardWrapWrap.style.paddingBottom = '33px'; 
+                                    cardWrapWrap.style.backgroundColor = 'rgb(32,32,32)';
+                                    cardWrapWrap.style.margin = '10px 0px';
+
+                                    let cardpreview = document.createElement('p');
+                                    cardpreview.style.color = 'white';
+                                    cardpreview.style.fontSize = '15px';
+                                    cardpreview.style.fontWeight = 'bold';
+
+                                    let cardpreviewTxt = document.createElement('p');
+                                    cardpreviewTxt.style.color = 'white';
+                                    cardpreviewTxt.style.fontSize = '10px';
+
+                                    cardpreview.appendChild(document.createTextNode('Card Preview'))
+
+                                    cardWrapWrapWrap.appendChild(cardpreview)
+                                    cardpreviewTxt.appendChild(document.createTextNode('Adjust the thumbnail below using the handle'));
+                                    cardWrapWrapWrap.appendChild(cardpreviewTxt)
+                                    let source = prepareSource();
+                                    let iframe = document.createElement('iframe');
+                                    iframeWrap.style.position = 'absolute';
+                                    iframeWrap.style.height = '100%';
+                                    iframeWrap.style.width = '100%';
+                                    iframeWrap.style.zIndex = '99999999';
+                                    iframeWrap.style.backgroundColor = 'red';
+                                    iframeWrap.style.display = 'flex';
+                                    iframeWrap.style.justifyContent = 'center';
+                                    iframeWrap.style.alignItems = 'center';
+                                    iframeWrap.setAttribute("id", "card-thumb-wrap");
+
+                                    document.getElementById('root').appendChild(iframeWrap);
+
+                                    iframe.setAttribute("id","regular-thumbnail");
+                                    iframe.style.height = '200%';
+                                    iframe.style.width = '200%';
+                                    iframe.style.top = '0px';
+                                    iframe.style.left = '0px';
+                                    iframe.style.background = 'black';
+                                    iframe.style.transform = 'scale(0.5)';
+                                    iframe.style.transformOrigin = 'left top';
+                                    iframe.style.display = 'block';
+                                    iframe.style.border = '0px';
+                                    cardWrap.appendChild(overlay);
+                                    cardWrap.style.height = '246px';
+                                    cardWrap.style.width = '320px';
+                                    cardWrap.style.borderTop = '2px solid rgb(54,255,233)';
+                                    cardWrap.style.borderBottom = '2px solid rgb(54,255,233)';
+                                    cardWrap.style.position = 'relative';
+
+                                    iframe.style.overflow = 'hidden';
+               
+                                 
+                                   
+var resizer = document.createElement('div');
+resizer.className = 'resizer';
+resizer.style.width = '15px';
+resizer.style.height = '15px';
+resizer.style.background = 'rgb(54, 255, 233)';
+resizer.style.position = 'absolute';
+resizer.style.zIndex = '1000';
+resizer.style.right = 0;
+resizer.style.bottom = 0;
+resizer.style.cursor = 'se-resize';
+resizer.style.zIndex = '10000';
+resizer.style.right = '154px';
+resizer.style.bottom = '-8px';
+resizer.style.cursor = 'se-resize';
+resizer.style.borderRadius = '20px';
+cardWrap.appendChild(resizer);
+resizer.addEventListener('mousedown', initResize, false);
+
+function initResize(e) {
+   window.addEventListener('mousemove', Resize, false);
+   window.addEventListener('mouseup', stopResize, false);
+}
+function Resize(e) {
+    //cardWrap.style.width = (e.clientX - cardWrap.offsetLeft) + 'px';
+    cardWrap.style.height = (e.clientY - cardWrap.offsetTop) + 'px';
+}
+function stopResize(e) {
+    window.removeEventListener('mousemove', Resize, false);
+    window.removeEventListener('mouseup', stopResize, false);
+}
+
+
+
+                                    cardWrap.appendChild(iframe)
+                                    let heart = document.createElement('i');
+                                    let comments = document.createElement('i');
+                                    let enterbtn = document.createElement('div');
+
+                                    let fullbtn = document.createElement('i');
+                                    fullbtn.className = 'fas fa-expand';
+                                    fullbtn.style.color = 'white';
+                                    enterbtn.style.display = 'flex';
+                                    enterbtn.style.justifyContent = 'space-around'; 
+                                    enterbtn.style.alignItems = 'center'; 
+                                    enterbtn.style.outline = 'none'; 
+                                    enterbtn.style.cursor = 'pointer'; 
+                                    enterbtn.style.border = '0px solid rgb(73, 165, 64)'; 
+                                    enterbtn.style.borderRadius = '40px'; 
+                                    enterbtn.style.height = '25px'; 
+                                    enterbtn.style.width = '78px'; 
+                                    enterbtn.style.marginRight = '10px'; 
+                                    enterbtn.style.backgroundColor = 'rgb(49, 51, 51)';
+                                    enterbtn.style.fontFamily = "Source Sans Pro"; 
+                                    enterbtn.style.color = 'white'; 
+                                    enterbtn.style.fontSize  = '14px'; 
+                                    enterbtn.style.fontWeight = '600'; 
+                                    enterbtn.style.padding = '0px 8px'; 
+                                    enterbtn.style.position = 'relative'; 
+                                    enterbtn.style.transition = 'color 0.3s ease 0s, background-color 0.3s ease 0s';
+                                    enterbtn.style.borderColor = '0.3s ease 0s, width 0.3s ease 0s, opacity 0.3s ease 0s';
+                                    heart.className = 'far fa-heart';
+                                    heart.style.fontSize = '12px';
+                                    heart.style.color = 'white';
+                                    
+                                    comments.className = 'far fa-comment-alt';
+                                    comments.style.fontSize = '12px';
+                                    comments.style.color = 'white';
+                                    comments.style.margin = '5px';
+                               
+                                    
+
+                                    cardWrapWrap.appendChild(cardWrap);
+                       
+                                    heart.className = 'far fa-heart';
+                                    heart.style.fontSize = '12px';
+                                    heart.style.color = 'white';
+                                    heart.style.position = 'relative';
+                                    heart.style.margin = '5px';
+                               
+
+                                    let bottomWrap = document.createElement('div');
+                                    let likescomments = document.createElement('div');
+                                    likescomments.appendChild(heart);
+                                    likescomments.appendChild(comments);
+                                    likescomments.style.display = 'flex';
+                                    likescomments.style.width = '100px';
+
+                                    let enterAndFull = document.createElement('div');
+                                    enterAndFull.style.width = '100px';
+                                    enterAndFull.style.display = 'flex';
+                                    enterAndFull.appendChild(enterbtn);
+                                    enterAndFull.appendChild(fullbtn);
+
+                                    bottomWrap.style.position = 'absolute';
+                                    bottomWrap.appendChild(likescomments);
+                                    bottomWrap.appendChild(enterAndFull);
+                                    bottomWrap.style.bottom = '-27px';
+                                    bottomWrap.style.width = '100%';
+                                    bottomWrap.style.display = 'flex';
+                                    bottomWrap.style.justifyContent = 'space-between';
+
+                                    let descriptionWrapText = document.createElement('div');
+                                    let descriptionText = document.createElement('div');
+                                    descriptionWrapText.style.fontSize = '16px';
+                                    descriptionWrapText.style.padding = '0px 10px 0px';
+                                    descriptionText.style.maxWidth = '100%';
+                                    descriptionText.style.height = 'auto';
+                                    descriptionText.style.fontSize = '14px';
+                                    descriptionText.style.lineHeight = '1.2';
+                                    descriptionText.style.position = 'relative';
+                                    descriptionText.style.top = '5px';
+                                    descriptionText.style.overflow = 'hidden';
+                                    descriptionText.style.color = 'white';
+                                    descriptionText.style.marginLeft = '3';
+                                    descriptionText.style.paddingBottom = '20';
+                                    descriptionText.appendChild(document.createTextNode(`${this.getTruncatedString(this.state.descriptionText).string}`));
+                                    if(this.getTruncatedString(this.state.descriptionText).isReadMore === true) {
+                                        let span = document.createElement('span');
+                                        span.style.color = 'white';
+                                        span.style.marginLeft = '2px';
+                                        span.appendChild(document.createTextNode('...[Read More]'));
+                                        descriptionText.appendChild(span);
+                                    }
+                                    bottomWrap.appendChild(descriptionText)
+                                    
+                //                     <div id="descriptionWrapText" style={{fontSize:'16px', padding:'0px 10px 0px'}}>
+                       
+
+
+                // <div id="description-text" 
+                //     style={{
+                //         maxWidth:'100%',
+                //         height:'auto',
+                //         fontSize:'14px',
+                //         lineHeight:'1.2',
+                //         position:'relative',
+                //         top:'5px',
+                //         overflow:'hidden',
+                //         color:'white',
+                //         marginLeft:3,
+                //         paddingBottom:20
+                // }}>
+                //     {`${this.getTruncatedString(this.props.description).string}`}
+                //     {this.getTruncatedString(this.props.description).isReadMore ? (<span style={{color:'white',marginLeft:2}}>...[Read More]
+                //     <div style={{display:'flex',alignItems:'center',marginRight:'18px',flexDirection:'row', marginTop:7}}>
+                //             {/* <i className="fas fa-play" style={{fontSize:10, color:'white',marginRight:10}}></i> */}
+                //                 <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.getNumberToString(this.props.views)} Views</p>
+                //             </div>
+                //     </span>) :''}
+                //     </div>
+                    
+                
+
+
+
+                         
+                //     </div>
+                
+                                
+                                    cardWrap.appendChild(bottomWrap);
+                                    //cardWrapWrap.appendChild(heart);
+
+                                    cardWrapWrapWrap.appendChild(cardWrapWrap);
+                                    let save = document.createElement('div');
+                                    save.style.height = '30px';
+                                    save.style.width = '50px';
+                                    save.style.borderRadius = '4px';
+                                    save.style.backgroundColor = 'rgb(54,255,233)';
+                                    save.style.display = 'flex';
+                                    save.style.justifyContent = 'center';
+                                    save.style.alignItems = 'center';
+                                    let savetxt = document.createElement('p');
+                                    savetxt.style.color = 'black';
+                                    savetxt.style.fontSize = '12px';
+                                    savetxt.style.fontWeight = 'bold';
+                                    savetxt.appendChild(document.createTextNode('SAVE'))
+                                    save.appendChild(savetxt);
+                                    cardWrapWrapWrap.appendChild(cardWrapWrap);
+                                    cardWrapWrapWrap.appendChild(save);
+                                    iframeWrap.appendChild(cardWrapWrapWrap);
+                                    iframeWrap.style.display = 'none';
+         
+                                    let iframe_doc = iframe.contentDocument;
+                                    //window.Subj('#regular-thumbnail').draggle();
+                                    console.log('window',window)
+                                    iframe_doc.open();
+                                    iframe_doc.write(source);
+                                    iframe_doc.close();
+         
+          
+                                    //when removing last library, set to [];
+
+                                };
+                                renderDHTML();
+           
+                                console.log('content window ', iframe.contentWindow)
+       
+                                iframe.contentWindow.flowroom.SaveScreenShot(
+                                    ()=> {
+                                        let imageData = localStorage.getItem("thumbnail");
+                                        alert(imageData)
+                                        // let isRemix = isPostAsNew;
+                                        // let remixRoomID = isPostAsNew ? that.state.shortID : that.state.remixRoomID;
+                                        // let remixUserName = isPostAsNew ? that.state.userName : that.state.remixUserName;
+                                        localStorage.setItem("thumbnailUrl", "");
+                                        let thumbnail = document.getElementById('thumbnail-pic-display');
+                                        thumbnail.src = imageData;
+                                        thumbnail.setAttribute("height", "100%");
+                                        thumbnail.setAttribute("width", "100%");
+                                        that.putObject (
+                                            imageData, 
+                                            (url) => { 
+                                                localStorage.setItem("thumbnailUrl", url);
+                                            }
+                                        );
+                                    }
+                                );
+                             
+                            }
                         }} style={{
-                            display:that.state.postAsNewBtnVisible ? 'flex' : 'none',
+                           
                            
                             height:'52px',
                             width:'48px',
@@ -1898,10 +2336,12 @@ class RoomMain extends Component {
                             borderRight:'1px solid #181818',
                             borderBottom:'1px solid #181818',
                             justifyContent:'center',
-                            cursor:'pointer'
+                            cursor:'pointer',
+                            display:'flex',
                         }} 
                         className="menu-bg-border">
                             <div style={{
+                                id:'publish-new-icon',
                                 fontSize:'15px',
                                 color:'white',
                                 backgroundImage:'url(../save-regular-grey.svg)',
@@ -1912,7 +2352,8 @@ class RoomMain extends Component {
                                 marginBottom:'3px',
                                 pointerEvents:'none'
                             }}></div>
-                            <p id="publish-text" style={{fontSize:10.2,fontWeight:'bold',width:'38px', pointerEvents:'none'}} className="menubgnot">PUBLISH AS NEW </p>
+                            <p id="publish-text" style={{fontSize:10.2,fontWeight:'bold', pointerEvents:'none'}} className="menubgnot">PUBLISH </p>
+                            <p style={{fontSize:10.2,fontWeight:'bold',pointerEvents:'none'}} className="menubgnot">NEW</p>
                         </div>
                         <div id="post-tab" onClick={(e)=> {
                             let that = this;
@@ -1930,11 +2371,7 @@ class RoomMain extends Component {
                             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
                             let mainmenu = document.getElementById('main-menu');
                             let remixImageList = document.getElementById('remix-image-list');
-
-                            let list = document.getElementById('main-menu');
-                            list.style.padding = '7px 14px 2px 7px';
-                            list.style.display = 'block';
-                            
+                           
                             if(thisElement != undefined) {
                             if(thisElement.className !== 'menubg') {                            
                                
@@ -1967,29 +2404,86 @@ class RoomMain extends Component {
                             }
                             setTimeout(()=>{
                                 let iframe = document.getElementById('output_frame');
-                              
+                                let dhtml = JSON.parse(localStorage.getItem("dhtml"));
+                                let html_ = dhtml.html;
+                                let css_ = dhtml.css;
+                                let js_ = dhtml.js;
+                            
+                                
+
                                  
-                                    iframe.contentWindow.flowroom.SaveScreenShot(
-                                        ()=> {
-                                            let imageData = localStorage.getItem("thumbnail");
-                                            //alert(imageData)
-                                            // let isRemix = isPostAsNew;
-                                            // let remixRoomID = isPostAsNew ? that.state.shortID : that.state.remixRoomID;
-                                            // let remixUserName = isPostAsNew ? that.state.userName : that.state.remixUserName;
-                                            localStorage.setItem("thumbnailUrl", "");
-                                            let thumbnail = document.getElementById('thumbnail-pic-display');
-                                            thumbnail.src = imageData;
-                                            thumbnail.setAttribute("height", "100%");
-                                            thumbnail.setAttribute("width", "100%");
-                                            that.putObject (
-                                                imageData, 
-                                                (url) => { 
-                                                    localStorage.setItem("thumbnailUrl", url);
-                                                }
-                                            );
-                                        }
-                                    );
-                                   
+        let base_tpl = "<!doctype html>\n" +
+        "<html>\n\t" +
+        "<head>\n\t\t" +
+        "<meta charset=\"utf-8\">\n\t\t" +
+        "<title>Test</title>\n\n\t\t\n\t" +
+        "</head>\n\t" +
+        "<body>\n\t\n\t" +
+        "</body>\n" +
+        "</html>";
+        
+      
+     
+        let prepareSource = () => {
+          let html = html_,
+          css = css_,
+          js = js_,
+ 
+          src = '';
+          src = base_tpl.replace('</body>', html + '</body>');
+          css = '<style>' + css + '</style>';
+          src = src.replace('</head>', css + '</head>');
+          js = '<script>' + js + '<\/script>';
+          src = src.replace('</body>', js + '</body>');
+          let dhtmlObj = {html:html, js:js, css:css}
+          
+         // alert(htmlObj.html);
+          localStorage.setItem("dhtml", JSON.stringify(dhtmlObj));
+          localStorage.setItem("css", JSON.stringify(css));
+          localStorage.setItem("js", JSON.stringify(js));
+          return src;
+        };
+
+        let renderDHTML = () => {
+            // alert('called')
+            let source = prepareSource();
+            let iframe = document.querySelector('#regular-thumbnail');
+            let iframe_doc = iframe.contentDocument;
+                  
+            iframe_doc.open();
+            iframe_doc.write(source);
+            iframe_doc.close();
+         
+          
+          //when removing last library, set to [];
+        //   iframe.contentWindow.flowroom.SaveScreenShot(
+        //     ()=> {
+        //         let imageData = localStorage.getItem("thumbnail");
+        //         //alert(imageData)
+        //         // let isRemix = isPostAsNew;
+        //         // let remixRoomID = isPostAsNew ? that.state.shortID : that.state.remixRoomID;
+        //         // let remixUserName = isPostAsNew ? that.state.userName : that.state.remixUserName;
+        //         localStorage.setItem("thumbnailUrl", "");
+        //         let thumbnail = document.getElementById('thumbnail-pic-display');
+        //         thumbnail.src = imageData;
+        //         thumbnail.setAttribute("height", "100%");
+        //         thumbnail.setAttribute("width", "100%");
+        //         that.putObject (
+        //             imageData, 
+        //             (url) => { 
+        //                 localStorage.setItem("thumbnailUrl", url);
+        //             }
+        //         );
+        //     }
+        // );
+       
+           
+           
+          };
+
+          
+            renderDHTML()
+                                
                                
                                
 
@@ -1997,7 +2491,7 @@ class RoomMain extends Component {
 
                                 }
                         }} style={{
-                            display:that.state.postBtnVisible ? 'flex' : 'none',
+                            display:'none',
                            
                             height:'52px',
                             width:'48px',
@@ -2010,6 +2504,7 @@ class RoomMain extends Component {
                         }} 
                         className="menu-bg-border">
                             <div style={{
+                                id:"publish-icon",
                                 fontSize:'15px',
                                 color:'white',
                                 backgroundImage:'url(../save-regular-grey.svg)',

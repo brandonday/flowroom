@@ -7,7 +7,7 @@ import {fabric} from 'fabric';
 import Fullscreen from "react-full-screen";
 
 
-const objects = [{}];
+const objects = [{},{}];
 let fabricA = [];
 
 
@@ -117,19 +117,19 @@ let fabricA = [];
                     </Fullscreen>
                     
                 </div>
-                <div id="out-cover">
+                <div id="out-cover" style={{display:'block'}}>
                     
                 </div>
           
                             
          {/* { 
                 objects.map((i)=> {
-                return (<FR_OBJECT id={i}/>)
+                return (<FR_OBJECT id={i} monkey={10}/>)
                         })
-            } 
-            <canvas id="fabricCanvas">
-            </canvas> */}
-         
+            }  */}
+            {/* <canvas id="fabricCanvas">
+            </canvas>
+          */}
         
             
         {/* <div id="preferences-bottom" className="preferences-bottom">

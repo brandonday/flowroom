@@ -13,6 +13,7 @@ function getTheNodes() {
         <textarea id="css_code" className="css_code"></textarea>
         <div id="css-box"></div>
         <textarea id="js_code" className="js_code"></textarea>
+        <div style={{position:'absolute',left:0,right:0,bottom:0,height:'100%',width:'100%'}}></div>
     </div>
 )
 

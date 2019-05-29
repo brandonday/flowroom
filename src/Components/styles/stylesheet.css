@@ -1812,7 +1812,7 @@ right: 0px;
 .react-resizable-handle {
   position: absolute;
   width:100%;
-  height: 1px;
+  height: 10px;
   bottom: 0;
   right: 0;
   box-sizing: border-box;
@@ -1844,12 +1844,12 @@ right: 0px;
   margin: auto;
   height: 36px;
 }
-.box3 .react-resizable-handle {
+/* .box3 .react-resizable-handle {
   display: none;
 }
-.box3:hover .react-resizable-handle {
+.box3:hover . {
   display: block;
-}
+} */
 
 .page-wrap twilight {
   padding: 0;
