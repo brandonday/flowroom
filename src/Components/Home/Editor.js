@@ -627,14 +627,14 @@ goFull = () => {
     }
     
 }
-// const mapDispatchToProps = (dispatch) => ({
-//   openModal: (modal) => dispatch(OPEN_MODAL(modal)),
-//   saveDHTML: (dhtml) => dispatch(saveDHTML(dhtml))
-// });
-// const ConnectedEditor = connect((state) => {
-//   return {
-//     state:state
-//   }
-// },mapDispatchToProps)(Editor)
+const mapDispatchToProps = (dispatch) => ({
+  openModal: (modal) => dispatch(OPEN_MODAL(modal)),
+  saveDHTML: (dhtml) => dispatch(saveDHTML(dhtml))
+});
+const ConnectedEditor = connect((state) => {
+  return {
+    state:state
+  }
+},mapDispatchToProps)(Editor)
 
-export default Editor;
+export default ConnectedEditor;
