@@ -1825,6 +1825,188 @@ class RoomMain extends Component {
                                 marginBottom:'3px',
                                 pointerEvents:'none'
                             }}></div>
+                            <p id="script-text" style={{fontSize:10.2,fontWeight:'bold',width:'26px',pointerEvents:'none'}} className="menubgnot">ELEMENTS</p>
+                        </div>
+                        <div id="script-tag" refs="script-tag" onClick={(e)=> {
+                            //document.getElementById('resizable-box').className = 'resize-boxes-open';
+//                             var resizer = document.createElement('div');
+// resizer.className = 'resizer';
+// resizer.style.width = '100%';
+// resizer.style.height = '15px';
+// resizer.style.background = 'rgb(54, 255, 233)';
+// resizer.style.position = 'absolute';
+// resizer.style.zIndex = '99999';
+// resizer.style.right = 0;
+// resizer.style.bottom = 0;
+// resizer.style.cursor = 'se-resize';
+
+
+// resizer.style.cursor = 'se-resize';
+// resizer.style.borderRadius = '20px';
+// document.getElementById('resizable-box').appendChild(resizer);
+// resizer.addEventListener('mousedown', initResize, false);
+
+// function initResize(e) {
+//    window.addEventListener('mousemove', Resize, false);
+//    window.addEventListener('mouseup', stopResize, false);
+// }
+// function Resize(e) {
+//     //cardWrap.style.width = (e.clientX - cardWrap.offsetLeft) + 'px';
+//     document.getElementById('resizable-box').style.height = (e.clientY + document.getElementById('resizable-box').offsetTop) + 'px';
+// }
+// function stopResize(e) {
+//     window.removeEventListener('mousemove', Resize, false);
+//     window.removeEventListener('mouseup', stopResize, false);
+// }
+                            let thisElement = document.getElementById(e.target.id);
+                            let tabsWithMenubgClass = document.getElementsByClassName('menubg');
+                          if(thisElement !== undefined) {
+                            if(thisElement.className !== 'menubg') {                            
+                               
+                               for(let i = 0; tabsWithMenubgClass.length; i++) {
+                                if(tabsWithMenubgClass[i] != undefined) {
+                                    if(tabsWithMenubgClass[i].id !== thisElement.id) {
+                                        tabsWithMenubgClass[i].className = 'menubgnot';
+                                    } 
+                                }
+                               }
+                               thisElement.className = 'menubg'; 
+
+                               document.getElementById('remix-icon').style.backgroundImage = `url(../code_cyan.svg)`;
+                               document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
+
+                               document.getElementById('script-icon').style.backgroundImage = `url(../code_cyan.svg)`;
+                               document.getElementById('script-text').style.color = "rgb(54, 255, 233)";
+
+                              // document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular.svg)`;
+                               document.getElementById('publish-text').style.color = "rgb(82, 82, 82)";
+
+                            }
+                        }
+                            
+                            // let remixid = document.getElementById('remix-tab');
+                            // let script = document.getElementById('script-tag');
+                            // let postTab = document.getElementById('post-tab');
+                            // remixid.className = '';
+                            // remixid.style.borderRight = '0px solid #181818';  
+                            // script.className = 'menubg';
+                            // script.style.color = 'rgb(64, 255, 232)';
+                            // postTab.className = '';
+                            // postTab.style.color = 'rgb(82, 82, 82)';  
+                            // remixid.style.color = 'rgb(82, 82, 82)';   
+                        }} style={{
+                            display:'flex',
+                            cursor:'pointer',
+                            height:'52px',
+                            width:'48px',
+                            flexDirection:'column',
+                            alignItems:'center',
+                            borderRight:'1px solid #181818',
+                            borderBottom:'1px solid #181818',
+                            justifyContent:'center'
+                        }} className="menu-bg-border">
+                            <div id="script-icon" style={{
+                                fontSize:'15px',
+                                color:'white',
+                                backgroundImage:'url(../code.svg)',
+                                backgroundSize:'100% 100%',
+                                backgroundRepeat:'no-repeat',
+                                height:'14px',
+                                width:'16px',
+                                marginBottom:'3px',
+                                pointerEvents:'none'
+                            }}></div>
+                            <p id="script-text" style={{fontSize:10.2,fontWeight:'bold',width:'26px',pointerEvents:'none'}} className="menubgnot">APPS</p>
+                        </div>
+                        <div id="script-tag" refs="script-tag" onClick={(e)=> {
+                            //document.getElementById('resizable-box').className = 'resize-boxes-open';
+//                             var resizer = document.createElement('div');
+// resizer.className = 'resizer';
+// resizer.style.width = '100%';
+// resizer.style.height = '15px';
+// resizer.style.background = 'rgb(54, 255, 233)';
+// resizer.style.position = 'absolute';
+// resizer.style.zIndex = '99999';
+// resizer.style.right = 0;
+// resizer.style.bottom = 0;
+// resizer.style.cursor = 'se-resize';
+
+
+// resizer.style.cursor = 'se-resize';
+// resizer.style.borderRadius = '20px';
+// document.getElementById('resizable-box').appendChild(resizer);
+// resizer.addEventListener('mousedown', initResize, false);
+
+// function initResize(e) {
+//    window.addEventListener('mousemove', Resize, false);
+//    window.addEventListener('mouseup', stopResize, false);
+// }
+// function Resize(e) {
+//     //cardWrap.style.width = (e.clientX - cardWrap.offsetLeft) + 'px';
+//     document.getElementById('resizable-box').style.height = (e.clientY + document.getElementById('resizable-box').offsetTop) + 'px';
+// }
+// function stopResize(e) {
+//     window.removeEventListener('mousemove', Resize, false);
+//     window.removeEventListener('mouseup', stopResize, false);
+// }
+                            let thisElement = document.getElementById(e.target.id);
+                            let tabsWithMenubgClass = document.getElementsByClassName('menubg');
+                          if(thisElement !== undefined) {
+                            if(thisElement.className !== 'menubg') {                            
+                               
+                               for(let i = 0; tabsWithMenubgClass.length; i++) {
+                                if(tabsWithMenubgClass[i] != undefined) {
+                                    if(tabsWithMenubgClass[i].id !== thisElement.id) {
+                                        tabsWithMenubgClass[i].className = 'menubgnot';
+                                    } 
+                                }
+                               }
+                               thisElement.className = 'menubg'; 
+
+                               document.getElementById('remix-icon').style.backgroundImage = `url(../code_cyan.svg)`;
+                               document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
+
+                               document.getElementById('script-icon').style.backgroundImage = `url(../code_cyan.svg)`;
+                               document.getElementById('script-text').style.color = "rgb(54, 255, 233)";
+
+                              // document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular.svg)`;
+                               document.getElementById('publish-text').style.color = "rgb(82, 82, 82)";
+
+                            }
+                        }
+                            
+                            // let remixid = document.getElementById('remix-tab');
+                            // let script = document.getElementById('script-tag');
+                            // let postTab = document.getElementById('post-tab');
+                            // remixid.className = '';
+                            // remixid.style.borderRight = '0px solid #181818';  
+                            // script.className = 'menubg';
+                            // script.style.color = 'rgb(64, 255, 232)';
+                            // postTab.className = '';
+                            // postTab.style.color = 'rgb(82, 82, 82)';  
+                            // remixid.style.color = 'rgb(82, 82, 82)';   
+                        }} style={{
+                            display:'flex',
+                            cursor:'pointer',
+                            height:'52px',
+                            width:'48px',
+                            flexDirection:'column',
+                            alignItems:'center',
+                            borderRight:'1px solid #181818',
+                            borderBottom:'1px solid #181818',
+                            justifyContent:'center'
+                        }} className="menu-bg-border">
+                            <div id="script-icon" style={{
+                                fontSize:'15px',
+                                color:'white',
+                                backgroundImage:'url(../code.svg)',
+                                backgroundSize:'100% 100%',
+                                backgroundRepeat:'no-repeat',
+                                height:'14px',
+                                width:'16px',
+                                marginBottom:'3px',
+                                pointerEvents:'none'
+                            }}></div>
                             <p id="script-text" style={{fontSize:10.2,fontWeight:'bold',width:'26px',pointerEvents:'none'}} className="menubgnot">SCRIPT</p>
                         </div>
                         <div id="save-tab" onClick={()=> {
@@ -1944,7 +2126,7 @@ class RoomMain extends Component {
 
                                 }
                          
-                                let iframe = document.getElementById('output_frame');
+                                let iframe = document.getElementById('regular-thumbnail');
                                 let dhtml = JSON.parse(localStorage.getItem("dhtml"));
 
                               
@@ -2107,36 +2289,36 @@ class RoomMain extends Component {
                
                                  
                                    
-var resizer = document.createElement('div');
-resizer.className = 'resizer';
-resizer.style.width = '15px';
-resizer.style.height = '15px';
-resizer.style.background = 'rgb(54, 255, 233)';
-resizer.style.position = 'absolute';
-resizer.style.zIndex = '1000';
-resizer.style.right = 0;
-resizer.style.bottom = 0;
-resizer.style.cursor = 'se-resize';
-resizer.style.zIndex = '10000';
-resizer.style.right = '154px';
-resizer.style.bottom = '-8px';
-resizer.style.cursor = 'se-resize';
-resizer.style.borderRadius = '20px';
-cardWrap.appendChild(resizer);
-resizer.addEventListener('mousedown', initResize, false);
+                                    var resizer = document.createElement('div');
+                                    resizer.className = 'resizer';
+                                    resizer.style.width = '15px';
+                                    resizer.style.height = '15px';
+                                    resizer.style.background = 'rgb(54, 255, 233)';
+                                    resizer.style.position = 'absolute';
+                                    resizer.style.zIndex = '1000';
+                                    resizer.style.right = 0;
+                                    resizer.style.bottom = 0;
+                                    resizer.style.cursor = 'se-resize';
+                                    resizer.style.zIndex = '10000';
+                                    resizer.style.right = '154px';
+                                    resizer.style.bottom = '-8px';
+                                    resizer.style.cursor = 'se-resize';
+                                    resizer.style.borderRadius = '20px';
+                                    cardWrap.appendChild(resizer);
+                                    resizer.addEventListener('mousedown', initResize, false);
 
-function initResize(e) {
-   window.addEventListener('mousemove', Resize, false);
-   window.addEventListener('mouseup', stopResize, false);
-}
-function Resize(e) {
-    //cardWrap.style.width = (e.clientX - cardWrap.offsetLeft) + 'px';
-    cardWrap.style.height = (e.clientY - cardWrap.offsetTop) + 'px';
-}
-function stopResize(e) {
-    window.removeEventListener('mousemove', Resize, false);
-    window.removeEventListener('mouseup', stopResize, false);
-}
+                                    function initResize(e) {
+                                        window.addEventListener('mousemove', Resize, false);
+                                        window.addEventListener('mouseup', stopResize, false);
+                                    }
+                                    function Resize(e) {
+                                        //cardWrap.style.width = (e.clientX - cardWrap.offsetLeft) + 'px';
+                                        cardWrap.style.height = (e.clientY - cardWrap.offsetTop) + 'px';
+                                    }
+                                    function stopResize(e) {
+                                        window.removeEventListener('mousemove', Resize, false);
+                                        window.removeEventListener('mouseup', stopResize, false);
+                                    }
 
 
 
@@ -2287,7 +2469,7 @@ function stopResize(e) {
                                     cardWrapWrapWrap.appendChild(cardWrapWrap);
                                     cardWrapWrapWrap.appendChild(save);
                                     iframeWrap.appendChild(cardWrapWrapWrap);
-                                    iframeWrap.style.display = 'none';
+                                    //iframeWrap.style.display = 'none';
          
                                     let iframe_doc = iframe.contentDocument;
                                     //window.Subj('#regular-thumbnail').draggle();
@@ -2301,10 +2483,11 @@ function stopResize(e) {
 
                                 };
                                 renderDHTML();
-           
-                                console.log('content window ', iframe.contentWindow)
-       
-                                iframe.contentWindow.flowroom.SaveScreenShot(
+                                let get_iframe = document.getElementById('regular-thumbnail');
+                         
+                            console.log('hhh', get_iframe.contentWindow)
+                            get_iframe.onload = ()=> {
+                               get_iframe.contentWindow.flowroom.SaveScreenShot(
                                     ()=> {
                                         let imageData = localStorage.getItem("thumbnail");
                                         alert(imageData)
@@ -2324,7 +2507,8 @@ function stopResize(e) {
                                         );
                                     }
                                 );
-                             
+                                }
+                            
                             }
                         }} style={{
                            
