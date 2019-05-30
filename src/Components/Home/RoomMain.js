@@ -1736,7 +1736,7 @@ class RoomMain extends Component {
                                 <p id="remix-text" style={{fontSize:10.2,fontWeight:'bold',width:'26px', pointerEvents:'none', marginTop:4}} className="menubgnot">REMIX</p>
                                
                         </div>
-                        <div id="script-tag" refs="script-tag" onClick={(e)=> {
+                        <div id="elements-tag" onClick={(e)=> {
                             //document.getElementById('resizable-box').className = 'resize-boxes-open';
 //                             var resizer = document.createElement('div');
 // resizer.className = 'resizer';
@@ -1825,9 +1825,9 @@ class RoomMain extends Component {
                                 marginBottom:'3px',
                                 pointerEvents:'none'
                             }}></div>
-                            <p id="script-text" style={{fontSize:10.2,fontWeight:'bold',width:'26px',pointerEvents:'none'}} className="menubgnot">ELEMENTS</p>
+                            <p id="elements-text" style={{fontSize:10.2,fontWeight:'bold',width:'26px',pointerEvents:'none'}} className="menubgnot">ELEMENTS</p>
                         </div>
-                        <div id="script-tag" refs="script-tag" onClick={(e)=> {
+                        <div id="app-tag"  onClick={(e)=> {
                             //document.getElementById('resizable-box').className = 'resize-boxes-open';
 //                             var resizer = document.createElement('div');
 // resizer.className = 'resizer';
@@ -1916,7 +1916,7 @@ class RoomMain extends Component {
                                 marginBottom:'3px',
                                 pointerEvents:'none'
                             }}></div>
-                            <p id="script-text" style={{fontSize:10.2,fontWeight:'bold',width:'26px',pointerEvents:'none'}} className="menubgnot">APPS</p>
+                            <p id="app-text" style={{fontSize:10.2,fontWeight:'bold',width:'26px',pointerEvents:'none'}} className="menubgnot">APPS</p>
                         </div>
                         <div id="script-tag" refs="script-tag" onClick={(e)=> {
                             //document.getElementById('resizable-box').className = 'resize-boxes-open';
