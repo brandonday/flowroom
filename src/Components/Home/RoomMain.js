@@ -20,356 +20,355 @@ import ImageEdit from './ImageEdit.js';
 import * as S3 from 'aws-sdk/clients/s3';
 import RelatedRoomPost from './RelatedRoomPost.js';
 import { WithContext as ReactTags } from 'react-tag-input';
-let database = firebase.database();
+    let database = firebase.database();
 
-AWS.config.update({
-  region: 'us-west-2',
-  credentials: new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: 'us-west-2:5df2511a-5595-416c-b148-aba28893c3f3'
-  })
-});
+    AWS.config.update({
+        region: 'us-west-2',
+        credentials: new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: 'us-west-2:5df2511a-5595-416c-b148-aba28893c3f3'
+        })
+    });
 
 
   
-  const s3 = new S3();
+    const s3 = new S3();
   
   
-  var moment = require('moment');
-  let timer = null; 
-  const messages = [];
-  let names = [];
-  let messagesSent = [];
-  let messageList = [];
-  let preventDuplicateArray = []; //keeps track
-  let postData = [];
-  let callOnce = false;
-  let isUploaded = false;
+    var moment = require('moment');
+    let timer = null; 
+    const messages = [];
+    let names = [];
+    let messagesSent = [];
+    let messageList = [];
+    let preventDuplicateArray = []; //keeps track
+    let postData = [];
+    let callOnce = false;
+    let isUploaded = false;
 
 
 
 
 
-let Loaded = false;
-let isMenuOpen = false;
-let gui = new dat.GUI();
-document.getElementsByClassName('close-button close-bottom')[0].style.display = 'none';
-let addedBefore = false;
-let roomsPerPage = 4;
-let roomFilter = 'weight';
-let relatedRooms = [];
-const KeyCodes = {
-    comma: 188,
-    enter: 13,
-  };
+    let Loaded = false;
+    let isMenuOpen = false;
+    let gui = new dat.GUI();
+    document.getElementsByClassName('close-button close-bottom')[0].style.display = 'none';
+    let addedBefore = false;
+    let roomsPerPage = 4;
+    let roomFilter = 'weight';
+    let relatedRooms = [];
+    const KeyCodes = {
+        comma: 188,
+        enter: 13,
+    };
 
-  const delimiters1 = [KeyCodes.comma, KeyCodes.enter];
-  const delimiters2 = [KeyCodes.comma, KeyCodes.enter];
-  const delimiters3 = [KeyCodes.comma, KeyCodes.enter];
-  const delimiters4 = [KeyCodes.comma, KeyCodes.enter];
-  const delimiters5 = [KeyCodes.comma, KeyCodes.enter];
- let thumbPicURL;
-class RoomMain extends Component {
-    constructor(props) {
-        super(props);
-        this.descriptionhandleChange = this.descriptionhandleChange.bind(this);
-        this.titlehandleChange = this.titlehandleChange.bind(this);
-        this.imageTextPostedhandleChange = this.imageTextPostedhandleChange.bind(this);
-        this.textPostedhandleChange = this.textPostedhandleChange.bind(this);
-        this.communityhandleChange = this.communityhandleChange.bind(this);
-        this.state = {
-           descriptionText:'',
-           modalIsOpen:true,
-           details:false,
-           objects:false,
-           comments:false,
-           draw:false,
-           remix:false,
-           preferences:false,
-           record:false,
-           openBtnVisible:true,
-           postBtnVisible:true,
-           isLoading:false,
-           userNameSelf:'',
-           relatedRooms:[],
-           isRemix:false,
-           remixRoomID:'',
-           remixUserName:'',
-           userName:'',
-           shortID:'',
-           dateCreated:'',
-           isOpen:false,
-           showPublish:true,
-           modalopen:false,
-        ideaByTags: [
+    const delimiters1 = [KeyCodes.comma, KeyCodes.enter];
+    const delimiters2 = [KeyCodes.comma, KeyCodes.enter];
+    const delimiters3 = [KeyCodes.comma, KeyCodes.enter];
+    const delimiters4 = [KeyCodes.comma, KeyCodes.enter];
+    const delimiters5 = [KeyCodes.comma, KeyCodes.enter];
+    let thumbPicURL;
+    class RoomMain extends Component {
+        constructor(props) {
+            super(props);
+            this.descriptionhandleChange = this.descriptionhandleChange.bind(this);
+            this.titlehandleChange = this.titlehandleChange.bind(this);
+            this.imageTextPostedhandleChange = this.imageTextPostedhandleChange.bind(this);
+            this.textPostedhandleChange = this.textPostedhandleChange.bind(this);
+            this.communityhandleChange = this.communityhandleChange.bind(this);
+            this.state = {
+                descriptionText:'',
+                modalIsOpen:true,
+                details:false,
+                objects:false,
+                comments:false,
+                draw:false,
+                remix:false,
+                preferences:false,
+                record:false,
+                openBtnVisible:true,
+                postBtnVisible:true,
+                isLoading:false,
+                userNameSelf:'',
+                relatedRooms:[],
+                isRemix:false,
+                remixRoomID:'',
+                remixUserName:'',
+                userName:'',
+                shortID:'',
+                dateCreated:'',
+                isOpen:false,
+                showPublish:true,
+                modalopen:false,
+                ideaByTags: [
 
-         ],
-         creditsTags: [
+                ],
+                creditsTags: [
 
-         ],
-         compatibleTags: [
-            { id: "IE", text: "IE" },
-            { id: "Chrome", text: "Chrome" },
-            { id: "Firefox", text: "Firefox" },
-            { id: "Opera", text: "Opera" },
-         ],
-         tags: [
+                ],
+                compatibleTags: [
+                    { id: "IE", text: "IE" },
+                    { id: "Chrome", text: "Chrome" },
+                    { id: "Firefox", text: "Firefox" },
+                    { id: "Opera", text: "Opera" },
+                ],
+                tags: [
 
-         ],
-         suggestionsIdeaBy: [
+                ],
+                suggestionsIdeaBy: [
 
-         ],
-         suggestionscredits: [
+                ],
+                suggestionscredits: [
 
-         ],
-         suggestionsCompatibleTags: [
+                ],
+                suggestionsCompatibleTags: [
 
-         ],
-         suggestionsTags: [
+                ],
+                suggestionsTags: [
 
-         ],
-         suggestionNamesTags : [
+                ],
+                suggestionNamesTags : [
 
-         ],
-         NamesTags : [
+                ],
+                NamesTags : [
 
-         ],
-            isRemixable:false,
-            isLive:false,
-            isAR:false,
-            isVR:false,
-            is360:false,
-            isAI:false,
-            isDesktop:false,
-            isTable:false,
-            isMobile:false,
-            isAllRes:false,
-            isProduction:true,
-            isObject:false,
-            publicBtnClass:'',
-            privateBtnClass:'',
-            notPrivateBtnClass:'',
-            unlistedBtnClass:'',
-            notUnlistedBtnClass:'',
-            roomPostBtnClass:'',
-            imagePostBtnClass:'',
-            textPostBtnClass:'',
-            webBtnClass:'',
-            nativeBtnClass:'',
-            isWebNative:'',
-            regBtnClass:'',
-            exBtnClass:'',
-            rmxBtnClass:'',
-            notRmxBtnClass:'',
-            liveBtnClass:'',
-            notLiveBtnClass:'',
-            notArVr360Class:'',
-            arBtnClass:'',
-            notARBtnClass:'',
-            vrBtnClass:'',
-            notVRBtnClass:'',
-            three60BtnClass:'',
-            notThree60BtnClass:'',
-            aiBtnClass:'',
-            notAIBtnClass:'',
-            allResBtnClass:'',
-            mobileBtnClass:'',
-            tabletBtnClass:'',
-            desktopBtnClass:'',
-            objectBtnClass:'',
-            notObjectClass:'',
-            description:'',
-            avatar:'',
-            picURL:'',
-            thumbPicURL:'',
-            progress: 100,
-            isUploading: false,
-            descriptionD:'block',
-            thumbnailPicBox:'flex',
-            imagePost:'none',
-            imageText:'none',
-            roomType:'',
-            textPosted:'',
-            imageTextPosted:'',
-            postedPicURL:'',
-            objectOptions:{},
-            textPosted:'',
-            roomPrivacy:'',
-            compatability:'',
-            performance:'',
-            communityApartOf:'',
-            isWeb:false,
-            isNative:false,
-            isWebNative:false,
-            placeholder:'',
-            imagePostDisplay:'none',
-            username:'',
-            newMessage:'',
-            messageTo:'',
-            showBack:false,
-            myusername:'',
-            messages:[],
-            messagebox:[],
-            picForMessage:'',
-            fullname:'',
-            messageList:[],
-            messageReset:false,
-            theMessages:true,
-            room_title:'',
-            shortID:'',
-            showSignInSignUp:false,
-            room_card_height:246,
-            room_aspect_ratio:1.3,
-            repostedBy:'',
-            repostedByArray:[],
-            remixedByArray:[],
-            isRemix:false, 
-            remixRoomID:'', 
-            remixUserName:'',
-            postAsNewBtnVisible:false
+                ],
+                isRemixable:false,
+                isLive:false,
+                isAR:false,
+                isVR:false,
+                is360:false,
+                isAI:false,
+                isDesktop:false,
+                isTable:false,
+                isMobile:false,
+                isAllRes:false,
+                isProduction:true,
+                isObject:false,
+                publicBtnClass:'',
+                privateBtnClass:'',
+                notPrivateBtnClass:'',
+                unlistedBtnClass:'',
+                notUnlistedBtnClass:'',
+                roomPostBtnClass:'',
+                imagePostBtnClass:'',
+                textPostBtnClass:'',
+                webBtnClass:'',
+                nativeBtnClass:'',
+                isWebNative:'',
+                regBtnClass:'',
+                exBtnClass:'',
+                rmxBtnClass:'',
+                notRmxBtnClass:'',
+                liveBtnClass:'',
+                notLiveBtnClass:'',
+                notArVr360Class:'',
+                arBtnClass:'',
+                notARBtnClass:'',
+                vrBtnClass:'',
+                notVRBtnClass:'',
+                three60BtnClass:'',
+                notThree60BtnClass:'',
+                aiBtnClass:'',
+                notAIBtnClass:'',
+                allResBtnClass:'',
+                mobileBtnClass:'',
+                tabletBtnClass:'',
+                desktopBtnClass:'',
+                objectBtnClass:'',
+                notObjectClass:'',
+                description:'',
+                avatar:'',
+                picURL:'',
+                thumbPicURL:'',
+                progress: 100,
+                isUploading: false,
+                descriptionD:'block',
+                thumbnailPicBox:'flex',
+                imagePost:'none',
+                imageText:'none',
+                roomType:'',
+                textPosted:'',
+                imageTextPosted:'',
+                postedPicURL:'',
+                objectOptions:{},
+                textPosted:'',
+                roomPrivacy:'',
+                compatability:'',
+                performance:'',
+                communityApartOf:'',
+                isWeb:false,
+                isNative:false,
+                isWebNative:false,
+                placeholder:'',
+                imagePostDisplay:'none',
+                username:'',
+                newMessage:'',
+                messageTo:'',
+                showBack:false,
+                myusername:'',
+                messages:[],
+                messagebox:[],
+                picForMessage:'',
+                fullname:'',
+                messageList:[],
+                messageReset:false,
+                theMessages:true,
+                room_title:'',
+                shortID:'',
+                showSignInSignUp:false,
+                room_card_height:246,
+                room_aspect_ratio:1.3,
+                repostedBy:'',
+                repostedByArray:[],
+                remixedByArray:[],
+                isRemix:false, 
+                remixRoomID:'', 
+                remixUserName:'',
+                postAsNewBtnVisible:false
             
-        };
-        this.openModal = this.openModal.bind(this);
-        this.afterOpenModal = this.afterOpenModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
+            };
+            this.openModal = this.openModal.bind(this);
+            this.afterOpenModal = this.afterOpenModal.bind(this);
+            this.closeModal = this.closeModal.bind(this);
 
-      this.handleDeletecredits = this.handleDeletecredits.bind(this);
-      this.handleAdditioncredits = this.handleAdditioncredits.bind(this);
-      this.handleDragcredits = this.handleDragcredits.bind(this);
+            this.handleDeletecredits = this.handleDeletecredits.bind(this);
+            this.handleAdditioncredits = this.handleAdditioncredits.bind(this);
+            this.handleDragcredits = this.handleDragcredits.bind(this);
 
-      this.handleDeleteNames = this.handleDeleteNames.bind(this);
-      this.handleAdditionalNames = this.handleAdditionalNames.bind(this);
-      this.handleDragNames = this.handleDragNames.bind(this);
+            this.handleDeleteNames = this.handleDeleteNames.bind(this);
+            this.handleAdditionalNames = this.handleAdditionalNames.bind(this);
+            this.handleDragNames = this.handleDragNames.bind(this);
 
-      this.handleDeleteIdeaBy = this.handleDeleteIdeaBy.bind(this);
-      this.handleAdditionIdeaBy = this.handleAdditionIdeaBy.bind(this);
-      this.handleDragIdeaBy = this.handleDragIdeaBy.bind(this);
+            this.handleDeleteIdeaBy = this.handleDeleteIdeaBy.bind(this);
+            this.handleAdditionIdeaBy = this.handleAdditionIdeaBy.bind(this);
+            this.handleDragIdeaBy = this.handleDragIdeaBy.bind(this);
 
-      this.handleDeleteCompatibleTags = this.handleDeleteCompatibleTags.bind(this);
-      this.handleAdditionCompatibleTags = this.handleAdditionCompatibleTags.bind(this);
-      this.handleDragIdeaBy = this.handleDragIdeaBy.bind(this);
+            this.handleDeleteCompatibleTags = this.handleDeleteCompatibleTags.bind(this);
+            this.handleAdditionCompatibleTags = this.handleAdditionCompatibleTags.bind(this);
+            this.handleDragIdeaBy = this.handleDragIdeaBy.bind(this);
 
-      this.handleDeleteTags = this.handleDeleteTags.bind(this);
-      this.handleAdditionTags = this.handleAdditionTags.bind(this);
-      this.handleDragTags = this.handleDragTags.bind(this);
+            this.handleDeleteTags = this.handleDeleteTags.bind(this);
+            this.handleAdditionTags = this.handleAdditionTags.bind(this);
+            this.handleDragTags = this.handleDragTags.bind(this);
 
-      this.closeModal = this.closeModal.bind(this)
-      this.selectPr.bind(this)
+            this.closeModal = this.closeModal.bind(this)
+            this.selectPr.bind(this)
 
-      this.getFileName = this.getFileName.bind(this);
-      this.putObject = this.putObject.bind(this);
-      this.getMimeType = this.getMimeType.bind(this);
-    }
-    descriptionhandleChange(event) {
-        this.setState({description: event.target.value});
-      }
-    titlehandleChange(event) {
-        this.setState({room_title: event.target.value});
-      }
-    imageTextPostedhandleChange(event) {
-        this.setState({imageTextPosted: event.target.value});
-    }
-    textPostedhandleChange(event) {
-        this.setState({textPosted: event.target.value});
-    }
-    communityhandleChange(event) {
-        this.setState({communityApartOf: event.target.value});
+            this.getFileName = this.getFileName.bind(this);
+            this.putObject = this.putObject.bind(this);
+            this.getMimeType = this.getMimeType.bind(this);
+        }
+        descriptionhandleChange(event) {
+            this.setState({description: event.target.value});
+        }
+        titlehandleChange(event) {
+            this.setState({room_title: event.target.value});
+        }
+        imageTextPostedhandleChange(event) {
+            this.setState({imageTextPosted: event.target.value});
+        }
+        textPostedhandleChange(event) {
+            this.setState({textPosted: event.target.value});
+        }
+        communityhandleChange(event) {
+            this.setState({communityApartOf: event.target.value});
     
-    }
-    componentDidMount() {
-        let that = this;
-        // alert('room loaded')
-        let hashids = new Hashids(uuid(), 6);
+        }
+        componentDidMount() {
+            let that = this;
+            // alert('room loaded')
+            let hashids = new Hashids(uuid(), 6);
        
-        this.setState({shortID:hashids.encode(1, 2, 3)});
+            this.setState({shortID:hashids.encode(1, 2, 3)});
 
-        //this.incrementViews();
-        var user = firebase.auth().currentUser;
-        var name, email, photoUrl, uid, emailVerified, fullname;
-        var shortID = window.location.pathname.split("room/").pop();
-        let imageData = localStorage.getItem("thumbnail");
-        this.setState({thumbPicURL:imageData});
-        document.getElementById('main-menu').style.display = 'none';
-        document.getElementById('tab-menu').style.height = 'none';
+            //this.incrementViews();
+            var user = firebase.auth().currentUser;
+            var name, email, photoUrl, uid, emailVerified, fullname;
+            var shortID = window.location.pathname.split("room/").pop();
+            let imageData = localStorage.getItem("thumbnail");
+            this.setState({thumbPicURL:imageData});
+            document.getElementById('main-menu').style.display = 'none';
+            document.getElementById('tab-menu').style.height = 'none';
         
-        window.datGUI = function(array) {
-            let output = document.getElementById('output_frame').contentWindow;
-            let guiProperties;
-            let createDatGUI = function() {
-                //alert('created')
-                for(let i = 0; i < array.length; i++) {
+            window.datGUI = function(array) {
+                let output = document.getElementById('output_frame').contentWindow;
+                let guiProperties;
+                let createDatGUI = function() {
+                    //alert('created')
+                    for(let i = 0; i < array.length; i++) {
                   
 
-                    Object.keys(array[i]).forEach((key)=> {
+                        Object.keys(array[i]).forEach((key)=> {
 
-                        //alert(key);
-                        if(key !== 'color') {
-                        this[key] = array[i][Object.keys(array[i])[0]];
-                        }else {
-                        this.color = '#fff'
-                        }
+                            //alert(key);
+                            if(key !== 'color') {
+                                this[key] = array[i][Object.keys(array[i])[0]];
+                            } else {
+                                this.color = '#fff'
+                            }
                        });
                     
                     
-                }
-                //alert(this.text)
+                    }
+                    //alert(this.text)
                
-              //  document.getElementsByClassName("string").firstChild.style.display = 'flex';
-            }
-            guiProperties = new createDatGUI();
-            let mainmenu = document.getElementById('main-menu');
-            let remixTextBox = document.createElement('div');
-            //remixTextBox.style.border = '1px solid red';
-            remixTextBox.style.height = '330px';
-            remixTextBox.style.width = '269px';
-            remixTextBox.style.overflow = 'hidden';
-            remixTextBox.style.marginTop = '20px';
-            let remixTextTitle = document.createElement('div');
-            let imgtitle = document.createElement('p');
-            let imgclose = document.createElement('p');
-
-            let imgico = document.createElement('i');
-            imgico.className = 'fas fa-font';
-            imgtitle.appendChild(imgico);
-            imgtitle.appendChild(document.createTextNode('Text'));
-            imgclose.appendChild(document.createTextNode('Close'));
-            imgtitle.style.color = 'white';
-            imgtitle.style.fontSize = '13px';
-            imgtitle.style.marginLeft = '10px';
-            imgtitle.style.fontWeight = '900';
-            imgtitle.style.marginTop = '4px';
-            imgclose.style.color = 'white';
-            imgclose.style.fontSize = '10px';
-            imgclose.style.marginRight = '20px'
-            imgclose.addEventListener('click', function() {
-              if(imgclose.innerText === 'Close') {
-                remixTextBox.style.height = '33px';
-                imgclose.innerText = 'Open';
-              } else {
+                    //  document.getElementsByClassName("string").firstChild.style.display = 'flex';
+                }
+                guiProperties = new createDatGUI();
+                let mainmenu = document.getElementById('main-menu');
+                let remixTextBox = document.createElement('div');
+                //remixTextBox.style.border = '1px solid red';
                 remixTextBox.style.height = '330px';
-                imgclose.innerText = 'Close';
+                remixTextBox.style.width = '269px';
+                remixTextBox.style.overflow = 'hidden';
+                remixTextBox.style.marginTop = '20px';
+                let remixTextTitle = document.createElement('div');
+                let imgtitle = document.createElement('p');
+                let imgclose = document.createElement('p');
+
+                let imgico = document.createElement('i');
+                imgico.className = 'fas fa-font';
+                imgtitle.appendChild(imgico);
+                imgtitle.appendChild(document.createTextNode('Text'));
+                imgclose.appendChild(document.createTextNode('Close'));
+                imgtitle.style.color = 'white';
+                imgtitle.style.fontSize = '13px';
+                imgtitle.style.marginLeft = '10px';
+                imgtitle.style.fontWeight = '900';
+                imgtitle.style.marginTop = '4px';
+                imgclose.style.color = 'white';
+                imgclose.style.fontSize = '10px';
+                imgclose.style.marginRight = '20px'
+                imgclose.addEventListener('click', function() {
+                    if(imgclose.innerText === 'Close') {
+                        remixTextBox.style.height = '33px';
+                        imgclose.innerText = 'Open';
+                    } else {
+                        remixTextBox.style.height = '330px';
+                        imgclose.innerText = 'Close';
                 
-              }
-              
-            });
-            remixTextTitle.style.height = '28px';
-            remixTextTitle.style.width = '100%';
-            remixTextTitle.style.backgroundColor = '#141414';
-            remixTextTitle.style.alignItems = 'center';
-            remixTextTitle.style.display = 'flex';
-            remixTextTitle.style.justifyContent = 'space-between';
-            imgico.style.marginRight = '7px';
-            remixTextTitle.appendChild(imgtitle);
-            remixTextTitle.appendChild(imgclose);
+                    }
+                });
+                remixTextTitle.style.height = '28px';
+                remixTextTitle.style.width = '100%';
+                remixTextTitle.style.backgroundColor = '#141414';
+                remixTextTitle.style.alignItems = 'center';
+                remixTextTitle.style.display = 'flex';
+                remixTextTitle.style.justifyContent = 'space-between';
+                imgico.style.marginRight = '7px';
+                remixTextTitle.appendChild(imgtitle);
+                remixTextTitle.appendChild(imgclose);
 
-            remixTextBox.appendChild(remixTextTitle);
-            //gui.domElement
-            remixTextBox.appendChild(gui.domElement);
-            mainmenu.appendChild(remixTextBox);
+                remixTextBox.appendChild(remixTextTitle);
+                //gui.domElement
+                remixTextBox.appendChild(gui.domElement);
+                mainmenu.appendChild(remixTextBox);
             
-            document.getElementsByClassName('close-button')[0].style.display = 'none';
-            document.getElementsByClassName('dg')[0].style.display = 'block';
+                document.getElementsByClassName('close-button')[0].style.display = 'none';
+                document.getElementsByClassName('dg')[0].style.display = 'block';
 
-            for(let i = 0; i < array.length; i++) {
+                for(let i = 0; i < array.length; i++) {
                 
 
                     Object.keys(array[i]).forEach(function(key) {
@@ -385,197 +384,201 @@ class RoomMain extends Component {
                         }
                       
                       });
-            }
+                }
             
-            setValue();
-            function setValue() {
-                for(let i = 0; i < array.length; i++) {
-                    // output[Object.keys(obj[i])[0]].innerHTML = text[Object.keys(obj[i])[0]];
-                    // output[Object.keys(obj[i])[0]].style.color = text[Object.keys(obj[i])[0]];
-                    // console.log(obj[i].remix)
-                    Object.keys(array[i]).forEach(function(key) {
-
+                setValue();
+                function setValue() {
+                    for(let i = 0; i < array.length; i++) {
+                        // output[Object.keys(obj[i])[0]].innerHTML = text[Object.keys(obj[i])[0]];
+                        // output[Object.keys(obj[i])[0]].style.color = text[Object.keys(obj[i])[0]];
+                        // console.log(obj[i].remix)
+                        Object.keys(array[i]).forEach(function(key) {
                        
-                        if(key === 'color') {
-                            output['title'].style.color = guiProperties['color'];
-                        } else if (key !== 'color') {
-                            output[key].innerHTML = guiProperties[Object.keys(array[i])[0]];
-                        }
+                            if(key === 'color') {
+                                output['title'].style.color = guiProperties['color'];
+                            } else if (key !== 'color') {
+                                output[key].innerHTML = guiProperties[Object.keys(array[i])[0]];
+                            }
                       
                       });
-                    
                         
-                        
+                    }
                 }
             }
-        }
-        function myFunction(x) {
-            if (x.matches) { // If media query matches
-                if(isMenuOpen === false) {
-                    //document.getElementById('tab-menu').style.display = 'none';
-                } else {
-                    //document.getElementById('tab-menu').style.display = 'block';
-                }
-                if(isMenuOpen === true) {
-                    //document.getElementById('main-menu').style.display = 'block';
-                }
+            function myFunction(x) {
+                if (x.matches) { // If media query matches
+                    if(isMenuOpen === false) {
+                        //document.getElementById('tab-menu').style.display = 'none';
+                    } else {
+                        //document.getElementById('tab-menu').style.display = 'block';
+                    }
+                    if(isMenuOpen === true) {
+                        //document.getElementById('main-menu').style.display = 'block';
+                    }
           
-                document.getElementById('main-menu').style.position = 'absolute';
-                document.getElementById('main-menu').style.height = '583px';
-                document.getElementById('main-menu').style.width = '330px';
-                document.getElementById('main-menu').style.zIndex = '999994';
-                document.getElementById('main-menu').style.top = '0px';
-                document.getElementById('main-menu').style.zIndex = '999999';
-                document.getElementById('main-menu').style.left = '48px';
-                document.getElementById('main-menu').style.display = 'none';
-                document.getElementById('main-section-wrap-comments-screen-wrap').style.top = '10px';
-                document.getElementById('tab-menu').style.position = 'absolute';
-                document.getElementById('tab-menu').style.zIndex = '999999';
-                document.getElementById('tab-menu').style.height = '100%';
-                document.getElementById('tab-menu').style.display = 'none';
-                document.getElementById('menu-btn-mobile').style.display = 'flex';
-                document.getElementById('rf-right').style.display = 'none';
-                document.getElementById('rf-top').style.display = 'flex';
-                document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingLeft = '10px';
-                document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingRight = '10px';
-                // document.getElementById('main-menu').style.position = 'absolute';
-                // document.getElementById('main-menu').style.left = '-330px';
-            } else {
-                let main = document.getElementById('main-menu');
-                let tabMenu = document.getElementById('tab-menu');
-                tabMenu.style.position = 'relative';
-                tabMenu.style.display = 'block';
-                document.getElementById('tab-menu').style.transform = 0;
+                    document.getElementById('main-menu').style.position = 'absolute';
+                    document.getElementById('main-menu').style.height = '583px';
+                    document.getElementById('main-menu').style.width = '330px';
+                    document.getElementById('main-menu').style.zIndex = '999994';
+                    document.getElementById('main-menu').style.top = '0px';
+                    document.getElementById('main-menu').style.zIndex = '999999';
+                    document.getElementById('main-menu').style.left = '48px';
+                    document.getElementById('main-menu').style.display = 'none';
+                    document.getElementById('main-section-wrap-comments-screen-wrap').style.top = '10px';
+                    document.getElementById('tab-menu').style.position = 'absolute';
+                    document.getElementById('tab-menu').style.zIndex = '999999';
+                    document.getElementById('tab-menu').style.height = '100%';
+                    document.getElementById('tab-menu').style.display = 'none';
+                    document.getElementById('menu-btn-mobile').style.display = 'flex';
+                    document.getElementById('rf-right').style.display = 'none';
+                    document.getElementById('rf-top').style.display = 'flex';
+                    document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingLeft = '10px';
+                    document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingRight = '10px';
+                    // document.getElementById('main-menu').style.position = 'absolute';
+                    // document.getElementById('main-menu').style.left = '-330px';
+                } else {
+                    let main = document.getElementById('main-menu');
+                    let tabMenu = document.getElementById('tab-menu');
+                    tabMenu.style.position = 'relative';
+                    tabMenu.style.display = 'block';
+                    document.getElementById('tab-menu').style.transform = 0;
               
                 
-                main.style.borderRight = '1px solid rgb(24, 24, 24)';
-                main.style.background = 'rgb(24, 24, 24)';
+                    main.style.borderRight = '1px solid rgb(24, 24, 24)';
+                    main.style.background = 'rgb(24, 24, 24)';
        
-                main.style.flexDirection = 'column';
-                if(isMenuOpen === true) {
-                    //document.getElementById('main-menu').style.display = 'flex';
-                }
-                main.style.position = 'relative';
-                main.style.left = '0px';
-                document.getElementById('rf-right').style.display = 'flex';
-                document.getElementById('rf-top').style.display = 'none';
-                document.getElementById('menu-btn-mobile').style.display = 'none';
-                document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingLeft = '77px';
-                document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingRight = '36px';
-                document.getElementById('main-section-wrap-comments-screen-wrap').style.top = '60px';
-            }
-        }
-        let x = window.matchMedia("(max-width: 768px)");
-        myFunction(x) // Call listener function at run time
-        x.addListener(myFunction) // Attach listener function on state changes
-        let parts = window.location.pathname.split('/');
-        let lastSegment = parts.pop() || parts.pop();  // handle potential trailing slash
-        firebase.database().ref(`/rooms/${lastSegment}`).once('value').then((snapshot)=> {
-            if(snapshot.val() !== null) {
-              let uid = snapshot.val().uid;
-              that.setState({
-                isRemix:snapshot.val().isRemix,
-                remixRoomID:snapshot.val().remixRoomID,
-                remixUserName:snapshot.val().remixUserName,
-                userName:snapshot.val().userName,
-                shortID:snapshot.val().shortID,
-                dateCreated:snapshot.val().date
-              });
-              
-              if(firebase.auth().currentUser !== null) {
-                that.setState (
-                    {
-                     userNameSelf:firebase.auth().currentUser.displayName
+                    main.style.flexDirection = 'column';
+                    if(isMenuOpen === true) {
+                        //document.getElementById('main-menu').style.display = 'flex';
                     }
-                );
-                let currentUser = firebase.auth().currentUser.uid;
-                if(currentUser === uid) {
-                  that.setState({display:'flex', postBtnVisible:false, postAsNewBtnVisible:true, saveVisible:true});
-                } else {
-                  that.setState({saveVisible:false,postBtnVisible:false, postAsNewBtnVisible:true,remixVisible:'block'});
+                    main.style.position = 'relative';
+                    main.style.left = '0px';
+                    document.getElementById('rf-right').style.display = 'flex';
+                    document.getElementById('rf-top').style.display = 'none';
+                    document.getElementById('menu-btn-mobile').style.display = 'none';
+                    document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingLeft = '77px';
+                    document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingRight = '36px';
+                    document.getElementById('main-section-wrap-comments-screen-wrap').style.top = '60px';
                 }
-              } else {
-                  that.setState({saveVisible:false,postBtnVisible:false, postAsNewBtnVisible:true, remixVisible:'block'});
-              }
-            } else {
-                that.setState({
-                    saveVisible:false,
-                    postVisible:true,
-                    remixVisible:true,
-                    isRemix:false,
-                    openModalomID:'',
-                    remixUserName:'',
-                    userName:'',
-                    shortID:''
-                });
-            } 
-        }).catch((error) => {
-          console.log(error)
-        });
+            }
+            let x = window.matchMedia("(max-width: 768px)");
+            myFunction(x) // Call listener function at run time
+            x.addListener(myFunction) // Attach listener function on state changes
+            let parts = window.location.pathname.split('/');
+            let lastSegment = parts.pop() || parts.pop();  // handle potential trailing slash
+            firebase.database().ref(`/rooms/${lastSegment}`).once('value').then((snapshot)=> {
+                if(snapshot.val() !== null) {
+                    let uid = snapshot.val().uid;
+                    that.setState (
+                        {
+                            isRemix:snapshot.val().isRemix,
+                            remixRoomID:snapshot.val().remixRoomID,
+                            remixUserName:snapshot.val().remixUserName,
+                            userName:snapshot.val().userName,
+                            shortID:snapshot.val().shortID,
+                            dateCreated:snapshot.val().date
+                        }   
+                    );
+              
+                    if(firebase.auth().currentUser !== null) {
+                        that.setState (
+                        {
+                            userNameSelf:firebase.auth().currentUser.displayName
+                        }
+                    );
+                    let currentUser = firebase.auth().currentUser.uid;
+                        if(currentUser === uid) {
+                            that.setState({display:'flex', postBtnVisible:false, postAsNewBtnVisible:true, saveVisible:true});
+                        } else {
+                            that.setState({saveVisible:false,postBtnVisible:false, postAsNewBtnVisible:true,remixVisible:'block'});
+                        }
+                    } else {
+                        that.setState({saveVisible:false,postBtnVisible:false, postAsNewBtnVisible:true, remixVisible:'block'});
+                    }
+                } else {
+                    that.setState(
+                        {
+                            saveVisible:false,
+                            postVisible:true,
+                            remixVisible:true,
+                            isRemix:false,
+                            openModalomID:'',
+                            remixUserName:'',
+                            userName:'',
+                            shortID:''
+                        }
+                    );
+                } 
+            }).catch((error) => {
+                console.log(error)
+            });
         
-        const database = firebase.database();
+            const database = firebase.database();
 
-        if (user != null) {
-            name = user.displayName;
-            email = user.email;
-            photoUrl = user.photoURL;
-            console.log('photo :',photoUrl)
-            emailVerified = user.emailVerified;
-            fullname = user.fullname;
-            uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
+            if (user != null) {
+                name = user.displayName;
+                email = user.email;
+                photoUrl = user.photoURL;
+                console.log('photo :',photoUrl)
+                emailVerified = user.emailVerified;
+                fullname = user.fullname;
+                uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
                      // this value to authenticate with your backend server, if
                      // you have one. Use User.getToken() instead.
-                     that.setState({username:name, 
+                that.setState(
+                    {
+                        username:name, 
                         pic:photoUrl, 
                         fullname:fullname,
                         suggestionNamesTags:names, 
                         myusername:name
-                    });
+                    }
+                );
                     
-            database.ref(`/follows/${name}/following`).once('value').then((snapshot) => {
-                snapshot.forEach((childSnapShot) => {
-                    names.push({id:`${childSnapShot.val()}`,text:`${childSnapShot.val()}`});
-                })
-                
-
-            });
+                database.ref(`/follows/${name}/following`).once('value').then((snapshot) => {
+                    snapshot.forEach((childSnapShot) => {
+                        names.push({id:`${childSnapShot.val()}`,text:`${childSnapShot.val()}`});
+                    })
+                });
 
             
-           database.ref(`rooms/${shortID}`).once('value').then(function(snapshot) {
+                database.ref(`rooms/${shortID}`).once('value').then(function(snapshot) {
                 
-                if(snapshot.val() == null) {
-                    return;
-                }
-                console.log('snapshot :', snapshot.val())
-                that.setState({room_title:snapshot.val().room_title,
-                    description:snapshot.val().description, 
-                    tags:snapshot.val().tags !== ''? snapshot.val().tags : [],
-                    room_card_height:snapshot.val().room_card_height
+                    if(snapshot.val() == null) {
+                        return;
+                    }
+                    console.log('snapshot :', snapshot.val())
+                    that.setState(
+                        {
+                            room_title:snapshot.val().room_title,
+                            description:snapshot.val().description, 
+                            tags:snapshot.val().tags !== ''? snapshot.val().tags : [],
+                            room_card_height:snapshot.val().room_card_height
+                        }
+                    );
+                
                 });
-                
-            });
 
         }
-        this.setState({publicBtnClass:'selected-background',
-            privateBtnClass:'',unlistedBtnClass:'',webBtnClass:'selected-background',
-            roomType:'other',roomPostBtnClass:'selected-background',isProduction:true,
-            regBtnClass:'selected-background',exBtnClass:'',isRemixable:false,rmxBtnClass:'selected-background',
-            notRmxBtnClass:'',isLive:false,liveBtnClass:'selected-background',notLiveBtnClass:'',
-            isAR:false,isVR:false,is360:false,notArVr360Class:'selected-background',arBtnClass:'',
-            vrBtnClass:'',three60BtnClass:'',aiBtnClass:'',notAIBtnClass:'selected-background',
-            isAI:false, mobileBtnClass:'selected-background',isDesktop:true,isTable:true,
-            isMobile:true,tabletBtnClass:'selected-background',desktopBtnClass:'selected-background',
-            isObject:false, notObjectClass:'selected-background',objectBtnClass:''
-        });
-
-       
+        this.setState (
+            {
+                publicBtnClass:'selected-background',
+                privateBtnClass:'',unlistedBtnClass:'',webBtnClass:'selected-background',
+                roomType:'other',roomPostBtnClass:'selected-background',isProduction:true,
+                regBtnClass:'selected-background',exBtnClass:'',isRemixable:false,rmxBtnClass:'selected-background',
+                notRmxBtnClass:'',isLive:false,liveBtnClass:'selected-background',notLiveBtnClass:'',
+                isAR:false,isVR:false,is360:false,notArVr360Class:'selected-background',arBtnClass:'',
+                vrBtnClass:'',three60BtnClass:'',aiBtnClass:'',notAIBtnClass:'selected-background',
+                isAI:false, mobileBtnClass:'selected-background',isDesktop:true,isTable:true,
+                isMobile:true,tabletBtnClass:'selected-background',desktopBtnClass:'selected-background',
+                isObject:false, notObjectClass:'selected-background',objectBtnClass:''
+            }   
+        );
     }
     componentWillUnmount() {
         this.setState({thumbPicURL:''});
     }
     saveRoom () {
-     
-       
         let uid = firebase.auth().currentUser.uid;
         let html = this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.html : '';
         let css = this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.css: '';
@@ -599,10 +602,7 @@ class RoomMain extends Component {
         
  
         let iframe = document.getElementById('output_frame');
-                              
-                                 
-     
-
+                            
         if(document.getElementById('postbtn')) {
             document.getElementById('postbtn').style.display = 'none';
         }
@@ -630,17 +630,15 @@ class RoomMain extends Component {
         let that = this;
         let uid = firebase.auth().currentUser.uid;
         s3.putObject(params, function(err, data) {
-          console.log('err: ', err)
-          if (err) {
-            console.log('error :',err);
-          } else {
-            console.log('data :', data);
-            let obj = {
-              url:`http://test.flowroom.com/uploads/${fileName}`
+            if (err) {
+                console.log('error :',err);
+            } else {
+                console.log('data :', data);
+                let obj = {
+                    url:`http://test.flowroom.com/uploads/${fileName}`
+                }
+                console.log('obj :', obj);
             }
-            console.log('obj :', obj);
-            
-          }
         });
 
         let html = this.props.state.dhtml.hasOwnProperty("dhtml") ?  this.props.state.dhtml.dhtml.html : '';
@@ -742,7 +740,8 @@ class RoomMain extends Component {
                 remixRoomID:this.props.state.entireApp.remixRoomID, 
                 remixUserName:this.props.state.entireApp.remixUserName,
 
-        });
+            }
+        );
 
       }
       getMimeType(type) {
@@ -781,10 +780,10 @@ class RoomMain extends Component {
     
     loadScreenShot() {
         console.log('load thumbnail')
-            let imageData = localStorage.getItem('thumbnail');
-            if(imageData !== null) {
-                this.setState({thumbPicURL:imageData})
-            }
+        let imageData = localStorage.getItem('thumbnail');
+        if(imageData !== null) {
+            this.setState({thumbPicURL:imageData})
+        }
 
     }
     handleCardAspectRatio(e) {
@@ -797,10 +796,21 @@ class RoomMain extends Component {
         if(i !== null) {
             let elID = i;
             if(elID === 'room-post-btn') {
-                this.setState({placeholder:'description...', roomPostBtnClass:'selected-background',
-                    imagePostBtnClass:'',textPostBtnClass:'',description:"",descriptionD:'block',imagePost:'none',
-                    imageText:'none',thumbnailPicBox:'flex',roomType:'other',imagePostDisplay:'none'
-                });
+                this.setState (
+                    {
+                        placeholder:'description...', 
+                        roomPostBtnClass:'selected-background',
+                        imagePostBtnClass:'',
+                        textPostBtnClass:'',
+                        description:"",
+                        descriptionD:'block',
+                        imagePost:'none',
+                        imageText:'none',
+                        thumbnailPicBox:'flex',
+                        roomType:'other',
+                        imagePostDisplay:'none'
+                    }
+                );
             }
             if(elID === 'room-post-image-btn') {
 
@@ -1416,14 +1426,14 @@ class RoomMain extends Component {
                             <textarea onChange={this.descriptionhandleChange.bind(this)} style={{border:'0px', outline:'none', height:50,width:'100%',borderRadius:3,backgroundColor:'rgb(37,37,37)',resize:'none',marginTop:5}}></textarea>
                         </div>
                         <div style={{marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'2px 10px'}}>
-                            <p style={{color:'white',fontSize:11}}>Tags</p>
+                            <p style={{color:'white',fontSize:11,margin:'10px 0px'}}>Tags</p>
                             <ReactTags style={{marginBottom:10}} inline={false} tags={this.state.tags}
-                        suggestions={this.state.suggestionsTags}
-                        handleDelete={this.handleDeleteTags}
-                        handleAddition={this.handleAdditionTags}
-                        handleDrag={this.handleDragTags}
-                        placeholder={'Type any tags here'}
-                        delimiters={delimiters4} />
+                                suggestions={this.state.suggestionsTags}
+                                handleDelete={this.handleDeleteTags}
+                                handleAddition={this.handleAdditionTags}
+                                handleDrag={this.handleDragTags}
+                                placeholder={'Type any tags here'}
+                                delimiters={delimiters4} />
                         </div>
                         <div style={{height:75, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
                             <p style={{color:'white',fontSize:11,marginTop:10,marginBottom:5}}>Visibility</p>
@@ -1432,12 +1442,13 @@ class RoomMain extends Component {
                                 <input type="checkbox" id="my-dropdown" value="" name="my-checkbox" style={{width:'100%'}}/>
                                     <label for="my-dropdown" data-toggle="dropdown" style={{width:'100%',color:'white'}}>
                                         Choose one
+                                        <i class="fas fa-chevron-down" style={{float:'right'}}></i>
                                     </label>
-                                    <ul>
-                                        <li style={{color:'#fff'}}>Public (Everyone including followers)</li>
-                                        <li style={{color:'#fff'}}>Private (Only me)</li>
-                                        <li style={{color:'#fff'}}>Unlisted (Everyone you share with except followers)</li>
-                                        <li style={{color:'#fff'}}>Followers</li>
+                                    <ul style={{zIndex:999999999, backgroundColor:'rgb(37, 37, 37)'}}>
+                                        <li style={{color:'#fff',margin:'10px 5px'}}>Public (Everyone including followers)</li>
+                                        <li style={{color:'#fff',margin:'10px 5px'}}>Private (Only me)</li>
+                                        <li style={{color:'#fff',margin:'10px 5px'}}>Unlisted (Everyone you share with except followers)</li>
+                                        <li style={{color:'#fff',margin:'10px 5px'}}>Followers</li>
                                     </ul>
                             </div>
                             {/* <div className="custom-select" style={{height:20, width:200}}>
@@ -1694,7 +1705,21 @@ class RoomMain extends Component {
                                     }
                                    }
                                    thisElement.className = 'menubg'; 
-                                  document.getElementById('remix-icon').style.backgroundImage = 'url(../infinity_cyan.svg)';
+
+                                   document.getElementById('remix-icon').style.backgroundImage = `url(../infinity_cyan.svg)`;
+                                   document.getElementById('remix-text').style.color = "rgb(54, 255, 233)";
+    
+                                   document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
+                                   document.getElementById('script-text').style.color = "rgb(82, 82, 82)";
+                                   if(document.getElementById('publish-new-icon') !== null) {
+                                        document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular-grey.svg)`;
+                                        document.getElementById('publish-text-new').style.color = "rgb(82, 82, 82)";
+                                        document.getElementById('publish-text-publish').style.color = 'rgb(82, 82, 82)'
+                                   }
+                                   document.getElementById('elements-icon').style.color = `rgb(82, 82, 82)`;
+                                   document.getElementById('elements-text').style.color = "rgb(82, 82, 82)";
+    
+                               
                                
                                   // document.querySelector(".svgClass").getSVGDocument().getElementById("svgInternalID").setAttribute("fill", "red")
 
@@ -1737,36 +1762,7 @@ class RoomMain extends Component {
                                
                         </div>
                         <div id="elements-tag" onClick={(e)=> {
-                            //document.getElementById('resizable-box').className = 'resize-boxes-open';
-//                             var resizer = document.createElement('div');
-// resizer.className = 'resizer';
-// resizer.style.width = '100%';
-// resizer.style.height = '15px';
-// resizer.style.background = 'rgb(54, 255, 233)';
-// resizer.style.position = 'absolute';
-// resizer.style.zIndex = '99999';
-// resizer.style.right = 0;
-// resizer.style.bottom = 0;
-// resizer.style.cursor = 'se-resize';
 
-
-// resizer.style.cursor = 'se-resize';
-// resizer.style.borderRadius = '20px';
-// document.getElementById('resizable-box').appendChild(resizer);
-// resizer.addEventListener('mousedown', initResize, false);
-
-// function initResize(e) {
-//    window.addEventListener('mousemove', Resize, false);
-//    window.addEventListener('mouseup', stopResize, false);
-// }
-// function Resize(e) {
-//     //cardWrap.style.width = (e.clientX - cardWrap.offsetLeft) + 'px';
-//     document.getElementById('resizable-box').style.height = (e.clientY + document.getElementById('resizable-box').offsetTop) + 'px';
-// }
-// function stopResize(e) {
-//     window.removeEventListener('mousemove', Resize, false);
-//     window.removeEventListener('mouseup', stopResize, false);
-// }
                             let thisElement = document.getElementById(e.target.id);
                             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
                           if(thisElement !== undefined) {
@@ -1781,28 +1777,30 @@ class RoomMain extends Component {
                                }
                                thisElement.className = 'menubg'; 
 
-                               document.getElementById('remix-icon').style.backgroundImage = `url(../code_cyan.svg)`;
+                               document.getElementById('remix-icon').style.backgroundImage = `url(../infinity_grey.svg)`;
                                document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
 
-                               document.getElementById('script-icon').style.backgroundImage = `url(../code_cyan.svg)`;
-                               document.getElementById('script-text').style.color = "rgb(54, 255, 233)";
+                               document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
+                               document.getElementById('script-text').style.color = "rgb(82, 82, 82)";
 
-                              // document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular.svg)`;
-                               document.getElementById('publish-text').style.color = "rgb(82, 82, 82)";
+                               if(document.getElementById('publish-new-icon') !== null) {
+                               document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular-grey.svg)`;
+                               document.getElementById('publish-text-new').style.color = "rgb(82, 82, 82)";
+                               document.getElementById('publish-text-publish').style.color = "rgb(82, 82, 82)";
+                               }
+                               document.getElementById('elements-icon').style.color = `rgb(54, 255, 233)`;
+                               document.getElementById('elements-text').style.color = 'rgb(54, 255, 233)';
+                            
+                               document.getElementById('apps-icon').style.color = `rgb(82, 82, 82)`;
+                               document.getElementById('apps-text').style.color = 'rgb(82, 82, 82)';
+                               
+                               
+                               
 
                             }
                         }
                             
-                            // let remixid = document.getElementById('remix-tab');
-                            // let script = document.getElementById('script-tag');
-                            // let postTab = document.getElementById('post-tab');
-                            // remixid.className = '';
-                            // remixid.style.borderRight = '0px solid #181818';  
-                            // script.className = 'menubg';
-                            // script.style.color = 'rgb(64, 255, 232)';
-                            // postTab.className = '';
-                            // postTab.style.color = 'rgb(82, 82, 82)';  
-                            // remixid.style.color = 'rgb(82, 82, 82)';   
+                           
                         }} style={{
                             display:'flex',
                             cursor:'pointer',
@@ -1814,50 +1812,12 @@ class RoomMain extends Component {
                             borderBottom:'1px solid #181818',
                             justifyContent:'center'
                         }} className="menu-bg-border">
-                            <div id="script-icon" style={{
-                                fontSize:'15px',
-                                color:'white',
-                                backgroundImage:'url(../code.svg)',
-                                backgroundSize:'100% 100%',
-                                backgroundRepeat:'no-repeat',
-                                height:'14px',
-                                width:'16px',
-                                marginBottom:'3px',
-                                pointerEvents:'none'
-                            }}></div>
-                            <p id="elements-text" style={{fontSize:10.2,fontWeight:'bold',width:'26px',pointerEvents:'none'}} className="menubgnot">ELEMENTS</p>
+                            
+                            <i id="elements-icon" className="fas fa-shapes" style={{color:'white', fontSize:15,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none'}}></i>
+                            <p id="elements-text" style={{fontSize:8.5,fontWeight:'bold',width:'38px',pointerEvents:'none'}} className="menubgnot">ELEMENTS</p>
                         </div>
                         <div id="app-tag"  onClick={(e)=> {
-                            //document.getElementById('resizable-box').className = 'resize-boxes-open';
-//                             var resizer = document.createElement('div');
-// resizer.className = 'resizer';
-// resizer.style.width = '100%';
-// resizer.style.height = '15px';
-// resizer.style.background = 'rgb(54, 255, 233)';
-// resizer.style.position = 'absolute';
-// resizer.style.zIndex = '99999';
-// resizer.style.right = 0;
-// resizer.style.bottom = 0;
-// resizer.style.cursor = 'se-resize';
 
-
-// resizer.style.cursor = 'se-resize';
-// resizer.style.borderRadius = '20px';
-// document.getElementById('resizable-box').appendChild(resizer);
-// resizer.addEventListener('mousedown', initResize, false);
-
-// function initResize(e) {
-//    window.addEventListener('mousemove', Resize, false);
-//    window.addEventListener('mouseup', stopResize, false);
-// }
-// function Resize(e) {
-//     //cardWrap.style.width = (e.clientX - cardWrap.offsetLeft) + 'px';
-//     document.getElementById('resizable-box').style.height = (e.clientY + document.getElementById('resizable-box').offsetTop) + 'px';
-// }
-// function stopResize(e) {
-//     window.removeEventListener('mousemove', Resize, false);
-//     window.removeEventListener('mouseup', stopResize, false);
-// }
                             let thisElement = document.getElementById(e.target.id);
                             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
                           if(thisElement !== undefined) {
@@ -1872,28 +1832,31 @@ class RoomMain extends Component {
                                }
                                thisElement.className = 'menubg'; 
 
-                               document.getElementById('remix-icon').style.backgroundImage = `url(../code_cyan.svg)`;
+                               document.getElementById('remix-icon').style.backgroundImage = `url(../infinity_grey.svg)`;
                                document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
 
-                               document.getElementById('script-icon').style.backgroundImage = `url(../code_cyan.svg)`;
-                               document.getElementById('script-text').style.color = "rgb(54, 255, 233)";
+                               document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
+                               document.getElementById('script-text').style.color = "rgb(82, 82, 82)";
 
-                              // document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular.svg)`;
-                               document.getElementById('publish-text').style.color = "rgb(82, 82, 82)";
+                               if(document.getElementById('publish-new-icon') !== null) {
+                                document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular-grey.svg)`;
+                                }
+                                //document.getElementById('publish-text').style.color = "rgb(82, 82, 82)";
+                                document.getElementById('publish-text-publish').style.color = "rgb(82, 82, 82)";
+                                document.getElementById('publish-text-new').style.color = "rgb(82, 82, 82)";
+
+                               document.getElementById('elements-icon').style.color = `rgb(82, 82, 82)`;
+                               document.getElementById('elements-text').style.color = "rgb(82, 82, 82)";
+
+                               
+                               
+                               document.getElementById('apps-icon').style.color = `rgb(54, 255, 233)`;
+                               document.getElementById('apps-text').style.color = "rgb(54, 255, 233)";
 
                             }
                         }
                             
-                            // let remixid = document.getElementById('remix-tab');
-                            // let script = document.getElementById('script-tag');
-                            // let postTab = document.getElementById('post-tab');
-                            // remixid.className = '';
-                            // remixid.style.borderRight = '0px solid #181818';  
-                            // script.className = 'menubg';
-                            // script.style.color = 'rgb(64, 255, 232)';
-                            // postTab.className = '';
-                            // postTab.style.color = 'rgb(82, 82, 82)';  
-                            // remixid.style.color = 'rgb(82, 82, 82)';   
+                             
                         }} style={{
                             display:'flex',
                             cursor:'pointer',
@@ -1905,75 +1868,46 @@ class RoomMain extends Component {
                             borderBottom:'1px solid #181818',
                             justifyContent:'center'
                         }} className="menu-bg-border">
-                            <div id="script-icon" style={{
-                                fontSize:'15px',
-                                color:'white',
-                                backgroundImage:'url(../code.svg)',
-                                backgroundSize:'100% 100%',
-                                backgroundRepeat:'no-repeat',
-                                height:'14px',
-                                width:'16px',
-                                marginBottom:'3px',
-                                pointerEvents:'none'
-                            }}></div>
-                            <p id="app-text" style={{fontSize:10.2,fontWeight:'bold',width:'26px',pointerEvents:'none'}} className="menubgnot">APPS</p>
+                            
+                            <i id="apps-icon" className="fas fa-cubes" style={{color:'white', fontSize:15,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none'}}></i>
+                            <p id="apps-text" style={{fontSize:10.2,fontWeight:'bold',width:'21px',pointerEvents:'none'}} className="menubgnot">APPS</p>
                         </div>
                         <div id="script-tag" refs="script-tag" onClick={(e)=> {
-                            //document.getElementById('resizable-box').className = 'resize-boxes-open';
-//                             var resizer = document.createElement('div');
-// resizer.className = 'resizer';
-// resizer.style.width = '100%';
-// resizer.style.height = '15px';
-// resizer.style.background = 'rgb(54, 255, 233)';
-// resizer.style.position = 'absolute';
-// resizer.style.zIndex = '99999';
-// resizer.style.right = 0;
-// resizer.style.bottom = 0;
-// resizer.style.cursor = 'se-resize';
-
-
-// resizer.style.cursor = 'se-resize';
-// resizer.style.borderRadius = '20px';
-// document.getElementById('resizable-box').appendChild(resizer);
-// resizer.addEventListener('mousedown', initResize, false);
-
-// function initResize(e) {
-//    window.addEventListener('mousemove', Resize, false);
-//    window.addEventListener('mouseup', stopResize, false);
-// }
-// function Resize(e) {
-//     //cardWrap.style.width = (e.clientX - cardWrap.offsetLeft) + 'px';
-//     document.getElementById('resizable-box').style.height = (e.clientY + document.getElementById('resizable-box').offsetTop) + 'px';
-// }
-// function stopResize(e) {
-//     window.removeEventListener('mousemove', Resize, false);
-//     window.removeEventListener('mouseup', stopResize, false);
 // }
                             let thisElement = document.getElementById(e.target.id);
                             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
-                          if(thisElement !== undefined) {
-                            if(thisElement.className !== 'menubg') {                            
+                            if(thisElement !== undefined) {
+                                if(thisElement.className !== 'menubg') {                            
                                
-                               for(let i = 0; tabsWithMenubgClass.length; i++) {
-                                if(tabsWithMenubgClass[i] != undefined) {
-                                    if(tabsWithMenubgClass[i].id !== thisElement.id) {
-                                        tabsWithMenubgClass[i].className = 'menubgnot';
-                                    } 
+                                    for(let i = 0; tabsWithMenubgClass.length; i++) {
+                                        if(tabsWithMenubgClass[i] != undefined) {
+                                            if(tabsWithMenubgClass[i].id !== thisElement.id) {
+                                                tabsWithMenubgClass[i].className = 'menubgnot';
+                                            } 
+                                        }
+                                    }
+                                    thisElement.className = 'menubg'; 
+
+                                    document.getElementById('remix-icon').style.backgroundImage = `url(../infinity_grey.svg)`;
+                                    document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
+
+                                    document.getElementById('script-icon').style.backgroundImage = `url(../code_cyan.svg)`;
+                                    document.getElementById('script-text').style.color = "rgb(54, 255, 233)";
+                                    if(document.getElementById('publish-new-icon') !== null) {
+                                    document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular-grey.svg)`;
+                                    }
+                                    //document.getElementById('publish-text').style.color = "rgb(82, 82, 82)";
+                                    document.getElementById('publish-text-publish').style.color = "rgb(82, 82, 82)";
+                                    document.getElementById('publish-text-new').style.color = "rgb(82, 82, 82)";
+
+                                    document.getElementById('apps-icon').style.color = `rgb(82, 82, 82)`;
+                                    document.getElementById('apps-text').style.color = "rgb(82, 82, 82)";
+
+                                    document.getElementById('elements-icon').style.color = `rgb(82, 82, 82)`;
+                                    document.getElementById('elements-text').style.color = 'rgb(82, 82, 82)';
+
                                 }
-                               }
-                               thisElement.className = 'menubg'; 
-
-                               document.getElementById('remix-icon').style.backgroundImage = `url(../code_cyan.svg)`;
-                               document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
-
-                               document.getElementById('script-icon').style.backgroundImage = `url(../code_cyan.svg)`;
-                               document.getElementById('script-text').style.color = "rgb(54, 255, 233)";
-
-                              // document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular.svg)`;
-                               document.getElementById('publish-text').style.color = "rgb(82, 82, 82)";
-
                             }
-                        }
                             
                             // let remixid = document.getElementById('remix-tab');
                             // let script = document.getElementById('script-tag');
@@ -2097,15 +2031,31 @@ class RoomMain extends Component {
                                         }
                                     }
                                     thisElement.className = 'menubg'; 
-
-                                    document.getElementById('remix-icon').style.backgroundImage = `url(../code_cyan.svg)`;
+                                    document.getElementById('remix-icon').style.backgroundImage = `url(../infinity_grey.svg)`;
                                     document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
      
-                                    document.getElementById('script-icon').style.backgroundImage = `url(../code_cyan.svg)`;
-                                    document.getElementById('script-text').style.color = "";
+                                    document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
+                                    document.getElementById('script-text').style.color = "rgb(82, 82, 82)";
+                                    
+                                    if(document.getElementById('publish-icon') !== null) {
+                                        document.getElementById('publish-icon').style.backgroundImage = `url(../save-regular.svg)`;
+                                    }
+                                    
+                 
+                                        document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular.svg)`;
+                                        document.getElementById('publish-text-publish').style.color = "rgb(54, 255, 233)";
+                                        document.getElementById('publish-text-new').style.color = "rgb(54, 255, 233)";
+                                    
+    
+                                    
      
-                                   // document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular.svg)`;
-                                    document.getElementById('publish-text').style.color = "rgb(54, 255, 233)";
+                                    document.getElementById('apps-icon').style.color = `rgb(82, 82, 82)`;
+                                    document.getElementById('apps-text').style.color = "rgb(82, 82, 82)";
+     
+                                    document.getElementById('elements-icon').style.color = `rgb(82, 82, 82)`;
+                                    document.getElementById('elements-text').style.color = 'rgb(82, 82, 82)';
+                   
+                                    
                                
                                     if(document.getElementById('menu-info') !== null) {
                                         //    document.getElementById('menu-info').remove();
@@ -2115,14 +2065,16 @@ class RoomMain extends Component {
                                         document.getElementById('menu-info').remove();
                                         //    document.getElementById('remix-list').remove();
                                     }
-                                    that.setState({
-                                        details:false,
-                                        objects:false,
-                                        comments:false,
-                                        draw:false,
-                                        remix:false,
-                                        showPublish:true
-                                    });
+                                    that.setState(
+                                        {
+                                            details:false,
+                                            objects:false,
+                                            comments:false,
+                                            draw:false,
+                                            remix:false,
+                                            showPublish:true
+                                        }
+                                    );
 
                                 }
                          
@@ -2414,40 +2366,7 @@ class RoomMain extends Component {
                                     }
                                     bottomWrap.appendChild(descriptionText)
                                     
-                //                     <div id="descriptionWrapText" style={{fontSize:'16px', padding:'0px 10px 0px'}}>
-                       
-
-
-                // <div id="description-text" 
-                //     style={{
-                //         maxWidth:'100%',
-                //         height:'auto',
-                //         fontSize:'14px',
-                //         lineHeight:'1.2',
-                //         position:'relative',
-                //         top:'5px',
-                //         overflow:'hidden',
-                //         color:'white',
-                //         marginLeft:3,
-                //         paddingBottom:20
-                // }}>
-                //     {`${this.getTruncatedString(this.props.description).string}`}
-                //     {this.getTruncatedString(this.props.description).isReadMore ? (<span style={{color:'white',marginLeft:2}}>...[Read More]
-                //     <div style={{display:'flex',alignItems:'center',marginRight:'18px',flexDirection:'row', marginTop:7}}>
-                //             {/* <i className="fas fa-play" style={{fontSize:10, color:'white',marginRight:10}}></i> */}
-                //                 <p style={{fontFamily:'Source Sans Pro',color:'white',fontSize:'14px'}}>{this.getNumberToString(this.props.views)} Views</p>
-                //             </div>
-                //     </span>) :''}
-                //     </div>
-                    
-                
-
-
-
-                         
-                //     </div>
-                
-                                
+                             
                                     cardWrap.appendChild(bottomWrap);
                                     //cardWrapWrap.appendChild(heart);
 
@@ -2469,7 +2388,7 @@ class RoomMain extends Component {
                                     cardWrapWrapWrap.appendChild(cardWrapWrap);
                                     cardWrapWrapWrap.appendChild(save);
                                     iframeWrap.appendChild(cardWrapWrapWrap);
-                                    //iframeWrap.style.display = 'none';
+                                    iframeWrap.style.display = 'none';
          
                                     let iframe_doc = iframe.contentDocument;
                                     //window.Subj('#regular-thumbnail').draggle();
@@ -2485,29 +2404,32 @@ class RoomMain extends Component {
                                 renderDHTML();
                                 let get_iframe = document.getElementById('regular-thumbnail');
                          
-                            console.log('hhh', get_iframe.contentWindow)
-                            get_iframe.onload = ()=> {
-                               get_iframe.contentWindow.flowroom.SaveScreenShot(
-                                    ()=> {
-                                        let imageData = localStorage.getItem("thumbnail");
-                                        alert(imageData)
-                                        // let isRemix = isPostAsNew;
-                                        // let remixRoomID = isPostAsNew ? that.state.shortID : that.state.remixRoomID;
-                                        // let remixUserName = isPostAsNew ? that.state.userName : that.state.remixUserName;
-                                        localStorage.setItem("thumbnailUrl", "");
-                                        let thumbnail = document.getElementById('thumbnail-pic-display');
-                                        thumbnail.style.backgroundImage = `url(${imageData})`;
-                                        thumbnail.style.backgroundRepeat = 'no-repeat';
-                                        thumbnail.style.backgroundSize = 'cover';
-                                        that.putObject (
-                                            imageData, 
-                                            (url) => { 
-                                                localStorage.setItem("thumbnailUrl", url);
-                                            }
-                                        );
-                                    }
-                                );
+                                console.log('hhh', get_iframe.contentWindow)
+                                get_iframe.onload = ()=> {
+                                    get_iframe.contentWindow.flowroom.SaveScreenShot(
+                                        ()=> {
+                                            let imageData = localStorage.getItem("thumbnail");
+                                            alert(imageData)
+                                            // let isRemix = isPostAsNew;
+                                            // let remixRoomID = isPostAsNew ? that.state.shortID : that.state.remixRoomID;
+                                            // let remixUserName = isPostAsNew ? that.state.userName : that.state.remixUserName;
+                                            localStorage.setItem("thumbnailUrl", "");
+                                            let thumbnail = document.getElementById('thumbnail-pic-display');
+                                            thumbnail.style.backgroundImage = `url(${imageData})`;
+                                            thumbnail.style.backgroundRepeat = 'no-repeat';
+                                            thumbnail.style.backgroundSize = 'cover';
+                                            that.putObject (
+                                                imageData, 
+                                                (url) => { 
+                                                    localStorage.setItem("thumbnailUrl", url);
+                                                }
+                                            );
+                                        }
+                                    );
                                 }
+
+                          
+
                             
                             }
                         }} style={{
@@ -2524,8 +2446,7 @@ class RoomMain extends Component {
                             display:'flex',
                         }} 
                         className="menu-bg-border">
-                            <div style={{
-                                id:'publish-new-icon',
+                            <div id="publish-new-icon" style={{
                                 fontSize:'15px',
                                 color:'white',
                                 backgroundImage:'url(../save-regular-grey.svg)',
@@ -2536,8 +2457,8 @@ class RoomMain extends Component {
                                 marginBottom:'3px',
                                 pointerEvents:'none'
                             }}></div>
-                            <p id="publish-text" style={{fontSize:10.2,fontWeight:'bold', pointerEvents:'none'}} className="menubgnot">PUBLISH </p>
-                            <p style={{fontSize:10.2,fontWeight:'bold',pointerEvents:'none'}} className="menubgnot">NEW</p>
+                            <p id="publish-text-publish" style={{fontSize:10.2,fontWeight:'bold', pointerEvents:'none'}} className="menubgnot">PUBLISH</p>
+                            <p id="publish-text-new" style={{fontSize:10.2,fontWeight:'bold',pointerEvents:'none'}} className="menubgnot">NEW</p>
                         </div>
                         <div id="post-tab" onClick={(e)=> {
                             let that = this;
@@ -2557,7 +2478,7 @@ class RoomMain extends Component {
                             let remixImageList = document.getElementById('remix-image-list');
                            
                             if(thisElement != undefined) {
-                            if(thisElement.className !== 'menubg') {                            
+                                if(thisElement.className !== 'menubg') {                            
                                
                                for(let i = 0; tabsWithMenubgClass.length; i++) {
                                 if(tabsWithMenubgClass[i] != undefined) {
@@ -2586,7 +2507,7 @@ class RoomMain extends Component {
                                 });
 
                             }
-                            setTimeout(()=>{
+                           
                                 let iframe = document.getElementById('output_frame');
                                 let dhtml = JSON.parse(localStorage.getItem("dhtml"));
                                 let html_ = dhtml.html;
@@ -2596,84 +2517,79 @@ class RoomMain extends Component {
                                 
 
                                  
-        let base_tpl = "<!doctype html>\n" +
-        "<html>\n\t" +
-        "<head>\n\t\t" +
-        "<meta charset=\"utf-8\">\n\t\t" +
-        "<title>Test</title>\n\n\t\t\n\t" +
-        "</head>\n\t" +
-        "<body>\n\t\n\t" +
-        "</body>\n" +
-        "</html>";
+                                let base_tpl = "<!doctype html>\n" +
+                                "<html>\n\t" +
+                                "<head>\n\t\t" +
+                                "<meta charset=\"utf-8\">\n\t\t" +
+                                "<title>Test</title>\n\n\t\t\n\t" +
+                                "</head>\n\t" +
+                                "<body>\n\t\n\t" +
+                                "</body>\n" +
+                                "</html>";
         
       
      
-        let prepareSource = () => {
-          let html = html_,
-          css = css_,
-          js = js_,
+                                let prepareSource = () => {
+                                    let html = html_,
+                                    css = css_,
+                                    js = js_,
  
-          src = '';
-          src = base_tpl.replace('</body>', html + '</body>');
-          css = '<style>' + css + '</style>';
-          src = src.replace('</head>', css + '</head>');
-          js = '<script>' + js + '<\/script>';
-          src = src.replace('</body>', js + '</body>');
-          let dhtmlObj = {html:html, js:js, css:css}
+                                    src = '';
+                                    src = base_tpl.replace('</body>', html + '</body>');
+                                    css = '<style>' + css + '</style>';
+                                    src = src.replace('</head>', css + '</head>');
+                                    js = '<script>' + js + '<\/script>';
+                                    src = src.replace('</body>', js + '</body>');
+                                    let dhtmlObj = {html:html, js:js, css:css}
           
-         // alert(htmlObj.html);
-          localStorage.setItem("dhtml", JSON.stringify(dhtmlObj));
-          localStorage.setItem("css", JSON.stringify(css));
-          localStorage.setItem("js", JSON.stringify(js));
-          return src;
-        };
+                                    // alert(htmlObj.html);
+                                    localStorage.setItem("dhtml", JSON.stringify(dhtmlObj));
+                                    localStorage.setItem("css", JSON.stringify(css));
+                                    localStorage.setItem("js", JSON.stringify(js));
+                                    return src;
+                                };
 
-        let renderDHTML = () => {
-            // alert('called')
-            let source = prepareSource();
-            let iframe = document.querySelector('#regular-thumbnail');
-            let iframe_doc = iframe.contentDocument;
+                                let renderDHTML = () => {
+                                    // alert('called')
+                                let source = prepareSource();
+                                let iframe = document.querySelector('#regular-thumbnail');
+                                let iframe_doc = iframe.contentDocument;
                   
-            iframe_doc.open();
-            iframe_doc.write(source);
-            iframe_doc.close();
+                                iframe_doc.open();
+                                iframe_doc.write(source);
+                                iframe_doc.close();
          
           
-          //when removing last library, set to [];
-        //   iframe.contentWindow.flowroom.SaveScreenShot(
-        //     ()=> {
-        //         let imageData = localStorage.getItem("thumbnail");
-        //         //alert(imageData)
-        //         // let isRemix = isPostAsNew;
-        //         // let remixRoomID = isPostAsNew ? that.state.shortID : that.state.remixRoomID;
-        //         // let remixUserName = isPostAsNew ? that.state.userName : that.state.remixUserName;
-        //         localStorage.setItem("thumbnailUrl", "");
-        //         let thumbnail = document.getElementById('thumbnail-pic-display');
-        //         thumbnail.src = imageData;
-        //         thumbnail.setAttribute("height", "100%");
-        //         thumbnail.setAttribute("width", "100%");
-        //         that.putObject (
-        //             imageData, 
-        //             (url) => { 
-        //                 localStorage.setItem("thumbnailUrl", url);
-        //             }
-        //         );
-        //     }
-        // );
+                                //when removing last library, set to [];
+                                //iframe.contentWindow.flowroom.SaveScreenShot(
+                                //     ()=> {
+                                //         let imageData = localStorage.getItem("thumbnail");
+                                //         alert(imageData)
+                                //         let isRemix = isPostAsNew;
+                                //         let remixRoomID = isPostAsNew ? that.state.shortID : that.state.remixRoomID;
+                                //         let remixUserName = isPostAsNew ? that.state.userName : that.state.remixUserName;
+                                //         localStorage.setItem("thumbnailUrl", "");
+                                //         let thumbnail = document.getElementById('thumbnail-pic-display');
+                                //         thumbnail.src = imageData;
+                                //         thumbnail.setAttribute("height", "100%");
+                                //         thumbnail.setAttribute("width", "100%");
+                                //         that.putObject (
+                                //             imageData, 
+                                //             (url) => { 
+                                //                 localStorage.setItem("thumbnailUrl", url);
+                                //             }
+                                //         );
+                                //     }
+                                // );
        
            
            
-          };
+                        };
 
           
-            renderDHTML()
-                                
-                               
-                               
+                        renderDHTML()
 
-                                 },5000)
-
-                                }
+                            }
                         }} style={{
                             display:'none',
                            
@@ -2687,8 +2603,8 @@ class RoomMain extends Component {
                             cursor:'pointer'
                         }} 
                         className="menu-bg-border">
-                            <div style={{
-                                id:"publish-icon",
+                            <div id="publish-icon" style={{
+                                
                                 fontSize:'15px',
                                 color:'white',
                                 backgroundImage:'url(../save-regular-grey.svg)',
@@ -2699,7 +2615,7 @@ class RoomMain extends Component {
                                 marginBottom:'3px',
                                 pointerEvents:'none'
                             }}></div>
-                            <p id="publish-text" style={{fontSize:10.2,fontWeight:'bold',width:'38px', pointerEvents:'none'}} className="menubgnot">PUBLISH</p>
+                            <p id="publish-text-" style={{fontSize:10.2,fontWeight:'bold',width:'38px', pointerEvents:'none'}} className="menubgnot">PUBLISH</p>
                         </div>
                         {/* <div id="objects" onClick={()=> {
                             // let objectsid = document.getElementById('objects');

@@ -3587,6 +3587,27 @@ p {
 .ReactTags__remove {
   margin-left:7px;
 }
+.ReactTags__selected {
+  display:flex;
+  flex-wrap:wrap;
+}
+
+.tag-wrapper, .ReactTags__tag {
+  
+  font-weight: bold;
+  color: rgb(64, 255, 232);
+  font-size: 13px;
+  background-color: transparent;
+  border: 1px solid rgb(64, 255, 232);
+  border-radius: 4px;
+  padding: 5px 7px;
+  position: relative;
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+}
+
 
 /* The container must be positioned relative: */
 .custom-select {
@@ -3679,13 +3700,13 @@ p {
   border-color: #333;
 }
 
-.dropdown > label:after,
+/* .dropdown > label:after,
 .dropdown > a[role="button"]:after {
   content: "\f0d7";
   font-family: FontAwesome;
   display: inline-block;
   margin-left: 6px;
-}
+} */
 
 .dropdown > ul {
   position: absolute;
