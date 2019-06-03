@@ -46,7 +46,7 @@ import { WithContext as ReactTags } from 'react-tag-input';
     let isUploaded = false;
 
 
-
+    let elements_arr = [{},{},{}];
 
 
     let Loaded = false;
@@ -225,7 +225,8 @@ import { WithContext as ReactTags } from 'react-tag-input';
                 isRemix:false, 
                 remixRoomID:'', 
                 remixUserName:'',
-                postAsNewBtnVisible:false
+                postAsNewBtnVisible:false,
+                welcome:false
             
             };
             this.openModal = this.openModal.bind(this);
@@ -1484,8 +1485,25 @@ import { WithContext as ReactTags } from 'react-tag-input';
                         </div>              
                 </div>
             )
-        } else if(this.state.record === true) {
-            return (<p>record</p>)
+        } else if(this.state.elements === true) {
+            let mainmenu = document.getElementById('main-menu');
+            mainmenu.style.display = 'flex';
+            mainmenu.style.width = '330px';
+            mainmenu.style.padding = '10px'
+            let element_menu = document.createElement('div');
+            element_menu.style.display = 'flex';
+            element_menu.style.width = '100%';
+            element_menu.style.flexWrap = 'wrap';
+            element_menu.setAttribute("id","element-menu")
+            elements_arr.map(() => {
+            let element = document.createElement('div');
+            element.style.height = '100px';
+            element.style.width = '100px';
+            element.style.border = '1px solid white';
+            element.style.margin = '5px';
+            element_menu.appendChild(element);
+            })
+            mainmenu.appendChild(element_menu);
         }
      }
     
@@ -1668,32 +1686,110 @@ import { WithContext as ReactTags } from 'react-tag-input';
                             height:'100%'
                         }}>
                         <div id="remix-tab" onClick={(e)=> { 
+                            
                             let list = document.getElementById('main-menu');
                                 let thisElement = document.getElementById(e.target.id);
                                 let tabsWithMenubgClass = document.getElementsByClassName('menubg');
                                 let menuinfo = document.createElement('div');
+                                
         
                                 menuinfo.setAttribute("id", "menu-info");
+                                
                                 menuinfo.style.height = '170px';
                                 menuinfo.style.width = '259px';
                                 let menuinfobox = document.createElement('div');
                                 let menuinfotop = document.createElement('div');
+                                let infinity = document.createElement('div');
                                 menuinfotop.style.display = 'flex';
                                 menuinfotop.style.justifyContent = 'space-between';
                                 menuinfotop.style.height = '20px';
                                 menuinfotop.style.width = '100%';
                                 menuinfobox.style.border = '1px solid #222222';
-                                menuinfobox.style.height = '147px';
+                                // menuinfobox.style.height = '147px';
                                 menuinfobox.style.width = '259px';
                                 menuinfobox.style.borderRadius = '3px';
                                 menuinfobox.style.marginTop = '11px';
-                        
+                                infinity.style.backgroundImage = `url(../infinity_cyan.svg)`;
+                                infinity.style.backgroundSize = '100% 100%';
+                                infinity.style.backgroundRepeat = 'no-repeat';
+                                infinity.style.height = '20px';
+                                infinity.style.width = '25px';
+                                let closebox = document.createElement('div');
+                                closebox.style.display = 'flex';
+                                closebox.style.alignItems = 'center';
+                                closebox.style.justifyContent = 'space-between';
+                                closebox.style.width = '45px';
+                                let welcometext = document.createElement('p');
+                                welcometext.style.color = 'rgb(54, 255, 233)';
+                                welcometext.appendChild(document.createTextNode('Welcome to the Remix Menu'));
+
+
+                                let firstLine = document.createElement('p');
+                                firstLine.style.color = 'white';
+                                firstLine.style.fontSize = '15px';
+                                firstLine.appendChild(document.createTextNode('Here you can swap Text,'));
+
+
+                                let secondLine = document.createElement('p');
+                                secondLine.style.color = 'white';
+                                secondLine.style.fontSize = '15px';
+                                secondLine.appendChild(document.createTextNode('Images, and other elements'));
+
+                                let thirdLine = document.createElement('p');
+                                thirdLine.style.color = 'white';
+                                thirdLine.style.fontSize = '15px';
+                                thirdLine.appendChild(document.createTextNode('inside of flows.'));
+                                thirdLine.style.paddingBottom = '10px'
+
+                                let fourthLine = document.createElement('p');
+                                fourthLine.style.color = 'white';
+                                fourthLine.style.fontSize = '15px';
+                                fourthLine.appendChild(document.createTextNode('Click here for step by step'));
+                               
+
+                                let fifthLine = document.createElement('p');
+                                fifthLine.style.color = 'white';
+                                fifthLine.style.fontSize = '15px';
+                                fifthLine.appendChild(document.createTextNode('video walkthroughs'));
+
+                                let welcome_texts = document.createElement('div');
+
+                                let closet = document.createElement('p');
+                                let closex = document.createElement('p');
+                                closex.appendChild(document.createTextNode('X'));
+                                closex.style.fontSize = '20px';
+                                closex.style.color = 'white';
+                                closet.appendChild(document.createTextNode('close'));
+                                closet.style.fontSize = '11px';
+                                closet.style.color = 'white';
+                                menuinfotop.appendChild(infinity);
+                                closebox.appendChild(closet);
+                                closebox.appendChild(closex);
+                                menuinfotop.appendChild(closebox);
                                 menuinfobox.appendChild(menuinfotop)
-                            
-                                menuinfo.appendChild(menuinfobox);
+                                menuinfobox.appendChild(welcometext);
+                                menuinfobox.style.padding = '20px';
+                                menuinfobox.setAttribute("id", "menu-info-box");
+                                
+                                welcome_texts.appendChild(firstLine);
+                                welcome_texts.appendChild(secondLine);
+                                welcome_texts.appendChild(thirdLine);
+                                welcome_texts.appendChild(fourthLine);
+                                welcome_texts.appendChild(fifthLine);
+                               
+                           
+                                if(that.state.welcome === false) {
+                                    menuinfo.appendChild(menuinfobox);
+                                
+                                menuinfobox.appendChild(welcome_texts);
+                                menuinfobox.style.display = 'flex';
+                                menuinfobox.style.justifyContent = 'center';
+                                menuinfobox.style.flexDirection = 'column';
+                                that.setState({welcome:true});
                                 list.style.padding = '7px 14px 2px 7px';
-                          
                                 list.appendChild(menuinfo);
+                                }
+                                
                             if(thisElement !== undefined) {
                                 if(thisElement.className !== 'menubg') {                            
                                    
@@ -1719,7 +1815,10 @@ import { WithContext as ReactTags } from 'react-tag-input';
                                    document.getElementById('elements-icon').style.color = `rgb(82, 82, 82)`;
                                    document.getElementById('elements-text').style.color = "rgb(82, 82, 82)";
     
-                               
+                                   document.getElementById('apps-icon').style.color = `rgb(82, 82, 82)`;
+                                   document.getElementById('apps-text').style.color = "rgb(82, 82, 82)";
+
+                                   
                                
                                   // document.querySelector(".svgClass").getSVGDocument().getElementById("svgInternalID").setAttribute("fill", "red")
 
@@ -1765,6 +1864,8 @@ import { WithContext as ReactTags } from 'react-tag-input';
 
                             let thisElement = document.getElementById(e.target.id);
                             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
+                            let menuinfo = document.getElementById('menu-info')
+                            
                           if(thisElement !== undefined) {
                             if(thisElement.className !== 'menubg') {                            
                                
@@ -1794,11 +1895,28 @@ import { WithContext as ReactTags } from 'react-tag-input';
                                document.getElementById('apps-icon').style.color = `rgb(82, 82, 82)`;
                                document.getElementById('apps-text').style.color = 'rgb(82, 82, 82)';
                                
-                               
+                               if(menuinfo !== null) {
+                                menuinfo.remove();
+                                that.setState({welcome:false});
+                                }
+
+                                
                                
 
                             }
                         }
+
+                        that.setState(
+                            {
+                                details:false,
+                                objects:false,
+                                comments:false,
+                                draw:false,
+                                remix:false,
+                                showPublish:false,
+                                elements:true
+                            }
+                        );
                             
                            
                         }} style={{
@@ -1853,6 +1971,8 @@ import { WithContext as ReactTags } from 'react-tag-input';
                                document.getElementById('apps-icon').style.color = `rgb(54, 255, 233)`;
                                document.getElementById('apps-text').style.color = "rgb(54, 255, 233)";
 
+                               document.getElementById('element-menu').remove()
+
                             }
                         }
                             
@@ -1876,6 +1996,7 @@ import { WithContext as ReactTags } from 'react-tag-input';
 // }
                             let thisElement = document.getElementById(e.target.id);
                             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
+                            let menuinfo = document.getElementById('menu-info');
                             if(thisElement !== undefined) {
                                 if(thisElement.className !== 'menubg') {                            
                                
@@ -1905,7 +2026,9 @@ import { WithContext as ReactTags } from 'react-tag-input';
 
                                     document.getElementById('elements-icon').style.color = `rgb(82, 82, 82)`;
                                     document.getElementById('elements-text').style.color = 'rgb(82, 82, 82)';
-
+                                    if(menuinfo !== null) {
+                                        menuinfo.remove()
+                                    }
                                 }
                             }
                             
@@ -2017,7 +2140,7 @@ import { WithContext as ReactTags } from 'react-tag-input';
                             let mainmenu = document.getElementById('main-menu');
                             let remixImageList = document.getElementById('remix-image-list');
                             let list = document.getElementById('main-menu');
-                        
+                            let menuinfo = document.getElementById('menu-info')
                             list.style.padding = '7px 14px 2px 7px';
                           
                             if(thisElement != undefined) {
@@ -2427,8 +2550,10 @@ import { WithContext as ReactTags } from 'react-tag-input';
                                         }
                                     );
                                 }
-
-                          
+                                if(menuinfo !== null) {
+                                    menuinfo.remove()
+                                }
+                                
 
                             
                             }
