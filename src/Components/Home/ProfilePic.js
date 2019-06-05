@@ -49,9 +49,10 @@ class ProfilePic extends Component {
     const {isLoading} = this.state;
     return (
       <div>
+
     {
         isLoading ? <div>.</div> :
-      (<div onClick={()=> {
+      (<div style={{display:'flex'}}><div onClick={()=> {
         if(this.state.menuVisible === false) {
           this.setState({menuVisible:true});
         } else {
@@ -65,6 +66,12 @@ class ProfilePic extends Component {
         backgroundRepeat:'no-repeat'
         
         }}>
+        <div>
+        {/* <p style={{color:'white'}}>{this.state.username}</p>   */}
+        </div>
+        
+        </div>
+        
         <div style={{position:'relative'}}>
           <div style={{
             position:'absolute',

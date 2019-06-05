@@ -95,7 +95,9 @@ let that;
         remixImageBox.style.height = '330px';
         remixImageBox.style.width = '269px';
         remixImageBox.style.overflow = 'hidden';
+        remixImageBox.style.marginTop = '70px';
         remixImageBox.setAttribute("id", "remix-image-box");
+       
 
         let backArrow = document.createElement('i');
         let forwardArrow = document.createElement('i');

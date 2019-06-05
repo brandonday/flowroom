@@ -438,7 +438,7 @@ float: right;
 
 align-items: flex-end;
 
-position: absolute;
+
 
 right: 0px;
   }
@@ -768,7 +768,7 @@ right: 0px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
+  padding:0px 50px;
 }
 
 .meta-content-container {
@@ -2530,7 +2530,7 @@ svg, .remix-icon{
   font-family: 'Source Sans Pro';
   color: #494A4C;
   font-weight: 600;
-  margin-left: -21px;
+
   margin-top: 4px;
 }
 

@@ -20,6 +20,8 @@ import ImageEdit from './ImageEdit.js';
 import * as S3 from 'aws-sdk/clients/s3';
 import RelatedRoomPost from './RelatedRoomPost.js';
 import { WithContext as ReactTags } from 'react-tag-input';
+
+let apps = [{},{}]
     let database = firebase.database();
 
     AWS.config.update({
@@ -226,7 +228,11 @@ import { WithContext as ReactTags } from 'react-tag-input';
                 remixRoomID:'', 
                 remixUserName:'',
                 postAsNewBtnVisible:false,
-                welcome:false
+                welcome:false,
+                element_menu:false,
+                app_menu:false,
+                script_menu:false,
+                publish_menu:false
             
             };
             this.openModal = this.openModal.bind(this);
@@ -1437,7 +1443,7 @@ import { WithContext as ReactTags } from 'react-tag-input';
                                 delimiters={delimiters4} />
                         </div>
                         <div style={{height:75, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
-                            <p style={{color:'white',fontSize:11,marginTop:10,marginBottom:5}}>Visibility</p>
+                            <p style={{color:'white',fontSize:11,margin:'10px 0px'}}>Visibility</p>
 
                             <div class="dropdown" style={{width:'100%'}}>
                                 <input type="checkbox" id="my-dropdown" value="" name="my-checkbox" style={{width:'100%'}}/>
@@ -1464,8 +1470,14 @@ import { WithContext as ReactTags } from 'react-tag-input';
 
 
                         </div>
-                        <div style={{height:147, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
-                            <p style={{color:'white',fontSize:11}}>Thumbnail Preview</p>
+                        <div style={{height:168, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
+                            <div style={{display:'flex',justifyContent:'space-between'}}>
+                            <p style={{color:'white',fontSize:11,margin:'10px 0px'}}>Card Preview</p>
+                            <p onClick={()=>{
+                                document.getElementById('card-thumb-wrap').style.display = 'flex';
+                                document.getElementById('black-opacity-modal').style.display = 'flex';
+                            }} style={{color:'white',fontSize:11,margin:'10px 0px'}}>Edit</p>
+                            </div>
                             <div id="thumbnail-pic-box" style={{width:'100%', height:120,backgroundColor:'rgb(37,37,37)',borderRadius:3}}>
                             <div id="thumbnail-pic-display"
                              style={{backgroundImage:`url{${this.props.state.entireApp.image})`, backgroundSize:'cover',backgroundPosition:'center'}}
@@ -1485,25 +1497,35 @@ import { WithContext as ReactTags } from 'react-tag-input';
                         </div>              
                 </div>
             )
-        } else if(this.state.elements === true) {
-            let mainmenu = document.getElementById('main-menu');
-            mainmenu.style.display = 'flex';
-            mainmenu.style.width = '330px';
-            mainmenu.style.padding = '10px'
-            let element_menu = document.createElement('div');
-            element_menu.style.display = 'flex';
-            element_menu.style.width = '100%';
-            element_menu.style.flexWrap = 'wrap';
-            element_menu.setAttribute("id","element-menu")
-            elements_arr.map(() => {
-            let element = document.createElement('div');
-            element.style.height = '100px';
-            element.style.width = '100px';
-            element.style.border = '1px solid white';
-            element.style.margin = '5px';
-            element_menu.appendChild(element);
-            })
-            mainmenu.appendChild(element_menu);
+        } else if(this.state.script_menu === true) {
+            return(<div  style={{border:'1px solid rgb(34, 34, 34)', width:'259px', 
+            borderRadius:'3px', marginTop:'11px', 
+            padding:'20px', display:'flex', 
+            justifyContent:'center', 
+            flexDirection:'column'}}>
+            <div style={{display:'flex', 
+            justifyContent:'space-between', 
+            height:'20px', 
+            width: '100%'}}>
+            <div style={{backgroundImage:'url(&quot;../infinity_cyan.svg&quot)', 
+            backgroundSize:'100% 100%', 
+            backgroundRepeat:'no-repeat', 
+            height:'20px', 
+            width:'25px'}}></div>
+            <div style={{display:'flex', 
+            alignItems:'center', 
+            justifyContent:'space-between', 
+            width:'45px'}}>
+            <p style={{fontSize:'11px', color:'white'}}>close</p>
+            <p style={{fontSize:'20px', color:'white'}}>X</p></div></div>
+            <p style={{color:'rgb(54, 255, 233)'}}>Welcome to the Script Menu</p><div>
+            <p style={{color:'white', fontSize:'15px'}}>Here you can swap Text,</p>
+            <p style={{color:'white', fontSize: '15px'}}>Images, and other elements</p>
+            <p style={{color: 'white', fontSize: '15px', paddingBottom:'10px'}}>inside of flows.</p>
+            <p style={{color:'white', fontSize:'15px'}}>Click here for step by step</p>
+            <p style={{color:'white', fontSize:'15px'}}>video walkthroughs</p>
+            </div>
+            </div>)
         }
      }
     
@@ -1819,7 +1841,13 @@ import { WithContext as ReactTags } from 'react-tag-input';
                                    document.getElementById('apps-text').style.color = "rgb(82, 82, 82)";
 
                                    
-                               
+                                   if(document.getElementById('element-menu') !== null) {
+                                    document.getElementById('element-menu').remove();
+                                   }
+                                   if(document.getElementById('app-menu') !== null) {
+                                    document.getElementById('app-menu').remove();
+                                   }
+ 
                                   // document.querySelector(".svgClass").getSVGDocument().getElementById("svgInternalID").setAttribute("fill", "red")
 
                                 }  
@@ -1834,7 +1862,9 @@ import { WithContext as ReactTags } from 'react-tag-input';
                                     record:false
                           
                                 });
-                                document.getElementById('main-menu').style.display = 'flex';
+                                document.getElementById('main-menu').style.display = 'block';
+                                document.getElementById('main-menu').style.overflowY = 'scroll';
+                                document.getElementById('main-menu').style.width = '400px';
                                 isMenuOpen = true;
                             }} 
                             style={{
@@ -1864,7 +1894,8 @@ import { WithContext as ReactTags } from 'react-tag-input';
 
                             let thisElement = document.getElementById(e.target.id);
                             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
-                            let menuinfo = document.getElementById('menu-info')
+                            let menuinfo = document.getElementById('menu-info');
+                            
                             
                           if(thisElement !== undefined) {
                             if(thisElement.className !== 'menubg') {                            
@@ -1894,29 +1925,72 @@ import { WithContext as ReactTags } from 'react-tag-input';
                             
                                document.getElementById('apps-icon').style.color = `rgb(82, 82, 82)`;
                                document.getElementById('apps-text').style.color = 'rgb(82, 82, 82)';
+
+                                   let mainmenu = document.getElementById('main-menu');
+            mainmenu.style.display = 'flex';
+            mainmenu.style.width = '330px';
+            mainmenu.style.padding = '10px'
+            let element_menu = document.createElement('div');
+            element_menu.style.display = 'flex';
+            element_menu.style.width = '100%';
+            element_menu.style.flexWrap = 'wrap';
+            element_menu.setAttribute("id","element-menu")
+            elements_arr.map(() => {
+            let element = document.createElement('div');
+            element.style.height = '100px';
+            element.style.width = '100px';
+            element.style.border = '1px solid white';
+            element.style.margin = '5px';
+            element_menu.appendChild(element);
+            });
+            if(document.getElementById('element-menu') === null) {
+                mainmenu.appendChild(element_menu);
+            }   
+            if(this.state.element_menu === false) {
+                mainmenu.appendChild(element_menu);
+                this.setState({element_menu:true});
+            }
+            
                                
                                if(menuinfo !== null) {
                                 menuinfo.remove();
                                 that.setState({welcome:false});
                                 }
 
-                                
+                                // if(document.getElementById('element-menu') !== null) {
+                                //     document.getElementById('element-menu').remove();
+                                // }
+
+                                if(document.getElementById('app-menu') !== null) {
+                                    document.getElementById('app-menu').remove();
+                                   }
+
+                                   if(document.getElementById('remix-image-box') !== null) {
+                                    document.getElementById('remix-image-box').remove();
+                                   }
+
+
+                                   
+
+                                   that.setState(
+                                    {
+                                        details:false,
+                                        objects:false,
+                                        comments:false,
+                                        draw:false,
+                                        remix:false,
+                                        showPublish:false,
+                                        script_menu:false
+                                    }
+                                );
+
+ 
                                
 
                             }
                         }
 
-                        that.setState(
-                            {
-                                details:false,
-                                objects:false,
-                                comments:false,
-                                draw:false,
-                                remix:false,
-                                showPublish:false,
-                                elements:true
-                            }
-                        );
+       
                             
                            
                         }} style={{
@@ -1970,9 +2044,75 @@ import { WithContext as ReactTags } from 'react-tag-input';
                                
                                document.getElementById('apps-icon').style.color = `rgb(54, 255, 233)`;
                                document.getElementById('apps-text').style.color = "rgb(54, 255, 233)";
+                               if(document.getElementById('element-menu') !== null) {
+                                document.getElementById('element-menu').remove();
+                               }
 
-                               document.getElementById('element-menu').remove()
+                        
+                               let mainmenu = document.getElementById('main-menu');
+                               mainmenu.style.display = 'flex';
+                               mainmenu.style.width = '330px';
+                               mainmenu.style.padding = '10px'
+                               let app_menu = document.createElement('div');
+                               app_menu.style.display = 'flex';
+                               app_menu.style.width = '100%';
+                               app_menu.style.flexWrap = 'wrap';
+                               app_menu.setAttribute("id","app-menu")
+                               apps.map(() => {
+                               let app = document.createElement('div');
+                               app.style.height = '100px';
+                               app.style.width = '100px';
+                               app.style.border = '1px solid white';
+                               app.style.margin = '5px';
+                               app_menu.appendChild(app);
+                               });
+                               if(document.getElementById('menu-info') !== null) {
+                                document.getElementById('menu-info').remove();
+                                that.setState({welcome:false});
+                                }
+                               if(document.getElementById('app-menu') === null) {
+                                mainmenu.appendChild(app_menu);
+                               }
+                               if(document.getElementById('menu-info-box') !== null) {
+                                document.getElementById('menu-info-box').remove()
+                               }
+                              
 
+                               if(document.getElementById('remix-image-box') !== null) {
+                                document.getElementById('remix-image-box').remove();
+                               }
+
+
+                               
+
+                               that.setState(
+                                {
+                                    details:false,
+                                    objects:false,
+                                    comments:false,
+                                    draw:false,
+                                    remix:false,
+                                    showPublish:false,
+                                    script_menu:false
+                                }
+                            );
+
+                               if(this.state.app_menu === false) {
+                                   
+                                mainmenu.appendChild(app_menu);
+                                this.setState({app_menu:true, script_menu:false});
+                               }
+                               this.setState({script_menu:false});
+                                           
+                            
+
+                                // if(document.getElementById('element-menu') !== null) {
+                                //     document.getElementById('element-menu').remove();
+                                // }
+
+
+                                
+                               
                             }
                         }
                             
@@ -1993,10 +2133,14 @@ import { WithContext as ReactTags } from 'react-tag-input';
                             <p id="apps-text" style={{fontSize:10.2,fontWeight:'bold',width:'21px',pointerEvents:'none'}} className="menubgnot">APPS</p>
                         </div>
                         <div id="script-tag" refs="script-tag" onClick={(e)=> {
-// }
+// }    
                             let thisElement = document.getElementById(e.target.id);
                             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
                             let menuinfo = document.getElementById('menu-info');
+
+                            
+                            
+                            
                             if(thisElement !== undefined) {
                                 if(thisElement.className !== 'menubg') {                            
                                
@@ -2026,9 +2170,48 @@ import { WithContext as ReactTags } from 'react-tag-input';
 
                                     document.getElementById('elements-icon').style.color = `rgb(82, 82, 82)`;
                                     document.getElementById('elements-text').style.color = 'rgb(82, 82, 82)';
-                                    if(menuinfo !== null) {
-                                        menuinfo.remove()
+                                    if(document.getElementById('menu-info') !== null) {
+                                        document.getElementById('menu-info').remove();
+                                        that.setState({welcome:false});
+                                        }
+                                    if(document.getElementById('app-menu') !== null){
+                                        document.getElementById('app-menu').remove();
                                     }
+                                    // if(menuinfo !== null) {
+                                    //     menuinfo.remove()
+                                    // }
+                                    // if(document.getElementById('menu-info-box') !== null) {
+                                    //     document.getElementById('menu-info-box').remove()
+                                    //    }
+                                    if(document.getElementById('element-menu') !== null) {
+                                        document.getElementById('element-menu').remove();
+                                    }
+                         
+                                    if(document.getElementById('remix-image-box') !== null) {
+                                        document.getElementById('remix-image-box').remove();
+                                       }
+        
+        
+                                       
+        
+                                       that.setState(
+                                        {
+                                            details:false,
+                                            objects:false,
+                                            comments:false,
+                                            draw:false,
+                                            remix:false,
+                                            showPublish:false,
+                                            script_menu:true
+                                        }
+                                    );
+        
+                                       
+                                       this.setState({script_menu:true});
+                                                   
+
+                                    
+     
                                 }
                             }
                             
@@ -2335,12 +2518,34 @@ import { WithContext as ReactTags } from 'react-tag-input';
                                     iframeWrap.style.height = '100%';
                                     iframeWrap.style.width = '100%';
                                     iframeWrap.style.zIndex = '99999999';
-                                    iframeWrap.style.backgroundColor = 'red';
+                                    iframeWrap.style.backgroundColor = 'transparent';
                                     iframeWrap.style.display = 'flex';
                                     iframeWrap.style.justifyContent = 'center';
                                     iframeWrap.style.alignItems = 'center';
                                     iframeWrap.setAttribute("id", "card-thumb-wrap");
-
+                                    iframeWrap.style.zIndex = '999999999';
+                                    let closecardthumbwrap = document.createElement('p');
+                                    closecardthumbwrap.style.fontSize = '40px';
+                                    closecardthumbwrap.style.color = 'white';
+                                    closecardthumbwrap.appendChild(document.createTextNode('X'));
+                                    
+                                    closecardthumbwrap.style.top = '0px';
+                                    closecardthumbwrap.style.position = 'absolute';
+                                    closecardthumbwrap.style.right = '20px';
+                                    closecardthumbwrap.addEventListener('click', ()=>{
+                                        iframeWrap.style.display = 'none';
+                                        document.getElementById('black-opacity-modal').style.display = 'none'
+                                    })
+                                    iframeWrap.appendChild(closecardthumbwrap);
+                                    let blackOpacityModal = document.createElement('div');
+                                    blackOpacityModal.setAttribute("id", "black-opacity-modal");
+                                    blackOpacityModal.style.position = 'absolute';
+                                    blackOpacityModal.style.height = '100%';
+                                    blackOpacityModal.style.width = '100%';
+                                    blackOpacityModal.style.backgroundColor = 'black';
+                                    blackOpacityModal.style.opacity = '0.8';
+                                    blackOpacityModal.style.zIndex = '9999999';
+                                    document.getElementById('root').appendChild(blackOpacityModal);
                                     document.getElementById('root').appendChild(iframeWrap);
 
                                     iframe.setAttribute("id","regular-thumbnail");
@@ -2511,8 +2716,9 @@ import { WithContext as ReactTags } from 'react-tag-input';
                                     cardWrapWrapWrap.appendChild(cardWrapWrap);
                                     cardWrapWrapWrap.appendChild(save);
                                     iframeWrap.appendChild(cardWrapWrapWrap);
+                                    
                                     iframeWrap.style.display = 'none';
-         
+                                    blackOpacityModal.style.display = 'none';
                                     let iframe_doc = iframe.contentDocument;
                                     //window.Subj('#regular-thumbnail').draggle();
                                     console.log('window',window)
@@ -2553,6 +2759,10 @@ import { WithContext as ReactTags } from 'react-tag-input';
                                 if(menuinfo !== null) {
                                     menuinfo.remove()
                                 }
+                                if(document.getElementById('element-menu') !== null) {
+                                    document.getElementById('element-menu').remove();
+                                }
+ 
                                 
 
                             
