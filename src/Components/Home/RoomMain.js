@@ -21,6 +21,9 @@ import * as S3 from 'aws-sdk/clients/s3';
 import RelatedRoomPost from './RelatedRoomPost.js';
 import { WithContext as ReactTags } from 'react-tag-input';
 
+var GphApiClient = require('giphy-js-sdk-core')
+let client = GphApiClient("ybxqH0QDbtfnHTrTrFJ0BmLMX6QpEpWu")
+
 let apps = [{},{}]
     let database = firebase.database();
 
@@ -46,10 +49,11 @@ let apps = [{},{}]
     let postData = [];
     let callOnce = false;
     let isUploaded = false;
+    let objects_arr = []
 
 
     let elements_arr = [{},{},{}];
-
+    let element_options = ['GIFS','STICKERS','EMOJIS','TEXT'];
 
     let Loaded = false;
     let isMenuOpen = false;
@@ -232,7 +236,8 @@ let apps = [{},{}]
                 element_menu:false,
                 app_menu:false,
                 script_menu:false,
-                publish_menu:false
+                publish_menu:false,
+                object_arr:[]
             
             };
             this.openModal = this.openModal.bind(this);
@@ -265,6 +270,7 @@ let apps = [{},{}]
             this.getFileName = this.getFileName.bind(this);
             this.putObject = this.putObject.bind(this);
             this.getMimeType = this.getMimeType.bind(this);
+            this.makeResizableDiv =  this.makeResizableDiv.bind(this)
         }
         descriptionhandleChange(event) {
             this.setState({description: event.target.value});
@@ -288,6 +294,25 @@ let apps = [{},{}]
             let hashids = new Hashids(uuid(), 6);
        
             this.setState({shortID:hashids.encode(1, 2, 3)});
+
+            client.search('gifs', {"q": "cats"})
+  .then((response) => {
+    response.data.forEach((gifObject) => {
+      elements_arr.push(gifObject)
+    })
+  })
+  .catch((err) => {
+
+  })
+
+/// Sticker Search
+client.search('stickers', {"q": "cats"})
+  .then((response) => {
+
+  })
+  .catch((err) => {
+
+  })
 
             //this.incrementViews();
             var user = firebase.auth().currentUser;
@@ -1694,6 +1719,87 @@ let apps = [{},{}]
             string: stringIn.length < 120 ? stringIn : stringIn.substring(0, 120)
         };
     }
+    /*Make resizable div by Hung Nguyen*/
+ makeResizableDiv(div) {
+    
+    const element = document.querySelector(div);
+    const resizers = document.querySelectorAll(div + ' .resizer')
+    const minimum_size = 20;
+    let original_width = 0;
+    let original_height = 0;
+    let original_x = 0;
+    let original_y = 0;
+    let original_mouse_x = 0;
+    let original_mouse_y = 0;
+    for (let i = 0;i < resizers.length; i++) {
+      const currentResizer = resizers[i];
+      currentResizer.addEventListener('mousedown', function(e) {
+        e.preventDefault()
+        original_width = parseFloat(getComputedStyle(element, null).getPropertyValue('width').replace('px', ''));
+        original_height = parseFloat(getComputedStyle(element, null).getPropertyValue('height').replace('px', ''));
+        original_x = element.getBoundingClientRect().left;
+        original_y = element.getBoundingClientRect().top;
+        original_mouse_x = document.getElementById('output-container').contentWidth + 'px';
+        original_mouse_y = e.pageY;
+        window.addEventListener('mousemove', resize)
+        window.addEventListener('mouseup', stopResize)
+      })
+      
+      function resize(e) {
+          document.getElementById('out-cover').style.display = 'block';
+        if (currentResizer.classList.contains('bottom-right')) {
+          const width = original_width + (e.pageX - original_mouse_x);
+          const height = original_height + (e.pageY - original_mouse_y)
+          if (width > minimum_size) {
+            element.style.width = width + 'px'
+          }
+          if (height > minimum_size) {
+            element.style.height = height + 'px'
+          }
+        }
+        else if (currentResizer.classList.contains('bottom-left')) {
+          const height = original_height + (e.pageY - original_mouse_y)
+          const width = original_width - (e.pageX - original_mouse_x)
+          if (height > minimum_size) {
+            element.style.height = height + 'px'
+          }
+          if (width > minimum_size) {
+            element.style.width = width + 'px'
+            element.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
+          }
+        }
+        else if (currentResizer.classList.contains('top-right')) {
+          const width = original_width + (e.pageX - original_mouse_x)
+          const height = original_height - (e.pageY - original_mouse_y)
+          if (width > minimum_size) {
+            element.style.width = width + 'px'
+          }
+          if (height > minimum_size) {
+            element.style.height = height + 'px'
+            element.style.top = original_y + (e.pageY - original_mouse_y) + 'px'
+          }
+        }
+        else {
+          const width = original_width - (e.pageX - original_mouse_x)
+          const height = original_height - (e.pageY - original_mouse_y)
+          if (width > minimum_size) {
+            element.style.width = width + 'px'
+            element.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
+          }
+          if (height > minimum_size) {
+            element.style.height = height + 'px'
+            element.style.top = original_y + (e.pageY - original_mouse_y) + 'px'
+          }
+        }
+      }
+      
+      function stopResize() {
+        window.removeEventListener('mousemove', resize)
+      }
+    }
+  }
+  
+ 
     render() {
         let that = this;
         const {isLoading} = this.state;
@@ -1931,19 +2037,105 @@ let apps = [{},{}]
             mainmenu.style.width = '330px';
             mainmenu.style.padding = '10px'
             let element_menu = document.createElement('div');
+
             element_menu.style.display = 'flex';
             element_menu.style.width = '100%';
             element_menu.style.flexWrap = 'wrap';
-            element_menu.setAttribute("id","element-menu")
-            elements_arr.map(() => {
+            element_menu.setAttribute("id","element-menu");
+            element_menu.style.top = '10px';
+            element_menu.style.position = 'relative';
+            element_menu.style.display = 'flex';
+            element_menu.style.justifyContent = 'center'
+            elements_arr.map((i) => {
             let element = document.createElement('div');
+            if(i.images !== undefined) {
+            console.log(i.images.downsized_medium.url)
+            
             element.style.height = '100px';
             element.style.width = '100px';
-            element.style.border = '1px solid white';
+            element.style.border = '0px solid white';
             element.style.margin = '5px';
+            element.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
+            element.style.backgroundSize = 'cover';
+            
+            element.addEventListener('click',()=>{
+                let object = document.createElement('div');
+                let resizers = document.createElement('div');
+                let resizerOne = document.createElement('div');
+                let resizerTwo = document.createElement('div');
+                let resizerThree = document.createElement('div');
+                let resizerFour = document.createElement('div');
+
+                resizers.className = 'resizers';
+                resizerOne.className = 'resizer top-left';
+                resizerTwo.className = 'resizer top-right';
+                resizerThree.className = 'resizer bottom-left';
+                resizerFour.className = 'resizer bottom-right';
+
+
+                object.style.backgroundSize = 'cover';
+                object.style.height = '100px';
+                object.style.width = '100px';
+                object.style.border = '1px solid white';
+                object.style.zIndex = '9999999999';
+                object.className = 'resizable';
+                object.style.position = 'absolute';
+                object.setAttribute("id", i.id);
+                resizers.appendChild(resizerOne);
+                resizers.appendChild(resizerTwo);
+                resizers.appendChild(resizerThree);
+                resizers.appendChild(resizerFour);
+                object.appendChild(resizers);
+                console.log(i)
+
+                
+                
+                if(i.type === 'gif') {
+                    document.getElementById('output-container').appendChild(object);
+                    object.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
+                    this.makeResizableDiv(`#${i.id}`);
+                }
+                
+       
+            })
+
             element_menu.appendChild(element);
+            }
             });
+            
+            let searchGIFS = document.createElement('div');
+            searchGIFS.style.height = '20px';
+            searchGIFS.style.width = '150px';
+            searchGIFS.style.border = '1px solid white'
+
+            let elementTabs = document.createElement('ul');
+            elementTabs.style.display = 'flex';
+            elementTabs.style.alignItems = 'center';
+            elementTabs.style.height = '30px';
+            elementTabs.style.width = '245px';
+            elementTabs.style.border = '0px solid white';
+            elementTabs.style.padding = '10px 0px';
+
+
+
+            
+            for(let i=0; i < element_options.length; i++) {
+                let li = document.createElement('li');
+                li.style.color = 'rgb(54, 255, 233)';
+                li.style.listStyleType = 'none';
+                li.style.fontSize = '14px'
+                li.appendChild(document.createTextNode(element_options[i]));
+                li.addEventListener('click', ()=>{
+         
+                   
+
+                })
+                elementTabs.appendChild(li)
+            }
+            
             if(document.getElementById('element-menu') === null) {
+                mainmenu.appendChild(elementTabs);
+                //mainmenu.appendChild(searchGIFS);
                 mainmenu.appendChild(element_menu);
             }   
             if(this.state.element_menu === false) {
@@ -3012,8 +3204,11 @@ let apps = [{},{}]
                 
                         
                         </div>
-                        <div style={{display:'flex', flexDirection:'column', background:'white', width:'100%', position:'relative', border:'0px solid red'}}>
+                        <div id="flow-content" style={{display:'flex', flexDirection:'column', background:'white', width:'100%', position:'relative', border:'0px solid red'}}>
                             <Editor/>
+                            {((i = 0)=>{
+                          
+                            })}
                             <div style={{width:'100%', borderBottom:'1px solid black',background:'rgb(24, 24, 24)'}}>
                                 <div className="tabs-wrap"></div>        
                             </div>

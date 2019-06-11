@@ -43,28 +43,24 @@ class RelatedRoomPost extends Component {
 
         return  (
             <div style={{position:'relative'}} onMouseEnter={this.mouseHover.bind(this)} onMouseLeave={this.mouseLeave.bind(this)}  style={{
-                height:159, width:232,
+                width:232,
                 background:'#1f1f1f',
-                display:'flex',
+            
                 justifyContent:'center',
                 alignItems:'flex-end',
-                padding:5,
                 margin:'0px 0px 15px',
-                flexDirection:'column'
+                flexDirection:'column',
+                padding:'8px 8px 6px'
             }}>
             <div style={{width:232}}>
                 <Link to={`/room/${this.props.shortID}`}><p style={{
-                    fontSize:'12px',
-                    left:'11px',
-                    top:'-7px',
+                    fontSize:'16px',
                     position:'relative',
                     margin:0,
                     color:'white'
                 }}>{this.props.title}</p></Link>
                 <Link to={`/${this.props.userName}`}><p style={{
-                    fontSize:'8px',
-                    left:'11px',
-                    top:'-9px',
+                    fontSize:'14px',
                     position:'relative',
                     margin:0,
                     color:'white'
@@ -72,13 +68,13 @@ class RelatedRoomPost extends Component {
             </div>
             <div style={{
                 height:118, 
-                width:221, 
                 backgroundSize:'cover',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition:'center',
                 backgroundImage:`url(${this.props.thumbnail})`,
                 backgroundRepeat:'no-repeat',
-                transform:'scale(1)'
+                transform:'scale(1)',
+                marginTop:8
             }}></div>
                 
             </div>

@@ -52,24 +52,27 @@ class ProfilePic extends Component {
 
     {
         isLoading ? <div>.</div> :
-      (<div style={{display:'flex'}}><div onClick={()=> {
+      (<div onClick={()=> {
         if(this.state.menuVisible === false) {
           this.setState({menuVisible:true});
         } else {
           this.setState({menuVisible:false}); 
         }
-      }} className="header-profile-pic" style={{
+      }} ><div style={{display:'flex'}}><div className="header-profile-pic" style={{
         backgroundImage:`url(${this.state.pic})`,
         backgroundRepeat:'no-repeat',
         backgroundPosition:'center center',
         backgroundSize:'cover',
-        backgroundRepeat:'no-repeat'
-        
+        backgroundRepeat:'no-repeat',
+        cursor:'pointer'
         }}>
-        <div>
-        {/* <p style={{color:'white'}}>{this.state.username}</p>   */}
-        </div>
+     
         
+        </div>
+        <div style={{display:'flex',marginLeft:5,alignItems:'center'}}>
+        <p style={{color:'white',fontSize:12,cursor:'pointer'}}>{this.state.username}</p>  
+        <i style={{marginLeft:5,color:'white',cursor:'pointer'}} className="fas fa-chevron-down"></i>
+        </div>
         </div>
         
         <div style={{position:'relative'}}>
@@ -77,22 +80,22 @@ class ProfilePic extends Component {
             position:'absolute',
             height:'105px',
             width:'100px',
-            border:'1px solid #E2E2E2',
-            top:'38px',
-            left:'-31px',
-            background:'white',
-            borderRadius:'6px',
+            border:'0.1px solid rgb(64, 255, 232)',
+            top:'28px',
+         
+            background:'black',
+
             zIndex:'999999',
             display:this.state.menuVisible ? 'flex' : 'none',
             flexDirection:'column'
           }}>
             <div onClick={()=> {
               window.location.replace(`/${this.state.username}`)
-            }} style={{display:'flex', borderBottom:'1px solid #E2E2E2', height:'35px', textAlign:'center', justifyContent:'center', alignItems:'center'}}>View Profile</div>
+            }} style={{display:'flex', borderBottom:'1px solid rgb(64, 255, 232)', height:'35px', textAlign:'center', justifyContent:'center', alignItems:'center',color:'rgb(64, 255, 232)',pointer:'cursor'}}>View Profile</div>
             <div onClick={()=> {
               window.location.replace(`/${this.state.username}/edit`)
-            }} style={{display:'flex', borderBottom:'1px solid #E2E2E2', height:'35px', textAlign:'center', justifyContent:'center', alignItems:'center'}}>Edit Profile</div>
-            <div onClick={logOut()} style={{display:'flex', borderBottom:'1px solid #E2E2E2', height:'35px', textAlign:'center', justifyContent:'center', alignItems:'center'}}>Log Out</div>
+            }} style={{display:'flex', borderBottom:'1px solid rgb(64, 255, 232)', height:'35px', textAlign:'center', justifyContent:'center', alignItems:'center',color:'rgb(64, 255, 232)',pointer:'cursor'}}>Edit Profile</div>
+            <div onClick={logOut()} style={{display:'flex', borderBottom:'1px solid rgb(64, 255, 232)', height:'35px', textAlign:'center', justifyContent:'center', alignItems:'center',color:'rgb(64, 255, 232)',pointer:'cursor'}}>Log Out</div>
           </div>
         </div>
       </div>)
