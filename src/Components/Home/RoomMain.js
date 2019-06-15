@@ -1722,8 +1722,8 @@ client.search('stickers', {"q": "cats"})
     /*Make resizable div by Hung Nguyen*/
  makeResizableDiv(div) {
     
-    const element = document.querySelector(div);
-    const resizers = document.querySelectorAll(div + ' .resizer')
+    const element = document.getElementById('output_frame').contentWindow.document.querySelector(div);
+    const resizers =  document.getElementById('output_frame').contentWindow.document.querySelectorAll(div + ' .resizer')
     const minimum_size = 20;
     let original_width = 0;
     let original_height = 0;
@@ -1739,14 +1739,14 @@ client.search('stickers', {"q": "cats"})
         original_height = parseFloat(getComputedStyle(element, null).getPropertyValue('height').replace('px', ''));
         original_x = element.getBoundingClientRect().left;
         original_y = element.getBoundingClientRect().top;
-        original_mouse_x = document.getElementById('output-container').contentWidth + 'px';
+        original_mouse_x = e.pageX;
         original_mouse_y = e.pageY;
-        window.addEventListener('mousemove', resize)
-        window.addEventListener('mouseup', stopResize)
+        document.getElementById('output_frame').contentWindow.addEventListener('mousemove', resize)
+        document.getElementById('output_frame').contentWindow.addEventListener('mouseup', stopResize)
       })
       
       function resize(e) {
-          document.getElementById('out-cover').style.display = 'block';
+          //document.getElementById('out-cover').style.display = 'block';
         if (currentResizer.classList.contains('bottom-right')) {
           const width = original_width + (e.pageX - original_mouse_x);
           const height = original_height + (e.pageY - original_mouse_y)
@@ -1794,7 +1794,7 @@ client.search('stickers', {"q": "cats"})
       }
       
       function stopResize() {
-        window.removeEventListener('mousemove', resize)
+        document.getElementById('output_frame').contentWindow.removeEventListener('mousemove', resize)
       }
     }
   }
@@ -1953,7 +1953,9 @@ client.search('stickers', {"q": "cats"})
                                    if(document.getElementById('app-menu') !== null) {
                                     document.getElementById('app-menu').remove();
                                    }
- 
+                                   if(document.getElementById('elements') !== null) {
+                                    document.getElementById('elements').remove();
+                                   }
                                   // document.querySelector(".svgClass").getSVGDocument().getElementById("svgInternalID").setAttribute("fill", "red")
 
                                 }  
@@ -2065,6 +2067,52 @@ client.search('stickers', {"q": "cats"})
                 let resizerTwo = document.createElement('div');
                 let resizerThree = document.createElement('div');
                 let resizerFour = document.createElement('div');
+                let header = document.createElement('div');
+                header.style.height = '100px';
+                header.style.width = '10px';
+                header.style.border = '1px solid black';
+                header.style.position = 'relative';
+                header.style.margin = 'auto';
+
+                let dragwrapper = document.createElement('div');
+                dragwrapper.style.height = '100px';
+                dragwrapper.style.width = '100px';
+                dragwrapper.style.border = '1px solid black';
+
+                let minimize = document.createElement('div');
+                minimize.setAttribute("id", 'minimize_' + i.id);
+                let minicon = document.createElement('i');
+                minicon.style.color = 'white';
+                minicon.className = 'fas fa-window-minimize'
+                minimize.appendChild(minicon);
+
+                let maximize = document.createElement('div');
+                maximize.setAttribute("id", 'maximize_' + i.id);
+                let maxicon = document.createElement('i');
+                maxicon.style.color = 'white';
+                maxicon.className = 'fas fa-window-minimize';
+                maximize.appendChild(maxicon);
+                
+                let close = document.createElement('div');
+                close.setAttribute('id', 'close_' + i.id);
+                let closeicon = document.createElement('i');
+                closeicon.style.color = 'white';
+                closeicon.className = 'fas fa-window-minimize';
+                close.appendChild(closeicon);
+
+                dragwrapper.appendChild(minimize);
+                dragwrapper.appendChild(maximize);
+                dragwrapper.appendChild(close);
+
+                header.style.height = '29px';
+                header.style.border = '1px solid black';
+                header.style.width = '100px';
+
+
+
+                
+                
+
 
                 resizers.className = 'resizers';
                 resizerOne.className = 'resizer top-left';
@@ -2077,24 +2125,33 @@ client.search('stickers', {"q": "cats"})
                 object.style.height = '100px';
                 object.style.width = '100px';
                 object.style.border = '1px solid white';
-                object.style.zIndex = '9999999999';
+                object.style.zIndex = '1000000000000000000000000';
                 object.className = 'resizable';
                 object.style.position = 'absolute';
+                object.style.top = '0px';
                 object.setAttribute("id", i.id);
                 resizers.appendChild(resizerOne);
                 resizers.appendChild(resizerTwo);
                 resizers.appendChild(resizerThree);
                 resizers.appendChild(resizerFour);
+                object.appendChild(header)
                 object.appendChild(resizers);
                 console.log(i)
-
+               
                 
                 
                 if(i.type === 'gif') {
-                    document.getElementById('output-container').appendChild(object);
+                    document.getElementById('output_frame').contentDocument.body.appendChild(object);
                     object.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
                     this.makeResizableDiv(`#${i.id}`);
                 }
+                let dhtml = JSON.parse(localStorage.getItem("dhtml"));
+          
+                let html = document.getElementById('output_frame').contentWindow.document.body.innerHTML;
+                let dhtmlObj = {html:html, js:dhtml.js, css:dhtml.css}
+                
+               
+                localStorage.setItem("dhtml", JSON.stringify(dhtmlObj));
                 
        
             })
@@ -2115,6 +2172,7 @@ client.search('stickers', {"q": "cats"})
             elementTabs.style.width = '245px';
             elementTabs.style.border = '0px solid white';
             elementTabs.style.padding = '10px 0px';
+            elementTabs.setAttribute("id","elements")
 
 
 
@@ -2125,7 +2183,7 @@ client.search('stickers', {"q": "cats"})
                 li.style.listStyleType = 'none';
                 li.style.fontSize = '14px'
                 li.appendChild(document.createTextNode(element_options[i]));
-                li.addEventListener('click', ()=>{
+                li.addEventListener('click', ()=> {
          
                    
 
@@ -2274,6 +2332,10 @@ client.search('stickers', {"q": "cats"})
                                 document.getElementById('remix-image-box').remove();
                                }
 
+                               if(document.getElementById('elements') !== null) {
+                                document.getElementById('elements').remove();
+                               }
+
 
                                
 
@@ -2383,7 +2445,9 @@ client.search('stickers', {"q": "cats"})
                                         document.getElementById('remix-image-box').remove();
                                        }
         
-        
+                                       if(document.getElementById('elements') !== null) {
+                                        document.getElementById('elements').remove();
+                                       }
                                        
         
                                        that.setState(
@@ -2954,6 +3018,9 @@ client.search('stickers', {"q": "cats"})
                                 if(document.getElementById('element-menu') !== null) {
                                     document.getElementById('element-menu').remove();
                                 }
+                                if(document.getElementById('elements') !== null) {
+                                    document.getElementById('elements').remove();
+                                   }
  
                                 
 
@@ -3024,6 +3091,9 @@ client.search('stickers', {"q": "cats"})
                                document.getElementById('menu-info').remove();
                             //    document.getElementById('remix-list').remove();
                               }
+                              if(document.getElementById('elements') !== null) {
+                                document.getElementById('elements').remove();
+                               }
                                that.setState({
                                 details:false,
                                 objects:false,
