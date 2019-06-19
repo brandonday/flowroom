@@ -237,7 +237,8 @@ let apps = [{},{}]
                 app_menu:false,
                 script_menu:false,
                 publish_menu:false,
-                object_arr:[]
+                object_arr:[],
+                fontAwesomeAdded:false
             
             };
             this.openModal = this.openModal.bind(this);
@@ -1720,6 +1721,10 @@ client.search('stickers', {"q": "cats"})
         };
     }
     /*Make resizable div by Hung Nguyen*/
+
+
+
+
  makeResizableDiv(div) {
     
     const element = document.getElementById('output_frame').contentWindow.document.querySelector(div);
@@ -1798,7 +1803,52 @@ client.search('stickers', {"q": "cats"})
       }
     }
   }
-  
+ 
+
+dragElement(elmnt) {
+ 
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header")) {
+    /* if present, the header is where you move the DIV from:*/
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+    
+  } else {
+    /* otherwise, move the DIV from anywhere inside the DIV:*/
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+     
+    e = e || window.event;
+    e.preventDefault();
+    
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    /* stop moving when mouse button is released:*/
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
  
     render() {
         let that = this;
@@ -2068,57 +2118,84 @@ client.search('stickers', {"q": "cats"})
                 let resizerThree = document.createElement('div');
                 let resizerFour = document.createElement('div');
                 let header = document.createElement('div');
-                header.style.height = '100px';
-                header.style.width = '10px';
-                header.style.border = '1px solid black';
+                header.style.height = '20px';
+                header.style.width = '125px';
+                //header.style.border = '1px solid black';
                 header.style.position = 'relative';
                 header.style.margin = 'auto';
+                header.style.display = 'flex';
+                header.style.top = '-34px';
 
                 let dragwrapper = document.createElement('div');
-                dragwrapper.style.height = '100px';
-                dragwrapper.style.width = '100px';
-                dragwrapper.style.border = '1px solid black';
+                dragwrapper.style.display = 'flex';
+                dragwrapper.style.height = '20px';
+                dragwrapper.style.width = '64px';
+                //dragwrapper.style.border = '1px solid black';
+                dragwrapper.style.position = 'absolute';
+                dragwrapper.style.right = '0px';
+                dragwrapper.style.justifyContent = 'space-between';
+
 
                 let minimize = document.createElement('div');
                 minimize.setAttribute("id", 'minimize_' + i.id);
                 let minicon = document.createElement('i');
                 minicon.style.color = 'white';
-                minicon.className = 'fas fa-window-minimize'
+                minicon.className = 'fas fa-window-minimize';
+                // minicon.style.fontSize = '20px';
+                
                 minimize.appendChild(minicon);
+                //minimize.style.height = '20px';
+                //minimize.style.width = '20px';
+                //minimize.style.border = '1px solid black';
 
                 let maximize = document.createElement('div');
                 maximize.setAttribute("id", 'maximize_' + i.id);
                 let maxicon = document.createElement('i');
                 maxicon.style.color = 'white';
-                maxicon.className = 'fas fa-window-minimize';
+                maxicon.className = 'fas fa-window-maximize';
                 maximize.appendChild(maxicon);
+                
+                //maximize.style.border = '1px solid black';
                 
                 let close = document.createElement('div');
                 close.setAttribute('id', 'close_' + i.id);
                 let closeicon = document.createElement('i');
                 closeicon.style.color = 'white';
-                closeicon.className = 'fas fa-window-minimize';
+                closeicon.className = 'fas fa-window-close';
                 close.appendChild(closeicon);
+          
+                //close.style.border = '1px solid black';
 
                 dragwrapper.appendChild(minimize);
                 dragwrapper.appendChild(maximize);
                 dragwrapper.appendChild(close);
 
-                header.style.height = '29px';
-                header.style.border = '1px solid black';
-                header.style.width = '100px';
+                header.appendChild(dragwrapper);
+                
+                
+                header.style.display = 'flex';
+                header.style.flexDirection = 'row';
+                header.style.alignItems = 'center';
+                header.setAttribute("id", `${i.id+'header'}`);
+                header.setAttribute("class", "draggable")
+                let dragMe = document.createElement('p');
 
+                dragMe.appendChild(document.createTextNode('DRAG'));
+                dragMe.style.color = 'white';
 
+                
+
+                
+                header.appendChild(dragMe);
 
                 
                 
 
-
-                resizers.className = 'resizers';
-                resizerOne.className = 'resizer top-left';
-                resizerTwo.className = 'resizer top-right';
-                resizerThree.className = 'resizer bottom-left';
-                resizerFour.className = 'resizer bottom-right';
+                // resizers.className = 'resizers';
+                // resizerOne.className = 'resizer top-left';
+                // resizerTwo.className = 'resizer top-right';
+                // resizerThree.className = 'resizer bottom-left';
+                // resizerFour.className = 'resizer bottom-right';
 
 
                 object.style.backgroundSize = 'cover';
@@ -2130,20 +2207,29 @@ client.search('stickers', {"q": "cats"})
                 object.style.position = 'absolute';
                 object.style.top = '0px';
                 object.setAttribute("id", i.id);
-                resizers.appendChild(resizerOne);
-                resizers.appendChild(resizerTwo);
-                resizers.appendChild(resizerThree);
-                resizers.appendChild(resizerFour);
+                // resizers.appendChild(resizerOne);
+                // resizers.appendChild(resizerTwo);
+                // resizers.appendChild(resizerThree);
+                // resizers.appendChild(resizerFour);
+                
                 object.appendChild(header)
-                object.appendChild(resizers);
+                //object.appendChild(resizers);
+                
                 console.log(i)
                
                 
                 
                 if(i.type === 'gif') {
+                    let objectWrapper = document.createElement('div');
+                    let dragSection = document.createElement('div');
+                    dragSection.style.height = '30px';
+                    dragSection.style.width = '100%';
                     document.getElementById('output_frame').contentDocument.body.appendChild(object);
                     object.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
-                    this.makeResizableDiv(`#${i.id}`);
+                    //this.makeResizableDiv(`#${i.id}`);
+                    document.getElementById('output_frame').contentWindow.Subjx(`.resizable`).drag({each:{move:false}});
+                    
+                    
                 }
                 let dhtml = JSON.parse(localStorage.getItem("dhtml"));
           

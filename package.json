@@ -24,6 +24,7 @@
     "hashids": "^1.2.2",
     "history": "^4.7.2",
     "html2canvas": "^1.0.0-alpha.12",
+    "interactjs": "^1.4.0-rc.13",
     "live-server": "^1.2.1",
     "lodash.throttle": "^4.1.1",
     "moment": "^2.22.2",
