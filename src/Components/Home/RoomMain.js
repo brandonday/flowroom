@@ -2188,7 +2188,7 @@ dragElement(elmnt) {
                 
                 header.appendChild(dragMe);
 
-                
+                let hashids = new Hashids(uuid(), 6);
                 
 
                 // resizers.className = 'resizers';
@@ -2202,24 +2202,24 @@ dragElement(elmnt) {
                 object.style.height = '100px';
                 object.style.width = '100px';
                 object.style.border = '1px solid white';
-                object.style.zIndex = '1000000000000000000000000';
+                //object.style.zIndex = '1000000000000000000000000';
                 object.className = 'resizable';
                 object.style.position = 'absolute';
                 object.style.top = '0px';
-                object.setAttribute("id", i.id);
+                object.setAttribute("id", hashids.encode(1,2,3));
                 // resizers.appendChild(resizerOne);
                 // resizers.appendChild(resizerTwo);
                 // resizers.appendChild(resizerThree);
                 // resizers.appendChild(resizerFour);
                 
-                object.appendChild(header)
+                //object.appendChild(header)
                 //object.appendChild(resizers);
                 
                 console.log(i)
                
                 
                 
-                if(i.type === 'gif') {
+                //if(i.type === 'gif') {
                     let objectWrapper = document.createElement('div');
                     let dragSection = document.createElement('div');
                     dragSection.style.height = '30px';
@@ -2227,10 +2227,10 @@ dragElement(elmnt) {
                     document.getElementById('output_frame').contentDocument.body.appendChild(object);
                     object.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
                     //this.makeResizableDiv(`#${i.id}`);
-                    document.getElementById('output_frame').contentWindow.Subjx(`.resizable`).drag({each:{move:false}});
+                    document.getElementById('output_frame').contentWindow.Subjx(`#${object.id}`).drag({move:false});
                     
                     
-                }
+                //}
                 let dhtml = JSON.parse(localStorage.getItem("dhtml"));
           
                 let html = document.getElementById('output_frame').contentWindow.document.body.innerHTML;

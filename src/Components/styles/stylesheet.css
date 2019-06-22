@@ -2742,6 +2742,21 @@ svg, .remix-icon{
   
 }
 
+
+.dg-hdl, .dg-hdl-t, .dg-hdl-tl {
+  content: "";
+    /* position: absolute; */
+    /* top: -5px; */
+    /* left: -5px; */
+    width: 10px !important;
+    height: 10px !important;
+    /* margin-left: 50%; */
+    /* margin-top: 50%; */
+    border-radius: 50% !important;
+    background: rgb(218, 207, 207) !important;
+    box-shadow: 0 0 5px 1px rgba(14,19,24,.15), 0 0 0 1px rgba(14,19,24,.15);
+}
+
 .output_frame {
   border: 0;
   background:#1f1f1f;
