@@ -430,7 +430,7 @@ let apps = [{},{}]
           
                     document.getElementById('main-menu').style.position = 'absolute';
                     document.getElementById('main-menu').style.height = '100%';
-                    document.getElementById('main-menu').style.width = '330px';
+                    document.getElementById('main-menu').style.width = '269px';
                     document.getElementById('main-menu').style.zIndex = '999994';
                     document.getElementById('main-menu').style.top = '0px';
                     document.getElementById('main-menu').style.zIndex = '999999';
@@ -447,7 +447,8 @@ let apps = [{},{}]
                     document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingLeft = '10px';
                     document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingRight = '10px';
                     document.getElementById('room-main-page').style.marginTop = '30px';
-                    document.getElementById('room-wrap').style.flex = 4;
+                   
+                    
                     // document.getElementById('main-menu').style.position = 'absolute';
                     // document.getElementById('main-menu').style.left = '-330px';
                 } else {
@@ -474,6 +475,9 @@ let apps = [{},{}]
                     document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingRight = '36px';
                     document.getElementById('main-section-wrap-comments-screen-wrap').style.top = '60px';
                     document.getElementById('room-main-page').style.marginTop = '0px';
+                    document.getElementById('room-wrap').style.flex = '5 1 0%';
+                    document.getElementById('main-menu').style.maxWidth = '283px';
+                    document.getElementById('main-menu').style.width = '100%';
                 }
             }
             let x = window.matchMedia("(max-width: 768px)");
@@ -1471,11 +1475,12 @@ let apps = [{},{}]
         }
 
         RemixTab(e) {
+  
             let list = document.getElementById('main-menu');
             let thisElement = document.getElementById(e.target.id);
             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
             let menuinfo = document.createElement('div');
-            
+            document.getElementById('publish-section').style.display = 'none';
     
             menuinfo.setAttribute("id", "menu-info");
             
@@ -1562,14 +1567,14 @@ let apps = [{},{}]
             welcome_texts.appendChild(fifthLine);
            
        
-            if(that.state.welcome === false) {
+            if(this.state.welcome === false) {
                 menuinfo.appendChild(menuinfobox);
             
             menuinfobox.appendChild(welcome_texts);
             menuinfobox.style.display = 'flex';
             menuinfobox.style.justifyContent = 'center';
             menuinfobox.style.flexDirection = 'column';
-            that.setState({welcome:true});
+            this.setState({welcome:true});
             list.style.padding = '7px 14px 2px 7px';
             list.appendChild(menuinfo);
             }
@@ -1630,7 +1635,7 @@ let apps = [{},{}]
             );
             document.getElementById('main-menu').style.display = 'block';
             document.getElementById('main-menu').style.overflowY = 'scroll';
-            document.getElementById('main-menu').style.width = '269px';
+            //document.getElementById('main-menu').style.width = '269px';
             isMenuOpen = true;
         }
         ElementsTabs(e) {
@@ -1670,7 +1675,7 @@ let apps = [{},{}]
 
                 let mainmenu = document.getElementById('main-menu');
                 mainmenu.style.display = 'flex';
-                mainmenu.style.width = '269px';
+                //mainmenu.style.width = '269px';
                 mainmenu.style.padding = '10px'
                 let element_menu = document.createElement('div');
 
@@ -1784,7 +1789,7 @@ let apps = [{},{}]
                             object.style.border = '1px solid white';
                             //object.style.zIndex = '1000000000000000000000000';
                             object.className = 'resizable';
-                            object.style.position = 'absolute';
+                           // object.style.position = 'absolute';
                             object.style.top = '0px';
                             let object_id = 'OBJECT_' + hashids.encode(1,2,3);
                             object.setAttribute("id", object_id);
@@ -1805,10 +1810,37 @@ let apps = [{},{}]
                             let dragSection = document.createElement('div');
                             dragSection.style.height = '30px';
                             dragSection.style.width = '100%';
-                            document.getElementById('output_frame').contentDocument.body.appendChild(object);
+                            document.getElementById('output_frame').contentDocument.body.style.display = 'flex';
+                            let div = document.createElement('div');
+                            div.style.height = '200px';
+                            div.style.width = '300px';
+                            div.style.margin = '10px 20px'
+                            div.style.border = '1px solid blue';
+                            div.style.position = 'relative';
+                            div.setAttribute("id", `${'container'+i.id}`)
+                            div.appendChild(object)
+                            document.getElementById('overlay_output_frame').contentDocument.getElementById('overlay-container').appendChild(div);
+                            document.getElementById('overlay_output_frame').contentDocument.body.style.padding = '10px';
                             object.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
+                           
                             //this.makeResizableDiv(`#${i.id}`);
-                            document.getElementById('output_frame').contentWindow.Subjx(`#${object.id}`).drag({move:false});
+                            
+                            document.getElementById('overlay_output_frame').contentWindow.Subjx(`#${object.id}`).drag({
+                                
+                            container:`${'container'+i.id}`,
+                            // snapping to grid (default: 10)
+                            snap: {
+                                x: 20,
+                                y: 20,
+                                angle: 45
+                            },
+                            // mimic behavior with other draggable elements
+                            each: {
+                                move: false,
+                                resize: true, 
+                                rotate: true
+                                }
+                            });
     
     
                             //}
@@ -1864,7 +1896,7 @@ let apps = [{},{}]
                
                 if(menuinfo !== null) {
                     menuinfo.remove();
-                    that.setState({welcome:false});
+                    this.setState({welcome:false});
                 }
 
                 // if(document.getElementById('element-menu') !== null) {
@@ -1879,7 +1911,7 @@ let apps = [{},{}]
                     document.getElementById('remix-image-box').remove();
                    }
 
-                   that.setState(
+                   this.setState(
                         {
                             details:false,
                             objects:false,
@@ -1940,7 +1972,7 @@ let apps = [{},{}]
         
                     let mainmenu = document.getElementById('main-menu');
                     mainmenu.style.display = 'flex';
-                    mainmenu.style.width = '269px';
+                    //mainmenu.style.width = '269px';
                     mainmenu.style.padding = '10px'
                     let app_menu = document.createElement('div');
                     app_menu.style.display = 'flex';
@@ -1957,7 +1989,7 @@ let apps = [{},{}]
                     });
                     if(document.getElementById('menu-info') !== null) {
                         document.getElementById('menu-info').remove();
-                        that.setState({welcome:false});
+                        this.setState({welcome:false});
                     }
                     if(document.getElementById('app-menu') === null) {
                         mainmenu.appendChild(app_menu);
@@ -1978,7 +2010,7 @@ let apps = [{},{}]
 
                
 
-                    that.setState(
+                    this.setState(
                         {
                             details:false,
                             objects:false,
@@ -2050,7 +2082,7 @@ let apps = [{},{}]
                     document.getElementById('elements-text').style.color = 'rgb(82, 82, 82)';
                     if(document.getElementById('menu-info') !== null) {
                         document.getElementById('menu-info').remove();
-                        that.setState({welcome:false});
+                        this.setState({welcome:false});
                         }
                     if(document.getElementById('app-menu') !== null){
                         document.getElementById('app-menu').remove();
@@ -2074,7 +2106,7 @@ let apps = [{},{}]
                        }
                        
 
-                       that.setState(
+                       this.setState(
                         {
                             details:false,
                             objects:false,
@@ -2127,7 +2159,7 @@ let apps = [{},{}]
             let list = document.getElementById('main-menu');
             let menuinfo = document.getElementById('menu-info')
             list.style.padding = '7px 14px 2px 7px';
-          
+            list.style.width = '354px'
             if(thisElement != undefined) {
                 if(thisElement.className !== 'menubg') {                            
                
@@ -2558,20 +2590,376 @@ let apps = [{},{}]
                         }
                     );
                 }
+                
                 if(menuinfo !== null) {
-                    menuinfo.remove()
+                    menuinfo.remove();
+                    this.setState({welcome:false});
                 }
+
+                // if(document.getElementById('element-menu') !== null) {
+                //     document.getElementById('element-menu').remove();
+                // }
+
+                if(document.getElementById('app-menu') !== null) {
+                    document.getElementById('app-menu').remove();
+                   }
+
+                   if(document.getElementById('remix-image-box') !== null) {
+                    document.getElementById('remix-image-box').remove();
+                   }
                 if(document.getElementById('element-menu') !== null) {
+             
                     document.getElementById('element-menu').remove();
                 }
                 if(document.getElementById('elements') !== null) {
                     document.getElementById('elements').remove();
-                   }
+                }
 
                 document.getElementById('publish-section').style.display = 'flex';
 
-            
+                if(document.getElementById('app-menu') !== null){
+                    document.getElementById('app-menu').remove();
+                }
             }
+        }
+        PostTab(e) {
+            let that = this;
+            //this.openModal(true);
+            // let remixid = document.getElementById('remix-tab');
+            // let script = document.getElementById('script-tag');
+            // let postTab = document.getElementById('post-tab');
+            // remixid.className = '';
+            // remixid.style.borderRight = '0px solid #181818';  
+            // script.className = '';
+            // script.style.color = 'rgb(82, 82, 82)';
+            // postTab.className = 'menubg';
+            // postTab.style.color = 'rgb(64, 255, 232)';
+            let thisElement = document.getElementById(e.target.id);
+            let tabsWithMenubgClass = document.getElementsByClassName('menubg');
+            let mainmenu = document.getElementById('main-menu');
+            let remixImageList = document.getElementById('remix-image-list');
+           
+            if(thisElement != undefined) {
+                if(thisElement.className !== 'menubg') {                            
+               
+               for(let i = 0; tabsWithMenubgClass.length; i++) {
+                if(tabsWithMenubgClass[i] != undefined) {
+                    if(tabsWithMenubgClass[i].id !== thisElement.id) {
+                        tabsWithMenubgClass[i].className = 'menubgnot'
+                    } 
+                }
+               }
+               thisElement.className = 'menubg'; 
+               
+              if(document.getElementById('menu-info') !== null) {
+            //    document.getElementById('menu-info').remove();
+                if(document.getElementById('remix-image-box')){
+                document.getElementById('remix-image-box').remove();
+                }
+               document.getElementById('menu-info').remove();
+            //    document.getElementById('remix-list').remove();
+              }
+              if(document.getElementById('elements') !== null) {
+                document.getElementById('elements').remove();
+               }
+               that.setState({
+                details:false,
+                objects:false,
+                comments:false,
+                draw:false,
+                remix:false,
+                showPublish:true
+                });
+
+            }
+           
+                let iframe = document.getElementById('output_frame');
+                let dhtml = JSON.parse(localStorage.getItem("dhtml"));
+                let html_ = dhtml.html;
+                let css_ = dhtml.css;
+                let js_ = dhtml.js;
+            
+                
+
+                 
+                let base_tpl = "<!doctype html>\n" +
+                "<html>\n\t" +
+                "<head>\n\t\t" +
+                "<meta charset=\"utf-8\">\n\t\t" +
+                "<title>Test</title>\n\n\t\t\n\t" +
+                "</head>\n\t" +
+                "<body>\n\t\n\t" +
+                "</body>\n" +
+                "</html>";
+
+
+
+                let prepareSource = () => {
+                    let html = html_,
+                    css = css_,
+                    js = js_,
+
+                    src = '';
+                    src = base_tpl.replace('</body>', html + '</body>');
+                    css = '<style>' + css + '</style>';
+                    src = src.replace('</head>', css + '</head>');
+                    js = '<script>' + js + '<\/script>';
+                    src = src.replace('</body>', js + '</body>');
+                    let dhtmlObj = {html:html, js:js, css:css}
+
+                    // alert(htmlObj.html);
+                    localStorage.setItem("dhtml", JSON.stringify(dhtmlObj));
+                    localStorage.setItem("css", JSON.stringify(css));
+                    localStorage.setItem("js", JSON.stringify(js));
+                    return src;
+                };
+
+                let renderDHTML = () => {
+                    // alert('called')
+                let source = prepareSource();
+                let iframe = document.querySelector('#regular-thumbnail');
+                let iframe_doc = iframe.contentDocument;
+  
+                iframe_doc.open();
+                iframe_doc.write(source);
+                iframe_doc.close();
+
+
+                //when removing last library, set to [];
+                //iframe.contentWindow.flowroom.SaveScreenShot(
+                //     ()=> {
+                //         let imageData = localStorage.getItem("thumbnail");
+                //         alert(imageData)
+                //         let isRemix = isPostAsNew;
+                //         let remixRoomID = isPostAsNew ? that.state.shortID : that.state.remixRoomID;
+                //         let remixUserName = isPostAsNew ? that.state.userName : that.state.remixUserName;
+                //         localStorage.setItem("thumbnailUrl", "");
+                //         let thumbnail = document.getElementById('thumbnail-pic-display');
+                //         thumbnail.src = imageData;
+                //         thumbnail.setAttribute("height", "100%");
+                //         thumbnail.setAttribute("width", "100%");
+                //         that.putObject (
+                //             imageData, 
+                //             (url) => { 
+                //                 localStorage.setItem("thumbnailUrl", url);
+                //             }
+                //         );
+                //     }
+                // );
+
+
+
+        };
+
+
+        renderDHTML()
+
+            }
+        }
+        OpenMenu(){
+            
+            let list = document.getElementById('main-menu');
+            let thisElement = document.getElementById('remix-tab');
+            let tabsWithMenubgClass = document.getElementsByClassName('menubg');
+            let menuinfo = document.createElement('div');
+            
+
+            menuinfo.setAttribute("id", "menu-info");
+            
+            menuinfo.style.height = '170px';
+            menuinfo.style.width = '259px';
+            let menuinfobox = document.createElement('div');
+            let menuinfotop = document.createElement('div');
+            let infinity = document.createElement('div');
+            menuinfotop.style.display = 'flex';
+            menuinfotop.style.justifyContent = 'space-between';
+            menuinfotop.style.height = '20px';
+            menuinfotop.style.width = '100%';
+            menuinfobox.style.border = '1px solid #222222';
+            // menuinfobox.style.height = '147px';
+            menuinfobox.style.width = '259px';
+            menuinfobox.style.borderRadius = '3px';
+            menuinfobox.style.marginTop = '11px';
+            infinity.style.backgroundImage = `url(../infinity_cyan.svg)`;
+            infinity.style.backgroundSize = '100% 100%';
+            infinity.style.backgroundRepeat = 'no-repeat';
+            infinity.style.height = '20px';
+            infinity.style.width = '25px';
+            let closebox = document.createElement('div');
+            closebox.style.display = 'flex';
+            closebox.style.alignItems = 'center';
+            closebox.style.justifyContent = 'space-between';
+            closebox.style.width = '45px';
+            let welcometext = document.createElement('p');
+            welcometext.style.color = 'rgb(54, 255, 233)';
+            welcometext.appendChild(document.createTextNode('Welcome to the Remix Menu'));
+
+
+            let firstLine = document.createElement('p');
+            firstLine.style.color = 'white';
+            firstLine.style.fontSize = '15px';
+            firstLine.appendChild(document.createTextNode('Here you can swap Text,'));
+
+
+            let secondLine = document.createElement('p');
+            secondLine.style.color = 'white';
+            secondLine.style.fontSize = '15px';
+            secondLine.appendChild(document.createTextNode('Images, and other elements'));
+
+            let thirdLine = document.createElement('p');
+            thirdLine.style.color = 'white';
+            thirdLine.style.fontSize = '15px';
+            thirdLine.appendChild(document.createTextNode('inside of flows.'));
+            thirdLine.style.paddingBottom = '10px'
+
+            let fourthLine = document.createElement('p');
+            fourthLine.style.color = 'white';
+            fourthLine.style.fontSize = '15px';
+            fourthLine.appendChild(document.createTextNode('Click here for step by step'));
+           
+
+            let fifthLine = document.createElement('p');
+            fifthLine.style.color = 'white';
+            fifthLine.style.fontSize = '15px';
+            fifthLine.appendChild(document.createTextNode('video walkthroughs'));
+
+            let welcome_texts = document.createElement('div');
+
+            let closet = document.createElement('p');
+            let closex = document.createElement('p');
+            closex.appendChild(document.createTextNode('X'));
+            closex.style.fontSize = '20px';
+            closex.style.color = 'white';
+            closet.appendChild(document.createTextNode('close'));
+            closet.style.fontSize = '11px';
+            closet.style.color = 'white';
+            menuinfotop.appendChild(infinity);
+            closebox.appendChild(closet);
+            closebox.appendChild(closex);
+            menuinfotop.appendChild(closebox);
+            menuinfobox.appendChild(menuinfotop)
+            menuinfobox.appendChild(welcometext);
+            menuinfobox.style.padding = '20px';
+            menuinfobox.setAttribute("id", "menu-info-box");
+            
+            welcome_texts.appendChild(firstLine);
+            welcome_texts.appendChild(secondLine);
+            welcome_texts.appendChild(thirdLine);
+            welcome_texts.appendChild(fourthLine);
+            welcome_texts.appendChild(fifthLine);
+           
+       
+            if(this.state.welcome === false) {
+                menuinfo.appendChild(menuinfobox);
+            
+            menuinfobox.appendChild(welcome_texts);
+            menuinfobox.style.display = 'flex';
+            menuinfobox.style.justifyContent = 'center';
+            menuinfobox.style.flexDirection = 'column';
+            this.setState({welcome:true});
+            list.style.padding = '7px 14px 2px 7px';
+            list.appendChild(menuinfo);
+            }
+            
+            if(thisElement !== undefined) {
+                if(thisElement.className !== 'menubg') {                            
+               
+                    for(let i = 0; tabsWithMenubgClass.length; i++) {
+                        if(tabsWithMenubgClass[i] != undefined) {
+                            if(tabsWithMenubgClass[i].id !== thisElement.id) {
+                                tabsWithMenubgClass[i].className = '';
+                            } 
+                        }
+                    }
+                    thisElement.className = 'menubg'; 
+
+                    document.getElementById('remix-icon').style.backgroundImage = `url(../infinity_cyan.svg)`;
+                    document.getElementById('remix-text').style.color = "rgb(54, 255, 233)";
+
+                    document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
+                    document.getElementById('script-text').style.color = "rgb(82, 82, 82)";
+                    if(document.getElementById('publish-new-icon') !== null) {
+                        document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular-grey.svg)`;
+                        document.getElementById('publish-text-new').style.color = "rgb(82, 82, 82)";
+                        document.getElementById('publish-text-publish').style.color = 'rgb(82, 82, 82)'
+                    }
+                    document.getElementById('elements-icon').style.color = `rgb(82, 82, 82)`;
+                    document.getElementById('elements-text').style.color = "rgb(82, 82, 82)";
+
+                    document.getElementById('apps-icon').style.color = `rgb(82, 82, 82)`;
+                    document.getElementById('apps-text').style.color = "rgb(82, 82, 82)";
+
+               
+                    if(document.getElementById('element-menu') !== null) {
+                        document.getElementById('element-menu').remove();
+                    }
+                    if(document.getElementById('app-menu') !== null) {
+                        document.getElementById('app-menu').remove();
+                    }
+                    if(document.getElementById('elements') !== null) {
+                        document.getElementById('elements').remove();
+                    }
+                    // document.querySelector(".svgClass").getSVGDocument().getElementById("svgInternalID").setAttribute("fill", "red")
+
+                }  
+            }
+            this.setState({
+                details:false,
+                objects:false,
+                comments:false,
+                draw:false,
+                remix:true,
+                preferences:false,
+                record:false
+      
+            });
+            document.getElementById('main-menu').style.display = 'block';
+            document.getElementById('main-menu').style.overflowY = 'scroll';
+            //document.getElementById('main-menu').style.width = '269px';
+            isMenuOpen = true;
+
+          
+            if(this.state.isOpen === false) {
+                const element = document.querySelector('#main-menu');
+                const ball = styler(element); 
+            
+                tween({ from:0, to: 0, duration: 300 })
+                .start(v => ball.set('x', v));
+                document.getElementById('tab-menu').style.display = 'block';
+                //document.getElementById('main-menu').style.width = '269px';
+                this.setState({isOpen:true});
+                let remixid = document.getElementById('remix-tab');
+                remixid.className = 'menubg';
+             
+                this.setState(
+                        {
+                            details:false,
+                            objects:false,
+                            comments:false,
+                            draw:false,
+                            remix:true,
+                            preferences:false,
+                            record:false
+      
+                        }
+                );
+                document.getElementById('main-menu').style.display = 'flex';
+                isMenuOpen = true;
+           } else {
+                const element = document.querySelector('#main-menu');
+                const ball = styler(element); 
+            
+                tween({ from:0, to: -378, duration: 200 })
+                .start(v => ball.set('x', v));
+                document.getElementById('tab-menu').style.display = 'none';
+                //document.getElementById('main-menu').style.width = '269px';
+                this.setState(
+                        {
+                            isOpen:false
+                        }
+                    );
+                document.getElementById('publish-section').style.display = 'none';
+                }
         }
         handleDeletecredits(i) {
             const { creditsTags } = this.state;
@@ -2872,14 +3260,14 @@ let apps = [{},{}]
 
         return (
             <div id="room-main-page" className="page-wrap twilight room-main-page-wrap">
-                <div style={{display:'flex',flexDirection:'column', height:'100%',width:'100%'}}>
+                <div className="room-wrap-wrap" style={{display:'flex',flexDirection:'column', height:'100%',width:'100%'}}>
                     <div id="room-wrap" style={{display:'flex',flex:1,position:'relative',overflow:'hidden'}}>
-                        <div id="tab-menu" style={{
+                        <div id="tab-menu" className="tab-menu" style={{
                             width:'48px', 
                             background:'rgb(14, 14, 14)',
                             height:'100%'
                         }}>
-                        <div id="remix-tab" onClick={this.RemixTab.bind(this)} 
+                        <div id="remix-tab" className="remix-tab" onClick={this.RemixTab.bind(this)} 
                             style={{
                                 display:'flex',
                                 height:'52px',
@@ -2892,7 +3280,7 @@ let apps = [{},{}]
                                 cursor:'pointer'
                                
                             }} className="menu-bg-border">
-                                <div id="remix-icon" style={{
+                                <div id="remix-icon" className="remix-icon" style={{
                                     backgroundImage:'url(../infinity_grey.svg)',
                                     backgroundSize: '100% 100%',
                                     backgroundRepeat:'no-repeat',
@@ -3042,140 +3430,7 @@ let apps = [{},{}]
                             <p id="publish-text-publish" style={{fontSize:10.2,fontWeight:500, pointerEvents:'none'}} className="menubgnot">PUBLISH</p>
                             <p id="publish-text-new" style={{fontSize:10.2,fontWeight:500,pointerEvents:'none'}} className="menubgnot">NEW</p>
                         </div>
-                        <div id="post-tab" onClick={(e)=> {
-                            let that = this;
-                            //this.openModal(true);
-                            // let remixid = document.getElementById('remix-tab');
-                            // let script = document.getElementById('script-tag');
-                            // let postTab = document.getElementById('post-tab');
-                            // remixid.className = '';
-                            // remixid.style.borderRight = '0px solid #181818';  
-                            // script.className = '';
-                            // script.style.color = 'rgb(82, 82, 82)';
-                            // postTab.className = 'menubg';
-                            // postTab.style.color = 'rgb(64, 255, 232)';
-                            let thisElement = document.getElementById(e.target.id);
-                            let tabsWithMenubgClass = document.getElementsByClassName('menubg');
-                            let mainmenu = document.getElementById('main-menu');
-                            let remixImageList = document.getElementById('remix-image-list');
-                           
-                            if(thisElement != undefined) {
-                                if(thisElement.className !== 'menubg') {                            
-                               
-                               for(let i = 0; tabsWithMenubgClass.length; i++) {
-                                if(tabsWithMenubgClass[i] != undefined) {
-                                    if(tabsWithMenubgClass[i].id !== thisElement.id) {
-                                        tabsWithMenubgClass[i].className = 'menubgnot'
-                                    } 
-                                }
-                               }
-                               thisElement.className = 'menubg'; 
-                               
-                              if(document.getElementById('menu-info') !== null) {
-                            //    document.getElementById('menu-info').remove();
-                                if(document.getElementById('remix-image-box')){
-                                document.getElementById('remix-image-box').remove();
-                                }
-                               document.getElementById('menu-info').remove();
-                            //    document.getElementById('remix-list').remove();
-                              }
-                              if(document.getElementById('elements') !== null) {
-                                document.getElementById('elements').remove();
-                               }
-                               that.setState({
-                                details:false,
-                                objects:false,
-                                comments:false,
-                                draw:false,
-                                remix:false,
-                                showPublish:true
-                                });
-
-                            }
-                           
-                                let iframe = document.getElementById('output_frame');
-                                let dhtml = JSON.parse(localStorage.getItem("dhtml"));
-                                let html_ = dhtml.html;
-                                let css_ = dhtml.css;
-                                let js_ = dhtml.js;
-                            
-                                
-
-                                 
-                                let base_tpl = "<!doctype html>\n" +
-                                "<html>\n\t" +
-                                "<head>\n\t\t" +
-                                "<meta charset=\"utf-8\">\n\t\t" +
-                                "<title>Test</title>\n\n\t\t\n\t" +
-                                "</head>\n\t" +
-                                "<body>\n\t\n\t" +
-                                "</body>\n" +
-                                "</html>";
-        
-      
-     
-                                let prepareSource = () => {
-                                    let html = html_,
-                                    css = css_,
-                                    js = js_,
- 
-                                    src = '';
-                                    src = base_tpl.replace('</body>', html + '</body>');
-                                    css = '<style>' + css + '</style>';
-                                    src = src.replace('</head>', css + '</head>');
-                                    js = '<script>' + js + '<\/script>';
-                                    src = src.replace('</body>', js + '</body>');
-                                    let dhtmlObj = {html:html, js:js, css:css}
-          
-                                    // alert(htmlObj.html);
-                                    localStorage.setItem("dhtml", JSON.stringify(dhtmlObj));
-                                    localStorage.setItem("css", JSON.stringify(css));
-                                    localStorage.setItem("js", JSON.stringify(js));
-                                    return src;
-                                };
-
-                                let renderDHTML = () => {
-                                    // alert('called')
-                                let source = prepareSource();
-                                let iframe = document.querySelector('#regular-thumbnail');
-                                let iframe_doc = iframe.contentDocument;
-                  
-                                iframe_doc.open();
-                                iframe_doc.write(source);
-                                iframe_doc.close();
-         
-          
-                                //when removing last library, set to [];
-                                //iframe.contentWindow.flowroom.SaveScreenShot(
-                                //     ()=> {
-                                //         let imageData = localStorage.getItem("thumbnail");
-                                //         alert(imageData)
-                                //         let isRemix = isPostAsNew;
-                                //         let remixRoomID = isPostAsNew ? that.state.shortID : that.state.remixRoomID;
-                                //         let remixUserName = isPostAsNew ? that.state.userName : that.state.remixUserName;
-                                //         localStorage.setItem("thumbnailUrl", "");
-                                //         let thumbnail = document.getElementById('thumbnail-pic-display');
-                                //         thumbnail.src = imageData;
-                                //         thumbnail.setAttribute("height", "100%");
-                                //         thumbnail.setAttribute("width", "100%");
-                                //         that.putObject (
-                                //             imageData, 
-                                //             (url) => { 
-                                //                 localStorage.setItem("thumbnailUrl", url);
-                                //             }
-                                //         );
-                                //     }
-                                // );
-       
-           
-           
-                        };
-
-          
-                        renderDHTML()
-
-                            }
-                        }} style={{
+                        <div id="post-tab" onClick={this.PostTab.bind(this)} style={{
                             display:'none',
                            
                             height:'52px',
@@ -3322,204 +3577,7 @@ let apps = [{},{}]
                                 alignItems:'center',
                                 right:'59px'
                             }}>
-                                <button id="menu-btn-mobile" onClick={(e)=>{
-                                    
-                                    let list = document.getElementById('main-menu');
-                                    let thisElement = document.getElementById('remix-tab');
-                                    let tabsWithMenubgClass = document.getElementsByClassName('menubg');
-                                    let menuinfo = document.createElement('div');
-                                    
-            
-                                    menuinfo.setAttribute("id", "menu-info");
-                                    
-                                    menuinfo.style.height = '170px';
-                                    menuinfo.style.width = '259px';
-                                    let menuinfobox = document.createElement('div');
-                                    let menuinfotop = document.createElement('div');
-                                    let infinity = document.createElement('div');
-                                    menuinfotop.style.display = 'flex';
-                                    menuinfotop.style.justifyContent = 'space-between';
-                                    menuinfotop.style.height = '20px';
-                                    menuinfotop.style.width = '100%';
-                                    menuinfobox.style.border = '1px solid #222222';
-                                    // menuinfobox.style.height = '147px';
-                                    menuinfobox.style.width = '259px';
-                                    menuinfobox.style.borderRadius = '3px';
-                                    menuinfobox.style.marginTop = '11px';
-                                    infinity.style.backgroundImage = `url(../infinity_cyan.svg)`;
-                                    infinity.style.backgroundSize = '100% 100%';
-                                    infinity.style.backgroundRepeat = 'no-repeat';
-                                    infinity.style.height = '20px';
-                                    infinity.style.width = '25px';
-                                    let closebox = document.createElement('div');
-                                    closebox.style.display = 'flex';
-                                    closebox.style.alignItems = 'center';
-                                    closebox.style.justifyContent = 'space-between';
-                                    closebox.style.width = '45px';
-                                    let welcometext = document.createElement('p');
-                                    welcometext.style.color = 'rgb(54, 255, 233)';
-                                    welcometext.appendChild(document.createTextNode('Welcome to the Remix Menu'));
-    
-    
-                                    let firstLine = document.createElement('p');
-                                    firstLine.style.color = 'white';
-                                    firstLine.style.fontSize = '15px';
-                                    firstLine.appendChild(document.createTextNode('Here you can swap Text,'));
-    
-    
-                                    let secondLine = document.createElement('p');
-                                    secondLine.style.color = 'white';
-                                    secondLine.style.fontSize = '15px';
-                                    secondLine.appendChild(document.createTextNode('Images, and other elements'));
-    
-                                    let thirdLine = document.createElement('p');
-                                    thirdLine.style.color = 'white';
-                                    thirdLine.style.fontSize = '15px';
-                                    thirdLine.appendChild(document.createTextNode('inside of flows.'));
-                                    thirdLine.style.paddingBottom = '10px'
-    
-                                    let fourthLine = document.createElement('p');
-                                    fourthLine.style.color = 'white';
-                                    fourthLine.style.fontSize = '15px';
-                                    fourthLine.appendChild(document.createTextNode('Click here for step by step'));
-                                   
-    
-                                    let fifthLine = document.createElement('p');
-                                    fifthLine.style.color = 'white';
-                                    fifthLine.style.fontSize = '15px';
-                                    fifthLine.appendChild(document.createTextNode('video walkthroughs'));
-    
-                                    let welcome_texts = document.createElement('div');
-    
-                                    let closet = document.createElement('p');
-                                    let closex = document.createElement('p');
-                                    closex.appendChild(document.createTextNode('X'));
-                                    closex.style.fontSize = '20px';
-                                    closex.style.color = 'white';
-                                    closet.appendChild(document.createTextNode('close'));
-                                    closet.style.fontSize = '11px';
-                                    closet.style.color = 'white';
-                                    menuinfotop.appendChild(infinity);
-                                    closebox.appendChild(closet);
-                                    closebox.appendChild(closex);
-                                    menuinfotop.appendChild(closebox);
-                                    menuinfobox.appendChild(menuinfotop)
-                                    menuinfobox.appendChild(welcometext);
-                                    menuinfobox.style.padding = '20px';
-                                    menuinfobox.setAttribute("id", "menu-info-box");
-                                    
-                                    welcome_texts.appendChild(firstLine);
-                                    welcome_texts.appendChild(secondLine);
-                                    welcome_texts.appendChild(thirdLine);
-                                    welcome_texts.appendChild(fourthLine);
-                                    welcome_texts.appendChild(fifthLine);
-                                   
-                               
-                                    if(that.state.welcome === false) {
-                                        menuinfo.appendChild(menuinfobox);
-                                    
-                                    menuinfobox.appendChild(welcome_texts);
-                                    menuinfobox.style.display = 'flex';
-                                    menuinfobox.style.justifyContent = 'center';
-                                    menuinfobox.style.flexDirection = 'column';
-                                    that.setState({welcome:true});
-                                    list.style.padding = '7px 14px 2px 7px';
-                                    list.appendChild(menuinfo);
-                                    }
-                                    
-                                if(thisElement !== undefined) {
-                                    if(thisElement.className !== 'menubg') {                            
-                                       
-                                       for(let i = 0; tabsWithMenubgClass.length; i++) {
-                                        if(tabsWithMenubgClass[i] != undefined) {
-                                            if(tabsWithMenubgClass[i].id !== thisElement.id) {
-                                                tabsWithMenubgClass[i].className = '';
-                                            } 
-                                        }
-                                       }
-                                       thisElement.className = 'menubg'; 
-    
-                                       document.getElementById('remix-icon').style.backgroundImage = `url(../infinity_cyan.svg)`;
-                                       document.getElementById('remix-text').style.color = "rgb(54, 255, 233)";
-        
-                                       document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
-                                       document.getElementById('script-text').style.color = "rgb(82, 82, 82)";
-                                       if(document.getElementById('publish-new-icon') !== null) {
-                                            document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular-grey.svg)`;
-                                            document.getElementById('publish-text-new').style.color = "rgb(82, 82, 82)";
-                                            document.getElementById('publish-text-publish').style.color = 'rgb(82, 82, 82)'
-                                       }
-                                       document.getElementById('elements-icon').style.color = `rgb(82, 82, 82)`;
-                                       document.getElementById('elements-text').style.color = "rgb(82, 82, 82)";
-        
-                                       document.getElementById('apps-icon').style.color = `rgb(82, 82, 82)`;
-                                       document.getElementById('apps-text').style.color = "rgb(82, 82, 82)";
-    
-                                       
-                                       if(document.getElementById('element-menu') !== null) {
-                                        document.getElementById('element-menu').remove();
-                                       }
-                                       if(document.getElementById('app-menu') !== null) {
-                                        document.getElementById('app-menu').remove();
-                                       }
-                                       if(document.getElementById('elements') !== null) {
-                                        document.getElementById('elements').remove();
-                                       }
-                                      // document.querySelector(".svgClass").getSVGDocument().getElementById("svgInternalID").setAttribute("fill", "red")
-    
-                                    }  
-                                }
-                                    this.setState({
-                                        details:false,
-                                        objects:false,
-                                        comments:false,
-                                        draw:false,
-                                        remix:true,
-                                        preferences:false,
-                                        record:false
-                              
-                                    });
-                                    document.getElementById('main-menu').style.display = 'block';
-                                    document.getElementById('main-menu').style.overflowY = 'scroll';
-                                    document.getElementById('main-menu').style.width = '269px';
-                                    isMenuOpen = true;
-
-                                  
-                                   if(this.state.isOpen === false) {
-                                    const element = document.querySelector('#main-menu');
-                                    const ball = styler(element); 
-                                    
-                                    tween({ from:0, to: 0, duration: 300 })
-                                    .start(v => ball.set('x', v));
-                                    document.getElementById('tab-menu').style.display = 'block';
-                                    document.getElementById('main-menu').style.width = '269px';
-                                    this.setState({isOpen:true});
-                                    let remixid = document.getElementById('remix-tab');
-                                    remixid.className = 'menubg';
-                                     
-                                    this.setState({
-                                        details:false,
-                                        objects:false,
-                                        comments:false,
-                                        draw:false,
-                                        remix:true,
-                                        preferences:false,
-                                        record:false
-                              
-                                    });
-                                    document.getElementById('main-menu').style.display = 'flex';
-                                    isMenuOpen = true;
-                                   } else {
-                                    const element = document.querySelector('#main-menu');
-                                    const ball = styler(element); 
-                                    
-                                    tween({ from:0, to: -378, duration: 200 })
-                                    .start(v => ball.set('x', v));
-                                    document.getElementById('tab-menu').style.display = 'none';
-                                    document.getElementById('main-menu').style.width = '269px';
-                                    this.setState({isOpen:false});
-                                   }
-                                }} style={{
+                                <button id="menu-btn-mobile" onClick={this.OpenMenu.bind(this)} style={{
                                     fontWeight:400,
                                     color:'rgb(64, 255, 232)',
                                     fontSize:'11px',

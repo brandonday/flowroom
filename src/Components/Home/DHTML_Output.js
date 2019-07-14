@@ -114,6 +114,8 @@ let fabricA = [];
                     }
                     }}>
                     <iframe id="output_frame" className="output_frame" src=""></iframe>
+                    <iframe id="overlay_output_frame" className="overlay_output_frame" src=""></iframe>
+
                     </Fullscreen>
                     
                 </div>

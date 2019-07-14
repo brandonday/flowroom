@@ -456,6 +456,70 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
             console.log(error)
           });
         }  
+
+        let base_tplo = "<!doctype html>\n" +
+        "<html>\n\t" +
+        "<head>\n\t\t" +
+        "<meta charset=\"utf-8\">\n\t\t" +
+        "<title>Test</title>\n\n\t\t\n\t" +
+        "</head>\n\t" +
+        "<body>\n\t\n\t" +
+        "</body>\n" +
+        "</html>";
+
+        let resizeo = `
+
+        html,body {
+          height:100%;
+          width:100%;
+        }
+        
+      `
+      let subjo = '<script src="../dist/js/subjx.js"></script>';
+      let subjcsso = '<link rel="stylesheet" href="../dist/style/subjx.css">';        
+      let drago = `<script></script>`
+      let fontawesomeo = '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"></link> '    
+     
+        let prepareSourceo = () => {
+          let html = '<div></div>';
+          let css = '';
+          let js = '';
+        
+          let JSflowroom = '<script src="../flowroom.js"></script>';
+          let src = '';
+          src = base_tpl.replace('</body>' + '</body>');
+          css = '<style>' + css + resizeo + '</style>';
+          src = src.replace('</head>', css + JSflowroom + fontawesomeo + subjcsso + '</head>');
+          js = '<script>' + js + '<\/script>';
+          src = src.replace('</body>', js + subjo + drago + '<div id="overlay-container" style=" display:flex;width:100%;border:1px solid blue;flex-wrap:wrap;justify-content:center;align-items:center"></div>' + '</body>');
+         
+          
+         // alert(htmlObj.html);
+          
+          // localStorage.setItem("css", JSON.stringify(css));
+          // localStorage.setItem("js", JSON.stringify(js));
+          return src;
+        };
+
+        let renderDHTMLOver = () => {
+          // alert('called')
+          let source = prepareSourceo();
+          let iframe = document.querySelector('.overlay_output_frame');
+          let iframe_doc = iframe.contentDocument;
+                
+          iframe_doc.open();
+          iframe_doc.write(source);
+          iframe_doc.close();
+         
+
+        }
+        //when removing last library, set to [];
+         
+         
+        
+  
+ 
+        renderDHTMLOver();
     }
     renderContent2(before = null, htmlUpdate = null, cssUpdate = null, jsUpdate = null) {
   
