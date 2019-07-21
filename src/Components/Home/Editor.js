@@ -219,9 +219,9 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
             for(i = 0; i < this.state.libraries.length; i++) {
                 var iFrameHead = iframe.contentWindow.document.getElementsByTagName("head")[0];
                 var myscript = document.createElement('script');
-                myscript.type = 'text/javascript';
-                myscript.src = this.state.libraries[i];
-                iFrameHead.appendChild(myscript);
+                //myscript.type = 'text/javascript';
+               // myscript.src = this.state.libraries[i];
+                //iFrameHead.appendChild(myscript);
             }
 
             if(this.state.cssStyles.length !== 0) {
@@ -229,9 +229,9 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
                     var iFrameHead = iframe.contentWindow.document.getElementsByTagName("head")[0];
                     var link = document.createElement('link');
                     link.rel = 'stylesheet';
-                    link.href=this.state.cssStyles[i];
-                    link.type = 'text/css';
-                    iFrameHead.appendChild(link);
+                    //link.href=this.state.cssStyles[i];
+                    //link.type = 'text/css';
+                    //iFrameHead.appendChild(link);
                 }
             }
          
@@ -473,7 +473,64 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
           height:100%;
           width:100%;
         }
+        .rotate {
+          content: "";
+          position: absolute;
+          top: 16px;
+          left: 6px;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #fff url(data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' hei… 0 2.18 15.57.75.75 0 0 0 .47-1.43 7.25 7.25 0 0 1-1-13.37z'/%3E%3C/svg%3E) 2px 2px no-repeat;
+          background-size: 16px 16px;
+          box-shadow: 0 0 5px 1px rgba(14,19,24,.15), 0 0 0 1px rgba(14,19,24,.15);
+        }
+          
+
+        .resizable {
+          background: white;
+          width: 100px;
+          height: 100px;
+          background-size:100% 100%;
+     
+        }
         
+        .resizable .resizers{
+          width: 100%;
+          height: 100%;
+          box-sizing: border-box;
+        }
+        
+        .resizable .resizers .resizer{
+          width: 10px;
+          height: 10px;
+          border-radius: 50%; /*magic to turn square into circle*/
+          background: white;
+          border: 3px solid #4286f4;
+          position: absolute;
+        }
+        
+        .resizable .resizers .resizer.top-left {
+          left: -5px;
+          top: -5px;
+          cursor: nwse-resize; /*resizer cursor*/
+        }
+        .resizable .resizers .resizer.top-right {
+          right: -5px;
+          top: -5px;
+          cursor: nesw-resize;
+        }
+        .resizable .resizers .resizer.bottom-left {
+          left: -5px;
+          bottom: -5px;
+          cursor: nesw-resize;
+        }
+        .resizable .resizers .resizer.bottom-right {
+          right: -5px;
+          bottom: -5px;
+          cursor: nwse-resize;
+        }
+    
       `
       let subjo = '<script src="../dist/js/subjx.js"></script>';
       let subjcsso = '<link rel="stylesheet" href="../dist/style/subjx.css">';        
@@ -489,9 +546,9 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
           let src = '';
           src = base_tpl.replace('</body>' + '</body>');
           css = '<style>' + css + resizeo + '</style>';
-          src = src.replace('</head>', css + JSflowroom + fontawesomeo + subjcsso + '</head>');
+          src = src.replace('</head>', css + JSflowroom + fontawesomeo + '</head>');
           js = '<script>' + js + '<\/script>';
-          src = src.replace('</body>', js + subjo + drago + '<div id="overlay-container" style=" display:flex;width:100%;border:1px solid blue;flex-wrap:wrap;justify-content:center;align-items:center"></div>' + '</body>');
+          src = src.replace('</body>', js +  drago + '<div id="overlay-container" style=" display:flex;width:100%;border:0px solid blue;flex-wrap:wrap;justify-content:center;align-items:center"></div>' + '</body>');
          
           
          // alert(htmlObj.html);

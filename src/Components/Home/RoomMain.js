@@ -672,6 +672,7 @@ let apps = [{},{}]
             const urlHTML = `http://test.flowroom.com/uploads/${fileNameHTML}`;
             const urlCSS = `http://test.flowroom.com/uploads/${fileNameCSS}`;
             const urlJS = `http://test.flowroom.com/uploads/${fileNameJS}`;
+            
 
             this.props.startCreateRoom(
                 {
@@ -1812,35 +1813,59 @@ let apps = [{},{}]
                             dragSection.style.width = '100%';
                             document.getElementById('output_frame').contentDocument.body.style.display = 'flex';
                             let div = document.createElement('div');
-                            div.style.height = '200px';
-                            div.style.width = '300px';
+                            //div.style.height = '200px';
+                            // div.style.width = '300px';
                             div.style.margin = '10px 20px'
-                            div.style.border = '1px solid blue';
+                            div.style.border = '0px solid blue';
                             div.style.position = 'relative';
-                            div.setAttribute("id", `${'container'+i.id}`)
-                            div.appendChild(object)
+                            div.setAttribute("id", `container${object.id}`);
+                            let resizable = document.createElement('div');
+                            resizable.className = 'resizable';
+
+                            let resizers_box = document.createElement('div');
+                            resizers_box.className = 'resizers';
+                            let resizerTopLeft = document.createElement('div');
+                            resizerTopLeft.className = 'resizer top-left';
+                            let resizerTopRight = document.createElement('div');
+                            resizerTopRight.className = 'resizer top-right';
+                            let resizerBottomLeft = document.createElement('div');
+                            resizerBottomLeft.className = 'resizer bottom-left';
+                            let resizerBottomRight = document.createElement('div');
+                            resizerBottomRight.className = 'resizer bottom-right';
+
+                            resizers_box.appendChild(resizerTopLeft);
+                            resizers_box.appendChild(resizerTopRight);
+                            resizers_box.appendChild(resizerBottomLeft);
+                            resizers_box.appendChild(resizerBottomRight);
+
+                            resizable.setAttribute("id",`${i.id}`)
+                            resizable.appendChild(resizers_box);
+                            //resizable.appendChild(object)
+                            
+                            div.appendChild(resizable);
+                            
+
                             document.getElementById('overlay_output_frame').contentDocument.getElementById('overlay-container').appendChild(div);
                             document.getElementById('overlay_output_frame').contentDocument.body.style.padding = '10px';
-                            object.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
+                
+                            resizable.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
                            
-                            //this.makeResizableDiv(`#${i.id}`);
+                            this.makeResizableDiv(`#${i.id}`);
                             
-                            document.getElementById('overlay_output_frame').contentWindow.Subjx(`#${object.id}`).drag({
+                            // const xDraggables = document.getElementById('overlay_output_frame').contentWindow.Subjx(`#${object.id}`).drag({
                                 
-                            container:`${'container'+i.id}`,
-                            // snapping to grid (default: 10)
-                            snap: {
-                                x: 20,
-                                y: 20,
-                                angle: 45
-                            },
-                            // mimic behavior with other draggable elements
-                            each: {
-                                move: false,
-                                resize: true, 
-                                rotate: true
-                                }
-                            });
+                            // container:`#container${object.id}`,
+                            // each: {
+                            //     move: false,
+                            //     resize: true, 
+                            //     rotate: true
+                            // }
+                            // // snapping to grid (default: 10)
+    
+                            // });
+
+
+                        
     
     
                             //}
@@ -1979,12 +2004,96 @@ let apps = [{},{}]
                     app_menu.style.width = '100%';
                     app_menu.style.flexWrap = 'wrap';
                     app_menu.setAttribute("id","app-menu")
-                    apps.map(() => {
+                    apps.map((i) => {
                         let app = document.createElement('div');
                         app.style.height = '100px';
                         app.style.width = '100px';
                         app.style.border = '1px solid white';
                         app.style.margin = '5px';
+
+
+                        
+                        
+                        let hashids = new Hashids(uuid(), 6);
+
+
+                        // resizers.className = 'resizers';
+                        // resizerOne.className = 'resizer top-left';
+                        // resizerTwo.className = 'resizer top-right';
+                        // resizerThree.className = 'resizer bottom-left';
+                        // resizerFour.className = 'resizer bottom-right';
+                        app.addEventListener('click', ()=>{
+                        let object = document.createElement('div')
+                        object.style.backgroundSize = 'cover';
+                        object.style.height = '100px';
+                        object.style.width = '100px';
+                        object.style.border = '1px solid white';
+                        //object.style.zIndex = '1000000000000000000000000';
+                        object.className = 'resizable';
+                       // object.style.position = 'absolute';
+                        object.style.top = '0px';
+                        let object_id = 'OBJECT_' + hashids.encode(1,2,3);
+                        object.setAttribute("id", object_id);
+                        // resizers.appendChild(resizerOne);
+                        // resizers.appendChild(resizerTwo);
+                        // resizers.appendChild(resizerThree)
+                        // resizers.appendChild(resizerFour);
+
+                        //object.appendChild(header)
+                        //object.appendChild(resizers);
+
+                        console.log(i)
+
+
+
+                        //if(i.type === 'gif') {
+                        let objectWrapper = document.createElement('div');
+                        let dragSection = document.createElement('div');
+                        dragSection.style.height = '30px';
+                        dragSection.style.width = '100%';
+                        document.getElementById('output_frame').contentDocument.body.style.display = 'flex';
+                        let div = document.createElement('div');
+                        //div.style.height = '200px';
+                        // div.style.width = '300px';
+                        div.style.margin = '10px 20px'
+                        div.style.border = '0px solid blue';
+                        div.style.position = 'relative';
+                        div.setAttribute("id", `container${object.id}`);
+                        let resizable = document.createElement('div');
+                        resizable.className = 'resizable';
+
+                        let resizers_box = document.createElement('div');
+                        resizers_box.className = 'resizers';
+                        let resizerTopLeft = document.createElement('div');
+                        resizerTopLeft.className = 'resizer top-left';
+                        let resizerTopRight = document.createElement('div');
+                        resizerTopRight.className = 'resizer top-right';
+                        let resizerBottomLeft = document.createElement('div');
+                        resizerBottomLeft.className = 'resizer bottom-left';
+                        let resizerBottomRight = document.createElement('div');
+                        resizerBottomRight.className = 'resizer bottom-right';
+
+                        resizers_box.appendChild(resizerTopLeft);
+                        resizers_box.appendChild(resizerTopRight);
+                        resizers_box.appendChild(resizerBottomLeft);
+                        resizers_box.appendChild(resizerBottomRight);
+
+                        resizable.setAttribute("id",`${i.id}`)
+                        resizable.appendChild(resizers_box);
+                        //resizable.appendChild(object)
+                        
+                        div.appendChild(resizable);
+                        
+
+                        document.getElementById('overlay_output_frame').contentDocument.getElementById('overlay-container').appendChild(div);
+                        document.getElementById('overlay_output_frame').contentDocument.body.style.padding = '10px';
+            
+                        //resizable.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
+                       
+                        this.makeResizableDiv(`#${i.id}`);
+                        })
+
+
                         app_menu.appendChild(app);
                     });
                     if(document.getElementById('menu-info') !== null) {
@@ -2218,14 +2327,15 @@ let apps = [{},{}]
 
                 }
          
-                let iframe = document.getElementById('regular-thumbnail');
+                let iframe = document.createElement('iframe');
                 let dhtml = JSON.parse(localStorage.getItem("dhtml"));
 
               
                 let html_ = dhtml.html;
                 let css_ = dhtml.css;
                 let js_ = dhtml.js;
-           
+                
+                let html2canvas = '<script src="../html2canvas.min.js"></script>';
                 let JSflowroom = '<script src="../flowroom.js"></script>';
 
                  
@@ -2249,7 +2359,7 @@ let apps = [{},{}]
                     src = '';
                     src = base_tpl.replace('</body>', html + '</body>');
                     css = '<style>' + css + '</style>';
-                    src = src.replace('</head>', css + JSflowroom + '</head>');
+                    src = src.replace('</head>', css + html2canvas + JSflowroom + '</head>');
                     js = '<script>' + js + '<\/script>';
                     src = src.replace('</body>', js + '</body>');
                     let dhtmlObj = {html:html, js:js, css:css}
@@ -2347,7 +2457,6 @@ let apps = [{},{}]
                     cardpreviewTxt.appendChild(document.createTextNode('Adjust the thumbnail below using the handle'));
                     cardWrapWrapWrap.appendChild(cardpreviewTxt)
                     let source = prepareSource();
-                    let iframe = document.createElement('iframe');
                     iframeWrap.style.position = 'absolute';
                     iframeWrap.style.height = '100%';
                     iframeWrap.style.width = '100%';
@@ -2547,6 +2656,8 @@ let apps = [{},{}]
                     savetxt.style.fontWeight = 'bold';
                     savetxt.appendChild(document.createTextNode('SAVE'))
                     save.appendChild(savetxt);
+                    save.addEventListener('click', ()=>{
+                })
                     cardWrapWrapWrap.appendChild(cardWrapWrap);
                     cardWrapWrapWrap.appendChild(save);
                     iframeWrap.appendChild(cardWrapWrapWrap);
@@ -2560,36 +2671,54 @@ let apps = [{},{}]
                     iframe_doc.write(source);
                     iframe_doc.close();
 
-
+                alert('re')
                     //when removing last library, set to [];
 
                 };
                 renderDHTML();
+                
                 let get_iframe = document.getElementById('regular-thumbnail');
-         
+         setTimeout(()=> {
                 console.log('hhh', get_iframe.contentWindow)
-                get_iframe.onload = ()=> {
-                    get_iframe.contentWindow.flowroom.SaveScreenShot(
-                        ()=> {
-                            let imageData = localStorage.getItem("thumbnail");
-                            alert(imageData)
-                            // let isRemix = isPostAsNew;
-                            // let remixRoomID = isPostAsNew ? that.state.shortID : that.state.remixRoomID;
-                            // let remixUserName = isPostAsNew ? that.state.userName : that.state.remixUserName;
-                            localStorage.setItem("thumbnailUrl", "");
-                            let thumbnail = document.getElementById('thumbnail-pic-display');
-                            thumbnail.style.backgroundImage = `url(${imageData})`;
-                            thumbnail.style.backgroundRepeat = 'no-repeat';
-                            thumbnail.style.backgroundSize = 'cover';
-                            that.putObject (
-                                imageData, 
-                                (url) => { 
-                                    localStorage.setItem("thumbnailUrl", url);
+                //get_iframe.onload = ()=> {
+                    alert('f')
+                    var timer = setInterval(()=> {
+                        
+                        var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                        // Check if loading is complete
+                        if (iframeDoc.readyState == 'complete' || iframeDoc.readyState == 'interactive') {
+                            alert('loaded')
+                            setTimeout(()=>{
+                            get_iframe.contentWindow.flowroom.SaveScreenShot(
+                                ()=> {
+                                    alert('call')
+                                    let imageData = localStorage.getItem("thumbnail");
+                                    alert(imageData)
+                                    // let isRemix = isPostAsNew;
+                                    // let remixRoomID = isPostAsNew ? that.state.shortID : that.state.remixRoomID;
+                                    // let remixUserName = isPostAsNew ? that.state.userName : that.state.remixUserName;
+                                    localStorage.setItem("thumbnailUrl", "");
+                                    let thumbnail = document.getElementById('thumbnail-pic-display');
+                                    thumbnail.style.backgroundImage = `url(${imageData})`;
+                                    thumbnail.style.backgroundRepeat = 'no-repeat';
+                                    thumbnail.style.backgroundSize = 'cover';
+                                    that.putObject (
+                                        imageData, 
+                                        (url) => { 
+                                            localStorage.setItem("thumbnailUrl", url);
+                                        }
+                                    );
                                 }
+
                             );
+                            },12000)
+                            clearInterval(timer);
+                            return;
                         }
-                    );
-                }
+                    }, 4000);
+      
+                //}
+            },5000)
                 
                 if(menuinfo !== null) {
                     menuinfo.remove();
@@ -3132,9 +3261,9 @@ let apps = [{},{}]
 
 
     makeResizableDiv(div) {
-        
-        const element = document.getElementById('output_frame').contentWindow.document.querySelector(div);
-        const resizers =  document.getElementById('output_frame').contentWindow.document.querySelectorAll(div + ' .resizer')
+       
+        const element = document.getElementById('overlay_output_frame').contentWindow.document.querySelector(div);
+        const resizers =  document.getElementById('overlay_output_frame').contentWindow.document.querySelectorAll(div + ' .resizer')
         const minimum_size = 20;
         let original_width = 0;
         let original_height = 0;
@@ -3152,11 +3281,12 @@ let apps = [{},{}]
             original_y = element.getBoundingClientRect().top;
             original_mouse_x = e.pageX;
             original_mouse_y = e.pageY;
-            document.getElementById('output_frame').contentWindow.addEventListener('mousemove', resize)
-            document.getElementById('output_frame').contentWindow.addEventListener('mouseup', stopResize)
+            document.getElementById('overlay_output_frame').contentWindow.addEventListener('mousemove', resize)
+            document.getElementById('overlay_output_frame').contentWindow.addEventListener('mouseup', stopResize)
         })
       
         function resize(e) {
+         
           //document.getElementById('out-cover').style.display = 'block';
             if (currentResizer.classList.contains('bottom-right')) {
                 const width = original_width + (e.pageX - original_mouse_x);
@@ -3202,7 +3332,7 @@ let apps = [{},{}]
             }
       
             function stopResize() {
-                document.getElementById('output_frame').contentWindow.removeEventListener('mousemove', resize)
+                document.getElementById('overlay_output_frame').contentWindow.removeEventListener('mousemove', resize)
             }
         }
     }
