@@ -11,14 +11,14 @@ export const PrivateRoute = ({isAuthenticated, userExists, component:Component, 
         
         if(isAuthenticated) {
              return (
-                <div style={{display:'flex', flex:1, flexDirection:'column',overflowY:'scroll'}}>
+                <div style={{display:'flex', flex:1, flexDirection:'column'}}>
                 <Header isLoggedIn={true}/>
                     <Component {...props}/>
                 {/* <Footer/> */}
                 </div>
             )
         } else if(!isAuthenticated) {
-            return  (<div style={{display:'flex', flex:1, flexDirection:'column',overflowY:'scroll'}}>
+            return  (<div style={{display:'flex', flex:1, flexDirection:'column'}}>
 
                 <Header isLoggedIn={false}/>
                 <Component {...props}/>

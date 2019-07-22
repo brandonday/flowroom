@@ -1952,6 +1952,8 @@ let apps = [{},{}]
             }
 
             document.getElementById('publish-section').style.display = 'none';
+            document.getElementById('main-menu').style.display = 'block';
+            document.getElementById('main-menu').style.overflowY = 'scroll';
             
         }
         AppsTab(e) {
@@ -2150,6 +2152,8 @@ let apps = [{},{}]
                 }
             }
             document.getElementById('publish-section').style.display = 'none';
+            document.getElementById('main-menu').style.display = 'block';
+            document.getElementById('main-menu').style.overflowY = 'scroll';
         }
         ScriptTag(e){
 
@@ -2235,6 +2239,8 @@ let apps = [{},{}]
 
                 }
                 document.getElementById('publish-section').style.display = 'none';
+                document.getElementById('main-menu').style.display = 'block';
+            document.getElementById('main-menu').style.overflowY = 'scroll';
             }
             
             // let remixid = document.getElementById('remix-tab');
@@ -2327,7 +2333,7 @@ let apps = [{},{}]
 
                 }
          
-                let iframe = document.createElement('iframe');
+                let iframe = document.createElement('regular-thumbnail');
                 let dhtml = JSON.parse(localStorage.getItem("dhtml"));
 
               
@@ -2457,6 +2463,7 @@ let apps = [{},{}]
                     cardpreviewTxt.appendChild(document.createTextNode('Adjust the thumbnail below using the handle'));
                     cardWrapWrapWrap.appendChild(cardpreviewTxt)
                     let source = prepareSource();
+                    let iframe = document.createElement('iframe');
                     iframeWrap.style.position = 'absolute';
                     iframeWrap.style.height = '100%';
                     iframeWrap.style.width = '100%';
@@ -2671,24 +2678,24 @@ let apps = [{},{}]
                     iframe_doc.write(source);
                     iframe_doc.close();
 
-                alert('re')
+                //alert('re')
                     //when removing last library, set to [];
 
                 };
                 renderDHTML();
                 
                 let get_iframe = document.getElementById('regular-thumbnail');
-         setTimeout(()=> {
-                console.log('hhh', get_iframe.contentWindow)
-                //get_iframe.onload = ()=> {
-                    alert('f')
-                    var timer = setInterval(()=> {
+        //  setTimeout(()=> {
+        //         console.log('hhh', get_iframe.contentWindow)
+        //         //get_iframe.onload = ()=> {
+        //             alert('f')
+        //             var timer = setInterval(()=> {
                         
-                        var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                        // Check if loading is complete
-                        if (iframeDoc.readyState == 'complete' || iframeDoc.readyState == 'interactive') {
-                            alert('loaded')
-                            setTimeout(()=>{
+        //                 var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        //                 // Check if loading is complete
+        //                 if (iframeDoc.readyState == 'complete' || iframeDoc.readyState == 'interactive') {
+                            // setTimeout(()=>{
+                            get_iframe.onload = () => {
                             get_iframe.contentWindow.flowroom.SaveScreenShot(
                                 ()=> {
                                     alert('call')
@@ -2711,14 +2718,15 @@ let apps = [{},{}]
                                 }
 
                             );
-                            },12000)
-                            clearInterval(timer);
-                            return;
-                        }
-                    }, 4000);
+                            }
+            //                 },5000)
+            //                 clearInterval(timer);
+            //                 return;
+            //             }
+            //         }, 4000);
       
-                //}
-            },5000)
+            //     //}
+            // },5000)
                 
                 if(menuinfo !== null) {
                     menuinfo.remove();
@@ -2750,6 +2758,8 @@ let apps = [{},{}]
                     document.getElementById('app-menu').remove();
                 }
             }
+            document.getElementById('main-menu').style.display = 'block';
+            document.getElementById('main-menu').style.overflowY = 'scroll';
         }
         PostTab(e) {
             let that = this;
@@ -3398,6 +3408,7 @@ let apps = [{},{}]
                             height:'100%'
                         }}>
                         <div id="remix-tab" className="remix-tab" onClick={this.RemixTab.bind(this)} 
+                            onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
                             style={{
                                 display:'flex',
                                 height:'52px',
@@ -3421,7 +3432,9 @@ let apps = [{},{}]
                                 <p id="remix-text" style={{fontSize:10.2,fontWeight:500,width:'26px', pointerEvents:'none', marginTop:4}} className="menubgnot">REMIX</p>
                                
                         </div>
-                        <div id="elements-tag" onClick={this.ElementsTabs.bind(this)} style={{
+                        <div id="elements-tag" onClick={this.ElementsTabs.bind(this)} 
+                        onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
+                        style={{
                             display:'flex',
                             cursor:'pointer',
                             height:'52px',
@@ -3436,7 +3449,9 @@ let apps = [{},{}]
                             <i id="elements-icon" className="fas fa-shapes" style={{color:'white', fontSize:15,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none'}}></i>
                             <p id="elements-text" style={{fontSize:8.5,fontWeight:500,width:'38px',pointerEvents:'none'}} className="menubgnot">ELEMENTS</p>
                         </div>
-                        <div id="app-tag"  onClick={this.AppsTab.bind(this)} style={{
+                        <div id="app-tag"  onClick={this.AppsTab.bind(this)} 
+                        onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
+                        style={{
                             display:'flex',
                             cursor:'pointer',
                             height:'52px',
@@ -3451,7 +3466,9 @@ let apps = [{},{}]
                             <i id="apps-icon" className="fas fa-cubes" style={{color:'white', fontSize:15,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none'}}></i>
                             <p id="apps-text" style={{fontSize:10.2,fontWeight:500,width:'21px',pointerEvents:'none'}} className="menubgnot">APPS</p>
                         </div>
-                        <div id="script-tag" refs="script-tag" onClick={this.ScriptTag.bind(this)} style={{
+                        <div id="script-tag" refs="script-tag" onClick={this.ScriptTag.bind(this)}
+                        onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
+                        style={{
                             display:'flex',
                             cursor:'pointer',
                             height:'52px',
@@ -3477,7 +3494,9 @@ let apps = [{},{}]
                         </div>
                         <div id="save-tab" onClick={()=> {
                             this.openModal(false)
-                        }} style={{
+                        }} 
+                        onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
+                        style={{
                             display:that.state.saveVisible ? 'flex' : 'none',
                           
                             height:'52px',
@@ -3532,7 +3551,8 @@ let apps = [{},{}]
                                     }}></div>
                             <p id="publish-text" style={{fontSize:10.2,fontWeight:500,color:'#525252'}}>DELETE</p>
                         </div>
-                        <div id="post-as-new-tab" onClick={this.PostAsNewTab.bind(this)} style={{
+                        <div id="post-as-new-tab" onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
+                        onClick={this.PostAsNewTab.bind(this)} style={{
                            
                            
                             height:'74px',
@@ -3560,7 +3580,7 @@ let apps = [{},{}]
                             <p id="publish-text-publish" style={{fontSize:10.2,fontWeight:500, pointerEvents:'none'}} className="menubgnot">PUBLISH</p>
                             <p id="publish-text-new" style={{fontSize:10.2,fontWeight:500,pointerEvents:'none'}} className="menubgnot">NEW</p>
                         </div>
-                        <div id="post-tab" onClick={this.PostTab.bind(this)} style={{
+                        <div id="post-tab" onClick={this.PostTab.bind(this)} onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}} style={{
                             display:'none',
                            
                             height:'52px',

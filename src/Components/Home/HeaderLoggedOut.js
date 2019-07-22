@@ -46,7 +46,7 @@ import { connect } from 'react-redux';
                             </div>
                         </div>
                     </div>
-                    <div id="search-field-wrap" style={{position:'absolute',height:50,width:'100%',backgroundColor:'#0f0f0f',left:'0px',zIndex:'9999999'}}>
+                    <div id="search-field-wrap" style={{height:50,width:'100%',backgroundColor:'#0f0f0f',left:'0px',zIndex:'9999999'}}>
                         <Search/>
                     </div>
                 </div>
