@@ -72,8 +72,8 @@ class NewButton extends Component {
                             display:'flex',
                             padding:'5px 7px',
                             width:'68px',
-                            justifyContent:'space-between',
-                            alignItems:'center'
+                            alignItems:'center',
+                            justifyContent:'space-between'
                         
                             }}>
                             <i className="fa fa-plus" style={{
@@ -96,7 +96,7 @@ class NewButton extends Component {
                             <p style={{fontSize:'10px',
                                      fontWeight:'700',
                                      position:'relative',
-                                     left:'-4px'}}>CREATE</p>
+                                   }}>CREATE</p>
                     </button>
                 </div>
                 <div id="newbtn" className="new-button-dropdown-content">

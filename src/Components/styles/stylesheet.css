@@ -681,7 +681,19 @@ right: 0px;
     padding-top: 0px;
     align-items: center;
     justify-content: center;
+    position:absolute
   }
+
+  .header-content {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    -webkit-align-items: center;
+    align-items: center;
+    padding: 0px 0px !important;
+    width: 100%;
+    }
 
   .search-box {
     max-width:100% !important;
@@ -1044,7 +1056,7 @@ right: 0px;
 
 
 
-.search-box-tablet {
+.-tablet {
   background-color: #F9FAFA;
   border: 1px solid #DEDFE1;
   border-radius: 40px;
