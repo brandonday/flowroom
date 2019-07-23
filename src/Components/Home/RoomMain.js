@@ -2509,7 +2509,7 @@ let apps = [{},{}]
                     iframe.style.display = 'block';
                     iframe.style.border = '0px';
                     cardWrap.appendChild(overlay);
-                    cardWrap.style.height = '246px';
+                    cardWrap.style.height = that.state.room_card_height + 'px';
                     cardWrap.style.width = '320px';
                     cardWrap.style.borderTop = '2px solid rgb(54,255,233)';
                     cardWrap.style.borderBottom = '2px solid rgb(54,255,233)';
@@ -2664,7 +2664,11 @@ let apps = [{},{}]
                     savetxt.appendChild(document.createTextNode('SAVE'))
                     save.appendChild(savetxt);
                     save.addEventListener('click', ()=>{
-                })
+                        that.setState({room_card_height:cardWrap.height});
+                        document.getElementById('black-opacity-modal').style.display = 'none'
+                        document.getElementById('card-thumb-wrap').style.display = 'none';
+
+                    })
                     cardWrapWrapWrap.appendChild(cardWrapWrap);
                     cardWrapWrapWrap.appendChild(save);
                     iframeWrap.appendChild(cardWrapWrapWrap);
@@ -2678,6 +2682,7 @@ let apps = [{},{}]
                     iframe_doc.write(source);
                     iframe_doc.close();
 
+                   
                 //alert('re')
                     //when removing last library, set to [];
 
