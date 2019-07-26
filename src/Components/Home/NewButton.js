@@ -71,7 +71,6 @@ class NewButton extends Component {
                             position:'relative',
                             display:'flex',
                             padding:'5px 7px',
-                            width:'68px',
                             alignItems:'center',
                             justifyContent:'space-between'
                         
@@ -95,7 +94,8 @@ class NewButton extends Component {
                             }}></i>
                             <p style={{fontSize:'10px',
                                      fontWeight:'700',
-                                     position:'relative',
+                                     position:'relative', 
+                                     marginLeft:6
                                    }}>CREATE</p>
                     </button>
                 </div>

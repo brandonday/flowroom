@@ -3,7 +3,7 @@ body {
   font-size: 10px;
   font-family:Source Sans Pro;
   margin:0;
-  height: 100%; 
+  /* height: 100%;  */
   background:rgb(0,0,0) !important;
   -webkit-font-smoothing: antialiased; 
   display:flex;
@@ -368,7 +368,7 @@ body {
   -ms-flex-direction: column;
   flex-direction: column;
   overflow-y:scroll;
-  height:100vh;
+  /* height:100%; */
   
 }
   
@@ -717,7 +717,9 @@ right: 0px;
     line-height: 29px;
     text-align: left;
 }
-  
+  #create-box {
+    top:60px !important;
+  }
 }
 
 #search-field-wrap {
@@ -2040,6 +2042,10 @@ right: 0px;
     height:20px; 
     border:0px solid red;
     padding-top:5px;
+  }
+
+  #room-wrap {
+    height:calc(100% - 220px);
   }
 
   .room-by-mobile {

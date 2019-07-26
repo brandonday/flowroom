@@ -12,7 +12,6 @@ import HeaderLoggedIn from './HeaderLoggedIn.js';
 import HeaderLoggedOut from './HeaderLoggedOut.js';
 import { firebase } from '../firebase/firebase';
 import { connect } from 'react-redux';
-import Headroom from 'react-headroom';
 
 let database = firebase.database();
 
@@ -40,12 +39,10 @@ class Header extends Component {
         let that = this;
         
         return (
-            <div style={{width:'100%'}}> 
-            <Headroom>
+            <div style={{width:'100%'}}>    
                 <header id="header" className="header" style={{width:'100%'}}>
                     {that.state.isInit ? '' : (that.state.isLoggedIn ? (<HeaderLoggedIn/>):(<HeaderLoggedOut/>))}
                 </header>
-                </Headroom>   
             </div>
         )
     }

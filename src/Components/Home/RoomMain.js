@@ -10,7 +10,7 @@ import Hashids from 'hashids';
 import { OPEN_MODAL } from '../../actions/entireApp';
 import { connect } from 'react-redux';
 import { firebase } from '../firebase/firebase';
-import { tween, styler } from 'popmotion';
+import { tween, styler, calc } from 'popmotion';
 import { startCreateRoom } from '../../actions/rooms';
 import axios from 'axios';
 import * as dat from 'dat.gui';
@@ -475,7 +475,7 @@ let apps = [{},{}]
                     document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingRight = '36px';
                     document.getElementById('main-section-wrap-comments-screen-wrap').style.top = '60px';
                     document.getElementById('room-main-page').style.marginTop = '0px';
-                    document.getElementById('room-wrap').style.flex = '5 1 0%';
+                    //document.getElementById('room-wrap').style.flex = '5 1 0%';
                     document.getElementById('main-menu').style.maxWidth = '283px';
                     document.getElementById('main-menu').style.width = '100%';
                 }
@@ -1555,6 +1555,9 @@ let apps = [{},{}]
             menuinfotop.appendChild(infinity);
             closebox.appendChild(closet);
             closebox.appendChild(closex);
+            closebox.addEventListener('click',()=>{
+                document.getElementById('menu-info-box').remove()
+            })
             menuinfotop.appendChild(closebox);
             menuinfobox.appendChild(menuinfotop)
             menuinfobox.appendChild(welcometext);
@@ -3405,8 +3408,8 @@ let apps = [{},{}]
 
         return (
             <div id="room-main-page" className="page-wrap twilight room-main-page-wrap">
-                <div className="room-wrap-wrap" style={{display:'flex',flexDirection:'column', height:'100%',width:'100%'}}>
-                    <div id="room-wrap" style={{display:'flex',flex:1,position:'relative',overflow:'hidden'}}>
+                <div className="room-wrap-wrap" style={{display:'flex',flexDirection:'column', height:'100vh',width:'100%'}}>
+                    <div id="room-wrap" style={{display:'flex',position:'relative',overflow:'hidden'}}>
                         <div id="tab-menu" className="tab-menu" style={{
                             width:'48px', 
                             background:'rgb(14, 14, 14)',
@@ -3661,7 +3664,6 @@ let apps = [{},{}]
                                 left:'-330px',
                                 backgroundColor:'#181818',
                                 flexDirection:'column',
-                                alignItems:'center',
                                 transform:'none'
                         }}>
  
