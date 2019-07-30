@@ -1555,9 +1555,11 @@ let apps = [{},{}]
             menuinfotop.appendChild(infinity);
             closebox.appendChild(closet);
             closebox.appendChild(closex);
-            closebox.addEventListener('click',()=>{
-                document.getElementById('menu-info-box').remove()
-            })
+            
+            closebox.addEventListener('click', ()=>{
+                document.getElementById('menu-info').remove()
+            });
+            closebox.style.cursor = 'pointer';
             menuinfotop.appendChild(closebox);
             menuinfobox.appendChild(menuinfotop)
             menuinfobox.appendChild(welcometext);

@@ -76,6 +76,7 @@ class Editor extends Component {
           this.setState({showSubComponent:true}) 
 
         } else {
+
           this.setState({showSubComponent:false}) 
 
         }
@@ -225,7 +226,7 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
             for(i = 0; i < this.state.libraries.length; i++) {
                 var iFrameHead = iframe.contentWindow.document.getElementsByTagName("head")[0];
                 var myscript = document.createElement('script');
-                //myscript.type = 'text/javascript';
+                myscript.type = 'text/javascript';
                // myscript.src = this.state.libraries[i];
                 //iFrameHead.appendChild(myscript);
             }
@@ -684,7 +685,6 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
         let codeTriangle1 = document.getElementsByClassName('down-editor-3x')[0];
         let codeTriangle2 = document.getElementsByClassName('down-editor-3x')[1];
         let codeTriangle3 = document.getElementsByClassName('down-editor-3x')[2];
-        
 
     }
     resizeAnimationComplete () {
