@@ -2728,7 +2728,7 @@ let apps = [{},{}]
 
                             );
 
-                            },500)
+                            },5000)
                             }
                         
                     //         clearInterval(timer);
