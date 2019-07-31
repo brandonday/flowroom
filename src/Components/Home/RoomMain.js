@@ -2678,7 +2678,7 @@ let apps = [{},{}]
                     cardWrapWrapWrap.appendChild(save);
                     iframeWrap.appendChild(cardWrapWrapWrap);
                     
-                    iframeWrap.style.display = 'none';
+                    iframeWrap.style.visibility = 'hidden'
                     blackOpacityModal.style.display = 'none';
                     let iframe_doc = iframe.contentDocument;
                     //window.Subj('#regular-thumbnail').draggle();
@@ -2695,18 +2695,17 @@ let apps = [{},{}]
                 renderDHTML();
                 
                 let get_iframe = document.getElementById('regular-thumbnail');
-        //  setTimeout(()=> {
-        //         console.log('hhh', get_iframe.contentWindow)
-        //         //get_iframe.onload = ()=> {
-        //             alert('f')
-        //             var timer = setInterval(()=> {
+                var iframeDoc = get_iframe.contentWindow;
+                   // var timer = setInterval(()=> {
                         
-        //                 var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-        //                 // Check if loading is complete
-        //                 if (iframeDoc.readyState == 'complete' || iframeDoc.readyState == 'interactive') {
-                            // setTimeout(()=>{
+                        
+                        // Check if loading is complete
+                        // if (iframeDoc.readyState == 'complete' || iframeDoc.readyState == 'interactive') {
+                     
                             get_iframe.onload = () => {
-                            get_iframe.contentWindow.flowroom.SaveScreenShot(
+                                alert('d')
+                            setTimeout(()=>{
+                           iframeDoc.flowroom.SaveScreenShot(
                                 ()=> {
                                     alert('call')
                                     let imageData = localStorage.getItem("thumbnail");
@@ -2728,15 +2727,15 @@ let apps = [{},{}]
                                 }
 
                             );
+
+                            },500)
                             }
-            //                 },5000)
-            //                 clearInterval(timer);
-            //                 return;
-            //             }
-            //         }, 4000);
+                        
+                    //         clearInterval(timer);
+                    //         return;
+                    //     }
+                    // }, 4000);
       
-            //     //}
-            // },5000)
                 
                 if(menuinfo !== null) {
                     menuinfo.remove();
