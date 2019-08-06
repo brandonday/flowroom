@@ -447,19 +447,19 @@ class RoomPost extends Component {
                        
 
 
-                <div id="description-text" style={{
-
-  maxWidth:'100%',
-  height:'auto',
-  fontSize:'14px',
-  lineHeight:'1.2',
-  position:'relative',
-  top:'5px',
-  overflow:'hidden',
-  color:'white',
-  marginLeft:3,
-  paddingBottom:20
-    }}>
+                <div id="description-text" 
+                    style={{
+                        maxWidth:'100%',
+                        height:'auto',
+                        fontSize:'14px',
+                        lineHeight:'1.2',
+                        position:'relative',
+                        top:'5px',
+                        overflow:'hidden',
+                        color:'white',
+                        marginLeft:3,
+                        paddingBottom:20
+                }}>
                     {`${this.getTruncatedString(this.props.description).string}`}
                     {this.getTruncatedString(this.props.description).isReadMore ? (<span style={{color:'white',marginLeft:2}}>...[Read More]
                     <div style={{display:'flex',alignItems:'center',marginRight:'18px',flexDirection:'row', marginTop:7}}>

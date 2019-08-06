@@ -15,6 +15,7 @@ class FR_OBJECT extends Component {
         }
     }
     componentDidMount() {
+       let monkey = this.props.monkey;
         // let base_tpl = "<!doctype html>\n" +
         //   "<html>\n\t" +
         //   "<head>\n\t\t" +

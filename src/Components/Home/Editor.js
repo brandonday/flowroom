@@ -79,7 +79,7 @@ class Editor extends Component {
 
           this.setState({showSubComponent:false}) 
 
-        }
+        } 
         
       })
   
