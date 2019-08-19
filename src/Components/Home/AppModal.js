@@ -10,7 +10,7 @@ import uuid from 'uuid';
 import Hashids from 'hashids';
 import NewMessageButton from './NewMessageButton';
 import MessageItem from './MessageItem';
-import Create from './Create';
+//import Create from './Create';
 import { WithContext as ReactTags } from 'react-tag-input';
 import FileUploader from "react-firebase-file-uploader";
 import Convo from './Convo';
@@ -772,7 +772,7 @@ const KeyCodes = {
 
             return (
                 <div style={{height:'100%', width:'100%'}} onClick={this.closeModal}>
-                    <Create/>
+                    {/* <Create/> */}
                 </div>
             )
         } else if(this.props.state.entireApp.modalType === 'signupsignin') {

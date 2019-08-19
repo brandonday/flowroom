@@ -28,6 +28,8 @@
     "interactjs": "^1.4.0-rc.13",
     "live-server": "^1.2.1",
     "lodash.throttle": "^4.1.1",
+    "materialize": "^1.0.0",
+    "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.22.2",
     "node-sass": "^4.11.0",
     "normalize.css": "^8.0.1",

@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import AppModal from './AppModal';
 import { OPEN_MODAL } from '../../actions/entireApp';
 import { connect } from 'react-redux';
-
+import {openMenu} from '../../actions/openMenu';
+import createHistory from 'history/createBrowserHistory';
 
 
 
@@ -12,11 +13,14 @@ class NewButton extends Component {
     constructor() {
         super();
         this.state = {
-
+            showMenu:false
         }
     }
+    componentWillReceiveProps() {
+        
+    }
     newclicked(){
-
+        
         // if(document.getElementById('newbtn').style.display !== 'block') {
         //     document.getElementById('newbtn').style.display = 'block';
         //     document.getElementById('new-button-dropdown').style.backgroundColor = '#0A7F29';
@@ -44,38 +48,38 @@ class NewButton extends Component {
         //       border:0
         //     }
         //   }})
-        let modal = document.getElementById('default-modal');
-        modal.style.display = 'block';
-        modal.style.top = '80px';
-        let create = document.getElementById('create-box');
-        create .style.display = 'flex';
+        // let modal = document.getElementById('default-modal');
+        // modal.style.display = 'block';
+        // modal.style.top = '80px';
+       
+        if(this.props.state.openMenu.openMenu !== true) {
+            this.props.openMenu({openMenu:true});
+            document.getElementById("default-modal").style.display = 'block'
+            document.getElementById("default-modal").style.top = '80px'
+
+        } else {
+            this.props.openMenu({openMenu:false});
+            document.getElementById("default-modal").style.display = 'none'
+            document.getElementById("default-modal").style.top = '80px'
+
+        }
+        
+     
+
+
         
     }
-    
+
     openModal() {
        
       }
+    
     render() {
     return  (
         <div style={{position:'relative'}}>
             <div onClick={this.newclicked.bind(this)} id="new-button-dropdown" className="new-button-dropdown">
                 <div className="new-btn">
-                    <button style={{
-                            fontWeight:'bold',
-                            color: 'rgb(64, 255, 232)',
-                            fontSize:'13px',
-                            backgroundColor:'transparent',
-                            border: '1px solid rgb(64, 255, 232)',
-                            borderRadius:'4px',
-                            paddingRight:'3px',
-                            position:'relative',
-                            display:'flex',
-                            padding:'5px 7px',
-                            alignItems:'center',
-                            justifyContent:'space-between'
-                        
-                            }}>
-                            <i className="fa fa-plus" style={{
+                {this.props.state.openMenu.openMenu ? (<i className="fa fa-minus" style={{
                                 mozSsxFontSmoothing:'grayscale',
 
                                 webkitFontSmoothing:'antialiased',
@@ -90,13 +94,61 @@ class NewButton extends Component {
                                 
                                 lineHeight:0,
                                 
-                                fontSize:'11px'
-                            }}></i>
-                            <p style={{fontSize:'10px',
+                                fontSize:'18px',
+                                position:'absolute',
+                                color:'#40FFE8',
+                                marginLeft:10
+
+                            }}></i>):(<i className="fa fa-plus" style={{
+                                mozSsxFontSmoothing:'grayscale',
+
+                                webkitFontSmoothing:'antialiased',
+                                
+                                display: 'inline-block',
+                                
+                                fontStyle: 'normal',
+                                
+                                fontVariant:'normal',
+                                
+                                textRendering:'auto',
+                                
+                                lineHeight:0,
+                                
+                                fontSize:'18px',
+                                position:'absolute',
+                                color:'#40FFE8',
+                                marginLeft:10
+                            }}></i>)}
+                            <p style={{fontSize:'14px',
                                      fontWeight:'700',
                                      position:'relative', 
-                                     marginLeft:6
+                                     marginLeft:6,
+                                     position:'absolute',
+                                     color:'#40FFE8',
+                                     marginLeft:32
                                    }}>CREATE</p>
+                    <button style={{
+                            fontWeight:'bold',
+                            color: 'rgb(64, 255, 232)',
+                            fontSize:'13px',
+                            backgroundColor:'transparent',
+                            border: '1px solid rgb(64, 255, 232)',
+                            borderRadius:'4px',
+                            paddingRight:'3px',
+                            position:'relative',
+                            display:'flex',
+                            padding:'5px 7px',
+                            alignItems:'center',
+                            justifyContent:'space-between',
+                            outline:'none',
+                            border:'2px solid #40FFE8',
+                            borderRadius:'5px',
+                            opacity:'0.7',
+                            width:'95px',
+                            height:'35px'
+                        
+                            }}>
+    
                     </button>
                 </div>
                 <div id="newbtn" className="new-button-dropdown-content">
@@ -123,10 +175,15 @@ class NewButton extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    openModal: (modal) => dispatch(OPEN_MODAL(modal))
+    openMenu: (bool) => dispatch(openMenu(bool))
 });
 
+const mapStateToProps = (state) => {
+    return {
+        state:state
+    }
+}
 
-const ConnectedNewButton = connect(undefined, mapDispatchToProps)(NewButton)
+const ConnectedNewButton = connect(mapStateToProps, mapDispatchToProps)(NewButton)
 
 export default ConnectedNewButton;

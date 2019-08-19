@@ -15,8 +15,8 @@ const Default = props => <Responsive {...props} minWidth={768} />;
         <div className="logo-wrap" style={{marginRight:'17px'}}>
             <div id="fr-logo" style={{backgroundImage:'url(./public/logo.svg)',
                 backgroundImage:'url(../logo.svg)',
-                height:'31px',
-                width:'136px',
+                height:'35px',
+                width:'157px',
                 backgroundSize:'contain',
                 backgroundRepeat:'no-repeat'
             }}></div>

@@ -57,6 +57,7 @@ body {
 }
 
 .carousel-item-c {
+  
   height:283px !important;
   width:327px !important;
   background-color:transparent !important;
@@ -70,14 +71,14 @@ body {
 .carousel-item-image {
   background-color: #FFFFFF !important;
           border-radius: 10px !important;
-          width: 287px !important;
-          max-width:287px !important;
+          width:100% !important;
+          /* max-width:287px !important; */
           height: 191px !important;
 }
 
 .carousel-item-info {
   display:flex !important ;width:100% !important ;display:flex !important;flex-direction: column !important;    margin: 15px 1px;
-          padding-left:20px !important;pointer-events: none !important;
+          pointer-events: none !important;
 }
 
 .carousel-item-title {
@@ -86,7 +87,7 @@ body {
           font-weight: 600 !important;
           
           margin-bottom:3px !important;
-          text-align: lef !importantt;
+          text-align:left !important;
 }
 
 .carousel-item-description {
@@ -96,6 +97,99 @@ body {
           
            text-align: left !important;
 }
+
+.indicators .indicator-item.active {
+  background-color: #40FFE8 !important;
+  border-radius: 100% !important;
+  width: 9px !important;
+  height: 9px !important;
+}
+
+.indicators .indicator-item {
+  background-color: #FFF !important;
+  border-radius: 100% !important;
+  width: 9px !important;
+  height: 9px !important;
+}
+
+
+.carousel-item-wrap-mobile {
+  height:0px !important;
+  width:327px !important;
+  background-color:transparent !important;
+  min-height:0px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content: center !important;
+  flex-direction:column !important;
+}
+
+.carousel-item-c-mobile {
+  height:245px !important;
+  width:189px !important;
+  background-color:transparent !important;
+  min-height:0px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content: center !important;
+  flex-direction:column !important;
+}
+
+.carousel-item-image-mobile {
+  background-color: #FFFFFF !important;
+          border-radius: 10px !important;
+          width:100% !important;
+          /* max-width:287px !important; */
+          height: 170px !important;
+}
+
+.carousel-item-info-mobile {
+  display:flex !important ;width:100% !important ;display:flex !important;flex-direction: column !important;    margin: 15px 1px;
+          pointer-events: none !important;
+          justify-content: center;
+          align-items: center;
+
+}
+
+.carousel-item-title-mobile {
+  color:#ffff !important;
+          font-size: 14px !important;
+          font-weight: 600 !important;
+          
+          margin-bottom:3px !important;
+          text-align:left !important;
+}
+
+.carousel-item-description-mobile {
+  color:#ffff !important;
+           font-size: 11px !important;
+           font-weight: 500 !important;
+          
+           text-align: left !important;
+}
+
+.indicators .indicator-item.active-mobile {
+  background-color: #40FFE8 !important;
+  border-radius: 100% !important;
+  width: 9px !important;
+  height: 9px !important;
+}
+
+.indicators .indicator-item-mobile {
+  background-color: #FFF !important;
+  border-radius: 100% !important;
+  width: 9px !important;
+  height: 9px !important;
+}
+
+
+#create-tags {
+  display:flex !important;
+
+}
+
+
+
 /*-----------------END OF DOM --------------------*/
 
 @media only screen and (max-width: 320px) {
@@ -995,7 +1089,11 @@ right: 0px;
 }
 
 
-
+.new-btn {
+  display:flex;
+  align-items:center;
+  
+}
 
 .signup-button-wrap {
   margin-left: 16px;

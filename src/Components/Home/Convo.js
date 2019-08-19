@@ -10,7 +10,7 @@ import uuid from 'uuid';
 import Hashids from 'hashids';
 import NewMessageButton from './NewMessageButton';
 import MessageItem from './MessageItem';
-import Create from './Create';
+// import Create from './Create';
 import { WithContext as ReactTags } from 'react-tag-input';
 import FileUploader from "react-firebase-file-uploader";
 var moment = require('moment');

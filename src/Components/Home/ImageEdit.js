@@ -55,6 +55,7 @@ let that;
             remixImageList.style.width = '100%';
         let remixImageTitle = document.createElement('div');
         let menuinfo = document.createElement('div');
+        menuinfo.style.marginBottom = '53px';
         if(document.getElementById('menu-info') == null) {
         let menuinfo = document.createElement('div');
         

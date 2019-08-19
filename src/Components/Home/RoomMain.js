@@ -3409,7 +3409,7 @@ let apps = [{},{}]
 
         return (
             <div id="room-main-page" className="page-wrap twilight room-main-page-wrap">
-                <div className="room-wrap-wrap" style={{display:'flex',flexDirection:'column', height:'100vh',width:'100%'}}>
+                <div className="room-wrap-wrap" style={{flexDirection:'column', height:'100vh',width:'100%'}}>
                     <div id="room-wrap" style={{display:'flex',position:'relative',overflow:'hidden'}}>
                         <div id="tab-menu" className="tab-menu" style={{
                             width:'48px', 
@@ -3438,7 +3438,7 @@ let apps = [{},{}]
                                     width:22,
                                     pointerEvents:'none'
                                     }}></div>
-                                <p id="remix-text" style={{fontSize:10.2,fontWeight:500,width:'26px', pointerEvents:'none', marginTop:4}} className="menubgnot">REMIX</p>
+                                <p id="remix-text" style={{fontSize:10.2,fontWeight:500, pointerEvents:'none', marginTop:4}} className="menubgnot">REMIX</p>
                                
                         </div>
                         <div id="elements-tag" onClick={this.ElementsTabs.bind(this)} 
@@ -3456,7 +3456,7 @@ let apps = [{},{}]
                         }} className="menu-bg-border">
                             
                             <i id="elements-icon" className="fas fa-shapes" style={{color:'white', fontSize:15,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none'}}></i>
-                            <p id="elements-text" style={{fontSize:8.5,fontWeight:500,width:'38px',pointerEvents:'none'}} className="menubgnot">ELEMENTS</p>
+                            <p id="elements-text" style={{fontSize:8.5,fontWeight:500,pointerEvents:'none'}} className="menubgnot">ELEMENTS</p>
                         </div>
                         <div id="app-tag"  onClick={this.AppsTab.bind(this)} 
                         onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
@@ -3473,7 +3473,7 @@ let apps = [{},{}]
                         }} className="menu-bg-border">
                             
                             <i id="apps-icon" className="fas fa-cubes" style={{color:'white', fontSize:15,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none'}}></i>
-                            <p id="apps-text" style={{fontSize:10.2,fontWeight:500,width:'21px',pointerEvents:'none'}} className="menubgnot">APPS</p>
+                            <p id="apps-text" style={{fontSize:10.2,fontWeight:500,pointerEvents:'none'}} className="menubgnot">APPS</p>
                         </div>
                         <div id="script-tag" refs="script-tag" onClick={this.ScriptTag.bind(this)}
                         onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
@@ -3499,7 +3499,7 @@ let apps = [{},{}]
                                 marginBottom:'3px',
                                 pointerEvents:'none'
                             }}></div>
-                            <p id="script-text" style={{fontSize:10.2,fontWeight:500,width:'26px',pointerEvents:'none'}} className="menubgnot">SCRIPT</p>
+                            <p id="script-text" style={{fontSize:10.2,fontWeight:500,pointerEvents:'none'}} className="menubgnot">SCRIPT</p>
                         </div>
                         <div id="save-tab" onClick={()=> {
                             this.openModal(false)
@@ -3614,7 +3614,7 @@ let apps = [{},{}]
                                 marginBottom:'3px',
                                 pointerEvents:'none'
                             }}></div>
-                            <p id="publish-text-" style={{fontSize:10.2,fontWeight:'bold',width:'38px', pointerEvents:'none'}} className="menubgnot">PUBLISH</p>
+                            <p id="publish-text-" style={{fontSize:10.2,fontWeight:'bold', pointerEvents:'none'}} className="menubgnot">PUBLISH</p>
                         </div>
                         {/* <div id="objects" onClick={()=> {
                             // let objectsid = document.getElementById('objects');
