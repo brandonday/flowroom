@@ -123,7 +123,10 @@ class Create extends Component {
       <div style={{display:this.state.menuMobile ? 'none':'block',backgroundColor:'#FFFFFF',
       borderRadius:'10px',
       width:'295px',
-      height:'175px',margin:'23px 45px'}}></div>
+      height:'175px',margin:'23px 45px',backgroundImage:'url(https://media.giphy.com/media/TigiW06eiQCClpNnKy/giphy.gif)',
+      backgroundSize:'cover',
+      backgroundRepeat:'no-repeat'
+      }}></div>
       <p style={{color:'white',fontSize:this.state.menuMobile ? '12px':'16px'}}>Drag & Drop Gifs, Images, Text, Emojis,{`${this.state.mobileMenu ? ' or add in':''}`}</p> 
       <p style={{color:'white',fontSize:this.state.menuMobile ? '12px':'16px'}}>{`${this.state.mobileMenu ? '':'  or add in'}`} apps like YouTube, Spotify,{`${!this.state.mobileMenu ? '':' and much more.'}`}</p> 
       <p style={{color:'white',fontSize:this.state.menuMobile ? '12px':'16px'}}>{`${!this.state.mobileMenu ? ' and much more.':''}`}</p>

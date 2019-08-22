@@ -55,7 +55,7 @@ let that;
             remixImageList.style.width = '100%';
         let remixImageTitle = document.createElement('div');
         let menuinfo = document.createElement('div');
-        menuinfo.style.marginBottom = '53px';
+       
         if(document.getElementById('menu-info') == null) {
         let menuinfo = document.createElement('div');
         
@@ -99,6 +99,7 @@ let that;
         //.style.marginTop = '70px';
         remixImageBox.setAttribute("id", "remix-image-box");
         
+        remixImageBox.style.marginTop = '47px'
 
         let backArrow = document.createElement('i');
         let forwardArrow = document.createElement('i');

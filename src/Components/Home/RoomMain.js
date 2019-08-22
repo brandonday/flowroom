@@ -238,7 +238,8 @@ let apps = [{},{}]
                 script_menu:false,
                 publish_menu:false,
                 object_arr:[],
-                fontAwesomeAdded:false
+                fontAwesomeAdded:false,
+                funType:'cats'
             
             };
             this.openModal = this.openModal.bind(this);
@@ -272,6 +273,7 @@ let apps = [{},{}]
             this.putObject = this.putObject.bind(this);
             this.getMimeType = this.getMimeType.bind(this);
             this.makeResizableDiv =  this.makeResizableDiv.bind(this)
+            this.funStuff = this.funStuff.bind(this)
         }
         descriptionhandleChange(event) {
             this.setState({description: event.target.value});
@@ -296,14 +298,6 @@ let apps = [{},{}]
        
             this.setState({shortID:hashids.encode(1, 2, 3)});
 
-            client.search('gifs', {"q": "cats"}).then((response) => {
-                response.data.forEach((gifObject) => {
-                    elements_arr.push(gifObject)
-                })
-            }).catch((err) => { })
-
-            /// Sticker Search
-            client.search('stickers', {"q": "cats"}).then((response) => {}).catch((err) => {})
             //this.incrementViews();
             var user = firebase.auth().currentUser;
             var name, email, photoUrl, uid, emailVerified, fullname;
@@ -1322,6 +1316,222 @@ let apps = [{},{}]
 
             }
         }
+        funStuff(type = 'gifs') {
+
+            client.search(type, {"q": `${this.state.funType}`}).then((response) => {
+                response.data.forEach((gifObject) => {
+                    elements_arr.push(gifObject)
+                                    let element_menu = document.createElement('div');
+
+                element_menu.style.display = 'flex';
+                element_menu.style.width = '100%';
+                element_menu.style.flexWrap = 'wrap';
+                element_menu.setAttribute("id","element-menu");
+                element_menu.style.top = '10px';
+                element_menu.style.position = 'relative';
+                element_menu.style.display = 'flex';
+                element_menu.style.justifyContent = 'center'
+                    elements_arr.map((i) => {
+                        let element = document.createElement('div');
+                        if(i.images !== undefined) {
+                            console.log(i.images.downsized_medium.url)
+    
+                            element.style.height = '100px';
+                            element.style.width = '100px';
+                            element.style.border = '0px solid white';
+                            element.style.margin = '5px';
+                            element.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
+                            element.style.backgroundSize = 'cover';
+    
+                            element.addEventListener('click',()=>{
+                                let object = document.createElement('div');
+                                let resizers = document.createElement('div');
+                                let resizerOne = document.createElement('div');
+                                let resizerTwo = document.createElement('div');
+                                let resizerThree = document.createElement('div');
+                                let resizerFour = document.createElement('div');
+                                let header = document.createElement('div');
+                                header.style.height = '20px';
+                                header.style.width = '125px';
+                                //header.style.border = '1px solid black';
+                                header.style.position = 'relative';
+                                header.style.margin = 'auto';
+                                header.style.display = 'flex';
+                                header.style.top = '-34px';
+    
+                                let dragwrapper = document.createElement('div');
+                                dragwrapper.style.display = 'flex';
+                                dragwrapper.style.height = '20px';
+                                dragwrapper.style.width = '64px';
+                                //dragwrapper.style.border = '1px solid black';
+                                dragwrapper.style.position = 'absolute';
+                                dragwrapper.style.right = '0px';
+                                dragwrapper.style.justifyContent = 'space-between';
+    
+    
+                                let minimize = document.createElement('div');
+                                minimize.setAttribute("id", 'minimize_' + i.id);
+                                let minicon = document.createElement('i');
+                                minicon.style.color = 'white';
+                                minicon.className = 'fas fa-window-minimize';
+                                // minicon.style.fontSize = '20px';
+    
+                                minimize.appendChild(minicon);
+                                //minimize.style.height = '20px';
+                                //minimize.style.width = '20px';
+                                //minimize.style.border = '1px solid black';
+    
+                                let maximize = document.createElement('div');
+                                maximize.setAttribute("id", 'maximize_' + i.id);
+                                let maxicon = document.createElement('i');
+                                maxicon.style.color = 'white';
+                                maxicon.className = 'fas fa-window-maximize';
+                                maximize.appendChild(maxicon);
+    
+                                //maximize.style.border = '1px solid black';
+    
+                                let close = document.createElement('div');
+                                close.setAttribute('id', 'close_' + i.id);
+                                let closeicon = document.createElement('i');
+                                closeicon.style.color = 'white';
+                                closeicon.className = 'fas fa-window-close';
+                                close.appendChild(closeicon);
+    
+                                //close.style.border = '1px solid black';
+    
+                                dragwrapper.appendChild(minimize);
+                                dragwrapper.appendChild(maximize);
+                                dragwrapper.appendChild(close);
+    
+                                header.appendChild(dragwrapper);
+    
+    
+                                header.style.display = 'flex';
+                                header.style.flexDirection = 'row';
+                                header.style.alignItems = 'center';
+                                header.setAttribute("id", `${i.id+'header'}`);  
+                                header.setAttribute("class", "draggable")
+                                let dragMe = document.createElement('p');
+    
+                                dragMe.appendChild(document.createTextNode('DRAG'));
+                                dragMe.style.color = 'white';
+                                header.appendChild(dragMe);
+    
+                                let hashids = new Hashids(uuid(), 6);
+    
+    
+                                // resizers.className = 'resizers';
+                                // resizerOne.className = 'resizer top-left';
+                                // resizerTwo.className = 'resizer top-right';
+                                // resizerThree.className = 'resizer bottom-left';
+                                // resizerFour.className = 'resizer bottom-right';
+    
+    
+                                object.style.backgroundSize = 'cover';
+                                object.style.height = '100px';
+                                object.style.width = '100px';
+                                object.style.border = '1px solid white';
+                                //object.style.zIndex = '1000000000000000000000000';
+                                object.className = 'resizable';
+                               // object.style.position = 'absolute';
+                                object.style.top = '0px';
+                                let object_id = 'OBJECT_' + hashids.encode(1,2,3);
+                                object.setAttribute("id", object_id);
+                                // resizers.appendChild(resizerOne);
+                                // resizers.appendChild(resizerTwo);
+                                // resizers.appendChild(resizerThree)
+                                // resizers.appendChild(resizerFour);
+    
+                                //object.appendChild(header)
+                                //object.appendChild(resizers);
+    
+                                console.log(i)
+    
+    
+    
+                                //if(i.type === 'gif') {
+                                let objectWrapper = document.createElement('div');
+                                let dragSection = document.createElement('div');
+                                dragSection.style.height = '30px';
+                                dragSection.style.width = '100%';
+                                document.getElementById('output_frame').contentDocument.body.style.display = 'flex';
+                                let div = document.createElement('div');
+                                //div.style.height = '200px';
+                                // div.style.width = '300px';
+                                div.style.margin = '10px 20px'
+                                div.style.border = '0px solid blue';
+                                div.style.position = 'relative';
+                                div.setAttribute("id", `container${object.id}`);
+                                let resizable = document.createElement('div');
+                                resizable.className = 'resizable';
+    
+                                let resizers_box = document.createElement('div');
+                                resizers_box.className = 'resizers';
+                                let resizerTopLeft = document.createElement('div');
+                                resizerTopLeft.className = 'resizer top-left';
+                                let resizerTopRight = document.createElement('div');
+                                resizerTopRight.className = 'resizer top-right';
+                                let resizerBottomLeft = document.createElement('div');
+                                resizerBottomLeft.className = 'resizer bottom-left';
+                                let resizerBottomRight = document.createElement('div');
+                                resizerBottomRight.className = 'resizer bottom-right';
+    
+                                resizers_box.appendChild(resizerTopLeft);
+                                resizers_box.appendChild(resizerTopRight);
+                                resizers_box.appendChild(resizerBottomLeft);
+                                resizers_box.appendChild(resizerBottomRight);
+    
+                                resizable.setAttribute("id",`${i.id}`)
+                                resizable.appendChild(resizers_box);
+                                //resizable.appendChild(object)
+                                
+                                div.appendChild(resizable);
+                                
+    
+                                document.getElementById('overlay_output_frame').contentDocument.getElementById('overlay-container').appendChild(div);
+                                document.getElementById('overlay_output_frame').contentDocument.body.style.padding = '10px';
+                    
+                                resizable.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
+                               
+                                this.makeResizableDiv(`#${i.id}`);
+                                
+                                // const xDraggables = document.getElementById('overlay_output_frame').contentWindow.Subjx(`#${object.id}`).drag({
+                                    
+                                // container:`#container${object.id}`,
+                                // each: {
+                                //     move: false,
+                                //     resize: true, 
+                                //     rotate: true
+                                // }
+                                // // snapping to grid (default: 10)
+        
+                                // });
+    
+    
+                            
+        
+        
+                                //}
+                                let dhtml = JSON.parse(localStorage.getItem("dhtml"));
+    
+                                let html = document.getElementById('output_frame').contentWindow.document.body.innerHTML;
+                                let dhtmlObj = {html:html, js:dhtml.js, css:dhtml.css}
+    
+    
+                                localStorage.setItem("dhtml", JSON.stringify(dhtmlObj));
+    
+    
+                            })
+    
+                            document.getElementById('element-menu').appendChild(element)
+                        }
+                    });
+                })
+            }).catch((err) => { })
+
+            /// Sticker Search
+            
+        }
         menuSelect() {
             if(this.state.details === true) {
         
@@ -1890,9 +2100,45 @@ let apps = [{},{}]
                 });
 
                 let searchGIFS = document.createElement('div');
+                let closeSearch = document.createElement('i');
+                let closeSearchWrap = document.createElement('div');
+                let searchInput = document.createElement('input');
+                let searchGiphy = document.createElement('div');
+                let searchGiphyWrap = document.createElement('div');
+                var typingTimer;
+                var doneTypingInterval = 700;
+                let that = this;
+                searchInput.addEventListener('input',(e)=>{
+                    let getSel = document.getElementsByClassName('elementbg')
+                    clearTimeout(typingTimer);
+                    typingTimer = setTimeout(
+                    function(){
+                        document.getElementById('element-menu').innerHTML = '';
+                        that.funStuff(getSel[0].innerText.toLowerCase());
+                        that.setState({funType:e.target.value})
+                        elements_arr = []
+                       
+                    },
+                        doneTypingInterval
+                    );
+            
+                    return true;
+                })
+
                 searchGIFS.style.height = '20px';   
                 searchGIFS.style.width = '150px';
-                searchGIFS.style.border = '1px solid white'
+                searchGIFS.style.border = '1px solid white';
+
+                searchGiphy.style.backgroundImage = 'url(/poweredbygiphy.png';
+                searchGiphy.style.backgroundSize = 'contain';
+                searchGiphy.style.backgroundRepeat = 'no-repeat';
+                searchGiphy.style.height = '20px';
+                searchGiphy.style.width = '109px';
+                searchGiphy.style.float = 'right';
+
+                searchGiphyWrap.style.height = '20px';
+                searchGiphyWrap.style.width = '100%';
+                searchGiphyWrap.appendChild(searchGiphy);
 
                 let elementTabs = document.createElement('ul');
                 elementTabs.style.display = 'flex';
@@ -1902,21 +2148,54 @@ let apps = [{},{}]
                 elementTabs.style.border = '0px solid white';
                 elementTabs.style.padding = '10px 0px';
                 elementTabs.setAttribute("id","elements")
-
+                closeSearch.style.color = 'white';
+                closeSearch.className = 'fa fa-times';
+                closeSearch.style.float = 'right'
+                closeSearch.style.fontSize = '15px'
+                closeSearchWrap.style.width = '100%';
+                closeSearchWrap.style.height = '20px';
+            
                 for(let i=0; i < element_options.length; i++) {
                     let li = document.createElement('li');
-                    li.style.color = 'rgb(54, 255, 233)';
+                    li.style.color = '#C6C6C6';
                     li.style.listStyleType = 'none';
                     li.style.fontSize = '14px'
                     li.appendChild(document.createTextNode(element_options[i]));
-                    li.addEventListener('click', ()=> {})
-                    elementTabs.appendChild(li)
+                    li.addEventListener('click', ()=> {
+                        let elements = document.getElementsByClassName('elementbg');
+                        for(let i =0; i < elements.length; i++) {
+                            elements[i].className = '';
+                        }
+                        li.className = 'elementbg';
+                        this.funStuff('gifs');
+                    })
+                 
+                    elementTabs.appendChild(li);
+                    
                 }
+                
+                closeSearchWrap.appendChild(closeSearch);
+                searchInput.style.backgroundColor = '#252525';
+                searchInput.style.height = '30px';
+                searchInput.style.width = '100%';
+                searchInput.style.border = 'none';
+                searchInput.style.margin = '10px 0px';
+                searchInput.style.outline = 'none';
+                searchInput.style.paddingLeft = '10px';
+
+                searchInput.setAttribute("placeholder", 'Search for stuff here...');
+                searchInput.className = 'search-placeholder';
+                document.getElementById('main-menu').appendChild(closeSearchWrap);
+              
+               
 
                 if(document.getElementById('element-menu') === null) {
                     mainmenu.appendChild(elementTabs);
                     //mainmenu.appendChild(searchGIFS);
+                    document.getElementById('main-menu').appendChild(searchInput);
+                    document.getElementById('main-menu').appendChild(searchGiphyWrap);
                     mainmenu.appendChild(element_menu);
+
                 }   
                 if(this.state.element_menu === false) {
                     mainmenu.appendChild(element_menu);
@@ -3412,7 +3691,7 @@ let apps = [{},{}]
                 <div className="room-wrap-wrap" style={{flexDirection:'column', height:'100vh',width:'100%'}}>
                     <div id="room-wrap" style={{display:'flex',position:'relative',overflow:'hidden'}}>
                         <div id="tab-menu" className="tab-menu" style={{
-                            width:'48px', 
+                            width:'68px', 
                             background:'rgb(14, 14, 14)',
                             height:'100%'
                         }}>
@@ -3420,8 +3699,8 @@ let apps = [{},{}]
                             onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
                             style={{
                                 display:'flex',
-                                height:'52px',
-                                width:'48px',
+                                height:'65px',
+                                width:'65px',
                                 flexDirection:'column',
                                 alignItems:'center',
                                 borderRight:'1px solid #181818',
@@ -3434,11 +3713,14 @@ let apps = [{},{}]
                                     backgroundImage:'url(../infinity_grey.svg)',
                                     backgroundSize: '100% 100%',
                                     backgroundRepeat:'no-repeat',
-                                    height:9,
-                                    width:22,
+                                    height:'19px',
+                                    width:'26px',
                                     pointerEvents:'none'
                                     }}></div>
-                                <p id="remix-text" style={{fontSize:10.2,fontWeight:500, pointerEvents:'none', marginTop:4}} className="menubgnot">REMIX</p>
+                                <p id="remix-text" style={{fontSize:'11.2px',
+    fontWeight:600,
+    pointerEvents:'none',
+    pointerEvents:'none', marginTop:2}} className="menubgnot">REMIX</p>
                                
                         </div>
                         <div id="elements-tag" onClick={this.ElementsTabs.bind(this)} 
@@ -3446,8 +3728,8 @@ let apps = [{},{}]
                         style={{
                             display:'flex',
                             cursor:'pointer',
-                            height:'52px',
-                            width:'48px',
+                            height:'65px',
+                            width:'65px',
                             flexDirection:'column',
                             alignItems:'center',
                             borderRight:'1px solid #181818',
@@ -3455,16 +3737,17 @@ let apps = [{},{}]
                             justifyContent:'center'
                         }} className="menu-bg-border">
                             
-                            <i id="elements-icon" className="fas fa-shapes" style={{color:'white', fontSize:15,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none'}}></i>
-                            <p id="elements-text" style={{fontSize:8.5,fontWeight:500,pointerEvents:'none'}} className="menubgnot">ELEMENTS</p>
+                            <i id="elements-icon" className="fas fa-shapes" style={{color:'white', fontSize:19,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none',height:'20px',
+    width:'20px'}}></i>
+                            <p id="elements-text" style={{fontSize:10.5,fontWeight:600,pointerEvents:'none'}} className="menubgnot">ELEMENTS</p>
                         </div>
                         <div id="app-tag"  onClick={this.AppsTab.bind(this)} 
                         onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
                         style={{
                             display:'flex',
                             cursor:'pointer',
-                            height:'52px',
-                            width:'48px',
+                            height:'65px',
+                                width:'65px',
                             flexDirection:'column',
                             alignItems:'center',
                             borderRight:'1px solid #181818',
@@ -3472,16 +3755,16 @@ let apps = [{},{}]
                             justifyContent:'center'
                         }} className="menu-bg-border">
                             
-                            <i id="apps-icon" className="fas fa-cubes" style={{color:'white', fontSize:15,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none'}}></i>
-                            <p id="apps-text" style={{fontSize:10.2,fontWeight:500,pointerEvents:'none'}} className="menubgnot">APPS</p>
+                            <i id="apps-icon" className="fas fa-cubes" style={{color:'white', fontSize:22,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none'}}></i>
+                            <p id="apps-text" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none'}} className="menubgnot">APPS</p>
                         </div>
                         <div id="script-tag" refs="script-tag" onClick={this.ScriptTag.bind(this)}
                         onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
                         style={{
                             display:'flex',
                             cursor:'pointer',
-                            height:'52px',
-                            width:'48px',
+                            height:'65px',
+                            width:'65px',
                             flexDirection:'column',
                             alignItems:'center',
                             borderRight:'1px solid #181818',
@@ -3508,8 +3791,8 @@ let apps = [{},{}]
                         style={{
                             display:that.state.saveVisible ? 'flex' : 'none',
                           
-                            height:'52px',
-                            width:'48px',
+                            height:'57px',
+                                width:'67px',
                             flexDirection:'column',
                             alignItems:'center',
                             borderRight:'1px solid #181818',
@@ -3523,8 +3806,8 @@ let apps = [{},{}]
                                 backgroundImage:'url(../save-regular-grey.svg)',
                                 backgroundSize:'100% 100%',
                                 backgroundRepeat:'no-repeat',
-                                height:'14px',
-                                width:'16px',
+                                height:'57px',
+                                width:'67px',
                                 marginBottom:'3px'
                             
                                }}></div>
@@ -3539,8 +3822,8 @@ let apps = [{},{}]
                             }} style={{
                                 display:'none',
                                
-                                height:'52px',
-                                width:'48px',
+                                height:'57px',
+                                width:'67px',
                                 flexDirection:'column',
                                 alignItems:'center',
                                 borderRight:'1px solid #181818',
@@ -3564,8 +3847,8 @@ let apps = [{},{}]
                         onClick={this.PostAsNewTab.bind(this)} style={{
                            
                            
-                            height:'74px',
-                            width:'48px',
+                            height:'57px',
+                                width:'67px',
                             flexDirection:'column',
                             alignItems:'center',
                             borderRight:'1px solid #181818',
@@ -3581,8 +3864,8 @@ let apps = [{},{}]
                                 backgroundImage:'url(../save-regular-grey.svg)',
                                 backgroundSize:'100% 100%',
                                 backgroundRepeat:'no-repeat',
-                                height:'14px',
-                                width:'16px',
+                                height:'65px',
+                                width:'65px',
                                 marginBottom:'3px',
                                 pointerEvents:'none'
                             }}></div>
@@ -3592,8 +3875,8 @@ let apps = [{},{}]
                         <div id="post-tab" onClick={this.PostTab.bind(this)} onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}} style={{
                             display:'none',
                            
-                            height:'52px',
-                            width:'48px',
+                            height:'57px',
+                            width:'67px',
                             flexDirection:'column',
                             alignItems:'center',
                             borderRight:'1px solid #181818',
@@ -3609,8 +3892,8 @@ let apps = [{},{}]
                                 backgroundImage:'url(../save-regular-grey.svg)',
                                 backgroundSize:'100% 100%',
                                 backgroundRepeat:'no-repeat',
-                                height:'14px',
-                                width:'16px',
+                                height:'57px',
+                                width:'67px',
                                 marginBottom:'3px',
                                 pointerEvents:'none'
                             }}></div>

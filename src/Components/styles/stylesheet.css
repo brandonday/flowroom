@@ -188,7 +188,14 @@ body {
 
 }
 
+.elementbg {
+  color: rgb(64, 255, 232) !important;
+}
 
+.search-placeholder::-webkit-input-placeholder {
+  color: rgb(198, 198, 198);
+  font-size:15px;
+}
 
 /*-----------------END OF DOM --------------------*/
 
