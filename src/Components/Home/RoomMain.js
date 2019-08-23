@@ -360,7 +360,7 @@ let apps = [{},{}]
                 
                     }
                 });
-                remixTextTitle.style.height = '28px';
+                remixTextTitle.style.height = '34px';
                 remixTextTitle.style.width = '100%';
                 remixTextTitle.style.backgroundColor = '#141414';
                 remixTextTitle.style.alignItems = 'center';
@@ -470,7 +470,7 @@ let apps = [{},{}]
                     document.getElementById('main-section-wrap-comments-screen-wrap').style.top = '60px';
                     document.getElementById('room-main-page').style.marginTop = '0px';
                     //document.getElementById('room-wrap').style.flex = '5 1 0%';
-                    document.getElementById('main-menu').style.maxWidth = '283px';
+                    document.getElementById('main-menu').style.maxWidth = '330px';
                     document.getElementById('main-menu').style.width = '100%';
                 }
             }
@@ -1696,7 +1696,9 @@ let apps = [{},{}]
             menuinfo.setAttribute("id", "menu-info");
             
             menuinfo.style.height = '170px';
-            menuinfo.style.width = '259px';
+            menuinfo.style.width = '300px';
+            menuinfo.style.left = '8px';
+            menuinfo.style.position = 'relative';
             let menuinfobox = document.createElement('div');
             let menuinfotop = document.createElement('div');
             let infinity = document.createElement('div');
@@ -1706,7 +1708,7 @@ let apps = [{},{}]
             menuinfotop.style.width = '100%';
             menuinfobox.style.border = '1px solid #222222';
             // menuinfobox.style.height = '147px';
-            menuinfobox.style.width = '259px';
+            menuinfobox.style.width = '300px';
             menuinfobox.style.borderRadius = '3px';
             menuinfobox.style.marginTop = '11px';
             infinity.style.backgroundImage = `url(../infinity_cyan.svg)`;
@@ -1833,6 +1835,20 @@ let apps = [{},{}]
                     if(document.getElementById('elements') !== null) {
                         document.getElementById('elements').remove();
                     }
+
+                    if(document.getElementById('search-input') !== null) {
+                        document.getElementById('search-input').remove()
+                    }
+
+                    if(document.getElementById('search-giphy-wrap') !== null) {
+                        document.getElementById('search-giphy-wrap').remove()
+                    }
+
+                    if(document.getElementById('close-search-wrap') !== null) {
+                        document.getElementById('close-search-wrap').remove()
+                    }
+
+            
               // document.querySelector(".svgClass").getSVGDocument().getElementById("svgInternalID").setAttribute("fill", "red")
     
                 }  
@@ -2103,8 +2119,13 @@ let apps = [{},{}]
                 let closeSearch = document.createElement('i');
                 let closeSearchWrap = document.createElement('div');
                 let searchInput = document.createElement('input');
+                searchInput.setAttribute("id","search-input");
+                searchInput.style.color = 'white';
+                searchInput.style.fontSize = '12px';
                 let searchGiphy = document.createElement('div');
                 let searchGiphyWrap = document.createElement('div');
+                searchGiphyWrap.setAttribute("id", "search-giphy-wrap");
+                closeSearchWrap.setAttribute("id","close-search-wrap");
                 var typingTimer;
                 var doneTypingInterval = 700;
                 let that = this;
@@ -2141,6 +2162,7 @@ let apps = [{},{}]
                 searchGiphyWrap.appendChild(searchGiphy);
 
                 let elementTabs = document.createElement('ul');
+
                 elementTabs.style.display = 'flex';
                 elementTabs.style.alignItems = 'center';
                 elementTabs.style.height = '30px';
@@ -2154,12 +2176,16 @@ let apps = [{},{}]
                 closeSearch.style.fontSize = '15px'
                 closeSearchWrap.style.width = '100%';
                 closeSearchWrap.style.height = '20px';
+
+           
             
                 for(let i=0; i < element_options.length; i++) {
                     let li = document.createElement('li');
                     li.style.color = '#C6C6C6';
                     li.style.listStyleType = 'none';
-                    li.style.fontSize = '14px'
+                    li.style.fontSize = '14px';
+                    li.style.fontFamily = 'Open Sans';
+                    li.style.cursor = 'pointer';
                     li.appendChild(document.createTextNode(element_options[i]));
                     li.addEventListener('click', ()=> {
                         let elements = document.getElementsByClassName('elementbg');
@@ -2402,6 +2428,17 @@ let apps = [{},{}]
                         document.getElementById('elements').remove();
                     }
 
+                    if(document.getElementById('search-input') !== null) {
+                        document.getElementById('search-input').remove()
+                    }
+
+                    if(document.getElementById('search-giphy-wrap') !== null) {
+                        document.getElementById('search-giphy-wrap').remove()
+                    }
+
+                    if(document.getElementById('close-search-wrap') !== null) {
+                        document.getElementById('close-search-wrap').remove()
+                    }
 
                
 
@@ -2502,6 +2539,17 @@ let apps = [{},{}]
                         document.getElementById('elements').remove();
                        }
                        
+                       if(document.getElementById('search-input') !== null) {
+                        document.getElementById('search-input').remove()
+                    }
+
+                    if(document.getElementById('search-giphy-wrap') !== null) {
+                        document.getElementById('search-giphy-wrap').remove()
+                    }
+
+                    if(document.getElementById('close-search-wrap') !== null) {
+                        document.getElementById('close-search-wrap').remove()
+                    }
 
                        this.setState(
                         {
@@ -3044,6 +3092,17 @@ let apps = [{},{}]
 
                 if(document.getElementById('app-menu') !== null){
                     document.getElementById('app-menu').remove();
+                }
+                if(document.getElementById('search-input') !== null) {
+                    document.getElementById('search-input').remove()
+                }
+
+                if(document.getElementById('search-giphy-wrap') !== null) {
+                    document.getElementById('search-giphy-wrap').remove()
+                }
+
+                if(document.getElementById('close-search-wrap') !== null) {
+                    document.getElementById('close-search-wrap').remove()
                 }
             }
             document.getElementById('main-menu').style.display = 'block';
@@ -3691,7 +3750,7 @@ let apps = [{},{}]
                 <div className="room-wrap-wrap" style={{flexDirection:'column', height:'100vh',width:'100%'}}>
                     <div id="room-wrap" style={{display:'flex',position:'relative',overflow:'hidden'}}>
                         <div id="tab-menu" className="tab-menu" style={{
-                            width:'68px', 
+                            width:'60px', 
                             background:'rgb(14, 14, 14)',
                             height:'100%'
                         }}>
@@ -3699,8 +3758,8 @@ let apps = [{},{}]
                             onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
                             style={{
                                 display:'flex',
-                                height:'65px',
-                                width:'65px',
+                                height:'59px',
+                                width:'59px',
                                 flexDirection:'column',
                                 alignItems:'center',
                                 borderRight:'1px solid #181818',
@@ -3711,16 +3770,20 @@ let apps = [{},{}]
                             }} className="menu-bg-border">
                                 <div id="remix-icon" className="remix-icon" style={{
                                     backgroundImage:'url(../infinity_grey.svg)',
-                                    backgroundSize: '100% 100%',
+                                    backgroundSize: 'contain',
                                     backgroundRepeat:'no-repeat',
                                     height:'19px',
                                     width:'26px',
-                                    pointerEvents:'none'
+                                    pointerEvents:'none',
+                                    position:'relative',
+                                    top:3
                                     }}></div>
-                                <p id="remix-text" style={{fontSize:'11.2px',
+                                <p id="remix-text" style={{fontSize:'11px',
     fontWeight:600,
     pointerEvents:'none',
-    pointerEvents:'none', marginTop:2}} className="menubgnot">REMIX</p>
+    pointerEvents:'none', marginTop:0,position:'relative',
+    top:'0px',
+    left:'-0.5px'}} className="menubgnot">REMIX</p>
                                
                         </div>
                         <div id="elements-tag" onClick={this.ElementsTabs.bind(this)} 
@@ -3772,17 +3835,17 @@ let apps = [{},{}]
                             justifyContent:'center'
                         }} className="menu-bg-border">
                             <div id="script-icon" style={{
-                                fontSize:'15px',
+                                fontSize:'18px',
                                 color:'white',
                                 backgroundImage:'url(../code.svg)',
                                 backgroundSize:'100% 100%',
                                 backgroundRepeat:'no-repeat',
-                                height:'14px',
-                                width:'16px',
+                                height:'15px',
+                                width:'21px',
                                 marginBottom:'3px',
                                 pointerEvents:'none'
                             }}></div>
-                            <p id="script-text" style={{fontSize:10.2,fontWeight:500,pointerEvents:'none'}} className="menubgnot">SCRIPT</p>
+                            <p id="script-text" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none'}} className="menubgnot">SCRIPT</p>
                         </div>
                         <div id="save-tab" onClick={()=> {
                             this.openModal(false)
@@ -3864,13 +3927,13 @@ let apps = [{},{}]
                                 backgroundImage:'url(../save-regular-grey.svg)',
                                 backgroundSize:'100% 100%',
                                 backgroundRepeat:'no-repeat',
-                                height:'65px',
-                                width:'65px',
+                                height:'16px',
+                                width:'16px',
                                 marginBottom:'3px',
                                 pointerEvents:'none'
                             }}></div>
-                            <p id="publish-text-publish" style={{fontSize:10.2,fontWeight:500, pointerEvents:'none'}} className="menubgnot">PUBLISH</p>
-                            <p id="publish-text-new" style={{fontSize:10.2,fontWeight:500,pointerEvents:'none'}} className="menubgnot">NEW</p>
+                            <p id="publish-text-publish" style={{fontSize:11.2,fontWeight:600, pointerEvents:'none'}} className="menubgnot">PUBLISH</p>
+                            <p id="publish-text-new" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none'}} className="menubgnot">NEW</p>
                         </div>
                         <div id="post-tab" onClick={this.PostTab.bind(this)} onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}} style={{
                             display:'none',

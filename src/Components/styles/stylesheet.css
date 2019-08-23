@@ -532,7 +532,7 @@ body {
   align-items: center;
   display:flex;
   background-color: rgb(15,15,15);
-  height:69px;
+  height:80px;
 }
 
 /* .CodeMirror-lines {
@@ -565,6 +565,9 @@ body {
 }
 #create-btn-wrap-left {
   display:block;
+  left: 31px !important;
+  top: 1px !important;
+  position:relative;
 }
 #create-btn-wrap-right {
   display:none !important;

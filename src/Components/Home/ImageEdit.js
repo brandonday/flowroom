@@ -61,7 +61,9 @@ let that;
         
         menuinfo.setAttribute("id", "menu-info");
         menuinfo.style.height = '170px';
-        menuinfo.style.width = '259px';
+        menuinfo.style.width = '300px';
+        menuinfo.style.left = '8px';
+        menuinfo.style.position = 'relative';
         let menuinfobox = document.createElement('div');
         let menuinfotop = document.createElement('div');
         menuinfotop.style.display = 'flex';
@@ -70,7 +72,7 @@ let that;
         menuinfotop.style.width = '100%';
         menuinfobox.style.border = '1px solid #222222';
         menuinfobox.style.height = '147px';
-        menuinfobox.style.width = '259px';
+        menuinfobox.style.width = '300px';
         menuinfobox.style.borderRadius = '3px';
         menuinfobox.style.marginTop = '11px';
 
@@ -85,6 +87,10 @@ let that;
         let remixImageListNavArrows = document.createElement('div');
         let remixImageWrap = document.createElement('div');
         remixImageWrap.setAttribute("id", "remix-list");
+       // remixImageWrap.style.height = '179px';
+        //remixImageWrap.style.width = '138px';
+        //remixImageWrap.style.backgroundColor = 'red';
+
         remixImageListNavArrows.style.display = 'flex';
         remixImageListNavArrows.style.position = 'absolute';
         remixImageListNavArrows.style.right = '14px';
@@ -94,12 +100,14 @@ let that;
         let remixImageBox = document.createElement('div');
         //remixImageBox.style.border = '1px solid red';
         remixImageBox.style.height = '330px';
-        remixImageBox.style.width = '269px';
+        // remixImageBox.style.width = '269px';
         remixImageBox.style.overflow = 'hidden';
         //.style.marginTop = '70px';
         remixImageBox.setAttribute("id", "remix-image-box");
         
-        remixImageBox.style.marginTop = '47px'
+        remixImageBox.style.marginTop = '5px'
+        remixImageBox.style.position = 'relative';
+        remixImageBox.style.left = '2px';
 
         let backArrow = document.createElement('i');
         let forwardArrow = document.createElement('i');
@@ -116,13 +124,15 @@ let that;
         
         remixImageListNav.style.height = '37px';
         remixImageListNav.style.width = '100%';
-        remixImageListNav.style.paddingLeft = '10px';
+        //remixImageListNav.style.paddingLeft = '10px';
         remixImageListNav.style.display = 'flex';
         remixImageListNav.style.flexDirection = 'row';
         remixImageListNav.style.color = 'rgb(64, 255, 232)';
         remixImageListNav.style.fontSize = '12px';
         remixImageListNav.style.alignItems = 'center';
         remixImageListNav.style.listStyleType = 'none';
+        remixImageListNav.style.paddingTop = '9px';
+        remixImageListNav.style.position = 'relative';
 
         let remixImageListNavUL = document.createElement('ul');
         remixImageListNav.appendChild(remixImageListNavUL);
@@ -130,15 +140,21 @@ let that;
          for(let i = 0; i < remixImageListOptions.length; i++) {
           let remixImageListItem = document.createElement('li');
             remixImageListItem.style.marginRight = '20px';
-            remixImageListItem.style.height = '20px';
+            remixImageListItem.style.height = '28px';
  
-            remixImageListItem.style.textAlign = 'center';
-            remixImageListItem.style.alignItems = '38px';
+            //remixImageListItem.style.textAlign = 'center';
+            remixImageListItem.style.alignItems = 'center';
             remixImageListItem.style.display = 'flex';
             remixImageListItem.style.justifyContent = 'center';
-            remixImageListItem.style.paddingLeft = '6px';
-            remixImageListItem.style.paddingRight = '6px';
-            remixImageListItem.style.marginRight = '20px';
+            remixImageListItem.style.width = '50px';
+            remixImageListItem.style.position = 'relative';
+            remixImageListItem.style.left = '-5px';
+            remixImageListItem.style.top = '-1px';
+            remixImageListItem.style.fontSize = '14.2px'; 
+
+            // remixImageListItem.style.paddingLeft = '6px';
+            // remixImageListItem.style.paddingRight = '6px';
+            //remixImageListItem.style.marginRight = '20px';
             remixImageListItem.className = 'notSelectedRM';
             remixImageListItem.setAttribute("id", `${remixImageListOptions[i]}`)
             remixImageListItem.appendChild(document.createTextNode(remixImageListOptions[i]));
@@ -165,10 +181,12 @@ let that;
         imgtitle.appendChild(document.createTextNode('Images'));
         imgclose.appendChild(document.createTextNode('Close'));
         imgtitle.style.color = 'white';
-        imgtitle.style.fontSize = '13px';
+        imgtitle.style.fontSize = '13.5px';
         imgtitle.style.marginLeft = '10px';
         imgtitle.style.fontWeight = '900';
         imgtitle.style.marginTop = '4px';
+        imgtitle.style.position = 'relative';
+        imgtitle.style.left = '2px';
         imgclose.style.color = 'white';
         imgclose.style.fontSize = '10px';
         imgclose.style.marginRight = '20px'
@@ -185,7 +203,7 @@ let that;
           }
           
         });
-        remixImageTitle.style.height = '28px';
+        remixImageTitle.style.height = '34px';
         remixImageTitle.style.width = '100%';
         remixImageTitle.style.backgroundColor = '#141414';
         remixImageTitle.style.alignItems = 'center';
@@ -285,10 +303,10 @@ let that;
                     bgImgWrap.style.borderRadius = '5px';
                     bgImgWrap.style.backgroundColor = '#252525';
                     
-                    item.style.height = '120px';
-                    item.style.width = '113px';
+                    // item.style.height = '120px';
+                    // item.style.width = '113px';
 
-                    item.style.margin = '3px 6px 5px 7px';
+                    item.style.margin = '15px 6px 5px 7px';
 
     
                     item.style.display = 'flex';
@@ -300,14 +318,14 @@ let that;
                     bgImgWrap.style.border = '0px solid red';
                     item.style.display = 'flex';
                     item.style.flexDirection = 'column';
-                    item.style.height = '179px';
-                    item.style.width = '113px';
+                    item.style.height = '224px';
+                    item.style.width = '139px';
 
 
                     
                     bgImgWrap.appendChild(bgImg)
                     item.appendChild(bgImgWrap);
-                    item.appendChild(itemInfoWrap);
+                    //item.appendChild(itemInfoWrap);
                    
                     remixImageList.appendChild(remixImageWrap);
           

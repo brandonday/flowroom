@@ -94,7 +94,7 @@ class NewButton extends Component {
                                 
                                 lineHeight:0,
                                 
-                                fontSize:'18px',
+                                fontSize:'17px',
                                 position:'absolute',
                                 color:'#40FFE8',
                                 marginLeft:10
@@ -114,12 +114,12 @@ class NewButton extends Component {
                                 
                                 lineHeight:0,
                                 
-                                fontSize:'18px',
+                                fontSize:'17px',
                                 position:'absolute',
                                 color:'#40FFE8',
                                 marginLeft:10
                             }}></i>)}
-                            <p style={{fontSize:'14px',
+                            <p style={{fontSize:'13.6px',
                                      fontWeight:'700',
                                      position:'relative', 
                                      marginLeft:6,

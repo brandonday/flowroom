@@ -12,10 +12,10 @@ const Default = props => <Responsive {...props} minWidth={768} />;
 
         <a href="/">
         {/* <Desktop> */}
-        <div className="logo-wrap" style={{marginRight:'17px'}}>
+        <div className="logo-wrap" style={{marginRight:'17px',left:24,position:'relative'}}>
             <div id="fr-logo" style={{backgroundImage:'url(./public/logo.svg)',
                 backgroundImage:'url(../logo.svg)',
-                height:'35px',
+                height:'36px',
                 width:'157px',
                 backgroundSize:'contain',
                 backgroundRepeat:'no-repeat'
