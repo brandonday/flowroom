@@ -84,7 +84,7 @@ let apps = [{},{}]
             this.communityhandleChange = this.communityhandleChange.bind(this);
             this.state = {
                 descriptionText:'',
-                modalIsOpen:true,
+                modasOpen:true,
                 details:false,
                 objects:false,
                 comments:false,
@@ -360,7 +360,7 @@ let apps = [{},{}]
                 
                     }
                 });
-                remixTextTitle.style.height = '34px';
+                remixTextTitle.style.height = '28px';
                 remixTextTitle.style.width = '100%';
                 remixTextTitle.style.backgroundColor = '#141414';
                 remixTextTitle.style.alignItems = 'center';
@@ -424,17 +424,23 @@ let apps = [{},{}]
           
                     document.getElementById('main-menu').style.position = 'absolute';
                     document.getElementById('main-menu').style.height = '100%';
-                    document.getElementById('main-menu').style.width = '269px';
+                    document.getElementById('main-menu').style.width = '271px';
                     document.getElementById('main-menu').style.zIndex = '999994';
                     document.getElementById('main-menu').style.top = '0px';
                     document.getElementById('main-menu').style.zIndex = '999999';
-                    document.getElementById('main-menu').style.left = '48px';
+                    document.getElementById('main-menu').style.left = '56px';
                     document.getElementById('main-menu').style.display = 'none';
                     document.getElementById('main-section-wrap-comments-screen-wrap').style.top = '10px';
                     document.getElementById('tab-menu').style.position = 'absolute';
                     document.getElementById('tab-menu').style.zIndex = '999999';
                     document.getElementById('tab-menu').style.height = '100%';
+                    document.getElementById('tab-menu').style.width = '56px';
                     document.getElementById('tab-menu').style.display = 'none';
+                    let remixImages = document.getElementsByClassName('remix-image');
+                    for(let i = 0; i < remixImages.length; i++) {
+                        remixImages[i].style.width = '112px';
+
+                    }
                     document.getElementById('menu-btn-mobile').style.display = 'flex';
                     document.getElementById('rf-right').style.display = 'none';
                     document.getElementById('rf-top').style.display = 'flex';
@@ -1316,9 +1322,11 @@ let apps = [{},{}]
 
             }
         }
-        funStuff(type = 'gifs') {
-
-            client.search(type, {"q": `${this.state.funType}`}).then((response) => {
+        funStuff(type = 'gifs', funType) {
+           
+            if(elements_arr.length === 3) {
+                
+            client.search(type, {"q": `${funType}`}).then((response) => {
                 response.data.forEach((gifObject) => {
                     elements_arr.push(gifObject)
                                     let element_menu = document.createElement('div');
@@ -1330,17 +1338,24 @@ let apps = [{},{}]
                 element_menu.style.top = '10px';
                 element_menu.style.position = 'relative';
                 element_menu.style.display = 'flex';
-                element_menu.style.justifyContent = 'center'
+                element_menu.style.justifyContent = 'space-between'
                     elements_arr.map((i) => {
                         let element = document.createElement('div');
                         if(i.images !== undefined) {
                             console.log(i.images.downsized_medium.url)
-    
-                            element.style.height = '100px';
-                            element.style.width = '100px';
+                            if(window.innerWidth < 698) {
+                                element.style.height = '117px';
+                                element.style.width = '117px';
+                            } else {
+                                element.style.height = '147px';
+                                element.style.width = '147px';
+                            }
+                           
                             element.style.border = '0px solid white';
-                            element.style.margin = '5px';
+                            //element.style.marginRight = '7px';
+                            element.style.marginBottom = '12px';
                             element.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
+                            element.style.borderRadius = '4px';
                             element.style.backgroundSize = 'cover';
     
                             element.addEventListener('click',()=>{
@@ -1528,8 +1543,9 @@ let apps = [{},{}]
                     });
                 })
             }).catch((err) => { })
-
+          
             /// Sticker Search
+        }
             
         }
         menuSelect() {
@@ -1695,9 +1711,18 @@ let apps = [{},{}]
     
             menuinfo.setAttribute("id", "menu-info");
             
-            menuinfo.style.height = '170px';
-            menuinfo.style.width = '300px';
+            // menuinfo.style.height = '170px';
+            // menuinfo.style.width = '300px';
             menuinfo.style.left = '8px';
+
+            if(window.innerWidth > 698) {
+                menuinfo.style.height = '215px';
+                menuinfo.style.width = '300px';
+              } else {
+                menuinfo.style.height = '215px';
+                menuinfo.style.width = '240px';
+              }
+             
             menuinfo.style.position = 'relative';
             let menuinfobox = document.createElement('div');
             let menuinfotop = document.createElement('div');
@@ -1708,7 +1733,17 @@ let apps = [{},{}]
             menuinfotop.style.width = '100%';
             menuinfobox.style.border = '1px solid #222222';
             // menuinfobox.style.height = '147px';
+            if(window.innerWidth > 698) {
+                menuinfo.style.height = '215px';
+                menuinfo.style.width = '300px';
+              } else {
+                menuinfo.style.height = '215px';
+
+                menuinfo.style.width = '240px';
+              }
+            
             menuinfobox.style.width = '300px';
+            
             menuinfobox.style.borderRadius = '3px';
             menuinfobox.style.marginTop = '11px';
             infinity.style.backgroundImage = `url(../infinity_cyan.svg)`;
@@ -1874,7 +1909,7 @@ let apps = [{},{}]
             let thisElement = document.getElementById(e.target.id);
             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
             let menuinfo = document.getElementById('menu-info');
-            
+            this.funStuff('gifs');
             
             if(thisElement !== undefined) {
                 if(thisElement.className !== 'menubg') {                            
@@ -1918,18 +1953,29 @@ let apps = [{},{}]
                 element_menu.style.top = '10px';
                 element_menu.style.position = 'relative';
                 element_menu.style.display = 'flex';
-                element_menu.style.justifyContent = 'center'
+                element_menu.style.justifyContent = 'space-between';
+                element_menu.style.padding = '0px 2px';
+                element_menu.style.height = 'calc(100% - 124px)';
+                element_menu.style.overflowY = 'scroll'
+
                 elements_arr.map((i) => {
                     let element = document.createElement('div');
                     if(i.images !== undefined) {
                         console.log(i.images.downsized_medium.url)
-
-                        element.style.height = '100px';
-                        element.style.width = '100px';
+                        if(window.innerWidth < 698) {
+                            element.style.height = '117px';
+                            element.style.width = '117px';
+                        } else {
+                            element.style.height = '147px';
+                            element.style.width = '147px';
+                        }
+                 
                         element.style.border = '0px solid white';
-                        element.style.margin = '5px';
+                         //element.style.marginRight = '7px';
+                         element.style.marginBottom = '12px';
                         element.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
                         element.style.backgroundSize = 'cover';
+                        element.style.borderRadius = '4px'
 
                         element.addEventListener('click',()=>{
                             let object = document.createElement('div');
@@ -2016,8 +2062,16 @@ let apps = [{},{}]
 
 
                             object.style.backgroundSize = 'cover';
-                            object.style.height = '100px';
-                            object.style.width = '100px';
+                            if(window.innerWidth < 698) {
+                                object.style.height = '117px';
+                                object.style.width = '117px';
+                            } else {
+                                object.style.height = '147px';
+                                object.style.width = '147px';
+                            }
+                            
+
+
                             object.style.border = '1px solid white';
                             //object.style.zIndex = '1000000000000000000000000';
                             object.className = 'resizable';
@@ -2081,25 +2135,25 @@ let apps = [{},{}]
                 
                             resizable.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
                            
-                            this.makeResizableDiv(`#${i.id}`);
+                            //this.makeResizableDiv(`#${i.id}`);
                             
-                            // const xDraggables = document.getElementById('overlay_output_frame').contentWindow.Subjx(`#${object.id}`).drag({
+                            const xDraggables = document.getElementById('overlay_output_frame').contentWindow.Subjx(`#${object.id}`).drag({
                                 
-                            // container:`#container${object.id}`,
-                            // each: {
-                            //     move: false,
-                            //     resize: true, 
-                            //     rotate: true
-                            // }
-                            // // snapping to grid (default: 10)
+                            container:`#container${object.id}`,
+                            each: {
+                                move: false,
+                                resize: true, 
+                                rotate: true
+                            }
+                            // snapping to grid (default: 10)
     
-                            // });
+                            });
 
 
                         
     
     
-                            //}
+                        
                             let dhtml = JSON.parse(localStorage.getItem("dhtml"));
 
                             let html = document.getElementById('output_frame').contentWindow.document.body.innerHTML;
@@ -2130,21 +2184,23 @@ let apps = [{},{}]
                 var doneTypingInterval = 700;
                 let that = this;
                 searchInput.addEventListener('input',(e)=>{
+                    elements_arr = []
                     let getSel = document.getElementsByClassName('elementbg')
                     clearTimeout(typingTimer);
                     typingTimer = setTimeout(
                     function(){
                         document.getElementById('element-menu').innerHTML = '';
-                        that.funStuff(getSel[0].innerText.toLowerCase());
+                        that.funStuff(getSel[0].innerText.toLowerCase(), e.target.value);
                         that.setState({funType:e.target.value})
-                        elements_arr = []
+                  
                        
                     },
                         doneTypingInterval
                     );
             
                     return true;
-                })
+                });
+                searchInput.value = this.state.funType
 
                 searchGIFS.style.height = '20px';   
                 searchGIFS.style.width = '150px';
@@ -2154,7 +2210,7 @@ let apps = [{},{}]
                 searchGiphy.style.backgroundSize = 'contain';
                 searchGiphy.style.backgroundRepeat = 'no-repeat';
                 searchGiphy.style.height = '20px';
-                searchGiphy.style.width = '109px';
+                searchGiphy.style.width = '130px';
                 searchGiphy.style.float = 'right';
 
                 searchGiphyWrap.style.height = '20px';
@@ -2186,6 +2242,7 @@ let apps = [{},{}]
                     li.style.fontSize = '14px';
                     li.style.fontFamily = 'Open Sans';
                     li.style.cursor = 'pointer';
+            
                     li.appendChild(document.createTextNode(element_options[i]));
                     li.addEventListener('click', ()=> {
                         let elements = document.getElementsByClassName('elementbg');
@@ -2199,7 +2256,7 @@ let apps = [{},{}]
                     elementTabs.appendChild(li);
                     
                 }
-                
+                let elemetBox = document.createElement('div');
                 closeSearchWrap.appendChild(closeSearch);
                 searchInput.style.backgroundColor = '#252525';
                 searchInput.style.height = '30px';
@@ -2212,7 +2269,7 @@ let apps = [{},{}]
                 searchInput.setAttribute("placeholder", 'Search for stuff here...');
                 searchInput.className = 'search-placeholder';
                 document.getElementById('main-menu').appendChild(closeSearchWrap);
-              
+                
                
 
                 if(document.getElementById('element-menu') === null) {
@@ -3253,7 +3310,7 @@ let apps = [{},{}]
             menuinfo.setAttribute("id", "menu-info");
             
             menuinfo.style.height = '170px';
-            menuinfo.style.width = '259px';
+            menuinfo.style.width = '240px';
             let menuinfobox = document.createElement('div');
             let menuinfotop = document.createElement('div');
             let infinity = document.createElement('div');
@@ -3263,7 +3320,7 @@ let apps = [{},{}]
             menuinfotop.style.width = '100%';
             menuinfobox.style.border = '1px solid #222222';
             // menuinfobox.style.height = '147px';
-            menuinfobox.style.width = '259px';
+            menuinfobox.style.width = '240px';
             menuinfobox.style.borderRadius = '3px';
             menuinfobox.style.marginTop = '11px';
             infinity.style.backgroundImage = `url(../infinity_cyan.svg)`;
@@ -3279,28 +3336,56 @@ let apps = [{},{}]
             let welcometext = document.createElement('p');
             welcometext.style.color = 'rgb(54, 255, 233)';
             welcometext.appendChild(document.createTextNode('Welcome to the Remix Menu'));
-
-
+           
             let firstLine = document.createElement('p');
             firstLine.style.color = 'white';
-            firstLine.style.fontSize = '15px';
+            
+            if(window.innerWidth > 698) {
+                welcometext.style.fontSize = '15px';
+            } else {
+                welcometext.style.fontSize = '14px';
+            }
             firstLine.appendChild(document.createTextNode('Here you can swap Text,'));
 
-
+            if(window.innerWidth > 698) {
+                firstLine.style.fontSize = '15px';
+            } else {
+                firstLine.style.fontSize = '14px';
+            }
             let secondLine = document.createElement('p');
             secondLine.style.color = 'white';
-            secondLine.style.fontSize = '15px';
+            if(window.innerWidth > 698) {
+                secondLine.style.fontSize = '15px';
+            } else {
+                secondLine.style.fontSize = '12px';
+            }    
+
+
+            
             secondLine.appendChild(document.createTextNode('Images, and other elements'));
+
 
             let thirdLine = document.createElement('p');
             thirdLine.style.color = 'white';
-            thirdLine.style.fontSize = '15px';
+            if(window.innerWidth > 698) {
+                thirdLine.style.fontSize = '15px';
+            } else {
+                thirdLine.style.fontSize = '12px'
+            }
+            
+
             thirdLine.appendChild(document.createTextNode('inside of flows.'));
             thirdLine.style.paddingBottom = '10px'
 
             let fourthLine = document.createElement('p');
             fourthLine.style.color = 'white';
-            fourthLine.style.fontSize = '15px';
+            if(window.innerWidth > 698) {
+                fourthLine.style.fontSize = '15px';
+            } else {
+                fourthLine.style.fontSize = '12px';
+
+            }
+            
             fourthLine.appendChild(document.createTextNode('Click here for step by step'));
            
 
@@ -3791,8 +3876,8 @@ let apps = [{},{}]
                         style={{
                             display:'flex',
                             cursor:'pointer',
-                            height:'65px',
-                            width:'65px',
+                            height:'59px',
+                            width:'59px',
                             flexDirection:'column',
                             alignItems:'center',
                             borderRight:'1px solid #181818',
@@ -3809,8 +3894,8 @@ let apps = [{},{}]
                         style={{
                             display:'flex',
                             cursor:'pointer',
-                            height:'65px',
-                                width:'65px',
+                            height:'59px',
+                                width:'59px',
                             flexDirection:'column',
                             alignItems:'center',
                             borderRight:'1px solid #181818',
@@ -3826,8 +3911,8 @@ let apps = [{},{}]
                         style={{
                             display:'flex',
                             cursor:'pointer',
-                            height:'65px',
-                            width:'65px',
+                            height:'59px',
+                            width:'59px',
                             flexDirection:'column',
                             alignItems:'center',
                             borderRight:'1px solid #181818',
@@ -3910,8 +3995,8 @@ let apps = [{},{}]
                         onClick={this.PostAsNewTab.bind(this)} style={{
                            
                            
-                            height:'57px',
-                                width:'67px',
+                            height:'87px',
+                                width:'59px',
                             flexDirection:'column',
                             alignItems:'center',
                             borderRight:'1px solid #181818',

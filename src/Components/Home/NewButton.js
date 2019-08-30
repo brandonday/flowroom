@@ -13,11 +13,27 @@ class NewButton extends Component {
     constructor() {
         super();
         this.state = {
-            showMenu:false
+            showMenu:false,
+            isMobile:false
         }
     }
     componentWillReceiveProps() {
         
+    }
+    componentDidMount() {
+        let that = this;
+        function myFunction(x) {
+            if (x.matches) { // If media query matches
+              that.setState({isMobile:true})
+            } else {
+              that.setState({isMobile:false})
+
+            }
+          }
+          
+          var x = window.matchMedia("(max-width: 698px)")
+          myFunction(x) // Call listener function at run time
+          x.addListener(myFunction) 
     }
     newclicked(){
         
@@ -94,10 +110,10 @@ class NewButton extends Component {
                                 
                                 lineHeight:0,
                                 
-                                fontSize:'17px',
+                                fontSize:this.state.isMobile? '10px':'18px',
                                 position:'absolute',
                                 color:'#40FFE8',
-                                marginLeft:10
+                                marginLeft:this.state.isMobile? 8: 10
 
                             }}></i>):(<i className="fa fa-plus" style={{
                                 mozSsxFontSmoothing:'grayscale',
@@ -114,18 +130,18 @@ class NewButton extends Component {
                                 
                                 lineHeight:0,
                                 
-                                fontSize:'17px',
+                                fontSize:this.state.isMobile ? '10px':'18px',
                                 position:'absolute',
                                 color:'#40FFE8',
-                                marginLeft:10
+                                marginLeft:this.state.isMobile? 8: 10
                             }}></i>)}
-                            <p style={{fontSize:'13.6px',
+                            <p style={{fontSize:this.state.isMobile? '10px':'14px',
                                      fontWeight:'700',
                                      position:'relative', 
                                      marginLeft:6,
                                      position:'absolute',
                                      color:'#40FFE8',
-                                     marginLeft:32
+                                     marginLeft:this.state.isMobile? 21 : 32
                                    }}>CREATE</p>
                     <button style={{
                             fontWeight:'bold',
@@ -144,8 +160,8 @@ class NewButton extends Component {
                             border:'2px solid #40FFE8',
                             borderRadius:'5px',
                             opacity:'0.7',
-                            width:'95px',
-                            height:'35px'
+                            width:this.state.isMobile? '70px':'95px',
+                            height:this.state.isMobile? '26px':'35px'
                         
                             }}>
     

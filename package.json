@@ -36,6 +36,7 @@
     "photoeditorsdk": "^4.14.1",
     "popmotion": "^8.6.3",
     "prop-types": "^15.7.2",
+    "rc-tabs": "^9.6.6",
     "react": "^16.5.2",
     "react-cropper": "^1.0.1",
     "react-darkroom": "^0.3.7",

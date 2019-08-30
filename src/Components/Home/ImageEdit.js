@@ -60,8 +60,14 @@ let that;
         let menuinfo = document.createElement('div');
         
         menuinfo.setAttribute("id", "menu-info");
-        menuinfo.style.height = '170px';
-        menuinfo.style.width = '300px';
+        if(window.innerWidth() > 698) {
+          menuinfo.style.height = '215px';
+          menuinfo.style.width = '300px';
+        } else {
+          menuinfo.style.height = '215px';
+          menuinfo.style.width = '240px';
+        }
+       
         menuinfo.style.left = '8px';
         menuinfo.style.position = 'relative';
         let menuinfobox = document.createElement('div');
@@ -244,16 +250,28 @@ let that;
                       let itemInfot = document.createElement('p');
                       let itemInfoh = document.createElement('p');
                       let itemInfoEdit = document.createElement('p');
+
+                      itemInfo.style.fontSize = '11.9px';
+                      itemInfo.style.color = 'white';
+                      itemInfo.style.marginLeft = '-1px';
+                      itemInfo.style.marginTop = '10px';
+                      itemInfo.style.height = '14px';
+                      itemInfo.style.fontFamily = 'Open Sans';
+
+
+                      itemInfot.style.fontSize = '11.9px';
+                      itemInfot.style.marginLeft = '1px';
+                      itemInfot.style.fontFamily = 'Open Sans';
                       
-                      // itemInfo.appendChild(document.createTextNode('Pac-man'));
-                      // itemInfot.appendChild(document.createTextNode('Hero'));
-                      // itemInfoh.appendChild(document.createTextNode('100px x 100px'));
-                      //itemInfoEdit.appendChild(document.createTextNode('Edit'));
+                      itemInfo.appendChild(document.createTextNode('Pac-man'));
+                      itemInfot.appendChild(document.createTextNode('Hero'));
+                      itemInfoh.appendChild(document.createTextNode('100px x 100px'));
+                      itemInfoEdit.appendChild(document.createTextNode('Edit'));
 
                      
 
                       itemInfoWrap.style.height = '62px';
-                      itemInfoWrap.style.width = '120px';
+                      itemInfoWrap.style.width = '100%';
                       itemInfoWrap.style.backgroundColor = 'rgb(24, 24, 24)';
                       itemInfo.style.fontSize = '12px';
                       itemInfo.style.color = 'white';
@@ -288,44 +306,48 @@ let that;
                       itemInfoWrap.appendChild(itemInfoEdit);
 
                       bgImg.style.backgroundImage = `url(${getList[j].image})`;
-                      bgImg.style.height = '99px';
-                      bgImg.style.width = '111px';
+                      bgImg.style.height = '139px';
+                      bgImg.style.width = '100%';
                       bgImg.style.backgroundSize = 'cover';
                       bgImg.style.backgroundPosition = 'center';
-                      bgImg.setAttribute("id", `image_edit_${j}`)
+                      bgImg.setAttribute("id", `image_edit_${j}`);
 
-                    bgImgWrap.style.height = '179px';
-                    bgImgWrap.style.width = '113px';
+                    //bgImgWrap.style.height = '179px';
+                    bgImgWrap.style.width = '100%';
                     bgImgWrap.style.display = 'flex';
                     bgImgWrap.style.justifyContent = 'center';
                     bgImgWrap.style.alignItems = 'center';
-                    bgImgWrap.style.marginLeft = '6px';
-                    bgImgWrap.style.borderRadius = '5px';
+                    //bgImgWrap.style.marginLeft = '6px';
+                    //bgImgWrap.style.borderRadius = '5px';
                     bgImgWrap.style.backgroundColor = '#252525';
                     
-                    // item.style.height = '120px';
-                    // item.style.width = '113px';
+                    item.style.height = '224px';
+                    item.style.width = '139px';
+                    //item.style.margin = 0;
 
-                    item.style.margin = '15px 6px 5px 7px';
+                    item.style.margin = '14px 3px 7px 6px';
 
     
                     item.style.display = 'flex';
                     item.style.alignItems = 'center';
-                    item.style.borderRadius = '3px';
+                    //item.style.borderRadius = '3px';
                     item.style.backgroundColor = '#1f1f1f';
                   
                     bgImgWrap.style.position = 'relative';
                     bgImgWrap.style.border = '0px solid red';
+                    bgImgWrap.style.overflow = 'hidden';
+                    bgImgWrap.style.borderRadius = '5px';
                     item.style.display = 'flex';
                     item.style.flexDirection = 'column';
-                    item.style.height = '224px';
-                    item.style.width = '139px';
+                    item.setAttribute("class","remix-image")
+                    // item.style.height = '224px';
+                    // item.style.width = '137px';
 
 
                     
                     bgImgWrap.appendChild(bgImg)
                     item.appendChild(bgImgWrap);
-                    //item.appendChild(itemInfoWrap);
+                    item.appendChild(itemInfoWrap);
                    
                     remixImageList.appendChild(remixImageWrap);
           

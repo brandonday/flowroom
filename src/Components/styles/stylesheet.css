@@ -803,6 +803,16 @@ right: 0px;
   #fa-search {
     display:block !important;
   } */
+  
+  .logo-wrap {
+    left:0px !important;
+  }
+
+  #fr-logo {
+    height: 27px !important;
+    width: 118px !important;
+  }
+  
   .fa-bars {
     display:block !important;
   }
