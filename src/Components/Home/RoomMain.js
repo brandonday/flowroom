@@ -1323,8 +1323,8 @@ let apps = [{},{}]
             }
         }
         funStuff(type = 'gifs', funType) {
-           
-            if(elements_arr.length === 3) {
+            elements_arr = [];
+            if(elements_arr.length === 0) {
                 
             client.search(type, {"q": `${funType}`}).then((response) => {
                 response.data.forEach((gifObject) => {
@@ -1733,16 +1733,9 @@ let apps = [{},{}]
             menuinfotop.style.width = '100%';
             menuinfobox.style.border = '1px solid #222222';
             // menuinfobox.style.height = '147px';
-            if(window.innerWidth > 698) {
-                menuinfo.style.height = '215px';
-                menuinfo.style.width = '300px';
-              } else {
-                menuinfo.style.height = '215px';
-
-                menuinfo.style.width = '240px';
-              }
+       
             
-            menuinfobox.style.width = '300px';
+            //menuinfobox.style.width = '300px';
             
             menuinfobox.style.borderRadius = '3px';
             menuinfobox.style.marginTop = '11px';
@@ -1759,36 +1752,60 @@ let apps = [{},{}]
             let welcometext = document.createElement('p');
             welcometext.style.color = 'rgb(54, 255, 233)';
             welcometext.appendChild(document.createTextNode('Welcome to the Remix Menu'));
-    
+            if(window.innerWidth > 698) {
+                welcometext.style.fontSize = '1.6rem'
+            } else {
+                welcometext.style.fontSize = '15px';
+            }
     
             let firstLine = document.createElement('p');
             firstLine.style.color = 'white';
-            firstLine.style.fontSize = '15px';
+            //firstLine.style.fontSize = '15px';
             firstLine.appendChild(document.createTextNode('Here you can swap Text,'));
-    
+            if(window.innerWidth > 698) {
+                firstLine.style.fontSize = '1.6rem'
+            } else {
+                firstLine.style.fontSize = '12px';
+            }
     
             let secondLine = document.createElement('p');
             secondLine.style.color = 'white';
-            secondLine.style.fontSize = '15px';
+           // secondLine.style.fontSize = '15px';
             secondLine.appendChild(document.createTextNode('Images, and other elements'));
-    
+            if(window.innerWidth > 698) {
+                secondLine.style.fontSize = '1.6rem'
+            } else {
+                secondLine.style.fontSize = '12px';
+            }
             let thirdLine = document.createElement('p');
             thirdLine.style.color = 'white';
-            thirdLine.style.fontSize = '15px';
+            //thirdLine.style.fontSize = '15px';
             thirdLine.appendChild(document.createTextNode('inside of flows.'));
             thirdLine.style.paddingBottom = '10px'
-    
+            if(window.innerWidth > 698) {
+                thirdLine.style.fontSize = '1.6rem'
+            } else {
+                thirdLine.style.fontSize = '12px';
+            }
             let fourthLine = document.createElement('p');
             fourthLine.style.color = 'white';
-            fourthLine.style.fontSize = '15px';
+            //fourthLine.style.fontSize = '15px';
             fourthLine.appendChild(document.createTextNode('Click here for step by step'));
-           
+            if(window.innerWidth > 698) {
+                fourthLine.style.fontSize = '1.6rem'
+            } else {
+                fourthLine.style.fontSize = '12px';
+            }
     
             let fifthLine = document.createElement('p');
             fifthLine.style.color = 'white';
-            fifthLine.style.fontSize = '15px';
+            //fifthLine.style.fontSize = '15px';
             fifthLine.appendChild(document.createTextNode('video walkthroughs'));
-    
+            if(window.innerWidth > 698) {
+                fifthLine.style.fontSize = '1.6rem'
+            } else {
+                fifthLine.style.fontSize = '12px';
+            }
             let welcome_texts = document.createElement('div');
     
             let closet = document.createElement('p');
@@ -2663,7 +2680,7 @@ let apps = [{},{}]
             let list = document.getElementById('main-menu');
             let menuinfo = document.getElementById('menu-info')
             list.style.padding = '7px 14px 2px 7px';
-            list.style.width = '354px'
+           // list.style.width = '354px'
             if(thisElement != undefined) {
                 if(thisElement.className !== 'menubg') {                            
                
@@ -3308,9 +3325,15 @@ let apps = [{},{}]
             
 
             menuinfo.setAttribute("id", "menu-info");
-            
-            menuinfo.style.height = '170px';
-            menuinfo.style.width = '240px';
+            if(window.innerWidth > 698) {
+                menuinfo.style.height = '170px';
+                menuinfo.style.width = '240px';
+            } else {
+                menuinfo.style.height = '215px';
+                menuinfo.style.width = '240px';
+            }
+           
+
             let menuinfobox = document.createElement('div');
             let menuinfotop = document.createElement('div');
             let infinity = document.createElement('div');
@@ -3336,7 +3359,7 @@ let apps = [{},{}]
             let welcometext = document.createElement('p');
             welcometext.style.color = 'rgb(54, 255, 233)';
             welcometext.appendChild(document.createTextNode('Welcome to the Remix Menu'));
-           
+            
             let firstLine = document.createElement('p');
             firstLine.style.color = 'white';
             
@@ -3391,7 +3414,12 @@ let apps = [{},{}]
 
             let fifthLine = document.createElement('p');
             fifthLine.style.color = 'white';
-            fifthLine.style.fontSize = '15px';
+            if(window.innerHeight > 698) {
+                fifthLine.style.fontSize = '15px';
+            } else {
+                fifthLine.style.fontSize = '12px';
+            }
+           
             fifthLine.appendChild(document.createTextNode('video walkthroughs'));
 
             let welcome_texts = document.createElement('div');
@@ -3887,7 +3915,7 @@ let apps = [{},{}]
                             
                             <i id="elements-icon" className="fas fa-shapes" style={{color:'white', fontSize:19,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none',height:'20px',
     width:'20px'}}></i>
-                            <p id="elements-text" style={{fontSize:10.5,fontWeight:600,pointerEvents:'none'}} className="menubgnot">ELEMENTS</p>
+                            <p id="elements-text" style={{fontSize:8.5,fontWeight:600,pointerEvents:'none'}} className="menubgnot">ELEMENTS</p>
                         </div>
                         <div id="app-tag"  onClick={this.AppsTab.bind(this)} 
                         onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}

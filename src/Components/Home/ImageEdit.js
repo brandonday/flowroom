@@ -60,7 +60,7 @@ let that;
         let menuinfo = document.createElement('div');
         
         menuinfo.setAttribute("id", "menu-info");
-        if(window.innerWidth() > 698) {
+        if(window.innerWidth > 698) {
           menuinfo.style.height = '215px';
           menuinfo.style.width = '300px';
         } else {
@@ -78,7 +78,13 @@ let that;
         menuinfotop.style.width = '100%';
         menuinfobox.style.border = '1px solid #222222';
         menuinfobox.style.height = '147px';
-        menuinfobox.style.width = '300px';
+        if(window.innerWidth > 698) {
+          menuinfobox.style.width = '300px';
+        } else {
+          menuinfobox.style.width = '240px';
+        }
+        
+        
         menuinfobox.style.borderRadius = '3px';
         menuinfobox.style.marginTop = '11px';
 
@@ -319,10 +325,16 @@ let that;
                     bgImgWrap.style.alignItems = 'center';
                     //bgImgWrap.style.marginLeft = '6px';
                     //bgImgWrap.style.borderRadius = '5px';
-                    bgImgWrap.style.backgroundColor = '#252525';
-                    
                     item.style.height = '224px';
+                    bgImgWrap.style.backgroundColor = '#252525';
+                    if(window.innerWidth > 698) {
+                 
                     item.style.width = '139px';
+                    } else {
+
+                      item.style.width = '112px';
+
+                    }
                     //item.style.margin = 0;
 
                     item.style.margin = '14px 3px 7px 6px';
