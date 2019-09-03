@@ -833,7 +833,7 @@ const KeyCodes = {
                         display:this.state.descriptionD
                     }} value={this.state.description} onChange={this.descriptionhandleChange} placeholder={this.state.placeholder}></textarea>
                      <p style={{marginTop:10, marginBottom:10}}>Tags</p>
-                     <ReactTags style={{marginBottom:10}} tags={this.state.tags}
+                     <ReactTags style={{marginBottom:1,}} tags={this.state.tags}
                         suggestions={this.state.suggestionsTags}
                         handleDelete={this.handleDeleteTags}
                         handleAddition={this.handleAdditionTags}

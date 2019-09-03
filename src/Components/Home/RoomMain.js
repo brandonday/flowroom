@@ -74,6 +74,9 @@ let apps = [{},{}]
     const delimiters4 = [KeyCodes.comma, KeyCodes.enter];
     const delimiters5 = [KeyCodes.comma, KeyCodes.enter];
     let thumbPicURL;
+    let infinityIcon = `url(../infinity_cyan.svg)`;
+    let infinityIconGray = `url(../infinity_grey.svg)`;
+
     class RoomMain extends Component {
         constructor(props) {
             super(props);
@@ -446,7 +449,7 @@ let apps = [{},{}]
                     document.getElementById('rf-top').style.display = 'flex';
                     document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingLeft = '10px';
                     document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingRight = '10px';
-                    document.getElementById('room-main-page').style.marginTop = '30px';
+                    //document.getElementById('room-main-page').style.marginTop = '30px';
                    
                     
                     // document.getElementById('main-menu').style.position = 'absolute';
@@ -1605,22 +1608,22 @@ let apps = [{},{}]
                 )
             } else if(this.state.showPublish === true) {
                 return (
-                    <div className="publish-wrap-wrap" style={{height:'100%', width:'259px',overflowY:'scroll',paddingBottom:70}}>
+                    <div className="publish-wrap-wrap" style={{height:'100%',paddingBottom:70,width:298}}>
                         <div className="publish-wrap">
-                            <div className="publish-room" style={{height:30, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)', display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0px 10px'}}>
-                                <p style={{color:'white', fontSize:12}}>Publish Room</p>
-                                <i className="fas fa-times" style={{color:'white'}}></i>
+                            <div className="publish-room" style={{height:30, marginBottom:7, width:'100%',display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0px 0px 0px 12px'}}>
+                                <p style={{color:'white', fontSize:16}}>Publish Room</p>
+                                <i className="fas fa-times" style={{color:'white',fontSize:14}}></i>
                             </div>     
-                            <div className="publish-title" style={{height:48, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)', padding:'5px 10px'}}>
-                                <p style={{color:'white',fontSize:11}}>Title</p>
-                                <input type="text" onChange={this.titlehandleChange.bind(this)} style={{height:20, width:'100%',borderRadius:3,border:'0px',backgroundColor:'rgb(37,37,37)',outline:'none'}}/>
+                            <div className="publish-title" style={{height:75, marginBottom:10, width:'100%', backgroundColor:'rgb(31,31,31)', padding:'5px 10px'}}>
+                                <p style={{color:'white',fontSize:12,marginBottom:5}}>Title</p>
+                                <input type="text" onChange={this.titlehandleChange.bind(this)} style={{height:33, width:'100%',borderRadius:3,border:'0px',backgroundColor:'rgb(37,37,37)',outline:'none',paddingLeft:10,color:'white',fontSize:12.5}}/>
                             </div>
-                            <div className="publish-description" style={{height:90, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'5px 10px'}}>
-                                <p style={{color:'white',fontSize:11}}>Description</p>
-                                <textarea onChange={this.descriptionhandleChange.bind(this)} style={{border:'0px', outline:'none', height:50,width:'100%',borderRadius:3,backgroundColor:'rgb(37,37,37)',resize:'none',marginTop:5}}></textarea>
+                            <div className="publish-description" style={{height:155, marginBottom:10, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'5px 10px'}}>
+                                <p style={{color:'white',fontSize:12}}>Description</p>
+                                <textarea onChange={this.descriptionhandleChange.bind(this)} style={{border:'0px', outline:'none',width:'100%',borderRadius:3,backgroundColor:'rgb(37,37,37)',resize:'none',marginTop:5,height:114,padding:10,color:'white',fontSize:12}}></textarea>
                             </div>
-                            <div className="publish-tags" style={{marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'2px 10px'}}>
-                                <p style={{color:'white',fontSize:11,margin:'10px 0px'}}>Tags</p>
+                            <div className="publish-tags" style={{marginBottom:10, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'2px 10px'}}>
+                                <p style={{color:'white',fontSize:12,margin:'4px 0px 6px 0px'}}>Tags</p>
                                 <ReactTags style={{marginBottom:10}} inline={false} tags={this.state.tags}
                                 suggestions={this.state.suggestionsTags}
                                 handleDelete={this.handleDeleteTags}
@@ -1629,13 +1632,13 @@ let apps = [{},{}]
                                 placeholder={'Type any tags here'}
                                 delimiters={delimiters4} />
                             </div>
-                            <div className="publish-visibility" style={{height:75, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
+                            <div className="publish-visibility" style={{height:75, marginBottom:18, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
                                 <p style={{color:'white',fontSize:11,margin:'10px 0px'}}>Visibility</p>
 
                                 <div class="dropdown" style={{width:'100%'}}>
                                     <input type="checkbox" id="my-dropdown" value="" name="my-checkbox" style={{width:'100%'}}/>
                                         <label for="my-dropdown" data-toggle="dropdown" style={{width:'100%',color:'white'}}>
-                                            Choose one
+                                            <p style={{fontSize:12}}>Choose one</p>
                                             <i class="fas fa-chevron-down" style={{float:'right'}}></i>
                                         </label>
                                         <ul style={{zIndex:999999999, backgroundColor:'rgb(37, 37, 37)'}}>
@@ -1654,7 +1657,22 @@ let apps = [{},{}]
                                         document.getElementById('black-opacity-modal').style.display = 'flex';
                                     }} style={{color:'white',fontSize:11,margin:'10px 0px'}}>Edit</p>
                                 </div>
-                                <div id="thumbnail-pic-box" style={{width:'100%', height:120,backgroundColor:'rgb(37,37,37)',borderRadius:3}}>
+                                <div id="thumbnail-pic-box" style={{width:'100%', height:120,backgroundColor:'rgb(37,37,37)',borderRadius:3,position:'relative',display:'none'}}>
+                                    <div id="thumb-pre-loader" style={{position:'absolute',height:120,width:278,display:'flex',justifyContent:'center',alignItems:'center'}}>
+                                        <div className="preloader-wrapper big active">
+                                            <div className="spinner-layer spinner-blue-only">
+                                                <div className="circle-clipper left">
+                                                    <div className="circle"></div>
+                                                </div>
+                                                <div className="gap-patch">
+                                                    <div className="circle"></div>
+                                                </div>
+                                                <div className="circle-clipper right">
+                                                    <div className="circle"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div id="thumbnail-pic-display" style={{backgroundImage:`url{${this.props.state.entireApp.image})`, backgroundSize:'cover',backgroundPosition:'center'}}
                                         width={150}></div>
                                     <div style={{position:'absolute',height:'100%',width:'320px',backgroundColor:'black',top:'0px',visibility:'hidden'}}>
@@ -1674,11 +1692,11 @@ let apps = [{},{}]
                         padding:'20px', display:'flex', 
                         justifyContent:'center', 
                         flexDirection:'column'}}>
-                        <div style={{display:'flex', 
+                        {/* <div style={{display:'flex', 
                             justifyContent:'space-between', 
                             height:'20px', 
                             width: '100%'}}>
-                            <div style={{backgroundImage:'url(&quot;../infinity_cyan.svg&quot)', 
+                            <div style={{backgroundImage:infinityIcon, 
                                 backgroundSize:'100% 100%', 
                                 backgroundRepeat:'no-repeat', 
                                 height:'20px', 
@@ -1695,7 +1713,7 @@ let apps = [{},{}]
                                         <p style={{color: 'white', fontSize: '15px', paddingBottom:'10px'}}>inside of flows.</p>
                                         <p style={{color:'white', fontSize:'15px'}}>Click here for step by step</p>
                                         <p style={{color:'white', fontSize:'15px'}}>video walkthroughs</p>
-                                    </div>
+                                    </div> */}
                         </div>
                 )
             }
@@ -1739,7 +1757,7 @@ let apps = [{},{}]
             
             menuinfobox.style.borderRadius = '3px';
             menuinfobox.style.marginTop = '11px';
-            infinity.style.backgroundImage = `url(../infinity_cyan.svg)`;
+            infinity.style.backgroundImage = infinityIcon;
             infinity.style.backgroundSize = '100% 100%';
             infinity.style.backgroundRepeat = 'no-repeat';
             infinity.style.height = '20px';
@@ -1813,7 +1831,7 @@ let apps = [{},{}]
             closex.appendChild(document.createTextNode('X'));
             closex.style.fontSize = '20px';
             closex.style.color = 'white';
-            closet.appendChild(document.createTextNode('close'));
+            closet.appendChild(document.createTextNode('Close'));
             closet.style.fontSize = '11px';
             closet.style.color = 'white';
             menuinfotop.appendChild(infinity);
@@ -1861,7 +1879,7 @@ let apps = [{},{}]
                     }
                     thisElement.className = 'menubg'; 
     
-                    document.getElementById('remix-icon').style.backgroundImage = `url(../infinity_cyan.svg)`;
+                    document.getElementById('remix-icon').style.backgroundImage = infinityIcon;
                     document.getElementById('remix-text').style.color = "rgb(54, 255, 233)";
     
                     document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
@@ -1940,7 +1958,7 @@ let apps = [{},{}]
                 }
                 thisElement.className = 'menubg'; 
 
-                document.getElementById('remix-icon').style.backgroundImage = `url(../infinity_grey.svg)`;
+                document.getElementById('remix-icon').style.backgroundImage = infinityIconGray;
                 document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
 
                 document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
@@ -2356,7 +2374,7 @@ let apps = [{},{}]
                     }
                     thisElement.className = 'menubg'; 
 
-                    document.getElementById('remix-icon').style.backgroundImage = `url(../infinity_grey.svg)`;
+                    document.getElementById('remix-icon').style.backgroundImage = infinityIcon;
                     document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
 
                     document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
@@ -2571,7 +2589,7 @@ let apps = [{},{}]
                     }
                     thisElement.className = 'menubg'; 
 
-                    document.getElementById('remix-icon').style.backgroundImage = `url(../infinity_grey.svg)`;
+                    document.getElementById('remix-icon').style.backgroundImage = infinityIcon;
                     document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
 
                     document.getElementById('script-icon').style.backgroundImage = `url(../code_cyan.svg)`;
@@ -2680,7 +2698,7 @@ let apps = [{},{}]
             let list = document.getElementById('main-menu');
             let menuinfo = document.getElementById('menu-info')
             list.style.padding = '7px 14px 2px 7px';
-           // list.style.width = '354px'
+            //list.style.width = '354px'
             if(thisElement != undefined) {
                 if(thisElement.className !== 'menubg') {                            
                
@@ -2692,7 +2710,7 @@ let apps = [{},{}]
                         }
                     }
                     thisElement.className = 'menubg'; 
-                    document.getElementById('remix-icon').style.backgroundImage = `url(../infinity_grey.svg)`;
+                    document.getElementById('remix-icon').style.backgroundImage = infinityIcon;
                     document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
 
                     document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
@@ -3104,13 +3122,13 @@ let apps = [{},{}]
                         // if (iframeDoc.readyState == 'complete' || iframeDoc.readyState == 'interactive') {
                      
                             get_iframe.onload = () => {
-                                alert('d')
+                                alert('d')       
                             setTimeout(()=>{
                            iframeDoc.flowroom.SaveScreenShot(
                                 ()=> {
-                                    alert('call')
+                                    //alert('call')
                                     let imageData = localStorage.getItem("thumbnail");
-                                    alert(imageData)
+                                    //alert(imageData)
                                     // let isRemix = isPostAsNew;
                                     // let remixRoomID = isPostAsNew ? that.state.shortID : that.state.remixRoomID;
                                     // let remixUserName = isPostAsNew ? that.state.userName : that.state.remixUserName;
@@ -3346,7 +3364,7 @@ let apps = [{},{}]
             menuinfobox.style.width = '240px';
             menuinfobox.style.borderRadius = '3px';
             menuinfobox.style.marginTop = '11px';
-            infinity.style.backgroundImage = `url(../infinity_cyan.svg)`;
+            infinity.style.backgroundImage = infinityIcon;
             infinity.style.backgroundSize = '100% 100%';
             infinity.style.backgroundRepeat = 'no-repeat';
             infinity.style.height = '20px';
@@ -3429,7 +3447,7 @@ let apps = [{},{}]
             closex.appendChild(document.createTextNode('X'));
             closex.style.fontSize = '20px';
             closex.style.color = 'white';
-            closet.appendChild(document.createTextNode('close'));
+            closet.appendChild(document.createTextNode('Close'));
             closet.style.fontSize = '11px';
             closet.style.color = 'white';
             menuinfotop.appendChild(infinity);
@@ -3472,7 +3490,7 @@ let apps = [{},{}]
                     }
                     thisElement.className = 'menubg'; 
 
-                    document.getElementById('remix-icon').style.backgroundImage = `url(../infinity_cyan.svg)`;
+                    document.getElementById('remix-icon').style.backgroundImage = infinityIcon;
                     document.getElementById('remix-text').style.color = "rgb(54, 255, 233)";
 
                     document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
@@ -3516,7 +3534,17 @@ let apps = [{},{}]
             document.getElementById('main-menu').style.overflowY = 'scroll';
             //document.getElementById('main-menu').style.width = '269px';
             isMenuOpen = true;
+            if(document.getElementById('search-input') !== null) {
+                document.getElementById('search-input').remove()
+            }
 
+            if(document.getElementById('search-giphy-wrap') !== null) {
+                document.getElementById('search-giphy-wrap').remove()
+            }
+
+            if(document.getElementById('close-search-wrap') !== null) {
+                document.getElementById('close-search-wrap').remove()
+            }
           
             if(this.state.isOpen === false) {
                 const element = document.querySelector('#main-menu');
@@ -4160,9 +4188,9 @@ let apps = [{},{}]
                     }}
                     >MENU</button> */}
                     <div id="publish-section" style={{position:'absolute', width:269, left:48, display:'none'}}>
-                    <div style={{display:'flex',height:55, marginBottom:7, width:'100%', justifyContent:'center',alignItems:'center', padding:'0 10px',borderTop:'1px solid rgb(29,29,29)',position:'absolute',left:0,bottom:'-7px',backgroundColor:'rgb(24,24,24)',zIndex:9999999}}>
-                            <div style={{backgroundColor:'grey',display:'flex',alignItems:'center',justifyContent:'center', height:'29px',width:'170px',marginRight:10,borderRadius:3,backgroundColor:'rgb(37, 37, 37)'}}>SAVE AS DRAFT</div>
-                            <div style={{backgroundColor:'grey',display:'flex',alignItems:'center',justifyContent:'center', height:'29px',width:'170px',borderRadius:3,backgroundColor:'rgb(54, 255, 233)',fontWeight:'bold',color:'rgb(82, 82, 82)'}} onClick={
+                    <div style={{display:'flex',height:55, marginBottom:7, justifyContent:'space-between',alignItems:'center', padding:'5px 26px 4px 6px',borderTop:'1px solid rgb(29,29,29)',position:'absolute',left:12,bottom:'-7px',backgroundColor:'rgb(24,24,24)',zIndex:9999999,width:329}}>
+                            <div style={{backgroundColor:'grey',display:'flex',alignItems:'center',justifyContent:'center', height:'36px',width:'141px',borderRadius:3,backgroundColor:'rgb(37, 37, 37)',color:'#FFF',fontSize:14,fontWeight:900}}>SAVE AS DRAFT</div>
+                            <div style={{backgroundColor:'grey',display:'flex',alignItems:'center',justifyContent:'center', height:'36px',width:'141px',borderRadius:3,backgroundColor:'rgb(54, 255, 233)',fontWeight:900,color:'#000',fontSize:14}} onClick={
                                 this.saveRoom.bind(this)
                             }>PUBLISH ROOM</div>
                         </div>   
