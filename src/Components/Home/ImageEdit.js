@@ -151,7 +151,7 @@ let that;
        
          for(let i = 0; i < remixImageListOptions.length; i++) {
           let remixImageListItem = document.createElement('li');
-            remixImageListItem.style.marginRight = '20px';
+            //remixImageListItem.style.marginRight = '20px';
             remixImageListItem.style.height = '28px';
  
             //remixImageListItem.style.textAlign = 'center';
@@ -160,9 +160,8 @@ let that;
             remixImageListItem.style.justifyContent = 'center';
             //remixImageListItem.style.width = '50px';
             remixImageListItem.style.position = 'relative';
-            remixImageListItem.style.left = '-5px';
-            remixImageListItem.style.top = '-1px';
-            remixImageListItem.style.fontSize = '14.2px'; 
+ 
+            remixImageListItem.style.fontSize = '16px'; 
 
             // remixImageListItem.style.paddingLeft = '6px';
             // remixImageListItem.style.paddingRight = '6px';
@@ -192,33 +191,33 @@ let that;
          }
          
         let imgico = document.createElement('i');
-        imgico.className = 'fas fa-image';
-        imgtitle.appendChild(imgico);
+        //imgico.className = 'fas fa-image';
+        //imgtitle.appendChild(imgico);
         imgtitle.appendChild(document.createTextNode('Remixable Items'));
-        imgclose.appendChild(document.createTextNode('Close'));
+        //imgclose.appendChild(document.createTextNode('Close'));
         imgtitle.style.color = 'white';
-        imgtitle.style.fontSize = '13.5px';
+        imgtitle.style.fontSize = '16px';
         imgtitle.style.marginLeft = '10px';
         imgtitle.style.fontWeight = '500';
-        imgtitle.style.marginTop = '4px';
+        //imgtitle.style.marginTop = '4px';
         imgtitle.style.position = 'relative';
         //imgtitle.style.left = '2px';
         imgclose.style.color = 'white';
         imgclose.style.fontSize = '10px';
         imgclose.style.marginRight = '20px'
-        imgclose.addEventListener('click', function() {
-          if(imgclose.innerText === 'Close') {
-            remixImageList.style.display = 'none';
-            remixImageBox.style.height = '33px';
-            imgclose.innerText = 'Open';
-          } else {
-            remixImageList.style.display = 'block';
-            remixImageBox.style.height = '330px';
-            imgclose.innerText = 'Close';
+        // imgclose.addEventListener('click', function() {
+        //   if(imgclose.innerText === 'Close') {
+        //     remixImageList.style.display = 'none';
+        //     remixImageBox.style.height = '33px';
+        //     imgclose.innerText = 'Open';
+        //   } else {
+        //     remixImageList.style.display = 'block';
+        //     remixImageBox.style.height = '330px';
+        //     imgclose.innerText = 'Close';
             
-          }
+        //   }
           
-        });
+        // });
         remixImageTitle.style.height = '34px';
         remixImageTitle.style.width = '100%';
         remixImageTitle.style.backgroundColor = '#141414';
@@ -263,20 +262,25 @@ let that;
 
                       itemInfo.style.fontSize = '11.9px';
                       itemInfo.style.color = 'white';
-                      itemInfo.style.marginLeft = '-1px';
+                      //itemInfo.style.marginLeft = '-1px';
                       itemInfo.style.marginTop = '10px';
                       itemInfo.style.height = '14px';
                       itemInfo.style.fontFamily = 'Open Sans';
 
 
                       itemInfot.style.fontSize = '11.9px';
-                      itemInfot.style.marginLeft = '1px';
+                      //itemInfot.style.marginLeft = '1px';
                       itemInfot.style.fontFamily = 'Open Sans';
                       
                       itemInfo.appendChild(document.createTextNode('Pac-man'));
-                      itemInfot.appendChild(document.createTextNode('Hero'));
+                      itemInfot.appendChild(document.createTextNode('The description here about the image.'));
                       itemInfoh.appendChild(document.createTextNode('100px x 100px'));
-                      itemInfoEdit.appendChild(document.createTextNode('Edit'));
+                      itemInfot.style.color = '#a59c9c';
+                      itemInfoh.style.color = '#a59c9c';
+                      itemInfoh.style.fontWeight = '600';
+                      itemInfoh.style.fontStyle = 'italic';
+                      itemInfoh.style.marginTop = 2;
+                      //itemInfoEdit.appendChild(document.createTextNode('Edit'));
 
                      
 
@@ -286,29 +290,30 @@ let that;
                       itemInfo.style.fontSize = '12px';
                       itemInfo.style.color = 'white';
                       itemInfo.style.fontWeight = '0';
-                      itemInfo.style.marginLeft = '7px';
-                      itemInfo.style.marginTop = '4px';
-                      itemInfo.style.height = '14px';
+                      //itemInfo.style.marginLeft = '7px';
+                      itemInfo.style.marginTop = '7px';
+                      itemInfo.style.marginBottom = '5px';
+                      //itemInfo.style.height = '14px';
 
                       itemInfot.style.fontSize = '10px';
-                      itemInfot.style.color = '#2b2b2b';
-                      itemInfot.style.height = '14px';
+                      // itemInfot.style.color = '#2b2b2b';
+                      //itemInfot.style.height = '14px';
                       itemInfot.style.fontWeight = '0';
-                      itemInfot.style.marginLeft = '7px';
+                      //itemInfot.style.marginLeft = '7px';
                 
 
                       itemInfo.style.fontSize = '12px';
 
                       itemInfoh.style.fontSize = '10px';
-                      itemInfoh.style.color = '#2b2b2b';
-                      itemInfoh.style.height = '13px';
+                      // itemInfoh.style.color = '#2b2b2b';
+                      //itemInfoh.style.height = '13px';
                       itemInfoh.style.fontWeight = '0';
-                      itemInfoh.style.marginLeft = '7px';
+                      //itemInfoh.style.marginLeft = '7px';
                       
                       itemInfoEdit.style.fontSize = '11px';
                       itemInfoEdit.style.color = '#767676';
                       itemInfoEdit.style.fontWeight = '0';
-                      itemInfoEdit.style.marginLeft = '7px';
+                      //itemInfoEdit.style.marginLeft = '7px';
 
                       itemInfoWrap.appendChild(itemInfo);
                       itemInfoWrap.appendChild(itemInfot);
@@ -474,7 +479,7 @@ let that;
                   list.appendChild(remixImageBox)
 
                   let getFirstSelected = document.getElementsByClassName('selectedRM');
-                  getFirstSelected[0].style.width = '42px'
+                  //getFirstSelected[0].style.width = '42px'
                   
 
 
