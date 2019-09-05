@@ -42,12 +42,12 @@ class RelatedRoomPostTop extends Component {
                 background:'rgb(15, 15, 15)',
                 display:'flex',
                 flexDirection:'row',
-                margin:10
+                margin:'12px 0px'
             }}>
         
             <div style={{
-                height:'93px', 
-                width:'168px', 
+               
+                width:this.props.roomWidth, 
                 backgroundSize:'cover',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition:'center',
@@ -57,17 +57,17 @@ class RelatedRoomPostTop extends Component {
             }}></div>
                 <div style={{display:'flex',flexDirection:'column'}}>
                 <Link to={`/room/${this.props.shortID}`}><p style={{
-                    fontSize:'12px',
+                    fontSize:'15px',
                     left:'11px',
-                    top:'-7px',
+                    fontWeight:600,
                     position:'relative',
                     margin:0,
                     color:'white'
                 }}>{this.props.title}</p></Link>
                 <Link to={`/${this.props.userName}`}><p style={{
-                    fontSize:'8px',
+                    fontSize:'12px',
                     left:'11px',
-                    top:'-9px',
+                    fontWeight:400,
                     position:'relative',
                     margin:0,
                     color:'white'

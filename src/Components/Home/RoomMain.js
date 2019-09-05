@@ -20,7 +20,8 @@ import ImageEdit from './ImageEdit.js';
 import * as S3 from 'aws-sdk/clients/s3';
 import RelatedRoomPost from './RelatedRoomPost.js';
 import { WithContext as ReactTags } from 'react-tag-input';
-
+import { rgbUnit } from 'style-value-types';
+import M from 'materialize-css';
 var GphApiClient = require('giphy-js-sdk-core')
 let client = GphApiClient("ybxqH0QDbtfnHTrTrFJ0BmLMX6QpEpWu")
 
@@ -295,6 +296,10 @@ let apps = [{},{}]
     
         }
         componentDidMount() {
+            document.addEventListener('DOMContentLoaded', function() {
+                var elems = document.querySelectorAll('.modal');
+                var instances = M.Modal.init(elems);
+              });
             let that = this;
             // alert('room loaded')
             let hashids = new Hashids(uuid(), 6);
@@ -432,6 +437,11 @@ let apps = [{},{}]
                     document.getElementById('main-menu').style.top = '0px';
                     document.getElementById('main-menu').style.zIndex = '999999';
                     document.getElementById('main-menu').style.left = '56px';
+                    if(document.getElementsByClassName('publish-wrap-wrap') !== null){
+                        document.getElementsByClassName('publish-wrap-wrap')[0].style.width = '250px';
+                    }
+                    document.getElementById('publish-menu').style.width = '267px'
+
                     document.getElementById('main-menu').style.display = 'none';
                     document.getElementById('main-section-wrap-comments-screen-wrap').style.top = '10px';
                     document.getElementById('tab-menu').style.position = 'absolute';
@@ -439,16 +449,26 @@ let apps = [{},{}]
                     document.getElementById('tab-menu').style.height = '100%';
                     document.getElementById('tab-menu').style.width = '56px';
                     document.getElementById('tab-menu').style.display = 'none';
+                    if(document.getElementById('menu-info') !== null) {
+                        document.getElementById('menu-info').style.width = '240px';
+                    }
                     let remixImages = document.getElementsByClassName('remix-image');
                     for(let i = 0; i < remixImages.length; i++) {
                         remixImages[i].style.width = '112px';
 
                     }
+                    document.getElementById('publish-menu').style.padding = '5px 16px 4px 3px'
                     document.getElementById('menu-btn-mobile').style.display = 'flex';
                     document.getElementById('rf-right').style.display = 'none';
                     document.getElementById('rf-top').style.display = 'flex';
                     document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingLeft = '10px';
                     document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingRight = '10px';
+                    document.getElementById('save-as-draft').style.width = '118px';
+                    document.getElementById('publish-room').style.width = '118px';
+                    document.getElementById('publish-room').style.height = '30px';
+                    document.getElementById('save-as-draft').style.height = '30px';
+                    document.getElementById('save-as-draft').style.fontSize = '12px';
+                    document.getElementById('publish-room').style.fontSize = '12px';
                     //document.getElementById('room-main-page').style.marginTop = '30px';
                    
                     
@@ -1608,22 +1628,22 @@ let apps = [{},{}]
                 )
             } else if(this.state.showPublish === true) {
                 return (
-                    <div className="publish-wrap-wrap" style={{height:'100%',paddingBottom:70,width:298}}>
+                    <div className="publish-wrap-wrap" style={{height:'100%',paddingBottom:70}}>
                         <div className="publish-wrap">
                             <div className="publish-room" style={{height:30, marginBottom:7, width:'100%',display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0px 0px 0px 12px'}}>
                                 <p style={{color:'white', fontSize:16}}>Publish Room</p>
                                 <i className="fas fa-times" style={{color:'white',fontSize:14}}></i>
                             </div>     
                             <div className="publish-title" style={{height:75, marginBottom:10, width:'100%', backgroundColor:'rgb(31,31,31)', padding:'5px 10px'}}>
-                                <p style={{color:'white',fontSize:12,marginBottom:5}}>Title</p>
-                                <input type="text" onChange={this.titlehandleChange.bind(this)} style={{height:33, width:'100%',borderRadius:3,border:'0px',backgroundColor:'rgb(37,37,37)',outline:'none',paddingLeft:10,color:'white',fontSize:12.5}}/>
+                                <p style={{color:'white',fontSize:14,marginBottom:5}}>Title</p>
+                                <input type="text" onChange={this.titlehandleChange.bind(this)} style={{height:33, width:'100%',borderRadius:3,border:'0px',backgroundColor:'rgb(37,37,37)',outline:'none',paddingLeft:10,color:'white',fontSize:15,color:'rgb(64, 255, 232)'}}/>
                             </div>
                             <div className="publish-description" style={{height:155, marginBottom:10, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'5px 10px'}}>
-                                <p style={{color:'white',fontSize:12}}>Description</p>
-                                <textarea onChange={this.descriptionhandleChange.bind(this)} style={{border:'0px', outline:'none',width:'100%',borderRadius:3,backgroundColor:'rgb(37,37,37)',resize:'none',marginTop:5,height:114,padding:10,color:'white',fontSize:12}}></textarea>
+                                <p style={{color:'white',fontSize:14}}>Description</p>
+                                <textarea className="description-textarea" onChange={this.descriptionhandleChange.bind(this)} style={{border:'0px', outline:'none',width:'100%',borderRadius:3,backgroundColor:'rgb(37,37,37)',resize:'none',marginTop:5,height:114,padding:10,fontSize:15,color:'rgb(64, 255, 232)'}} placeholder="Type in your text"></textarea>
                             </div>
                             <div className="publish-tags" style={{marginBottom:10, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'2px 10px'}}>
-                                <p style={{color:'white',fontSize:12,margin:'4px 0px 6px 0px'}}>Tags</p>
+                                <p style={{color:'white',fontSize:14,margin:'4px 0px 6px 0px'}}>Tags</p>
                                 <ReactTags style={{marginBottom:10}} inline={false} tags={this.state.tags}
                                 suggestions={this.state.suggestionsTags}
                                 handleDelete={this.handleDeleteTags}
@@ -1632,33 +1652,34 @@ let apps = [{},{}]
                                 placeholder={'Type any tags here'}
                                 delimiters={delimiters4} />
                             </div>
-                            <div className="publish-visibility" style={{height:75, marginBottom:18, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
-                                <p style={{color:'white',fontSize:11,margin:'10px 0px'}}>Visibility</p>
+                            <div className="publish-visibility" style={{height:90, marginBottom:18, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'1px 10px'}}>
+                                <p style={{color:'white',fontSize:14,margin:'10px 0px'}}>Visibility</p>
 
                                 <div class="dropdown" style={{width:'100%'}}>
                                     <input type="checkbox" id="my-dropdown" value="" name="my-checkbox" style={{width:'100%'}}/>
                                         <label for="my-dropdown" data-toggle="dropdown" style={{width:'100%',color:'white'}}>
                                             <p style={{fontSize:12}}>Choose one</p>
-                                            <i class="fas fa-chevron-down" style={{float:'right'}}></i>
+                                            <i class="fas fa-chevron-down" style={{float:'right',position:'absolute',right:'10px',top:'10px'}}></i>
                                         </label>
                                         <ul style={{zIndex:999999999, backgroundColor:'rgb(37, 37, 37)'}}>
-                                            <li style={{color:'#fff',margin:'10px 5px'}}>Public (Everyone including followers)</li>
-                                            <li style={{color:'#fff',margin:'10px 5px'}}>Private (Only me)</li>
-                                            <li style={{color:'#fff',margin:'10px 5px'}}>Unlisted (Everyone you share with except followers)</li>
-                                            <li style={{color:'#fff',margin:'10px 5px'}}>Followers</li>
+                                            <li style={{fontSize:12.5,color:'#fff',margin:'10px 5px'}}>Public (Everyone including followers)</li>
+                                            <li style={{fontSize:12.5,color:'#fff',margin:'10px 5px'}}>Followers (Only your followers)</li>
+                                            <li style={{fontSize:12.5,color:'#fff',margin:'10px 5px'}}>Private (Only me)</li>
+                                            <li style={{fontSize:12.5,color:'#fff',margin:'10px 5px'}}>Unlisted (Share with a link)</li>
+                                          
                                         </ul>
                                 </div>  
                             </div>
-                            <div style={{height:168, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
+                            <div style={{height:290, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
                                 <div style={{display:'flex',justifyContent:'space-between'}}>
-                                    <p style={{color:'white',fontSize:11,margin:'10px 0px'}}>Card Preview</p>
+                                    <p style={{color:'white',fontSize:14,margin:'10px 0px'}}>Card Preview</p>
                                     <p onClick={()=>{
                                         document.getElementById('card-thumb-wrap').style.display = 'flex';
                                         document.getElementById('black-opacity-modal').style.display = 'flex';
                                     }} style={{color:'white',fontSize:11,margin:'10px 0px'}}>Edit</p>
                                 </div>
-                                <div id="thumbnail-pic-box" style={{width:'100%', height:120,backgroundColor:'rgb(37,37,37)',borderRadius:3,position:'relative',display:'none'}}>
-                                    <div id="thumb-pre-loader" style={{position:'absolute',height:120,width:278,display:'flex',justifyContent:'center',alignItems:'center'}}>
+                                <div id="thumbnail-pic-box" style={{width:'100%', height:240,backgroundColor:'rgb(37,37,37)',borderRadius:3,position:'relative'}}>
+                                    <div id="thumb-pre-loader" style={{position:'absolute',height:120,width:278,display:'flex',justifyContent:'center',alignItems:'center',display:'none'}}>
                                         <div className="preloader-wrapper big active">
                                             <div className="spinner-layer spinner-blue-only">
                                                 <div className="circle-clipper left">
@@ -1731,13 +1752,13 @@ let apps = [{},{}]
             
             // menuinfo.style.height = '170px';
             // menuinfo.style.width = '300px';
-            menuinfo.style.left = '8px';
+            //menuinfo.style.left = '8px';
 
             if(window.innerWidth > 698) {
-                menuinfo.style.height = '215px';
+                menuinfo.style.height = '200px';
                 menuinfo.style.width = '300px';
               } else {
-                menuinfo.style.height = '215px';
+                menuinfo.style.height = '200px';
                 menuinfo.style.width = '240px';
               }
              
@@ -1773,7 +1794,7 @@ let apps = [{},{}]
             if(window.innerWidth > 698) {
                 welcometext.style.fontSize = '1.6rem'
             } else {
-                welcometext.style.fontSize = '15px';
+                welcometext.style.fontSize = '14px';
             }
     
             let firstLine = document.createElement('p');
@@ -1828,7 +1849,12 @@ let apps = [{},{}]
     
             let closet = document.createElement('p');
             let closex = document.createElement('p');
-            closex.appendChild(document.createTextNode('X'));
+            let closeicon = document.createElement('i');
+            closeicon.setAttribute("class", "fa fa-times");
+            closeicon.style.color = 'white'; 
+            closeicon.style.float = 'right'; 
+            closeicon.style.fontSize = '15px';
+            closex.appendChild(closeicon);
             closex.style.fontSize = '20px';
             closex.style.color = 'white';
             closet.appendChild(document.createTextNode('Close'));
@@ -2698,6 +2724,7 @@ let apps = [{},{}]
             let list = document.getElementById('main-menu');
             let menuinfo = document.getElementById('menu-info')
             list.style.padding = '7px 14px 2px 7px';
+            list.style.overflowX = 'hidden'
             //list.style.width = '354px'
             if(thisElement != undefined) {
                 if(thisElement.className !== 'menubg') {                            
@@ -3122,7 +3149,7 @@ let apps = [{},{}]
                         // if (iframeDoc.readyState == 'complete' || iframeDoc.readyState == 'interactive') {
                      
                             get_iframe.onload = () => {
-                                alert('d')       
+                            document.getElementById('thumb-pre-loader').style.display = 'flex';   
                             setTimeout(()=>{
                            iframeDoc.flowroom.SaveScreenShot(
                                 ()=> {
@@ -3143,6 +3170,7 @@ let apps = [{},{}]
                                             localStorage.setItem("thumbnailUrl", url);
                                         }
                                     );
+                                    document.getElementById('thumb-pre-loader').style.display = 'none';   
                                 }
 
                             );
@@ -3347,7 +3375,7 @@ let apps = [{},{}]
                 menuinfo.style.height = '170px';
                 menuinfo.style.width = '240px';
             } else {
-                menuinfo.style.height = '215px';
+                menuinfo.style.height = '200px';
                 menuinfo.style.width = '240px';
             }
            
@@ -3391,7 +3419,7 @@ let apps = [{},{}]
             if(window.innerWidth > 698) {
                 firstLine.style.fontSize = '15px';
             } else {
-                firstLine.style.fontSize = '14px';
+                firstLine.style.fontSize = '12px';
             }
             let secondLine = document.createElement('p');
             secondLine.style.color = 'white';
@@ -3433,18 +3461,21 @@ let apps = [{},{}]
             let fifthLine = document.createElement('p');
             fifthLine.style.color = 'white';
             if(window.innerHeight > 698) {
-                fifthLine.style.fontSize = '15px';
+                fifthLine.style.fontSize = '12px';
             } else {
                 fifthLine.style.fontSize = '12px';
             }
            
             fifthLine.appendChild(document.createTextNode('video walkthroughs'));
-
+            
             let welcome_texts = document.createElement('div');
 
             let closet = document.createElement('p');
             let closex = document.createElement('p');
-            closex.appendChild(document.createTextNode('X'));
+            let closeicon = document.createElement('i');
+            closeicon.className = 'fa fa-times';
+            closeicon.style.fontSize = '15px';
+            closex.appendChild(closeicon);
             closex.style.fontSize = '20px';
             closex.style.color = 'white';
             closet.appendChild(document.createTextNode('Close'));
@@ -3570,7 +3601,7 @@ let apps = [{},{}]
       
                         }
                 );
-                document.getElementById('main-menu').style.display = 'flex';
+                document.getElementById('main-menu').style.display = 'block';
                 isMenuOpen = true;
            } else {
                 const element = document.querySelector('#main-menu');
@@ -4188,9 +4219,15 @@ let apps = [{},{}]
                     }}
                     >MENU</button> */}
                     <div id="publish-section" style={{position:'absolute', width:269, left:48, display:'none'}}>
-                    <div style={{display:'flex',height:55, marginBottom:7, justifyContent:'space-between',alignItems:'center', padding:'5px 26px 4px 6px',borderTop:'1px solid rgb(29,29,29)',position:'absolute',left:12,bottom:'-7px',backgroundColor:'rgb(24,24,24)',zIndex:9999999,width:329}}>
-                            <div style={{backgroundColor:'grey',display:'flex',alignItems:'center',justifyContent:'center', height:'36px',width:'141px',borderRadius:3,backgroundColor:'rgb(37, 37, 37)',color:'#FFF',fontSize:14,fontWeight:900}}>SAVE AS DRAFT</div>
-                            <div style={{backgroundColor:'grey',display:'flex',alignItems:'center',justifyContent:'center', height:'36px',width:'141px',borderRadius:3,backgroundColor:'rgb(54, 255, 233)',fontWeight:900,color:'#000',fontSize:14}} onClick={
+                        <div style={{height:'1px',
+    backgroundColor:'rgb(65,65,65)',
+    width:'296px',
+    position:'absolute',
+    top:'-57px',
+    left:'19px'}}></div>
+                    <div id="publish-menu" style={{display:'flex',height:55, marginBottom:7, justifyContent:'space-between',alignItems:'center', padding:'5px 26px 4px 6px',borderTop:'1px solid rgb(29,29,29)',position:'absolute',left:12,bottom:'-7px',backgroundColor:'rgb(24,24,24)',zIndex:9999999}}>
+                            <div id="save-as-draft" style={{backgroundColor:'grey',display:'flex',alignItems:'center',justifyContent:'center', height:'36px',width:'141px',borderRadius:3,backgroundColor:'rgb(37, 37, 37)',color:'#FFF',fontSize:14,fontWeight:900}}>SAVE AS DRAFT</div>
+                            <div id="publish-room" style={{backgroundColor:'grey',display:'flex',alignItems:'center',justifyContent:'center', height:'36px',width:'141px',borderRadius:3,backgroundColor:'rgb(54, 255, 233)',fontWeight:900,color:'#000',fontSize:14}} onClick={
                                 this.saveRoom.bind(this)
                             }>PUBLISH ROOM</div>
                         </div>   
@@ -4264,6 +4301,84 @@ let apps = [{},{}]
                     </div>
                 </div>
             </div>
+
+                                        
+
+                <div id="modal1" class="modal" style={{height:450,position:'absolute',top:20,zIndex:9999999999}}>
+                    <div class="modal-content">
+                        <div style={{height:40, width:'100%',borderBottom:'1px solid #979797'}}>
+                            <h4 style={{fontWeight:'bold'}}>Share Flow</h4>
+                        </div>
+                        <div class="share-icons" style={{display:'flex',flexWrap:'wrap'}}>
+                            <div class="facebook" style={{width:'68px',
+                                height:'68px',
+                                backgroundImage:'url(/facebook.png)',
+                                backgroundRepeat:'no-repeat',
+                                backgroundSize:'contain',margin:'20px 12px'}}>
+                                    <p>Facebook</p>
+                                </div>
+                            <div class="instagram" style={{width:'68px',
+                                height:'68px',
+                                backgroundImage:'url(/instagram.png)',
+                                backgroundRepeat:'no-repeat',
+                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                            <div class="snapchat" style={{width:'68px',
+                                height:'68px',
+                                backgroundImage:'url(/snapchat.png)',
+                                backgroundRepeat:'no-repeat',
+                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                            <div class="twitter" style={{width:'68px',
+                                height:'68px',
+                                backgroundImage:'url(/twitter.png)',
+                                backgroundRepeat:'no-repeat',
+                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                            <div class="pinterest" style={{width:'68px',
+                                height:'68px',
+                                backgroundImage:'url(/pinterest.png)',
+                                backgroundRepeat:'no-repeat',
+                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                            <div class="tumblr" style={{width:'68px',
+                                height:'68px',
+                                backgroundImage:'url(/tumblr.png)',
+                                backgroundRepeat:'no-repeat',
+                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                            <div class="youtube" style={{width:'68px',
+                                height:'68px',
+                                backgroundImage:'url(/youtube.png)',
+                                backgroundRepeat:'no-repeat',
+                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                            <div class="reddit" style={{width:'68px',
+                                height:'68px',
+                                backgroundImage:'url(/reddit.png)',
+                                backgroundRepeat:'no-repeat',
+                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                            <div class="whatsapp" style={{width:'68px',
+                                height:'68px',
+                                backgroundImage:'url(/whatsapp.png)',
+                                backgroundRepeat:'no-repeat',
+                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                            <div class="messenger" style={{width:'68px',
+                                height:'68px',
+                                backgroundImage:'url(/messenger.png)',
+                                backgroundRepeat:'no-repeat',
+                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                            <div class="linkedin" style={{width:'68px',
+                                height:'68px',
+                                backgroundImage:'url(/linkedin.png)',
+                                backgroundRepeat:'no-repeat',
+                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                            <div class="slack" style={{width:'68px',
+                                height:'68px',
+                                backgroundImage:'url(/slack.png)',
+                                backgroundRepeat:'no-repeat',
+                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                    </div>
+                </div>
+        
         </div>)
        
     }

@@ -28,6 +28,7 @@ let history = createHistory();
                                 <RoomPosts/>
                                 <AppModal/>
                                 <Create/>
+                                
                         </div>
                 )
 

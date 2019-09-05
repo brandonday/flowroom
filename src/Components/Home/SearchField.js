@@ -14,7 +14,7 @@ const Default = props => <Responsive {...props} minWidth={768} />;
         justifyContent:'center',
         alignItems:'center'
     }}>
-        <div className="search-box" style={{borderRadius:'3px', height:'30px'}}>
+        <div className="search-box" style={{borderRadius:'3px', height:'36px'}}>
             <i style={{color:'rgb(95, 95, 95)',
     fontSize:'13px'
  }} className="fas fa-search"></i>

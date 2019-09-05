@@ -46,7 +46,7 @@ let that;
        
         
         let that = this;
-        let remixImageListOptions = ['Actors', 'Elements', 'Effects'];
+        let remixImageListOptions = ['Images', 'Text', 'Audio','Other'];
         let list = document.getElementById('main-menu');
         let getList = JSON.parse(localStorage.getItem( "FR_REMIX_LIST"));
         let remixImageList = document.createElement('div');
@@ -55,20 +55,20 @@ let that;
             remixImageList.style.width = '100%';
         let remixImageTitle = document.createElement('div');
         let menuinfo = document.createElement('div');
-       
+
         if(document.getElementById('menu-info') == null) {
         let menuinfo = document.createElement('div');
         
         menuinfo.setAttribute("id", "menu-info");
         if(window.innerWidth > 698) {
-          menuinfo.style.height = '215px';
+          menuinfo.style.height = '200px';
           menuinfo.style.width = '300px';
         } else {
-          menuinfo.style.height = '215px';
+          menuinfo.style.height = '200px';
           menuinfo.style.width = '240px';
         }
        
-        menuinfo.style.left = '8px';
+        //menuinfo.style.left = '8px';
         menuinfo.style.position = 'relative';
         let menuinfobox = document.createElement('div');
         let menuinfotop = document.createElement('div');
@@ -119,12 +119,12 @@ let that;
         
         remixImageBox.style.marginTop = '5px'
         remixImageBox.style.position = 'relative';
-        remixImageBox.style.left = '2px';
+       // remixImageBox.style.left = '2px';
 
         let backArrow = document.createElement('i');
         let forwardArrow = document.createElement('i');
-        backArrow.className = 'fas fa-chevron-left';
-        forwardArrow.className = 'fas fa-chevron-right';
+        // backArrow.className = 'fas fa-chevron-left';
+        // forwardArrow.className = 'fas fa-chevron-right';
         backArrow.style.color = '#6a6a6a';
         forwardArrow.style.color = '#6a6a6a';
         backArrow.style.fontSize = '12px';
@@ -158,7 +158,7 @@ let that;
             remixImageListItem.style.alignItems = 'center';
             remixImageListItem.style.display = 'flex';
             remixImageListItem.style.justifyContent = 'center';
-            remixImageListItem.style.width = '50px';
+            //remixImageListItem.style.width = '50px';
             remixImageListItem.style.position = 'relative';
             remixImageListItem.style.left = '-5px';
             remixImageListItem.style.top = '-1px';
@@ -170,12 +170,15 @@ let that;
             remixImageListItem.className = 'notSelectedRM';
             remixImageListItem.setAttribute("id", `${remixImageListOptions[i]}`)
             remixImageListItem.appendChild(document.createTextNode(remixImageListOptions[i]));
+            
             if(remixImageListItem.id === remixImageListOptions[0]) {
               remixImageListItem.className = 'selectedRM';
             }
+           
             remixImageListItem.addEventListener('click', ()=>{
               remixImageListItem.className = 'selectedRM';
               
+           
               let getsel = document.getElementsByClassName('selectedRM');
               
               for(let i = 0; i < getsel.length; i++) {
@@ -187,18 +190,19 @@ let that;
             remixImageListNav.appendChild(remixImageListItem);
             remixImageListNav.appendChild(remixImageListNavArrows);
          }
+         
         let imgico = document.createElement('i');
         imgico.className = 'fas fa-image';
         imgtitle.appendChild(imgico);
-        imgtitle.appendChild(document.createTextNode('Images'));
+        imgtitle.appendChild(document.createTextNode('Remixable Items'));
         imgclose.appendChild(document.createTextNode('Close'));
         imgtitle.style.color = 'white';
         imgtitle.style.fontSize = '13.5px';
         imgtitle.style.marginLeft = '10px';
-        imgtitle.style.fontWeight = '900';
+        imgtitle.style.fontWeight = '500';
         imgtitle.style.marginTop = '4px';
         imgtitle.style.position = 'relative';
-        imgtitle.style.left = '2px';
+        //imgtitle.style.left = '2px';
         imgclose.style.color = 'white';
         imgclose.style.fontSize = '10px';
         imgclose.style.marginRight = '20px'
@@ -325,7 +329,7 @@ let that;
                     bgImgWrap.style.alignItems = 'center';
                     //bgImgWrap.style.marginLeft = '6px';
                     //bgImgWrap.style.borderRadius = '5px';
-                    item.style.height = '224px';
+                    item.style.height = '201px';
                     bgImgWrap.style.backgroundColor = '#252525';
                     if(window.innerWidth > 698) {
                  
@@ -460,7 +464,7 @@ let that;
 
                   }
               
-                  list.style.padding = '7px 14px 2px 7px';
+                  list.style.padding = '7px 14px 2px 10px';
                   remixImageBox.appendChild(remixImageTitle);
                   remixImageBox.appendChild(remixImageList);
                   if(document.getElementById('menu-info') !== null){
@@ -469,8 +473,12 @@ let that;
                   
                   list.appendChild(remixImageBox)
 
+                  let getFirstSelected = document.getElementsByClassName('selectedRM');
+                  getFirstSelected[0].style.width = '42px'
+                  
 
 
+                  
                    
                 }
             

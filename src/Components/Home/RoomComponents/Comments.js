@@ -670,7 +670,6 @@ let roomFilter = 'weight';
             <div style={{height:'100%',width:'100%'}}>
                 <div id="rf-top" 
                     style={{
-                        height:'500px',
                         width:'100%',
                         justifyContent:'center',
                         marginTop:'45px',
@@ -679,8 +678,7 @@ let roomFilter = 'weight';
                 }}>
                     
                     <div style={{
-                        height:'470px',
-                        width:'95.2%',
+                        width:'100%',
                         /* padding: 10px; */
                         overflow:'hidden',
                         borderRadius:'6px',
@@ -688,32 +686,13 @@ let roomFilter = 'weight';
                         marginRight:'10px'
                     }}>
                   
-                    <div style={{display:this.state.userName == ''? 'none':'flex', alignItems:'center',height:40,width:'100%',background:'#0f0f0f'}}>
-                        <p style={{color:'white',fontSize:17,fontWeight:900,marginTop:45,marginBottom:50}}>Recommended Flows</p>
-                    </div>
+                
                     {/* <div style={{height:'100vh', width:'100%',background:'#0f0f0f'}}> */}
 
 
-                        
-                            {
-                                that.state.relatedRooms.map((i)=>{
-                                    return(<RelatedRoomPostTop
-                                        
-                                        shortID={i.shortID}
-                                        title={i.title} 
-                                        userName={i.userName}    
-                                        views={i.views} 
-                                        thumbnail={i.thumbnail}   
-                                        roomHeight={118} 
-                                        roomWidth={225}
-                                        isRemix={i.isRemix}
-                                        key={i.shortID}
-                                        />)
-                                })
-                            }
-                        
+
                     {/* </div> */}
-                    <div style={{height:'100vh', width:'100%',background:'#0f0f0f'}}>
+                    <div style={{width:'100%',background:'#0f0f0f'}}>
                     
                     </div>
 
@@ -727,7 +706,7 @@ let roomFilter = 'weight';
                 maxWidth:'1200px',
                 margin:'0 auto',
                 position:'relative',
-                padding:'0 20px'
+                padding:'0 2px'
                 
                 }}>
             
@@ -791,7 +770,12 @@ let roomFilter = 'weight';
               
                             alignItems:'flex-end', 
                         fontSize:'14px'}}>  
-                        <div style={{display:'flex',
+                          
+                        <div onClick={()=>{
+                            /*fix this shit*/
+                            document.getElementById('modal1').style.zIndex = '99999999999999'
+
+                        }} data-target="modal1" className="btn modal-trigger" style={{display:'flex',
                             alignItems:'center',
                             justifyContent:'space-between',
                             
@@ -844,7 +828,31 @@ let roomFilter = 'weight';
                         <p style={{color:'#fff',fontSize:14,margin:'2px 15px'}}>{this.state.description}</p>
                     </div>
                     </div>
-                    <div style={{display:'flex', width:'100%'}}>
+                    <div style={{display:'flex', width:'100%',flexDirection:'column'}}>
+                    <div>
+                    <div style={{display:this.state.userName == ''? 'none':'flex', alignItems:'center',height:40,width:'100%',background:'#0f0f0f',margin:'15px 0px'}}>
+                        <p style={{color:'white',fontSize:17,fontWeight:600}}>Recommended Flows</p>
+                    </div>
+                            {
+                                that.state.relatedRooms.map((i)=>{
+                                    return(
+                                   
+                                    <RelatedRoomPostTop
+                                        
+                                        shortID={i.shortID}
+                                        title={i.title} 
+                                        userName={i.userName}    
+                                        views={i.views} 
+                                        thumbnail={i.thumbnail}   
+                                        roomWidth={160}
+                                        isRemix={i.isRemix}
+                                        key={i.shortID}
+                                        />
+                                       
+                                        )
+                                })
+                            }
+                            </div>
                     <div style={{width:'100%'}}>
                         <div style={{height:'100%',width:'100%',borderTop:'1px solid black',marginBottom:'10px'}}>
                             {this.state.loggedIn ? (<div style={{width:'100%', marginTop:'20px'}}>
@@ -993,6 +1001,7 @@ let roomFilter = 'weight';
                     </div>
                     </div>
                 </div>
+                
         </div>)
 
         }
