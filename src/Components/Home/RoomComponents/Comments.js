@@ -726,82 +726,89 @@ let roomFilter = 'weight';
                 </div> */}
                 {/* <div style={{height:'200px',width:'100%'}}></div> */}
                 <div className="main-section-wrap-comments-box">
-                    <div style={{backgroundColor:'#1f1f1f',borderRadius:'6px',height:'242px',width:'100%'}}>
+                    <div style={{backgroundColor:'#1f1f1f',borderRadius:'6px',height:'242px',width:'100%',position:'relative'}}>
                     <div style={{height:'76px',width:'100%', display:'flex', borderBottom:'1px solid #373737', justifyContent:'space-between'}}>
-                        <div style={{height:47,marginLeft:17,marginTop:9}}>
+                        <div style={{marginLeft:17,marginTop:9}}>
                         <p style={{color:'#fafafa',fontSize:20,marginBottom:6}}>{this.state.room_title ? this.state.room_title: ''}</p>
-                        <div style={{display:'flex',alignItems:'center', marginLeft:'1px'}}>
-                            <i className="fa fa-play" style={{fontSize:11,marginRight:10,color:'white'}}></i>
-                            <p style={{fontSize:'13px',fontWeight:'500',color:'white'}}>{this.state.views}</p>
-                        </div>
-                        </div>
-                    <div style={{display:'flex', width:196, justifyContent:'space-between',height:63}}>
-                        <div style={{display:'flex',
+                        <div style={{display:'flex'}}>
+                            <div style={{display:'flex',alignItems:'center', marginLeft:'1px'}}>
+                                <i className="fa fa-play" style={{fontSize:11,marginRight:10,color:'white'}}></i>
+                                <p style={{fontSize:'13px',fontWeight:'500',color:'white'}}>{this.state.views}</p>
+                            </div>
+                            <div style={{display:'flex',position:'absolute',right:0}}>
+                                <div style={{display:'flex', width:196, justifyContent:'space-between'}}>
+                                    <div style={{display:'flex',
                            
-                            justifyContent:'space-between',
-                            color:'white',
+                                            justifyContent:'space-between',
+                                            color:'white',
                        
-                            alignItems:'flex-end', 
-                        fontSize:'14px'}}>  
-                        <div style={{display:'flex',
-                            alignItems:'center',
-                            justifyContent:'space-between',
+                                            alignItems:'flex-end', 
+                                            fontSize:'14px'}}>  
+                                        <div style={{display:'flex',
+                                            alignItems:'center',
+                                            justifyContent:'space-between',
                      
-                        }}>
-                            <i className="far fa-heart" onClick={()=>{
-                                firebase.auth().onAuthStateChanged((user)=> {
-                                    console.log("firebase.auth user: ",user);
-                                    if(user) {
-                                      this.incrementLikes();
-                                    } else {
-                                      this.openModal(true);
-                                    }
-                                });
+                                        }}>
+                                        <i className="far fa-heart" onClick={()=>{
+                                            firebase.auth().onAuthStateChanged((user)=> {
+                                                console.log("firebase.auth user: ",user);
+                                                if(user) {
+                                                    this.incrementLikes();
+                                                } else {
+                                                    this.openModal(true);
+                                                }
+                                            });
                                
-                            }} style={{marginRight:10}}></i>
-                            <p>Like</p>
-                        </div>
-                        </div>
+                                        }} style={{marginRight:10}}></i>
+                                        <p style={{fontWeight:500}}>Like</p>
+                                    </div>
+                                </div>
 
-                        <div style={{display:'flex',
+                                <div style={{display:'flex',
         
-                            justifyContent:'space-between',
-                            color:'white',
+                                    justifyContent:'space-between',
+                                    color:'white',
               
-                            alignItems:'flex-end', 
-                        fontSize:'14px'}}>  
+                                    alignItems:'flex-end', 
+                                    fontSize:'14px'}}>  
                           
-                        <div onClick={()=>{
-                            /*fix this shit*/
-                            document.getElementById('modal1').style.zIndex = '99999999999999'
+                                        <div onClick={()=>{
+                                            /*fix this shit*/
+                                            document.getElementById('modal1').style.zIndex = '99999999999999'
 
-                        }} data-target="modal1" className="btn modal-trigger" style={{display:'flex',
-                            alignItems:'center',
-                            justifyContent:'space-between',
+                                        }} data-target="modal1" className="btn modal-trigger" style={{display:'flex',
+                                            alignItems:'center',
+                                            justifyContent:'space-between',
                             
-                        }}>
-                            <i className="fas fa-share-alt" style={{marginRight:10}}></i>
-                            <p>Share</p>
-                        </div>
-                        </div>
+                                        }}>
+                                        <i className="fas fa-share-alt" style={{marginRight:10}}></i>
+                                        <p style={{fontWeight:500}}>Share</p>
+                                    </div>
+                                </div>
 
-                        <div style={{display:'flex',
+                                <div style={{display:'flex',
 
-                            justifyContent:'space-between',
-                            color:'white',
-                            alignItems:'flex-end', 
-                        fontSize:'14px'}}>  
-                        <div style={{display:'flex',
-                            alignItems:'center',
-                            justifyContent:'space-between',
-                            width:'50px',
-                            marginBottom:3
-                        }}>
-                            <i className="fas fa-ellipsis-h"></i>
+                                    justifyContent:'space-between',
+                                    color:'white',
+                                    alignItems:'flex-end', 
+                                    fontSize:'14px'}}>  
+                                        <div style={{display:'flex',
+                                            alignItems:'center',
+                                            justifyContent:'space-between',
+                                            width:'50px',
+                                            marginBottom:3
+                                        }}>
+                                        <i className="fas fa-ellipsis-h"></i>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
-                        </div>
+                    </div>
+
 
                     </div>
+                
 
                     </div>
                     <div style={{height:61,padding:'5px 15px',display:'flex'}}>
@@ -814,13 +821,32 @@ let roomFilter = 'weight';
                         <div style={{height:50}}>
                             <div style={{display:'flex', marginTop:7, flexDirection:'column',marginLeft:12}}>
                                 <div style={{display:'flex'}}>
-                                <Link to={`/${this.props.userName}`}><p style={{fontWeight:0,fontSize:13,color:'white',marginRight:10}}>{`${this.props.isRemix ? 'Remixed by ' + '@' + this.props.userName : 'Created by ' + '@' + this.props.userName}`}</p></Link>
-                                <div onClick={this.follow.bind(this)} style={{display:this.state.displayIfOwn, alignItems:'center', justifyContent:'center', border:'1px solid rgb(64, 255, 232)', height:22,width:65,borderRadius:6, color:'rgb(64, 255, 232)'}}>
-                                <p style={{fontSize:10,marginRight:2}}>+</p>
-                                <p style={{fontSize:10}}>{this.state.followlbl}</p>
+                                <p style={{fontWeight:400,fontSize:14,color:'#ACACAC'}}>{`${this.props.isRemix ? 'Remixed by ' : 'Created by '}`}</p>
+                                <Link to={`/${this.props.userName}`}>
+                                    <p style={{fontWeight:400,fontSize:14,color:'white',marginLeft:4,marginRight:'35px',}}>{this.props.isRemix ? ' @' + this.props.userName : ' @' + this.props.userName}</p>
+                                </Link>
+                                <div onClick={this.follow.bind(this)} style={{
+                                    display:this.state.displayIfOwn, 
+                                    alignItems:'center', 
+                                    justifyContent:'center',  
+                                    borderRadius:6, 
+                                    color:'#40FFE8',
+                                    border:'1px solid #40FFE8',
+                                    borderRadius:'3px',
+                                    opacity:0.7,
+                                    width:'75px',
+                                    height:'25px',
+                                    position:'relative',
+                                
+                                    
+                                    }}>
+                                    <div style={{display:'flex',position:'absolute'}}>
+                                        <p style={{fontSize:10,marginRight:2,fontWeight:700}}>+</p>
+                                        <p style={{fontSize:10,fontWeight:700}}>{this.state.followlbl}</p>
+                                    </div>
                                 </div>
                                 </div>
-                                <p style={{fontSize:12, position:'relative', top:'-4px'}}>{moment(this.props.dateCreated).format("LL")}</p>
+                                <p style={{fontSize:12, position:'relative',fontWeight:400}}>Published on: {moment(this.props.dateCreated).format("LL")}</p>
                             </div>
                         </div>
                     </div>
@@ -929,10 +955,10 @@ let roomFilter = 'weight';
                             }}>
                             <div style={{display:'flex',justifyContent:'center',alignItems:'center', color:'#80848C'}}>
                             <span style={{color:'rgb(64, 255, 232)',display:'flex'}}>
-                                <a href="/signup" style={{color:'rgb(64, 255, 232)',marginRight:4}}>
+                                <p href="/signup" style={{color:'rgb(64, 255, 232)',marginRight:4, fontSize:12,fontWeight:700}}>
                                     Sign up
-                                </a> <p style={{marginRight:4, color:'#80848C',fontSize:12,marginBottom:3}}> or</p> 
-                                <a href="/login" style={{color:'rgb(64, 255, 232)',marginRight:4}}>Sign in</a> to leave a comment</span>
+                                </p> <p style={{marginRight:4, color:'#80848C',fontSize:12,fontWeight:700}}> or</p> 
+                                <p href="/login" style={{color:'rgb(64, 255, 232)',marginRight:4,fontSize:12,fontWeight:700}}>Sign in</p> <p style={{fontSize:12,color:'#80848C',fontWeight:700}}>to leave a comment</p></span>
                             </div>
                         </div>
                     )}

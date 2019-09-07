@@ -299,6 +299,8 @@ let apps = [{},{}]
             document.addEventListener('DOMContentLoaded', function() {
                 var elems = document.querySelectorAll('.modal');
                 var instances = M.Modal.init(elems);
+
+                
               });
             let that = this;
             // alert('room loaded')
@@ -314,6 +316,8 @@ let apps = [{},{}]
             this.setState({thumbPicURL:imageData});
             document.getElementById('main-menu').style.display = 'none';
             document.getElementById('tab-menu').style.height = 'none';
+
+            
         
             window.datGUI = function(array) {
                 let output = document.getElementById('output_frame').contentWindow;
@@ -336,6 +340,7 @@ let apps = [{},{}]
                 guiProperties = new createDatGUI();
                 let mainmenu = document.getElementById('main-menu');
                 let remixTextBox = document.createElement('div');
+                
                 //remixTextBox.style.border = '1px solid red';
                 remixTextBox.style.height = '330px';
                 remixTextBox.style.width = '269px';
@@ -437,10 +442,13 @@ let apps = [{},{}]
                     document.getElementById('main-menu').style.top = '0px';
                     document.getElementById('main-menu').style.zIndex = '999999';
                     document.getElementById('main-menu').style.left = '56px';
-                    if(document.getElementsByClassName('publish-wrap-wrap') !== null){
-                        document.getElementsByClassName('publish-wrap-wrap')[0].style.width = '250px';
-                    }
+                    // document.getElementById('remix-image-box').style.position = 'relative';
+                    // document.getElementById('remix-image-box').style.top = '64px';
+                    // if(document.getElementsByClassName('publish-wrap-wrap') !== null){
+                    //     document.getElementsByClassName('publish-wrap-wrap')[0].style.width = '250px';
+                    // }
                     document.getElementById('publish-menu').style.width = '267px'
+                    document.getElementById('publish-menu').style.display = 'none';
 
                     document.getElementById('main-menu').style.display = 'none';
                     document.getElementById('main-section-wrap-comments-screen-wrap').style.top = '10px';
@@ -469,11 +477,34 @@ let apps = [{},{}]
                     document.getElementById('save-as-draft').style.height = '30px';
                     document.getElementById('save-as-draft').style.fontSize = '12px';
                     document.getElementById('publish-room').style.fontSize = '12px';
+                    
+                    if(document.getElementById('welcome-text') !== null) {
+                     document.getElementById('welcome-text').style.fontSize = '14px';
+                    }
+                    if(document.getElementById('first-line-text') !== null) {
+                        document.getElementById('first-line-text').style.fontSize = '12px';
+                    }
+                    if(document.getElementById('second-line-text') !== null) {
+                        document.getElementById('second-line-text').style.fontSize = '12px';
+                    }
+                    if(document.getElementById('third-line-text') !== null) {
+                        document.getElementById('third-line-text').style.fontSize = '12px';
+                    }
+                    if(document.getElementById('remix-image-box') !== null) {
+                       
+                        document.getElementById('remix-image-box').style.marginTop = '5px'
+                       
+                    }
+                    if(document.getElementById('menu-info') !== null) {
+                        document.getElementById('menu-info-box').style.width = '240px'
+                       }
                     //document.getElementById('room-main-page').style.marginTop = '30px';
                    
                     
                     // document.getElementById('main-menu').style.position = 'absolute';
                     // document.getElementById('main-menu').style.left = '-330px';
+                   
+
                 } else {
                     let main = document.getElementById('main-menu');
                     let tabMenu = document.getElementById('tab-menu');
@@ -501,6 +532,46 @@ let apps = [{},{}]
                     //document.getElementById('room-wrap').style.flex = '5 1 0%';
                     document.getElementById('main-menu').style.maxWidth = '330px';
                     document.getElementById('main-menu').style.width = '100%';
+
+
+               
+                       if(document.getElementById('first-line-text') !== null) {
+                           document.getElementById('first-line-text').style.fontSize = '1.6rem';
+                       }
+                       if(document.getElementById('second-line-text') !== null) {
+                           document.getElementById('second-line-text').style.fontSize = '1.6remx';
+                       }
+                       if(document.getElementById('third-line-text') !== null) {
+                           document.getElementById('third-line-text').style.fontSize = '1.6rem';
+                       }
+                       if(document.getElementById('remix-image-box') !== null) {
+                          
+                           document.getElementById('remix-image-box').style.marginTop = '1.6rem'
+                          
+                       }
+                       if(document.getElementById('menu-info') !== null) {
+                        document.getElementById('menu-info-box').style.width = '300px'
+                       }
+                       if(document.getElementById('welcome-text') !== null) {
+                        document.getElementById('welcome-text').style.fontSize = '1.6rem';
+                       }
+
+                       if(document.getElementsByClassName('remix-image') !== null) {
+                        let getclasses = document.getElementsByClassName('remix-image');
+                        for(let i = 0; i < getclasses.length; i++) {
+                            getclasses[i].style.height = '201px';
+                            getclasses[i].style.width = '139px'
+                        }
+        
+
+                       }
+                       document.getElementById('publish-menu').style.width = '326px'
+                       if(isMenuOpen === false) {
+                        const element = document.querySelector('#main-menu');
+                        const ball = styler(element); 
+                        // alert('nnbnnb')
+                        element.style.transform = 'translateX(0px) translateZ(-378px)';
+                        }
                 }
             }
             let x = window.matchMedia("(max-width: 768px)");
@@ -617,6 +688,8 @@ let apps = [{},{}]
                     isObject:false, notObjectClass:'selected-background',objectBtnClass:''
                 }      
             );
+            
+       
         }
         componentWillUnmount() {
             this.setState({thumbPicURL:''});
@@ -1790,7 +1863,10 @@ let apps = [{},{}]
             closebox.style.width = '45px';
             let welcometext = document.createElement('p');
             welcometext.style.color = 'rgb(54, 255, 233)';
+            welcometext.style.marginTop = '10px';
+            welcometext.style.marginBottom = '10px';
             welcometext.appendChild(document.createTextNode('Welcome to the Remix Menu'));
+            welcometext.setAttribute("id","welcome-text");
             if(window.innerWidth > 698) {
                 welcometext.style.fontSize = '1.6rem'
             } else {
@@ -1800,27 +1876,33 @@ let apps = [{},{}]
             let firstLine = document.createElement('p');
             firstLine.style.color = 'white';
             //firstLine.style.fontSize = '15px';
-            firstLine.appendChild(document.createTextNode('Here you can swap Text,'));
+            firstLine.appendChild(document.createTextNode('Here you can swap Text, Images,'));
             if(window.innerWidth > 698) {
                 firstLine.style.fontSize = '1.6rem'
             } else {
                 firstLine.style.fontSize = '12px';
             }
+            firstLine.setAttribute("id","first-line-text");
     
             let secondLine = document.createElement('p');
             secondLine.style.color = 'white';
            // secondLine.style.fontSize = '15px';
-            secondLine.appendChild(document.createTextNode('Images, and other elements'));
+            secondLine.appendChild(document.createTextNode('and other elements inside of flows.'));
             if(window.innerWidth > 698) {
                 secondLine.style.fontSize = '1.6rem'
             } else {
                 secondLine.style.fontSize = '12px';
             }
+
+            secondLine.setAttribute("id","second-line-text");
+
             let thirdLine = document.createElement('p');
             thirdLine.style.color = 'white';
             //thirdLine.style.fontSize = '15px';
-            thirdLine.appendChild(document.createTextNode('inside of flows.'));
-            thirdLine.style.paddingBottom = '10px'
+            thirdLine.appendChild(document.createTextNode('Click on the Remixable Items below to get started.'));
+            thirdLine.setAttribute("id", "third-line-text");
+            thirdLine.style.paddingBottom = '10px';
+            thirdLine.style.marginTop = '10px';
             if(window.innerWidth > 698) {
                 thirdLine.style.fontSize = '1.6rem'
             } else {
@@ -1829,7 +1911,7 @@ let apps = [{},{}]
             let fourthLine = document.createElement('p');
             fourthLine.style.color = 'white';
             //fourthLine.style.fontSize = '15px';
-            fourthLine.appendChild(document.createTextNode('Click here for step by step'));
+           // fourthLine.appendChild(document.createTextNode('Click here for step by step'));
             if(window.innerWidth > 698) {
                 fourthLine.style.fontSize = '1.6rem'
             } else {
@@ -1839,7 +1921,7 @@ let apps = [{},{}]
             let fifthLine = document.createElement('p');
             fifthLine.style.color = 'white';
             //fifthLine.style.fontSize = '15px';
-            fifthLine.appendChild(document.createTextNode('video walkthroughs'));
+            //fifthLine.appendChild(document.createTextNode('video walkthroughs'));
             if(window.innerWidth > 698) {
                 fifthLine.style.fontSize = '1.6rem'
             } else {
@@ -2298,12 +2380,12 @@ let apps = [{},{}]
             
                 for(let i=0; i < element_options.length; i++) {
                     let li = document.createElement('li');
-                    li.style.color = '#C6C6C6';
+                    li.style.color = 'white';
                     li.style.listStyleType = 'none';
                     li.style.fontSize = '14px';
                     li.style.fontFamily = 'Open Sans';
                     li.style.cursor = 'pointer';
-            
+                    li.setAttribute("id",`ELEMENTS_${element_options[i]}`)
                     li.appendChild(document.createTextNode(element_options[i]));
                     li.addEventListener('click', ()=> {
                         let elements = document.getElementsByClassName('elementbg');
@@ -2317,6 +2399,7 @@ let apps = [{},{}]
                     elementTabs.appendChild(li);
                     
                 }
+                
                 let elemetBox = document.createElement('div');
                 closeSearchWrap.appendChild(closeSearch);
                 searchInput.style.backgroundColor = '#252525';
@@ -2326,6 +2409,8 @@ let apps = [{},{}]
                 searchInput.style.margin = '10px 0px';
                 searchInput.style.outline = 'none';
                 searchInput.style.paddingLeft = '10px';
+                searchInput.style.color = 'rgb(64, 255, 232)';
+                searchInput.style.fontSize = '15px';
 
                 searchInput.setAttribute("placeholder", 'Search for stuff here...');
                 searchInput.className = 'search-placeholder';
@@ -2377,6 +2462,8 @@ let apps = [{},{}]
                     );
 
                 }
+                document.getElementById("ELEMENTS_GIFS").className = 'elementbg';
+                //document.getElementById("ELEMENTS_GIFS").style.fontWeight = '900'
             }
 
             document.getElementById('publish-section').style.display = 'none';
@@ -3227,6 +3314,8 @@ let apps = [{},{}]
             }
             document.getElementById('main-menu').style.display = 'block';
             document.getElementById('main-menu').style.overflowY = 'scroll';
+            document.getElementById('publish-menu').style.display = 'flex';
+
         }
         PostTab(e) {
             let that = this;
@@ -3362,7 +3451,7 @@ let apps = [{},{}]
 
             }
         }
-        OpenMenu(){
+        OpenMenu() {
             
             let list = document.getElementById('main-menu');
             let thisElement = document.getElementById('remix-tab');
@@ -3404,26 +3493,29 @@ let apps = [{},{}]
             closebox.style.width = '45px';
             let welcometext = document.createElement('p');
             welcometext.style.color = 'rgb(54, 255, 233)';
+            welcometext.style.marginTop = '10px';
+            welcometext.style.marginBottom = '10px';
             welcometext.appendChild(document.createTextNode('Welcome to the Remix Menu'));
-            
+            welcometext.setAttribute("id","welcome-text");
+
             let firstLine = document.createElement('p');
             firstLine.style.color = 'white';
             
-            if(window.innerWidth > 698) {
+            if(window.innerWidth > 768) {
                 welcometext.style.fontSize = '15px';
             } else {
                 welcometext.style.fontSize = '14px';
             }
-            firstLine.appendChild(document.createTextNode('Here you can swap Text,'));
+            firstLine.appendChild(document.createTextNode('Here you can swap Text, Images,'));
 
-            if(window.innerWidth > 698) {
+            if(window.innerWidth > 768) {
                 firstLine.style.fontSize = '15px';
             } else {
                 firstLine.style.fontSize = '12px';
             }
             let secondLine = document.createElement('p');
             secondLine.style.color = 'white';
-            if(window.innerWidth > 698) {
+            if(window.innerWidth > 768) {
                 secondLine.style.fontSize = '15px';
             } else {
                 secondLine.style.fontSize = '12px';
@@ -3431,42 +3523,42 @@ let apps = [{},{}]
 
 
             
-            secondLine.appendChild(document.createTextNode('Images, and other elements'));
+            secondLine.appendChild(document.createTextNode('and other elements inside of flows.'));
 
 
             let thirdLine = document.createElement('p');
             thirdLine.style.color = 'white';
-            if(window.innerWidth > 698) {
+            if(window.innerWidth > 768) {
                 thirdLine.style.fontSize = '15px';
             } else {
                 thirdLine.style.fontSize = '12px'
             }
             
 
-            thirdLine.appendChild(document.createTextNode('inside of flows.'));
+            thirdLine.appendChild(document.createTextNode('Click on the Remixable Items below to get started.'));
             thirdLine.style.paddingBottom = '10px'
-
+            thirdLine.style.marginTop = '10px';
             let fourthLine = document.createElement('p');
             fourthLine.style.color = 'white';
-            if(window.innerWidth > 698) {
+            if(window.innerWidth > 768) {
                 fourthLine.style.fontSize = '15px';
             } else {
                 fourthLine.style.fontSize = '12px';
 
             }
             
-            fourthLine.appendChild(document.createTextNode('Click here for step by step'));
+            //fourthLine.appendChild(document.createTextNode('Click here for step by step'));
            
 
             let fifthLine = document.createElement('p');
             fifthLine.style.color = 'white';
-            if(window.innerHeight > 698) {
+            if(window.innerHeight > 768) {
                 fifthLine.style.fontSize = '12px';
             } else {
                 fifthLine.style.fontSize = '12px';
             }
            
-            fifthLine.appendChild(document.createTextNode('video walkthroughs'));
+            //fifthLine.appendChild(document.createTextNode('video walkthroughs'));
             
             let welcome_texts = document.createElement('div');
 
@@ -3616,8 +3708,11 @@ let apps = [{},{}]
                             isOpen:false
                         }
                     );
-                document.getElementById('publish-section').style.display = 'none';
+                document.getElementById('publish-menu').style.display = 'none';
+                isMenuOpen = false;
                 }
+
+                
         }
         handleDeletecredits(i) {
             const { creditsTags } = this.state;

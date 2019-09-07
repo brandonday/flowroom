@@ -116,8 +116,12 @@ let that;
         remixImageBox.style.overflow = 'hidden';
         //.style.marginTop = '70px';
         remixImageBox.setAttribute("id", "remix-image-box");
-        
-        remixImageBox.style.marginTop = '5px'
+        if(window.innerWidth > 698) {
+          remixImageBox.style.marginTop = '66px'
+        } else {
+          remixImageBox.style.marginTop = '5px'
+        }
+       
         remixImageBox.style.position = 'relative';
        // remixImageBox.style.left = '2px';
 
@@ -486,7 +490,14 @@ let that;
                   
                    
                 }
-            
+                if(window.innerWidth < 768) {
+                
+                  let remixImages = document.getElementsByClassName('remix-image');
+                          for(let i = 0; i < remixImages.length; i++) {
+                              remixImages[i].style.width = '112px';
+      
+                          }
+                      }
                    
     }
 
