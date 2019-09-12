@@ -12,6 +12,9 @@ import { OPEN_MODAL } from '../../actions/entireApp';
 
 import SignInSignUpModal from './SignInSignUpModal';
 
+import M from 'materialize-css';
+
+import ReactModal from 'react-modal';
 
 let tagsLengthArray = [];
 let tagCounter = 0;
@@ -31,8 +34,10 @@ class RoomPost extends Component {
             tags:[],
             tagColor:'',
             likes:'',
-            isShowFrame:false
+            isShowFrame:false,
+            showModal:false
         }
+        this.handleCloseModal = this.handleCloseModal.bind(this)
        
 
     }
@@ -332,32 +337,36 @@ class RoomPost extends Component {
 
     }
     goFull = () => {
-        this.incrementViewsFull();
-        //document.fullscreenEnabled = false
-        if(document.fullscreenEnabled === true) {
-        let iframe = document.getElementById(`${this.props.shortID}`);
-        // alert(this.props.shortID)
-        let fullscreennode = document.getElementsByClassName('full-screenable-node');
-        let toptitle = document.getElementsByClassName('top-title');
-        let roomtitlecard = document.getElementsByClassName('room-card-title');
-        iframe.style.height = '100%';
-        iframe.style.width = '100%';
-        iframe.style.transform = 'none';
-        for(let i = 0; i < fullscreennode.length; i++) {
-            fullscreennode[i].style.height = '100%';
-            fullscreennode[i].style.width = '100%';
-        }
-        for(let i = 0; i < toptitle.length; i++) {
-            toptitle[i].style.display = 'none';
-        }
-        for(let i = 0; i < roomtitlecard.length; i++) {
-            roomtitlecard[i].style.display = 'none';
-        }
-        this.setState({ isFull: true });
-        } else {
-        
-        }
+        // this.incrementViewsFull();
+        // document.fullscreenEnabled = false
+        // if(document.fullscreenEnabled === true) {
+        // let iframe = document.getElementById(`${this.props.shortID}`);
+        // // alert(this.props.shortID)
+        // let fullscreennode = document.getElementsByClassName('full-screenable-node');
+        // let toptitle = document.getElementsByClassName('top-title');
+        // let roomtitlecard = document.getElementsByClassName('room-card-title');
+        // iframe.style.height = '100%';
+        // iframe.style.width = '100%';
+        // iframe.style.transform = 'none';
+        // for(let i = 0; i < fullscreennode.length; i++) {
+        //     fullscreennode[i].style.height = '100%';
+        //     fullscreennode[i].style.width = '100%';
+        // }
+        // for(let i = 0; i < toptitle.length; i++) {
+        //     toptitle[i].style.display = 'none';
+        // }
+        // for(let i = 0; i < roomtitlecard.length; i++) {
+        //     roomtitlecard[i].style.display = 'none';
+        // }
+        // this.setState({ isFull: true });
+        // } else {
+     
+            this.setState({ showModal: true }); 
+        //}
 
+    }
+    handleCloseModal() {
+        this.setState({ showModal: false }); 
     }
     expandText() {
         let that = this;
@@ -507,6 +516,25 @@ class RoomPost extends Component {
                 </div>
                 
                 </div>   */}
+        <ReactModal 
+           isOpen={this.state.showModal}
+         
+        >
+          <button onClick={this.handleCloseModal}>Close Modal</button>
+          <iframe id={`${this.props.shortID}`}  style={{
+                                height:'100%', border:'1px solid red',
+                                width:'100%',
+                                border:0,
+                                // position:'absolute',
+                                top:0,
+                                left: 0,
+                                background:'black',
+                         
+                                WebkitTransformOrigin:'top left',
+                                transformOrigin:'top left',
+                                display:'block'
+                            }} src={`/full/${this.props.shortID}`}/>
+        </ReactModal>
             </div>
         )
     }

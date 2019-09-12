@@ -7,6 +7,7 @@ import Create from './create';
 import { firebase } from '../firebase/firebase';
 import createHistory from 'history/createBrowserHistory';
 import { connect } from 'react-redux';
+import ReactModal from 'react-modal';
 
 
 let history = createHistory();
@@ -19,16 +20,16 @@ let history = createHistory();
                 }
         }
         
-    
         render() {
                 return  (
                         <div style={{flex:1,display:'flex',
-                                flexDirection:'column',background:'#141414'}}>
+                                flexDirection:'column',background:'#141414',}}>
+                                  
                                 <Communities/>
                                 <RoomPosts/>
                                 <AppModal/>
                                 <Create/>
-                                
+                   
                         </div>
                 )
 

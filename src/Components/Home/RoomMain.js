@@ -22,6 +22,10 @@ import RelatedRoomPost from './RelatedRoomPost.js';
 import { WithContext as ReactTags } from 'react-tag-input';
 import { rgbUnit } from 'style-value-types';
 import M from 'materialize-css';
+import MdCode from 'react-ionicons/lib/LogoNodejs'
+
+
+
 var GphApiClient = require('giphy-js-sdk-core')
 let client = GphApiClient("ybxqH0QDbtfnHTrTrFJ0BmLMX6QpEpWu")
 
@@ -243,7 +247,8 @@ let apps = [{},{}]
                 publish_menu:false,
                 object_arr:[],
                 fontAwesomeAdded:false,
-                funType:'cats'
+                funType:'cats',
+                embedCode:'embed'
             
             };
             this.openModal = this.openModal.bind(this);
@@ -296,12 +301,14 @@ let apps = [{},{}]
     
         }
         componentDidMount() {
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', ()=> {
                 var elems = document.querySelectorAll('.modal');
-                var instances = M.Modal.init(elems);
+                var instances = M.Modal.init(elems, {startingTop:'0%'});
 
-                
               });
+              
+              
+            
             let that = this;
             // alert('room loaded')
             let hashids = new Hashids(uuid(), 6);
@@ -434,7 +441,7 @@ let apps = [{},{}]
                     if(isMenuOpen === true) {
                         //document.getElementById('main-menu').style.display = 'block';
                     }
-          
+                    that.setState({isOpen:false});
                     document.getElementById('main-menu').style.position = 'absolute';
                     document.getElementById('main-menu').style.height = '100%';
                     document.getElementById('main-menu').style.width = '271px';
@@ -442,6 +449,17 @@ let apps = [{},{}]
                     document.getElementById('main-menu').style.top = '0px';
                     document.getElementById('main-menu').style.zIndex = '999999';
                     document.getElementById('main-menu').style.left = '56px';
+                    // let socialIcons = document.querySelectorAll('.facebook,.instagram,.snapchat,.twitter,.pinterest,.tumblr,.youtube,.reddit,.whatsapp,.messenger,.linkedin,.slack');
+                    // let socialIconTxt = document.querySelectorAll('.facebook-txt,.instagram-txt,.snapchat-txt,.twitter-txt,.pinterest-txt,.tumblr-txt,.youtube-txt,.reddit-txt,.whatsapp-txt,.messenger-txt,.linkedin-txt,.slack-txt,.inkedin-txt')
+                    // for(let i = 0; i < socialIcons.length; i++) {
+                    //     socialIcons[i].style.height = '40px';
+                    //     socialIcons[i].style.width = '40px';
+                    //     socialIconTxt[i].style.top = '48px';
+                    // }
+
+                    
+           
+
                     // document.getElementById('remix-image-box').style.position = 'relative';
                     // document.getElementById('remix-image-box').style.top = '64px';
                     // if(document.getElementsByClassName('publish-wrap-wrap') !== null){
@@ -571,6 +589,7 @@ let apps = [{},{}]
                         const ball = styler(element); 
                         // alert('nnbnnb')
                         element.style.transform = 'translateX(0px) translateZ(-378px)';
+                        element.style.display = 'none';
                         }
                 }
             }
@@ -1461,14 +1480,14 @@ let apps = [{},{}]
                                 let resizerTwo = document.createElement('div');
                                 let resizerThree = document.createElement('div');
                                 let resizerFour = document.createElement('div');
-                                let header = document.createElement('div');
-                                header.style.height = '20px';
-                                header.style.width = '125px';
-                                //header.style.border = '1px solid black';
-                                header.style.position = 'relative';
-                                header.style.margin = 'auto';
-                                header.style.display = 'flex';
-                                header.style.top = '-34px';
+                                // let header = document.createElement('div');
+                                // header.style.height = '20px';
+                                // header.style.width = '125px';
+                                // //header.style.border = '1px solid black';
+                                // header.style.position = 'relative';
+                                // header.style.margin = 'auto';
+                                // header.style.display = 'flex';
+                                // header.style.top = '-34px';
     
                                 let dragwrapper = document.createElement('div');
                                 dragwrapper.style.display = 'flex';
@@ -1480,53 +1499,53 @@ let apps = [{},{}]
                                 dragwrapper.style.justifyContent = 'space-between';
     
     
-                                let minimize = document.createElement('div');
-                                minimize.setAttribute("id", 'minimize_' + i.id);
-                                let minicon = document.createElement('i');
-                                minicon.style.color = 'white';
-                                minicon.className = 'fas fa-window-minimize';
-                                // minicon.style.fontSize = '20px';
+                                // let minimize = document.createElement('div');
+                                // minimize.setAttribute("id", 'minimize_' + i.id);
+                                // let minicon = document.createElement('i');
+                                // minicon.style.color = 'white';
+                                // minicon.className = 'fas fa-window-minimize';
+                                // // minicon.style.fontSize = '20px';
     
-                                minimize.appendChild(minicon);
+                                // minimize.appendChild(minicon);
                                 //minimize.style.height = '20px';
                                 //minimize.style.width = '20px';
                                 //minimize.style.border = '1px solid black';
     
-                                let maximize = document.createElement('div');
-                                maximize.setAttribute("id", 'maximize_' + i.id);
-                                let maxicon = document.createElement('i');
-                                maxicon.style.color = 'white';
-                                maxicon.className = 'fas fa-window-maximize';
-                                maximize.appendChild(maxicon);
+                                // let maximize = document.createElement('div');
+                                // maximize.setAttribute("id", 'maximize_' + i.id);
+                                // let maxicon = document.createElement('i');
+                                // maxicon.style.color = 'white';
+                                // maxicon.className = 'fas fa-window-maximize';
+                                // maximize.appendChild(maxicon);
     
                                 //maximize.style.border = '1px solid black';
     
-                                let close = document.createElement('div');
-                                close.setAttribute('id', 'close_' + i.id);
-                                let closeicon = document.createElement('i');
-                                closeicon.style.color = 'white';
-                                closeicon.className = 'fas fa-window-close';
-                                close.appendChild(closeicon);
+                                // let close = document.createElement('div');
+                                // close.setAttribute('id', 'close_' + i.id);
+                                // let closeicon = document.createElement('i');
+                                // closeicon.style.color = 'white';
+                                // closeicon.className = 'fas fa-window-close';
+                                // close.appendChild(closeicon);
     
-                                //close.style.border = '1px solid black';
+                                // //close.style.border = '1px solid black';
     
-                                dragwrapper.appendChild(minimize);
-                                dragwrapper.appendChild(maximize);
-                                dragwrapper.appendChild(close);
+                                // dragwrapper.appendChild(minimize);
+                                // dragwrapper.appendChild(maximize);
+                                // dragwrapper.appendChild(close);
     
-                                header.appendChild(dragwrapper);
+                                // header.appendChild(dragwrapper);
     
     
-                                header.style.display = 'flex';
-                                header.style.flexDirection = 'row';
-                                header.style.alignItems = 'center';
-                                header.setAttribute("id", `${i.id+'header'}`);  
-                                header.setAttribute("class", "draggable")
-                                let dragMe = document.createElement('p');
+                                // header.style.display = 'flex';
+                                // header.style.flexDirection = 'row';
+                                // header.style.alignItems = 'center';
+                                // header.setAttribute("id", `${i.id+'header'}`);  
+                                // header.setAttribute("class", "draggable")
+                                // let dragMe = document.createElement('p');
     
-                                dragMe.appendChild(document.createTextNode('DRAG'));
-                                dragMe.style.color = 'white';
-                                header.appendChild(dragMe);
+                                // dragMe.appendChild(document.createTextNode('DRAG'));
+                                // dragMe.style.color = 'white';
+                                // header.appendChild(dragMe);
     
                                 let hashids = new Hashids(uuid(), 6);
     
@@ -1565,7 +1584,7 @@ let apps = [{},{}]
                                 let dragSection = document.createElement('div');
                                 dragSection.style.height = '30px';
                                 dragSection.style.width = '100%';
-                                document.getElementById('output_frame').contentDocument.body.style.display = 'flex';
+                                //document.getElementById('output_frame').contentDocument.body.style.display = 'flex';
                                 let div = document.createElement('div');
                                 //div.style.height = '200px';
                                 // div.style.width = '300px';
@@ -2053,6 +2072,10 @@ let apps = [{},{}]
             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
             let menuinfo = document.getElementById('menu-info');
             this.funStuff('gifs');
+
+
+         
+
             
             if(thisElement !== undefined) {
                 if(thisElement.className !== 'menubg') {                            
@@ -2065,9 +2088,15 @@ let apps = [{},{}]
                     }
                 }
                 thisElement.className = 'menubg'; 
+                thisElement.style.transition = 'backgroundColor 0.2 ease-in'
+                thisElement.style.transition = 'color 0.2s ease-in';
+
 
                 document.getElementById('remix-icon').style.backgroundImage = infinityIconGray;
+                document.getElementById('remix-icon').style.webkitTransition = 'background-image 0.2s ease-in-out';
+                document.getElementById('remix-icon').style.transition = 'background-image 0.2s ease-in-out';
                 document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
+                document.getElementById('remix-text').style.transition = 'color 0.2s ease-in-out';
 
                 document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
                 document.getElementById('script-text').style.color = "rgb(82, 82, 82)";
@@ -2079,6 +2108,9 @@ let apps = [{},{}]
                 }
                 document.getElementById('elements-icon').style.color = `rgb(54, 255, 233)`;
                 document.getElementById('elements-text').style.color = 'rgb(54, 255, 233)';
+
+                document.getElementById('elements-icon').style.transition = 'color 0.2s ease-in';
+                document.getElementById('elements-text').style.transition = 'color 0.2s ease-in';
             
                 document.getElementById('apps-icon').style.color = `rgb(82, 82, 82)`;
                 document.getElementById('apps-text').style.color = 'rgb(82, 82, 82)';
@@ -4006,7 +4038,22 @@ let apps = [{},{}]
             document.onmousemove = null;
         }
     }
+    toggleFullScreen(){
+        var iframe = document.querySelector('#full_wrap');
+        if (!iframe.fullscreenElement) {
+            iframe.requestFullscreen();
+        } else {
+          if (iframe.exitFullscreen) {
+            iframe.exitFullscreen(); 
+          }
+        }
+    }
+    embedCode() {
+       let embed = '<iframe width="560" height="315" src=' + '"https://flowroom.com/room/embed/' + this.state.shortID + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 
+
+        this.setState({embedCode:embed})
+    }
  
     render() {
         let that = this;
@@ -4022,7 +4069,10 @@ let apps = [{},{}]
                             height:'100%'
                         }}>
                         <div id="remix-tab" className="remix-tab" onClick={this.RemixTab.bind(this)} 
-                            onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
+                            onDoubleClick={()=>{
+                                document.getElementById('main-menu').style.display = 'none';
+                                document.getElementById('remix-tab').className = ''
+                            }}
                             style={{
                                 display:'flex',
                                 height:'59px',
@@ -4399,79 +4449,207 @@ let apps = [{},{}]
 
                                         
 
-                <div id="modal1" class="modal" style={{height:450,position:'absolute',top:20,zIndex:9999999999}}>
+                <div id="modal1" className="modal" style={{height:450,zIndex:999999999999,outline:'none'}}>
                     <div class="modal-content">
                         <div style={{height:40, width:'100%',borderBottom:'1px solid #979797'}}>
                             <h4 style={{fontWeight:'bold'}}>Share Flow</h4>
                         </div>
-                        <div class="share-icons" style={{display:'flex',flexWrap:'wrap'}}>
+                        <div className="share-icons" style={{display:'flex',flexWrap:'wrap'}}>
                             <div class="facebook" style={{width:'68px',
                                 height:'68px',
                                 backgroundImage:'url(/facebook.png)',
                                 backgroundRepeat:'no-repeat',
-                                backgroundSize:'contain',margin:'20px 12px'}}>
-                                    <p>Facebook</p>
+                                backgroundSize:'contain',margin:'20px 12px',display:'flex',justifyContent:'center'}}>
+                                    <p className="facebook-txt" style={{height:17,position:'relative',top:71,fontSize:12,fontWeight:400}}>Facebook</p>
                                 </div>
                             <div class="instagram" style={{width:'68px',
                                 height:'68px',
                                 backgroundImage:'url(/instagram.png)',
                                 backgroundRepeat:'no-repeat',
-                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                                backgroundSize:'contain',margin:'20px 12px',display:'flex',justifyContent:'center'}}>
+                                    <p className="instagram-txt" style={{height:17,position:'relative',top:71,fontSize:12,fontWeight:400}}>Instagram</p>
+                                </div>
                             <div class="snapchat" style={{width:'68px',
                                 height:'68px',
                                 backgroundImage:'url(/snapchat.png)',
                                 backgroundRepeat:'no-repeat',
-                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                                backgroundSize:'contain',margin:'20px 12px',display:'flex',justifyContent:'center'}}>
+                                     <p className="snapchat-txt" style={{height:17,position:'relative',top:71,fontSize:12,fontWeight:400}}>Snapchat</p>
+                                </div>
                             <div class="twitter" style={{width:'68px',
                                 height:'68px',
                                 backgroundImage:'url(/twitter.png)',
                                 backgroundRepeat:'no-repeat',
-                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                                backgroundSize:'contain',margin:'20px 12px',display:'flex',justifyContent:'center'}}>
+                                    <p className="twitter-txt" style={{height:17,position:'relative',top:71,fontSize:12,fontWeight:400}}>Twitter</p>
+
+                                </div>
                             <div class="pinterest" style={{width:'68px',
                                 height:'68px',
                                 backgroundImage:'url(/pinterest.png)',
                                 backgroundRepeat:'no-repeat',
-                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                                backgroundSize:'contain',margin:'20px 12px',display:'flex',justifyContent:'center'}}>
+                                    <p className="pinterest-txt" style={{height:17,position:'relative',top:71,fontSize:12,fontWeight:400}}>Pinterest</p>
+                                </div>
                             <div class="tumblr" style={{width:'68px',
                                 height:'68px',
                                 backgroundImage:'url(/tumblr.png)',
                                 backgroundRepeat:'no-repeat',
-                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                                backgroundSize:'contain',margin:'20px 12px',display:'flex',justifyContent:'center'}}>
+                                    <p className="tumblr-txt" style={{height:17,position:'relative',top:71,fontSize:12,fontWeight:400}}>Tumblr</p>
+
+                                </div>
                             <div class="youtube" style={{width:'68px',
                                 height:'68px',
                                 backgroundImage:'url(/youtube.png)',
                                 backgroundRepeat:'no-repeat',
-                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                                backgroundSize:'contain',margin:'20px 12px',display:'flex',justifyContent:'center'}}>
+                                    <p className="youtube-txt" style={{height:17,position:'relative',top:71,fontSize:12,fontWeight:400}}>YouTube</p>
+
+                                </div>
                             <div class="reddit" style={{width:'68px',
                                 height:'68px',
                                 backgroundImage:'url(/reddit.png)',
                                 backgroundRepeat:'no-repeat',
-                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                                backgroundSize:'contain',margin:'20px 12px',display:'flex',justifyContent:'center'}}>
+                                    <p className="reddit-txt" style={{height:17,position:'relative',top:71,fontSize:12,fontWeight:400}}>Reddit</p>
+
+                                </div>
                             <div class="whatsapp" style={{width:'68px',
                                 height:'68px',
                                 backgroundImage:'url(/whatsapp.png)',
                                 backgroundRepeat:'no-repeat',
-                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                                backgroundSize:'contain',margin:'20px 12px',display:'flex',justifyContent:'center'}}>
+
+                                    <p className="whatsapp-txt" style={{height:17,position:'relative',top:71,fontSize:12,fontWeight:400}}>Whatsapp</p>
+
+                                </div>
                             <div class="messenger" style={{width:'68px',
                                 height:'68px',
                                 backgroundImage:'url(/messenger.png)',
                                 backgroundRepeat:'no-repeat',
-                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                                backgroundSize:'contain',margin:'20px 12px',display:'flex',justifyContent:'center'}}>
+                                    <p className="messenger-txt" style={{height:17,position:'relative',top:71,fontSize:12,fontWeight:400}}>Messenger</p>
+
+                                </div>
                             <div class="linkedin" style={{width:'68px',
                                 height:'68px',
                                 backgroundImage:'url(/linkedin.png)',
                                 backgroundRepeat:'no-repeat',
-                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                                backgroundSize:'contain',margin:'20px 12px',display:'flex',justifyContent:'center'}}>
+                                    <p className="linkedin-txt" style={{height:17,position:'relative',top:71,fontSize:12,fontWeight:400}}>LinkedIn</p>
+
+                                </div>
                             <div class="slack" style={{width:'68px',
                                 height:'68px',
                                 backgroundImage:'url(/slack.png)',
                                 backgroundRepeat:'no-repeat',
-                                backgroundSize:'contain',margin:'20px 12px'}}></div>
+                                backgroundSize:'contain',margin:'20px 12px',display:'flex',justifyContent:'center'}}>
+                                        <p className="slack" style={{height:17,position:'relative',top:71,fontSize:12,fontWeight:400}}>Slack</p>
+
+                                </div>
+                        </div>
+                        <div style={{borderTop:'1px solid rgb(151, 151, 151)',marginTop:24,display:'flex',alignItems:'center',justifyContent:'space-between',height:112}}>
+                                    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'100%',maxWidth:'74%'}}>
+                                    <div onClick={()=>{
+                                            /*fix this shit*/
+                                            document.getElementById('modal2').style.zIndex = '99999999999999'
+                                          let elem = document.getElementById('modal1');
+                                          let instance = M.Modal.getInstance(elem);
+                                          instance.close();
+
+                                          let elem_m = document.getElementById('modal2');
+                                          let instance_m = M.Modal.getInstance(elem_m);
+                                          instance_m.open();
+                                          this.embedCode()
+
+                                        }} data-target="modal2" className="btn modal-trigger" style={{display:'flex',
+                                            alignItems:'center',
+                                            justifyContent:'space-between',
+                            
+                                        }}>
+                                    <div style={{borderRadius:50, backgroundColor:'black',height:67,width:67,display:'flex',justifyContent:'center',alignItems:'center'}}>
+                                    
+                                        <p style={{position:'relative',top:50, fontSize:'12px',fontWeight:400,lineHeight:'14px'}}>Embed</p>
+                                   
+                                    </div>
+                                    </div>
+
+                                    <div style={{borderRadius:50, backgroundColor:'black',height:67,width:67,display:'flex',justifyContent:'center',alignItems:'center'}}>
+                                        <p style={{position:'relative',top:50, fontSize:'12px',fontWeight:400,lineHeight:'14px'}}>Email</p>
+                                    </div>
+                                    <div style={{display:'flex',flexDirection:'column'}}>
+                                        <div style={{backgroundColor:'#1F1F1F',borderRadius:'5px',
+                                            width:'281px',height:'42px',overflow:'hidden'}}>
+                                                <input type="text" placeholder="" value={'https://flowroom.com/room/xyz23423'}
+                                                    style={{backgroundColor:'#1F1F1F',border:'none',
+                                                    width:'281px',height:'42px',color:'white',paddingLeft:14,fontSize:15.8}}
+                                                /> 
+                                            </div>
+                                        <p style={{color:'black',position:'absolute',bottom:'32px',fontSize:'14px',fontWeight: 400}}>Share URL</p>
+                                    </div>
+                                    <p style={{position:'absolute',right:'131px', fontSize:'14px',fontWeight:'400',right:114}}>Copy Link</p>
+                                    </div>
+                        </div>
+
+                    </div>
+                 
+                </div>
+                <div id="modal2" className="modal modal-fixed-footer" style={{height:500,zIndex:999999999999,outline:'none',width:'100%',maxWidth:'1221px'}}>
+                    <div style={{display:'flex',height:'100%',flexDirection:'row'}}>
+                        <div style={{height:'100%', width:'300px',overflow:'hidden',width:724}}>
+                            <iframe style={{height:'100%',width:'100%',border:'none',
+                                transform:'scale(0.9)',
+                                transformOrigin:'left top',
+                                marginTop:18,
+                                marginLeft:28
+                        }} src={`/full/${this.state.shortID}`}></iframe>
+                            <div style={{
+                                height:30,
+                                width:'100%',
+                                backgroundColor:'#1F1F1F',
+                                borderRadius:'0 0 5px 5px',
+                                width:'723px',
+                                height:'50px',
+                                display:'flex',
+                                alignItems:'center',
+                                positon:'absolute',
+                                bottom:'0px'
+                                }}>
+                                    <div style={{
+                                        backgroundImage:'url(../logo.svg)',
+                                        height:'31px',
+                                        width:'137px',
+                                        backgroundSize:'contain',
+                                        backgroundRepeat:'no-repeat'}}></div>
+                            </div>
+                        </div>
+                        <div style={{display:'flex',height:'100%',width:'40%',justifyContent:'center',alignItems:'center'}}>
+                        <div style={{display:'flex',height:'100%',flexDirection:'column'}}>
+                            <div style={{height:60,width:'100%',borderBottom:'1px solid black',display:'flex',alignItems:'center'}}>
+                                <div style={{height:36,width:37,backgroundColor:'#1F1F1F',borderRadius:'100%'}}>
+                                <ion-icon name="code"></ion-icon>
+                                </div>
+                                <p style={{marginLeft:12}}>Embed</p>
+                            </div>
+                            <div style={{height:111,width:440,borderRadius:'5px', border:'1px solid black',marginTop:22,padding:12}}>
+                                        <div style={{height:'100%',width:'100%'}}>
+                                        <textarea style={{height:'100%',width:'100%', fontSize:15,outline:'none',resize:'none',border:'0px solid black'}} value={this.state.embedCode}>
+
+                                        </textarea>
+                                        </div>
+                            </div>
+                        </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+   
+                </div>
+                <div id="modal3" className="modal modal-fixed-footer" style={{height:450,zIndex:999999999999,outline:'none',width:'80%'}}>
+                    <div class="modal-content">
+                        <h4>Modal Header</h4>
+                        <p>A bunch of text</p>
                     </div>
+   
                 </div>
         
         </div>)

@@ -102,7 +102,7 @@ let fabricA = [];
             
                 <div id="result-div" className="result">
              
-                <Fullscreen
+                {/* <Fullscreen
                     enabled={this.state.isFull}
                     onChange={(isFull) => {
                         this.setState({isFull,fullscreen:true});
@@ -112,12 +112,14 @@ let fabricA = [];
                 
                         
                     }
-                    }}>
+                    }}> */}
                     <div style={{position:'absolute',height:'100%',width:'100%'}}>
-                        <iframe id="output_frame" className="output_frame" src=""></iframe>
-                        <iframe id="overlay_output_frame" className="overlay_output_frame" src=""></iframe>
+                        <div id="full_wrap" style={{height:'100%',width:'100%',border:'none',background:'transparent'}}>
+                            <iframe id="output_frame" className="output_frame" src=""></iframe>
+                            <iframe id="overlay_output_frame" className="overlay_output_frame" src=""></iframe>
+                        </div>
                     </div>
-                    </Fullscreen>
+                    {/* </Fullscreen> */}
                     
                 </div>
                 <div id="out-cover" style={{display:'block'}}>
