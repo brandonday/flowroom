@@ -1514,23 +1514,26 @@ let apps = [{id:'childSnapShot.key',
             }
         }
         funStuff(type = 'gifs', funType) {
+            
             elements_arr = [];
             if(elements_arr.length === 0) {
-                
+               
             client.search(type, {"q": `${funType}`}).then((response) => {
+                
                 response.data.forEach((gifObject) => {
                     elements_arr.push(gifObject)
-                                    let element_menu = document.createElement('div');
+                    let element_menu = document.createElement('element-menu');
 
-                element_menu.style.display = 'flex';
-                element_menu.style.width = '100%';
-                element_menu.style.flexWrap = 'wrap';
-                element_menu.setAttribute("id","element-menu");
-                element_menu.style.top = '10px';
-                element_menu.style.position = 'relative';
-                element_menu.style.display = 'flex';
-                element_menu.style.justifyContent = 'space-between'
+                // element_menu.style.display = 'flex';
+                // element_menu.style.width = '100%';
+                // element_menu.style.flexWrap = 'wrap';
+                // element_menu.setAttribute("id","element-menu");
+                // element_menu.style.top = '10px';
+                // element_menu.style.position = 'relative';
+                // element_menu.style.display = 'flex';
+                //element_menu.style.justifyContent = 'space-between'
                     elements_arr.map((i) => {
+                     
                         let element = document.createElement('div');
                         if(i.images !== undefined) {
                             console.log(i.images.downsized_medium.url)
@@ -2075,6 +2078,7 @@ let apps = [{id:'childSnapShot.key',
             let thisElement = document.getElementById(e.target.id);
             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
             let menuinfo = document.getElementById('menu-info');
+            
             this.funStuff('gifs');
 
 
@@ -2119,23 +2123,23 @@ let apps = [{id:'childSnapShot.key',
                 // document.getElementById('apps-icon').style.color = `rgb(82, 82, 82)`;
                 // document.getElementById('apps-text').style.color = 'rgb(82, 82, 82)';
 
-                let mainmenu = document.getElementById('main-menu');
-                mainmenu.style.display = 'flex';
-                mainmenu.style.width = '269px';
-                mainmenu.style.padding = '10px'
-                let element_menu = document.createElement('div');
+                // let mainmenu = document.getElementById('main-menu');
+                // mainmenu.style.display = 'flex';
+                // mainmenu.style.width = '269px';
+                // mainmenu.style.padding = '10px'
+                // let element_menu = document.createElement('div');
 
-                element_menu.style.display = 'flex';
-                element_menu.style.width = '100%';
-                element_menu.style.flexWrap = 'wrap';
-                element_menu.setAttribute("id","element-menu");
-                element_menu.style.top = '10px';
-                element_menu.style.position = 'relative';
-                element_menu.style.display = 'flex';
-                element_menu.style.justifyContent = 'space-between';
-                element_menu.style.padding = '0px 2px';
-                element_menu.style.height = 'calc(100% - 124px)';
-                element_menu.style.overflowY = 'scroll'
+                // element_menu.style.display = 'flex';
+                // element_menu.style.width = '100%';
+                // element_menu.style.flexWrap = 'wrap';
+                // element_menu.setAttribute("id","element-menu");
+                // element_menu.style.top = '10px';
+                // element_menu.style.position = 'relative';
+                // element_menu.style.display = 'flex';
+                // element_menu.style.justifyContent = 'space-between';
+                // element_menu.style.padding = '0px 2px';
+                // element_menu.style.height = 'calc(100% - 124px)';
+                // element_menu.style.overflowY = 'scroll'
                 elements_arr.map((i) => {
                     alert('cllrf')
 
@@ -2552,11 +2556,11 @@ let apps = [{id:'childSnapShot.key',
             //         }
 
         
-            //         let mainmenu = document.getElementById('main-menu');
-            //         mainmenu.style.display = 'flex';
-            //         //mainmenu.style.width = '269px';
-            //         mainmenu.style.padding = '10px'
-            //         let app_menu = document.createElement('div');
+                    let mainmenu = document.getElementById('main-menu');
+                    mainmenu.style.display = 'flex';
+                    mainmenu.style.width = '269px';
+                    mainmenu.style.padding = '10px'
+                    let app_menu = document.getElementById('app-menu');
                     // app_menu.style.display = 'flex';
                     // app_menu.style.width = '100%';
                     // app_menu.style.flexWrap = 'wrap';
@@ -2685,7 +2689,7 @@ let apps = [{id:'childSnapShot.key',
                     //     })
 
 
-                        //app_menu.appendChild(app);
+                        app_menu.appendChild(app);
                     });
                     // if(document.getElementById('menu-info') !== null) {
                     //     document.getElementById('menu-info').remove();
@@ -4267,12 +4271,13 @@ let apps = [{id:'childSnapShot.key',
                                             padding:'7px 14px 2px 10px',
                                             height:'100%'
                                         }}>
-                                            <div style={{height:30,width:'100%',position:'relative'}}>
-                                                <i className="fa fa-times" style={{color:'white',right:0,position:'absolute',fontSize:14}}></i>
+                                            <div style={{position:'absolute',width:273}}>
+                                            <div style={{height:19,width:'100%',position:'relative'}}>
+                                                <i className="fa fa-times" style={{color:'white',right:0,position:'absolute',fontSize:12}}></i>
                                             </div>
                                             <div style={{display:'flex'}}>
                                                 <div style={{display:'flex',width:'100%'}}>
-                                                    <ul style={{display:'flex',fontSize:15,fontWeight:'bold',color:'white'}}>
+                                                    <ul style={{display:'flex',fontSize:13,fontWeight:'bold',color:'white'}}>
                                                         <li id="gifs" onClick={()=>{
                                                             let getSelected = document.getElementsByClassName('menubg');
                                                             for(let i =0; i < getSelected.length; i++) {
@@ -4303,17 +4308,62 @@ let apps = [{id:'childSnapShot.key',
                                                         }}>Images</li>
                                                     </ul>
                                                 </div>
-                                                <div style={{display:'flex',width:'100%'}}></div>
+                                                <div style={{display:'flex',alignItems:'center'}}>
+                                                    <i class="fas fa-chevron-left" style={{color:'white',marginRight:8,fontSize:10}}></i>
+                                                    <i class="fas fa-chevron-right" style={{color:'white',fontSize:9}}></i>
+                                                </div>
                                             </div>
-                                            
+                                            <input type="text" 
+                                                style={{
+                                                    width:'100%',
+                                                    height:30,
+                                                    padding:5,
+                                                    outline:'none',
+                                                    marginTop:15,
+                                                    background:'#202020',
+                                                    border:'none',
+                                                    color:'rgb(64, 255, 232)'
+                                                }} placeholder="Search for any GIFs here"/>
+                                                <div style={{width:'100%',display:'flex',justifyContent:'flex-end'}}> 
+                                                    <div style={{backgroundImage:'url(../poweredbygiphy.png)',
+                                                        height:20,
+                                                        width:116,
+                                                        backgroundSize:'contain',
+                                                        backgroundRepeat:'no-repeat',
+                                                        position:'relative',
+                                                        marginTop:'9px'
+                                                    }}></div>
+                                                </div>
+                                        </div>
+                                        <div id="element-menu">
+
+                                        </div>
                                     </div>
                                 </TabPanel>
 
                                 <TabPanel tabId="vertical-tab-three">
-                                    <p style={{color:'white'}}>Tab 3 content</p>
+                                <div id="main-menu" 
+                                        style={{
+                                            borderRight:'1px solid rgb(24, 24, 24)', 
+                                            background:'rgb(24, 24, 24)', 
+                                            left:'0px; flex-direction: column',
+                                            transform:'translateX(0px) translateZ(-378px)',
+                                            display:'block', 
+                                            position:'relative',
+                                            maxWidth:'330px', 
+                                            width:'300px',
+                                            overflowY:'scroll',
+                                            padding:'7px 14px 2px 10px',
+                                            height:'100%'
+                                        }}>
+                                            <div id="app-menu" style={{
+                                                display:'flex',
+                                                width:'100%',
+                                                flexWrap:'wrap'}}></div>
+                                            </div>
                                 </TabPanel>
                                 <TabPanel tabId="vertical-tab-four">
-                                    <p style={{color:'white'}}>Tab 3 content</p>
+                                    
                                 </TabPanel>
                                 <TabPanel tabId="vertical-tab-five">
                                     <div id="main-menu" 
