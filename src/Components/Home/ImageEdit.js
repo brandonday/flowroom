@@ -28,7 +28,7 @@ let that;
     }
     componentDidMount() {
         document.getElementsByClassName('remix-m')[0].style.display = 'none';  
-     
+
         function removeDuplicates(originalArray, prop) {
              var newArray = [];
              var lookupObject  = {};
@@ -477,9 +477,8 @@ let that;
                   remixImageBox.appendChild(remixImageTitle);
                   remixImageBox.appendChild(remixImageList);
                   if(document.getElementById('menu-info') !== null){
-                  list.appendChild(menuinfo);
+                  //list.appendChild(menuinfo);
                   }
-                  
                   list.appendChild(remixImageBox)
 
                   let getFirstSelected = document.getElementsByClassName('selectedRM');
@@ -675,13 +674,13 @@ let that;
     render() {
        const { currentpic, pic } = this.state;
        window.onload = function () { 
-        document.getElementById('clearBtn').addEventListener('click', ()=>{
-            var canvas = document.getElementsByClassName("pesdk-react-canvas__canvas")[0];
+        // document.getElementById('clearBtn').addEventListener('click', ()=>{
+        //     var canvas = document.getElementsByClassName("pesdk-react-canvas__canvas")[0];
 
-            const context = canvas.getContext('2d');
+        //     const context = canvas.getContext('2d');
     
-            context.clearRect(0, 0);
-        })
+        //     context.clearRect(0, 0);
+        // })
      
 
        }

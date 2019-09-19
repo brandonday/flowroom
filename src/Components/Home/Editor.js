@@ -71,17 +71,17 @@ class Editor extends Component {
         
      }
     componentDidMount() {
-      document.getElementById('script-tag').addEventListener('click',()=>{
-        if(this.state.showSubComponent === false) {
-          this.setState({showSubComponent:true}) 
+      // document.getElementById('script-tag').addEventListener('click',()=>{
+      //   if(this.state.showSubComponent === false) {
+      //     this.setState({showSubComponent:true}) 
 
-        } else {
+      //   } else {
 
-          this.setState({showSubComponent:false}) 
+      //     this.setState({showSubComponent:false}) 
 
-        } 
+      //   } 
         
-      })
+      // })
   
       document.getElementById('out-cover').style.display = 'none';
         localStorage.setItem("dhtml",JSON.stringify({html:"w",css:"w",js:"d"}));

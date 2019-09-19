@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Resizable, ResizableBox } from 'react-resizable';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { Tab, Tabs, TabList, TabPanel } from 'react-web-tabs';
 import * as CodeMirror from 'codemirror';
 import Comments from './RoomComponents/Comments.js';
 import Editor from './Editor.js';
@@ -31,6 +31,7 @@ import MdCode from 'react-ionicons/lib/MdCode';
 import MdInfinite from 'react-ionicons/lib/MdInfinite';
 import MdCube from 'react-ionicons/lib/MdCube';
 import IosAppsOutline from 'react-ionicons/lib/IosAppsOutline';
+import "react-web-tabs/dist/react-web-tabs.css";
 
 
 import Create from './create';
@@ -38,7 +39,14 @@ import {flowAdd} from '../../actions/flowAdd.js'
 
 var GphApiClient = require('giphy-js-sdk-core')
 let client = GphApiClient("ybxqH0QDbtfnHTrTrFJ0BmLMX6QpEpWu")
-
+const CustomTab = ({ children }) => (
+    <Tab>
+      <h1>{children}</h1>
+    </Tab>
+  );
+  
+  CustomTab.tabsRole = 'Tab'; // Required field to use your custom Tab
+  
 let apps = [{id:'childSnapShot.key',
     date:'childSnapShot.val().date',
     isAR:'childSnapShot.val().isAR',
@@ -389,8 +397,8 @@ let apps = [{id:'childSnapShot.key',
             var shortID = window.location.pathname.split("room/").pop();
             let imageData = localStorage.getItem("thumbnail");
             this.setState({thumbPicURL:imageData});
-            document.getElementById('main-menu').style.display = 'none';
-            document.getElementById('tab-menu').style.height = 'none';
+            //document.getElementById('main-menu').style.display = 'none';
+            //document.getElementById('tab-menu').style.height = 'none';
 
             
         
@@ -536,7 +544,7 @@ let apps = [{id:'childSnapShot.key',
                     document.getElementById('publish-menu').style.width = '267px'
                     document.getElementById('publish-menu').style.display = 'none';
 
-                    document.getElementById('main-menu').style.display = 'none';
+                    //document.getElementById('main-menu').style.display = 'none';
                     document.getElementById('main-section-wrap-comments-screen-wrap').style.top = '10px';
                     document.getElementById('tab-menu').style.position = 'absolute';
                     document.getElementById('tab-menu').style.zIndex = '999999';
@@ -564,26 +572,26 @@ let apps = [{id:'childSnapShot.key',
                     document.getElementById('save-as-draft').style.fontSize = '12px';
                     document.getElementById('publish-room').style.fontSize = '12px';
                     
-                    if(document.getElementById('welcome-text') !== null) {
-                     document.getElementById('welcome-text').style.fontSize = '14px';
-                    }
-                    if(document.getElementById('first-line-text') !== null) {
-                        document.getElementById('first-line-text').style.fontSize = '12px';
-                    }
-                    if(document.getElementById('second-line-text') !== null) {
-                        document.getElementById('second-line-text').style.fontSize = '12px';
-                    }
-                    if(document.getElementById('third-line-text') !== null) {
-                        document.getElementById('third-line-text').style.fontSize = '12px';
-                    }
-                    if(document.getElementById('remix-image-box') !== null) {
+                    // if(document.getElementById('welcome-text') !== null) {
+                    //  document.getElementById('welcome-text').style.fontSize = '14px';
+                    // }
+                    // if(document.getElementById('first-line-text') !== null) {
+                    //     document.getElementById('first-line-text').style.fontSize = '12px';
+                    // }
+                    // if(document.getElementById('second-line-text') !== null) {
+                    //     document.getElementById('second-line-text').style.fontSize = '12px';
+                    // }
+                    // if(document.getElementById('third-line-text') !== null) {
+                    //     document.getElementById('third-line-text').style.fontSize = '12px';
+                    // }
+                    // if(document.getElementById('remix-image-box') !== null) {
                        
-                        document.getElementById('remix-image-box').style.marginTop = '5px'
+                    //     document.getElementById('remix-image-box').style.marginTop = '5px'
                        
-                    }
-                    if(document.getElementById('menu-info') !== null) {
-                        document.getElementById('menu-info-box').style.width = '240px'
-                       }
+                    // }
+                    // if(document.getElementById('menu-info') !== null) {
+                    //     document.getElementById('menu-info-box').style.width = '240px'
+                    //    }
                     //document.getElementById('room-main-page').style.marginTop = '30px';
                    
                     
@@ -621,26 +629,26 @@ let apps = [{id:'childSnapShot.key',
 
 
                
-                       if(document.getElementById('first-line-text') !== null) {
-                           document.getElementById('first-line-text').style.fontSize = '1.6rem';
-                       }
-                       if(document.getElementById('second-line-text') !== null) {
-                           document.getElementById('second-line-text').style.fontSize = '1.6remx';
-                       }
-                       if(document.getElementById('third-line-text') !== null) {
-                           document.getElementById('third-line-text').style.fontSize = '1.6rem';
-                       }
-                       if(document.getElementById('remix-image-box') !== null) {
+                    //    if(document.getElementById('first-line-text') !== null) {
+                    //        document.getElementById('first-line-text').style.fontSize = '1.6rem';
+                    //    }
+                    //    if(document.getElementById('second-line-text') !== null) {
+                    //        document.getElementById('second-line-text').style.fontSize = '1.6remx';
+                    //    }
+                    //    if(document.getElementById('third-line-text') !== null) {
+                    //        document.getElementById('third-line-text').style.fontSize = '1.6rem';
+                    //    }
+                    //    if(document.getElementById('remix-image-box') !== null) {
                           
-                           document.getElementById('remix-image-box').style.marginTop = '1.6rem'
+                    //        document.getElementById('remix-image-box').style.marginTop = '1.6rem'
                           
-                       }
-                       if(document.getElementById('menu-info') !== null) {
-                        document.getElementById('menu-info-box').style.width = '300px'
-                       }
-                       if(document.getElementById('welcome-text') !== null) {
-                        document.getElementById('welcome-text').style.fontSize = '1.6rem';
-                       }
+                    //    }
+                    //    if(document.getElementById('menu-info') !== null) {
+                    //     document.getElementById('menu-info-box').style.width = '300px'
+                    //    }
+                    //    if(document.getElementById('welcome-text') !== null) {
+                    //     document.getElementById('welcome-text').style.fontSize = '1.6rem';
+                    //    }
 
                        if(document.getElementsByClassName('remix-image') !== null) {
                         let getclasses = document.getElementsByClassName('remix-image');
@@ -657,7 +665,7 @@ let apps = [{id:'childSnapShot.key',
                         const ball = styler(element); 
                         // alert('nnbnnb')
                         element.style.transform = 'translateX(0px) translateZ(-378px)';
-                        element.style.display = 'none';
+                        //element.style.display = 'none';
                         }
                 }
             }
@@ -1790,83 +1798,7 @@ let apps = [{id:'childSnapShot.key',
                 )
             } else if(this.state.showPublish === true) {
                 return (
-                    <div className="publish-wrap-wrap" style={{height:'100%',paddingBottom:70}}>
-                        <div className="publish-wrap">
-                            <div className="publish-room" style={{height:30, marginBottom:7, width:'100%',display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0px 0px 0px 12px'}}>
-                                <p style={{color:'white', fontSize:16}}>Publish Room</p>
-                                <i className="fas fa-times" style={{color:'white',fontSize:14}}></i>
-                            </div>     
-                            <div className="publish-title" style={{height:75, marginBottom:10, width:'100%', backgroundColor:'rgb(31,31,31)', padding:'5px 10px'}}>
-                                <p style={{color:'white',fontSize:14,marginBottom:5}}>Title</p>
-                                <input type="text" onChange={this.titlehandleChange.bind(this)} style={{height:33, width:'100%',borderRadius:3,border:'0px',backgroundColor:'rgb(37,37,37)',outline:'none',paddingLeft:10,color:'white',fontSize:15,color:'rgb(64, 255, 232)'}}/>
-                            </div>
-                            <div className="publish-description" style={{height:155, marginBottom:10, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'5px 10px'}}>
-                                <p style={{color:'white',fontSize:14}}>Description</p>
-                                <textarea className="description-textarea" onChange={this.descriptionhandleChange.bind(this)} style={{border:'0px', outline:'none',width:'100%',borderRadius:3,backgroundColor:'rgb(37,37,37)',resize:'none',marginTop:5,height:114,padding:10,fontSize:15,color:'rgb(64, 255, 232)'}} placeholder="Type in your text"></textarea>
-                            </div>
-                            <div className="publish-tags" style={{marginBottom:10, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'2px 10px'}}>
-                                <p style={{color:'white',fontSize:14,margin:'4px 0px 6px 0px'}}>Tags</p>
-                                <ReactTags style={{marginBottom:10}} inline={false} tags={this.state.tags}
-                                suggestions={this.state.suggestionsTags}
-                                handleDelete={this.handleDeleteTags}
-                                handleAddition={this.handleAdditionTags}
-                                handleDrag={this.handleDragTags}
-                                placeholder={'Type any tags here'}
-                                delimiters={delimiters4} />
-                            </div>
-                            <div className="publish-visibility" style={{height:90, marginBottom:18, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'1px 10px'}}>
-                                <p style={{color:'white',fontSize:14,margin:'10px 0px'}}>Visibility</p>
-
-                                <div class="dropdown" style={{width:'100%'}}>
-                                    <input type="checkbox" id="my-dropdown" value="" name="my-checkbox" style={{width:'100%'}}/>
-                                        <label for="my-dropdown" data-toggle="dropdown" style={{width:'100%',color:'white'}}>
-                                            <p style={{fontSize:12}}>Choose one</p>
-                                            <i class="fas fa-chevron-down" style={{float:'right',position:'absolute',right:'10px',top:'10px'}}></i>
-                                        </label>
-                                        <ul style={{zIndex:999999999, backgroundColor:'rgb(37, 37, 37)'}}>
-                                            <li style={{fontSize:12.5,color:'#fff',margin:'10px 5px'}}>Public (Everyone including followers)</li>
-                                            <li style={{fontSize:12.5,color:'#fff',margin:'10px 5px'}}>Followers (Only your followers)</li>
-                                            <li style={{fontSize:12.5,color:'#fff',margin:'10px 5px'}}>Private (Only me)</li>
-                                            <li style={{fontSize:12.5,color:'#fff',margin:'10px 5px'}}>Unlisted (Share with a link)</li>
-                                          
-                                        </ul>
-                                </div>  
-                            </div>
-                            <div style={{height:290, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
-                                <div style={{display:'flex',justifyContent:'space-between'}}>
-                                    <p style={{color:'white',fontSize:14,margin:'10px 0px'}}>Card Preview</p>
-                                    <p onClick={()=>{
-                                        document.getElementById('card-thumb-wrap').style.display = 'flex';
-                                        document.getElementById('black-opacity-modal').style.display = 'flex';
-                                    }} style={{color:'white',fontSize:11,margin:'10px 0px'}}>Edit</p>
-                                </div>
-                                <div id="thumbnail-pic-box" style={{width:'100%', height:240,backgroundColor:'rgb(37,37,37)',borderRadius:3,position:'relative'}}>
-                                    <div id="thumb-pre-loader" style={{position:'absolute',height:120,width:278,display:'flex',justifyContent:'center',alignItems:'center',display:'none'}}>
-                                        <div className="preloader-wrapper big active">
-                                            <div className="spinner-layer spinner-blue-only">
-                                                <div className="circle-clipper left">
-                                                    <div className="circle"></div>
-                                                </div>
-                                                <div className="gap-patch">
-                                                    <div className="circle"></div>
-                                                </div>
-                                                <div className="circle-clipper right">
-                                                    <div className="circle"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="thumbnail-pic-display" style={{backgroundImage:`url{${this.props.state.entireApp.image})`, backgroundSize:'cover',backgroundPosition:'center'}}
-                                        width={150}></div>
-                                    <div style={{position:'absolute',height:'100%',width:'320px',backgroundColor:'black',top:'0px',visibility:'hidden'}}>
-                                        <div id="iframe-wrap" style={{height:'246px', width:'320px'}}>
-                                    
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                   <div></div>
                 )
             } else if(this.state.script_menu === true) {
                 return ( 
@@ -1903,241 +1835,243 @@ let apps = [{id:'childSnapShot.key',
         }
 
         RemixTab(e) {
-  
-            let list = document.getElementById('main-menu');
-            let thisElement = document.getElementById(e.target.id);
-            let tabsWithMenubgClass = document.getElementsByClassName('menubg');
-            let menuinfo = document.createElement('div');
-            document.getElementById('publish-section').style.display = 'none';
+            //alert('sssd')
+           
+             //let list = document.getElementById('main-menu');
+            // let thisElement = document.getElementById(e.target.id);
+            // let tabsWithMenubgClass = document.getElementsByClassName('menubg');
+            //let menuinfo = document.createElement('div');
+            // document.getElementById('publish-section').style.display = 'none';
     
-            menuinfo.setAttribute("id", "menu-info");
+             //menuinfo.setAttribute("id", "menu-info");
             
             // menuinfo.style.height = '170px';
             // menuinfo.style.width = '300px';
             //menuinfo.style.left = '8px';
 
-            if(window.innerWidth > 698) {
-                menuinfo.style.height = '200px';
-                menuinfo.style.width = '300px';
-              } else {
-                menuinfo.style.height = '200px';
-                menuinfo.style.width = '240px';
-              }
+            // if(window.innerWidth > 698) {
+            //     menuinfo.style.height = '200px';
+            //     menuinfo.style.width = '300px';
+            //   } else {
+            //     menuinfo.style.height = '200px';
+            //     menuinfo.style.width = '240px';
+            //   }
              
-            menuinfo.style.position = 'relative';
-            let menuinfobox = document.createElement('div');
-            let menuinfotop = document.createElement('div');
-            let infinity = document.createElement('div');
-            menuinfotop.style.display = 'flex';
-            menuinfotop.style.justifyContent = 'space-between';
-            menuinfotop.style.height = '20px';
-            menuinfotop.style.width = '100%';
-            menuinfobox.style.border = '1px solid #222222';
+            // menuinfo.style.position = 'relative';
+            // let menuinfobox = document.createElement('div');
+            // let menuinfotop = document.createElement('div');
+            // let infinity = document.createElement('div');
+            // menuinfotop.style.display = 'flex';
+            // menuinfotop.style.justifyContent = 'space-between';
+            // menuinfotop.style.height = '20px';
+            // menuinfotop.style.width = '100%';
+            // menuinfobox.style.border = '1px solid #222222';
             // menuinfobox.style.height = '147px';
        
             
             //menuinfobox.style.width = '300px';
             
-            menuinfobox.style.borderRadius = '3px';
-            menuinfobox.style.marginTop = '11px';
-            infinity.style.backgroundImage = infinityIcon;
-            infinity.style.backgroundSize = '100% 100%';
-            infinity.style.backgroundRepeat = 'no-repeat';
-            infinity.style.height = '20px';
-            infinity.style.width = '25px';
-            let closebox = document.createElement('div');
-            closebox.style.display = 'flex';
-            closebox.style.alignItems = 'center';
-            closebox.style.justifyContent = 'space-between';
-            closebox.style.width = '45px';
-            let welcometext = document.createElement('p');
-            welcometext.style.color = 'rgb(54, 255, 233)';
-            welcometext.style.marginTop = '10px';
-            welcometext.style.marginBottom = '10px';
-            welcometext.appendChild(document.createTextNode('Welcome to the Remix Menu'));
-            welcometext.setAttribute("id","welcome-text");
-            if(window.innerWidth > 698) {
-                welcometext.style.fontSize = '1.6rem'
-            } else {
-                welcometext.style.fontSize = '14px';
-            }
+        //     menuinfobox.style.borderRadius = '3px';
+        //     menuinfobox.style.marginTop = '11px';
+        //     infinity.style.backgroundImage = infinityIcon;
+        //     infinity.style.backgroundSize = '100% 100%';
+        //     infinity.style.backgroundRepeat = 'no-repeat';
+        //     infinity.style.height = '20px';
+        //     infinity.style.width = '25px';
+        //     let closebox = document.createElement('div');
+        //     closebox.style.display = 'flex';
+        //     closebox.style.alignItems = 'center';
+        //     closebox.style.justifyContent = 'space-between';
+        //     closebox.style.width = '45px';
+        //     let welcometext = document.createElement('p');
+        //     welcometext.style.color = 'rgb(54, 255, 233)';
+        //     welcometext.style.marginTop = '10px';
+        //     welcometext.style.marginBottom = '10px';
+        //     welcometext.appendChild(document.createTextNode('Welcome to the Remix Menu'));
+        //     welcometext.setAttribute("id","welcome-text");
+        //     if(window.innerWidth > 698) {
+        //         welcometext.style.fontSize = '1.6rem'
+        //     } else {
+        //         welcometext.style.fontSize = '14px';
+        //     }
     
-            let firstLine = document.createElement('p');
-            firstLine.style.color = 'white';
-            //firstLine.style.fontSize = '15px';
-            firstLine.appendChild(document.createTextNode('Here you can swap Text, Images,'));
-            if(window.innerWidth > 698) {
-                firstLine.style.fontSize = '1.6rem'
-            } else {
-                firstLine.style.fontSize = '12px';
-            }
-            firstLine.setAttribute("id","first-line-text");
+        //     let firstLine = document.createElement('p');
+        //     firstLine.style.color = 'white';
+        //     //firstLine.style.fontSize = '15px';
+        //     firstLine.appendChild(document.createTextNode('Here you can swap Text, Images,'));
+        //     if(window.innerWidth > 698) {
+        //         firstLine.style.fontSize = '1.6rem'
+        //     } else {
+        //         firstLine.style.fontSize = '12px';
+        //     }
+        //     firstLine.setAttribute("id","first-line-text");
     
-            let secondLine = document.createElement('p');
-            secondLine.style.color = 'white';
-           // secondLine.style.fontSize = '15px';
-            secondLine.appendChild(document.createTextNode('and other elements inside of flows.'));
-            if(window.innerWidth > 698) {
-                secondLine.style.fontSize = '1.6rem'
-            } else {
-                secondLine.style.fontSize = '12px';
-            }
+        //     let secondLine = document.createElement('p');
+        //     secondLine.style.color = 'white';
+        //    // secondLine.style.fontSize = '15px';
+        //     secondLine.appendChild(document.createTextNode('and other elements inside of flows.'));
+        //     if(window.innerWidth > 698) {
+        //         secondLine.style.fontSize = '1.6rem'
+        //     } else {
+        //         secondLine.style.fontSize = '12px';
+        //     }
 
-            secondLine.setAttribute("id","second-line-text");
+        //     secondLine.setAttribute("id","second-line-text");
 
-            let thirdLine = document.createElement('p');
-            thirdLine.style.color = 'white';
-            //thirdLine.style.fontSize = '15px';
-            thirdLine.appendChild(document.createTextNode('Click on the Remixable Items below to get started.'));
-            thirdLine.setAttribute("id", "third-line-text");
-            thirdLine.style.paddingBottom = '10px';
-            thirdLine.style.marginTop = '10px';
-            if(window.innerWidth > 698) {
-                thirdLine.style.fontSize = '1.6rem'
-            } else {
-                thirdLine.style.fontSize = '12px';
-            }
-            let fourthLine = document.createElement('p');
-            fourthLine.style.color = 'white';
-            //fourthLine.style.fontSize = '15px';
-           // fourthLine.appendChild(document.createTextNode('Click here for step by step'));
-            if(window.innerWidth > 698) {
-                fourthLine.style.fontSize = '1.6rem'
-            } else {
-                fourthLine.style.fontSize = '12px';
-            }
+        //     let thirdLine = document.createElement('p');
+        //     thirdLine.style.color = 'white';
+        //     //thirdLine.style.fontSize = '15px';
+        //     thirdLine.appendChild(document.createTextNode('Click on the Remixable Items below to get started.'));
+        //     thirdLine.setAttribute("id", "third-line-text");
+        //     thirdLine.style.paddingBottom = '10px';
+        //     thirdLine.style.marginTop = '10px';
+        //     if(window.innerWidth > 698) {
+        //         thirdLine.style.fontSize = '1.6rem'
+        //     } else {
+        //         thirdLine.style.fontSize = '12px';
+        //     }
+        //     let fourthLine = document.createElement('p');
+        //     fourthLine.style.color = 'white';
+        //     //fourthLine.style.fontSize = '15px';
+        //    // fourthLine.appendChild(document.createTextNode('Click here for step by step'));
+        //     if(window.innerWidth > 698) {
+        //         fourthLine.style.fontSize = '1.6rem'
+        //     } else {
+        //         fourthLine.style.fontSize = '12px';
+        //     }
     
-            let fifthLine = document.createElement('p');
-            fifthLine.style.color = 'white';
-            //fifthLine.style.fontSize = '15px';
-            //fifthLine.appendChild(document.createTextNode('video walkthroughs'));
-            if(window.innerWidth > 698) {
-                fifthLine.style.fontSize = '1.6rem'
-            } else {
-                fifthLine.style.fontSize = '12px';
-            }
-            let welcome_texts = document.createElement('div');
+        //     let fifthLine = document.createElement('p');
+        //     fifthLine.style.color = 'white';
+        //     //fifthLine.style.fontSize = '15px';
+        //     //fifthLine.appendChild(document.createTextNode('video walkthroughs'));
+        //     if(window.innerWidth > 698) {
+        //         fifthLine.style.fontSize = '1.6rem'
+        //     } else {
+        //         fifthLine.style.fontSize = '12px';
+        //     }
+        //     let welcome_texts = document.createElement('div');
     
-            let closet = document.createElement('p');
-            let closex = document.createElement('p');
-            let closeicon = document.createElement('i');
-            closeicon.setAttribute("class", "fa fa-times");
-            closeicon.style.color = 'white'; 
-            closeicon.style.float = 'right'; 
-            closeicon.style.fontSize = '15px';
-            closex.appendChild(closeicon);
-            closex.style.fontSize = '20px';
-            closex.style.color = 'white';
-            closet.appendChild(document.createTextNode('Close'));
-            closet.style.fontSize = '11px';
-            closet.style.color = 'white';
-            menuinfotop.appendChild(infinity);
-            closebox.appendChild(closet);
-            closebox.appendChild(closex);
+        //     let closet = document.createElement('p');
+        //     let closex = document.createElement('p');
+        //     let closeicon = document.createElement('i');
+        //     closeicon.setAttribute("class", "fa fa-times");
+        //     closeicon.style.color = 'white'; 
+        //     closeicon.style.float = 'right'; 
+        //     closeicon.style.fontSize = '15px';
+        //     closex.appendChild(closeicon);
+        //     closex.style.fontSize = '20px';
+        //     closex.style.color = 'white';
+        //     closet.appendChild(document.createTextNode('Close'));
+        //     closet.style.fontSize = '11px';
+        //     closet.style.color = 'white';
+        //     menuinfotop.appendChild(infinity);
+        //     closebox.appendChild(closet);
+        //     closebox.appendChild(closex);
             
-            closebox.addEventListener('click', ()=>{
-                document.getElementById('menu-info').remove()
-            });
-            closebox.style.cursor = 'pointer';
-            menuinfotop.appendChild(closebox);
-            menuinfobox.appendChild(menuinfotop)
-            menuinfobox.appendChild(welcometext);
-            menuinfobox.style.padding = '20px';
-            menuinfobox.setAttribute("id", "menu-info-box");
+        //     closebox.addEventListener('click', ()=>{
+        //         document.getElementById('menu-info').remove()
+        //     });
+        //     closebox.style.cursor = 'pointer';
+        //     menuinfotop.appendChild(closebox);
+        //     menuinfobox.appendChild(menuinfotop)
+        //     menuinfobox.appendChild(welcometext);
+        //     menuinfobox.style.padding = '20px';
+        //     menuinfobox.setAttribute("id", "menu-info-box");
             
-            welcome_texts.appendChild(firstLine);
-            welcome_texts.appendChild(secondLine);
-            welcome_texts.appendChild(thirdLine);
-            welcome_texts.appendChild(fourthLine);
-            welcome_texts.appendChild(fifthLine);
+        //     welcome_texts.appendChild(firstLine);
+        //     welcome_texts.appendChild(secondLine);
+        //     welcome_texts.appendChild(thirdLine);
+        //     welcome_texts.appendChild(fourthLine);
+        //     welcome_texts.appendChild(fifthLine);
            
        
-            if(this.state.welcome === false) {
-                menuinfo.appendChild(menuinfobox);
+        //     if(this.state.welcome === false) {
+        //         menuinfo.appendChild(menuinfobox);
             
-            menuinfobox.appendChild(welcome_texts);
-            menuinfobox.style.display = 'flex';
-            menuinfobox.style.justifyContent = 'center';
-            menuinfobox.style.flexDirection = 'column';
-            this.setState({welcome:true});
-            list.style.padding = '7px 14px 2px 7px';
-            list.appendChild(menuinfo);
-            }
+        //     menuinfobox.appendChild(welcome_texts);
+        //     menuinfobox.style.display = 'flex';
+        //     menuinfobox.style.justifyContent = 'center';
+        //     menuinfobox.style.flexDirection = 'column';
+        //     this.setState({welcome:true});
+        //     list.style.padding = '7px 14px 2px 7px';
+        //     list.appendChild(menuinfo);
+        //     }
             
-            if(thisElement !== null) {
-                if(thisElement.className !== 'menubg') {                            
+            // if(thisElement !== null) {
+            //     if(thisElement.className !== 'menubg') {                            
                
-                    for(let i = 0; tabsWithMenubgClass.length; i++) {
-                        if(tabsWithMenubgClass[i] != undefined) {
-                            if(tabsWithMenubgClass[i].id !== thisElement.id) {
-                                tabsWithMenubgClass[i].className = '';
-                            } 
-                        }
-                    }
-                    thisElement.className = 'menubg'; 
+            //         for(let i = 0; tabsWithMenubgClass.length; i++) {
+            //             if(tabsWithMenubgClass[i] != undefined) {
+            //                 if(tabsWithMenubgClass[i].id !== thisElement.id) {
+            //                     tabsWithMenubgClass[i].className = '';
+            //                 } 
+            //             }
+            //         }
+            //         thisElement.className = 'menubg'; 
     
-                    document.getElementById('remix-icon').style.backgroundImage = infinityIcon;
-                    document.getElementById('remix-text').style.color = "rgb(54, 255, 233)";
+            //         document.getElementById('remix-icon').style.backgroundImage = infinityIcon;
+            //         document.getElementById('remix-text').style.color = "rgb(54, 255, 233)";
     
-                    document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
-                    document.getElementById('script-text').style.color = "rgb(82, 82, 82)";
-                    if(document.getElementById('publish-new-icon') !== null) {
-                        document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular-grey.svg)`;
-                        document.getElementById('publish-text-new').style.color = "rgb(82, 82, 82)";
-                        document.getElementById('publish-text-publish').style.color = 'rgb(82, 82, 82)'
-                    }
-                    document.getElementById('elements-icon').style.color = `rgb(82, 82, 82)`;
-                    document.getElementById('elements-text').style.color = "rgb(82, 82, 82)";
+            //         document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
+            //         document.getElementById('script-text').style.color = "rgb(82, 82, 82)";
+            //         if(document.getElementById('publish-new-icon') !== null) {
+            //             document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular-grey.svg)`;
+            //             document.getElementById('publish-text-new').style.color = "rgb(82, 82, 82)";
+            //             document.getElementById('publish-text-publish').style.color = 'rgb(82, 82, 82)'
+            //         }
+            //         document.getElementById('elements-icon').style.color = `rgb(82, 82, 82)`;
+            //         document.getElementById('elements-text').style.color = "rgb(82, 82, 82)";
     
-                    document.getElementById('apps-icon').style.color = `rgb(82, 82, 82)`;
-                    document.getElementById('apps-text').style.color = "rgb(82, 82, 82)";
+            //         document.getElementById('apps-icon').style.color = `rgb(82, 82, 82)`;
+            //         document.getElementById('apps-text').style.color = "rgb(82, 82, 82)";
     
                
-                    if(document.getElementById('element-menu') !== null) {
-                        document.getElementById('element-menu').remove();
-                    }
-                    if(document.getElementById('app-menu') !== null) {
-                        document.getElementById('app-menu').remove();
-                    }
-                    if(document.getElementById('elements') !== null) {
-                        document.getElementById('elements').remove();
-                    }
+            //         if(document.getElementById('element-menu') !== null) {
+            //             document.getElementById('element-menu').remove();
+            //         }
+            //         if(document.getElementById('app-menu') !== null) {
+            //             document.getElementById('app-menu').remove();
+            //         }
+            //         if(document.getElementById('elements') !== null) {
+            //             document.getElementById('elements').remove();
+            //         }
 
-                    if(document.getElementById('search-input') !== null) {
-                        document.getElementById('search-input').remove()
-                    }
+            //         if(document.getElementById('search-input') !== null) {
+            //             document.getElementById('search-input').remove()
+            //         }
 
-                    if(document.getElementById('search-giphy-wrap') !== null) {
-                        document.getElementById('search-giphy-wrap').remove()
-                    }
+            //         if(document.getElementById('search-giphy-wrap') !== null) {
+            //             document.getElementById('search-giphy-wrap').remove()
+            //         }
 
-                    if(document.getElementById('close-search-wrap') !== null) {
-                        document.getElementById('close-search-wrap').remove()
-                    }
+            //         if(document.getElementById('close-search-wrap') !== null) {
+            //             document.getElementById('close-search-wrap').remove()
+            //         }
 
             
-              // document.querySelector(".svgClass").getSVGDocument().getElementById("svgInternalID").setAttribute("fill", "red")
+            //   // document.querySelector(".svgClass").getSVGDocument().getElementById("svgInternalID").setAttribute("fill", "red")
     
-                }  
-            }
-            this.setState(
-                    {
-                        details:false,
-                        objects:false,
-                        comments:false,
-                        draw:false,
-                        remix:true,
-                        preferences:false,
-                        record:false
+            //     }  
+            // }
+            // this.setState(
+            //         {
+            //             details:false,
+            //             objects:false,
+            //             comments:false,
+            //             draw:false,
+            //             remix:true,
+            //             preferences:false,
+            //             record:false
       
-                    }
-            );
+            //         }
+            // );
             document.getElementById('main-menu').style.display = 'block';
             document.getElementById('main-menu').style.overflowY = 'scroll';
             //document.getElementById('main-menu').style.width = '269px';
             isMenuOpen = true;
         }
         ElementsTabs(e) {
+            
             let thisElement = document.getElementById(e.target.id);
             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
             let menuinfo = document.getElementById('menu-info');
@@ -2147,47 +2081,47 @@ let apps = [{id:'childSnapShot.key',
          
 
             
-            if(thisElement !== null) {
-                if(thisElement.className !== 'menubg') {                            
+            // if(thisElement !== null) {
+                // if(thisElement.className !== 'menubg') {                            
                
-                for(let i = 0; tabsWithMenubgClass.length; i++) {
-                    if(tabsWithMenubgClass[i] != undefined) {
-                        if(tabsWithMenubgClass[i].id !== thisElement.id) {
-                            tabsWithMenubgClass[i].className = 'menubgnot';
-                        } 
-                    }
-                }
-                thisElement.className = 'menubg'; 
-                thisElement.style.transition = 'backgroundColor 0.2 ease-in'
-                thisElement.style.transition = 'color 0.2s ease-in';
+                // for(let i = 0; tabsWithMenubgClass.length; i++) {
+                //     if(tabsWithMenubgClass[i] != undefined) {
+                //         if(tabsWithMenubgClass[i].id !== thisElement.id) {
+                //             tabsWithMenubgClass[i].className = 'menubgnot';
+                //         } 
+                //     }
+                // }
+                // thisElement.className = 'menubg'; 
+                // thisElement.style.transition = 'backgroundColor 0.2 ease-in'
+                // thisElement.style.transition = 'color 0.2s ease-in';
 
 
-                document.getElementById('remix-icon').style.backgroundImage = infinityIconGray;
-                document.getElementById('remix-icon').style.webkitTransition = 'background-image 0.2s ease-in-out';
-                document.getElementById('remix-icon').style.transition = 'background-image 0.2s ease-in-out';
-                document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
-                document.getElementById('remix-text').style.transition = 'color 0.2s ease-in-out';
+                // document.getElementById('remix-icon').style.backgroundImage = infinityIconGray;
+                // document.getElementById('remix-icon').style.webkitTransition = 'background-image 0.2s ease-in-out';
+                // document.getElementById('remix-icon').style.transition = 'background-image 0.2s ease-in-out';
+                // document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
+                // document.getElementById('remix-text').style.transition = 'color 0.2s ease-in-out';
 
-                document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
-                document.getElementById('script-text').style.color = "rgb(82, 82, 82)";
+                // document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
+                // document.getElementById('script-text').style.color = "rgb(82, 82, 82)";
 
-                if(document.getElementById('publish-new-icon') !== null) {
-                    document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular-grey.svg)`;
-                    document.getElementById('publish-text-new').style.color = "rgb(82, 82, 82)";
-                    document.getElementById('publish-text-publish').style.color = "rgb(82, 82, 82)";
-                }
-                document.getElementById('elements-icon').style.color = `rgb(54, 255, 233)`;
-                document.getElementById('elements-text').style.color = 'rgb(54, 255, 233)';
+                // if(document.getElementById('publish-new-icon') !== null) {
+                //     document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular-grey.svg)`;
+                //     document.getElementById('publish-text-new').style.color = "rgb(82, 82, 82)";
+                //     document.getElementById('publish-text-publish').style.color = "rgb(82, 82, 82)";
+                // }
+                // document.getElementById('elements-icon').style.color = `rgb(54, 255, 233)`;
+                // document.getElementById('elements-text').style.color = 'rgb(54, 255, 233)';
 
-                document.getElementById('elements-icon').style.transition = 'color 0.2s ease-in';
-                document.getElementById('elements-text').style.transition = 'color 0.2s ease-in';
+                // document.getElementById('elements-icon').style.transition = 'color 0.2s ease-in';
+                // document.getElementById('elements-text').style.transition = 'color 0.2s ease-in';
             
-                document.getElementById('apps-icon').style.color = `rgb(82, 82, 82)`;
-                document.getElementById('apps-text').style.color = 'rgb(82, 82, 82)';
+                // document.getElementById('apps-icon').style.color = `rgb(82, 82, 82)`;
+                // document.getElementById('apps-text').style.color = 'rgb(82, 82, 82)';
 
                 let mainmenu = document.getElementById('main-menu');
                 mainmenu.style.display = 'flex';
-                //mainmenu.style.width = '269px';
+                mainmenu.style.width = '269px';
                 mainmenu.style.padding = '10px'
                 let element_menu = document.createElement('div');
 
@@ -2202,8 +2136,9 @@ let apps = [{id:'childSnapShot.key',
                 element_menu.style.padding = '0px 2px';
                 element_menu.style.height = 'calc(100% - 124px)';
                 element_menu.style.overflowY = 'scroll'
-
                 elements_arr.map((i) => {
+                    alert('cllrf')
+
                     let element = document.createElement('div');
                     if(i.images !== undefined) {
                         console.log(i.images.downsized_medium.url)
@@ -2272,9 +2207,9 @@ let apps = [{id:'childSnapShot.key',
                             let close = document.createElement('div');
                             close.setAttribute('id', 'close_' + i.id);
                             let closeicon = document.createElement('i');
-                            closeicon.style.color = 'white';
-                            closeicon.className = 'fas fa-window-close';
-                            close.appendChild(closeicon);
+                            //closeicon.style.color = 'white';
+                            //closeicon.className = 'fas fa-window-close';
+                            //close.appendChild(closeicon);
 
                             //close.style.border = '1px solid black';
 
@@ -2410,7 +2345,7 @@ let apps = [{id:'childSnapShot.key',
 
                         })
 
-                        element_menu.appendChild(element);
+                        //element_menu.appendChild(element);
                     }
                 });
 
@@ -2472,7 +2407,7 @@ let apps = [{id:'childSnapShot.key',
                 elementTabs.style.padding = '10px 0px';
                 elementTabs.setAttribute("id","elements")
                 closeSearch.style.color = 'white';
-                closeSearch.className = 'fa fa-times';
+                //closeSearch.className = 'fa fa-times';
                 closeSearch.style.float = 'right'
                 closeSearch.style.fontSize = '15px'
                 closeSearchWrap.style.width = '100%';
@@ -2520,111 +2455,112 @@ let apps = [{id:'childSnapShot.key',
                 
                
 
-                if(document.getElementById('element-menu') === null) {
-                    mainmenu.appendChild(elementTabs);
-                    //mainmenu.appendChild(searchGIFS);
-                    document.getElementById('main-menu').appendChild(searchInput);
-                    document.getElementById('main-menu').appendChild(searchGiphyWrap);
-                    mainmenu.appendChild(element_menu);
+                // if(document.getElementById('element-menu') === null) {
+                //     mainmenu.appendChild(elementTabs);
+                //     //mainmenu.appendChild(searchGIFS);
+                //     document.getElementById('main-menu').appendChild(searchInput);
+                //     document.getElementById('main-menu').appendChild(searchGiphyWrap);
+                //     mainmenu.appendChild(element_menu);
 
-                }   
-                if(this.state.element_menu === false) {
-                    mainmenu.appendChild(element_menu);
-                    this.setState({element_menu:true});
-                }
+                // }   
+                // if(this.state.element_menu === false) {
+                //     mainmenu.appendChild(element_menu);
+                //     this.setState({element_menu:true});
+                // }
 
                
-                if(menuinfo !== null) {
-                    menuinfo.remove();
-                    this.setState({welcome:false});
-                }
+                // if(menuinfo !== null) {
+                //     menuinfo.remove();
+                //     this.setState({welcome:false});
+                // }
 
                 // if(document.getElementById('element-menu') !== null) {
                 //     document.getElementById('element-menu').remove();
                 // }
 
-                if(document.getElementById('app-menu') !== null) {
-                    document.getElementById('app-menu').remove();
-                   }
+                // if(document.getElementById('app-menu') !== null) {
+                //     document.getElementById('app-menu').remove();
+                //    }
 
-                   if(document.getElementById('remix-image-box') !== null) {
-                    document.getElementById('remix-image-box').remove();
-                   }
+                //    if(document.getElementById('remix-image-box') !== null) {
+                //     document.getElementById('remix-image-box').remove();
+                //    }
 
-                   this.setState(
-                        {
-                            details:false,
-                            objects:false,
-                            comments:false,
-                            draw:false,
-                            remix:false,
-                            showPublish:false,
-                            script_menu:false
-                        }
-                    );
+                //    this.setState(
+                //         {
+                //             details:false,
+                //             objects:false,
+                //             comments:false,
+                //             draw:false,
+                //             remix:false,
+                //             showPublish:false,
+                //             script_menu:false
+                //         }
+                //     );
 
-                }
-                document.getElementById("ELEMENTS_GIFS").className = 'elementbg';
+                //}
+                //document.getElementById("ELEMENTS_GIFS").className = 'elementbg';
                 //document.getElementById("ELEMENTS_GIFS").style.fontWeight = '900'
-            }
+            //}
 
-            document.getElementById('publish-section').style.display = 'none';
+            // document.getElementById('publish-section').style.display = 'none';
             document.getElementById('main-menu').style.display = 'block';
-            document.getElementById('main-menu').style.overflowY = 'scroll';
+            // document.getElementById('main-menu').style.overflowY = 'scroll';
             
-        }
+        
+    }
         AppsTab(e) {
 
     
 
-            let thisElement = document.getElementById(e.target.id);
-            let tabsWithMenubgClass = document.getElementsByClassName('menubg');
-            if(thisElement !== null) {
-                if(thisElement.className !== 'menubg') {                            
+            // let thisElement = document.getElementById(e.target.id);
+            // let tabsWithMenubgClass = document.getElementsByClassName('menubg');
+            // if(thisElement !== null) {
+            //     if(thisElement.className !== 'menubg') {                            
                
-                    for(let i = 0; tabsWithMenubgClass.length; i++) {
-                        if(tabsWithMenubgClass[i] != undefined) {
-                            if(tabsWithMenubgClass[i].id !== thisElement.id) {
-                                tabsWithMenubgClass[i].className = 'menubgnot';
-                            } 
-                        }
-                    }
-                    thisElement.className = 'menubg'; 
+            //         for(let i = 0; tabsWithMenubgClass.length; i++) {
+            //             if(tabsWithMenubgClass[i] != undefined) {
+            //                 if(tabsWithMenubgClass[i].id !== thisElement.id) {
+            //                     tabsWithMenubgClass[i].className = 'menubgnot';
+            //                 } 
+            //             }
+            //         }
+            //         thisElement.className = 'menubg'; 
 
-                    document.getElementById('remix-icon').style.backgroundImage = infinityIcon;
-                    document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
+            //         document.getElementById('remix-icon').style.backgroundImage = infinityIcon;
+            //         document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
 
-                    document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
-                    document.getElementById('script-text').style.color = "rgb(82, 82, 82)";
+            //         document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
+            //         document.getElementById('script-text').style.color = "rgb(82, 82, 82)";
 
-                    if(document.getElementById('publish-new-icon') !== null) {
-                        document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular-grey.svg)`;
-                    }
-                    //document.getElementById('publish-text').style.color = "rgb(82, 82, 82)";
-                    document.getElementById('publish-text-publish').style.color = "rgb(82, 82, 82)";
-                    document.getElementById('publish-text-new').style.color = "rgb(82, 82, 82)";
+            //         if(document.getElementById('publish-new-icon') !== null) {
+            //             document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular-grey.svg)`;
+            //         }
+            //         //document.getElementById('publish-text').style.color = "rgb(82, 82, 82)";
+            //         document.getElementById('publish-text-publish').style.color = "rgb(82, 82, 82)";
+            //         document.getElementById('publish-text-new').style.color = "rgb(82, 82, 82)";
 
-                    document.getElementById('elements-icon').style.color = `rgb(82, 82, 82)`;
-                    document.getElementById('elements-text').style.color = "rgb(82, 82, 82)";
+            //         document.getElementById('elements-icon').style.color = `rgb(82, 82, 82)`;
+            //         document.getElementById('elements-text').style.color = "rgb(82, 82, 82)";
 
                
                
-                    document.getElementById('apps-icon').style.color = `rgb(54, 255, 233)`;
-                    document.getElementById('apps-text').style.color = "rgb(54, 255, 233)";
-                    if(document.getElementById('element-menu') !== null) {
-                        document.getElementById('element-menu').remove();
-                    }
+            //         document.getElementById('apps-icon').style.color = `rgb(54, 255, 233)`;
+            //         document.getElementById('apps-text').style.color = "rgb(54, 255, 233)";
+            //         if(document.getElementById('element-menu') !== null) {
+            //             document.getElementById('element-menu').remove();
+            //         }
 
         
-                    let mainmenu = document.getElementById('main-menu');
-                    mainmenu.style.display = 'flex';
-                    //mainmenu.style.width = '269px';
-                    mainmenu.style.padding = '10px'
-                    let app_menu = document.createElement('div');
-                    app_menu.style.display = 'flex';
-                    app_menu.style.width = '100%';
-                    app_menu.style.flexWrap = 'wrap';
-                    app_menu.setAttribute("id","app-menu")
+            //         let mainmenu = document.getElementById('main-menu');
+            //         mainmenu.style.display = 'flex';
+            //         //mainmenu.style.width = '269px';
+            //         mainmenu.style.padding = '10px'
+            //         let app_menu = document.createElement('div');
+                    // app_menu.style.display = 'flex';
+                    // app_menu.style.width = '100%';
+                    // app_menu.style.flexWrap = 'wrap';
+                    // app_menu.setAttribute("id","app-menu")
                     apps.map((i) => {
                     
                         let app = document.createElement('div');
@@ -2749,60 +2685,60 @@ let apps = [{id:'childSnapShot.key',
                     //     })
 
 
-                        app_menu.appendChild(app);
+                        //app_menu.appendChild(app);
                     });
-                    if(document.getElementById('menu-info') !== null) {
-                        document.getElementById('menu-info').remove();
-                        this.setState({welcome:false});
-                    }
-                    if(document.getElementById('app-menu') === null) {
-                        mainmenu.appendChild(app_menu);
-                    }
-                    if(document.getElementById('menu-info-box') !== null) {
-                        document.getElementById('menu-info-box').remove()
-                    }
+                    // if(document.getElementById('menu-info') !== null) {
+                    //     document.getElementById('menu-info').remove();
+                    //     this.setState({welcome:false});
+                    // }
+                    // if(document.getElementById('app-menu') === null) {
+                    //     mainmenu.appendChild(app_menu);
+                    // }
+                    // if(document.getElementById('menu-info-box') !== null) {
+                    //     document.getElementById('menu-info-box').remove()
+                    // }
               
 
-                    if(document.getElementById('remix-image-box') !== null) {
-                        document.getElementById('remix-image-box').remove();
-                    }
+                    // if(document.getElementById('remix-image-box') !== null) {
+                    //     document.getElementById('remix-image-box').remove();
+                    // }
 
-                    if(document.getElementById('elements') !== null) {
-                        document.getElementById('elements').remove();
-                    }
+                    // if(document.getElementById('elements') !== null) {
+                    //     document.getElementById('elements').remove();
+                    // }
 
-                    if(document.getElementById('search-input') !== null) {
-                        document.getElementById('search-input').remove()
-                    }
+                    // if(document.getElementById('search-input') !== null) {
+                    //     document.getElementById('search-input').remove()
+                    // }
 
-                    if(document.getElementById('search-giphy-wrap') !== null) {
-                        document.getElementById('search-giphy-wrap').remove()
-                    }
+                    // if(document.getElementById('search-giphy-wrap') !== null) {
+                    //     document.getElementById('search-giphy-wrap').remove()
+                    // }
 
-                    if(document.getElementById('close-search-wrap') !== null) {
-                        document.getElementById('close-search-wrap').remove()
-                    }
+                    // if(document.getElementById('close-search-wrap') !== null) {
+                    //     document.getElementById('close-search-wrap').remove()
+                    // }
 
                
 
-                    this.setState(
-                        {
-                            details:false,
-                            objects:false,
-                            comments:false,
-                            draw:false,
-                            remix:false,
-                            showPublish:false,
-                            script_menu:false
-                        }
-                    );
+                    // this.setState(
+                    //     {
+                    //         details:false,
+                    //         objects:false,
+                    //         comments:false,
+                    //         draw:false,
+                    //         remix:false,
+                    //         showPublish:false,
+                    //         script_menu:false
+                    //     }
+                    // );
 
-                    if(this.state.app_menu === false) {
+                    // if(this.state.app_menu === false) {
                    
-                        mainmenu.appendChild(app_menu);
-                        this.setState({app_menu:true, script_menu:false});
-                    }
-                    this.setState({script_menu:false});
+                    //     mainmenu.appendChild(app_menu);
+                    //     this.setState({app_menu:true, script_menu:false});
+                    // }
+                    // this.setState({script_menu:false});
                   
 
             
@@ -2814,23 +2750,23 @@ let apps = [{id:'childSnapShot.key',
 
                 
                
-                }
-            }
-            document.getElementById('publish-section').style.display = 'none';
-            document.getElementById('main-menu').style.display = 'block';
-            document.getElementById('main-menu').style.overflowY = 'scroll';
+               // }
+            //}
+            // document.getElementById('publish-section').style.display = 'none';
+            // document.getElementById('main-menu').style.display = 'block';
+            // document.getElementById('main-menu').style.overflowY = 'scroll';
 
-            if(this.props.state.flowAdd.flowAdd !== true) {
-                this.props.flowAdd({flowAdd:true});
-                // document.getElementById("default-modal").style.display = 'block'
-                // document.getElementById("default-modal").style.top = '80px'
+            // if(this.props.state.flowAdd.flowAdd !== true) {
+            //     this.props.flowAdd({flowAdd:true});
+            //     // document.getElementById("default-modal").style.display = 'block'
+            //     // document.getElementById("default-modal").style.top = '80px'
     
-            } else {
-                this.props.flowAdd({flowAdd:false});
-                // document.getElementById("default-modal").style.display = 'none'
-                // document.getElementById("default-modal").style.top = '80px'
+            // } else {
+            //     this.props.flowAdd({flowAdd:false});
+            //     // document.getElementById("default-modal").style.display = 'none'
+            //     // document.getElementById("default-modal").style.top = '80px'
     
-            }
+            // }
         }
         ScriptTag(e){
 
@@ -2967,58 +2903,10 @@ let apps = [{id:'childSnapShot.key',
             if(thisElement != undefined) {
                 if(thisElement.className !== 'menubg') {                            
                
-                    for(let i = 0; tabsWithMenubgClass.length; i++) {
-                        if(tabsWithMenubgClass[i] != undefined) {
-                            if(tabsWithMenubgClass[i].id !== thisElement.id) {
-                                tabsWithMenubgClass[i].className = 'menubgnot'
-                            } 
-                        }
-                    }
-                    thisElement.className = 'menubg'; 
-                    document.getElementById('remix-icon').style.backgroundImage = infinityIcon;
-                    document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
-
-                    document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
-                    document.getElementById('script-text').style.color = "rgb(82, 82, 82)";
-                    
-                    if(document.getElementById('publish-icon') !== null) {
-                        document.getElementById('publish-icon').style.backgroundImage = `url(../save-regular.svg)`;
-                    }
-                    
- 
-                        document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular.svg)`;
-                        document.getElementById('publish-text-publish').style.color = "rgb(54, 255, 233)";
-                        document.getElementById('publish-text-new').style.color = "rgb(54, 255, 233)";
-                    
-
-                    
-
-                    document.getElementById('apps-icon').style.color = `rgb(82, 82, 82)`;
-                    document.getElementById('apps-text').style.color = "rgb(82, 82, 82)";
-
-                    document.getElementById('elements-icon').style.color = `rgb(82, 82, 82)`;
-                    document.getElementById('elements-text').style.color = 'rgb(82, 82, 82)';
-   
-                    
+                
+           
                
-                    if(document.getElementById('menu-info') !== null) {
-                        //    document.getElementById('menu-info').remove();
-                        if(document.getElementById('remix-image-box')){
-                            document.getElementById('remix-image-box').remove();
-                        }
-                        document.getElementById('menu-info').remove();
-                        //    document.getElementById('remix-list').remove();
-                    }
-                    that.setState(
-                        {
-                            details:false,
-                            objects:false,
-                            comments:false,
-                            draw:false,
-                            remix:false,
-                            showPublish:true
-                        }
-                    );
+       
 
                 }
          
@@ -3422,46 +3310,46 @@ let apps = [{id:'childSnapShot.key',
                     // }, 4000);
       
                 
-                if(menuinfo !== null) {
-                    menuinfo.remove();
-                    this.setState({welcome:false});
-                }
+                // if(menuinfo !== null) {
+                //     menuinfo.remove();
+                //     this.setState({welcome:false});
+                // }
 
                 // if(document.getElementById('element-menu') !== null) {
                 //     document.getElementById('element-menu').remove();
                 // }
 
-                if(document.getElementById('app-menu') !== null) {
-                    document.getElementById('app-menu').remove();
-                   }
+                // if(document.getElementById('app-menu') !== null) {
+                //     document.getElementById('app-menu').remove();
+                //    }
 
-                   if(document.getElementById('remix-image-box') !== null) {
-                    document.getElementById('remix-image-box').remove();
-                   }
-                if(document.getElementById('element-menu') !== null) {
+                //    if(document.getElementById('remix-image-box') !== null) {
+                //     document.getElementById('remix-image-box').remove();
+                //    }
+                // if(document.getElementById('element-menu') !== null) {
              
-                    document.getElementById('element-menu').remove();
-                }
-                if(document.getElementById('elements') !== null) {
-                    document.getElementById('elements').remove();
-                }
+                //     document.getElementById('element-menu').remove();
+                // }
+                // if(document.getElementById('elements') !== null) {
+                //     document.getElementById('elements').remove();
+                // }
 
-                document.getElementById('publish-section').style.display = 'flex';
+                // document.getElementById('publish-section').style.display = 'flex';
 
-                if(document.getElementById('app-menu') !== null){
-                    document.getElementById('app-menu').remove();
-                }
-                if(document.getElementById('search-input') !== null) {
-                    document.getElementById('search-input').remove()
-                }
+                // if(document.getElementById('app-menu') !== null){
+                //     document.getElementById('app-menu').remove();
+                // }
+                // if(document.getElementById('search-input') !== null) {
+                //     document.getElementById('search-input').remove()
+                // }
 
-                if(document.getElementById('search-giphy-wrap') !== null) {
-                    document.getElementById('search-giphy-wrap').remove()
-                }
+                // if(document.getElementById('search-giphy-wrap') !== null) {
+                //     document.getElementById('search-giphy-wrap').remove()
+                // }
 
-                if(document.getElementById('close-search-wrap') !== null) {
-                    document.getElementById('close-search-wrap').remove()
-                }
+                // if(document.getElementById('close-search-wrap') !== null) {
+                //     document.getElementById('close-search-wrap').remove()
+                // }
             }
             document.getElementById('main-menu').style.display = 'block';
             document.getElementById('main-menu').style.overflowY = 'scroll';
@@ -3715,12 +3603,12 @@ let apps = [{id:'childSnapShot.key',
 
             let closet = document.createElement('p');
             let closex = document.createElement('p');
-            let closeicon = document.createElement('i');
-            closeicon.className = 'fa fa-times';
-            closeicon.style.fontSize = '15px';
-            closex.appendChild(closeicon);
-            closex.style.fontSize = '20px';
-            closex.style.color = 'white';
+            // let closeicon = document.createElement('i');
+            //closeicon.className = 'fa fa-times';
+            //closeicon.style.fontSize = '15px';
+            //closex.appendChild(closeicon);
+            //closex.style.fontSize = '20px';
+            //closex.style.color = 'white';
             closet.appendChild(document.createTextNode('Close'));
             closet.style.fontSize = '11px';
             closet.style.color = 'white';
@@ -4189,12 +4077,342 @@ let apps = [{id:'childSnapShot.key',
             <div id="room-main-page" className="page-wrap twilight room-main-page-wrap">
                 <div className="room-wrap-wrap" style={{flexDirection:'column', height:'100vh',width:'100%'}}>
                     <div id="room-wrap" style={{display:'flex',position:'relative',overflow:'hidden'}}>
+     
                         <div id="tab-menu" className="tab-menu" style={{
-                            width:'60px', 
                             background:'rgb(14, 14, 14)',
                             height:'100%'
                         }}>
-                        <div id="remix-tab" className="remix-tab" onClick={this.RemixTab.bind(this)} 
+                            <Tabs defaultTab="vertical-tab-one" vertical className="vertical-tabs">
+                                <TabList>
+                                    <Tab tabFor="vertical-tab-one"  >
+                                    
+                                        <div id="remix-icon" className="remix-icon" style={{
+                                            backgroundImage:'url(../infinity_grey.svg)',
+                                            backgroundSize: 'contain',
+                                            backgroundRepeat:'no-repeat',
+                                            height:'19px',
+                                            width:'26px',
+                                            pointerEvents:'none',
+                                            position:'relative',
+                                            top:3,
+                                            display:'none'
+                                        }}></div>
+                                        <MdInfinite color="rgb(82, 82, 82)" fontSize={30} fontWeight={700}/>                                   
+                                        <p id="remix-text" 
+                                            style={{
+                                                fontSize:'11px',
+                                                fontWeight:600,
+                                                pointerEvents:'none',
+                                                pointerEvents:'none',
+                                                marginTop:0,
+                                                position:'relative',
+                                                top:'0px',
+                                                left:'-0.5px'
+                                            }} className="menubgnot">REMIX</p>
+                            
+                                    </Tab>
+                                    <Tab tabFor="vertical-tab-two">
+                                        <div id="elements-tag" onClick={this.ElementsTabs.bind(this)} 
+                                           
+                                            style={{
+                                                display:'flex',
+                                                cursor:'pointer',
+                                                height:'59px',
+                                                width:'59px',
+                                                flexDirection:'column',
+                                                alignItems:'center',
+                                                borderRight:'1px solid #181818',
+                                                borderBottom:'1px solid #181818',
+                                                justifyContent:'center'
+                                            }} className="menu-bg-border">
+                                            <IosAppsOutline color="rgb(82, 82, 82)" fontSize={30}/>
+                                            <i id="elements-icon" className="fas fa-shapes" style={{color:'white', fontSize:19,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none',height:'20px', width:'20px',display:'none'}}></i>
+                                            <p id="elements-text" style={{fontSize:8.5,fontWeight:600,pointerEvents:'none'}} className="menubgnot">ELEMENTS</p>
+                                        </div>
+                                    </Tab>
+                                    <Tab tabFor="vertical-tab-three">
+                                        <div id="app-tag"  onClick={this.AppsTab.bind(this)} 
+                                          
+                                            style={{
+                                                display:'flex',
+                                                cursor:'pointer',
+                                                height:'59px',
+                                                width:'59px',
+                                                flexDirection:'column',
+                                                alignItems:'center',
+                                                borderRight:'1px solid #181818',
+                                                borderBottom:'1px solid #181818',
+                                                justifyContent:'center'
+                                            }} className="menu-bg-border">
+                                            <i id="apps-icon" className="fas fa-cubes" style={{color:'white', fontSize:22,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none',display:'none'}}></i>
+                                            <MdCube color="rgb(82, 82, 82)" fontSize={30}  />
+                                            <p id="apps-text" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none'}} className="menubgnot">APPS</p>
+                                        </div>
+                                    </Tab>
+                                    <Tab tabFor="vertical-tab-four">
+                                        <div id="script-tag" refs="script-tag" onClick={this.ScriptTag.bind(this)}
+                                         
+                                            style={{
+                                                display:'flex',
+                                                cursor:'pointer',
+                                                height:'59px',
+                                                width:'59px',
+                                                flexDirection:'column',
+                                                alignItems:'center',
+                                                borderRight:'1px solid #181818',
+                                                borderBottom:'1px solid #181818',
+                                                justifyContent:'center'
+                                            }} className="menu-bg-border">
+                                                <div id="script-icon" style={{
+                                                    fontSize:'18px',
+                                                    color:'white',
+                                                    backgroundImage:'url(../code.svg)',
+                                                    backgroundSize:'100% 100%',
+                                                    backgroundRepeat:'no-repeat',
+                                                    height:'15px',
+                                                    width:'21px',
+                                                    marginBottom:'3px',
+                                                    pointerEvents:'none'
+                                                }}></div>
+                                                <p id="script-text" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none'}} className="menubgnot">SCRIPT</p>
+                                        </div>
+
+                                    </Tab>
+                                    <Tab tabFor="vertical-tab-five">
+                                        <div id="post-as-new-tab" 
+                                            onClick={this.PostAsNewTab.bind(this)} 
+                                                style={{
+                                                    height:'87px',
+                                                    width:'59px',
+                                                    flexDirection:'column',
+                                                    alignItems:'center',
+                                                    borderRight:'1px solid #181818',
+                                                    borderBottom:'1px solid #181818',
+                                                    justifyContent:'center',
+                                                    cursor:'pointer',
+                                                    display:'flex',
+                                                }} 
+                                            className="menu-bg-border">
+                                                <div id="publish-new-icon" 
+                                                    style={{
+                                                        fontSize:'15px',
+                                                        color:'white',
+                                                        backgroundImage:'url(../save-regular-grey.svg)',
+                                                        backgroundSize:'100% 100%',
+                                                        backgroundRepeat:'no-repeat',
+                                                        height:'16px',
+                                                        width:'16px',
+                                                        marginBottom:'3px',
+                                                        pointerEvents:'none'
+                                                }}></div>
+                                                <p id="publish-text-publish" style={{fontSize:11.2,fontWeight:600, pointerEvents:'none'}} className="menubgnot">PUBLISH</p>
+                                                <p id="publish-text-new" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none'}} className="menubgnot">NEW</p>
+                                        </div>
+                                    </Tab>
+                                </TabList>
+
+                                <TabPanel tabId="vertical-tab-one">
+                                    <ImageEdit/>
+                                    <div id="main-menu" 
+                                        style={{
+                                            borderRight:'1px solid rgb(24, 24, 24)', 
+                                            background:'rgb(24, 24, 24)', 
+                                            left:'0px; flex-direction: column',
+                                            transform:'translateX(0px) translateZ(-378px)',
+                                            display:'block', 
+                                            position:'relative',
+                                            maxWidth:'330px', 
+                                            width:'300px',
+                                            overflowY:'scroll',
+                                            padding:'7px 14px 2px 10px',
+                                            height:'100%'
+                                        }}>
+                                        
+                                        <div id="menu-info" style={{height:'200px', width:'300px', position:'relative'}}>
+                                            <div id="menu-info-box" style={{height:'230px', width:'300px',border:'1px solid rgb(34, 34, 34)', borderRadius:'3px', marginTop:'11px', padding:'20px',  flexDirection:'column'}}>
+                                                <div style={{display:'flex', justifyContent:'space-between', height:'20px', width:'100%'}}>
+                                                    <div style={{backgroundImage: 'url("../infinity_cyan.svg")', backgroundSize:'100% 100%', backgroundRepeat:'no-repeat', height:'20px', width:'25px'}}></div>
+                                                    <div style={{display:'flex', alignItems:'center', justifyContent:'space-between', width:'45px', cursor:'pointer'}}>
+                                                        <p style={{fontSize:'11px', color:'white'}}>Close</p>
+                                                        <i className="fa fa-times" style={{fontSize:'14px', color:'white'}}></i>
+                                                    </div>
+                                                </div>
+                                                <p id="welcome-text" style={{color:'rgb(54, 255, 233)', fontSize:16}}>Welcome to the Remix Menu</p>
+                                                <div>
+                                                    <p id="first-line-text" style={{color:'white',marginTop:'10px',fontSize:14}}>Here you can swap Text, Images</p>
+                                                    <p id="second-line-text" style={{color:'white',fontSize:14}}>and other elements inside of flows.</p>
+                                                    <p id="third-line-text" style={{color:'white',fontSize:14}}>Click on the Remixable Items below to get started.</p>
+                                                    <p id="fourth-line-text" style={{color:'white',fontSize:14,marginTop:10}}>Click here for step by step</p>
+                                                    <p id="fifth-line-text" style={{color:'white',fontSize:14}}>video walkthroughs</p>
+                
+                                                </div>
+                                            </div> 
+
+                                        </div>
+                                     </div>
+                                </TabPanel>
+
+                                <TabPanel tabId="vertical-tab-two">
+                                    <div id="main-menu" 
+                                        style={{
+                                            borderRight:'1px solid rgb(24, 24, 24)', 
+                                            background:'rgb(24, 24, 24)', 
+                                            left:'0px; flex-direction: column',
+                                            transform:'translateX(0px) translateZ(-378px)',
+                                            display:'block', 
+                                            position:'relative',
+                                            maxWidth:'330px', 
+                                            width:'300px',
+                                            overflowY:'scroll',
+                                            padding:'7px 14px 2px 10px',
+                                            height:'100%'
+                                        }}>
+                                            <div style={{height:30,width:'100%',position:'relative'}}>
+                                                <i className="fa fa-times" style={{color:'white',right:0,position:'absolute',fontSize:14}}></i>
+                                            </div>
+                                            <div style={{display:'flex'}}>
+                                                <div style={{display:'flex',width:'100%'}}>
+                                                    <ul style={{display:'flex',fontSize:15,fontWeight:'bold',color:'white'}}>
+                                                        <li id="gifs" onClick={()=>{
+                                                            let getSelected = document.getElementsByClassName('menubg');
+                                                            for(let i =0; i < getSelected.length; i++) {
+                                                                getSelected[i].className = ''
+                                                            }
+                                                            document.getElementById('gifs').className = 'menubg'
+                                                        }} className="menubg" >GIFS</li>
+                                                        <li id="emojis" onClick={()=>{
+                                                            let getSelected = document.getElementsByClassName('menubg');
+                                                            for(let i =0; i < getSelected.length; i++) {
+                                                                getSelected[i].className = ''
+                                                            }
+                                                            document.getElementById('emojis').className = 'menubg'
+                                                        }}>Emojis</li>
+                                                        <li id="stickers" onClick={()=>{
+                                                            let getSelected = document.getElementsByClassName('menubg');
+                                                            for(let i =0; i < getSelected.length; i++) {
+                                                                getSelected[i].className = ''
+                                                            }
+                                                            document.getElementById('stickers').className = 'menubg'
+                                                        }}>Stickers</li>
+                                                        <li id="images" onClick={()=>{
+                                                            let getSelected = document.getElementsByClassName('menubg');
+                                                            for(let i =0; i < getSelected.length; i++) {
+                                                                getSelected[i].className = ''
+                                                            }
+                                                            document.getElementById('images').className = 'menubg'
+                                                        }}>Images</li>
+                                                    </ul>
+                                                </div>
+                                                <div style={{display:'flex',width:'100%'}}></div>
+                                            </div>
+                                            
+                                    </div>
+                                </TabPanel>
+
+                                <TabPanel tabId="vertical-tab-three">
+                                    <p style={{color:'white'}}>Tab 3 content</p>
+                                </TabPanel>
+                                <TabPanel tabId="vertical-tab-four">
+                                    <p style={{color:'white'}}>Tab 3 content</p>
+                                </TabPanel>
+                                <TabPanel tabId="vertical-tab-five">
+                                    <div id="main-menu" 
+                                        style={{
+                                        borderRight:'1px solid rgb(24, 24, 24)', 
+                                        background:'rgb(24, 24, 24)', 
+                                        left:'0px; flex-direction: column',
+                                        transform:'translateX(0px) translateZ(-378px)',
+                                        display:'block', 
+                                        position:'relative',
+                                        maxWidth:'330px', 
+                                        width:'300px',
+                                        overflowY:'scroll',
+                                        padding:'7px 14px 2px 10px',
+                                        height:'100%'
+                                    }}>
+                                        <div className="publish-wrap-wrap" style={{height:'100%',paddingBottom:70}}>
+                                            <div className="publish-wrap">
+                                                <div className="publish-room" style={{height:30, marginBottom:7, width:'100%',display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0px 0px 0px 12px'}}>
+                                                    <p style={{color:'white', fontSize:16}}>Publish Room</p>
+                                                    <i className="fas fa-times" style={{color:'white',fontSize:14}}></i>
+                                                </div>     
+                                                <div className="publish-title" style={{height:75, marginBottom:10, width:'100%', backgroundColor:'rgb(31,31,31)', padding:'5px 10px'}}>
+                                                    <p style={{color:'white',fontSize:14,marginBottom:5}}>Title</p>
+                                                    <input type="text" onChange={this.titlehandleChange.bind(this)} style={{height:33, width:'100%',borderRadius:3,border:'0px',backgroundColor:'rgb(37,37,37)',outline:'none',paddingLeft:10,color:'white',fontSize:15,color:'rgb(64, 255, 232)'}}/>
+                                                </div>
+                                                <div className="publish-description" style={{height:155, marginBottom:10, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'5px 10px'}}>
+                                                    <p style={{color:'white',fontSize:14}}>Description</p>
+                                                    <textarea className="description-textarea" onChange={this.descriptionhandleChange.bind(this)} style={{border:'0px', outline:'none',width:'100%',borderRadius:3,backgroundColor:'rgb(37,37,37)',resize:'none',marginTop:5,height:114,padding:10,fontSize:15,color:'rgb(64, 255, 232)'}} placeholder="Type in your text"></textarea>
+                                                </div>
+                                                <div className="publish-tags" style={{marginBottom:10, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'2px 10px'}}>
+                                                    <p style={{color:'white',fontSize:14,margin:'4px 0px 6px 0px'}}>Tags</p>
+                                                    <ReactTags style={{marginBottom:10}} inline={false} tags={this.state.tags}
+                                                        suggestions={this.state.suggestionsTags}
+                                                        handleDelete={this.handleDeleteTags}
+                                                        handleAddition={this.handleAdditionTags}
+                                                        handleDrag={this.handleDragTags}
+                                                        placeholder={'Type any tags here'}
+                                                        delimiters={delimiters4} />
+                                                </div>
+                                                <div className="publish-visibility" style={{height:90, marginBottom:18, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'1px 10px'}}>
+                                                    <p style={{color:'white',fontSize:14,margin:'10px 0px'}}>Visibility</p>
+
+                                                    <div class="dropdown" style={{width:'100%'}}>
+                                                        <input type="checkbox" id="my-dropdown" value="" name="my-checkbox" style={{width:'100%'}}/>
+                                                        <label for="my-dropdown" data-toggle="dropdown" style={{width:'100%',color:'white'}}>
+                                                            <p style={{fontSize:12}}>Choose one</p>
+                                                            <i class="fas fa-chevron-down" style={{float:'right',position:'absolute',right:'10px',top:'10px'}}></i>
+                                                        </label>
+                                                        <ul style={{zIndex:999999999, backgroundColor:'rgb(37, 37, 37)'}}>
+                                                            <li style={{fontSize:12.5,color:'#fff',margin:'10px 5px'}}>Public (Everyone including followers)</li>
+                                                            <li style={{fontSize:12.5,color:'#fff',margin:'10px 5px'}}>Followers (Only your followers)</li>
+                                                            <li style={{fontSize:12.5,color:'#fff',margin:'10px 5px'}}>Private (Only me)</li>
+                                                            <li style={{fontSize:12.5,color:'#fff',margin:'10px 5px'}}>Unlisted (Share with a link)</li>
+                                          
+                                                        </ul>
+                                                    </div>  
+                                                </div>
+                                                <div style={{height:290, marginBottom:7, width:'100%', backgroundColor:'rgb(31,31,31)',padding:'0px 10px'}}>
+                                                    <div style={{display:'flex',justifyContent:'space-between'}}>
+                                                        <p style={{color:'white',fontSize:14,margin:'10px 0px'}}>Card Preview</p>
+                                                        <p onClick={()=>{
+                                                            document.getElementById('card-thumb-wrap').style.display = 'flex';
+                                                            document.getElementById('black-opacity-modal').style.display = 'flex';
+                                                        }} style={{color:'white',fontSize:11,margin:'10px 0px'}}>Edit</p>
+                                                    </div>
+                                                    <div id="thumbnail-pic-box" style={{width:'100%', height:240,backgroundColor:'rgb(37,37,37)',borderRadius:3,position:'relative'}}>
+                                                        <div id="thumb-pre-loader" style={{position:'absolute',height:120,width:278,display:'flex',justifyContent:'center',alignItems:'center',display:'none'}}>
+                                                            <div className="preloader-wrapper big active">
+                                                                <div className="spinner-layer spinner-blue-only">
+                                                                    <div className="circle-clipper left">
+                                                                        <div className="circle"></div>
+                                                                    </div>
+                                                                    <div className="gap-patch">
+                                                                        <div className="circle"></div>
+                                                                    </div>  
+                                                                    <div className="circle-clipper right">
+                                                                        <div className="circle"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div id="thumbnail-pic-display" style={{backgroundImage:`url{${this.props.state.entireApp.image})`, backgroundSize:'cover',backgroundPosition:'center'}}width={150}></div>
+                                                        <div style={{position:'absolute',height:'100%',width:'320px',backgroundColor:'black',top:'0px',visibility:'hidden'}}>
+                                                            <div id="iframe-wrap" style={{height:'246px', width:'320px'}}>
+                                    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </TabPanel>
+                                <TabPanel tabId="vertical-tab-six">
+                                    <p style={{color:'white'}}>Tab 3 content</p>
+                                </TabPanel>
+                            </Tabs>
+                            {/* <div id="remix-tab" className="remix-tab" onClick={this.RemixTab.bind(this)} 
                             onDoubleClick={()=>{
                                 document.getElementById('main-menu').style.display = 'none';
                                 document.getElementById('remix-tab').className = ''
@@ -4222,64 +4440,67 @@ let apps = [{id:'childSnapShot.key',
                                     top:3,
                                     display:'none'
                                     }}></div>
-                                <MdInfinite color="rgb(82, 82, 82)" fontSize={30} fontWeight={700}/>                                   
-                                <p id="remix-text" style={{fontSize:'11px',
-    fontWeight:600,
-    pointerEvents:'none',
-    pointerEvents:'none', marginTop:0,position:'relative',
-    top:'0px',
-    left:'-0.5px'}} className="menubgnot">REMIX</p>
+                                    <MdInfinite color="rgb(82, 82, 82)" fontSize={30} fontWeight={700}/>                                   
+                                    <p id="remix-text" 
+                                        style={{
+                                            fontSize:'11px',
+                                            fontWeight:600,
+                                            pointerEvents:'none',
+                                            pointerEvents:'none',
+                                            marginTop:0,
+                                            position:'relative',
+                                            top:'0px',
+                                            left:'-0.5px'
+                                        }} className="menubgnot">REMIX</p>
                                
-                        </div>
-                        <div id="elements-tag" onClick={this.ElementsTabs.bind(this)} 
-                        onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
-                        style={{
-                            display:'flex',
-                            cursor:'pointer',
-                            height:'59px',
-                            width:'59px',
-                            flexDirection:'column',
-                            alignItems:'center',
-                            borderRight:'1px solid #181818',
-                            borderBottom:'1px solid #181818',
-                            justifyContent:'center'
-                        }} className="menu-bg-border">
-                            <IosAppsOutline color="rgb(82, 82, 82)" fontSize={30}/>
-                            * <i id="elements-icon" className="fas fa-shapes" style={{color:'white', fontSize:19,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none',height:'20px', 
-    width:'20px',display:'none'}}></i>
-                            <p id="elements-text" style={{fontSize:8.5,fontWeight:600,pointerEvents:'none'}} className="menubgnot">ELEMENTS</p>
-                        </div>
-                        <div id="app-tag"  onClick={this.AppsTab.bind(this)} 
-                        onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
-                        style={{
-                            display:'flex',
-                            cursor:'pointer',
-                            height:'59px',
-                                width:'59px',
-                            flexDirection:'column',
-                            alignItems:'center',
-                            borderRight:'1px solid #181818',
-                            borderBottom:'1px solid #181818',
-                            justifyContent:'center'
-                        }} className="menu-bg-border">
-                            
-                            <i id="apps-icon" className="fas fa-cubes" style={{color:'white', fontSize:22,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none',display:'none'}}></i>
-                            <MdCube color="rgb(82, 82, 82)" fontSize={30}  />
-                            <p id="apps-text" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none'}} className="menubgnot">APPS</p>
-                        </div>
-                        <div id="script-tag" refs="script-tag" onClick={this.ScriptTag.bind(this)}
-                        onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
-                        style={{
-                            display:'flex',
-                            cursor:'pointer',
-                            height:'59px',
-                            width:'59px',
-                            flexDirection:'column',
-                            alignItems:'center',
-                            borderRight:'1px solid #181818',
-                            borderBottom:'1px solid #181818',
-                            justifyContent:'center'
-                        }} className="menu-bg-border">
+                            </div> */}
+                            {/* <div id="elements-tag" onClick={this.ElementsTabs.bind(this)} 
+                                onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
+                                style={{
+                                    display:'flex',
+                                    cursor:'pointer',
+                                    height:'59px',
+                                    width:'59px',
+                                    flexDirection:'column',
+                                    alignItems:'center',
+                                    borderRight:'1px solid #181818',
+                                    borderBottom:'1px solid #181818',
+                                    justifyContent:'center'
+                                }} className="menu-bg-border">
+                                <IosAppsOutline color="rgb(82, 82, 82)" fontSize={30}/>
+                                <i id="elements-icon" className="fas fa-shapes" style={{color:'white', fontSize:19,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none',height:'20px', width:'20px',display:'none'}}></i>
+                                <p id="elements-text" style={{fontSize:8.5,fontWeight:600,pointerEvents:'none'}} className="menubgnot">ELEMENTS</p>
+                            </div> */}
+                            {/* <div id="app-tag"  onClick={this.AppsTab.bind(this)} 
+                                onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
+                                    style={{
+                                        display:'flex',
+                                        cursor:'pointer',
+                                        height:'59px',
+                                        width:'59px',
+                                        flexDirection:'column',
+                                        alignItems:'center',
+                                        borderRight:'1px solid #181818',
+                                        borderBottom:'1px solid #181818',
+                                        justifyContent:'center'
+                                    }} className="menu-bg-border">
+                                        <i id="apps-icon" className="fas fa-cubes" style={{color:'white', fontSize:22,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none',display:'none'}}></i>
+                                        <MdCube color="rgb(82, 82, 82)" fontSize={30}  />
+                                        <p id="apps-text" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none'}} className="menubgnot">APPS</p>
+                            </div> */}
+                            {/* <div id="script-tag" refs="script-tag" onClick={this.ScriptTag.bind(this)}
+                                onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
+                                style={{
+                                    display:'flex',
+                                    cursor:'pointer',
+                                    height:'59px',
+                                    width:'59px',
+                                    flexDirection:'column',
+                                    alignItems:'center',
+                                    borderRight:'1px solid #181818',
+                                    borderBottom:'1px solid #181818',
+                                    justifyContent:'center'
+                                }} className="menu-bg-border">
                             <div id="script-icon" style={{
                                 fontSize:'18px',
                                 color:'white',
@@ -4290,56 +4511,56 @@ let apps = [{id:'childSnapShot.key',
                                 width:'21px',
                                 marginBottom:'3px',
                                 pointerEvents:'none'
-                            }}></div>
-                            <p id="script-text" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none'}} className="menubgnot">SCRIPT</p>
-                        </div>
-                        <div id="save-tab" onClick={()=> {
-                            this.openModal(false)
-                        }} 
-                        onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
-                        style={{
-                            display:that.state.saveVisible ? 'flex' : 'none',
+                                }}></div>
+                                <p id="script-text" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none'}} className="menubgnot">SCRIPT</p>
+                            </div> */}
+                            {/* <div id="save-tab" onClick={()=> {
+                                    this.openModal(false)
+                                }} 
+                                onDoubleClick={()=>{
+                                    document.getElementById('main-menu').style.display = 'none'}}
+                                style={{
+                                    display:that.state.saveVisible ? 'flex' : 'none',
                           
-                            height:'57px',
-                                width:'67px',
-                            flexDirection:'column',
-                            alignItems:'center',
-                            borderRight:'1px solid #181818',
-                            borderBottom:'1px solid #181818',
-                            justifyContent:'center'
-                        }} 
-                        className="menu-bg-border">
-                            <div style={{
-                                fontSize:'15px',
-                         
-                                backgroundImage:'url(../save-regular-grey.svg)',
-                                backgroundSize:'100% 100%',
-                                backgroundRepeat:'no-repeat',
-                                height:'57px',
-                                width:'67px',
-                                marginBottom:'3px'
-                            
-                               }}></div>
+                                    height:'57px',
+                                    width:'67px',
+                                    flexDirection:'column',
+                                    alignItems:'center',
+                                    borderRight:'1px solid #181818',
+                                    borderBottom:'1px solid #181818',
+                                    justifyContent:'center'
+                                }} 
+                                className="menu-bg-border">
+                                <div style={{
+                                    fontSize:'15px',
+                                    backgroundImage:'url(../save-regular-grey.svg)',
+                                    backgroundSize:'100% 100%',
+                                    backgroundRepeat:'no-repeat',
+                                    height:'57px',
+                                    width:'67px',
+                                    marginBottom:'3px'
+                                }}></div>
                                 <p id="save-text" style={{fontSize:10.2,fontWeight:'bold',color:'#525252'}}>SAVE</p>
-                        </div>
-                        <div id="del-tab" onClick={()=> {
-                            let currentRoomID = window.location.pathname.split("room/").pop();
-                            firebase.database().ref(`rooms/${currentRoomID}`).remove();
-                            firebase.database().ref(`UsersRooms/${currentRoomID}/${that.state.userNameSelf}`).remove();
-                            firebase.database().ref(`${that.state.userNameSelf}/${currentRoomID}`).remove();
-                                window.location.replace('/');
-                            }} style={{
-                                display:'none',
+                            </div> */}
+                            {/* <div id="del-tab" onClick={()=> {
+                                let currentRoomID = window.location.pathname.split("room/").pop();
+                                firebase.database().ref(`rooms/${currentRoomID}`).remove();
+                                firebase.database().ref(`UsersRooms/${currentRoomID}/${that.state.userNameSelf}`).remove();
+                                firebase.database().ref(`${that.state.userNameSelf}/${currentRoomID}`).remove();
+                                    window.location.replace('/');
+                                }} 
+                                style={{
+                                    display:'none',
                                
-                                height:'57px',
-                                width:'67px',
-                                flexDirection:'column',
-                                alignItems:'center',
-                                borderRight:'1px solid #181818',
-                                borderBottom:'1px solid #181818',
-                                justifyContent:'center'
-                               }} 
-                               className="menu-bg-border">
+                                    height:'57px',
+                                    width:'67px',
+                                    flexDirection:'column',
+                                    alignItems:'center',
+                                    borderRight:'1px solid #181818',
+                                    borderBottom:'1px solid #181818',
+                                    justifyContent:'center'
+                                }} 
+                                className="menu-bg-border">
                                     <div style={{
                                         fontSize:'15px',
                                         color:'white',
@@ -4350,115 +4571,69 @@ let apps = [{id:'childSnapShot.key',
                                         width:'16px',
                                         marginBottom:'3px'
                                     }}></div>
-                            <p id="publish-text" style={{fontSize:10.2,fontWeight:500,color:'#525252'}}>DELETE</p>
-                        </div>
-                        <div id="post-as-new-tab" onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
-                        onClick={this.PostAsNewTab.bind(this)} style={{
-                           
-                           
-                            height:'87px',
-                                width:'59px',
-                            flexDirection:'column',
-                            alignItems:'center',
-                            borderRight:'1px solid #181818',
-                            borderBottom:'1px solid #181818',
-                            justifyContent:'center',
-                            cursor:'pointer',
-                            display:'flex',
-                        }} 
-                        className="menu-bg-border">
-                            <div id="publish-new-icon" style={{
-                                fontSize:'15px',
-                                color:'white',
-                                backgroundImage:'url(../save-regular-grey.svg)',
-                                backgroundSize:'100% 100%',
-                                backgroundRepeat:'no-repeat',
-                                height:'16px',
-                                width:'16px',
-                                marginBottom:'3px',
-                                pointerEvents:'none'
-                            }}></div>
-                            <p id="publish-text-publish" style={{fontSize:11.2,fontWeight:600, pointerEvents:'none'}} className="menubgnot">PUBLISH</p>
-                            <p id="publish-text-new" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none'}} className="menubgnot">NEW</p>
-                        </div>
-                        <div id="post-tab" onClick={this.PostTab.bind(this)} onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}} style={{
-                            display:'none',
-                           
-                            height:'57px',
-                            width:'67px',
-                            flexDirection:'column',
-                            alignItems:'center',
-                            borderRight:'1px solid #181818',
-                            borderBottom:'1px solid #181818',
-                            justifyContent:'center',
-                            cursor:'pointer'
-                        }} 
-                        className="menu-bg-border">
-                            <div id="publish-icon" style={{
-                                
-                                fontSize:'15px',
-                                color:'white',
-                                backgroundImage:'url(../save-regular-grey.svg)',
-                                backgroundSize:'100% 100%',
-                                backgroundRepeat:'no-repeat',
-                                height:'57px',
-                                width:'67px',
-                                marginBottom:'3px',
-                                pointerEvents:'none'
-                            }}></div>
-                            <p id="publish-text-" style={{fontSize:10.2,fontWeight:'bold', pointerEvents:'none'}} className="menubgnot">PUBLISH</p>
-                        </div>
-                        {/* <div id="objects" onClick={()=> {
-                            // let objectsid = document.getElementById('objects');
-                            // objectsid.className = 'menubg';
-                            // objectsid.style.borderRight = '0px solid #181818';
-                            // document.getElementById('objects').className = 'menubg'
-                            // let remixid = document.getElementById('details');
-                            // remixid.className = '';
-                            // remixid.style.borderRight = '0px solid #181818';
-                            let getclasses = document.getElementsByClassName('menubg');
-                            this.setState({details:false,
-                                objects:true,
-                                comments:false,
-                                draw:false,
-                                remix:false,
-                                preferences:false,
-                                record:false
-                            });
-                                    
-                            if(document.getElementById('remixhead') !== null) {
-                                document.getElementById('remixhead').style.display = 'none';
-                            }
-                                   
-                            document.getElementById('main-menu').style.display = 'flex';
-                            let tagstoRemove = document.querySelectorAll('#main-menu li');
-                                     
-                            for(let i = 0; i < tagstoRemove.length; i++) {
-                                      
-                                tagstoRemove[i].remove()
-                            }
-                             }} style={{
-                                    height:'50px',width:'48px',display:'flex',
+                                    <p id="publish-text" style={{fontSize:10.2,fontWeight:500,color:'#525252'}}>DELETE</p>
+                            </div> */}
+                            {/* <div id="post-as-new-tab" onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}}
+                                onClick={this.PostAsNewTab.bind(this)} 
+                                style={{
+                                    height:'87px',
+                                    width:'59px',
                                     flexDirection:'column',
-                                    justifyContent:'center',
                                     alignItems:'center',
                                     borderRight:'1px solid #181818',
-                                    borderBottom:'1px solid #181818'
-                                    }} className="menu-bg-border">
-                        
-                            </div>  */}
+                                    borderBottom:'1px solid #181818',
+                                    justifyContent:'center',
+                                    cursor:'pointer',
+                                    display:'flex',
+                                }} 
+                                className="menu-bg-border">
+                                <div id="publish-new-icon" style={{
+                                    fontSize:'15px',
+                                    color:'white',
+                                    backgroundImage:'url(../save-regular-grey.svg)',
+                                    backgroundSize:'100% 100%',
+                                    backgroundRepeat:'no-repeat',
+                                    height:'16px',
+                                    width:'16px',
+                                    marginBottom:'3px',
+                                    pointerEvents:'none'
+                                }}></div>
+                                <p id="publish-text-publish" style={{fontSize:11.2,fontWeight:600, pointerEvents:'none'}} className="menubgnot">PUBLISH</p>
+                                <p id="publish-text-new" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none'}} className="menubgnot">NEW</p>
+                            </div> */}
+                            {/* <div id="post-tab" onClick={this.PostTab.bind(this)} onDoubleClick={()=>{document.getElementById('main-menu').style.display = 'none'}} style={{
+                                display:'none',
+                           
+                                height:'57px',
+                                width:'67px',
+                                flexDirection:'column',
+                                alignItems:'center',
+                                borderRight:'1px solid #181818',
+                                borderBottom:'1px solid #181818',
+                                justifyContent:'center',
+                                cursor:'pointer'
+                            }} 
+                            className="menu-bg-border">
+                                <div id="publish-icon" style={{
+                                
+                                    fontSize:'15px',
+                                    color:'white',
+                                    backgroundImage:'url(../save-regular-grey.svg)',
+                                    backgroundSize:'100% 100%',
+                                    backgroundRepeat:'no-repeat',
+                                    height:'57px',
+                                    width:'67px',
+                                    marginBottom:'3px',
+                                    pointerEvents:'none'
+                                }}></div>
+                                <p id="publish-text-" style={{fontSize:10.2,fontWeight:'bold', pointerEvents:'none'}} className="menubgnot">PUBLISH</p>
+                            </div> */}
+  
                         </div>
                             
-                        <Tabs>
-    <TabList>
-      <CustomTab>Custom Tab 1</CustomTab>
-      <CustomTab>Custom Tab 2</CustomTab>
-    </TabList>
-    <TabPanel>Panel 1</TabPanel>
-    <TabPanel>Panel 2</TabPanel>
-  </Tabs>
+             
 
-                        <div id="main-menu" 
+                        {/* <div id="main-menu" 
                             style={{
                                  
                                 borderRight:'1px solid #181818',
@@ -4475,15 +4650,13 @@ let apps = [{id:'childSnapShot.key',
                             }
                 
                         
-                        </div>
+                        </div> */}
                         <div id="flow-content" style={{display:'flex', flexDirection:'column', background:'white', width:'100%', position:'relative', border:'0px solid red'}}>
                             <Editor/>
-                            {((i = 0)=>{
-                          
-                            })}
-                            <div style={{width:'100%', borderBottom:'1px solid black',background:'rgb(24, 24, 24)'}}>
+                         
+                            {/* <div style={{width:'100%', borderBottom:'1px solid black',background:'rgb(24, 24, 24)'}}>
                                 <div className="tabs-wrap"></div>        
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div style={{display:this.state.userName == ''? 'none':'flex',flex:1, border:'0px solid red',background:'rgb(15, 15, 15)'}}>
