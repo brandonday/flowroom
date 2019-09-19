@@ -5,20 +5,31 @@ import Footer from './Footer.js';
 import * as dat from 'dat.gui';
 import {fabric} from 'fabric';
 import Fullscreen from "react-full-screen";
+import { Responsive, WidthProvider } from "react-grid-layout";
+import _ from "lodash";
+import Flow from './Flow.js'
+import { connect } from 'react-redux';
+
+const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 
-const objects = [{},{}];
-let fabricA = [];
 
 
  class DHTML_Output extends Component {
      constructor() {
         super();
         this.state = {
-            isFull:false
+            isFull:false,
+            objects:[],
+            showGrid:false
         }
      }
      componentDidMount() {
+    
+
+       
+
+    
         let that = this;
         const targetElement = document.querySelector("#output-container");
         let element = document.getElementById('draggable-box');
@@ -76,7 +87,7 @@ let fabricA = [];
         //     // resize on init
         //     resizeCanvas();
         //   })();
-        
+       
      }
      goFull = () => {
  
@@ -95,8 +106,44 @@ let fabricA = [];
 
     }
 
+    getObjects() {
+        let i = 0;
+        return _.map(this.state.objects,(obj)=> {
+            i++;
+           
 
+            return (
+              <div key={i} 
+                data-grid={{x: 0, y: 0, w:3, h: 3, static: false,draggableHandle: ".dragHandle",
+                draggableCancel:'.f-wrap',
+            }} 
+                
+        
+                style={{height:'100%',width:'100%',paddingBottom:30,backgroundColor:'black'}}>
+            <span className="dragHandle">[DRAG HERE]</span>
+                <div className="f-wrap" style={{height:'100%',width:'100%'}}>
+                  <Flow shortID={obj.shortID} />
+                </div>
+
+        
+              </div>
+            );
+          });
+    }
      render() {
+         if(this.props.state.flowAdd.flowAdd === true) {
+             let getflows = document.getElementsByClassName('add-flow');
+             for(let i = 0; i < getflows.length; i++){
+                 getflows[i].addEventListener('click',()=>{
+                    let getObj = this.state.objects;
+                    getObj.push({shortID:getflows[i].id})
+                    
+                     this.setState({objects:getObj,showGrid:true})
+                    
+                 })
+             }
+             
+         }
         return (
             <div id="output-container" className="output-container">
             
@@ -114,13 +161,29 @@ let fabricA = [];
                     }
                     }}> */}
                     <div style={{position:'absolute',height:'100%',width:'100%'}}>
-                        <div id="full_wrap" style={{height:'100%',width:'100%',border:'none',background:'transparent'}}>
-                            <iframe id="output_frame" className="output_frame" src=""></iframe>
-                            <iframe id="overlay_output_frame" className="overlay_output_frame" src=""></iframe>
-                        </div>
+                    {this.state.showGrid ?(<ResponsiveReactGridLayout
+               
+                    
+          layouts={[
+            {i: 'a', x: 0, y: 0, w: 1, h: 2, static: true},
+            {i: 'b', x: 1, y: 0, w: 3, h: 2, minW: 5, maxW: 5},
+            {i: 'c', x: 4, y: 0, w: 1, h: 2}
+          ]}
+          className="layout"
+          // WidthProvider option
+    
+          
+          cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 5 }}
+          compactType={'vertical'}
+          autoSize={true}
+          width={1200}
+        >
+          {this.getObjects()}
+         
+        </ResponsiveReactGridLayout>):(<Flow/> )  }
                     </div>
                     {/* </Fullscreen> */}
-                    
+              
                 </div>
                 <div id="out-cover" style={{display:'block'}}>
                     
@@ -148,8 +211,13 @@ let fabricA = [];
  }
 
 
-var calld = function() {
-    DHTML_Output.updateEditor()
-}
+ 
+  const ConnectedDHTML_Output = connect((state) => {
+    return {
+      state:state
+    }
+  })(DHTML_Output)
+  
 
-export default DHTML_Output;
+export default ConnectedDHTML_Output;
+

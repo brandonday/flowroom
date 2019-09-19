@@ -49,6 +49,7 @@
     "react-dropzone": "^7.0.1",
     "react-firebase-file-uploader": "^2.4.2",
     "react-full-screen": "^0.2.3",
+    "react-grid-layout": "^0.16.6",
     "react-headroom": "^2.2.8",
     "react-image-crop": "^6.0.12",
     "react-ionicons": "^3.0.1",

@@ -22,14 +22,81 @@ import RelatedRoomPost from './RelatedRoomPost.js';
 import { WithContext as ReactTags } from 'react-tag-input';
 import { rgbUnit } from 'style-value-types';
 import M from 'materialize-css';
-import MdCode from 'react-ionicons/lib/LogoNodejs'
+import ReactModal from 'react-modal';
+import SignUpModal from './SignUpModal';
+import LoginModal from './LoginModal';
+
+import "react-tabs/style/react-tabs.css";
+import MdCode from 'react-ionicons/lib/MdCode';
+import MdInfinite from 'react-ionicons/lib/MdInfinite';
+import MdCube from 'react-ionicons/lib/MdCube';
+import IosAppsOutline from 'react-ionicons/lib/IosAppsOutline';
 
 
+import Create from './create';
+import {flowAdd} from '../../actions/flowAdd.js'
 
 var GphApiClient = require('giphy-js-sdk-core')
 let client = GphApiClient("ybxqH0QDbtfnHTrTrFJ0BmLMX6QpEpWu")
 
-let apps = [{},{}]
+let apps = [{id:'childSnapShot.key',
+    date:'childSnapShot.val().date',
+    isAR:'childSnapShot.val().isAR',
+    isDevelopmental:'childSnapShot.val().isDevelopmental',
+    is360:'childSnapShot.val().is360',
+    isAI:'childSnapShot.val().isAI',
+    isDesktop:'childSnapShot.val().isDesktop',
+    isDeveloper:'childSnapShot.val().isDeveloper',
+    isLive:'childSnapShot.val().isLive',
+    isLocked:'childSnapShot.val().isLocked',
+    isMobile:'childSnapShot.val().isMobile',
+    isNSFW:'childSnapShot.val().isNSFW',
+    isVR:'childSnapShot.val().isVR',
+    pic:'childSnapShot.val().pic',
+    views:'childSnapShot.val().views',
+    commentsCount:'childSnapShot.val().commentsCount === undefined ? 0 : childSnapShot.val().commentsCount',
+    likes:'childSnapShot.val().likes === undefined ? 0:childSnapShot.val().likes',
+    description:'childSnapShot.val().description',
+    objectNum:'childSnapShot.val().objectNum',
+    postedPicURL:'childSnapShot.val().postedPicURL',
+    isRemixable:'childSnapShot.val().isRemixable',
+    roomType:'childSnapShot.val().roomType',
+    username:'Brandon',
+    shortID:'0aikSQ',
+    room_title:'Comparison Slider',
+    tags:'childSnapShot.val().tags',
+    room_aspect_ratio:'',
+    room_card_height:'',
+    thumbnail:'http://test.flowroom.com/uploads/1eiZsZ.jpg'},{id:'childSnapShot.key',
+    date:'childSnapShot.val().date',
+    isAR:'childSnapShot.val().isAR',
+    isDevelopmental:'childSnapShot.val().isDevelopmental',
+    is360:'childSnapShot.val().is360',
+    isAI:'childSnapShot.val().isAI',
+    isDesktop:'childSnapShot.val().isDesktop',
+    isDeveloper:'childSnapShot.val().isDeveloper',
+    isLive:'childSnapShot.val().isLive',
+    isLocked:'childSnapShot.val().isLocked',
+    isMobile:'childSnapShot.val().isMobile',
+    isNSFW:'childSnapShot.val().isNSFW',
+    isVR:'childSnapShot.val().isVR',
+    pic:'childSnapShot.val().pic',
+    views:'childSnapShot.val().views',
+    commentsCount:'childSnapShot.val().commentsCount === undefined ? 0 : childSnapShot.val().commentsCount',
+    likes:'childSnapShot.val().likes === undefined ? 0:childSnapShot.val().likes',
+    description:'childSnapShot.val().description',
+    objectNum:'childSnapShot.val().objectNum',
+    postedPicURL:'childSnapShot.val().postedPicURL',
+    isRemixable:'childSnapShot.val().isRemixable',
+    roomType:'childSnapShot.val().roomType',
+    username:'Brandon',
+    shortID:'v7uPs8',
+    room_title:'Comparison Slider',
+    tags:'childSnapShot.val().tags',
+    room_aspect_ratio:'',
+    room_card_height:'',
+    thumbnail:'http://test.flowroom.com/uploads/NzcXtl.jpg'}]
+
     let database = firebase.database();
 
     AWS.config.update({
@@ -248,7 +315,8 @@ let apps = [{},{}]
                 object_arr:[],
                 fontAwesomeAdded:false,
                 funType:'cats',
-                embedCode:'embed'
+                embedCode:'embed',
+                showModal:false
             
             };
             this.openModal = this.openModal.bind(this);
@@ -1617,7 +1685,6 @@ let apps = [{},{}]
                                 
                                 div.appendChild(resizable);
                                 
-    
                                 document.getElementById('overlay_output_frame').contentDocument.getElementById('overlay-container').appendChild(div);
                                 document.getElementById('overlay_output_frame').contentDocument.body.style.padding = '10px';
                     
@@ -1662,6 +1729,9 @@ let apps = [{},{}]
             /// Sticker Search
         }
             
+        }
+        goFull=()=>{
+      
         }
         menuSelect() {
             if(this.state.details === true) {
@@ -1994,7 +2064,7 @@ let apps = [{},{}]
             list.appendChild(menuinfo);
             }
             
-            if(thisElement !== undefined) {
+            if(thisElement !== null) {
                 if(thisElement.className !== 'menubg') {                            
                
                     for(let i = 0; tabsWithMenubgClass.length; i++) {
@@ -2077,7 +2147,7 @@ let apps = [{},{}]
          
 
             
-            if(thisElement !== undefined) {
+            if(thisElement !== null) {
                 if(thisElement.className !== 'menubg') {                            
                
                 for(let i = 0; tabsWithMenubgClass.length; i++) {
@@ -2505,9 +2575,11 @@ let apps = [{},{}]
         }
         AppsTab(e) {
 
+    
+
             let thisElement = document.getElementById(e.target.id);
             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
-            if(thisElement !== undefined) {
+            if(thisElement !== null) {
                 if(thisElement.className !== 'menubg') {                            
                
                     for(let i = 0; tabsWithMenubgClass.length; i++) {
@@ -2554,93 +2626,127 @@ let apps = [{},{}]
                     app_menu.style.flexWrap = 'wrap';
                     app_menu.setAttribute("id","app-menu")
                     apps.map((i) => {
+                    
                         let app = document.createElement('div');
-                        app.style.height = '100px';
-                        app.style.width = '100px';
-                        app.style.border = '1px solid white';
+                        app.className = 'add-flow'
+                        app.style.height = '300px';
+                        app.style.width = '100%';
+                        app.style.border = '0px solid white';
                         app.style.margin = '5px';
-
-
+                        app.setAttribute("id",`${i.shortID}`);
+                        app.style.background ='rgb(31, 31, 31)';
+                        app.style.justifyContent = 'center';
+                        app.style.alignItems = 'flex-end';
+                        app.style.margin = '0px 0px 15px';
+                        app.style.flexDirection = 'column';
+                        app.style.padding = '8px 8px 6px';
+                        let toptitlelink = document.createElement('a');
+                        let toptitle = document.createElement('p');
+                        toptitle.appendChild(document.createTextNode(`${i.room_title}`));
+                        toptitlelink.appendChild(toptitle);
+                        let appTitle = document.createElement('div');
                         
-                        
+                        appTitle.appendChild(toptitle);
+                        appTitle.appendChild(toptitlelink)
+                        app.appendChild(appTitle)
+
+                        let userlink = document.createElement('a');
+                        let userp = document.createElement('p');
+                        userp.style.color = 'white';
+                        toptitle.style.color = 'white' 
+                        userp.appendChild(document.createTextNode(`Created by @${i.username}`));
+                        userp.style.fontSize = '13px';
+                        userlink.appendChild(userp);
+                        let username = document.createElement('div');
+                        username.appendChild(userlink)
+                        app.appendChild(username)
                         let hashids = new Hashids(uuid(), 6);
-
-
+                         
+                        let thumbnail = document.createElement('div');
+                        thumbnail.style.height = '200px';
+         
+                        thumbnail.style.backgroundImage = `url(${i.thumbnail})`;
+                        thumbnail.style.backgroundSize = `cover`;
+                        thumbnail.style.backgroundRepeat = `no-repeat`;
+                        thumbnail.style.backgroundRepeat = 'center'
+                        thumbnail.style.marginTop = 10;
+                        app.appendChild(thumbnail)
+                        
                         // resizers.className = 'resizers';
                         // resizerOne.className = 'resizer top-left';
                         // resizerTwo.className = 'resizer top-right';
                         // resizerThree.className = 'resizer bottom-left';
                         // resizerFour.className = 'resizer bottom-right';
-                        app.addEventListener('click', ()=>{
-                        let object = document.createElement('div')
-                        object.style.backgroundSize = 'cover';
-                        object.style.height = '100px';
-                        object.style.width = '100px';
-                        object.style.border = '1px solid white';
-                        //object.style.zIndex = '1000000000000000000000000';
-                        object.className = 'resizable';
-                       // object.style.position = 'absolute';
-                        object.style.top = '0px';
-                        let object_id = 'OBJECT_' + hashids.encode(1,2,3);
-                        object.setAttribute("id", object_id);
-                        // resizers.appendChild(resizerOne);
-                        // resizers.appendChild(resizerTwo);
-                        // resizers.appendChild(resizerThree)
-                        // resizers.appendChild(resizerFour);
+                    //     app.addEventListener('click', ()=>{
+                    //     let object = document.createElement('div')
+                    //     object.style.backgroundSize = 'cover';
+                    //     object.style.height = '100px';
+                    //     object.style.width = '100px';
+                    //     object.style.border = '1px solid white';
+                    //     //object.style.zIndex = '1000000000000000000000000';
+                    //     object.className = 'resizable';
+                    //    // object.style.position = 'absolute';
+                    //     object.style.top = '0px';
+                    //     let object_id = 'OBJECT_' + hashids.encode(1,2,3);
+                    //     object.setAttribute("id", object_id);
+                    //     // resizers.appendChild(resizerOne);
+                    //     // resizers.appendChild(resizerTwo);
+                    //     // resizers.appendChild(resizerThree)
+                    //     // resizers.appendChild(resizerFour);
 
-                        //object.appendChild(header)
-                        //object.appendChild(resizers);
+                    //     //object.appendChild(header)
+                    //     //object.appendChild(resizers);
 
-                        console.log(i)
+                    //     console.log(i)
 
 
 
-                        //if(i.type === 'gif') {
-                        let objectWrapper = document.createElement('div');
-                        let dragSection = document.createElement('div');
-                        dragSection.style.height = '30px';
-                        dragSection.style.width = '100%';
-                        document.getElementById('output_frame').contentDocument.body.style.display = 'flex';
-                        let div = document.createElement('div');
-                        //div.style.height = '200px';
-                        // div.style.width = '300px';
-                        div.style.margin = '10px 20px'
-                        div.style.border = '0px solid blue';
-                        div.style.position = 'relative';
-                        div.setAttribute("id", `container${object.id}`);
-                        let resizable = document.createElement('div');
-                        resizable.className = 'resizable';
+                    //     //if(i.type === 'gif') {
+                    //     let objectWrapper = document.createElement('div');
+                    //     let dragSection = document.createElement('div');
+                    //     dragSection.style.height = '30px';
+                    //     dragSection.style.width = '100%';
+                    //     document.getElementById('output_frame').contentDocument.body.style.display = 'flex';
+                    //     let div = document.createElement('div');
+                    //     //div.style.height = '200px';
+                    //     // div.style.width = '300px';
+                    //     div.style.margin = '10px 20px'
+                    //     div.style.border = '0px solid blue';
+                    //     div.style.position = 'relative';
+                    //     div.setAttribute("id", `container${object.id}`);
+                    //     let resizable = document.createElement('div');
+                    //     resizable.className = 'resizable';
 
-                        let resizers_box = document.createElement('div');
-                        resizers_box.className = 'resizers';
-                        let resizerTopLeft = document.createElement('div');
-                        resizerTopLeft.className = 'resizer top-left';
-                        let resizerTopRight = document.createElement('div');
-                        resizerTopRight.className = 'resizer top-right';
-                        let resizerBottomLeft = document.createElement('div');
-                        resizerBottomLeft.className = 'resizer bottom-left';
-                        let resizerBottomRight = document.createElement('div');
-                        resizerBottomRight.className = 'resizer bottom-right';
+                    //     let resizers_box = document.createElement('div');
+                    //     resizers_box.className = 'resizers';
+                    //     let resizerTopLeft = document.createElement('div');
+                    //     resizerTopLeft.className = 'resizer top-left';
+                    //     let resizerTopRight = document.createElement('div');
+                    //     resizerTopRight.className = 'resizer top-right';
+                    //     let resizerBottomLeft = document.createElement('div');
+                    //     resizerBottomLeft.className = 'resizer bottom-left';
+                    //     let resizerBottomRight = document.createElement('div');
+                    //     resizerBottomRight.className = 'resizer bottom-right';
 
-                        resizers_box.appendChild(resizerTopLeft);
-                        resizers_box.appendChild(resizerTopRight);
-                        resizers_box.appendChild(resizerBottomLeft);
-                        resizers_box.appendChild(resizerBottomRight);
+                    //     resizers_box.appendChild(resizerTopLeft);
+                    //     resizers_box.appendChild(resizerTopRight);
+                    //     resizers_box.appendChild(resizerBottomLeft);
+                    //     resizers_box.appendChild(resizerBottomRight);
 
-                        resizable.setAttribute("id",`${i.id}`)
-                        resizable.appendChild(resizers_box);
-                        //resizable.appendChild(object)
+                    //     resizable.setAttribute("id",`${i.id}`)
+                    //     resizable.appendChild(resizers_box);
+                    //     //resizable.appendChild(object)
                         
-                        div.appendChild(resizable);
+                    //     div.appendChild(resizable);
                         
 
-                        document.getElementById('overlay_output_frame').contentDocument.getElementById('overlay-container').appendChild(div);
-                        document.getElementById('overlay_output_frame').contentDocument.body.style.padding = '10px';
+                    //     document.getElementById('overlay_output_frame').contentDocument.getElementById('overlay-container').appendChild(div);
+                    //     document.getElementById('overlay_output_frame').contentDocument.body.style.padding = '10px';
             
-                        //resizable.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
+                    //     //resizable.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
                        
-                        this.makeResizableDiv(`#${i.id}`);
-                        })
+                    //     this.makeResizableDiv(`#${i.id}`);
+                    //     })
 
 
                         app_menu.appendChild(app);
@@ -2697,7 +2803,8 @@ let apps = [{},{}]
                         this.setState({app_menu:true, script_menu:false});
                     }
                     this.setState({script_menu:false});
-                           
+                  
+
             
 
                     // if(document.getElementById('element-menu') !== null) {
@@ -2712,6 +2819,18 @@ let apps = [{},{}]
             document.getElementById('publish-section').style.display = 'none';
             document.getElementById('main-menu').style.display = 'block';
             document.getElementById('main-menu').style.overflowY = 'scroll';
+
+            if(this.props.state.flowAdd.flowAdd !== true) {
+                this.props.flowAdd({flowAdd:true});
+                // document.getElementById("default-modal").style.display = 'block'
+                // document.getElementById("default-modal").style.top = '80px'
+    
+            } else {
+                this.props.flowAdd({flowAdd:false});
+                // document.getElementById("default-modal").style.display = 'none'
+                // document.getElementById("default-modal").style.top = '80px'
+    
+            }
         }
         ScriptTag(e){
 
@@ -4038,14 +4157,21 @@ let apps = [{},{}]
             document.onmousemove = null;
         }
     }
-    toggleFullScreen(){
-        var iframe = document.querySelector('#full_wrap');
+    toggleFullScreen() {
+       
+        if(document.fullscreenEnabled === true) {
+        let iframe = document.getElementById('full_wrap');
+        // alert(this.props.shortID)
         if (!iframe.fullscreenElement) {
             iframe.requestFullscreen();
         } else {
           if (iframe.exitFullscreen) {
             iframe.exitFullscreen(); 
           }
+        }
+        } else {
+     
+          // this.setState({showModal: true}); 
         }
     }
     embedCode() {
@@ -4093,8 +4219,10 @@ let apps = [{},{}]
                                     width:'26px',
                                     pointerEvents:'none',
                                     position:'relative',
-                                    top:3
+                                    top:3,
+                                    display:'none'
                                     }}></div>
+                                <MdInfinite color="rgb(82, 82, 82)" fontSize={30} fontWeight={700}/>                                   
                                 <p id="remix-text" style={{fontSize:'11px',
     fontWeight:600,
     pointerEvents:'none',
@@ -4116,9 +4244,9 @@ let apps = [{},{}]
                             borderBottom:'1px solid #181818',
                             justifyContent:'center'
                         }} className="menu-bg-border">
-                            
-                            <i id="elements-icon" className="fas fa-shapes" style={{color:'white', fontSize:19,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none',height:'20px',
-    width:'20px'}}></i>
+                            <IosAppsOutline color="rgb(82, 82, 82)" fontSize={30}/>
+                            * <i id="elements-icon" className="fas fa-shapes" style={{color:'white', fontSize:19,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none',height:'20px', 
+    width:'20px',display:'none'}}></i>
                             <p id="elements-text" style={{fontSize:8.5,fontWeight:600,pointerEvents:'none'}} className="menubgnot">ELEMENTS</p>
                         </div>
                         <div id="app-tag"  onClick={this.AppsTab.bind(this)} 
@@ -4135,7 +4263,8 @@ let apps = [{},{}]
                             justifyContent:'center'
                         }} className="menu-bg-border">
                             
-                            <i id="apps-icon" className="fas fa-cubes" style={{color:'white', fontSize:22,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none'}}></i>
+                            <i id="apps-icon" className="fas fa-cubes" style={{color:'white', fontSize:22,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none',display:'none'}}></i>
+                            <MdCube color="rgb(82, 82, 82)" fontSize={30}  />
                             <p id="apps-text" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none'}} className="menubgnot">APPS</p>
                         </div>
                         <div id="script-tag" refs="script-tag" onClick={this.ScriptTag.bind(this)}
@@ -4319,7 +4448,16 @@ let apps = [{},{}]
                         
                             </div>  */}
                         </div>
-            
+                            
+                        <Tabs>
+    <TabList>
+      <CustomTab>Custom Tab 1</CustomTab>
+      <CustomTab>Custom Tab 2</CustomTab>
+    </TabList>
+    <TabPanel>Panel 1</TabPanel>
+    <TabPanel>Panel 2</TabPanel>
+  </Tabs>
+
                         <div id="main-menu" 
                             style={{
                                  
@@ -4417,7 +4555,7 @@ let apps = [{},{}]
                                     marginRight:'8px',
                                     outline:'none'
                             }}>{this.state.isOpen ? 'CLOSE MENU' : 'OPEN MENU'}</button>
-                            <div id="full-screen" onClick={this.toggleFullScreen} style={{
+                            <div id="full-screen" onClick={this.toggleFullScreen.bind(this)} style={{
                                 display:'flex',
                                 color:'white',
                         
@@ -4569,7 +4707,7 @@ let apps = [{},{}]
                             
                                         }}>
                                     <div style={{borderRadius:50, backgroundColor:'black',height:67,width:67,display:'flex',justifyContent:'center',alignItems:'center'}}>
-                                    
+                                        
                                         <p style={{position:'relative',top:50, fontSize:'12px',fontWeight:400,lineHeight:'14px'}}>Embed</p>
                                    
                                     </div>
@@ -4596,48 +4734,44 @@ let apps = [{},{}]
                  
                 </div>
                 <div id="modal2" className="modal modal-fixed-footer" style={{height:500,zIndex:999999999999,outline:'none',width:'100%',maxWidth:'1221px'}}>
-                    <div style={{display:'flex',height:'100%',flexDirection:'row'}}>
-                        <div style={{height:'100%', width:'300px',overflow:'hidden',width:724}}>
-                            <iframe style={{height:'100%',width:'100%',border:'none',
-                                transform:'scale(0.9)',
-                                transformOrigin:'left top',
-                                marginTop:18,
-                                marginLeft:28
-                        }} src={`/full/${this.state.shortID}`}></iframe>
-                            <div style={{
-                                height:30,
-                                width:'100%',
-                                backgroundColor:'#1F1F1F',
-                                borderRadius:'0 0 5px 5px',
-                                width:'723px',
-                                height:'50px',
-                                display:'flex',
-                                alignItems:'center',
-                                positon:'absolute',
-                                bottom:'0px'
-                                }}>
-                                    <div style={{
-                                        backgroundImage:'url(../logo.svg)',
-                                        height:'31px',
-                                        width:'137px',
-                                        backgroundSize:'contain',
-                                        backgroundRepeat:'no-repeat'}}></div>
+                    <div style={{display:'flex',height:'100%',flexDirection:'row',borderRadius:'5px'}}>
+                        <div style={{display:'flex',flex:1}}>
+                           <div style={{display:'flex',flex:1}}>
+                            <iframe style={{border:'none',
+                              
+                                borderRadius:5,
+                                top:'16px',
+                                left:'28px',
+                                position:'relative'
+                        }} src={`/${this.state.shortID}/embed`} height="460px" width="726px"></iframe>
                             </div>
                         </div>
-                        <div style={{display:'flex',height:'100%',width:'40%',justifyContent:'center',alignItems:'center'}}>
-                        <div style={{display:'flex',height:'100%',flexDirection:'column'}}>
-                            <div style={{height:60,width:'100%',borderBottom:'1px solid black',display:'flex',alignItems:'center'}}>
-                                <div style={{height:36,width:37,backgroundColor:'#1F1F1F',borderRadius:'100%'}}>
-                                <ion-icon name="code"></ion-icon>
+                        <div style={{display:'flex',height:'100%'}}>
+                        <div style={{display:'flex',height:'100%',flexDirection:'column',marginRight:12}}>
+                            <div style={{height:60,width:'100%',borderBottom:'1px solid #979797',display:'flex',alignItems:'space-between'}}>
+                                <div style={{display:'flex',alignItems:'center',width:'100%'}}>
+                                    <div style={{height:36,width:37,backgroundColor:'#1F1F1F',borderRadius:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>
+                                        <MdCode color="#FFFFFF" fontSize="20px"/>
+                                    </div>
+                                    <div style={{display:'flex',alignItems:'center',justifyContent:'center',height:'100%'}}>
+                                        <p style={{marginLeft:12,color:'#000000',fontSize:21,fontWeight:600}}>Embed</p>
+                                    </div>
                                 </div>
-                                <p style={{marginLeft:12}}>Embed</p>
+                                <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
+                                    <p style={{fontSize:20,color:'#161616',fontWeight:900}}>X</p>
+                                </div>
                             </div>
-                            <div style={{height:111,width:440,borderRadius:'5px', border:'1px solid black',marginTop:22,padding:12}}>
+                            <div style={{height:111,width:440,borderRadius:'5px', border:'1px solid #979797',marginTop:22}}>
                                         <div style={{height:'100%',width:'100%'}}>
-                                        <textarea style={{height:'100%',width:'100%', fontSize:15,outline:'none',resize:'none',border:'0px solid black'}} value={this.state.embedCode}>
+                                        
+                                        <textarea style={{height:'100%',width:'100%', fontSize:15,outline:'none',resize:'none',border:'0px solid black',padding:12}} value={this.state.embedCode}>
 
                                         </textarea>
                                         </div>
+                                        <div>
+                                        <p style={{top:10,position:'relative'}}>Copy</p>
+                                        </div>
+
                             </div>
                         </div>
                         </div>
@@ -4645,13 +4779,17 @@ let apps = [{},{}]
    
                 </div>
                 <div id="modal3" className="modal modal-fixed-footer" style={{height:450,zIndex:999999999999,outline:'none',width:'80%'}}>
-                    <div class="modal-content">
-                        <h4>Modal Header</h4>
-                        <p>A bunch of text</p>
-                    </div>
-   
+                   
                 </div>
-        
+                <ReactModal 
+           isOpen={this.state.showModal}
+         
+        >
+          <button onClick={this.handleCloseModal}>Close Modal</button>
+          {/* <DHTML_Output /> */}
+        </ReactModal>
+                <Create/>
+
         </div>)
        
     }
@@ -4665,7 +4803,8 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    startCreateRoom: (room) => dispatch(startCreateRoom(room))
+    startCreateRoom: (room) => dispatch(startCreateRoom(room)),
+    flowAdd: (bool) => dispatch(flowAdd(bool))
   });
 
 const ConnectedRoomMain = connect(mapStateToProps,mapDispatchToProps)(RoomMain)

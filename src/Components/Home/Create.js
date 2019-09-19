@@ -18,12 +18,13 @@ class Create extends Component {
             lastcom:'',
             width:0,
             height:0,
-            menuMobile:false
+            menuMobile:false,
+            isRoom:false
         }
     }
 
     componentDidMount() {
-   
+ 
 
         
             document.addEventListener('DOMContentLoaded', ()=> {
@@ -88,6 +89,17 @@ class Create extends Component {
           var x = window.matchMedia("(max-width: 1024px)")
           myFunction(x) // Call listener function at run time
           x.addListener(myFunction) // Attach listener function on state changes
+          var shortID = window.location.pathname.split("room/").pop();
+
+          if(shortID !== '/') {
+            
+            this.setState({isRoom:true})
+          } else {
+           
+            this.setState({isRoom:false})
+            
+    
+          }
     }
     
     selectCommunity = (i) => {
@@ -116,7 +128,7 @@ class Create extends Component {
         return(
 
 
-<div id="create-box" style={{position:'absolute',height:'540px',zIndex:'9999999',backgroundColor:'#151515',width:'100%',top:'69px',display:this.props.state.openMenu.openMenu? 'block':'none'}}>
+<div id="create-box" style={{position:'absolute',height:'540px',zIndex:'9999999',backgroundColor:'#151515',width:'100%',top:this.state.isRoom ? '0px' : '69px',display:this.props.state.openMenu.openMenu? 'block':'none'}}>
   <div id="create-box-wrap" style={{display:'flex',width:'100%',flexDirection:this.state.menuMobile ? 'column':'row'}}>
     <div id="create-from-scratch-wrap" style={{height:'100%',alignItems:'center',display:'flex',flexDirection:'column'}}>
       <p style={{color:'white',fontSize:this.state.menuMobile ? '16px':'20px',fontWeight:700,marginTop:this.state.menuMobile ? '18px':'37px',marginBottom:this.state.menuMobile ? '7px':'0px',position:'relative'}}>Create A Flow From Scratch</p>

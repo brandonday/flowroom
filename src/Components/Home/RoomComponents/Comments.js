@@ -8,6 +8,12 @@ import Hashids from 'hashids';
 import Profile from '../Profile.js';
 import RelatedRoomPost from '../RelatedRoomPost.js';
 import RelatedRoomPostTop from '../RelatedRoomPostTop.js';
+import M from 'materialize-css';
+
+import SignUp from '../SignUp.js';
+import SignUpModal from '../SignUpModal';
+import LoginModal from '../LoginModal';
+
 
 var moment = require('moment');
 const database = firebase.database();
@@ -755,7 +761,10 @@ let roomFilter = 'weight';
                                                 if(user) {
                                                     this.incrementLikes();
                                                 } else {
-                                                    this.openModal(true);
+                                                    let elem_m = document.getElementById('modal4');
+                                                    elem_m.style.zIndex = '99999999999999'
+                                                    let instance_m = M.Modal.getInstance(elem_m);
+                                                    instance_m.open();
                                                 }
                                             });
                                
@@ -1027,7 +1036,17 @@ let roomFilter = 'weight';
                     </div>
                     </div>
                 </div>
-                
+                <div id="modal4" className="modal modal-fixed-footer" style={{height:450,zIndex:99999999999999,outline:'none',width:'80%'}}>
+                    <div class="modal-content">
+                    <div id="sign-up-modal-wrap" >
+                    <SignUpModal/>
+                    </div>
+                    <div id="login-modal-wrap" style={{display:'none'}}>
+                    <LoginModal/>
+                    </div>
+                    </div>
+   
+                </div>
         </div>)
 
         }

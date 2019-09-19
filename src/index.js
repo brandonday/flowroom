@@ -11,9 +11,15 @@ import NotFound from './Components/Home/NotFound.js';
 import ProfilePage from './Components/Home/ProfilePage.js';
 import SignUp from './Components/Home/SignUp.js';
 import Login from './Components/Home/Login.js';
+
 import About from './Components/Home/About.js';
+
+
 import Profile from './Components/Home/Profile.js';
 import Full from './Components/Home/full.js';
+
+import Embed from './Components/Home/embed.js';
+
 import PhotoEditor from './Components/Home/PhotoEditor.js';
 import reduxIt from './redux.js';
 import './Components/styles/stylesheet.css';
@@ -70,6 +76,7 @@ const Routes = () => (
             <FullRoute exact path="/signup" component={SignUp}></FullRoute>
             <FullRoute path="/login" component={Login}></FullRoute>
             <PrivateRoute path="/about" component={About}></PrivateRoute>
+            <FullRoute exact path="/:id/embed/" component={Embed}></FullRoute>
             <PrivateRoute exact path="/:id" component={ProfilePage}></PrivateRoute>
             <PrivateRoute exact path="/:id/edit" component={Profile}></PrivateRoute>
 

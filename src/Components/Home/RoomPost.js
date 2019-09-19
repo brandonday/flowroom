@@ -228,35 +228,8 @@ class RoomPost extends Component {
     post() {
         if(this.props.roomType === 'other') {
             return (
-                <Fullscreen
-                    enabled={this.state.isFull}
-                    onChange={(isFull) => {
-                        this.setState({isFull,fullscreen:true});
-                       
-                    if(!isFull) {
-                        let fullscreennode = document.getElementsByClassName('full-screenable-node');
-                        let toptitle = document.getElementsByClassName('top-title');
-                        let roomtitlecard = document.getElementsByClassName('room-card-title');
-                  
-                        let iframe = document.getElementById(`${this.props.shortID}`);
-                        iframe.style.transform = 'scale(0.5)';
-                        iframe.style.height = '200%';
-                        iframe.style.width = '200%';
-                        for(let i = 0; i < fullscreennode.length; i++) {
-                            fullscreennode[i].style.height = '246px';
-                            fullscreennode[i].style.width = '100%';
-                        }
-                        for(let i = 0; i < toptitle.length; i++) {
-                            toptitle[i].style.display = 'flex';
-                        }
-                        for(let i = 0; i < roomtitlecard.length; i++) {
-                            roomtitlecard[i].style.display = 'flex';
-                        }
-                
-                        
-                    }
-                    }}>
 
+<div>
                     <div className="top-title" style={{display:'flex',height:'60px',width:'100%'}}>
                         <div style={{display:'flex',
                             marginTop:10,
@@ -325,7 +298,7 @@ class RoomPost extends Component {
                                 display:'none'
                             }} />
                         </div>
-                </Fullscreen>
+                        </div>
             )
         } else if(this.props.roomType === 'image') {
             return (<img style={{height:'auto', width:'100%'}} src={this.props.postedPicURL}/>)
@@ -337,8 +310,7 @@ class RoomPost extends Component {
 
     }
     goFull = () => {
-        // this.incrementViewsFull();
-        // document.fullscreenEnabled = false
+        
         // if(document.fullscreenEnabled === true) {
         // let iframe = document.getElementById(`${this.props.shortID}`);
         // // alert(this.props.shortID)
