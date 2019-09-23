@@ -32,7 +32,7 @@ import MdInfinite from 'react-ionicons/lib/MdInfinite';
 import MdCube from 'react-ionicons/lib/MdCube';
 import IosAppsOutline from 'react-ionicons/lib/IosAppsOutline';
 import "react-web-tabs/dist/react-web-tabs.css";
-
+import ResizableRect from 'react-resizable-rotatable-draggable'
 
 import Create from './create';
 import {flowAdd} from '../../actions/flowAdd.js'
@@ -132,7 +132,7 @@ let apps = [{id:'childSnapShot.key',
     let objects_arr = []
 
 
-    let elements_arr = [{},{},{}];
+    let elements_arr = [];
     let element_options = ['GIFS','STICKERS','EMOJIS','TEXT'];
 
     let Loaded = false;
@@ -324,12 +324,19 @@ let apps = [{id:'childSnapShot.key',
                 fontAwesomeAdded:false,
                 funType:'cats',
                 embedCode:'embed',
-                showModal:false
+                showModal:false,
+                activeTab: 0,
+                width: 100,
+                height: 100,
+                top: 100,
+                left: 100,
+                rotateAngle: 0
             
             };
             this.openModal = this.openModal.bind(this);
             this.afterOpenModal = this.afterOpenModal.bind(this);
             this.closeModal = this.closeModal.bind(this);
+            this.activeTab = this.activeTab.bind(this);
 
             this.handleDeletecredits = this.handleDeletecredits.bind(this);
             this.handleAdditioncredits = this.handleAdditioncredits.bind(this);
@@ -625,7 +632,7 @@ let apps = [{id:'childSnapShot.key',
                     document.getElementById('room-main-page').style.marginTop = '0px';
                     //document.getElementById('room-wrap').style.flex = '5 1 0%';
                     document.getElementById('main-menu').style.maxWidth = '330px';
-                    document.getElementById('main-menu').style.width = '100%';
+                    document.getElementById('main-menu').style.width = '330px';
 
 
                
@@ -1517,7 +1524,7 @@ let apps = [{id:'childSnapShot.key',
             
             elements_arr = [];
             if(elements_arr.length === 0) {
-               
+             console.log('the arr', elements_arr.length)
             client.search(type, {"q": `${funType}`}).then((response) => {
                 
                 response.data.forEach((gifObject) => {
@@ -1532,617 +1539,10 @@ let apps = [{id:'childSnapShot.key',
                 // element_menu.style.position = 'relative';
                 // element_menu.style.display = 'flex';
                 //element_menu.style.justifyContent = 'space-between'
-                    elements_arr.map((i) => {
-                     
-                        let element = document.createElement('div');
-                        if(i.images !== undefined) {
-                            console.log(i.images.downsized_medium.url)
-                            if(window.innerWidth < 698) {
-                                element.style.height = '117px';
-                                element.style.width = '117px';
-                            } else {
-                                element.style.height = '147px';
-                                element.style.width = '147px';
-                            }
-                           
-                            element.style.border = '0px solid white';
-                            //element.style.marginRight = '7px';
-                            element.style.marginBottom = '12px';
-                            element.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
-                            element.style.borderRadius = '4px';
-                            element.style.backgroundSize = 'cover';
-    
-                            element.addEventListener('click',()=>{
-                                let object = document.createElement('div');
-                                let resizers = document.createElement('div');
-                                let resizerOne = document.createElement('div');
-                                let resizerTwo = document.createElement('div');
-                                let resizerThree = document.createElement('div');
-                                let resizerFour = document.createElement('div');
-                                // let header = document.createElement('div');
-                                // header.style.height = '20px';
-                                // header.style.width = '125px';
-                                // //header.style.border = '1px solid black';
-                                // header.style.position = 'relative';
-                                // header.style.margin = 'auto';
-                                // header.style.display = 'flex';
-                                // header.style.top = '-34px';
-    
-                                let dragwrapper = document.createElement('div');
-                                dragwrapper.style.display = 'flex';
-                                dragwrapper.style.height = '20px';
-                                dragwrapper.style.width = '64px';
-                                //dragwrapper.style.border = '1px solid black';
-                                dragwrapper.style.position = 'absolute';
-                                dragwrapper.style.right = '0px';
-                                dragwrapper.style.justifyContent = 'space-between';
-    
-    
-                                // let minimize = document.createElement('div');
-                                // minimize.setAttribute("id", 'minimize_' + i.id);
-                                // let minicon = document.createElement('i');
-                                // minicon.style.color = 'white';
-                                // minicon.className = 'fas fa-window-minimize';
-                                // // minicon.style.fontSize = '20px';
-    
-                                // minimize.appendChild(minicon);
-                                //minimize.style.height = '20px';
-                                //minimize.style.width = '20px';
-                                //minimize.style.border = '1px solid black';
-    
-                                // let maximize = document.createElement('div');
-                                // maximize.setAttribute("id", 'maximize_' + i.id);
-                                // let maxicon = document.createElement('i');
-                                // maxicon.style.color = 'white';
-                                // maxicon.className = 'fas fa-window-maximize';
-                                // maximize.appendChild(maxicon);
-    
-                                //maximize.style.border = '1px solid black';
-    
-                                // let close = document.createElement('div');
-                                // close.setAttribute('id', 'close_' + i.id);
-                                // let closeicon = document.createElement('i');
-                                // closeicon.style.color = 'white';
-                                // closeicon.className = 'fas fa-window-close';
-                                // close.appendChild(closeicon);
-    
-                                // //close.style.border = '1px solid black';
-    
-                                // dragwrapper.appendChild(minimize);
-                                // dragwrapper.appendChild(maximize);
-                                // dragwrapper.appendChild(close);
-    
-                                // header.appendChild(dragwrapper);
-    
-    
-                                // header.style.display = 'flex';
-                                // header.style.flexDirection = 'row';
-                                // header.style.alignItems = 'center';
-                                // header.setAttribute("id", `${i.id+'header'}`);  
-                                // header.setAttribute("class", "draggable")
-                                // let dragMe = document.createElement('p');
-    
-                                // dragMe.appendChild(document.createTextNode('DRAG'));
-                                // dragMe.style.color = 'white';
-                                // header.appendChild(dragMe);
-    
-                                let hashids = new Hashids(uuid(), 6);
-    
-    
-                                // resizers.className = 'resizers';
-                                // resizerOne.className = 'resizer top-left';
-                                // resizerTwo.className = 'resizer top-right';
-                                // resizerThree.className = 'resizer bottom-left';
-                                // resizerFour.className = 'resizer bottom-right';
-    
-    
-                                object.style.backgroundSize = 'cover';
-                                object.style.height = '100px';
-                                object.style.width = '100px';
-                                object.style.border = '1px solid white';
-                                //object.style.zIndex = '1000000000000000000000000';
-                                object.className = 'resizable';
-                               // object.style.position = 'absolute';
-                                object.style.top = '0px';
-                                let object_id = 'OBJECT_' + hashids.encode(1,2,3);
-                                object.setAttribute("id", object_id);
-                                // resizers.appendChild(resizerOne);
-                                // resizers.appendChild(resizerTwo);
-                                // resizers.appendChild(resizerThree)
-                                // resizers.appendChild(resizerFour);
-    
-                                //object.appendChild(header)
-                                //object.appendChild(resizers);
-    
-                                console.log(i)
-    
-    
-    
-                                //if(i.type === 'gif') {
-                                let objectWrapper = document.createElement('div');
-                                let dragSection = document.createElement('div');
-                                dragSection.style.height = '30px';
-                                dragSection.style.width = '100%';
-                                //document.getElementById('output_frame').contentDocument.body.style.display = 'flex';
-                                let div = document.createElement('div');
-                                //div.style.height = '200px';
-                                // div.style.width = '300px';
-                                div.style.margin = '10px 20px'
-                                div.style.border = '0px solid blue';
-                                div.style.position = 'relative';
-                                div.setAttribute("id", `container${object.id}`);
-                                let resizable = document.createElement('div');
-                                resizable.className = 'resizable';
-    
-                                let resizers_box = document.createElement('div');
-                                resizers_box.className = 'resizers';
-                                let resizerTopLeft = document.createElement('div');
-                                resizerTopLeft.className = 'resizer top-left';
-                                let resizerTopRight = document.createElement('div');
-                                resizerTopRight.className = 'resizer top-right';
-                                let resizerBottomLeft = document.createElement('div');
-                                resizerBottomLeft.className = 'resizer bottom-left';
-                                let resizerBottomRight = document.createElement('div');
-                                resizerBottomRight.className = 'resizer bottom-right';
-    
-                                resizers_box.appendChild(resizerTopLeft);
-                                resizers_box.appendChild(resizerTopRight);
-                                resizers_box.appendChild(resizerBottomLeft);
-                                resizers_box.appendChild(resizerBottomRight);
-    
-                                resizable.setAttribute("id",`${i.id}`)
-                                resizable.appendChild(resizers_box);
-                                //resizable.appendChild(object)
-                                
-                                div.appendChild(resizable);
-                                
-                                document.getElementById('overlay_output_frame').contentDocument.getElementById('overlay-container').appendChild(div);
-                                document.getElementById('overlay_output_frame').contentDocument.body.style.padding = '10px';
-                    
-                                resizable.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
-                               
-                                this.makeResizableDiv(`#${i.id}`);
-                                
-                                // const xDraggables = document.getElementById('overlay_output_frame').contentWindow.Subjx(`#${object.id}`).drag({
-                                    
-                                // container:`#container${object.id}`,
-                                // each: {
-                                //     move: false,
-                                //     resize: true, 
-                                //     rotate: true
-                                // }
-                                // // snapping to grid (default: 10)
-        
-                                // });
-    
-    
-                            
-        
-        
-                                //}
-                                let dhtml = JSON.parse(localStorage.getItem("dhtml"));
-    
-                                let html = document.getElementById('output_frame').contentWindow.document.body.innerHTML;
-                                let dhtmlObj = {html:html, js:dhtml.js, css:dhtml.css}
-    
-    
-                                localStorage.setItem("dhtml", JSON.stringify(dhtmlObj));
-    
-    
-                            })
-    
-                            document.getElementById('element-menu').appendChild(element)
-                        }
-                    });
+                   
                 })
-            }).catch((err) => { })
-          
-            /// Sticker Search
-        }
-            
-        }
-        goFull=()=>{
-      
-        }
-        menuSelect() {
-            if(this.state.details === true) {
-        
-                return (
-                    <div className="menu-select">
-                        <input className="menu-search" type="text" placeholder="search..."/>
-            
-                        <div id="main-add-section" className="main-add-section">
-                            <div id="menu-sel-wrap" className="menu-sel-wrap">
-                                <div className="menu-sel-wrap-wrap">
-
-                                    <div className="images-section"  onClick={this.imageSearch.bind(this)} className="ball">
-                                        <i className="fas fa-images"></i>
-                                        <p>Images</p>
-                                    </div>
-                                    <div className="text-section">
-                                        <i className="fas fa-font"></i>
-                                        <p>Text</p>
-                                    </div>
-                                    <div classNames="gifs-section">
-                                        <i className="fas fa-images"></i>
-                                        <p>GIFS</p>
-                                    </div>
-                                    <div className="stickers-section">
-                                        <i className="fas fa-images"></i>
-                                        <p>Stickers</p>
-                                    </div>
-                                    <div className="shapes-section">
-                                        <i class="fas fa-shapes" onClick={this.shapesSection.bind(this)}></i>
-                                        <p>Shapes</p>
-                                    </div>
-                                    <div className="icons-section">
-                                        <i className="fas fa-images"></i>
-                                        <p>Icons</p>
-                                    </div>
-                                    <div className="videos-section">
-                                        <i className="fas fa-images"></i>
-                                        <p>Video</p>
-                                    </div>
-                                    <div className="audio-section">
-                                        <i className="fas fa-images"></i>
-                                        <p>Audio</p>
-                                    </div>
-                                </div>
-                                <div id="selection" className="selection">
-                                    <div id="innerSel" className="innerSel"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )
-            } else if(this.state.remix === true) {
-                return (
-                    <ImageEdit/>
-                )
-            } else if(this.state.showPublish === true) {
-                return (
-                   <div></div>
-                )
-            } else if(this.state.script_menu === true) {
-                return ( 
-                    <div  style={{border:'1px solid rgb(34, 34, 34)', width:'259px', 
-                        borderRadius:'3px', marginTop:'11px', 
-                        padding:'20px', display:'flex', 
-                        justifyContent:'center', 
-                        flexDirection:'column'}}>
-                        {/* <div style={{display:'flex', 
-                            justifyContent:'space-between', 
-                            height:'20px', 
-                            width: '100%'}}>
-                            <div style={{backgroundImage:infinityIcon, 
-                                backgroundSize:'100% 100%', 
-                                backgroundRepeat:'no-repeat', 
-                                height:'20px', 
-                                width:'25px'}}></div>
-                                <div style={{display:'flex', 
-                                    alignItems:'center', 
-                                    justifyContent:'space-between', 
-                                    width:'45px'}}>
-                                        <p style={{fontSize:'11px', color:'white'}}>close</p>
-                                        <p style={{fontSize:'20px', color:'white'}}>X</p></div></div>
-                                        <p style={{color:'rgb(54, 255, 233)'}}>Welcome to the Script Menu</p><div>
-                                        <p style={{color:'white', fontSize:'15px'}}>Here you can swap Text,</p>
-                                        <p style={{color:'white', fontSize: '15px'}}>Images, and other elements</p>
-                                        <p style={{color: 'white', fontSize: '15px', paddingBottom:'10px'}}>inside of flows.</p>
-                                        <p style={{color:'white', fontSize:'15px'}}>Click here for step by step</p>
-                                        <p style={{color:'white', fontSize:'15px'}}>video walkthroughs</p>
-                                    </div> */}
-                        </div>
-                )
-            }
-        }
-
-        RemixTab(e) {
-            //alert('sssd')
-           
-             //let list = document.getElementById('main-menu');
-            // let thisElement = document.getElementById(e.target.id);
-            // let tabsWithMenubgClass = document.getElementsByClassName('menubg');
-            //let menuinfo = document.createElement('div');
-            // document.getElementById('publish-section').style.display = 'none';
-    
-             //menuinfo.setAttribute("id", "menu-info");
-            
-            // menuinfo.style.height = '170px';
-            // menuinfo.style.width = '300px';
-            //menuinfo.style.left = '8px';
-
-            // if(window.innerWidth > 698) {
-            //     menuinfo.style.height = '200px';
-            //     menuinfo.style.width = '300px';
-            //   } else {
-            //     menuinfo.style.height = '200px';
-            //     menuinfo.style.width = '240px';
-            //   }
-             
-            // menuinfo.style.position = 'relative';
-            // let menuinfobox = document.createElement('div');
-            // let menuinfotop = document.createElement('div');
-            // let infinity = document.createElement('div');
-            // menuinfotop.style.display = 'flex';
-            // menuinfotop.style.justifyContent = 'space-between';
-            // menuinfotop.style.height = '20px';
-            // menuinfotop.style.width = '100%';
-            // menuinfobox.style.border = '1px solid #222222';
-            // menuinfobox.style.height = '147px';
-       
-            
-            //menuinfobox.style.width = '300px';
-            
-        //     menuinfobox.style.borderRadius = '3px';
-        //     menuinfobox.style.marginTop = '11px';
-        //     infinity.style.backgroundImage = infinityIcon;
-        //     infinity.style.backgroundSize = '100% 100%';
-        //     infinity.style.backgroundRepeat = 'no-repeat';
-        //     infinity.style.height = '20px';
-        //     infinity.style.width = '25px';
-        //     let closebox = document.createElement('div');
-        //     closebox.style.display = 'flex';
-        //     closebox.style.alignItems = 'center';
-        //     closebox.style.justifyContent = 'space-between';
-        //     closebox.style.width = '45px';
-        //     let welcometext = document.createElement('p');
-        //     welcometext.style.color = 'rgb(54, 255, 233)';
-        //     welcometext.style.marginTop = '10px';
-        //     welcometext.style.marginBottom = '10px';
-        //     welcometext.appendChild(document.createTextNode('Welcome to the Remix Menu'));
-        //     welcometext.setAttribute("id","welcome-text");
-        //     if(window.innerWidth > 698) {
-        //         welcometext.style.fontSize = '1.6rem'
-        //     } else {
-        //         welcometext.style.fontSize = '14px';
-        //     }
-    
-        //     let firstLine = document.createElement('p');
-        //     firstLine.style.color = 'white';
-        //     //firstLine.style.fontSize = '15px';
-        //     firstLine.appendChild(document.createTextNode('Here you can swap Text, Images,'));
-        //     if(window.innerWidth > 698) {
-        //         firstLine.style.fontSize = '1.6rem'
-        //     } else {
-        //         firstLine.style.fontSize = '12px';
-        //     }
-        //     firstLine.setAttribute("id","first-line-text");
-    
-        //     let secondLine = document.createElement('p');
-        //     secondLine.style.color = 'white';
-        //    // secondLine.style.fontSize = '15px';
-        //     secondLine.appendChild(document.createTextNode('and other elements inside of flows.'));
-        //     if(window.innerWidth > 698) {
-        //         secondLine.style.fontSize = '1.6rem'
-        //     } else {
-        //         secondLine.style.fontSize = '12px';
-        //     }
-
-        //     secondLine.setAttribute("id","second-line-text");
-
-        //     let thirdLine = document.createElement('p');
-        //     thirdLine.style.color = 'white';
-        //     //thirdLine.style.fontSize = '15px';
-        //     thirdLine.appendChild(document.createTextNode('Click on the Remixable Items below to get started.'));
-        //     thirdLine.setAttribute("id", "third-line-text");
-        //     thirdLine.style.paddingBottom = '10px';
-        //     thirdLine.style.marginTop = '10px';
-        //     if(window.innerWidth > 698) {
-        //         thirdLine.style.fontSize = '1.6rem'
-        //     } else {
-        //         thirdLine.style.fontSize = '12px';
-        //     }
-        //     let fourthLine = document.createElement('p');
-        //     fourthLine.style.color = 'white';
-        //     //fourthLine.style.fontSize = '15px';
-        //    // fourthLine.appendChild(document.createTextNode('Click here for step by step'));
-        //     if(window.innerWidth > 698) {
-        //         fourthLine.style.fontSize = '1.6rem'
-        //     } else {
-        //         fourthLine.style.fontSize = '12px';
-        //     }
-    
-        //     let fifthLine = document.createElement('p');
-        //     fifthLine.style.color = 'white';
-        //     //fifthLine.style.fontSize = '15px';
-        //     //fifthLine.appendChild(document.createTextNode('video walkthroughs'));
-        //     if(window.innerWidth > 698) {
-        //         fifthLine.style.fontSize = '1.6rem'
-        //     } else {
-        //         fifthLine.style.fontSize = '12px';
-        //     }
-        //     let welcome_texts = document.createElement('div');
-    
-        //     let closet = document.createElement('p');
-        //     let closex = document.createElement('p');
-        //     let closeicon = document.createElement('i');
-        //     closeicon.setAttribute("class", "fa fa-times");
-        //     closeicon.style.color = 'white'; 
-        //     closeicon.style.float = 'right'; 
-        //     closeicon.style.fontSize = '15px';
-        //     closex.appendChild(closeicon);
-        //     closex.style.fontSize = '20px';
-        //     closex.style.color = 'white';
-        //     closet.appendChild(document.createTextNode('Close'));
-        //     closet.style.fontSize = '11px';
-        //     closet.style.color = 'white';
-        //     menuinfotop.appendChild(infinity);
-        //     closebox.appendChild(closet);
-        //     closebox.appendChild(closex);
-            
-        //     closebox.addEventListener('click', ()=>{
-        //         document.getElementById('menu-info').remove()
-        //     });
-        //     closebox.style.cursor = 'pointer';
-        //     menuinfotop.appendChild(closebox);
-        //     menuinfobox.appendChild(menuinfotop)
-        //     menuinfobox.appendChild(welcometext);
-        //     menuinfobox.style.padding = '20px';
-        //     menuinfobox.setAttribute("id", "menu-info-box");
-            
-        //     welcome_texts.appendChild(firstLine);
-        //     welcome_texts.appendChild(secondLine);
-        //     welcome_texts.appendChild(thirdLine);
-        //     welcome_texts.appendChild(fourthLine);
-        //     welcome_texts.appendChild(fifthLine);
-           
-       
-        //     if(this.state.welcome === false) {
-        //         menuinfo.appendChild(menuinfobox);
-            
-        //     menuinfobox.appendChild(welcome_texts);
-        //     menuinfobox.style.display = 'flex';
-        //     menuinfobox.style.justifyContent = 'center';
-        //     menuinfobox.style.flexDirection = 'column';
-        //     this.setState({welcome:true});
-        //     list.style.padding = '7px 14px 2px 7px';
-        //     list.appendChild(menuinfo);
-        //     }
-            
-            // if(thisElement !== null) {
-            //     if(thisElement.className !== 'menubg') {                            
-               
-            //         for(let i = 0; tabsWithMenubgClass.length; i++) {
-            //             if(tabsWithMenubgClass[i] != undefined) {
-            //                 if(tabsWithMenubgClass[i].id !== thisElement.id) {
-            //                     tabsWithMenubgClass[i].className = '';
-            //                 } 
-            //             }
-            //         }
-            //         thisElement.className = 'menubg'; 
-    
-            //         document.getElementById('remix-icon').style.backgroundImage = infinityIcon;
-            //         document.getElementById('remix-text').style.color = "rgb(54, 255, 233)";
-    
-            //         document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
-            //         document.getElementById('script-text').style.color = "rgb(82, 82, 82)";
-            //         if(document.getElementById('publish-new-icon') !== null) {
-            //             document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular-grey.svg)`;
-            //             document.getElementById('publish-text-new').style.color = "rgb(82, 82, 82)";
-            //             document.getElementById('publish-text-publish').style.color = 'rgb(82, 82, 82)'
-            //         }
-            //         document.getElementById('elements-icon').style.color = `rgb(82, 82, 82)`;
-            //         document.getElementById('elements-text').style.color = "rgb(82, 82, 82)";
-    
-            //         document.getElementById('apps-icon').style.color = `rgb(82, 82, 82)`;
-            //         document.getElementById('apps-text').style.color = "rgb(82, 82, 82)";
-    
-               
-            //         if(document.getElementById('element-menu') !== null) {
-            //             document.getElementById('element-menu').remove();
-            //         }
-            //         if(document.getElementById('app-menu') !== null) {
-            //             document.getElementById('app-menu').remove();
-            //         }
-            //         if(document.getElementById('elements') !== null) {
-            //             document.getElementById('elements').remove();
-            //         }
-
-            //         if(document.getElementById('search-input') !== null) {
-            //             document.getElementById('search-input').remove()
-            //         }
-
-            //         if(document.getElementById('search-giphy-wrap') !== null) {
-            //             document.getElementById('search-giphy-wrap').remove()
-            //         }
-
-            //         if(document.getElementById('close-search-wrap') !== null) {
-            //             document.getElementById('close-search-wrap').remove()
-            //         }
-
-            
-            //   // document.querySelector(".svgClass").getSVGDocument().getElementById("svgInternalID").setAttribute("fill", "red")
-    
-            //     }  
-            // }
-            // this.setState(
-            //         {
-            //             details:false,
-            //             objects:false,
-            //             comments:false,
-            //             draw:false,
-            //             remix:true,
-            //             preferences:false,
-            //             record:false
-      
-            //         }
-            // );
-            document.getElementById('main-menu').style.display = 'block';
-            document.getElementById('main-menu').style.overflowY = 'scroll';
-            //document.getElementById('main-menu').style.width = '269px';
-            isMenuOpen = true;
-        }
-        ElementsTabs(e) {
-            
-            let thisElement = document.getElementById(e.target.id);
-            let tabsWithMenubgClass = document.getElementsByClassName('menubg');
-            let menuinfo = document.getElementById('menu-info');
-            
-            this.funStuff('gifs');
-
-
-         
-
-            
-            // if(thisElement !== null) {
-                // if(thisElement.className !== 'menubg') {                            
-               
-                // for(let i = 0; tabsWithMenubgClass.length; i++) {
-                //     if(tabsWithMenubgClass[i] != undefined) {
-                //         if(tabsWithMenubgClass[i].id !== thisElement.id) {
-                //             tabsWithMenubgClass[i].className = 'menubgnot';
-                //         } 
-                //     }
-                // }
-                // thisElement.className = 'menubg'; 
-                // thisElement.style.transition = 'backgroundColor 0.2 ease-in'
-                // thisElement.style.transition = 'color 0.2s ease-in';
-
-
-                // document.getElementById('remix-icon').style.backgroundImage = infinityIconGray;
-                // document.getElementById('remix-icon').style.webkitTransition = 'background-image 0.2s ease-in-out';
-                // document.getElementById('remix-icon').style.transition = 'background-image 0.2s ease-in-out';
-                // document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
-                // document.getElementById('remix-text').style.transition = 'color 0.2s ease-in-out';
-
-                // document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
-                // document.getElementById('script-text').style.color = "rgb(82, 82, 82)";
-
-                // if(document.getElementById('publish-new-icon') !== null) {
-                //     document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular-grey.svg)`;
-                //     document.getElementById('publish-text-new').style.color = "rgb(82, 82, 82)";
-                //     document.getElementById('publish-text-publish').style.color = "rgb(82, 82, 82)";
-                // }
-                // document.getElementById('elements-icon').style.color = `rgb(54, 255, 233)`;
-                // document.getElementById('elements-text').style.color = 'rgb(54, 255, 233)';
-
-                // document.getElementById('elements-icon').style.transition = 'color 0.2s ease-in';
-                // document.getElementById('elements-text').style.transition = 'color 0.2s ease-in';
-            
-                // document.getElementById('apps-icon').style.color = `rgb(82, 82, 82)`;
-                // document.getElementById('apps-text').style.color = 'rgb(82, 82, 82)';
-
-                // let mainmenu = document.getElementById('main-menu');
-                // mainmenu.style.display = 'flex';
-                // mainmenu.style.width = '269px';
-                // mainmenu.style.padding = '10px'
-                // let element_menu = document.createElement('div');
-
-                // element_menu.style.display = 'flex';
-                // element_menu.style.width = '100%';
-                // element_menu.style.flexWrap = 'wrap';
-                // element_menu.setAttribute("id","element-menu");
-                // element_menu.style.top = '10px';
-                // element_menu.style.position = 'relative';
-                // element_menu.style.display = 'flex';
-                // element_menu.style.justifyContent = 'space-between';
-                // element_menu.style.padding = '0px 2px';
-                // element_menu.style.height = 'calc(100% - 124px)';
-                // element_menu.style.overflowY = 'scroll'
                 elements_arr.map((i) => {
-                    alert('cllrf')
-
+                     
                     let element = document.createElement('div');
                     if(i.images !== undefined) {
                         console.log(i.images.downsized_medium.url)
@@ -2153,13 +1553,13 @@ let apps = [{id:'childSnapShot.key',
                             element.style.height = '147px';
                             element.style.width = '147px';
                         }
-                 
+                       
                         element.style.border = '0px solid white';
-                         //element.style.marginRight = '7px';
-                         element.style.marginBottom = '12px';
+                        //element.style.marginRight = '7px';
+                        element.style.marginBottom = '12px';
                         element.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
+                        element.style.borderRadius = '4px';
                         element.style.backgroundSize = 'cover';
-                        element.style.borderRadius = '4px'
 
                         element.addEventListener('click',()=>{
                             let object = document.createElement('div');
@@ -2168,14 +1568,14 @@ let apps = [{id:'childSnapShot.key',
                             let resizerTwo = document.createElement('div');
                             let resizerThree = document.createElement('div');
                             let resizerFour = document.createElement('div');
-                            let header = document.createElement('div');
-                            header.style.height = '20px';
-                            header.style.width = '125px';
-                            //header.style.border = '1px solid black';
-                            header.style.position = 'relative';
-                            header.style.margin = 'auto';
-                            header.style.display = 'flex';
-                            header.style.top = '-34px';
+                            // let header = document.createElement('div');
+                            // header.style.height = '20px';
+                            // header.style.width = '125px';
+                            // //header.style.border = '1px solid black';
+                            // header.style.position = 'relative';
+                            // header.style.margin = 'auto';
+                            // header.style.display = 'flex';
+                            // header.style.top = '-34px';
 
                             let dragwrapper = document.createElement('div');
                             dragwrapper.style.display = 'flex';
@@ -2187,53 +1587,53 @@ let apps = [{id:'childSnapShot.key',
                             dragwrapper.style.justifyContent = 'space-between';
 
 
-                            let minimize = document.createElement('div');
-                            minimize.setAttribute("id", 'minimize_' + i.id);
-                            let minicon = document.createElement('i');
-                            minicon.style.color = 'white';
-                            minicon.className = 'fas fa-window-minimize';
-                            // minicon.style.fontSize = '20px';
+                            // let minimize = document.createElement('div');
+                            // minimize.setAttribute("id", 'minimize_' + i.id);
+                            // let minicon = document.createElement('i');
+                            // minicon.style.color = 'white';
+                            // minicon.className = 'fas fa-window-minimize';
+                            // // minicon.style.fontSize = '20px';
 
-                            minimize.appendChild(minicon);
+                            // minimize.appendChild(minicon);
                             //minimize.style.height = '20px';
                             //minimize.style.width = '20px';
                             //minimize.style.border = '1px solid black';
 
-                            let maximize = document.createElement('div');
-                            maximize.setAttribute("id", 'maximize_' + i.id);
-                            let maxicon = document.createElement('i');
-                            maxicon.style.color = 'white';
-                            maxicon.className = 'fas fa-window-maximize';
-                            maximize.appendChild(maxicon);
+                            // let maximize = document.createElement('div');
+                            // maximize.setAttribute("id", 'maximize_' + i.id);
+                            // let maxicon = document.createElement('i');
+                            // maxicon.style.color = 'white';
+                            // maxicon.className = 'fas fa-window-maximize';
+                            // maximize.appendChild(maxicon);
 
                             //maximize.style.border = '1px solid black';
 
-                            let close = document.createElement('div');
-                            close.setAttribute('id', 'close_' + i.id);
-                            let closeicon = document.createElement('i');
-                            //closeicon.style.color = 'white';
-                            //closeicon.className = 'fas fa-window-close';
-                            //close.appendChild(closeicon);
+                            // let close = document.createElement('div');
+                            // close.setAttribute('id', 'close_' + i.id);
+                            // let closeicon = document.createElement('i');
+                            // closeicon.style.color = 'white';
+                            // closeicon.className = 'fas fa-window-close';
+                            // close.appendChild(closeicon);
 
-                            //close.style.border = '1px solid black';
+                            // //close.style.border = '1px solid black';
 
-                            dragwrapper.appendChild(minimize);
-                            dragwrapper.appendChild(maximize);
-                            dragwrapper.appendChild(close);
+                            // dragwrapper.appendChild(minimize);
+                            // dragwrapper.appendChild(maximize);
+                            // dragwrapper.appendChild(close);
 
-                            header.appendChild(dragwrapper);
+                            // header.appendChild(dragwrapper);
 
 
-                            header.style.display = 'flex';
-                            header.style.flexDirection = 'row';
-                            header.style.alignItems = 'center';
-                            header.setAttribute("id", `${i.id+'header'}`);  
-                            header.setAttribute("class", "draggable")
-                            let dragMe = document.createElement('p');
+                            // header.style.display = 'flex';
+                            // header.style.flexDirection = 'row';
+                            // header.style.alignItems = 'center';
+                            // header.setAttribute("id", `${i.id+'header'}`);  
+                            // header.setAttribute("class", "draggable")
+                            // let dragMe = document.createElement('p');
 
-                            dragMe.appendChild(document.createTextNode('DRAG'));
-                            dragMe.style.color = 'white';
-                            header.appendChild(dragMe);
+                            // dragMe.appendChild(document.createTextNode('DRAG'));
+                            // dragMe.style.color = 'white';
+                            // header.appendChild(dragMe);
 
                             let hashids = new Hashids(uuid(), 6);
 
@@ -2246,16 +1646,8 @@ let apps = [{id:'childSnapShot.key',
 
 
                             object.style.backgroundSize = 'cover';
-                            if(window.innerWidth < 698) {
-                                object.style.height = '117px';
-                                object.style.width = '117px';
-                            } else {
-                                object.style.height = '147px';
-                                object.style.width = '147px';
-                            }
-                            
-
-
+                            object.style.height = '100px';
+                            object.style.width = '100px';
                             object.style.border = '1px solid white';
                             //object.style.zIndex = '1000000000000000000000000';
                             object.className = 'resizable';
@@ -2280,7 +1672,7 @@ let apps = [{id:'childSnapShot.key',
                             let dragSection = document.createElement('div');
                             dragSection.style.height = '30px';
                             dragSection.style.width = '100%';
-                            document.getElementById('output_frame').contentDocument.body.style.display = 'flex';
+                            //document.getElementById('output_frame').contentDocument.body.style.display = 'flex';
                             let div = document.createElement('div');
                             //div.style.height = '200px';
                             // div.style.width = '300px';
@@ -2313,31 +1705,30 @@ let apps = [{id:'childSnapShot.key',
                             
                             div.appendChild(resizable);
                             
-
                             document.getElementById('overlay_output_frame').contentDocument.getElementById('overlay-container').appendChild(div);
                             document.getElementById('overlay_output_frame').contentDocument.body.style.padding = '10px';
                 
                             resizable.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
                            
-                            //this.makeResizableDiv(`#${i.id}`);
+                            this.makeResizableDiv(`#${i.id}`);
                             
-                            const xDraggables = document.getElementById('overlay_output_frame').contentWindow.Subjx(`#${object.id}`).drag({
+                            // const xDraggables = document.getElementById('overlay_output_frame').contentWindow.Subjx(`#${object.id}`).drag({
                                 
-                            container:`#container${object.id}`,
-                            each: {
-                                move: false,
-                                resize: true, 
-                                rotate: true
-                            }
-                            // snapping to grid (default: 10)
+                            // container:`#container${object.id}`,
+                            // each: {
+                            //     move: false,
+                            //     resize: true, 
+                            //     rotate: true
+                            // }
+                            // // snapping to grid (default: 10)
     
-                            });
+                            // });
 
 
                         
     
     
-                        
+                            //}
                             let dhtml = JSON.parse(localStorage.getItem("dhtml"));
 
                             let html = document.getElementById('output_frame').contentWindow.document.body.innerHTML;
@@ -2349,163 +1740,409 @@ let apps = [{id:'childSnapShot.key',
 
                         })
 
-                        //element_menu.appendChild(element);
+                        document.getElementById('element-menu').appendChild(element)
                     }
                 });
+                console.log('the arr now', elements_arr.length)
+            }).catch((err) => { })
+          
+            /// Sticker Search
+        }
+            
+        }
+  removeDuplicates(originalArray, prop) {
+            var newArray = [];
+            var lookupObject  = {};
+       
+            for(var i in originalArray) {
+               lookupObject[originalArray[i][prop]] = originalArray[i];
+            }
+       
+            for(i in lookupObject) {
+                newArray.push(lookupObject[i]);
+            }
+             return newArray;
+    }
+        RemixTab(e) {
+          
+        //    let elem = document.getElementById('Fill-1');
+        //     elem.setAttribute("style", "fill:#40FFE8");
+        //     document.getElementById('remix-text').style.color = '#40FFE8';
+            document.getElementById('main-menu').style.display = 'block';
+            document.getElementById('main-menu').style.overflowY = 'scroll';
+            document.getElementById('main-menu').style.width = '330px';
+            isMenuOpen = true;
+        }
+        ElementsTabs(e) {
+            
+            this.funStuff('gifs');
 
-                let searchGIFS = document.createElement('div');
-                let closeSearch = document.createElement('i');
-                let closeSearchWrap = document.createElement('div');
-                let searchInput = document.createElement('input');
-                searchInput.setAttribute("id","search-input");
-                searchInput.style.color = 'white';
-                searchInput.style.fontSize = '12px';
-                let searchGiphy = document.createElement('div');
-                let searchGiphyWrap = document.createElement('div');
-                searchGiphyWrap.setAttribute("id", "search-giphy-wrap");
-                closeSearchWrap.setAttribute("id","close-search-wrap");
-                var typingTimer;
-                var doneTypingInterval = 700;
-                let that = this;
-                searchInput.addEventListener('input',(e)=>{
-                    elements_arr = []
-                    let getSel = document.getElementsByClassName('elementbg')
-                    clearTimeout(typingTimer);
-                    typingTimer = setTimeout(
-                    function(){
-                        document.getElementById('element-menu').innerHTML = '';
-                        that.funStuff(getSel[0].innerText.toLowerCase(), e.target.value);
-                        that.setState({funType:e.target.value})
+            //     elements_arr.map((i) => {
+            //         alert('cllrf')
+
+            //         let element = document.createElement('div');
+            //         if(i.images !== undefined) {
+            //             console.log(i.images.downsized_medium.url)
+            //             if(window.innerWidth < 698) {
+            //                 element.style.height = '117px';
+            //                 element.style.width = '117px';
+            //             } else {
+            //                 element.style.height = '147px';
+            //                 element.style.width = '147px';
+            //             }
+                 
+            //             element.style.border = '0px solid white';
+            //              //element.style.marginRight = '7px';
+            //              element.style.marginBottom = '12px';
+            //             element.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
+            //             element.style.backgroundSize = 'cover';
+            //             element.style.borderRadius = '4px'
+
+            //             element.addEventListener('click',()=>{
+            //                 let object = document.createElement('div');
+            //                 let resizers = document.createElement('div');
+            //                 let resizerOne = document.createElement('div');
+            //                 let resizerTwo = document.createElement('div');
+            //                 let resizerThree = document.createElement('div');
+            //                 let resizerFour = document.createElement('div');
+            //                 let header = document.createElement('div');
+            //                 header.style.height = '20px';
+            //                 header.style.width = '125px';
+            //                 //header.style.border = '1px solid black';
+            //                 header.style.position = 'relative';
+            //                 header.style.margin = 'auto';
+            //                 header.style.display = 'flex';
+            //                 header.style.top = '-34px';
+
+            //                 let dragwrapper = document.createElement('div');
+            //                 dragwrapper.style.display = 'flex';
+            //                 dragwrapper.style.height = '20px';
+            //                 dragwrapper.style.width = '64px';
+            //                 //dragwrapper.style.border = '1px solid black';
+            //                 dragwrapper.style.position = 'absolute';
+            //                 dragwrapper.style.right = '0px';
+            //                 dragwrapper.style.justifyContent = 'space-between';
+
+
+            //                 let minimize = document.createElement('div');
+            //                 minimize.setAttribute("id", 'minimize_' + i.id);
+            //                 let minicon = document.createElement('i');
+            //                 minicon.style.color = 'white';
+            //                 minicon.className = 'fas fa-window-minimize';
+            //                 // minicon.style.fontSize = '20px';
+
+            //                 minimize.appendChild(minicon);
+            //                 //minimize.style.height = '20px';
+            //                 //minimize.style.width = '20px';
+            //                 //minimize.style.border = '1px solid black';
+
+            //                 let maximize = document.createElement('div');
+            //                 maximize.setAttribute("id", 'maximize_' + i.id);
+            //                 let maxicon = document.createElement('i');
+            //                 maxicon.style.color = 'white';
+            //                 maxicon.className = 'fas fa-window-maximize';
+            //                 maximize.appendChild(maxicon);
+
+            //                 //maximize.style.border = '1px solid black';
+
+            //                 let close = document.createElement('div');
+            //                 close.setAttribute('id', 'close_' + i.id);
+            //                 let closeicon = document.createElement('i');
+            //                 //closeicon.style.color = 'white';
+            //                 //closeicon.className = 'fas fa-window-close';
+            //                 //close.appendChild(closeicon);
+
+            //                 //close.style.border = '1px solid black';
+
+            //                 dragwrapper.appendChild(minimize);
+            //                 dragwrapper.appendChild(maximize);
+            //                 dragwrapper.appendChild(close);
+
+            //                 header.appendChild(dragwrapper);
+
+
+            //                 header.style.display = 'flex';
+            //                 header.style.flexDirection = 'row';
+            //                 header.style.alignItems = 'center';
+            //                 header.setAttribute("id", `${i.id+'header'}`);  
+            //                 header.setAttribute("class", "draggable")
+            //                 let dragMe = document.createElement('p');
+
+            //                 dragMe.appendChild(document.createTextNode('DRAG'));
+            //                 dragMe.style.color = 'white';
+            //                 header.appendChild(dragMe);
+
+            //                 let hashids = new Hashids(uuid(), 6);
+
+
+            //                 // resizers.className = 'resizers';
+            //                 // resizerOne.className = 'resizer top-left';
+            //                 // resizerTwo.className = 'resizer top-right';
+            //                 // resizerThree.className = 'resizer bottom-left';
+            //                 // resizerFour.className = 'resizer bottom-right';
+
+
+            //                 object.style.backgroundSize = 'cover';
+            //                 if(window.innerWidth < 698) {
+            //                     object.style.height = '117px';
+            //                     object.style.width = '117px';
+            //                 } else {
+            //                     object.style.height = '147px';
+            //                     object.style.width = '147px';
+            //                 }
+                            
+
+
+            //                 object.style.border = '1px solid white';
+            //                 //object.style.zIndex = '1000000000000000000000000';
+            //                 object.className = 'resizable';
+            //                // object.style.position = 'absolute';
+            //                 object.style.top = '0px';
+            //                 let object_id = 'OBJECT_' + hashids.encode(1,2,3);
+            //                 object.setAttribute("id", object_id);
+            //                 // resizers.appendChild(resizerOne);
+            //                 // resizers.appendChild(resizerTwo);
+            //                 // resizers.appendChild(resizerThree)
+            //                 // resizers.appendChild(resizerFour);
+
+            //                 //object.appendChild(header)
+            //                 //object.appendChild(resizers);
+
+            //                 console.log(i)
+
+
+
+            //                 //if(i.type === 'gif') {
+            //                 let objectWrapper = document.createElement('div');
+            //                 let dragSection = document.createElement('div');
+            //                 dragSection.style.height = '30px';
+            //                 dragSection.style.width = '100%';
+            //                 document.getElementById('output_frame').contentDocument.body.style.display = 'flex';
+            //                 let div = document.createElement('div');
+            //                 //div.style.height = '200px';
+            //                 // div.style.width = '300px';
+            //                 div.style.margin = '10px 20px'
+            //                 div.style.border = '0px solid blue';
+            //                 div.style.position = 'relative';
+            //                 div.setAttribute("id", `container${object.id}`);
+            //                 let resizable = document.createElement('div');
+            //                 resizable.className = 'resizable';
+
+            //                 let resizers_box = document.createElement('div');
+            //                 resizers_box.className = 'resizers';
+            //                 let resizerTopLeft = document.createElement('div');
+            //                 resizerTopLeft.className = 'resizer top-left';
+            //                 let resizerTopRight = document.createElement('div');
+            //                 resizerTopRight.className = 'resizer top-right';
+            //                 let resizerBottomLeft = document.createElement('div');
+            //                 resizerBottomLeft.className = 'resizer bottom-left';
+            //                 let resizerBottomRight = document.createElement('div');
+            //                 resizerBottomRight.className = 'resizer bottom-right';
+
+            //                 resizers_box.appendChild(resizerTopLeft);
+            //                 resizers_box.appendChild(resizerTopRight);
+            //                 resizers_box.appendChild(resizerBottomLeft);
+            //                 resizers_box.appendChild(resizerBottomRight);
+
+            //                 resizable.setAttribute("id",`${i.id}`)
+            //                 resizable.appendChild(resizers_box);
+            //                 //resizable.appendChild(object)
+                            
+            //                 div.appendChild(resizable);
+                            
+
+            //                 document.getElementById('overlay_output_frame').contentDocument.getElementById('overlay-container').appendChild(div);
+            //                 document.getElementById('overlay_output_frame').contentDocument.body.style.padding = '10px';
+                
+            //                 resizable.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
+                           
+            //                 //this.makeResizableDiv(`#${i.id}`);
+                            
+            //                 const xDraggables = document.getElementById('overlay_output_frame').contentWindow.Subjx(`#${object.id}`).drag({
+                                
+            //                 container:`#container${object.id}`,
+            //                 each: {
+            //                     move: false,
+            //                     resize: true, 
+            //                     rotate: true
+            //                 }
+            //                 // snapping to grid (default: 10)
+    
+            //                 });
+
+
+                        
+    
+    
+                        
+            //                 let dhtml = JSON.parse(localStorage.getItem("dhtml"));
+
+            //                 let html = document.getElementById('output_frame').contentWindow.document.body.innerHTML;
+            //                 let dhtmlObj = {html:html, js:dhtml.js, css:dhtml.css}
+
+
+            //                 localStorage.setItem("dhtml", JSON.stringify(dhtmlObj));
+
+
+            //             })
+
+            //             //element_menu.appendChild(element);
+            //         }
+            //     });
+
+            //     let searchGIFS = document.createElement('div');
+            //     let closeSearch = document.createElement('i');
+            //     let closeSearchWrap = document.createElement('div');
+            //     let searchInput = document.createElement('input');
+            //     searchInput.setAttribute("id","search-input");
+            //     searchInput.style.color = 'white';
+            //     searchInput.style.fontSize = '12px';
+            //     let searchGiphy = document.createElement('div');
+            //     let searchGiphyWrap = document.createElement('div');
+            //     searchGiphyWrap.setAttribute("id", "search-giphy-wrap");
+            //     closeSearchWrap.setAttribute("id","close-search-wrap");
+            //     var typingTimer;
+            //     var doneTypingInterval = 700;
+            //     let that = this;
+            //     searchInput.addEventListener('input',(e)=>{
+            //         elements_arr = []
+            //         let getSel = document.getElementsByClassName('elementbg')
+            //         clearTimeout(typingTimer);
+            //         typingTimer = setTimeout(
+            //         function(){
+            //             document.getElementById('element-menu').innerHTML = '';
+            //             that.funStuff(getSel[0].innerText.toLowerCase(), e.target.value);
+            //             that.setState({funType:e.target.value})
                   
                        
-                    },
-                        doneTypingInterval
-                    );
+            //         },
+            //             doneTypingInterval
+            //         );
             
-                    return true;
-                });
-                searchInput.value = this.state.funType
+            //         return true;
+            //     });
+            //     searchInput.value = this.state.funType
 
-                searchGIFS.style.height = '20px';   
-                searchGIFS.style.width = '150px';
-                searchGIFS.style.border = '1px solid white';
+            //     searchGIFS.style.height = '20px';   
+            //     searchGIFS.style.width = '150px';
+            //     searchGIFS.style.border = '1px solid white';
 
-                searchGiphy.style.backgroundImage = 'url(/poweredbygiphy.png';
-                searchGiphy.style.backgroundSize = 'contain';
-                searchGiphy.style.backgroundRepeat = 'no-repeat';
-                searchGiphy.style.height = '20px';
-                searchGiphy.style.width = '130px';
-                searchGiphy.style.float = 'right';
+            //     searchGiphy.style.backgroundImage = 'url(/poweredbygiphy.png';
+            //     searchGiphy.style.backgroundSize = 'contain';
+            //     searchGiphy.style.backgroundRepeat = 'no-repeat';
+            //     searchGiphy.style.height = '20px';
+            //     searchGiphy.style.width = '130px';
+            //     searchGiphy.style.float = 'right';
 
-                searchGiphyWrap.style.height = '20px';
-                searchGiphyWrap.style.width = '100%';
-                searchGiphyWrap.appendChild(searchGiphy);
+            //     searchGiphyWrap.style.height = '20px';
+            //     searchGiphyWrap.style.width = '100%';
+            //     searchGiphyWrap.appendChild(searchGiphy);
 
-                let elementTabs = document.createElement('ul');
+            //     let elementTabs = document.createElement('ul');
 
-                elementTabs.style.display = 'flex';
-                elementTabs.style.alignItems = 'center';
-                elementTabs.style.height = '30px';
-                elementTabs.style.width = '245px';
-                elementTabs.style.border = '0px solid white';
-                elementTabs.style.padding = '10px 0px';
-                elementTabs.setAttribute("id","elements")
-                closeSearch.style.color = 'white';
-                //closeSearch.className = 'fa fa-times';
-                closeSearch.style.float = 'right'
-                closeSearch.style.fontSize = '15px'
-                closeSearchWrap.style.width = '100%';
-                closeSearchWrap.style.height = '20px';
+            //     elementTabs.style.display = 'flex';
+            //     elementTabs.style.alignItems = 'center';
+            //     elementTabs.style.height = '30px';
+            //     elementTabs.style.width = '245px';
+            //     elementTabs.style.border = '0px solid white';
+            //     elementTabs.style.padding = '10px 0px';
+            //     elementTabs.setAttribute("id","elements")
+            //     closeSearch.style.color = 'white';
+            //     //closeSearch.className = 'fa fa-times';
+            //     closeSearch.style.float = 'right'
+            //     closeSearch.style.fontSize = '15px'
+            //     closeSearchWrap.style.width = '100%';
+            //     closeSearchWrap.style.height = '20px';
 
            
             
-                for(let i=0; i < element_options.length; i++) {
-                    let li = document.createElement('li');
-                    li.style.color = 'white';
-                    li.style.listStyleType = 'none';
-                    li.style.fontSize = '14px';
-                    li.style.fontFamily = 'Open Sans';
-                    li.style.cursor = 'pointer';
-                    li.setAttribute("id",`ELEMENTS_${element_options[i]}`)
-                    li.appendChild(document.createTextNode(element_options[i]));
-                    li.addEventListener('click', ()=> {
-                        let elements = document.getElementsByClassName('elementbg');
-                        for(let i =0; i < elements.length; i++) {
-                            elements[i].className = '';
-                        }
-                        li.className = 'elementbg';
-                        this.funStuff('gifs');
-                    })
+            //     for(let i=0; i < element_options.length; i++) {
+            //         let li = document.createElement('li');
+            //         li.style.color = 'white';
+            //         li.style.listStyleType = 'none';
+            //         li.style.fontSize = '14px';
+            //         li.style.fontFamily = 'Open Sans';
+            //         li.style.cursor = 'pointer';
+            //         li.setAttribute("id",`ELEMENTS_${element_options[i]}`)
+            //         li.appendChild(document.createTextNode(element_options[i]));
+            //         li.addEventListener('click', ()=> {
+            //             let elements = document.getElementsByClassName('elementbg');
+            //             for(let i =0; i < elements.length; i++) {
+            //                 elements[i].className = '';
+            //             }
+            //             li.className = 'elementbg';
+            //             this.funStuff('gifs');
+            //         })
                  
-                    elementTabs.appendChild(li);
+            //         elementTabs.appendChild(li);
                     
-                }
+            //     }
                 
-                let elemetBox = document.createElement('div');
-                closeSearchWrap.appendChild(closeSearch);
-                searchInput.style.backgroundColor = '#252525';
-                searchInput.style.height = '30px';
-                searchInput.style.width = '100%';
-                searchInput.style.border = 'none';
-                searchInput.style.margin = '10px 0px';
-                searchInput.style.outline = 'none';
-                searchInput.style.paddingLeft = '10px';
-                searchInput.style.color = 'rgb(64, 255, 232)';
-                searchInput.style.fontSize = '15px';
+            //     let elemetBox = document.createElement('div');
+            //     closeSearchWrap.appendChild(closeSearch);
+            //     searchInput.style.backgroundColor = '#252525';
+            //     searchInput.style.height = '30px';
+            //     searchInput.style.width = '100%';
+            //     searchInput.style.border = 'none';
+            //     searchInput.style.margin = '10px 0px';
+            //     searchInput.style.outline = 'none';
+            //     searchInput.style.paddingLeft = '10px';
+            //     searchInput.style.color = 'rgb(64, 255, 232)';
+            //     searchInput.style.fontSize = '15px';
 
-                searchInput.setAttribute("placeholder", 'Search for stuff here...');
-                searchInput.className = 'search-placeholder';
-                document.getElementById('main-menu').appendChild(closeSearchWrap);
+            //     searchInput.setAttribute("placeholder", 'Search for stuff here...');
+            //     searchInput.className = 'search-placeholder';
+            //     document.getElementById('main-menu').appendChild(closeSearchWrap);
                 
                
 
-                // if(document.getElementById('element-menu') === null) {
-                //     mainmenu.appendChild(elementTabs);
-                //     //mainmenu.appendChild(searchGIFS);
-                //     document.getElementById('main-menu').appendChild(searchInput);
-                //     document.getElementById('main-menu').appendChild(searchGiphyWrap);
-                //     mainmenu.appendChild(element_menu);
+            //     // if(document.getElementById('element-menu') === null) {
+            //     //     mainmenu.appendChild(elementTabs);
+            //     //     //mainmenu.appendChild(searchGIFS);
+            //     //     document.getElementById('main-menu').appendChild(searchInput);
+            //     //     document.getElementById('main-menu').appendChild(searchGiphyWrap);
+            //     //     mainmenu.appendChild(element_menu);
 
-                // }   
-                // if(this.state.element_menu === false) {
-                //     mainmenu.appendChild(element_menu);
-                //     this.setState({element_menu:true});
-                // }
+            //     // }   
+            //     // if(this.state.element_menu === false) {
+            //     //     mainmenu.appendChild(element_menu);
+            //     //     this.setState({element_menu:true});
+            //     // }
 
                
-                // if(menuinfo !== null) {
-                //     menuinfo.remove();
-                //     this.setState({welcome:false});
-                // }
+            //     // if(menuinfo !== null) {
+            //     //     menuinfo.remove();
+            //     //     this.setState({welcome:false});
+            //     // }
 
-                // if(document.getElementById('element-menu') !== null) {
-                //     document.getElementById('element-menu').remove();
-                // }
+            //     // if(document.getElementById('element-menu') !== null) {
+            //     //     document.getElementById('element-menu').remove();
+            //     // }
 
-                // if(document.getElementById('app-menu') !== null) {
-                //     document.getElementById('app-menu').remove();
-                //    }
+            //     // if(document.getElementById('app-menu') !== null) {
+            //     //     document.getElementById('app-menu').remove();
+            //     //    }
 
-                //    if(document.getElementById('remix-image-box') !== null) {
-                //     document.getElementById('remix-image-box').remove();
-                //    }
+            //     //    if(document.getElementById('remix-image-box') !== null) {
+            //     //     document.getElementById('remix-image-box').remove();
+            //     //    }
 
-                //    this.setState(
-                //         {
-                //             details:false,
-                //             objects:false,
-                //             comments:false,
-                //             draw:false,
-                //             remix:false,
-                //             showPublish:false,
-                //             script_menu:false
-                //         }
-                //     );
+            //     //    this.setState(
+            //     //         {
+            //     //             details:false,
+            //     //             objects:false,
+            //     //             comments:false,
+            //     //             draw:false,
+            //     //             remix:false,
+            //     //             showPublish:false,
+            //     //             script_menu:false
+            //     //         }
+            //     //     );
 
-                //}
-                //document.getElementById("ELEMENTS_GIFS").className = 'elementbg';
-                //document.getElementById("ELEMENTS_GIFS").style.fontWeight = '900'
-            //}
+            //     //}
+            //     //document.getElementById("ELEMENTS_GIFS").className = 'elementbg';
+            //     //document.getElementById("ELEMENTS_GIFS").style.fontWeight = '900'
+            // //}
 
             // document.getElementById('publish-section').style.display = 'none';
             document.getElementById('main-menu').style.display = 'block';
@@ -2513,58 +2150,21 @@ let apps = [{id:'childSnapShot.key',
             
         
     }
-        AppsTab(e) {
+    AppTab() {
 
+       
     
-
-            // let thisElement = document.getElementById(e.target.id);
-            // let tabsWithMenubgClass = document.getElementsByClassName('menubg');
-            // if(thisElement !== null) {
-            //     if(thisElement.className !== 'menubg') {                            
-               
-            //         for(let i = 0; tabsWithMenubgClass.length; i++) {
-            //             if(tabsWithMenubgClass[i] != undefined) {
-            //                 if(tabsWithMenubgClass[i].id !== thisElement.id) {
-            //                     tabsWithMenubgClass[i].className = 'menubgnot';
-            //                 } 
-            //             }
-            //         }
-            //         thisElement.className = 'menubg'; 
-
-            //         document.getElementById('remix-icon').style.backgroundImage = infinityIcon;
-            //         document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
-
-            //         document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
-            //         document.getElementById('script-text').style.color = "rgb(82, 82, 82)";
-
-            //         if(document.getElementById('publish-new-icon') !== null) {
-            //             document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular-grey.svg)`;
-            //         }
-            //         //document.getElementById('publish-text').style.color = "rgb(82, 82, 82)";
-            //         document.getElementById('publish-text-publish').style.color = "rgb(82, 82, 82)";
-            //         document.getElementById('publish-text-new').style.color = "rgb(82, 82, 82)";
-
-            //         document.getElementById('elements-icon').style.color = `rgb(82, 82, 82)`;
-            //         document.getElementById('elements-text').style.color = "rgb(82, 82, 82)";
-
-               
-               
-            //         document.getElementById('apps-icon').style.color = `rgb(54, 255, 233)`;
-            //         document.getElementById('apps-text').style.color = "rgb(54, 255, 233)";
-            //         if(document.getElementById('element-menu') !== null) {
-            //             document.getElementById('element-menu').remove();
-            //         }
-
         
-                    let mainmenu = document.getElementById('main-menu');
-                    mainmenu.style.display = 'flex';
-                    mainmenu.style.width = '269px';
-                    mainmenu.style.padding = '10px'
+                    // let mainmenu = document.getElementById('main-menu');
+                    // mainmenu.style.display = 'flex';
+                    // // mainmenu.style.width = '330px';
+                    // mainmenu.style.padding = '10px'
                     let app_menu = document.getElementById('app-menu');
                     // app_menu.style.display = 'flex';
                     // app_menu.style.width = '100%';
                     // app_menu.style.flexWrap = 'wrap';
-                    // app_menu.setAttribute("id","app-menu")
+                
+
                     apps.map((i) => {
                     
                         let app = document.createElement('div');
@@ -2611,6 +2211,9 @@ let apps = [{id:'childSnapShot.key',
                         thumbnail.style.backgroundRepeat = 'center'
                         thumbnail.style.marginTop = 10;
                         app.appendChild(thumbnail)
+                        app.addEventListener('click',()=>{
+                            this.props.flowAdd({flowAdd:i.shortID})
+                        })
                         
                         // resizers.className = 'resizers';
                         // resizerOne.className = 'resizer top-left';
@@ -2691,196 +2294,10 @@ let apps = [{id:'childSnapShot.key',
 
                         app_menu.appendChild(app);
                     });
-                    // if(document.getElementById('menu-info') !== null) {
-                    //     document.getElementById('menu-info').remove();
-                    //     this.setState({welcome:false});
-                    // }
-                    // if(document.getElementById('app-menu') === null) {
-                    //     mainmenu.appendChild(app_menu);
-                    // }
-                    // if(document.getElementById('menu-info-box') !== null) {
-                    //     document.getElementById('menu-info-box').remove()
-                    // }
-              
-
-                    // if(document.getElementById('remix-image-box') !== null) {
-                    //     document.getElementById('remix-image-box').remove();
-                    // }
-
-                    // if(document.getElementById('elements') !== null) {
-                    //     document.getElementById('elements').remove();
-                    // }
-
-                    // if(document.getElementById('search-input') !== null) {
-                    //     document.getElementById('search-input').remove()
-                    // }
-
-                    // if(document.getElementById('search-giphy-wrap') !== null) {
-                    //     document.getElementById('search-giphy-wrap').remove()
-                    // }
-
-                    // if(document.getElementById('close-search-wrap') !== null) {
-                    //     document.getElementById('close-search-wrap').remove()
-                    // }
-
-               
-
-                    // this.setState(
-                    //     {
-                    //         details:false,
-                    //         objects:false,
-                    //         comments:false,
-                    //         draw:false,
-                    //         remix:false,
-                    //         showPublish:false,
-                    //         script_menu:false
-                    //     }
-                    // );
-
-                    // if(this.state.app_menu === false) {
-                   
-                    //     mainmenu.appendChild(app_menu);
-                    //     this.setState({app_menu:true, script_menu:false});
-                    // }
-                    // this.setState({script_menu:false});
-                  
-
-            
-
-                    // if(document.getElementById('element-menu') !== null) {
-                    //     document.getElementById('element-menu').remove();
-                    // }
-
-
-                
-               
-               // }
-            //}
-            // document.getElementById('publish-section').style.display = 'none';
-            // document.getElementById('main-menu').style.display = 'block';
-            // document.getElementById('main-menu').style.overflowY = 'scroll';
-
-            // if(this.props.state.flowAdd.flowAdd !== true) {
-            //     this.props.flowAdd({flowAdd:true});
-            //     // document.getElementById("default-modal").style.display = 'block'
-            //     // document.getElementById("default-modal").style.top = '80px'
-    
-            // } else {
-            //     this.props.flowAdd({flowAdd:false});
-            //     // document.getElementById("default-modal").style.display = 'none'
-            //     // document.getElementById("default-modal").style.top = '80px'
-    
-            // }
+                    
         }
         ScriptTag(e){
-
-            let thisElement = document.getElementById(e.target.id);
-            let tabsWithMenubgClass = document.getElementsByClassName('menubg');
-            let menuinfo = document.getElementById('menu-info');
-
             
-            
-            
-            if(thisElement !== undefined) {
-                if(thisElement.className !== 'menubg') {                            
-               
-                    for(let i = 0; tabsWithMenubgClass.length; i++) {
-                        if(tabsWithMenubgClass[i] != undefined) {
-                            if(tabsWithMenubgClass[i].id !== thisElement.id) {
-                                tabsWithMenubgClass[i].className = 'menubgnot';
-                            } 
-                        }
-                    }
-                    thisElement.className = 'menubg'; 
-
-                    document.getElementById('remix-icon').style.backgroundImage = infinityIcon;
-                    document.getElementById('remix-text').style.color = "rgb(82, 82, 82)";
-
-                    document.getElementById('script-icon').style.backgroundImage = `url(../code_cyan.svg)`;
-                    document.getElementById('script-text').style.color = "rgb(54, 255, 233)";
-                    if(document.getElementById('publish-new-icon') !== null) {
-                    document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular-grey.svg)`;
-                    }
-                    //document.getElementById('publish-text').style.color = "rgb(82, 82, 82)";
-                    document.getElementById('publish-text-publish').style.color = "rgb(82, 82, 82)";
-                    document.getElementById('publish-text-new').style.color = "rgb(82, 82, 82)";
-
-                    document.getElementById('apps-icon').style.color = `rgb(82, 82, 82)`;
-                    document.getElementById('apps-text').style.color = "rgb(82, 82, 82)";
-
-                    document.getElementById('elements-icon').style.color = `rgb(82, 82, 82)`;
-                    document.getElementById('elements-text').style.color = 'rgb(82, 82, 82)';
-                    if(document.getElementById('menu-info') !== null) {
-                        document.getElementById('menu-info').remove();
-                        this.setState({welcome:false});
-                        }
-                    if(document.getElementById('app-menu') !== null){
-                        document.getElementById('app-menu').remove();
-                    }
-                    // if(menuinfo !== null) {
-                    //     menuinfo.remove()
-                    // }
-                    // if(document.getElementById('menu-info-box') !== null) {
-                    //     document.getElementById('menu-info-box').remove()
-                    //    }
-                    if(document.getElementById('element-menu') !== null) {
-                        document.getElementById('element-menu').remove();
-                    }
-         
-                    if(document.getElementById('remix-image-box') !== null) {
-                        document.getElementById('remix-image-box').remove();
-                       }
-
-                       if(document.getElementById('elements') !== null) {
-                        document.getElementById('elements').remove();
-                       }
-                       
-                       if(document.getElementById('search-input') !== null) {
-                        document.getElementById('search-input').remove()
-                    }
-
-                    if(document.getElementById('search-giphy-wrap') !== null) {
-                        document.getElementById('search-giphy-wrap').remove()
-                    }
-
-                    if(document.getElementById('close-search-wrap') !== null) {
-                        document.getElementById('close-search-wrap').remove()
-                    }
-
-                       this.setState(
-                        {
-                            details:false,
-                            objects:false,
-                            comments:false,
-                            draw:false,
-                            remix:false,
-                            showPublish:false,
-                            script_menu:true
-                        }
-                    );
-
-                       
-                       this.setState({script_menu:true});
-                                   
-
-                    
-
-                }
-                document.getElementById('publish-section').style.display = 'none';
-                document.getElementById('main-menu').style.display = 'block';
-            document.getElementById('main-menu').style.overflowY = 'scroll';
-            }
-            
-            // let remixid = document.getElementById('remix-tab');
-            // let script = document.getElementById('script-tag');
-            // let postTab = document.getElementById('post-tab');
-            // remixid.className = '';
-            // remixid.style.borderRight = '0px solid #181818';  
-            // script.className = 'menubg';
-            // script.style.color = 'rgb(64, 255, 232)';
-            // postTab.className = '';
-            // postTab.style.color = 'rgb(82, 82, 82)';  
-            // remixid.style.color = 'rgb(82, 82, 82)';   
         }
         PostAsNewTab(e) {
 
@@ -2895,24 +2312,17 @@ let apps = [{id:'childSnapShot.key',
             // script.style.color = 'rgb(82, 82, 82)';
             // postTab.className = 'menubg';
             // postTab.style.color = 'rgb(64, 255, 232)';
-            let thisElement = document.getElementById(e.target.id);
-            let tabsWithMenubgClass = document.getElementsByClassName('menubg');
-            let mainmenu = document.getElementById('main-menu');
-            let remixImageList = document.getElementById('remix-image-list');
-            let list = document.getElementById('main-menu');
-            let menuinfo = document.getElementById('menu-info')
-            list.style.padding = '7px 14px 2px 7px';
-            list.style.overflowX = 'hidden'
+            // let thisElement = document.getElementById(e.target.id);
+            // let tabsWithMenubgClass = document.getElementsByClassName('menubg');
+            // let mainmenu = document.getElementById('main-menu');
+            // let remixImageList = document.getElementById('remix-image-list');
+            // let list = document.getElementById('main-menu');
+            // let menuinfo = document.getElementById('menu-info')
+            // list.style.padding = '7px 14px 2px 7px';
+            // list.style.overflowX = 'hidden'
             //list.style.width = '354px'
-            if(thisElement != undefined) {
-                if(thisElement.className !== 'menubg') {                            
-               
-                
-           
-               
-       
 
-                }
+        
          
                 let iframe = document.createElement('regular-thumbnail');
                 let dhtml = JSON.parse(localStorage.getItem("dhtml"));
@@ -3314,50 +2724,8 @@ let apps = [{id:'childSnapShot.key',
                     // }, 4000);
       
                 
-                // if(menuinfo !== null) {
-                //     menuinfo.remove();
-                //     this.setState({welcome:false});
-                // }
-
-                // if(document.getElementById('element-menu') !== null) {
-                //     document.getElementById('element-menu').remove();
-                // }
-
-                // if(document.getElementById('app-menu') !== null) {
-                //     document.getElementById('app-menu').remove();
-                //    }
-
-                //    if(document.getElementById('remix-image-box') !== null) {
-                //     document.getElementById('remix-image-box').remove();
-                //    }
-                // if(document.getElementById('element-menu') !== null) {
-             
-                //     document.getElementById('element-menu').remove();
-                // }
-                // if(document.getElementById('elements') !== null) {
-                //     document.getElementById('elements').remove();
-                // }
-
-                // document.getElementById('publish-section').style.display = 'flex';
-
-                // if(document.getElementById('app-menu') !== null){
-                //     document.getElementById('app-menu').remove();
-                // }
-                // if(document.getElementById('search-input') !== null) {
-                //     document.getElementById('search-input').remove()
-                // }
-
-                // if(document.getElementById('search-giphy-wrap') !== null) {
-                //     document.getElementById('search-giphy-wrap').remove()
-                // }
-
-                // if(document.getElementById('close-search-wrap') !== null) {
-                //     document.getElementById('close-search-wrap').remove()
-                // }
-            }
-            document.getElementById('main-menu').style.display = 'block';
-            document.getElementById('main-menu').style.overflowY = 'scroll';
-            document.getElementById('publish-menu').style.display = 'flex';
+  
+      
 
         }
         PostTab(e) {
@@ -4068,11 +3436,127 @@ let apps = [{id:'childSnapShot.key',
     }
     embedCode() {
        let embed = '<iframe width="560" height="315" src=' + '"https://flowroom.com/room/embed/' + this.state.shortID + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-
-
         this.setState({embedCode:embed})
     }
- 
+    activeTab(i) {
+        this.setState({
+            activeTab:i,
+        });
+        if(i == 0) {
+             this.RemixTab()
+             let getSelected = document.getElementsByClassName('menubg-s');
+             let getSelectedTxt = document.getElementsByClassName('menubg'); 
+             for(let i = 0; i < getSelected.length; i++) {
+                getSelected[i].setAttribute("class","")
+             }
+             let elem = document.getElementById('Fill-1');
+             elem.setAttribute("class", "menubg-s")
+
+             for(let i = 0; i < getSelectedTxt.length; i++) {
+                getSelectedTxt[i].setAttribute("class","")
+             }
+             document.getElementById('remix-text').className = 'menubg';
+             document.getElementById('publish-text-new').className = '';
+
+        }
+        if(i == 1){
+       
+            this.ElementsTabs()
+            let getSelected = document.getElementsByClassName('menubg-s');
+            let getSelectedTxt = document.getElementsByClassName('menubg'); 
+            for(let i = 0; i < getSelected.length; i++) {
+               getSelected[i].setAttribute("class","")
+            }
+            let elem = document.getElementById('Flowroom-Room---Text---Remix-Mode-v0.2');
+            elem.setAttribute("class", "menubg-s")
+
+            for(let i = 0; i < getSelectedTxt.length; i++) {
+               getSelectedTxt[i].setAttribute("class","")
+            }
+            document.getElementById('elements-text').className = 'menubg';
+            document.getElementById('publish-text-new').className = '';
+
+        } 
+        if(i == 2) {
+            this.AppTab()
+            let getSelected = document.getElementsByClassName('menubg-s');
+            let getSelectedTxt = document.getElementsByClassName('menubg'); 
+            for(let i = 0; i < getSelected.length; i++) {
+               getSelected[i].setAttribute("class","")
+            }
+            let elem = document.getElementById('app-icon');  
+            elem.setAttribute("class", "menubg-s")
+
+            for(let i = 0; i < getSelectedTxt.length; i++) {
+               getSelectedTxt[i].setAttribute("class","")
+            }
+            document.getElementById('apps-text').className = 'menubg';
+            document.getElementById('publish-text-new').className = '';
+
+            
+        } 
+        if(i == 3) {
+            this.ScriptTag.bind(this);
+            let getSelected = document.getElementsByClassName('menubg-s');
+            let getSelectedTxt = document.getElementsByClassName('menubg'); 
+            for(let i = 0; i < getSelected.length; i++) {
+               getSelected[i].setAttribute("class","")
+            }
+            let elem = document.getElementById('script-p');  
+            elem.setAttribute("class", "menubg-s")
+
+            for(let i = 0; i < getSelectedTxt.length; i++) {
+               getSelectedTxt[i].setAttribute("class","")
+            }
+            document.getElementById('script-text').className = 'menubg';
+            document.getElementById('publish-text-new').className = '';
+
+        } 
+        if(i ==4) {
+            this.PostAsNewTab.bind(this);
+            let getSelected = document.getElementsByClassName('menubg-s');
+            let getSelectedTxt = document.getElementsByClassName('menubg'); 
+            for(let i = 0; i < getSelected.length; i++) {
+               getSelected[i].setAttribute("class","")
+            }
+            let elem = document.getElementById('publish-tag');  
+            elem.setAttribute("class", "menubg-s")
+
+            for(let i = 0; i < getSelectedTxt.length; i++) {
+               getSelectedTxt[i].setAttribute("class","")
+            }
+            document.getElementById('publish-text-publish').className = 'menubg';
+            document.getElementById('publish-text-new').className = 'menubg';
+        }
+    }
+    handleResize = (style, isShiftKey, type) => {
+        // type is a string and it shows which resize-handler you clicked
+        // e.g. if you clicked top-right handler, then type is 'tr'
+        let { top, left, width, height } = style
+        top = Math.round(top)
+        left = Math.round(left)
+        width = Math.round(width)
+        height = Math.round(height)
+        this.setState({
+          top,
+          left,
+          width,
+          height
+        })
+      }
+    
+      handleRotate = (rotateAngle) => {
+        this.setState({
+          rotateAngle
+        })
+      }
+    
+      handleDrag = (deltaX, deltaY) => {
+        this.setState({
+          left: this.state.left + deltaX,
+          top: this.state.top + deltaY
+        })
+      }
     render() {
         let that = this;
         const {isLoading} = this.state;
@@ -4088,8 +3572,8 @@ let apps = [{id:'childSnapShot.key',
                         }}>
                             <Tabs defaultTab="vertical-tab-one" vertical className="vertical-tabs">
                                 <TabList>
-                                    <Tab tabFor="vertical-tab-one"  >
-                                    
+                                    <Tab tabFor="vertical-tab-one" onClick={()=>{this.activeTab(0)}} className={this.state.activeTab == 0 ? 'activeClass' : ''} style={{height:78,width:78,display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
+{/*                                     
                                         <div id="remix-icon" className="remix-icon" style={{
                                             backgroundImage:'url(../infinity_grey.svg)',
                                             backgroundSize: 'contain',
@@ -4100,23 +3584,40 @@ let apps = [{id:'childSnapShot.key',
                                             position:'relative',
                                             top:3,
                                             display:'none'
-                                        }}></div>
-                                        <MdInfinite color="rgb(82, 82, 82)" fontSize={30} fontWeight={700}/>                                   
+                                        }}></div> */}
+                                        {/* <MdInfinite color="rgb(82, 82, 82)" fontSize={30} fontWeight={700}/>                                    */}
+                                    
+                                        <div style={{marginBottom:8}}>
+                                            <svg width="20px" height="12px" viewBox="0 0 26 10" version="1.1" xmlns="http://www.w3.org/2000/svg">
+
+                                                <g id="Mobile" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <g id="Mobile---Text-v0.2" transform="translate(-16.000000, -522.000000)">
+                                                        <g id="Group-3" transform="translate(16.000000, 522.000000)">
+            
+                                                        <g id="Clip-2"></g>
+                                                            <path className="menubg-s" d="M22.9372988,6.65081888 C22.0968687,7.71528957 20.5814734,8.24279316 19.1316086,7.86285038 C18.4226493,7.67743549 17.7177856,7.37074736 17.1280101,6.98694907 C16.237613,6.40722088 15.4491978,5.71182745 14.5555241,5.01783602 C15.9775383,3.81001053 17.2275348,2.5815055 19.1524965,2.1451321 C20.6449561,1.8065484 22.0882679,2.22048976 22.8926561,3.20504628 C23.716294,4.21308636 23.735134,5.6406758 22.9372988,6.65081888 M8.12533283,7.39598341 C7.19315988,7.95818657 6.08569255,8.12642692 4.9589756,7.88142691 C3.1409107,7.4860621 2.08791569,5.86639826 2.57652831,4.27792899 C3.06759833,2.68244971 4.93644946,1.67581163 6.77785964,2.12620506 C7.57200873,2.32038246 8.34567951,2.69296473 9.01491088,3.1160191 C9.8598462,3.6498317 10.5892838,4.31858708 11.5456212,5.06725662 C10.3443632,5.89338682 9.27990029,6.69953848 8.12533283,7.39598341 M19.1369329,0.106619902 C17.1079414,0.423472554 15.5970512,1.4651607 14.1762657,2.63408061 C13.7867681,2.95478877 13.4902421,3.3589161 13.2129657,3.65789322 C11.893343,2.69787174 10.8358427,1.84264998 9.67554136,1.10554696 C7.99140464,0.0354682552 6.09716041,-0.28769341 4.0579297,0.267499733 C1.54933598,0.950275139 -0.0496109391,2.90747117 0.00117528469,5.21481742 C0.0490945443,7.41666296 1.61773355,9.24347272 3.99977128,9.79305785 C6.22658337,10.3065414 8.24861229,9.84037545 10.037598,8.66164152 C11.0721625,7.98026812 12.0174416,7.20005351 12.9938477,6.47101201 C14.0554436,7.26033963 15.0572428,8.07840832 16.1470988,8.7983368 C17.7169665,9.83511794 19.5002183,10.2374928 21.4751471,9.84633396 C24.6628017,9.21473166 26.5611416,6.5628432 25.8517728,3.73184887 C25.2001528,1.13078301 22.3495712,-0.395297132 19.1369329,0.106619902" id="Fill-1" fill="#FFFFFF" mask="url(#mask-2)"></path>
+                                                        </g>
+                                                    </g>
+                                                </g>
+                                            </svg>
+                                        </div>
                                         <p id="remix-text" 
                                             style={{
-                                                fontSize:'11px',
+                                                fontSize:11.2,
                                                 fontWeight:600,
                                                 pointerEvents:'none',
                                                 pointerEvents:'none',
                                                 marginTop:0,
                                                 position:'relative',
                                                 top:'0px',
-                                                left:'-0.5px'
-                                            }} className="menubgnot">REMIX</p>
-                            
+                                                left:'-0.5px',
+                                                color:'white',
+                                               
+                                            }} className="menubg">REMIX</p>
+                                   
                                     </Tab>
-                                    <Tab tabFor="vertical-tab-two">
-                                        <div id="elements-tag" onClick={this.ElementsTabs.bind(this)} 
+                                    <Tab tabFor="vertical-tab-two" onClick={()=>{this.activeTab(1)}} className={this.state.activeTab == 1 ? 'activeClass' : ''} style={{height:78,width:78,display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
+                                        {/* <div id="elements-tag" 
                                            
                                             style={{
                                                 display:'flex',
@@ -4125,17 +3626,32 @@ let apps = [{id:'childSnapShot.key',
                                                 width:'59px',
                                                 flexDirection:'column',
                                                 alignItems:'center',
-                                                borderRight:'1px solid #181818',
-                                                borderBottom:'1px solid #181818',
-                                                justifyContent:'center'
-                                            }} className="menu-bg-border">
-                                            <IosAppsOutline color="rgb(82, 82, 82)" fontSize={30}/>
-                                            <i id="elements-icon" className="fas fa-shapes" style={{color:'white', fontSize:19,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none',height:'20px', width:'20px',display:'none'}}></i>
-                                            <p id="elements-text" style={{fontSize:8.5,fontWeight:600,pointerEvents:'none'}} className="menubgnot">ELEMENTS</p>
-                                        </div>
+                                                border:'none',
+                                                justifyContent:'center',
+                                                
+                                            }} className="menu-bg-border"> */}
+                                            {/* <IosAppsOutline color="rgb(82, 82, 82)" fontSize={30}/> */}
+                                            <div style={{marginBottom:8}}>
+                                                <svg width="20px" height="20px" viewBox="0 0 23 22" version="1.1" xmlns="http://www.w3.org/2000/svg" >
+  
+                                                    <g id="Room" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                        <g id="Flowroom-Room---Text---Remix-Mode-v0.2" transform="translate(-17.000000, -212.000000)" fill="white">
+                                                            <g id="Group" transform="translate(17.000000, 212.000000)">
+                                                                <rect id="Rectangle" x="13" y="0" width="10" height="10" rx="3"></rect>
+                                                                <polygon id="Polygon" points="17.5 12 22.7308108 15.8004065 20.7328189 21.9495935 14.2671811 21.9495935 12.2691892 15.8004065"></polygon>
+                                                                <circle id="Oval" cx="4.75" cy="4.75" r="4.75"></circle>
+                                                                <polygon id="Triangle" points="4.5 13 9 22 0 22"></polygon>
+                                                            </g>
+                                                        </g>
+                                                    </g>
+                                                </svg>
+                                           </div>
+                                            {/* <i id="elements-icon" className="fas fa-shapes" style={{color:'white', fontSize:19,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none',height:'20px', width:'20px',display:'none'}}></i> */}
+                                            <p id="elements-text" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none',color:'white'}} className="menubgnot">ELEMENTS</p>
+                                        {/* </div> */}
                                     </Tab>
-                                    <Tab tabFor="vertical-tab-three">
-                                        <div id="app-tag"  onClick={this.AppsTab.bind(this)} 
+                                    <Tab tabFor="vertical-tab-three" onClick={()=>{this.activeTab(2)}} className={this.state.activeTab == 2 ? 'activeClass' : ''} style={{height:78,width:78,display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
+                                        {/* <div id="app-tag"  
                                           
                                             style={{
                                                 display:'flex',
@@ -4144,17 +3660,20 @@ let apps = [{id:'childSnapShot.key',
                                                 width:'59px',
                                                 flexDirection:'column',
                                                 alignItems:'center',
-                                                borderRight:'1px solid #181818',
-                                                borderBottom:'1px solid #181818',
+                                                border:'none',
                                                 justifyContent:'center'
-                                            }} className="menu-bg-border">
-                                            <i id="apps-icon" className="fas fa-cubes" style={{color:'white', fontSize:22,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none',display:'none'}}></i>
-                                            <MdCube color="rgb(82, 82, 82)" fontSize={30}  />
-                                            <p id="apps-text" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none'}} className="menubgnot">APPS</p>
-                                        </div>
+                                            }} className="menu-bg-border"> */}
+                                            {/* <i id="apps-icon" className="fas fa-cubes" style={{color:'white', fontSize:22,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none',display:'none'}}></i> */}
+                                            <div style={{marginBottom:8}}>
+                                            <svg class="sc-bdVaJa fUuvxv" fill="white" width="20" height="20" viewBox="0 0 1024 1024" rotate="0">
+                                                <path id="app-icon" d="M934.6 336.2c-3.6 0-7 0.6-10.2 2l-355.2 184.2c0 0-0.2 0-0.2 0-15.2 9.4-25 25-25 42.8v371.8c0 12.8 11.2 23 25.4 23 4.4 0 8.6-1 12.2-2.8 0.4-0.2 0.8-0.4 1-0.6l350-185.6c16.4-9 27.4-25.4 27.4-44.2v-367.6c0-12.8-11.4-23-25.4-23z M908.6 237l-363.4-163.4c0 0-21.4-9.6-33.2-9.6s-33 9.6-33 9.6l-363.8 163.4c0 0-16 6.6-16 19 0 13.2 16.6 23 16.6 23l371 195.6c7.6 3.4 16.2 5.2 25.2 5.2 9.2 0 17.8-2 25.4-5.4l370.8-195.8c0 0 15-8 15-23 0.2-12.6-14.6-18.6-14.6-18.6z M455 522.4l-355.4-184.4c-3-1.2-6.6-2-10.2-2-14 0-25.4 10.2-25.4 23v367.6c0 18.8 11 35.2 27.4 44.2l0.4 0.2 349.4 185.4c3.8 2.2 8.4 3.4 13.2 3.4 14 0 25.4-10.4 25.4-23v-371.6c0.2-17.8-9.8-33.6-24.8-42.8z"></path></svg>
+                                            </div>    
+                                           
+                                            <p id="apps-text" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none',color:'white'}} className="menubgnot">APPS</p>
+                                        {/* </div> */}
                                     </Tab>
-                                    <Tab tabFor="vertical-tab-four">
-                                        <div id="script-tag" refs="script-tag" onClick={this.ScriptTag.bind(this)}
+                                    <Tab tabFor="vertical-tab-four" onClick={()=>{this.activeTab(3)}} className={this.state.activeTab == 3 ? 'activeClass' : ''} style={{height:78,width:78,display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
+                                        {/* <div id="script-tag" refs="script-tag" onClick={this.ScriptTag.bind(this)}
                                          
                                             style={{
                                                 display:'flex',
@@ -4163,11 +3682,10 @@ let apps = [{id:'childSnapShot.key',
                                                 width:'59px',
                                                 flexDirection:'column',
                                                 alignItems:'center',
-                                                borderRight:'1px solid #181818',
-                                                borderBottom:'1px solid #181818',
+                                                border:'none',
                                                 justifyContent:'center'
-                                            }} className="menu-bg-border">
-                                                <div id="script-icon" style={{
+                                            }} className="menu-bg-border"> */}
+                                                {/* <div id="script-icon" style={{
                                                     fontSize:'18px',
                                                     color:'white',
                                                     backgroundImage:'url(../code.svg)',
@@ -4176,13 +3694,24 @@ let apps = [{id:'childSnapShot.key',
                                                     height:'15px',
                                                     width:'21px',
                                                     marginBottom:'3px',
-                                                    pointerEvents:'none'
-                                                }}></div>
-                                                <p id="script-text" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none'}} className="menubgnot">SCRIPT</p>
-                                        </div>
+                                                    pointerEvents:'none',
+                                                    display:'none'
+                                                }}></div> */}
+                                                <div style={{marginBottom:8}}>
+                                                    <svg width="18px" height="14px" viewBox="0 0 18 14" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                                        <g id="Mobile" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <g id="Mobile---Text-v0.2" transform="translate(-149.000000, -520.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                                                                <path id='script-p' d="M154.625307,531.477701 L154.13337,531.987689 C154.005466,532.120286 153.808691,532.120286 153.680787,531.987689 L149.095928,527.234595 C148.968024,527.101998 148.968024,526.898002 149.095928,526.765405 L153.680787,522.012311 C153.808691,521.879714 154.005466,521.879714 154.13337,522.012311 L154.625307,522.522299 C154.753211,522.654897 154.753211,522.858892 154.625307,522.991489 L150.758677,527 L154.625307,531.008511 C154.753211,531.141108 154.753211,531.345103 154.625307,531.477701 Z M160.440011,520.594542 L156.770156,533.76245 C156.720962,533.935846 156.543864,534.037844 156.386444,533.986845 L155.776442,533.813449 C155.609183,533.76245 155.510795,533.578854 155.559989,533.405458 L159.229844,520.23755 C159.279038,520.064154 159.456136,519.962156 159.613556,520.013155 L160.223558,520.186551 C160.390817,520.23755 160.489205,520.421146 160.440011,520.594542 Z M166.904072,527.234595 L162.319213,531.987689 C162.191309,532.120286 161.994534,532.120286 161.86663,531.987689 L161.374693,531.477701 C161.246789,531.345103 161.246789,531.141108 161.374693,531.008511 L165.241323,527 L161.374693,522.991489 C161.246789,522.858892 161.246789,522.654897 161.374693,522.522299 L161.86663,522.012311 C161.994534,521.879714 162.191309,521.879714 162.319213,522.012311 L166.904072,526.765405 C167.031976,526.898002 167.031976,527.101998 166.904072,527.234595 Z"></path>
+                                                            </g>
+                                                        </g>
+                                                    </svg>
+                                                </div>
+                                      
+                                                <p id="script-text" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none',color:'white'}} className="menubgnot">SCRIPT</p>
+                                        {/* </div> */}
 
                                     </Tab>
-                                    <Tab tabFor="vertical-tab-five">
+                                    <Tab tabFor="vertical-tab-five" onClick={()=>{this.activeTab(4)}} className={this.state.activeTab == 4 ? 'activeClass' : ''} style={{height:78,width:78,display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
                                         <div id="post-as-new-tab" 
                                             onClick={this.PostAsNewTab.bind(this)} 
                                                 style={{
@@ -4190,8 +3719,7 @@ let apps = [{id:'childSnapShot.key',
                                                     width:'59px',
                                                     flexDirection:'column',
                                                     alignItems:'center',
-                                                    borderRight:'1px solid #181818',
-                                                    borderBottom:'1px solid #181818',
+                                                    border:'none',
                                                     justifyContent:'center',
                                                     cursor:'pointer',
                                                     display:'flex',
@@ -4207,10 +3735,21 @@ let apps = [{id:'childSnapShot.key',
                                                         height:'16px',
                                                         width:'16px',
                                                         marginBottom:'3px',
-                                                        pointerEvents:'none'
+                                                        pointerEvents:'none',
+                                                        display:'none'
                                                 }}></div>
-                                                <p id="publish-text-publish" style={{fontSize:11.2,fontWeight:600, pointerEvents:'none'}} className="menubgnot">PUBLISH</p>
-                                                <p id="publish-text-new" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none'}} className="menubgnot">NEW</p>
+                                                <div style={{marginBottom:8}}>
+                                                    <svg width="15" height="15" viewBox="0 0 15 15" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    
+                                                        <g id="Mobile" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <g id="Mobile---Image-Editing" transform="translate(-277.000000, -520.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                                                                <path id="publish-tag" d="M280.75,533.75 L288.25,533.75 L288.25,530 L280.75,530 L280.75,533.75 Z M289.5,533.75 L290.75,533.75 L290.75,525 C290.75,524.814453 290.583984,524.414062 290.457031,524.287109 L287.712891,521.542969 C287.576172,521.40625 287.195312,521.25 287,521.25 L287,525.3125 C287,525.830078 286.580078,526.25 286.0625,526.25 L280.4375,526.25 C279.919922,526.25 279.5,525.830078 279.5,525.3125 L279.5,521.25 L278.25,521.25 L278.25,533.75 L279.5,533.75 L279.5,529.6875 C279.5,529.169922 279.919922,528.75 280.4375,528.75 L288.5625,528.75 C289.080078,528.75 289.5,529.169922 289.5,529.6875 L289.5,533.75 Z M285.75,524.6875 L285.75,521.5625 C285.75,521.396484 285.603516,521.25 285.4375,521.25 L283.5625,521.25 C283.396484,521.25 283.25,521.396484 283.25,521.5625 L283.25,524.6875 C283.25,524.853516 283.396484,525 283.5625,525 L285.4375,525 C285.603516,525 285.75,524.853516 285.75,524.6875 Z M292,525 L292,534.0625 C292,534.580078 291.580078,535 291.0625,535 L277.9375,535 C277.419922,535 277,534.580078 277,534.0625 L277,520.9375 C277,520.419922 277.419922,520 277.9375,520 L287,520 C287.517578,520 288.230469,520.292969 288.601562,520.664062 L291.335938,523.398438 C291.707031,523.769531 292,524.482422 292,525 Z"></path>
+                                                            </g>
+                                                        </g>
+                                                    </svg>
+                                                </div>
+                                                <p id="publish-text-publish" style={{fontSize:11.2,fontWeight:600, pointerEvents:'none',color:'white'}} className="menubgnot">PUBLISH</p>
+                                                <p id="publish-text-new" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none',color:'white'}} className="menubgnot">NEW</p>
                                         </div>
                                     </Tab>
                                 </TabList>
@@ -4226,14 +3765,14 @@ let apps = [{id:'childSnapShot.key',
                                             display:'block', 
                                             position:'relative',
                                             maxWidth:'330px', 
-                                            width:'300px',
+                                            width:'330px',
                                             overflowY:'scroll',
                                             padding:'7px 14px 2px 10px',
                                             height:'100%'
                                         }}>
                                         
                                         <div id="menu-info" style={{height:'200px', width:'300px', position:'relative'}}>
-                                            <div id="menu-info-box" style={{height:'230px', width:'300px',border:'1px solid rgb(34, 34, 34)', borderRadius:'3px', marginTop:'11px', padding:'20px',  flexDirection:'column'}}>
+                                            <div id="menu-info-box" style={{height:'230px', width:'300px',border:'1px solid rgb(50, 50, 50)', borderRadius:'3px', marginTop:'11px', padding:'20px',  flexDirection:'column'}}>
                                                 <div style={{display:'flex', justifyContent:'space-between', height:'20px', width:'100%'}}>
                                                     <div style={{backgroundImage: 'url("../infinity_cyan.svg")', backgroundSize:'100% 100%', backgroundRepeat:'no-repeat', height:'20px', width:'25px'}}></div>
                                                     <div style={{display:'flex', alignItems:'center', justifyContent:'space-between', width:'45px', cursor:'pointer'}}>
@@ -4266,12 +3805,12 @@ let apps = [{id:'childSnapShot.key',
                                             display:'block', 
                                             position:'relative',
                                             maxWidth:'330px', 
-                                            width:'300px',
+                                            width:'330px',
                                             overflowY:'scroll',
                                             padding:'7px 14px 2px 10px',
-                                            height:'100%'
+                                            height:'100vh'
                                         }}>
-                                            <div style={{position:'absolute',width:273}}>
+                                            <div style={{position:'relative',width:'100%'}}>
                                             <div style={{height:19,width:'100%',position:'relative'}}>
                                                 <i className="fa fa-times" style={{color:'white',right:0,position:'absolute',fontSize:12}}></i>
                                             </div>
@@ -4279,32 +3818,32 @@ let apps = [{id:'childSnapShot.key',
                                                 <div style={{display:'flex',width:'100%'}}>
                                                     <ul style={{display:'flex',fontSize:13,fontWeight:'bold',color:'white'}}>
                                                         <li id="gifs" onClick={()=>{
-                                                            let getSelected = document.getElementsByClassName('menubg');
+                                                            let getSelected = document.getElementsByClassName('el');
                                                             for(let i =0; i < getSelected.length; i++) {
                                                                 getSelected[i].className = ''
                                                             }
-                                                            document.getElementById('gifs').className = 'menubg'
-                                                        }} className="menubg" >GIFS</li>
+                                                            document.getElementById('gifs').className = 'el'
+                                                        }} className="el" >GIFS</li>
                                                         <li id="emojis" onClick={()=>{
-                                                            let getSelected = document.getElementsByClassName('menubg');
+                                                            let getSelected = document.getElementsByClassName('el');
                                                             for(let i =0; i < getSelected.length; i++) {
                                                                 getSelected[i].className = ''
                                                             }
-                                                            document.getElementById('emojis').className = 'menubg'
+                                                            document.getElementById('emojis').className = 'el'
                                                         }}>Emojis</li>
                                                         <li id="stickers" onClick={()=>{
-                                                            let getSelected = document.getElementsByClassName('menubg');
+                                                            let getSelected = document.getElementsByClassName('el');
                                                             for(let i =0; i < getSelected.length; i++) {
                                                                 getSelected[i].className = ''
                                                             }
-                                                            document.getElementById('stickers').className = 'menubg'
+                                                            document.getElementById('stickers').className = 'el'
                                                         }}>Stickers</li>
                                                         <li id="images" onClick={()=>{
-                                                            let getSelected = document.getElementsByClassName('menubg');
+                                                            let getSelected = document.getElementsByClassName('el');
                                                             for(let i =0; i < getSelected.length; i++) {
                                                                 getSelected[i].className = ''
                                                             }
-                                                            document.getElementById('images').className = 'menubg'
+                                                            document.getElementById('images').className = 'el'
                                                         }}>Images</li>
                                                     </ul>
                                                 </div>
@@ -4323,6 +3862,7 @@ let apps = [{id:'childSnapShot.key',
                                                     background:'#202020',
                                                     border:'none',
                                                     color:'rgb(64, 255, 232)'
+                                                }} onChange={(e)=>{
                                                 }} placeholder="Search for any GIFs here"/>
                                                 <div style={{width:'100%',display:'flex',justifyContent:'flex-end'}}> 
                                                     <div style={{backgroundImage:'url(../poweredbygiphy.png)',
@@ -4335,7 +3875,7 @@ let apps = [{id:'childSnapShot.key',
                                                     }}></div>
                                                 </div>
                                         </div>
-                                        <div id="element-menu">
+                                        <div id="element-menu" style={{height:'100%',width:'100%',overflowY:'scroll',position:'relative',top:15,display:'flex',flexWrap:'wrap',justifyContent:'space-between'}}>
 
                                         </div>
                                     </div>
@@ -4351,7 +3891,7 @@ let apps = [{id:'childSnapShot.key',
                                             display:'block', 
                                             position:'relative',
                                             maxWidth:'330px', 
-                                            width:'300px',
+                                            width:'330px',
                                             overflowY:'scroll',
                                             padding:'7px 14px 2px 10px',
                                             height:'100%'
@@ -4375,7 +3915,7 @@ let apps = [{id:'childSnapShot.key',
                                         display:'block', 
                                         position:'relative',
                                         maxWidth:'330px', 
-                                        width:'300px',
+                                        width:'330px',
                                         overflowY:'scroll',
                                         padding:'7px 14px 2px 10px',
                                         height:'100%'

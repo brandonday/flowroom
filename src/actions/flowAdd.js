@@ -1,4 +1,4 @@
-export const flowAdd = ({flowAdd = {flowAdd:false}}) => ({
+export const flowAdd = ({flowAdd = {flowAdd:''}}) => ({
     type:'FLOW_ADD',
     flowAdd
 });

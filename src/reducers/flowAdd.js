@@ -1,5 +1,5 @@
 const filtersReducerDefaultState = {
-   flowAdd:false
+   flowAdd:''
 }
 
 export default (state = filtersReducerDefaultState, action) => {

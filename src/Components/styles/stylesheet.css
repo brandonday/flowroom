@@ -164,6 +164,30 @@ li b {
   margin: 20px;  
 }
 
+.rwt__tablist[aria-orientation="vertical"] {
+
+  margin-right: 1rem !important;
+  width: 78px;
+}
+
+.rwt__tab {
+
+  padding: 1rem 1rem !important;
+}
+
+.activeClass {
+  background:#181818 !important;
+}
+
+.rwt__tablist[aria-orientation="vertical"] .rwt__tab[aria-selected="true"]:after {
+  border-right: 0px solid #181818 !important;
+}
+
+.rwt__tablist[aria-orientation="vertical"] {
+  border-right: 0px solid #ddd !important;
+  margin-right: 0rem !important;
+}
+
 body {
   overflow:auto;
   -webkit-overflow-scrolling: touch;
@@ -2535,6 +2559,16 @@ right: 0px;
     background-color:#181818;
     color:rgb(64, 255, 232) !important;
   
+  }
+  .menubg-s {
+    background-color:#181818;
+    color:rgb(64, 255, 232) !important;
+    fill: rgb(64, 255, 232) !important;
+
+  }
+  .el {
+    color:rgb(64, 255, 232) !important;
+
   }
 
   .remix-icon {

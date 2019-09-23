@@ -8,7 +8,11 @@ import Fullscreen from "react-full-screen";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import _ from "lodash";
 import Flow from './Flow.js'
+import Overlay from './overlay.js'
+
 import { connect } from 'react-redux';
+import ResizableRect from 'react-resizable-rotatable-draggable'
+import { Stage, Layer, Rect, Transformer } from "react-konva";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -21,13 +25,15 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
         this.state = {
             isFull:false,
             objects:[],
-            showGrid:false
+            showGrid:false,
+            maxobj:0,
+        
         }
      }
      componentDidMount() {
     
 
-       
+ 
 
     
         let that = this;
@@ -107,6 +113,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
     }
 
     getObjects() {
+
         let i = 0;
         return _.map(this.state.objects,(obj)=> {
             i++;
@@ -122,7 +129,14 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
                 style={{height:'100%',width:'100%',paddingBottom:30,backgroundColor:'black'}}>
             <span className="dragHandle">[DRAG HERE]</span>
                 <div className="f-wrap" style={{height:'100%',width:'100%'}}>
+                  <div>
+           <Overlay/>
+            
+
+                  </div>
+               
                   <Flow shortID={obj.shortID} />
+             
                 </div>
 
         
@@ -130,20 +144,35 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
             );
           });
     }
+
      render() {
-         if(this.props.state.flowAdd.flowAdd === true) {
-             let getflows = document.getElementsByClassName('add-flow');
-             for(let i = 0; i < getflows.length; i++){
-                 getflows[i].addEventListener('click',()=>{
-                    let getObj = this.state.objects;
-                    getObj.push({shortID:getflows[i].id})
+       let {flowAdd} = this.props.state.flowAdd
+
+            // let getflows = document.getElementsByClassName('add-flow');
+            // for(let i = 0; i < getflows.length; i++){
+            //     getflows[i].addEventListener('click',()=>{
+        if(flowAdd !== '') {
+                let getObj = this.state.objects;
+                getObj.push({shortID:flowAdd})   
+                
+            //        console.log('the obj')
+            //     })
+            const MAX_OBJECTS = 1;
+            function addFlow(state, props) {
+                
+                if (state.maxobj === MAX_OBJECTS) {
+                  return null;
+                } 
                     
-                     this.setState({objects:getObj,showGrid:true})
-                    
-                 })
-             }
-             
-         }
+                
+                return {objects:getObj,showGrid:true,maxobj:state.maxobj + 1,objects:[]}
+              }
+              
+            
+              this.setState(addFlow)
+            // }
+            
+            }
         return (
             <div id="output-container" className="output-container">
             
@@ -179,6 +208,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
           width={1200}
         >
           {this.getObjects()}
+
          
         </ResponsiveReactGridLayout>):(<Flow/> )  }
                     </div>
