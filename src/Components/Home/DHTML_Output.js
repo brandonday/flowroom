@@ -13,7 +13,6 @@ import Overlay from './overlay.js'
 import { connect } from 'react-redux';
 import ResizableRect from 'react-resizable-rotatable-draggable'
 import { Stage, Layer, Rect, Transformer } from "react-konva";
-
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 
@@ -24,9 +23,10 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
         super();
         this.state = {
             isFull:false,
-            objects:[],
+            objects:[{}],
             showGrid:false,
             maxobj:0,
+            makeDrop:false
         
         }
      }
@@ -95,6 +95,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
         //   })();
        
      }
+    
      goFull = () => {
  
         //document.fullscreenEnabled = false
@@ -114,40 +115,49 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
     getObjects() {
 
-        let i = 0;
+       
         return _.map(this.state.objects,(obj)=> {
-            i++;
-           
+        
+           console.log('object', obj)
 
             return (
-              <div key={i} 
-                data-grid={{x: 0, y: 0, w:3, h: 3, static: false,draggableHandle: ".dragHandle",
-                draggableCancel:'.f-wrap',
-            }} 
+              <div id={`${obj.shortID}_`} key={obj.shortID} 
+                data-grid={{x: 0, y: 0, w:3, h: 3, static:false
+}} 
                 
         
                 style={{height:'100%',width:'100%',paddingBottom:30,backgroundColor:'black'}}>
-            <span className="dragHandle">[DRAG HERE]</span>
+            <span className="dragHandle" onClick={()=>{
+              
+              //alert(this.state.makeDrop)
+              
+            }}>[DRAG HERE]</span>
                 <div className="f-wrap" style={{height:'100%',width:'100%'}}>
-                  <div>
-           <Overlay/>
-            
-
-                  </div>
+                  <div style={{height:'100%',width:'100%'}}>
                
                   <Flow shortID={obj.shortID} />
-             
+                  {/* <Overlay/> */}
+                  </div>
                 </div>
 
         
               </div>
             );
           });
+          
     }
+   shouldComponentUpdate(props,state) {
+    //  alert(props.state.openMenu.openMenu )
+     if(props.state.openMenu.openMenu === true) {
+       return null
+     } else {
+       return true
+     }
+   }
 
      render() {
        let {flowAdd} = this.props.state.flowAdd
-
+       
             // let getflows = document.getElementsByClassName('add-flow');
             // for(let i = 0; i < getflows.length; i++){
             //     getflows[i].addEventListener('click',()=>{
@@ -161,16 +171,20 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
             function addFlow(state, props) {
                 
                 if (state.maxobj === MAX_OBJECTS) {
+         
                   return null;
                 } 
                     
-                
+               
                 return {objects:getObj,showGrid:true,maxobj:state.maxobj + 1,objects:[]}
               }
               
             
               this.setState(addFlow)
             // }
+
+
+            
             
             }
         return (

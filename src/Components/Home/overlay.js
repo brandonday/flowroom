@@ -1,112 +1,65 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from 'react';
 import { render } from "react-dom";
-import { Stage, Layer, Rect, Transformer } from "react-konva";
+import {Rnd} from 'react-rnd';
 
-const Rectangle = ({ shapeProps, isSelected, onSelect, onChange }) => {
-  const shapeRef = React.useRef();
-  const trRef = React.useRef();
+const Box = () => (
+  <div
+    className="box"
+    style={{ margin: 0, height: '100%', paddingBottom: '40px', width: 400}}
+  >
+    <article className="media">
+      <div className="media-left">
+        <figure className="image is-64x64">
+          <img src="https://avatars1.githubusercontent.com/u/10220449?v=3&s=460" draggable="false" alt="github avatar" />
+        </figure>
+      </div>
+      <div className="media-content">
+        <div className="content">
+          <p>
+            <strong>bokuweb</strong> <small>@bokuweb17</small> <small>31m</small>
+            <br />
+            Lorem .
+          </p>
+        </div>
+        <nav className="level is-mobile">
+          <div className="level-left">
+            <a className="level-item">
+              <span className="icon is-small"><i className="fa fa-reply" /></span>
+            </a>
+            <a className="level-item">
+              <span className="icon is-small"><i className="fa fa-retweet" /></span>
+            </a>
+            <a className="level-item">
+              <span className="icon is-small"><i className="fa fa-heart" /></span>
+            </a>
+          </div>
+        </nav>
+      </div>
+    </article>
+  </div>
+);
 
-  React.useEffect(() => {
-    if (isSelected) {
-      // we need to attach transformer manually
-      trRef.current.setNode(shapeRef.current);
-      trRef.current.getLayer().batchDraw();
-    }
-  }, [isSelected]);
 
-  return (
-    <React.Fragment>
-      <Rect
-        onClick={onSelect}
-        ref={shapeRef}
-        {...shapeProps}
-        draggable
-        onDragEnd={e => {
-          onChange({
-            ...shapeProps,
-            x: e.target.x(),
-            y: e.target.y()
-          });
-        }}
-        onTransformEnd={e => {
-          // transformer is changing scale
-          const node = shapeRef.current;
-          const scaleX = node.scaleX();
-          const scaleY = node.scaleY();
-
-          // we will reset it back
-          node.scaleX(1);
-          node.scaleY(1);
-          onChange({
-            ...shapeProps,
-            x: node.x(),
-            y: node.y(),
-            width: node.width() * scaleX,
-            height: node.height() * scaleY
-          });
-        }}
-      />
-      {isSelected && <Transformer ref={trRef} />}
-    </React.Fragment>
-  );
-};
-
-const initialRectangles = [
-  {
-    x: 10,
-    y: 10,
-    width: 100,
-    height: 100,
-    fill: "red",
-    id: "rect1"
-  },
-  {
-    x: 150,
-    y: 150,
-    width: 100,
-    height: 100,
-    fill: "green",
-    id: "rect2"
-  }
-];
-
-const Overlay = () => {
-//   const [rectangles, setRectangles] = React.useState(initialRectangles);
-//   const [selectedId, selectShape] = React.useState(null);
-
-  return (
-    <Stage
-      width={window.innerWidth}
-      height={window.innerHeight}
-      onMouseDown={e => {
-        // deselect when clicked on empty area
-        const clickedOnEmpty = e.target === e.target.getStage();
-        if (clickedOnEmpty) {
-          selectShape(null);
-        }
+export default () => (
+  <div
+    style={{
+      width: '400px',
+      height: '400px',
+      background:'blue'
+    }}
+    class="fuck"
+  >
+    <Rnd
+      default={{
+        x: 0,
+        y: 0,
+        width: 100,
+        height: 190,
       }}
+    
+      bounds=".fuck"
     >
-      <Layer>
-        {rectangles.map((rect, i) => {
-          return (
-            <Rectangle
-              key={i}
-              shapeProps={rect}
-              isSelected={rect.id === selectedId}
-              onSelect={() => {
-                selectShape(rect.id);
-              }}
-              onChange={newAttrs => {
-                const rects = rectangles.slice();
-                rects[i] = newAttrs;
-                setRectangles(rects);
-              }}
-            />
-          );
-        })}
-      </Layer>
-    </Stage>
-  );
-};
-
-export default Overlay;
+      <Box />
+    </Rnd>
+  </div>
+);

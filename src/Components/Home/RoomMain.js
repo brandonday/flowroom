@@ -326,11 +326,7 @@ let apps = [{id:'childSnapShot.key',
                 embedCode:'embed',
                 showModal:false,
                 activeTab: 0,
-                width: 100,
-                height: 100,
-                top: 100,
-                left: 100,
-                rotateAngle: 0
+                inputValue:''
             
             };
             this.openModal = this.openModal.bind(this);
@@ -1541,6 +1537,7 @@ let apps = [{id:'childSnapShot.key',
                 //element_menu.style.justifyContent = 'space-between'
                    
                 })
+           
                 elements_arr.map((i) => {
                      
                     let element = document.createElement('div');
@@ -1676,58 +1673,59 @@ let apps = [{id:'childSnapShot.key',
                             let div = document.createElement('div');
                             //div.style.height = '200px';
                             // div.style.width = '300px';
-                            div.style.margin = '10px 20px'
-                            div.style.border = '0px solid blue';
-                            div.style.position = 'relative';
-                            div.setAttribute("id", `container${object.id}`);
-                            let resizable = document.createElement('div');
-                            resizable.className = 'resizable';
+                            // div.style.margin = '10px 20px'
+                            // div.style.border = '0px solid blue';
+                            // div.style.position = 'relative';
+                            //div.setAttribute("id", `container${object.id}`);
+                            // let resizable = document.createElement('div');
+                            div.className = 'resizable';
 
-                            let resizers_box = document.createElement('div');
-                            resizers_box.className = 'resizers';
-                            let resizerTopLeft = document.createElement('div');
-                            resizerTopLeft.className = 'resizer top-left';
-                            let resizerTopRight = document.createElement('div');
-                            resizerTopRight.className = 'resizer top-right';
-                            let resizerBottomLeft = document.createElement('div');
-                            resizerBottomLeft.className = 'resizer bottom-left';
-                            let resizerBottomRight = document.createElement('div');
-                            resizerBottomRight.className = 'resizer bottom-right';
+                            // let resizers_box = document.createElement('div');
+                            // resizers_box.className = 'resizers';
+                            // let resizerTopLeft = document.createElement('div');
+                            // resizerTopLeft.className = 'resizer top-left';
+                            // let resizerTopRight = document.createElement('div');
+                            // resizerTopRight.className = 'resizer top-right';
+                            // let resizerBottomLeft = document.createElement('div');
+                            // resizerBottomLeft.className = 'resizer bottom-left';
+                            // let resizerBottomRight = document.createElement('div');
+                            // resizerBottomRight.className = 'resizer bottom-right';
 
-                            resizers_box.appendChild(resizerTopLeft);
-                            resizers_box.appendChild(resizerTopRight);
-                            resizers_box.appendChild(resizerBottomLeft);
-                            resizers_box.appendChild(resizerBottomRight);
+                            // resizers_box.appendChild(resizerTopLeft);
+                            // resizers_box.appendChild(resizerTopRight);
+                            // resizers_box.appendChild(resizerBottomLeft);
+                            // resizers_box.appendChild(resizerBottomRight);
 
-                            resizable.setAttribute("id",`${i.id}`)
-                            resizable.appendChild(resizers_box);
-                            //resizable.appendChild(object)
+                            // resizable.setAttribute("id",`${i.id}`)
+                            // resizable.appendChild(resizers_box);
+                            // resizable.appendChild(object)
                             
-                            div.appendChild(resizable);
+                            div.setAttribute("id", `${object.id}`)
                             
                             document.getElementById('overlay_output_frame').contentDocument.getElementById('overlay-container').appendChild(div);
                             document.getElementById('overlay_output_frame').contentDocument.body.style.padding = '10px';
                 
-                            resizable.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
+                            div.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
                            
-                            this.makeResizableDiv(`#${i.id}`);
+                            //this.makeResizableDiv(`#${i.id}`);
                             
-                            // const xDraggables = document.getElementById('overlay_output_frame').contentWindow.Subjx(`#${object.id}`).drag({
+                            const xDraggables = document.getElementById('overlay_output_frame').contentWindow.Subjx(`#${object.id}`).drag({
                                 
-                            // container:`#container${object.id}`,
-                            // each: {
-                            //     move: false,
-                            //     resize: true, 
-                            //     rotate: true
-                            // }
-                            // // snapping to grid (default: 10)
+                            container:`#container${object.id}`,
+                            each: {
+                                move: false,
+                                resize: true, 
+                                rotate: true
+                            }
+                            // snapping to grid (default: 10)
     
-                            // });
+                            });
 
 
                         
-    
-    
+                            localStorage.setItem("bound", JSON.stringify(div.getBoundingClientRect()))
+                            let getn = JSON.parse(localStorage.getItem("bound"))
+                            //console.log('bounds', getn)
                             //}
                             let dhtml = JSON.parse(localStorage.getItem("dhtml"));
 
@@ -1748,8 +1746,74 @@ let apps = [{id:'childSnapShot.key',
           
             /// Sticker Search
         }
+        let blockA = document.createElement('div');
+        blockA.style.height = '0px';
+        blockA.style.width = '0px';
+        blockA.style.background = 'white';
+        blockA.style.position = 'absolute';
+        blockA.style.zIndex = '99999';
+
+        let blockB = document.createElement('div');
+        blockB.style.height = '0px';
+        blockB.style.width = '0px';
+        blockB.style.background = 'white';
+        blockB.style.position = 'absolute';
+        blockB.style.zIndex = '99999';
+
+        document.getElementById('overlay_output_frame').contentWindow.document.getElementById('overlay-container').appendChild(blockA)
+        document.getElementById('output_frame').contentWindow.document.getElementsByTagName('body')[0].appendChild(blockB)
+
+        document.getElementById('overlay_output_frame').contentWindow.document.getElementById('overlay-container').addEventListener('mousemove',
+        (e)=>{
+            var x = e.pageX;
+            var y = e.pageY;
+            blockA.style.left = x + 'px';
+            blockA.style.top = y + 'px';
+            blockA.style.pointerEvents = 'none';
+            let getblockRect = blockA.getBoundingClientRect();
+            let getLocalRect = JSON.parse(localStorage.getItem("bound"));
+
+            if (getblockRect.left < getLocalRect.left + getLocalRect.width  && getblockRect.left + getblockRect.width  > getLocalRect.left &&
+                getblockRect.top < getLocalRect.top + getLocalRect.height && getblockRect.top + getblockRect.height > getLocalRect.top) {
+            document.getElementById('output_frame').style.pointerEvents = 'none';        
+            document.getElementById('overlay_output_frame').style.pointerEvents = 'all';
+         
+
+          } else {
+            document.getElementById('overlay_output_frame').style.pointerEvents = 'none';
+            document.getElementById('output_frame').style.pointerEvents = 'all';
+
+          }
+
+        });
+
+        document.getElementById('output_frame').contentWindow.document.getElementsByTagName('body')[0].addEventListener('mousemove',
+        (e)=>{
+            var x = e.pageX;
+            var y = e.pageY;
+            blockB.style.left = x + 'px';
+            blockB.style.top = y + 'px';
+            blockB.style.pointerEvents = 'none';
+            let getblockRect = blockB.getBoundingClientRect();
+            let getLocalRect = JSON.parse(localStorage.getItem("bound"));
+
+            if (getblockRect.left < getLocalRect.left + getLocalRect.width  && getblockRect.left + getblockRect.width  > getLocalRect.left &&
+                getblockRect.top < getLocalRect.top + getLocalRect.height && getblockRect.top + getblockRect.height > getLocalRect.top) {
+            document.getElementById('output_frame').style.pointerEvents = 'all';
+            document.getElementById('overlay_output_frame').style.pointerEvents = 'none';
+
+          } else {
+            document.getElementById('output_frame').style.pointerEvents = 'none';
+            document.getElementById('overlay_output_frame').style.pointerEvents = 'all';
+
             
-        }
+
+          }
+
+        })
+        
+
+    }
   removeDuplicates(originalArray, prop) {
             var newArray = [];
             var lookupObject  = {};
@@ -3529,34 +3593,7 @@ let apps = [{id:'childSnapShot.key',
             document.getElementById('publish-text-new').className = 'menubg';
         }
     }
-    handleResize = (style, isShiftKey, type) => {
-        // type is a string and it shows which resize-handler you clicked
-        // e.g. if you clicked top-right handler, then type is 'tr'
-        let { top, left, width, height } = style
-        top = Math.round(top)
-        left = Math.round(left)
-        width = Math.round(width)
-        height = Math.round(height)
-        this.setState({
-          top,
-          left,
-          width,
-          height
-        })
-      }
-    
-      handleRotate = (rotateAngle) => {
-        this.setState({
-          rotateAngle
-        })
-      }
-    
-      handleDrag = (deltaX, deltaY) => {
-        this.setState({
-          left: this.state.left + deltaX,
-          top: this.state.top + deltaY
-        })
-      }
+  
     render() {
         let that = this;
         const {isLoading} = this.state;
@@ -3863,7 +3900,8 @@ let apps = [{id:'childSnapShot.key',
                                                     border:'none',
                                                     color:'rgb(64, 255, 232)'
                                                 }} onChange={(e)=>{
-                                                }} placeholder="Search for any GIFs here"/>
+                                                    this.setState({inputValue:e.target.value})
+                                                }} value={this.state.inputValue} placeholder="Search for any GIFs here"/>
                                                 <div style={{width:'100%',display:'flex',justifyContent:'flex-end'}}> 
                                                     <div style={{backgroundImage:'url(../poweredbygiphy.png)',
                                                         height:20,
