@@ -79,6 +79,14 @@ import Overlay from './overlay.js'
       bottom: -5px;
       cursor: nwse-resize;
     }
+    .dg-hdl {
+        width: 10px !important;
+        height: 10px !important;
+        border-radius: 50% !important;
+        pointer-events: auto !important;
+        background:white !important;
+        border: none
+    }
         `
 let subj = '<script src="../dist/js/subjx.js"></script>';
 let subjcss = '<link rel="stylesheet" href="../dist/style/subjx.css">';        
@@ -135,7 +143,6 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
                   <div id="full_wrap" style={{height:'100%',width:'100%',border:'none',background:'transparent'}}> 
                             <iframe id="output_frame" className="output_frame" src={`/full/${this.props.shortID}`} style={{position:'relative',display:'block'}}></iframe>
                             <iframe id="overlay_output_frame" className="overlay_output_frame" src="" style={{position:'absolute',display:'block',background:'red',top:11,height:460,width:330,background:'transparent'}}></iframe>
-                         
                         </div>
             </div>
         )
