@@ -12,7 +12,8 @@ import Overlay from './overlay.js'
          }
      }
      componentDidMount() {
-    
+       let index = this.props.index;
+     alert(index)
         let base_tpl = "<!doctype html>\n" +
         "<html>\n\t" +
         "<head>\n\t\t" +
@@ -41,7 +42,7 @@ import Overlay from './overlay.js'
       position: absolute;
       top: 100px;
       left: 100px;
-      border: 1px solid hsla(0,0%,50%,.2) !important;
+      border: 0px solid hsla(0,0%,50%,.2) !important;
     }
     
     .resizable .resizers{
@@ -79,14 +80,50 @@ import Overlay from './overlay.js'
       bottom: -5px;
       cursor: nwse-resize;
     }
+    .dg, .dg-controls, .dg-hdl {
+        position: absolute;
+        background-color: transparent !important;
+    }
     .dg-hdl {
         width: 10px !important;
         height: 10px !important;
         border-radius: 50% !important;
         pointer-events: auto !important;
         background:white !important;
-        border: none
+        border: none !important
     }
+    .dg-hdl-ml {
+        width: 5px !important;
+        left:0% !important;
+        height: 15px !important;
+        border-radius: 30% !important;
+        margin-left: -3px !important;
+    }
+    .dg-hdl-mr {
+        width: 5px !important;
+    left: 100% !important;
+    height: 15px !important;
+    border-radius: 30% !important;
+    margin-left: -2px !important;
+    }
+    
+    .dg-controls {
+        border:1px solid rgb(64, 255, 232) !important;
+    }
+    .dg-normal {
+        display: none !important;
+   
+    }
+
+    .dg-hdl-bc {
+        display:none !important;
+    }
+    .dg-hdl-tc {
+        display:none !important;
+
+    }
+
+    
         `
 let subj = '<script src="../dist/js/subjx.js"></script>';
 let subjcss = '<link rel="stylesheet" href="../dist/style/subjx.css">';        
@@ -116,14 +153,16 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
         };
 
         let renderDHTML = () => {
-          // alert('called')
+          
           let source = prepareSource();
-          let iframe = document.querySelector('.overlay_output_frame');
+          let iframe = document.getElementsByClassName('overlay_output_frame')[0];
           let iframe_doc = iframe.contentDocument;
-                
+          
           iframe_doc.open();
           iframe_doc.write(source);
           iframe_doc.close();
+
+          
 
         //when removing last library, set to [];
          
@@ -131,7 +170,7 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
         };
   
        
-  
+
         renderDHTML();
        
 
@@ -141,8 +180,8 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
         return (
             <div style={{height:'100%', width:'100%'}}>
                   <div id="full_wrap" style={{height:'100%',width:'100%',border:'none',background:'transparent'}}> 
-                            <iframe id="output_frame" className="output_frame" src={`/full/${this.props.shortID}`} style={{position:'relative',display:'block'}}></iframe>
-                            <iframe id="overlay_output_frame" className="overlay_output_frame" src="" style={{position:'absolute',display:'block',background:'red',top:11,height:460,width:330,background:'transparent'}}></iframe>
+                            <iframe id="output_frame" className="output_frame" src={`/full/${this.props.shortID}`} style={{position:'relative',display:'block',pointerEvents:'none'}}></iframe>
+                            <iframe id="overlay_output_frame" className="overlay_output_frame" src="" style={{position:'absolute',display:'block',background:'red',top:0,height:'100%',width:'100%',background:'transparent',pointerEvents:'none'}}></iframe>
                         </div>
             </div>
         )

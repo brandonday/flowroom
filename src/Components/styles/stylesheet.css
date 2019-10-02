@@ -84,9 +84,7 @@ body {
   overflow: scroll;
 }
 .dragHandle {
-  height:300px;
-  width:100%;
-  background-color:blue;
+ 
 }
 #content {
   width: 100%;
@@ -1378,6 +1376,10 @@ right: 0px;
   font-weight: 400;
   line-height: 29px;
   text-align: left;
+}
+
+.selected_flow {
+  border: 2px dashed rgb(64, 255, 232) !important;
 }
 
 .bound {

@@ -36,6 +36,7 @@ import ResizableRect from 'react-resizable-rotatable-draggable'
 
 import Create from './create';
 import {flowAdd} from '../../actions/flowAdd.js';
+//import { disconnect } from 'cluster';
 let objArray = [];
 
 var GphApiClient = require('giphy-js-sdk-core')
@@ -47,7 +48,7 @@ const CustomTab = ({ children }) => (
   );
   
   CustomTab.tabsRole = 'Tab'; // Required field to use your custom Tab
-  
+  let data = -1
 let apps = [{id:'childSnapShot.key',
     date:'childSnapShot.val().date',
     isAR:'childSnapShot.val().isAR',
@@ -1702,27 +1703,45 @@ let apps = [{id:'childSnapShot.key',
                             // resizable.appendChild(object)
                             
                             div.setAttribute("id", `${object.id}`)
+                            //document.getElementById("mySelect").childNodes[2]
+                            console.log('nodes',);
+                            // let overlayContainer = document.createElement('div');
+                            // overlayContainer.style.position = 'absolute';
+                            // overlayContainer.style.top = '0px';
+                            // overlayContainer.style.left = '0px';
+                            // overlayContainer.style.bottom = '0px';
+                            // overlayContainer.style.height = '100%';
+                            // overlayContainer.style.width = '100%';
+                            // overlayContainer.setAttribute("id", "overlay-container");
+                                // div.addEventListener('click', ()=>{
+                                // alert(`#${object.id}`)
+                      
+
+                        //})
+                            div.setAttribute("data-num",data)
+                            let arr = [];
+                            arr.push(div)
                             
-                            document.getElementById('overlay_output_frame').contentDocument.getElementById('overlay-container').appendChild(div);
+                            // document.getElementById('overlay_output_frame').contentDocument.body.appendChild(overlayContainer);
+                            document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].contentDocument.getElementById('overlay-container').appendChild(div)
+                            //document.getElementById('overlay_output_frame').contentDocument.getElementById('overlay-container').appendChild(div);
                             document.getElementById('overlay_output_frame').contentDocument.body.style.padding = '10px';
                 
                             div.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
-                            
+                          
+                           //let xDraggables = document.getElementById('overlay_output_frame').contentWindow.Subjx(arr).drag();
                             //this.makeResizableDiv(`#${i.id}`);
+                           div.addEventListener('click', ()=>{
+                           
                             
-                            const xDraggables = document.getElementById('overlay_output_frame').contentWindow.Subjx(`#${object.id}`).drag({
-                                
-                            container:`#container${object.id}`,
-                            each: {
-                                move: false,
-                                resize: true, 
-                                rotate: true
-                            }
-                            // snapping to grid (default: 10)
+                            // let getr = document.getElementsByClassName('resizable');
+                            // // for(let i = 0; i < getr.length; i++) {
+                            // //     getr[i].className =''
+                            // // }
+                            // div.className = 'resizable';
+                            document.getElementById('overlay_output_frame').contentWindow.Subjx(arr).drag();
     
-                            });
-
-
+                           })
                             objArray.push(div.getBoundingClientRect());
                             localStorage.setItem("bound", JSON.stringify(div.getBoundingClientRect()))
                             let getn = JSON.parse(localStorage.getItem("bound"))
@@ -1748,202 +1767,163 @@ let apps = [{id:'childSnapShot.key',
             /// Sticker Search
         }
         let blockA = document.createElement('div');
-        blockA.style.height = '0px';
-        blockA.style.width = '0px';
+        blockA.style.height = '0';
+        blockA.style.width = '0';
         blockA.style.background = 'white';
         blockA.style.position = 'absolute';
         blockA.style.zIndex = '99999';
         blockA.style.pointerEvents = 'none';
         let blockB = document.createElement('div');
-        blockB.style.height = '0px';
-        blockB.style.width = '0px';
+        blockB.style.height = '0';
+        blockB.style.width = '0';
         blockB.style.background = 'white';
         blockB.style.position = 'absolute';
         blockB.style.zIndex = '99999';
         blockB.style.pointerEvents = 'none';
         let isCollision = false;
+        // console.log('lo',document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].contentDocument.getElementById('overlay-container').appendChild(blockA)
+        // document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].contentDocument.getElementsByTagName('body')[0].appendChild(blockB)
 
         document.getElementById('overlay_output_frame').contentWindow.document.getElementById('overlay-container').appendChild(blockA)
-        document.getElementById('output_frame').contentWindow.document.getElementsByTagName('body')[0].appendChild(blockB)
-
-        document.getElementById('overlay_output_frame').contentWindow.document.getElementById('overlay-container').addEventListener('mousemove',
-        (e)=>{
+       document.getElementById('output_frame').contentWindow.document.getElementsByTagName('body')[0].appendChild(blockB);
+       let evref = document.getElementById('overlay_output_frame').contentWindow.document.getElementById('overlay-container');
+       function getMouse(e){
         
+
+        let resizable = document.getElementsByClassName('resizable');
+       
             var x = e.pageX;
             var y = e.pageY;
             
             blockA.style.left = x - 20 + 'px';
             blockA.style.top = y + 'px';
             
-            let getblockRect = blockA.getBoundingClientRect()
-            
-          
-            let getLocalRect = [document.getElementById('overlay_output_frame').contentWindow.document.getElementsByClassName('resizable')[0].getBoundingClientRect()];
-            console.log('obj a', objArray)
-            //for(let i = 0; i < getLocalRect.length; i++) {
-            if (getblockRect.left < getLocalRect[0].left + getLocalRect[0].width  && getblockRect.left + getblockRect.width  > getLocalRect[0].left &&
-                getblockRect.top < getLocalRect[0].top + getLocalRect[0].height && getblockRect.top + getblockRect.height > getLocalRect[0].top) {
-                    //alert('collision')
-                    //if(isCollision === false) {
-                    document.getElementById('overlay_output_frame').style.pointerEvents = 'all';
-                    document.getElementById('output_frame').style.pointerEvents = 'none';        
-                    isCollision = true;
-                    //}
+            let getblockRect = {
+                bottom: y,
+                height: 10,
+                left: x,
+                right: x,
+                top: y,
+                width: 10,
+                x: x,
+                y: y
+            };
+
+
+//         let resizables = document.getElementsByClassName('resizable');
+    
+//         let getLocalRect = [document.getElementById('overlay_output_frame').contentWindow.document.getElementsByClassName('resizable')[0].getBoundingClientRect(),document.getElementById('overlay_output_frame').contentWindow.document.getElementsByClassName('resizable')[1].getBoundingClientRect()];
+//         // for(let i =0; i < resizables.length; i++) {
+//         // if(getLocalRect[i].left !== undefined) {
+//             let getLocal = [document.getElementById('overlay_output_frame').contentWindow.document.getElementById('overlay-container').getBoundingClientRect()];
+
+//            for(let i = 0; i < getLocalRect.length; i++) {
+//                getLocalRect = getLocalRect[i]
+               
            
+//             if (getblockRect.left < getLocalRect.left + getLocalRect.width  && getblockRect.left + getblockRect.width  > getLocalRect.left &&
+//             getblockRect.top < getLocalRect.top + getLocalRect.height && getblockRect.top + getblockRect.height > getLocalRect.top) {
+               
+//                 //alert('collision')   //if(isCollision === false) {
+//                 document.getElementById('overlay_output_frame').style.pointerEvents = 'all';
+//                 document.getElementById('output_frame').style.pointerEvents = 'none';        
+//                 isCollision = true;
+//                 //}
+//                 console.log('getlocal', document.getElementById('overlay_output_frame').contentWindow.document.elementsFromPoint(x, y))
 
-          } else {
-            document.getElementById('overlay_output_frame').style.pointerEvents = 'none';
-            document.getElementById('output_frame').style.pointerEvents = 'all';
-            //alert(' no collision')
-            isCollision = false;
 
-          }
-        //}
-        
-        });
+
+//         } else {
+//             console.log('getlocal', document.getElementById('overlay_output_frame').contentWindow.document.elementsFromPoint(x, y))
+
+//                 document.getElementById('overlay_output_frame').style.pointerEvents = 'none';
+//                 document.getElementById('output_frame').style.pointerEvents = 'all';
+//                 //alert(' no collision')
+//                 isCollision = false;
+//            }
+//    // }
+let tag = document.getElementById('overlay_output_frame').contentWindow.document.elementsFromPoint(x, y)[1].tagName
+if(tag === 'HTML') {
+document.getElementById('overlay_output_frame').style.pointerEvents = 'none';
+document.getElementById('output_frame').style.pointerEvents = 'all';
+} else {
+    document.getElementById('overlay_output_frame').style.pointerEvents = 'all';
+    document.getElementById('output_frame').style.pointerEvents = 'none'; 
+}      
+  
+
+
+    //evref.removeEventListener('click', ()=>{alert('dfdfdf')});
+
+    }
+    evref.addEventListener('mousemove',getMouse, false);
+      
+
+ 
 
         document.getElementById('output_frame').contentWindow.document.getElementsByTagName('body')[0].addEventListener('mousemove',
-        (e)=>{
+        function getMouse(e){
            
             var x = e.pageX;
             var y = e.pageY;
             blockB.style.left = x - 20 + 'px';
             blockB.style.top = y + 'px';
            
-            let getblockRect = blockB.getBoundingClientRect()
-            console.log('stay', getblockRect)
-            let getLocalRect = [document.getElementById('overlay_output_frame').contentWindow.document.getElementsByClassName('resizable')[0].getBoundingClientRect()];
+            let getblockRect = {
+                bottom: y,
+                height: 10,
+                left: x,
+                right: x,
+                top: y,
+                width: 10,
+                x: x,
+                y: y
+            }
+        //     let resizables = document.getElementsByClassName('resizable');
+        //     let getLocalRect = [document.getElementById('overlay_output_frame').contentWindow.document.getElementsByClassName('resizable')[0].getBoundingClientRect(),document.getElementById('overlay_output_frame').contentWindow.document.getElementsByClassName('resizable')[1].getBoundingClientRect()];
 
-            //for(let i = 0; i < getLocalRect.length; i++) {
-            if (getblockRect.left < getLocalRect[0].left + getLocalRect[0].width  && getblockRect.left + getblockRect.width  > getLocalRect[0].left &&
-                getblockRect.top < getLocalRect[0].top + getLocalRect[0].height && getblockRect.top + getblockRect.height > getLocalRect[0].top) {
-                    //if(isCollision === false) {
-                    //alert('collision detection from output frame')
-                    document.getElementById('output_frame').style.pointerEvents = 'none';
-                    document.getElementById('overlay_output_frame').style.pointerEvents = 'all';
+        //     // for(let i =0; i < resizables.length; i++) {
+        //    // if(getLocalRect[i].left !== undefined) {
+        //      for(let i = 0; i < getLocalRect.length; i++) {
+        //         getLocalRect = getLocalRect[i]
+                
+             
+            
+        //     if (getblockRect.left < getLocalRect.left + getLocalRect.width  && getblockRect.left + getblockRect.width  > getLocalRect.left &&
+        //         getblockRect.top < getLocalRect.top + getLocalRect.height && getblockRect.top + getblockRect.height > getLocalRect.top) {
+        //             //if(isCollision === false) {
+        //             //alert('collision detection from output frame')
+        //             document.getElementById('output_frame').style.pointerEvents = 'none';
+        //             document.getElementById('overlay_output_frame').style.pointerEvents = 'all';
                     
-                    isCollision = true;
-                    console.log('stay', getblockRect)
-                    //}
+        //             isCollision = true;
+        //             console.log('getlocal', document.getElementById('overlay_output_frame').contentWindow.document.elementsFromPoint(x, y))
 
-          } else {
-            document.getElementById('output_frame').style.pointerEvents = 'all';
-            document.getElementById('overlay_output_frame').style.pointerEvents = 'none';
-            isCollision = false;
-
-            
-          }
-        //}
-            
-
-        });
-
-        //         document.getElementById('overlay_output_frame').contentWindow.document.getElementById('overlay-container').addEventListener('click',
-        // (e)=>{
-        //     var x = e.pageX;
-        //     var y = e.pageY;
-        //     blockA.style.left = x + 'px';
-        //     blockA.style.top = y + 'px';
-            
-        //     let getblockRect = {
-        //         bottom: y,
-        //         height: 0,
-        //         left: x,
-        //         right: x,
-        //         top: y,
-        //         width: 0,
-        //         x: x,
-        //         y: y
-        //     };
-        //     let getLocalRect = objArray;
-        //     for(let i = 0; i < getLocalRect.length; i++) {
-        //     if (getblockRect.left < getLocalRect[i].left + getLocalRect[i].width  && getblockRect.left + getblockRect.width  > getLocalRect[i].left &&
-        //         getblockRect.top < getLocalRect[i].top + getLocalRect[i].height && getblockRect.top + getblockRect.height > getLocalRect[i].top) {
-        //     document.getElementById('output_frame').style.pointerEvents = 'none';        
-        //     document.getElementById('overlay_output_frame').style.pointerEvents = 'all';
-         
 
         //   } else {
+        //     console.log('getlocal', document.getElementById('overlay_output_frame').contentWindow.document.elementsFromPoint(x, y))
+
+        //         document.getElementById('output_frame').style.pointerEvents = 'all';
         //     document.getElementById('overlay_output_frame').style.pointerEvents = 'none';
-        //     document.getElementById('output_frame').style.pointerEvents = 'all';
+        //     isCollision = false;
 
-        //   }
+
+        //    } 
+
         // }
+        let tag = document.getElementById('overlay_output_frame').contentWindow.document.elementsFromPoint(x, y)[1].tagName
 
-
-        // });
-
-        // document.getElementById('output_frame').contentWindow.document.getElementsByTagName('body')[0].addEventListener('click',
-        // (e)=>{
-        //     var x = e.pageX;
-        //     var y = e.pageY;
-        //     blockB.style.left = x + 'px';
-        //     blockB.style.top = y + 'px';
-           
-        //     let getblockRect = {
-        //         bottom: y,
-        //         height: 0,
-        //         left: x,
-        //         right: x,
-        //         top: y,
-        //         width: 0,
-        //         x: x,
-        //         y: y
-        //     };
-        //     let getLocalRect = objArray;
-        //     for(let i = 0; i < getLocalRect.length; i++) {
-
-        //     if (getblockRect.left < getLocalRect[i].left + getLocalRect[i].width  && getblockRect.left + getblockRect.width  > getLocalRect[i].left &&
-        //         getblockRect.top < getLocalRect[i].top + getLocalRect[i].height && getblockRect.top + getblockRect.height > getLocalRect[i].top) {
-        //     document.getElementById('output_frame').style.pointerEvents = 'all';
-        //     document.getElementById('overlay_output_frame').style.pointerEvents = 'none';
-
-        //   } else {
-        //     document.getElementById('output_frame').style.pointerEvents = 'none';
-        //     document.getElementById('overlay_output_frame').style.pointerEvents = 'all';
-
-            
-
-        //   }
-        // }
-
-        // })
-
-        // document.getElementById('overlay_output_frame').contentWindow.document.getElementById('overlay-container').addEventListener('click',
-        // (e)=>{
-        //     var x = e.pageX;
-        //     var y = e.pageY;
-        //     blockA.style.left = x + 'px';
-        //     blockA.style.top = y + 'px';
-            
-        //     let getblockRect = {
-        //         bottom: y,
-        //         height: 0,
-        //         left: x,
-        //         right: x,
-        //         top: y,
-        //         width: 0,
-        //         x: x,
-        //         y: y
-        //     };
-        //     let getLocalRect = objArray;
-        //     for(let i = 0; i < getLocalRect.length; i++) {
-
-        //     if (getblockRect.left < getLocalRect[i].left + getLocalRect[i].width  && getblockRect.left + getblockRect.width  > getLocalRect[i].left &&
-        //         getblockRect.top < getLocalRect[i].top + getLocalRect[i].height && getblockRect.top + getblockRect.height > getLocalRect[i].top) {
-        //     document.getElementById('output_frame').style.pointerEvents = 'none';        
-        //     document.getElementById('overlay_output_frame').style.pointerEvents = 'all';
-         
-
-        //   } else {
-        //     document.getElementById('overlay_output_frame').style.pointerEvents = 'none';
-        //     document.getElementById('output_frame').style.pointerEvents = 'all';
-
-        //   }
-        // }
-
-        // });
+        if(tag === 'DIV') {
+            document.getElementById('overlay_output_frame').style.pointerEvents = 'all';
+            document.getElementById('output_frame').style.pointerEvents = 'none';
+            } else {
+                document.getElementById('overlay_output_frame').style.pointerEvents = 'none';
+                document.getElementById('output_frame').style.pointerEvents = 'all'; 
+            }      
         
+        });
+            
+       
             
     }
   removeDuplicates(originalArray, prop) {
