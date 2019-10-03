@@ -1732,15 +1732,13 @@ let apps = [{id:'childSnapShot.key',
                            //let xDraggables = document.getElementById('overlay_output_frame').contentWindow.Subjx(arr).drag();
                             //this.makeResizableDiv(`#${i.id}`);
                            div.addEventListener('click', ()=>{
-                           
+                            let getControlClasses = document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].contentWindow.document.getElementsByClassName('dg-controls');
+                            console.log('control classes ',getControlClasses)
+                            for(let i = 0; i < getControlClasses.length; i++) {
+                                getControlClasses[i].style.display = 'none';
+                            }
                             
-                            // let getr = document.getElementsByClassName('resizable');
-                            // // for(let i = 0; i < getr.length; i++) {
-                            // //     getr[i].className =''
-                            // // }
-                            // div.className = 'resizable';
-                            document.getElementById('overlay_output_frame').contentWindow.Subjx(arr).drag();
-    
+                            document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].contentWindow.Subjx(div).drag();
                            })
                             objArray.push(div.getBoundingClientRect());
                             localStorage.setItem("bound", JSON.stringify(div.getBoundingClientRect()))
@@ -3796,7 +3794,7 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                                                 </svg>
                                            </div>
                                             {/* <i id="elements-icon" className="fas fa-shapes" style={{color:'white', fontSize:19,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none',height:'20px', width:'20px',display:'none'}}></i> */}
-                                            <p id="elements-text" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none',color:'white'}} className="menubgnot">ELEMENTS</p>
+                                            <p id="elements-text" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none',color:'white'}} className="menubgnot">OVERLAYS</p>
                                         {/* </div> */}
                                     </Tab>
                                     <Tab tabFor="vertical-tab-three" onClick={()=>{this.activeTab(2)}} className={this.state.activeTab == 2 ? 'activeClass' : ''} style={{height:78,width:78,display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}}>
