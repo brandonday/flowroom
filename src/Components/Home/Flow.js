@@ -13,7 +13,7 @@ import Overlay from './overlay.js'
      }
      componentDidMount() {
        let index = this.props.index;
-     alert(index)
+  
         let base_tpl = "<!doctype html>\n" +
         "<html>\n\t" +
         "<head>\n\t\t" +
@@ -153,9 +153,8 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
         };
 
         let renderDHTML = () => {
-          
           let source = prepareSource();
-          let iframe = document.getElementsByClassName('overlay_output_frame')[0];
+          let iframe = document.getElementsByClassName('overlay_output_frame')[index == null? 0 : index];
           let iframe_doc = iframe.contentDocument;
           
           iframe_doc.open();

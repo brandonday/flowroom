@@ -119,7 +119,7 @@ let counter = 0;
     getObjects() {
      
       
-        return _.map(this.state.objects,(obj)=> {
+        return this.state.objects.map((obj,index)=> {
         
            console.log('object', obj)
            counter++;
@@ -198,7 +198,7 @@ let counter = 0;
                 <div className="f-wrap" style={{height:'100%',width:'100%'}}>
                   <div style={{height:'100%',width:'100%'}} >
                
-                  <Flow shortID={obj.shortID} index={counter}/>
+                  <Flow shortID={obj.shortID} index={index} />
                   {/* <Overlay/> */}
                   </div>
                 </div>
