@@ -212,11 +212,12 @@ let counter = 0;
     }
    shouldComponentUpdate(props,state) {
     //  alert(props.state.openMenu.openMenu )
-     if(props.state.openMenu.openMenu === true) {
-       return null
-     } else {
-       return true
-     }
+      if(props.state.openMenu.openMenu === true || props.state.openMenu.openMenu === false) {
+        return null
+      } else {
+        return true
+      }
+  
    }
 
      render() {
@@ -245,7 +246,6 @@ let counter = 0;
               
             
               this.setState(addFlow)
-          
             
             }
            

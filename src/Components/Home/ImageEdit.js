@@ -47,7 +47,7 @@ let that;
         
         let that = this;
         let remixImageListOptions = ['Images', 'Text', 'Audio','Other'];
-        let list = document.getElementById('main-menu');
+        let list = document.getElementsByClassName('main-menu')[0];
         let getList = JSON.parse(localStorage.getItem( "FR_REMIX_LIST"));
         let remixImageList = document.createElement('div');
             remixImageList.setAttribute("id", "remix-image-list");
@@ -111,7 +111,7 @@ let that;
         remixImageListNavArrows.style.fontSize = '14px';
         let remixImageBox = document.createElement('div');
         remixImageBox.style.borderBottom = '1px solid rgb(63, 62, 62);';
-        remixImageBox.style.height = '330px';
+        //remixImageBox.style.height = '330px';
         // remixImageBox.style.width = '269px';
         remixImageBox.style.overflow = 'hidden';
         //.style.marginTop = '70px';
@@ -377,8 +377,8 @@ let that;
                    
                     remixImageList.appendChild(remixImageWrap);
           
-                    remixImageWrap.style.height = '250px';
-                    remixImageWrap.style.overflowY = 'scroll';
+                    remixImageWrap.style.height = 'calc(100% - 445px)';
+                    //remixImageWrap.style.overflowY = 'scroll';
                     remixImageWrap.style.display = 'flex';
                     remixImageWrap.style.flexWrap = 'wrap';
                     
@@ -474,7 +474,7 @@ let that;
 
                   }
               
-                  list.style.padding = '7px 14px 2px 10px';
+                  //list.[0].style.padding = '7px 14px 2px 10px';
                   remixImageBox.appendChild(remixImageTitle);
                   remixImageBox.appendChild(remixImageList);
                   if(document.getElementById('menu-info') !== null){

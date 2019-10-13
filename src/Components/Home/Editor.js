@@ -71,17 +71,19 @@ class Editor extends Component {
         
      }
     componentDidMount() {
-      // document.getElementById('script-tag').addEventListener('click',()=>{
-      //   if(this.state.showSubComponent === false) {
-      //     this.setState({showSubComponent:true}) 
+      document.getElementById('vertical-tab-four-tab').addEventListener('click',()=>{
+        if(this.state.showSubComponent === false) {
+          this.setState({showSubComponent:true}) 
 
-      //   } else {
+        } else {
 
-      //     this.setState({showSubComponent:false}) 
+          this.setState({showSubComponent:false}) 
 
-      //   } 
+        } 
         
-      // })
+      })
+   
+
   
       document.getElementById('out-cover').style.display = 'none';
         localStorage.setItem("dhtml",JSON.stringify({html:"w",css:"w",js:"d"}));
@@ -215,6 +217,7 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
         let renderDHTML = () => {
           // alert('called')
           let source = prepareSource();
+          
           let iframe = document.querySelector('.output_frame');
           let iframe_doc = iframe.contentDocument;
                 
@@ -242,7 +245,7 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
                 }
             }
          
-            
+
          
            
 
@@ -664,7 +667,7 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
        
     }
     resizeFunc(event) {
-        
+        document.getElementById('vertical-tab-four-tab').addEventListener('click',()=>{
         let resizeHeight = document.getElementById('resizable-box').clientHeight;
         this.setState((prevState, props) => {
             return {
@@ -685,6 +688,7 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
         let codeTriangle1 = document.getElementsByClassName('down-editor-3x')[0];
         let codeTriangle2 = document.getElementsByClassName('down-editor-3x')[1];
         let codeTriangle3 = document.getElementsByClassName('down-editor-3x')[2];
+      })
 
     }
     resizeAnimationComplete () {
@@ -740,7 +744,7 @@ goFull = () => {
 }
 
     render() {
-
+      console.log('prosp',this.props.state)
     
         return (<div id="full-page" className="full-page">
             <div className="top-boxes editor-parent">

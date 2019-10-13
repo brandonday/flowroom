@@ -33,9 +33,11 @@ import MdCube from 'react-ionicons/lib/MdCube';
 import IosAppsOutline from 'react-ionicons/lib/IosAppsOutline';
 import "react-web-tabs/dist/react-web-tabs.css";
 import ResizableRect from 'react-resizable-rotatable-draggable'
+import {openMenu} from '../../actions/openMenu';
 
 import Create from './create';
 import {flowAdd} from '../../actions/flowAdd.js';
+
 //import { disconnect } from 'cluster';
 let objArray = [];
 
@@ -191,6 +193,8 @@ let apps = [{id:'childSnapShot.key',
                 isOpen:false,
                 showPublish:true,
                 modalopen:false,
+                typing:false,
+                typingTimeout:0,
                 ideaByTags: [
 
                 ],
@@ -328,8 +332,8 @@ let apps = [{id:'childSnapShot.key',
                 embedCode:'embed',
                 showModal:false,
                 activeTab: 0,
-                inputValue:''
-            
+                inputValue:'cats',
+                searchElements:'gifs'
             };
             this.openModal = this.openModal.bind(this);
             this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -364,6 +368,8 @@ let apps = [{id:'childSnapShot.key',
             this.getMimeType = this.getMimeType.bind(this);
             this.makeResizableDiv =  this.makeResizableDiv.bind(this)
             this.funStuff = this.funStuff.bind(this)
+            this.changeName = this.changeName.bind(this);
+
         }
         descriptionhandleChange(event) {
             this.setState({description: event.target.value});
@@ -389,7 +395,18 @@ let apps = [{id:'childSnapShot.key',
               });
               
               
-            
+              let mainmenu = document.getElementsByClassName('main-menu');
+              for(let i =0; i < mainmenu.length; i++) {
+                mainmenu[i].style.height = '100vh';
+              }
+              for(let i = 0; i < mainmenu.length; i++) {
+                  if(window.innerWidth < 768) {
+                    mainmenu[i].style.width = '271px'
+                  } else {
+                    mainmenu[i].style.width = '330px'
+                  }
+              }
+
             let that = this;
             // alert('room loaded')
             let hashids = new Hashids(uuid(), 6);
@@ -426,7 +443,7 @@ let apps = [{id:'childSnapShot.key',
                     //  document.getElementsByClassName("string").firstChild.style.display = 'flex';
                 }
                 guiProperties = new createDatGUI();
-                let mainmenu = document.getElementById('main-menu');
+                
                 let remixTextBox = document.createElement('div');
                 
                 //remixTextBox.style.border = '1px solid red';
@@ -523,13 +540,16 @@ let apps = [{id:'childSnapShot.key',
                         //document.getElementById('main-menu').style.display = 'block';
                     }
                     that.setState({isOpen:false});
-                    document.getElementById('main-menu').style.position = 'absolute';
-                    document.getElementById('main-menu').style.height = '100%';
-                    document.getElementById('main-menu').style.width = '271px';
-                    document.getElementById('main-menu').style.zIndex = '999994';
-                    document.getElementById('main-menu').style.top = '0px';
-                    document.getElementById('main-menu').style.zIndex = '999999';
-                    document.getElementById('main-menu').style.left = '56px';
+                    let main = document.getElementsByClassName('main-menu');
+                    for(let i = 0; i < main.length; i++) {
+                    main[i].style.position = 'absolute';
+                    main[i].style.height = '100%';
+                    main[i].style.width = '271px';
+                    main[i].style.zIndex = '999994';
+                    main[i].style.top = '0px';
+                    main[i].style.zIndex = '999999';
+                    main[i].style.left = '78px';
+                    }
                     // let socialIcons = document.querySelectorAll('.facebook,.instagram,.snapchat,.twitter,.pinterest,.tumblr,.youtube,.reddit,.whatsapp,.messenger,.linkedin,.slack');
                     // let socialIconTxt = document.querySelectorAll('.facebook-txt,.instagram-txt,.snapchat-txt,.twitter-txt,.pinterest-txt,.tumblr-txt,.youtube-txt,.reddit-txt,.whatsapp-txt,.messenger-txt,.linkedin-txt,.slack-txt,.inkedin-txt')
                     // for(let i = 0; i < socialIcons.length; i++) {
@@ -554,7 +574,7 @@ let apps = [{id:'childSnapShot.key',
                     document.getElementById('tab-menu').style.position = 'absolute';
                     document.getElementById('tab-menu').style.zIndex = '999999';
                     document.getElementById('tab-menu').style.height = '100%';
-                    document.getElementById('tab-menu').style.width = '56px';
+                    //document.getElementById('tab-menu').style.width = '56px';
                     document.getElementById('tab-menu').style.display = 'none';
                     if(document.getElementById('menu-info') !== null) {
                         document.getElementById('menu-info').style.width = '240px';
@@ -577,83 +597,102 @@ let apps = [{id:'childSnapShot.key',
                     document.getElementById('save-as-draft').style.fontSize = '12px';
                     document.getElementById('publish-room').style.fontSize = '12px';
                     
-                    // if(document.getElementById('welcome-text') !== null) {
-                    //  document.getElementById('welcome-text').style.fontSize = '14px';
-                    // }
-                    // if(document.getElementById('first-line-text') !== null) {
-                    //     document.getElementById('first-line-text').style.fontSize = '12px';
-                    // }
-                    // if(document.getElementById('second-line-text') !== null) {
-                    //     document.getElementById('second-line-text').style.fontSize = '12px';
-                    // }
-                    // if(document.getElementById('third-line-text') !== null) {
-                    //     document.getElementById('third-line-text').style.fontSize = '12px';
-                    // }
-                    // if(document.getElementById('remix-image-box') !== null) {
+                    if(document.getElementById('welcome-text') !== null) {
+                     document.getElementById('welcome-text').style.fontSize = '14px';
+                    }
+                    if(document.getElementById('first-line-text') !== null) {
+                        document.getElementById('first-line-text').style.fontSize = '12px';
+                    }
+                    if(document.getElementById('second-line-text') !== null) {
+                        document.getElementById('second-line-text').style.fontSize = '12px';
+                    }
+                    if(document.getElementById('third-line-text') !== null) {
+                        document.getElementById('third-line-text').style.fontSize = '12px';
+                    }
+                    if(document.getElementById('remix-image-box') !== null) {
                        
-                    //     document.getElementById('remix-image-box').style.marginTop = '5px'
+                        document.getElementById('remix-image-box').style.marginTop = '50px'
                        
-                    // }
-                    // if(document.getElementById('menu-info') !== null) {
-                    //     document.getElementById('menu-info-box').style.width = '240px'
-                    //    }
+                    }
+                    if(document.getElementById('menu-info') !== null) {
+                        document.getElementById('menu-info-box').style.width = '240px'
+                       }
                     //document.getElementById('room-main-page').style.marginTop = '30px';
                    
                     
-                    // document.getElementById('main-menu').style.position = 'absolute';
-                    // document.getElementById('main-menu').style.left = '-330px';
+                    document.getElementsByClassName('main-menu')[0].style.position = 'absolute';
+                    //document.getElementById('main-menu').style.left = '-330px';
+                    let elements = document.getElementsByClassName('element');
+
+                    if(window.innerWidth < 698) {
+                        for(let i = 0; i < elements.length; i++) {
+                            elements[i].style.height = '117px';
+                            elements[i].style.width = '117px';
+                        }
+                    }
                    
 
                 } else {
-                    let main = document.getElementById('main-menu');
+                    let main = document.getElementsByClassName('main-menu');
+
                     let tabMenu = document.getElementById('tab-menu');
                     tabMenu.style.position = 'relative';
                     tabMenu.style.display = 'block';
                     document.getElementById('tab-menu').style.transform = 0;
-              
-                
-                    main.style.borderRight = '1px solid rgb(24, 24, 24)';
-                    main.style.background = 'rgb(24, 24, 24)';
+                    
+                    for(let i =0; i < main.length; i++) {
+                    main[i].style.borderRight = '1px solid rgb(24, 24, 24)';
+                    main[i].style.background = 'rgb(24, 24, 24)';
        
-                    main.style.flexDirection = 'column';
+                    main[i].style.flexDirection = 'column';
                     if(isMenuOpen === true) {
                         //document.getElementById('main-menu').style.display = 'flex';
                     }
-                    main.style.position = 'relative';
-                    main.style.left = '0px';
+                    main[i].style.position = 'relative';
+                    main[i].style.left = '0px';
                     document.getElementById('rf-right').style.display = 'flex';
                     document.getElementById('rf-top').style.display = 'none';
                     document.getElementById('menu-btn-mobile').style.display = 'none';
                     document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingLeft = '77px';
                     document.getElementsByClassName('main-section-wrap-comments-box')[0].style.paddingRight = '36px';
                     document.getElementById('main-section-wrap-comments-screen-wrap').style.top = '60px';
-                    document.getElementById('room-main-page').style.marginTop = '0px';
+                    //document.getElementById('room-main-page').style.marginTop = '0px';
                     //document.getElementById('room-wrap').style.flex = '5 1 0%';
-                    document.getElementById('main-menu').style.maxWidth = '330px';
-                    document.getElementById('main-menu').style.width = '330px';
+                    
+                        document.getElementsByClassName('main-menu')[i].style.width = '330px';
 
+                    }
+                    
+                    let elements = document.getElementsByClassName('element');
 
+                    if(window.innerWidth > 698) {
+                  
+                        for(let i = 0; i < elements.length; i++) {
+                            elements[i].style.height = '147px';
+                            elements[i].style.width = '147px';
+                        }
+                    }
                
-                    //    if(document.getElementById('first-line-text') !== null) {
-                    //        document.getElementById('first-line-text').style.fontSize = '1.6rem';
-                    //    }
-                    //    if(document.getElementById('second-line-text') !== null) {
-                    //        document.getElementById('second-line-text').style.fontSize = '1.6remx';
-                    //    }
-                    //    if(document.getElementById('third-line-text') !== null) {
-                    //        document.getElementById('third-line-text').style.fontSize = '1.6rem';
-                    //    }
-                    //    if(document.getElementById('remix-image-box') !== null) {
+                       if(document.getElementById('first-line-text') !== null) {
+                           document.getElementById('first-line-text').style.fontSize = '1.6rem';
+                       }
+                       if(document.getElementById('second-line-text') !== null) {
+                           document.getElementById('second-line-text').style.fontSize = '1.6remx';
+                       }
+                       if(document.getElementById('third-line-text') !== null) {
+                           document.getElementById('third-line-text').style.fontSize = '1.6rem';
+                       }
+                       if(document.getElementById('remix-image-box') !== null) {
                           
-                    //        document.getElementById('remix-image-box').style.marginTop = '1.6rem'
+                           document.getElementById('remix-image-box').style.marginTop = '50px'
                           
-                    //    }
-                    //    if(document.getElementById('menu-info') !== null) {
-                    //     document.getElementById('menu-info-box').style.width = '300px'
-                    //    }
-                    //    if(document.getElementById('welcome-text') !== null) {
-                    //     document.getElementById('welcome-text').style.fontSize = '1.6rem';
-                    //    }
+                       }
+                       if(document.getElementById('menu-info') !== null) {
+                        document.getElementById('menu-info-box').style.width = '300px'
+                       }
+                       if(document.getElementById('welcome-text') !== null) {
+                        document.getElementById('welcome-text').style.fontSize = '1.6rem';
+                       }
 
                        if(document.getElementsByClassName('remix-image') !== null) {
                         let getclasses = document.getElementsByClassName('remix-image');
@@ -666,12 +705,15 @@ let apps = [{id:'childSnapShot.key',
                        }
                        document.getElementById('publish-menu').style.width = '326px'
                        if(isMenuOpen === false) {
-                        const element = document.querySelector('#main-menu');
+                        const element = document.querySelector('.main-menu');
                         const ball = styler(element); 
                         // alert('nnbnnb')
                         element.style.transform = 'translateX(0px) translateZ(-378px)';
                         //element.style.display = 'none';
                         }
+
+                        
+                        
                 }
             }
             let x = window.matchMedia("(max-width: 768px)");
@@ -1519,7 +1561,7 @@ let apps = [{id:'childSnapShot.key',
             }
         }
         funStuff(type = 'gifs', funType) {
-            
+        //  alert(type, funType)
             elements_arr = [];
             if(elements_arr.length === 0) {
              console.log('the arr', elements_arr.length)
@@ -1559,7 +1601,7 @@ let apps = [{id:'childSnapShot.key',
                         element.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
                         element.style.borderRadius = '4px';
                         element.style.backgroundSize = 'cover';
-
+                        element.className = 'element'
                         element.addEventListener('click',()=>{
                             let object = document.createElement('div');
                             let resizers = document.createElement('div');
@@ -1654,70 +1696,22 @@ let apps = [{id:'childSnapShot.key',
                             object.style.top = '0px';
                             let object_id = 'OBJECT_' + hashids.encode(1,2,3);
                             object.setAttribute("id", object_id);
-                            // resizers.appendChild(resizerOne);
-                            // resizers.appendChild(resizerTwo);
-                            // resizers.appendChild(resizerThree)
-                            // resizers.appendChild(resizerFour);
-
-                            //object.appendChild(header)
-                            //object.appendChild(resizers);
-
-                            console.log(i)
-
-
-
-                            //if(i.type === 'gif') {
+    
                             let objectWrapper = document.createElement('div');
                             let dragSection = document.createElement('div');
                             dragSection.style.height = '30px';
                             dragSection.style.width = '100%';
-                            //document.getElementById('output_frame').contentDocument.body.style.display = 'flex';
                             let div = document.createElement('div');
-                            //div.style.height = '200px';
-                            // div.style.width = '300px';
-                            // div.style.margin = '10px 20px'
-                            // div.style.border = '0px solid blue';
-                            // div.style.position = 'relative';
-                            //div.setAttribute("id", `container${object.id}`);
-                            // let resizable = document.createElement('div');
+                        
                             div.className = 'resizable';
-
-                            // let resizers_box = document.createElement('div');
-                            // resizers_box.className = 'resizers';
-                            // let resizerTopLeft = document.createElement('div');
-                            // resizerTopLeft.className = 'resizer top-left';
-                            // let resizerTopRight = document.createElement('div');
-                            // resizerTopRight.className = 'resizer top-right';
-                            // let resizerBottomLeft = document.createElement('div');
-                            // resizerBottomLeft.className = 'resizer bottom-left';
-                            // let resizerBottomRight = document.createElement('div');
-                            // resizerBottomRight.className = 'resizer bottom-right';
-
-                            // resizers_box.appendChild(resizerTopLeft);
-                            // resizers_box.appendChild(resizerTopRight);
-                            // resizers_box.appendChild(resizerBottomLeft);
-                            // resizers_box.appendChild(resizerBottomRight);
-
-                            // resizable.setAttribute("id",`${i.id}`)
-                            // resizable.appendChild(resizers_box);
-                            // resizable.appendChild(object)
-                            
+                            div.style.backgroundSize = '100%';
+                            div.style.backgroundRepeat = 'no-repeat';
+                            div.style.backgroundColor = 'transparent';
+                            div.style.backgroundPosition = 'center center'
                             div.setAttribute("id", `${object.id}`)
-                            //document.getElementById("mySelect").childNodes[2]
-                            console.log('nodes',);
-                            // let overlayContainer = document.createElement('div');
-                            // overlayContainer.style.position = 'absolute';
-                            // overlayContainer.style.top = '0px';
-                            // overlayContainer.style.left = '0px';
-                            // overlayContainer.style.bottom = '0px';
-                            // overlayContainer.style.height = '100%';
-                            // overlayContainer.style.width = '100%';
-                            // overlayContainer.setAttribute("id", "overlay-container");
-                                // div.addEventListener('click', ()=>{
-                                // alert(`#${object.id}`)
                       
-
-                        //})
+                            console.log('nodes',);
+                
                             div.setAttribute("data-num",data)
                             let arr = [];
                             arr.push(div)
@@ -1755,8 +1749,19 @@ let apps = [{id:'childSnapShot.key',
 
 
                         })
+                        if(type == 'gifs') {
+                            document.getElementById('element-menu').appendChild(element)
 
-                        document.getElementById('element-menu').appendChild(element)
+                        } else if(type == 'emojis') {
+                            document.getElementById('emoji-menu').appendChild(element)
+
+                        } else if(type == 'stickers') {
+                            document.getElementById('sticker-menu').appendChild(element)
+
+                        } else if(type == 'images') {
+                            document.getElementById('image-menu').appendChild(element)
+
+                        }
                     }
                 });
                 console.log('the arr now', elements_arr.length)
@@ -1808,38 +1813,7 @@ let apps = [{id:'childSnapShot.key',
             };
 
 
-//         let resizables = document.getElementsByClassName('resizable');
-    
-//         let getLocalRect = [document.getElementById('overlay_output_frame').contentWindow.document.getElementsByClassName('resizable')[0].getBoundingClientRect(),document.getElementById('overlay_output_frame').contentWindow.document.getElementsByClassName('resizable')[1].getBoundingClientRect()];
-//         // for(let i =0; i < resizables.length; i++) {
-//         // if(getLocalRect[i].left !== undefined) {
-//             let getLocal = [document.getElementById('overlay_output_frame').contentWindow.document.getElementById('overlay-container').getBoundingClientRect()];
 
-//            for(let i = 0; i < getLocalRect.length; i++) {
-//                getLocalRect = getLocalRect[i]
-               
-           
-//             if (getblockRect.left < getLocalRect.left + getLocalRect.width  && getblockRect.left + getblockRect.width  > getLocalRect.left &&
-//             getblockRect.top < getLocalRect.top + getLocalRect.height && getblockRect.top + getblockRect.height > getLocalRect.top) {
-               
-//                 //alert('collision')   //if(isCollision === false) {
-//                 document.getElementById('overlay_output_frame').style.pointerEvents = 'all';
-//                 document.getElementById('output_frame').style.pointerEvents = 'none';        
-//                 isCollision = true;
-//                 //}
-//                 console.log('getlocal', document.getElementById('overlay_output_frame').contentWindow.document.elementsFromPoint(x, y))
-
-
-
-//         } else {
-//             console.log('getlocal', document.getElementById('overlay_output_frame').contentWindow.document.elementsFromPoint(x, y))
-
-//                 document.getElementById('overlay_output_frame').style.pointerEvents = 'none';
-//                 document.getElementById('output_frame').style.pointerEvents = 'all';
-//                 //alert(' no collision')
-//                 isCollision = false;
-//            }
-//    // }
 let tag = document.getElementById('overlay_output_frame').contentWindow.document.elementsFromPoint(x, y)[1].tagName
 if(tag === 'HTML') {
 document.getElementById('overlay_output_frame').style.pointerEvents = 'none';
@@ -1877,38 +1851,7 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                 x: x,
                 y: y
             }
-        //     let resizables = document.getElementsByClassName('resizable');
-        //     let getLocalRect = [document.getElementById('overlay_output_frame').contentWindow.document.getElementsByClassName('resizable')[0].getBoundingClientRect(),document.getElementById('overlay_output_frame').contentWindow.document.getElementsByClassName('resizable')[1].getBoundingClientRect()];
-
-        //     // for(let i =0; i < resizables.length; i++) {
-        //    // if(getLocalRect[i].left !== undefined) {
-        //      for(let i = 0; i < getLocalRect.length; i++) {
-        //         getLocalRect = getLocalRect[i]
-                
-             
-            
-        //     if (getblockRect.left < getLocalRect.left + getLocalRect.width  && getblockRect.left + getblockRect.width  > getLocalRect.left &&
-        //         getblockRect.top < getLocalRect.top + getLocalRect.height && getblockRect.top + getblockRect.height > getLocalRect.top) {
-        //             //if(isCollision === false) {
-        //             //alert('collision detection from output frame')
-        //             document.getElementById('output_frame').style.pointerEvents = 'none';
-        //             document.getElementById('overlay_output_frame').style.pointerEvents = 'all';
-                    
-        //             isCollision = true;
-        //             console.log('getlocal', document.getElementById('overlay_output_frame').contentWindow.document.elementsFromPoint(x, y))
-
-
-        //   } else {
-        //     console.log('getlocal', document.getElementById('overlay_output_frame').contentWindow.document.elementsFromPoint(x, y))
-
-        //         document.getElementById('output_frame').style.pointerEvents = 'all';
-        //     document.getElementById('overlay_output_frame').style.pointerEvents = 'none';
-        //     isCollision = false;
-
-
-        //    } 
-
-        // }
+ 
         let tag = document.getElementById('overlay_output_frame').contentWindow.document.elementsFromPoint(x, y)[1].tagName
 
         if(tag === 'DIV') {
@@ -1920,7 +1863,10 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
             }      
         
         });
-            
+
+    
+
+     
        
             
     }
@@ -1942,384 +1888,18 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
         //    let elem = document.getElementById('Fill-1');
         //     elem.setAttribute("style", "fill:#40FFE8");
         //     document.getElementById('remix-text').style.color = '#40FFE8';
-            document.getElementById('main-menu').style.display = 'block';
-            document.getElementById('main-menu').style.overflowY = 'scroll';
-            document.getElementById('main-menu').style.width = '330px';
+            document.getElementsByClassName('main-menu')[0].style.display = 'block';
+            document.getElementsByClassName('main-menu')[0].style.overflowY = 'scroll';
+            //document.getElementById('main-menu').style.width = '330px';
             isMenuOpen = true;
         }
         ElementsTabs(e) {
             
-            this.funStuff('gifs');
-
-            //     elements_arr.map((i) => {
-            //         alert('cllrf')
-
-            //         let element = document.createElement('div');
-            //         if(i.images !== undefined) {
-            //             console.log(i.images.downsized_medium.url)
-            //             if(window.innerWidth < 698) {
-            //                 element.style.height = '117px';
-            //                 element.style.width = '117px';
-            //             } else {
-            //                 element.style.height = '147px';
-            //                 element.style.width = '147px';
-            //             }
-                 
-            //             element.style.border = '0px solid white';
-            //              //element.style.marginRight = '7px';
-            //              element.style.marginBottom = '12px';
-            //             element.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
-            //             element.style.backgroundSize = 'cover';
-            //             element.style.borderRadius = '4px'
-
-            //             element.addEventListener('click',()=>{
-            //                 let object = document.createElement('div');
-            //                 let resizers = document.createElement('div');
-            //                 let resizerOne = document.createElement('div');
-            //                 let resizerTwo = document.createElement('div');
-            //                 let resizerThree = document.createElement('div');
-            //                 let resizerFour = document.createElement('div');
-            //                 let header = document.createElement('div');
-            //                 header.style.height = '20px';
-            //                 header.style.width = '125px';
-            //                 //header.style.border = '1px solid black';
-            //                 header.style.position = 'relative';
-            //                 header.style.margin = 'auto';
-            //                 header.style.display = 'flex';
-            //                 header.style.top = '-34px';
-
-            //                 let dragwrapper = document.createElement('div');
-            //                 dragwrapper.style.display = 'flex';
-            //                 dragwrapper.style.height = '20px';
-            //                 dragwrapper.style.width = '64px';
-            //                 //dragwrapper.style.border = '1px solid black';
-            //                 dragwrapper.style.position = 'absolute';
-            //                 dragwrapper.style.right = '0px';
-            //                 dragwrapper.style.justifyContent = 'space-between';
-
-
-            //                 let minimize = document.createElement('div');
-            //                 minimize.setAttribute("id", 'minimize_' + i.id);
-            //                 let minicon = document.createElement('i');
-            //                 minicon.style.color = 'white';
-            //                 minicon.className = 'fas fa-window-minimize';
-            //                 // minicon.style.fontSize = '20px';
-
-            //                 minimize.appendChild(minicon);
-            //                 //minimize.style.height = '20px';
-            //                 //minimize.style.width = '20px';
-            //                 //minimize.style.border = '1px solid black';
-
-            //                 let maximize = document.createElement('div');
-            //                 maximize.setAttribute("id", 'maximize_' + i.id);
-            //                 let maxicon = document.createElement('i');
-            //                 maxicon.style.color = 'white';
-            //                 maxicon.className = 'fas fa-window-maximize';
-            //                 maximize.appendChild(maxicon);
-
-            //                 //maximize.style.border = '1px solid black';
-
-            //                 let close = document.createElement('div');
-            //                 close.setAttribute('id', 'close_' + i.id);
-            //                 let closeicon = document.createElement('i');
-            //                 //closeicon.style.color = 'white';
-            //                 //closeicon.className = 'fas fa-window-close';
-            //                 //close.appendChild(closeicon);
-
-            //                 //close.style.border = '1px solid black';
-
-            //                 dragwrapper.appendChild(minimize);
-            //                 dragwrapper.appendChild(maximize);
-            //                 dragwrapper.appendChild(close);
-
-            //                 header.appendChild(dragwrapper);
-
-
-            //                 header.style.display = 'flex';
-            //                 header.style.flexDirection = 'row';
-            //                 header.style.alignItems = 'center';
-            //                 header.setAttribute("id", `${i.id+'header'}`);  
-            //                 header.setAttribute("class", "draggable")
-            //                 let dragMe = document.createElement('p');
-
-            //                 dragMe.appendChild(document.createTextNode('DRAG'));
-            //                 dragMe.style.color = 'white';
-            //                 header.appendChild(dragMe);
-
-            //                 let hashids = new Hashids(uuid(), 6);
-
-
-            //                 // resizers.className = 'resizers';
-            //                 // resizerOne.className = 'resizer top-left';
-            //                 // resizerTwo.className = 'resizer top-right';
-            //                 // resizerThree.className = 'resizer bottom-left';
-            //                 // resizerFour.className = 'resizer bottom-right';
-
-
-            //                 object.style.backgroundSize = 'cover';
-            //                 if(window.innerWidth < 698) {
-            //                     object.style.height = '117px';
-            //                     object.style.width = '117px';
-            //                 } else {
-            //                     object.style.height = '147px';
-            //                     object.style.width = '147px';
-            //                 }
-                            
-
-
-            //                 object.style.border = '1px solid white';
-            //                 //object.style.zIndex = '1000000000000000000000000';
-            //                 object.className = 'resizable';
-            //                // object.style.position = 'absolute';
-            //                 object.style.top = '0px';
-            //                 let object_id = 'OBJECT_' + hashids.encode(1,2,3);
-            //                 object.setAttribute("id", object_id);
-            //                 // resizers.appendChild(resizerOne);
-            //                 // resizers.appendChild(resizerTwo);
-            //                 // resizers.appendChild(resizerThree)
-            //                 // resizers.appendChild(resizerFour);
-
-            //                 //object.appendChild(header)
-            //                 //object.appendChild(resizers);
-
-            //                 console.log(i)
-
-
-
-            //                 //if(i.type === 'gif') {
-            //                 let objectWrapper = document.createElement('div');
-            //                 let dragSection = document.createElement('div');
-            //                 dragSection.style.height = '30px';
-            //                 dragSection.style.width = '100%';
-            //                 document.getElementById('output_frame').contentDocument.body.style.display = 'flex';
-            //                 let div = document.createElement('div');
-            //                 //div.style.height = '200px';
-            //                 // div.style.width = '300px';
-            //                 div.style.margin = '10px 20px'
-            //                 div.style.border = '0px solid blue';
-            //                 div.style.position = 'relative';
-            //                 div.setAttribute("id", `container${object.id}`);
-            //                 let resizable = document.createElement('div');
-            //                 resizable.className = 'resizable';
-
-            //                 let resizers_box = document.createElement('div');
-            //                 resizers_box.className = 'resizers';
-            //                 let resizerTopLeft = document.createElement('div');
-            //                 resizerTopLeft.className = 'resizer top-left';
-            //                 let resizerTopRight = document.createElement('div');
-            //                 resizerTopRight.className = 'resizer top-right';
-            //                 let resizerBottomLeft = document.createElement('div');
-            //                 resizerBottomLeft.className = 'resizer bottom-left';
-            //                 let resizerBottomRight = document.createElement('div');
-            //                 resizerBottomRight.className = 'resizer bottom-right';
-
-            //                 resizers_box.appendChild(resizerTopLeft);
-            //                 resizers_box.appendChild(resizerTopRight);
-            //                 resizers_box.appendChild(resizerBottomLeft);
-            //                 resizers_box.appendChild(resizerBottomRight);
-
-            //                 resizable.setAttribute("id",`${i.id}`)
-            //                 resizable.appendChild(resizers_box);
-            //                 //resizable.appendChild(object)
-                            
-            //                 div.appendChild(resizable);
-                            
-
-            //                 document.getElementById('overlay_output_frame').contentDocument.getElementById('overlay-container').appendChild(div);
-            //                 document.getElementById('overlay_output_frame').contentDocument.body.style.padding = '10px';
-                
-            //                 resizable.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
-                           
-            //                 //this.makeResizableDiv(`#${i.id}`);
-                            
-            //                 const xDraggables = document.getElementById('overlay_output_frame').contentWindow.Subjx(`#${object.id}`).drag({
-                                
-            //                 container:`#container${object.id}`,
-            //                 each: {
-            //                     move: false,
-            //                     resize: true, 
-            //                     rotate: true
-            //                 }
-            //                 // snapping to grid (default: 10)
-    
-            //                 });
-
-
-                        
-    
-    
-                        
-            //                 let dhtml = JSON.parse(localStorage.getItem("dhtml"));
-
-            //                 let html = document.getElementById('output_frame').contentWindow.document.body.innerHTML;
-            //                 let dhtmlObj = {html:html, js:dhtml.js, css:dhtml.css}
-
-
-            //                 localStorage.setItem("dhtml", JSON.stringify(dhtmlObj));
-
-
-            //             })
-
-            //             //element_menu.appendChild(element);
-            //         }
-            //     });
-
-            //     let searchGIFS = document.createElement('div');
-            //     let closeSearch = document.createElement('i');
-            //     let closeSearchWrap = document.createElement('div');
-            //     let searchInput = document.createElement('input');
-            //     searchInput.setAttribute("id","search-input");
-            //     searchInput.style.color = 'white';
-            //     searchInput.style.fontSize = '12px';
-            //     let searchGiphy = document.createElement('div');
-            //     let searchGiphyWrap = document.createElement('div');
-            //     searchGiphyWrap.setAttribute("id", "search-giphy-wrap");
-            //     closeSearchWrap.setAttribute("id","close-search-wrap");
-            //     var typingTimer;
-            //     var doneTypingInterval = 700;
-            //     let that = this;
-            //     searchInput.addEventListener('input',(e)=>{
-            //         elements_arr = []
-            //         let getSel = document.getElementsByClassName('elementbg')
-            //         clearTimeout(typingTimer);
-            //         typingTimer = setTimeout(
-            //         function(){
-            //             document.getElementById('element-menu').innerHTML = '';
-            //             that.funStuff(getSel[0].innerText.toLowerCase(), e.target.value);
-            //             that.setState({funType:e.target.value})
-                  
-                       
-            //         },
-            //             doneTypingInterval
-            //         );
+            this.funStuff(this.state.searchElements,this.state.inputValue)
+            //document.getElementsByClassName('main-menu')[0].style.width = '271px';
             
-            //         return true;
-            //     });
-            //     searchInput.value = this.state.funType
-
-            //     searchGIFS.style.height = '20px';   
-            //     searchGIFS.style.width = '150px';
-            //     searchGIFS.style.border = '1px solid white';
-
-            //     searchGiphy.style.backgroundImage = 'url(/poweredbygiphy.png';
-            //     searchGiphy.style.backgroundSize = 'contain';
-            //     searchGiphy.style.backgroundRepeat = 'no-repeat';
-            //     searchGiphy.style.height = '20px';
-            //     searchGiphy.style.width = '130px';
-            //     searchGiphy.style.float = 'right';
-
-            //     searchGiphyWrap.style.height = '20px';
-            //     searchGiphyWrap.style.width = '100%';
-            //     searchGiphyWrap.appendChild(searchGiphy);
-
-            //     let elementTabs = document.createElement('ul');
-
-            //     elementTabs.style.display = 'flex';
-            //     elementTabs.style.alignItems = 'center';
-            //     elementTabs.style.height = '30px';
-            //     elementTabs.style.width = '245px';
-            //     elementTabs.style.border = '0px solid white';
-            //     elementTabs.style.padding = '10px 0px';
-            //     elementTabs.setAttribute("id","elements")
-            //     closeSearch.style.color = 'white';
-            //     //closeSearch.className = 'fa fa-times';
-            //     closeSearch.style.float = 'right'
-            //     closeSearch.style.fontSize = '15px'
-            //     closeSearchWrap.style.width = '100%';
-            //     closeSearchWrap.style.height = '20px';
-
-           
-            
-            //     for(let i=0; i < element_options.length; i++) {
-            //         let li = document.createElement('li');
-            //         li.style.color = 'white';
-            //         li.style.listStyleType = 'none';
-            //         li.style.fontSize = '14px';
-            //         li.style.fontFamily = 'Open Sans';
-            //         li.style.cursor = 'pointer';
-            //         li.setAttribute("id",`ELEMENTS_${element_options[i]}`)
-            //         li.appendChild(document.createTextNode(element_options[i]));
-            //         li.addEventListener('click', ()=> {
-            //             let elements = document.getElementsByClassName('elementbg');
-            //             for(let i =0; i < elements.length; i++) {
-            //                 elements[i].className = '';
-            //             }
-            //             li.className = 'elementbg';
-            //             this.funStuff('gifs');
-            //         })
-                 
-            //         elementTabs.appendChild(li);
-                    
-            //     }
-                
-            //     let elemetBox = document.createElement('div');
-            //     closeSearchWrap.appendChild(closeSearch);
-            //     searchInput.style.backgroundColor = '#252525';
-            //     searchInput.style.height = '30px';
-            //     searchInput.style.width = '100%';
-            //     searchInput.style.border = 'none';
-            //     searchInput.style.margin = '10px 0px';
-            //     searchInput.style.outline = 'none';
-            //     searchInput.style.paddingLeft = '10px';
-            //     searchInput.style.color = 'rgb(64, 255, 232)';
-            //     searchInput.style.fontSize = '15px';
-
-            //     searchInput.setAttribute("placeholder", 'Search for stuff here...');
-            //     searchInput.className = 'search-placeholder';
-            //     document.getElementById('main-menu').appendChild(closeSearchWrap);
-                
-               
-
-            //     // if(document.getElementById('element-menu') === null) {
-            //     //     mainmenu.appendChild(elementTabs);
-            //     //     //mainmenu.appendChild(searchGIFS);
-            //     //     document.getElementById('main-menu').appendChild(searchInput);
-            //     //     document.getElementById('main-menu').appendChild(searchGiphyWrap);
-            //     //     mainmenu.appendChild(element_menu);
-
-            //     // }   
-            //     // if(this.state.element_menu === false) {
-            //     //     mainmenu.appendChild(element_menu);
-            //     //     this.setState({element_menu:true});
-            //     // }
-
-               
-            //     // if(menuinfo !== null) {
-            //     //     menuinfo.remove();
-            //     //     this.setState({welcome:false});
-            //     // }
-
-            //     // if(document.getElementById('element-menu') !== null) {
-            //     //     document.getElementById('element-menu').remove();
-            //     // }
-
-            //     // if(document.getElementById('app-menu') !== null) {
-            //     //     document.getElementById('app-menu').remove();
-            //     //    }
-
-            //     //    if(document.getElementById('remix-image-box') !== null) {
-            //     //     document.getElementById('remix-image-box').remove();
-            //     //    }
-
-            //     //    this.setState(
-            //     //         {
-            //     //             details:false,
-            //     //             objects:false,
-            //     //             comments:false,
-            //     //             draw:false,
-            //     //             remix:false,
-            //     //             showPublish:false,
-            //     //             script_menu:false
-            //     //         }
-            //     //     );
-
-            //     //}
-            //     //document.getElementById("ELEMENTS_GIFS").className = 'elementbg';
-            //     //document.getElementById("ELEMENTS_GIFS").style.fontWeight = '900'
-            // //}
-
             // document.getElementById('publish-section').style.display = 'none';
-            document.getElementById('main-menu').style.display = 'block';
+            //document.getElementById('main-menu').style.display = 'block';
             // document.getElementById('main-menu').style.overflowY = 'scroll';
             
         
@@ -2386,7 +1966,23 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                         thumbnail.style.marginTop = 10;
                         app.appendChild(thumbnail)
                         app.addEventListener('click',()=>{
-                            this.props.flowAdd({flowAdd:i.shortID})
+                            // let currentRoomID = window.location.pathname.split("room/").pop();
+
+                            // if(currentRoomID === '') {
+
+                            //     this.props.flowAdd({flowAdd:'empty'});
+
+                            // } else {
+                                 //if(currentRoomID !== i.shortID) {
+                                    //this.props.flowAdd({flowAdd:currentRoomID})
+                                   // this.props.openMenu({openMenu:null});
+
+                                this.props.flowAdd({flowAdd:i.shortID});
+                                
+                                // } else {
+                                //     alert('already added')
+                                // }
+                            //}
                         })
                         
                         // resizers.className = 'resizers';
@@ -2919,39 +2515,39 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
             let mainmenu = document.getElementById('main-menu');
             let remixImageList = document.getElementById('remix-image-list');
            
-            if(thisElement != undefined) {
-                if(thisElement.className !== 'menubg') {                            
+            // if(thisElement != undefined) {
+            //     if(thisElement.className !== 'menubg') {                            
                
-               for(let i = 0; tabsWithMenubgClass.length; i++) {
-                if(tabsWithMenubgClass[i] != undefined) {
-                    if(tabsWithMenubgClass[i].id !== thisElement.id) {
-                        tabsWithMenubgClass[i].className = 'menubgnot'
-                    } 
-                }
-               }
-               thisElement.className = 'menubg'; 
+            //    for(let i = 0; tabsWithMenubgClass.length; i++) {
+            //     if(tabsWithMenubgClass[i] != undefined) {
+            //         if(tabsWithMenubgClass[i].id !== thisElement.id) {
+            //             tabsWithMenubgClass[i].className = 'menubgnot'
+            //         } 
+            //     }
+            //    }
+            //    thisElement.className = 'menubg'; 
                
-              if(document.getElementById('menu-info') !== null) {
+            //   if(document.getElementById('menu-info') !== null) {
+            // //    document.getElementById('menu-info').remove();
+            //     if(document.getElementById('remix-image-box')){
+            //     document.getElementById('remix-image-box').remove();
+            //     }
             //    document.getElementById('menu-info').remove();
-                if(document.getElementById('remix-image-box')){
-                document.getElementById('remix-image-box').remove();
-                }
-               document.getElementById('menu-info').remove();
-            //    document.getElementById('remix-list').remove();
-              }
-              if(document.getElementById('elements') !== null) {
-                document.getElementById('elements').remove();
-               }
-               that.setState({
-                details:false,
-                objects:false,
-                comments:false,
-                draw:false,
-                remix:false,
-                showPublish:true
-                });
+            // //    document.getElementById('remix-list').remove();
+            //   }
+            //   if(document.getElementById('elements') !== null) {
+            //     document.getElementById('elements').remove();
+            //    }
+            //    that.setState({
+            //     details:false,
+            //     objects:false,
+            //     comments:false,
+            //     draw:false,
+            //     remix:false,
+            //     showPublish:true
+            //     });
 
-            }
+            // }
            
                 let iframe = document.getElementById('output_frame');
                 let dhtml = JSON.parse(localStorage.getItem("dhtml"));
@@ -3034,11 +2630,11 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
 
         renderDHTML()
 
-            }
+           // }
         }
         OpenMenu() {
             
-            let list = document.getElementById('main-menu');
+            let list = document.getElementsByClassName('main-menu')[0];
             let thisElement = document.getElementById('remix-tab');
             let tabsWithMenubgClass = document.getElementsByClassName('menubg');
             let menuinfo = document.createElement('div');
@@ -3075,73 +2671,73 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
             closebox.style.display = 'flex';
             closebox.style.alignItems = 'center';
             closebox.style.justifyContent = 'space-between';
-            closebox.style.width = '45px';
-            let welcometext = document.createElement('p');
-            welcometext.style.color = 'rgb(54, 255, 233)';
-            welcometext.style.marginTop = '10px';
-            welcometext.style.marginBottom = '10px';
-            welcometext.appendChild(document.createTextNode('Welcome to the Remix Menu'));
-            welcometext.setAttribute("id","welcome-text");
+            // closebox.style.width = '45px';
+            // let welcometext = document.createElement('p');
+            // welcometext.style.color = 'rgb(54, 255, 233)';
+            // welcometext.style.marginTop = '10px';
+            // welcometext.style.marginBottom = '10px';
+            // welcometext.appendChild(document.createTextNode('Welcome to the Remix Menu'));
+            // welcometext.setAttribute("id","welcome-text");
 
-            let firstLine = document.createElement('p');
-            firstLine.style.color = 'white';
+            // let firstLine = document.createElement('p');
+            // firstLine.style.color = 'white';
             
-            if(window.innerWidth > 768) {
-                welcometext.style.fontSize = '15px';
-            } else {
-                welcometext.style.fontSize = '14px';
-            }
-            firstLine.appendChild(document.createTextNode('Here you can swap Text, Images,'));
+            // if(window.innerWidth > 768) {
+            //     welcometext.style.fontSize = '15px';
+            // } else {
+            //     welcometext.style.fontSize = '14px';
+            // }
+            // firstLine.appendChild(document.createTextNode('Here you can swap Text, Images,'));
 
-            if(window.innerWidth > 768) {
-                firstLine.style.fontSize = '15px';
-            } else {
-                firstLine.style.fontSize = '12px';
-            }
-            let secondLine = document.createElement('p');
-            secondLine.style.color = 'white';
-            if(window.innerWidth > 768) {
-                secondLine.style.fontSize = '15px';
-            } else {
-                secondLine.style.fontSize = '12px';
-            }    
+            // if(window.innerWidth > 768) {
+            //     firstLine.style.fontSize = '15px';
+            // } else {
+            //     firstLine.style.fontSize = '12px';
+            // }
+            // let secondLine = document.createElement('p');
+            // secondLine.style.color = 'white';
+            // if(window.innerWidth > 768) {
+            //     secondLine.style.fontSize = '15px';
+            // } else {
+            //     secondLine.style.fontSize = '12px';
+            // }    
 
 
             
-            secondLine.appendChild(document.createTextNode('and other elements inside of flows.'));
+            // secondLine.appendChild(document.createTextNode('and other elements inside of flows.'));
 
 
-            let thirdLine = document.createElement('p');
-            thirdLine.style.color = 'white';
-            if(window.innerWidth > 768) {
-                thirdLine.style.fontSize = '15px';
-            } else {
-                thirdLine.style.fontSize = '12px'
-            }
+            // let thirdLine = document.createElement('p');
+            // thirdLine.style.color = 'white';
+            // if(window.innerWidth > 768) {
+            //     thirdLine.style.fontSize = '15px';
+            // } else {
+            //     thirdLine.style.fontSize = '12px'
+            // }
             
 
-            thirdLine.appendChild(document.createTextNode('Click on the Remixable Items below to get started.'));
-            thirdLine.style.paddingBottom = '10px'
-            thirdLine.style.marginTop = '10px';
-            let fourthLine = document.createElement('p');
-            fourthLine.style.color = 'white';
-            if(window.innerWidth > 768) {
-                fourthLine.style.fontSize = '15px';
-            } else {
-                fourthLine.style.fontSize = '12px';
+            // thirdLine.appendChild(document.createTextNode('Click on the Remixable Items below to get started.'));
+            // thirdLine.style.paddingBottom = '10px'
+            // thirdLine.style.marginTop = '10px';
+            // let fourthLine = document.createElement('p');
+            // fourthLine.style.color = 'white';
+            // if(window.innerWidth > 768) {
+            //     fourthLine.style.fontSize = '15px';
+            // } else {
+            //     fourthLine.style.fontSize = '12px';
 
-            }
+            // }
             
             //fourthLine.appendChild(document.createTextNode('Click here for step by step'));
            
 
-            let fifthLine = document.createElement('p');
-            fifthLine.style.color = 'white';
-            if(window.innerHeight > 768) {
-                fifthLine.style.fontSize = '12px';
-            } else {
-                fifthLine.style.fontSize = '12px';
-            }
+            // let fifthLine = document.createElement('p');
+            // fifthLine.style.color = 'white';
+            // if(window.innerHeight > 768) {
+            //     fifthLine.style.fontSize = '12px';
+            // } else {
+            //     fifthLine.style.fontSize = '12px';
+            // }
            
             //fifthLine.appendChild(document.createTextNode('video walkthroughs'));
             
@@ -3155,23 +2751,23 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
             //closex.appendChild(closeicon);
             //closex.style.fontSize = '20px';
             //closex.style.color = 'white';
-            closet.appendChild(document.createTextNode('Close'));
-            closet.style.fontSize = '11px';
-            closet.style.color = 'white';
-            menuinfotop.appendChild(infinity);
-            closebox.appendChild(closet);
-            closebox.appendChild(closex);
-            menuinfotop.appendChild(closebox);
-            menuinfobox.appendChild(menuinfotop)
-            menuinfobox.appendChild(welcometext);
-            menuinfobox.style.padding = '20px';
-            menuinfobox.setAttribute("id", "menu-info-box");
+            // closet.appendChild(document.createTextNode('Close'));
+            // closet.style.fontSize = '11px';
+            // closet.style.color = 'white';
+            // menuinfotop.appendChild(infinity);
+            // closebox.appendChild(closet);
+            // closebox.appendChild(closex);
+            // menuinfotop.appendChild(closebox);
+            // menuinfobox.appendChild(menuinfotop)
+            // menuinfobox.appendChild(welcometext);
+            // menuinfobox.style.padding = '20px';
+            // menuinfobox.setAttribute("id", "menu-info-box");
             
-            welcome_texts.appendChild(firstLine);
-            welcome_texts.appendChild(secondLine);
-            welcome_texts.appendChild(thirdLine);
-            welcome_texts.appendChild(fourthLine);
-            welcome_texts.appendChild(fifthLine);
+            // welcome_texts.appendChild(firstLine);
+            // welcome_texts.appendChild(secondLine);
+            // welcome_texts.appendChild(thirdLine);
+            // welcome_texts.appendChild(fourthLine);
+            // welcome_texts.appendChild(fifthLine);
            
        
             if(this.state.welcome === false) {
@@ -3186,60 +2782,9 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
             list.appendChild(menuinfo);
             }
             
-            if(thisElement !== undefined) {
-                if(thisElement.className !== 'menubg') {                            
-               
-                    for(let i = 0; tabsWithMenubgClass.length; i++) {
-                        if(tabsWithMenubgClass[i] != undefined) {
-                            if(tabsWithMenubgClass[i].id !== thisElement.id) {
-                                tabsWithMenubgClass[i].className = '';
-                            } 
-                        }
-                    }
-                    thisElement.className = 'menubg'; 
 
-                    document.getElementById('remix-icon').style.backgroundImage = infinityIcon;
-                    document.getElementById('remix-text').style.color = "rgb(54, 255, 233)";
-
-                    document.getElementById('script-icon').style.backgroundImage = `url(../code_grey.svg)`;
-                    document.getElementById('script-text').style.color = "rgb(82, 82, 82)";
-                    if(document.getElementById('publish-new-icon') !== null) {
-                        document.getElementById('publish-new-icon').style.backgroundImage = `url(../save-regular-grey.svg)`;
-                        document.getElementById('publish-text-new').style.color = "rgb(82, 82, 82)";
-                        document.getElementById('publish-text-publish').style.color = 'rgb(82, 82, 82)'
-                    }
-                    document.getElementById('elements-icon').style.color = `rgb(82, 82, 82)`;
-                    document.getElementById('elements-text').style.color = "rgb(82, 82, 82)";
-
-                    document.getElementById('apps-icon').style.color = `rgb(82, 82, 82)`;
-                    document.getElementById('apps-text').style.color = "rgb(82, 82, 82)";
-
-               
-                    if(document.getElementById('element-menu') !== null) {
-                        document.getElementById('element-menu').remove();
-                    }
-                    if(document.getElementById('app-menu') !== null) {
-                        document.getElementById('app-menu').remove();
-                    }
-                    if(document.getElementById('elements') !== null) {
-                        document.getElementById('elements').remove();
-                    }
-                    // document.querySelector(".svgClass").getSVGDocument().getElementById("svgInternalID").setAttribute("fill", "red")
-
-                }  
-            }
-            this.setState({
-                details:false,
-                objects:false,
-                comments:false,
-                draw:false,
-                remix:true,
-                preferences:false,
-                record:false
-      
-            });
-            document.getElementById('main-menu').style.display = 'block';
-            document.getElementById('main-menu').style.overflowY = 'scroll';
+            document.getElementsByClassName('main-menu')[0].style.display = 'block';
+            document.getElementsByClassName('main-menu')[0].style.overflowY = 'scroll';
             //document.getElementById('main-menu').style.width = '269px';
             isMenuOpen = true;
             if(document.getElementById('search-input') !== null) {
@@ -3255,7 +2800,7 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
             }
           
             if(this.state.isOpen === false) {
-                const element = document.querySelector('#main-menu');
+                const element = document.querySelector('.main-menu');
                 const ball = styler(element); 
             
                 tween({ from:0, to: 0, duration: 300 })
@@ -3263,8 +2808,8 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                 document.getElementById('tab-menu').style.display = 'block';
                 //document.getElementById('main-menu').style.width = '269px';
                 this.setState({isOpen:true});
-                let remixid = document.getElementById('remix-tab');
-                remixid.className = 'menubg';
+                //let remixid = document.getElementById('remix-tab');
+                //remixid.className = 'menubg';
              
                 this.setState(
                         {
@@ -3278,10 +2823,10 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
       
                         }
                 );
-                document.getElementById('main-menu').style.display = 'block';
+                document.getElementsByClassName('main-menu')[0].style.display = 'block';
                 isMenuOpen = true;
            } else {
-                const element = document.querySelector('#main-menu');
+                const element = document.querySelector('.main-menu');
                 const ball = styler(element); 
             
                 tween({ from:0, to: -378, duration: 200 })
@@ -3618,6 +3163,11 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
         });
         if(i == 0) {
              this.RemixTab()
+             if(window.innerWidth < 768) {
+                document.getElementsByClassName('main-menu')[0].style.width = '271px'
+            } else {
+                document.getElementsByClassName('main-menu')[0].style.width = '330px'
+            }
              let getSelected = document.getElementsByClassName('menubg-s');
              let getSelectedTxt = document.getElementsByClassName('menubg'); 
              for(let i = 0; i < getSelected.length; i++) {
@@ -3636,6 +3186,11 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
         if(i == 1){
        
             this.ElementsTabs()
+            if(window.innerWidth < 768) {
+                document.getElementsByClassName('main-menu')[1].style.width = '271px'
+            } else {
+                document.getElementsByClassName('main-menu')[1].style.width = '330px'
+            }
             let getSelected = document.getElementsByClassName('menubg-s');
             let getSelectedTxt = document.getElementsByClassName('menubg'); 
             for(let i = 0; i < getSelected.length; i++) {
@@ -3653,6 +3208,12 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
         } 
         if(i == 2) {
             this.AppTab()
+            if(window.innerWidth < 768) {
+                document.getElementsByClassName('main-menu')[2].style.width = '271px'
+            } else {
+                document.getElementsByClassName('main-menu')[2].style.width = '330px'
+            }
+
             let getSelected = document.getElementsByClassName('menubg-s');
             let getSelectedTxt = document.getElementsByClassName('menubg'); 
             for(let i = 0; i < getSelected.length; i++) {
@@ -3671,6 +3232,7 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
         } 
         if(i == 3) {
             this.ScriptTag.bind(this);
+
             let getSelected = document.getElementsByClassName('menubg-s');
             let getSelectedTxt = document.getElementsByClassName('menubg'); 
             for(let i = 0; i < getSelected.length; i++) {
@@ -3688,6 +3250,12 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
         } 
         if(i ==4) {
             this.PostAsNewTab.bind(this);
+            if(window.innerWidth < 768) {
+                document.getElementsByClassName('main-menu')[3].style.width = '271px'
+            } else {
+                document.getElementsByClassName('main-menu')[3].style.width = '330px'
+            }
+
             let getSelected = document.getElementsByClassName('menubg-s');
             let getSelectedTxt = document.getElementsByClassName('menubg'); 
             for(let i = 0; i < getSelected.length; i++) {
@@ -3703,7 +3271,24 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
             document.getElementById('publish-text-new').className = 'menubg';
         }
     }
-  
+    changeName = (event) => {
+        const self = this;
+        const evnt = event;
+        if (self.state.typingTimeout) {
+           clearTimeout(self.state.typingTimeout);
+        }
+        
+        self.setState({
+           inputValue: event.target.value,
+           typing: false,
+           typingTimeout: setTimeout(function () {
+               
+               document.getElementById('element-menu').innerHTML = ''
+               self.funStuff(self.state.searchElements, self.state.inputValue);
+             }, 500)
+        });
+
+    }
     render() {
         let that = this;
         const {isLoading} = this.state;
@@ -3903,7 +3488,7 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
 
                                 <TabPanel tabId="vertical-tab-one">
                                     <ImageEdit/>
-                                    <div id="main-menu" 
+                                    <div className="main-menu" 
                                         style={{
                                             borderRight:'1px solid rgb(24, 24, 24)', 
                                             background:'rgb(24, 24, 24)', 
@@ -3911,8 +3496,7 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                                             transform:'translateX(0px) translateZ(-378px)',
                                             display:'block', 
                                             position:'relative',
-                                            maxWidth:'330px', 
-                                            width:'330px',
+                                          
                                             overflowY:'scroll',
                                             padding:'7px 14px 2px 10px',
                                             height:'100%'
@@ -3943,7 +3527,7 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                                 </TabPanel>
 
                                 <TabPanel tabId="vertical-tab-two">
-                                    <div id="main-menu" 
+                                    <div className="main-menu" 
                                         style={{
                                             borderRight:'1px solid rgb(24, 24, 24)', 
                                             background:'rgb(24, 24, 24)', 
@@ -3951,14 +3535,14 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                                             transform:'translateX(0px) translateZ(-378px)',
                                             display:'block', 
                                             position:'relative',
-                                            maxWidth:'330px', 
-                                            width:'330px',
+                                           
+                                           
                                             overflowY:'scroll',
                                             padding:'7px 14px 2px 10px',
                                             height:'100vh'
                                         }}>
                                             <div style={{position:'relative',width:'100%'}}>
-                                            <div style={{height:19,width:'100%',position:'relative'}}>
+                                            {/* <div style={{height:19,width:'100%',position:'relative'}}>
                                                 <i className="fa fa-times" style={{color:'white',right:0,position:'absolute',fontSize:12}}></i>
                                             </div>
                                             <div style={{display:'flex'}}>
@@ -4009,9 +3593,7 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                                                     background:'#202020',
                                                     border:'none',
                                                     color:'rgb(64, 255, 232)'
-                                                }} onChange={(e)=>{
-                                                    this.setState({inputValue:e.target.value})
-                                                }} value={this.state.inputValue} placeholder="Search for any GIFs here"/>
+                                                }} onChange={this.changeName} value={this.state.inputValue} placeholder="Search for any GIFs here"/>
                                                 <div style={{width:'100%',display:'flex',justifyContent:'flex-end'}}> 
                                                     <div style={{backgroundImage:'url(../poweredbygiphy.png)',
                                                         height:20,
@@ -4022,15 +3604,87 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                                                         marginTop:'9px'
                                                     }}></div>
                                                 </div>
-                                        </div>
-                                        <div id="element-menu" style={{height:'100%',width:'100%',overflowY:'scroll',position:'relative',top:15,display:'flex',flexWrap:'wrap',justifyContent:'space-between'}}>
+                                        </div> */}
+                                        {/* <div id="element-menu" style={{height:'100%',width:'100%',overflowY:'scroll',position:'relative',top:15,display:'flex',flexWrap:'wrap',justifyContent:'space-between'}}>
 
+                                        </div> */}
+                                            <Tabs
+                                                defaultTab="one"
+                                                onChange={(tabId) => { console.log(tabId) }}>
+                                                <TabList>
+                                                    <div style={{display:'flex'}}>
+                                                    <div>
+                                                        <Tab tabFor="one" onClick={()=>{
+                                                            this.funStuff('gifs',this.state.inputValue)
+                                                            this.setState({searchElements:'gifs'})
+                                                            document.getElementById('element-menu').innerHTML =''
+                                                            }}><p style={{color:'white',fontSize:14}}>GIFs</p></Tab>
+                                                        <Tab tabFor="two"><p style={{color:'white',fontSize:14}}>Emojis</p></Tab>
+                                                        <Tab tabFor="three" onClick={()=>{
+                                                            this.funStuff('stickers',this.state.inputValue)
+                                                            this.setState({searchElements:'stickers'})
+                                                            document.getElementById('sticker-menu').innerHTML =''
+
+                                                    }}><p style={{color:'white',fontSize:14}}>Stickers</p></Tab>
+                                                        <Tab tabFor="four"><p style={{color:'white',fontSize:14}}>Images</p></Tab>
+                                                    </div>
+                                                    <div style={{display:'flex',flexDirection:'column',justifyContent:'space-between',
+                                                                alignItems:'center',position:'absolute',right:'0px',height:'32px'}}>
+                                                        <i class="fas fa-times" style={{color:'white',marginRight:'-4px',fontSize:13}}></i>
+                                                        <div style={{display:'flex',alignItems:'center'}}>
+                                                            <i class="fas fa-chevron-left" style={{color:'white',marginRight:8,fontSize:10}}></i>
+                                                            <i class="fas fa-chevron-right" style={{color:'white',fontSize:9}}></i>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    <input id="search-elements" type="text" 
+                                                        style={{
+                                                            width:'100%',
+                                                            height:40,
+                                                            padding:5,
+                                                            outline:'none',
+                                                            marginTop:15,
+                                                            background:'#202020',
+                                                            border:'none',
+                                                            color:'rgb(64, 255, 232)',
+                                                            fontSize:18,
+                                                            paddingLeft:12
+                                                        }} onChange={this.changeName} 
+                                                        value={this.state.inputValue} placeholder="Search for any GIFs here"/>
+                                                        <div style={{width:'100%',display:'flex',justifyContent:'flex-end'}}> 
+                                                        <div style={{backgroundImage:'url(../poweredbygiphy.png)',
+                                                        height:20,
+                                                        width:116,
+                                                        backgroundSize:'contain',
+                                                        backgroundRepeat:'no-repeat',
+                                                        position:'relative',
+                                                        marginTop:'9px'
+                                                    }}></div>
+                                                </div>
+                                                </TabList>
+                                                <TabPanel tabId="one">
+                                                   <div id="element-menu" style={{overlayY:'scroll',display:'flex',flexWrap:'wrap',
+                                                    justifyContent:'space-between'}}>
+
+                                                   </div>
+                                                </TabPanel>
+                                                <TabPanel tabId="two">
+                                                    <div id="emoji-menu"></div>
+                                                </TabPanel>
+                                                <TabPanel tabId="three">
+                                                    <div id="sticker-menu" style={{overlayY:'scroll',display:'flex',flexWrap:'wrap',
+                                                    justifyContent:'space-between'}}></div>
+                                                </TabPanel>
+                                                <TabPanel tabId="four">
+                                                    <div id="image-menu"></div>
+                                                </TabPanel>
+                                            </Tabs>
                                         </div>
                                     </div>
                                 </TabPanel>
 
                                 <TabPanel tabId="vertical-tab-three">
-                                <div id="main-menu" 
+                                <div className="main-menu" 
                                         style={{
                                             borderRight:'1px solid rgb(24, 24, 24)', 
                                             background:'rgb(24, 24, 24)', 
@@ -4038,8 +3692,7 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                                             transform:'translateX(0px) translateZ(-378px)',
                                             display:'block', 
                                             position:'relative',
-                                            maxWidth:'330px', 
-                                            width:'330px',
+                                     
                                             overflowY:'scroll',
                                             padding:'7px 14px 2px 10px',
                                             height:'100%'
@@ -4054,7 +3707,7 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                                     
                                 </TabPanel>
                                 <TabPanel tabId="vertical-tab-five">
-                                    <div id="main-menu" 
+                                    <div className="main-menu" 
                                         style={{
                                         borderRight:'1px solid rgb(24, 24, 24)', 
                                         background:'rgb(24, 24, 24)', 
@@ -4062,8 +3715,7 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                                         transform:'translateX(0px) translateZ(-378px)',
                                         display:'block', 
                                         position:'relative',
-                                        maxWidth:'330px', 
-                                        width:'330px',
+                                   
                                         overflowY:'scroll',
                                         padding:'7px 14px 2px 10px',
                                         height:'100%'
@@ -4715,7 +4367,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => ({
     startCreateRoom: (room) => dispatch(startCreateRoom(room)),
-    flowAdd: (bool) => dispatch(flowAdd(bool))
+    flowAdd: (bool) => dispatch(flowAdd(bool)),
+    openMenu: (bool) => dispatch(openMenu(bool))
   });
 
 const ConnectedRoomMain = connect(mapStateToProps,mapDispatchToProps)(RoomMain)

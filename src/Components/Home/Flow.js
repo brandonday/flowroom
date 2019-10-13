@@ -26,7 +26,7 @@ import Overlay from './overlay.js'
 
         let resize = `
         .rotate {content: "";
-    position: absolute;
+        position: absolute;
     top: 16px;
     left: 6px;
     width: 20px;
@@ -98,6 +98,7 @@ import Overlay from './overlay.js'
         height: 15px !important;
         border-radius: 30% !important;
         margin-left: -3px !important;
+        cursor: ew-resize !important;
     }
     .dg-hdl-mr {
         width: 5px !important;
@@ -105,10 +106,14 @@ import Overlay from './overlay.js'
     height: 15px !important;
     border-radius: 30% !important;
     margin-left: -2px !important;
+    cursor: ew-resize !important;
     }
     
     .dg-controls {
-        border:1px solid rgb(64, 255, 232) !important;
+      display:flex !important;
+      justify-content:center !important;  
+      border:1px solid rgb(64, 255, 232) !important;
+        
     }
     .dg-normal {
         display: none !important;
@@ -116,11 +121,28 @@ import Overlay from './overlay.js'
     }
 
     .dg-hdl-bc {
-        display:none !important;
+      width: 15px !important;
+    height: 5px !important;
+    border-radius: 30% !important;
+    bottom: 9px !important;
+    position: relative !important;
+    /* margin-left: auto !important; */
+    margin-right: auto !important;
+    margin-top: -2px !important;
     }
     .dg-hdl-tc {
-        display:none !important;
+        
+      width: 15px !important;
+      height: 5px !important;
+      border-radius: 30% !important;
+      top: 2px !important;
 
+    }
+    .dg-rotator {
+      position: absolute !important;
+      bottom: -32px !important;
+      height: 15px !important;
+      width: 15px !important;
     }
 
     
@@ -133,7 +155,7 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
         let prepareSource = () => {
           let html = '<div id="overlay-container" style="position:absolute;top:0px;left:0px;bottom:0px;height:100%;width:100%"></div>';
           let css = '';
-          let js = '';
+          let js = ``;
          
 
           let JSflowroom = '<script src="../flowroom.js"></script>';

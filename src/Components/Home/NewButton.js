@@ -22,6 +22,8 @@ class NewButton extends Component {
     }
     componentDidMount() {
         let that = this;
+        this.props.openMenu({openMenu:null});
+
         function myFunction(x) {
             if (x.matches) { // If media query matches
               that.setState({isMobile:true})
@@ -74,7 +76,9 @@ class NewButton extends Component {
             // document.getElementById("default-modal").style.top = '80px'
 
         } else {
+            this.props.openMenu({openMenu:null});
             this.props.openMenu({openMenu:false});
+            
             // document.getElementById("default-modal").style.display = 'none'
             // document.getElementById("default-modal").style.top = '80px'
 
