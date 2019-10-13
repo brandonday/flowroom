@@ -709,11 +709,11 @@ let roomFilter = 'weight';
             <div id="main-section-wrap-comments-screen-wrap" style={{
                 display:'flex',position:'relative',
                 width:'100%',
-                maxWidth:'1200px',
+                maxWidth:'1600px',
                 margin:'0 auto',
                 position:'relative',
-                padding:'0 2px'
-                
+                padding:'0 2px',
+                top:52
                 }}>
             
 
@@ -732,17 +732,17 @@ let roomFilter = 'weight';
                 </div> */}
                 {/* <div style={{height:'200px',width:'100%'}}></div> */}
                 <div className="main-section-wrap-comments-box">
-                    <div style={{backgroundColor:'#1f1f1f',borderRadius:'6px',height:'242px',width:'100%',position:'relative'}}>
-                    <div style={{height:'76px',width:'100%', display:'flex', borderBottom:'1px solid #373737', justifyContent:'space-between'}}>
+                    <div style={{backgroundColor:'#1f1f1f',borderRadius:'6px',height:'275px',width:'100%',position:'relative'}}>
+                    <div style={{height:'85px',width:'100%', display:'flex', borderBottom:'1px solid #373737', justifyContent:'space-between'}}>
                         <div style={{marginLeft:17,marginTop:9}}>
-                        <p style={{color:'#fafafa',fontSize:20,marginBottom:6}}>{this.state.room_title ? this.state.room_title: ''}</p>
+                        <p id="room-title" style={{color:'#fafafa',fontSize:24,marginBottom:0,top:'3px',left:'-3px',position:'relative'}}>{this.state.room_title ? this.state.room_title: ''}</p>
                         <div style={{display:'flex'}}>
-                            <div style={{display:'flex',alignItems:'center', marginLeft:'1px'}}>
-                                <i className="fa fa-play" style={{fontSize:11,marginRight:10,color:'white'}}></i>
-                                <p style={{fontSize:'13px',fontWeight:'500',color:'white'}}>{this.state.views}</p>
+                            <div style={{display:'flex',alignItems:'center', marginLeft:'1px',marginTop:'10px'}}>
+                                <i className="fa fa-play" style={{fontSize:14,marginRight:10,color:'white'}}></i>
+                                <p style={{fontSize:'14px',fontWeight:'500',color:'white'}}>{'49866'+this.state.views}</p>
                             </div>
                             <div style={{display:'flex',position:'absolute',right:0}}>
-                                <div style={{display:'flex', width:196, justifyContent:'space-between'}}>
+                                <div style={{display:'flex', width:230, justifyContent:'space-between',position:'relative',top:'7px'}}>
                                     <div style={{display:'flex',
                            
                                             justifyContent:'space-between',
@@ -755,7 +755,7 @@ let roomFilter = 'weight';
                                             justifyContent:'space-between',
                      
                                         }}>
-                                        <i className="far fa-heart" onClick={()=>{
+                                        <div style={{backgroundImage:'url(../heart.svg)',backgroundSize:'contain',backgroundRepeat:'no-repeat',height:17,width:17,marginRight:9}} onClick={()=>{
                                             firebase.auth().onAuthStateChanged((user)=> {
                                                 console.log("firebase.auth user: ",user);
                                                 if(user) {
@@ -768,7 +768,7 @@ let roomFilter = 'weight';
                                                 }
                                             });
                                
-                                        }} style={{marginRight:10}}></i>
+                                        }}></div>
                                         <p style={{fontWeight:500}}>Like</p>
                                     </div>
                                 </div>
@@ -790,7 +790,7 @@ let roomFilter = 'weight';
                                             justifyContent:'space-between',
                             
                                         }}>
-                                        <i className="fas fa-share-alt" style={{marginRight:10}}></i>
+                                        <div style={{backgroundImage:'url(../share.svg)',backgroundSize:'contain',ackgroundRepeat:'no-repeat',height:18,width:18,marginRight:9}}></div>
                                         <p style={{fontWeight:500}}>Share</p>
                                     </div>
                                 </div>
@@ -826,11 +826,11 @@ let roomFilter = 'weight';
                             backgroundSize:'cover',
                             backgroundRepeat:'no-repeat',
                             backgroundPosition:'center',
-                            height:43,width:43,borderRadius:25,marginTop:3}}></div>
+                            height:50,width:50,borderRadius:25,marginTop:7}}></div>
                         <div style={{height:50}}>
-                            <div style={{display:'flex', marginTop:7, flexDirection:'column',marginLeft:12}}>
+                            <div style={{display:'flex', marginTop:11, flexDirection:'column',marginLeft:12}}>
                                 <div style={{display:'flex'}}>
-                                <p style={{fontWeight:400,fontSize:14,color:'#ACACAC'}}>{`${this.props.isRemix ? 'Remixed by ' : 'Created by '}`}</p>
+                                <p style={{fontWeight:400,fontSize:14,color:'#ACACAC'}}>{`${!this.props.isRemix ? 'Remixed by ' : 'Created by '}`}</p>
                                 <Link to={`/${this.props.userName}`}>
                                     <p style={{fontWeight:400,fontSize:14,color:'white',marginLeft:4,marginRight:'35px',}}>{this.props.isRemix ? ' @' + this.props.userName : ' @' + this.props.userName}</p>
                                 </Link>
@@ -864,7 +864,7 @@ let roomFilter = 'weight';
                     </div>
                     </div>
                     <div style={{display:'flex', width:'100%',flexDirection:'column'}}>
-                    <div>
+                    <div id="recommended-flows-top">
                     <div style={{display:this.state.userName == ''? 'none':'flex', alignItems:'center',height:40,width:'100%',background:'#0f0f0f',margin:'15px 0px'}}>
                         <p style={{color:'white',fontSize:17,fontWeight:600}}>Recommended Flows</p>
                     </div>

@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 
 //import PhotoEditorUI from 'photoeditorsdk/desktop-ui'
 import PhotoEditorUI from 'photoeditorsdk/react-ui';
-import Styles from 'photoeditorsdk/css/PhotoEditorSDK.UI.ReactUI.min.css';
+import Styles from 'photoeditorsdk/css/PhotoEditorSDK.UI.ReactUI.css';
 import axios from 'axios';
 import AWS from 'aws-sdk';
 import * as S3 from 'aws-sdk/clients/s3';
@@ -46,6 +46,7 @@ class PhotoEditor extends React.Component {
         }
       }
     })
+    //document.getElementsByClassName('pesdk-react-topBar__button__label')[0].innerText = 'Save'
   }
 
   handleLoad() {

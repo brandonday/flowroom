@@ -422,7 +422,7 @@ let that;
                         
                         that.setState({pic:getImageSaved, id:getList[j].id, classorid:getList[j].classorid, type:getList[j].type, elementId:`image_edit_${j}`})
 
-                        document.getElementById('menu-wrap').style.height = '583px';
+                        //document.getElementById('menu-wrap').style.height = '583px';
                 
                         
                         //testFR(elId);
@@ -690,14 +690,15 @@ let that;
             position:'absolute',
             zIndex:'99999999999',
             height:'100%',
-            width:'100%',
+            width:'80%',
             overflow:'hidden',
             display:this.state.pic ? 'flex' : 'none',
             justifyContent:'center'
         }}>
-        <div id="menu" style={{height:'550px',
+        <div id="menu" style={{height:'600px',
             width:'396px',
             display:this.state.pic ? 'block' : 'none',
+            marginTop:25
             }}>
             <div style={{
               height:'32px',

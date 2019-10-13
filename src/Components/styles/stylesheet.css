@@ -2648,7 +2648,8 @@ right: 0px;
   }
 
   .pesdk-react-editor .pesdk-react-topBar__button--blue {
-    background: rgb(179, 0, 254) !important;
+    background:#40ffe8 !important;
+    color:#000000 !important;
   }
 
   .pesdk-react-editor .pesdk-react-header {
@@ -2657,6 +2658,27 @@ right: 0px;
 
   }
 
+  .pesdk-react-editor .pesdk-react-topBar__button__label {
+    
+    color: #000 !important;
+  }
+
+  .pesdk-react-topBar__button__icon {
+    display: none !important;
+  }
+
+  .pesdk-react-editor .pesdk-react-topBar__button--withIcon {
+    padding-left:10px !important;
+    padding-right:10px !important;
+  }
+
+  .pesdk-react-editor .pesdk-react-topBar__button--withIcon {
+    background-color:#40ffe8 !important;
+  }
+
+  .pesdk-react-editor .pesdk-react-topBar__row {
+    height:55px !important;
+  }
 
   .room-save-text {
     font-size:12px;

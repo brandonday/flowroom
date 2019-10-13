@@ -531,6 +531,7 @@ let apps = [{id:'childSnapShot.key',
             }
             function myFunction(x) {
                 if (x.matches) { // If media query matches
+                    document.getElementById('recommended-flows-top').style.display = 'block';
                     if(isMenuOpen === false) {
                         //document.getElementById('tab-menu').style.display = 'none';
                     } else {
@@ -634,7 +635,7 @@ let apps = [{id:'childSnapShot.key',
 
                 } else {
                     let main = document.getElementsByClassName('main-menu');
-
+                    document.getElementById('recommended-flows-top').style.display = 'none';
                     let tabMenu = document.getElementById('tab-menu');
                     tabMenu.style.position = 'relative';
                     tabMenu.style.display = 'block';

@@ -126,9 +126,11 @@ import Overlay from './overlay.js'
     border-radius: 30% !important;
     bottom: 9px !important;
     position: relative !important;
-    /* margin-left: auto !important; */
+    margin-left: auto !important;
     margin-right: auto !important;
     margin-top: -2px !important;
+    left:0px !important;
+    cursor: ns-resize !important;
     }
     .dg-hdl-tc {
         
@@ -136,7 +138,7 @@ import Overlay from './overlay.js'
       height: 5px !important;
       border-radius: 30% !important;
       top: 2px !important;
-
+      cursor: ns-resize !important;
     }
     .dg-rotator {
       position: absolute !important;
