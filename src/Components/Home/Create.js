@@ -30,11 +30,37 @@ class Create extends Component {
             document.addEventListener('DOMContentLoaded', ()=> {
                 if(window.innerWidth > 1024) {
                    // alert('sds')
-                    let options = {indicators:true,dist:0,shift:15,}
+                    let options = {indicators:true,dist:5,shift:15}
                     var elems = document.querySelectorAll('.carousel');
                     var instances = M.Carousel.init(elems,options);
                     //var elems = document.querySelectorAll('.tap-target');
                     //var instancesTarget = M.TapTarget.init(elems);
+                    var instance = M.Carousel.getInstance(elems);
+                  
+                    window.next = function() {
+                      var el = document.querySelector(".carousel");
+                      var l = M.Carousel.getInstance(el);
+                      l.next(1);
+                      let classOp = document.getElementsByClassName('carousel-item-c');
+                      for(let i = 0; i < classOp.length; i++) {
+                        classOp[i].style.opacity = 0;
+                      }
+  
+                    }
+
+                    window.prev = function() {
+                      var el = document.querySelector(".carousel");
+                      var l = M.Carousel.getInstance(el);
+                      l.prev(1);
+                    }
+
+                    document.getElementById('left-arrow').addEventListener('click', ()=> {
+                      window.prev();
+                    });
+
+                    document.getElementById('right-arrow').addEventListener('click', ()=> {
+                      window.next()
+                    })
                     
                     that.setState({menuMobile:false});
                 } else {
@@ -54,6 +80,7 @@ class Create extends Component {
                 }    
             })
         
+            
    
           //carousel.style.height = '450px'
           let that = this;
@@ -162,7 +189,7 @@ textAlign:'left',position:'absolute',zIndex:999}}>CREATE</p>
     <div style={{height:this.state.menuMobile ? '100%':'340px',border:'0.5px solid #444444',marginTop:'24px',marginLeft:this.state.menuMobile ? '30px':'0px',marginRight:this.state.menuMobile ? '30px':'0px'}}></div>
     <div style={{display:'flex',flexDirection:'column',height:'100%',width:'100%',justifyContent:'center'}}>
       <p style={{color:'white',fontSize:this.state.menuMobile ?'15px':'20px',fontWeight:'700',
-      marginLeft:this.state.menuMobile ?'auto':'40px',marginRight:this.state.menuMobile ? 'auto':'0px',marginTop:this.state.menuMobile ? '23px':'0px',top:this.state.menuMobile ? '':'28px',position:'relative'}}>Or choose a Template</p>
+      marginLeft:this.state.menuMobile ?'auto':'40px',marginRight:this.state.menuMobile ? 'auto':'0px',marginTop:this.state.menuMobile ? '23px':'0px',top:this.state.menuMobile ? '':'28px',position:'relative',background:'#151515'}}>Or choose a Template</p>
       <a onClick={(e)=>{
           e.preventDefault()
               if(this.props.state.openMenu.openMenu !== true) {
@@ -179,12 +206,15 @@ textAlign:'left',position:'absolute',zIndex:999}}>CREATE</p>
       }}href="" style={{display:this.state.menuMobile ? 'none':'block',color:'#40FFE8',
     right:'88px',
     position: 'absolute',
-    top:'31px'}}><p>Close</p></a>
-      <div id="create-tags" style={{display:'flex',flexDirection:'row',}}>
+    top:'31px'}}><div style={{display:'flex',
+      justifyContent:'space-between',
+      alignItems:'center',
+      width:'65px'}}><p>Close</p><i className="fa fa-times" style={{fontSize:'14px', color:'#40ffe8'}}></i></div></a>
+      <div id="create-tags" style={{display:'flex',flexDirection:'row',background:'#151515'}}>
   
       </div>
       <div style={{display:'flex',flexDirection:this.state.menuMobile ? 'column':'row',alignItems:'center'}}>
-          <div id="left-arrow"  class="fa fa-angle-left" style={{display:this.state.menuMobile ? 'none':'block',color:'#898989',fontSize:'30px',marginLeft:'15px',marginRight:'12px',marginBottom:'80px'}}></div>   
+          <div id="left-arrow"  class="fa fa-angle-left" style={{display:this.state.menuMobile ? 'none':'block',color:'#898989',fontSize:'30px',marginLeft:'15px',marginRight:'12px',cursor:'pointer'}}></div>   
           <div style={{display:'flex',flexDirection:'column',width:'100%'}}>
             <CTags display={this.state.menuMobile ? 'none':'flex'}/> 
             <CTagsMobile display={this.state.menuMobile ? 'flex':'none'}/>
@@ -194,7 +224,7 @@ textAlign:'left',position:'absolute',zIndex:999}}>CREATE</p>
          
           </div>
           
-      <div id="right-arrow" class="fa fa-angle-right" style={{display:this.state.menuMobile ? 'none':'block',color:'#898989', fontSize:'30px',marginLeft:'13px',marginRight:'31px',marginBottom:'80px'}}></div>
+      <div id="right-arrow" class="fa fa-angle-right" style={{display:this.state.menuMobile ? 'none':'block',color:'#898989', fontSize:'30px',marginLeft:'13px',marginRight:'31px',cursor:'pointer'}}></div>
 
     </div>
     </div>

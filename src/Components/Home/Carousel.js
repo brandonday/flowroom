@@ -119,7 +119,7 @@ let history = createHistory();
                 return  (
                         <div style={{flex:1,display:this.props.display,
                                 flexDirection:'column',background:'#141414'}}>
-                            <div id="carousel-desktop" className="carousel-desktop carousel carousel-slider center" style={{position:'relative',top:'9px',width:'100%'}}>
+                            <div id="carousel-desktop" className="carousel-desktop carousel carousel-slider center" style={{position:'relative',top:'9px',width:'100%',background:'#151515'}}>
 
 </div>
                         </div>

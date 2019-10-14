@@ -23,13 +23,12 @@ let history = createHistory();
         render() {
                 return  (
                         <div style={{flex:1,display:'flex',
-                                flexDirection:'column',background:'#141414',}}>
+                                flexDirection:'column',background:'#151515',}}>
                                   
                                 <Communities/>
                                 <RoomPosts/>
                                 <AppModal/>
                                 <Create/>
-                   
                         </div>
                 )
 

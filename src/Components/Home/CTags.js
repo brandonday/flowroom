@@ -46,6 +46,7 @@ let history = createHistory();
                         tagWrap.style.overflowX = 'scroll';
                         tagWrap.appendChild(tag);
                         tagWrap.style.marginTop = '10px';
+                        tagWrap.style.zIndex = 999;
                         carousel.appendChild(tagWrap)
                       }
          
@@ -53,8 +54,8 @@ let history = createHistory();
         render() {
                 return  (
                         <div style={{flex:1,display:'flex',
-                                flexDirection:'column',background:'#141414'}}>
-                         <div id="carousel-tags"  style={{position:'relative',top:'30px',width:'100%',display:this.props.display,overflowX:'scroll',height:50,top:49}}>
+                                flexDirection:'column',background:'#151515'}}>
+                         <div id="carousel-tags"  style={{position:'relative',top:'30px',width:'100%',display:this.props.display,overflowX:'scroll',height:50,top:49,background:'#151515'}}>
                                 
                         </div>
                         </div>

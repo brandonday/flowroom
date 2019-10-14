@@ -346,7 +346,7 @@ body {
 
 .search-placeholder::-webkit-input-placeholder {
   color: rgb(198, 198, 198);
-  font-size:30px !important;
+  font-size:14px !important;
 }
 
 .scrollbar {
@@ -657,6 +657,9 @@ h1 a:focus {
   cursor: pointer;
   text-decoration: none;
 }
+
+
+
     /* source-sans-pro-regular - latin */
 @font-face {
   font-family: 'Source Sans Pro';
@@ -922,7 +925,7 @@ right: 0px;
 
 .ReactTags__tagInputField::-webkit-input-placeholder{ /* Chrome/Opera/Safari */
   color:#a59c9c; 
-  font-size:30px;
+  font-size:14px;
 }
 ::-moz-placeholder { /* Firefox 19+ */
   color:#474747;

@@ -72,13 +72,15 @@ class NewButton extends Component {
        
         if(this.props.state.openMenu.openMenu !== true) {
             this.props.openMenu({openMenu:true});
+            document.getElementById('default-modal').style.display = 'block';
             // document.getElementById("default-modal").style.display = 'block'
             // document.getElementById("default-modal").style.top = '80px'
 
         } else {
             this.props.openMenu({openMenu:null});
             this.props.openMenu({openMenu:false});
-            
+            document.getElementById('default-modal').style.display = 'none';
+
             // document.getElementById("default-modal").style.display = 'none'
             // document.getElementById("default-modal").style.top = '80px'
 

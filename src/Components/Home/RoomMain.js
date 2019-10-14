@@ -675,13 +675,13 @@ let apps = [{id:'childSnapShot.key',
                     }
                
                        if(document.getElementById('first-line-text') !== null) {
-                           document.getElementById('first-line-text').style.fontSize = '1.6rem';
+                           document.getElementById('first-line-text').style.fontSize = '14px';
                        }
                        if(document.getElementById('second-line-text') !== null) {
-                           document.getElementById('second-line-text').style.fontSize = '1.6remx';
+                           document.getElementById('second-line-text').style.fontSize = '14px';
                        }
                        if(document.getElementById('third-line-text') !== null) {
-                           document.getElementById('third-line-text').style.fontSize = '1.6rem';
+                           document.getElementById('third-line-text').style.fontSize = '14px';
                        }
                        if(document.getElementById('remix-image-box') !== null) {
                           
@@ -692,7 +692,7 @@ let apps = [{id:'childSnapShot.key',
                         document.getElementById('menu-info-box').style.width = '300px'
                        }
                        if(document.getElementById('welcome-text') !== null) {
-                        document.getElementById('welcome-text').style.fontSize = '1.6rem';
+                        document.getElementById('welcome-text').style.fontSize = '14px';
                        }
 
                        if(document.getElementsByClassName('remix-image') !== null) {
@@ -1942,6 +1942,7 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                         let appTitle = document.createElement('div');
                         
                         appTitle.appendChild(toptitle);
+                        appTitle.style.padding = '4px';
                         appTitle.appendChild(toptitlelink)
                         app.appendChild(appTitle)
 
@@ -1951,9 +1952,11 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                         toptitle.style.color = 'white' 
                         userp.appendChild(document.createTextNode(`Created by @${i.username}`));
                         userp.style.fontSize = '13px';
+                        userp.style.lineHeight = 1;
                         userlink.appendChild(userp);
                         let username = document.createElement('div');
-                        username.appendChild(userlink)
+                        username.appendChild(userlink);
+                        username.style.padding = '0 4px'
                         app.appendChild(username)
                         let hashids = new Hashids(uuid(), 6);
                          
@@ -1964,7 +1967,7 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                         thumbnail.style.backgroundSize = `cover`;
                         thumbnail.style.backgroundRepeat = `no-repeat`;
                         thumbnail.style.backgroundRepeat = 'center'
-                        thumbnail.style.marginTop = 10;
+                        thumbnail.style.marginTop = '10px';
                         app.appendChild(thumbnail)
                         app.addEventListener('click',()=>{
                             // let currentRoomID = window.location.pathname.split("room/").pop();
