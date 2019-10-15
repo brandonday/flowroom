@@ -131,66 +131,66 @@ class Editor extends Component {
         "</html>";
 
         let resize = `
-        .rotate {content: "";
-    position: absolute;
-    top: 16px;
-    left: 6px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #fff url(data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' hei… 0 2.18 15.57.75.75 0 0 0 .47-1.43 7.25 7.25 0 0 1-1-13.37z'/%3E%3C/svg%3E) 2px 2px no-repeat;
-    background-size: 16px 16px;
-    box-shadow: 0 0 5px 1px rgba(14,19,24,.15), 0 0 0 1px rgba(14,19,24,.15);}
-    .resizable {
-      background: white;
-      width: 100px;
-      height: 100px;
-      position: absolute;
-      top: 100px;
-      left: 100px;
-      border: 1px solid hsla(0,0%,50%,.2) !important;
-    }
+          .rotate {
+            content: "";
+            position: absolute;
+            top: 16px;
+            left: 6px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff url(data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' hei… 0 2.18 15.57.75.75 0 0 0 .47-1.43 7.25 7.25 0 0 1-1-13.37z'/%3E%3C/svg%3E) 2px 2px no-repeat;
+            background-size: 16px 16px;
+            box-shadow: 0 0 5px 1px rgba(14,19,24,.15), 0 0 0 1px rgba(14,19,24,.15);}
+          .resizable {
+            background: white;
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            border: 1px solid hsla(0,0%,50%,.2) !important;
+          }
     
-    .resizable .resizers{
-      width: 100%;
-      height: 100%;
-   
-      box-sizing: border-box;
-    }
+          .resizable .resizers{
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+          }
     
-    .resizable .resizers .resizer{
-      width: 10px;
-      height: 10px;
-      border-radius: 50%; /*magic to turn square into circle*/
-      background: white;
-      position: absolute;
-    }
+          .resizable .resizers .resizer{
+            width: 10px;
+            height: 10px;
+            border-radius: 50%; /*magic to turn square into circle*/
+            background: white;
+            position: absolute;
+          }
     
-    .resizable .resizers .resizer.top-left {
-      left: -5px;
-      top: -5px;
-      cursor: nwse-resize; /*resizer cursor*/
-    }
-    .resizable .resizers .resizer.top-right {
-      right: -5px;
-      top: -5px;
-      cursor: nesw-resize;
-    }
-    .resizable .resizers .resizer.bottom-left {
-      left: -5px;
-      bottom: -5px;
-      cursor: nesw-resize;
-    }
-    .resizable .resizers .resizer.bottom-right {
-      right: -5px;
-      bottom: -5px;
-      cursor: nwse-resize;
-    }
+          .resizable .resizers .resizer.top-left {
+            left: -5px;
+            top: -5px;
+            cursor: nwse-resize; /*resizer cursor*/
+          }
+          .resizable .resizers .resizer.top-right {
+            right: -5px;
+            top: -5px;
+            cursor: nesw-resize;
+          }
+          .resizable .resizers .resizer.bottom-left {
+            left: -5px;
+            bottom: -5px;
+            cursor: nesw-resize;
+          }
+           .resizable .resizers .resizer.bottom-right {
+              right: -5px;
+              bottom: -5px;
+              cursor: nwse-resize;
+          }
         `
-let subj = '<script src="../dist/js/subjx.js"></script>';
-let subjcss = '<link rel="stylesheet" href="../dist/style/subjx.css">';        
-let drag = `<script></script>`
-let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"></link> '    
+        let subj = '<script src="../dist/js/subjx.js"></script>';
+        let subjcss = '<link rel="stylesheet" href="../dist/style/subjx.css">';        
+        let drag = `<script></script>`
+        let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"></link> '    
      
         let prepareSource = () => {
           let html = HTML_EDITOR.getValue();
@@ -205,12 +205,6 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
           src = src.replace('</head>', css + JSflowroom + fontawesome + subjcss + '</head>');
           js = '<script>' + js + '<\/script>';
           src = src.replace('</body>', js + subj + drag + '</body>');
-         
-          
-         // alert(htmlObj.html);
-          
-          // localStorage.setItem("css", JSON.stringify(css));
-          // localStorage.setItem("js", JSON.stringify(js));
           return src;
         };
 
@@ -225,34 +219,20 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
           iframe_doc.write(source);
           iframe_doc.close();
        
-        if(this.state.libraries.length !== 0) {
+          if(this.state.libraries.length !== 0) {
             for(i = 0; i < this.state.libraries.length; i++) {
-                var iFrameHead = iframe.contentWindow.document.getElementsByTagName("head")[0];
-                var myscript = document.createElement('script');
-                myscript.type = 'text/javascript';
-               // myscript.src = this.state.libraries[i];
-                //iFrameHead.appendChild(myscript);
+              var iFrameHead = iframe.contentWindow.document.getElementsByTagName("head")[0];
+              var myscript = document.createElement('script');
+              myscript.type = 'text/javascript';
             }
-
             if(this.state.cssStyles.length !== 0) {
-                for(i = 0; i < this.state.cssStyles.length; i++) {
-                    var iFrameHead = iframe.contentWindow.document.getElementsByTagName("head")[0];
-                    var link = document.createElement('link');
-                    link.rel = 'stylesheet';
-                    //link.href=this.state.cssStyles[i];
-                    //link.type = 'text/css';
-                    //iFrameHead.appendChild(link);
-                }
+              for(i = 0; i < this.state.cssStyles.length; i++) {
+                var iFrameHead = iframe.contentWindow.document.getElementsByTagName("head")[0];
+                var link = document.createElement('link');
+                link.rel = 'stylesheet';
+              }
             }
-         
-
-         
-           
-
-        }
-        //when removing last library, set to [];
-         
-         
+          } 
         };
   
         HTML_EDITOR = CodeMirror.fromTextArea(document.getElementById("html_code"), {
@@ -280,42 +260,38 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
        
         let typingTimer;                //timer identifier
         let doneTypingInterval = 1000;
-       
       
-      //user is "finished typing," do something
-      
-      
-      function doneTyping () {
-        renderDHTML();
+        function doneTyping () {
+          renderDHTML();
 
-        let html = HTML_EDITOR.getValue() || null;
-        let css = CSS_EDITOR.getValue() || null;
-        let js = JS_EDITOR.getValue() || null;
-        that.props.saveDHTML({html, css, js});
+          let html = HTML_EDITOR.getValue() || null;
+          let css = CSS_EDITOR.getValue() || null;
+          let js = JS_EDITOR.getValue() || null;
+          that.props.saveDHTML({html, css, js});
      
-      }
+        }
 
-      let isHTMLREADY = false;
-      let isCSSREADY = false;
-      let isJSREADY= false;
+        let isHTMLREADY = false;
+        let isCSSREADY = false;
+        let isJSREADY= false;
   
-      window.updateJSCode = function(code) {
-        JS_EDITOR.setValue(code)
-      }
+        window.updateJSCode = function(code) {
+          JS_EDITOR.setValue(code)
+        }
 
-      window.updateHTMLCode = function(code) {
-        HTML_EDITOR.setValue(code)
-      }
+        window.updateHTMLCode = function(code) {
+          HTML_EDITOR.setValue(code)
+        }
        
 
         HTML_EDITOR.on('change', (inst, changes) => {
           let html = HTML_EDITOR.getValue() || null;
-      let css = CSS_EDITOR.getValue() || null;
-      let js = JS_EDITOR.getValue() || null;
-      html = html === undefined || html === null ? '' : html;
-      css = css === undefined || css === null ? '' : css; 
-      js = js === undefined || js === null ? '' : js;
-         // that.props.saveDHTML({html, css, js});
+          let css = CSS_EDITOR.getValue() || null;
+          let js = JS_EDITOR.getValue() || null;
+          html = html === undefined || html === null ? '' : html;
+          css = css === undefined || css === null ? '' : css; 
+          js = js === undefined || js === null ? '' : js;
+          // that.props.saveDHTML({html, css, js});
           if(!isHTMLREADY) {
             renderDHTML();
             

@@ -1964,7 +1964,7 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                         thumbnail.style.height = '200px';
          
                         thumbnail.style.backgroundImage = `url(${i.thumbnail})`;
-                        thumbnail.style.backgroundSize = `cover`;
+                        thumbnail.style.backgroundSize = `contain`;
                         thumbnail.style.backgroundRepeat = `no-repeat`;
                         thumbnail.style.backgroundRepeat = 'center'
                         thumbnail.style.marginTop = '10px';
@@ -3621,15 +3621,24 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                                                         <Tab tabFor="one" onClick={()=>{
                                                             this.funStuff('gifs',this.state.inputValue)
                                                             this.setState({searchElements:'gifs'})
-                                                            document.getElementById('element-menu').innerHTML =''
-                                                            }}><p style={{color:'white',fontSize:14}}>GIFs</p></Tab>
+                                                            document.getElementById('element-menu').innerHTML ='';
+                                                            let selItem = document.getElementsByClassName('selectO');
+                                                            for(let i = 0; i < selItem.length; i++) {
+                                                                selItem[i].className = ''
+                                                            }
+                                                            document.getElementById('gifs').className = 'selectO'
+                                                            }}><p id="gifs" className="selectO" style={{color:'white',fontSize:14}}>GIFs</p></Tab>
                                                         <Tab tabFor="two"><p style={{color:'white',fontSize:14}}>Emojis</p></Tab>
                                                         <Tab tabFor="three" onClick={()=>{
                                                             this.funStuff('stickers',this.state.inputValue)
                                                             this.setState({searchElements:'stickers'})
                                                             document.getElementById('sticker-menu').innerHTML =''
-
-                                                    }}><p style={{color:'white',fontSize:14}}>Stickers</p></Tab>
+                                                            let selItem = document.getElementsByClassName('selectO');
+                                                            for(let i = 0; i < selItem.length; i++) {
+                                                                selItem[i].className = ''
+                                                            }
+                                                            document.getElementById('stickers').className = 'selectO'
+                                                    }}><p id="stickers" style={{color:'white',fontSize:14}}>Stickers</p></Tab>
                                                         <Tab tabFor="four"><p style={{color:'white',fontSize:14}}>Images</p></Tab>
                                                     </div>
                                                     <div style={{display:'flex',flexDirection:'column',justifyContent:'space-between',

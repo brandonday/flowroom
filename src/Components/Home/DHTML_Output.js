@@ -144,7 +144,7 @@ let counter = 0;
                   for(let y = 0; y < getAllOver.length; y++){
                     getAllOver[y].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].style.pointerEvents = 'none';
 
-                    getAllOver[y].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style.pointerEvents = 'none';
+                    getAllOver[y].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style.pointerEvents = 'all';
 
                   }
                   console.log('flow', )
@@ -198,7 +198,7 @@ let counter = 0;
                 <div className="f-wrap" style={{height:'100%',width:'100%'}}>
                   <div style={{height:'100%',width:'100%'}} >
                
-                  <Flow shortID={obj.shortID} index={index} />
+                  <Flow shortID={obj.shortID} index={index} pointerEvents={'none'}/>
                   {/* <Overlay/> */}
                   </div>
                 </div>
@@ -286,7 +286,7 @@ let counter = 0;
           {this.getObjects()}
 
          
-        </ResponsiveReactGridLayout>):(<Flow/> )  }
+        </ResponsiveReactGridLayout>):(<Flow pointerEvents={'all'}/> )  }
                     </div>
                     {/* </Fullscreen> */}
               

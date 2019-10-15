@@ -203,7 +203,7 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
         return (
             <div style={{height:'100%', width:'100%'}}>
                   <div id="full_wrap" style={{height:'100%',width:'100%',border:'none',background:'transparent'}}> 
-                            <iframe id="output_frame" className="output_frame" src={`/full/${this.props.shortID}`} style={{position:'relative',display:'block',pointerEvents:'none'}}></iframe>
+                            <iframe id="output_frame" className="output_frame" src={`/full/${this.props.shortID}`} style={{position:'relative',display:'block',pointerEvents:this.props.pointerEvents}}></iframe>
                             <iframe id="overlay_output_frame" className="overlay_output_frame" src="" style={{position:'absolute',display:'block',background:'red',top:0,height:'100%',width:'100%',background:'transparent',pointerEvents:'none'}}></iframe>
                         </div>
             </div>
