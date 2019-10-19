@@ -742,7 +742,7 @@ let roomFilter = 'weight';
                                 <p style={{fontSize:'14px',fontWeight:'500',color:'white'}}>{'49866'+this.state.views}</p>
                             </div>
                             <div style={{display:'flex',position:'absolute',right:0}}>
-                                <div style={{display:'flex', width:230, justifyContent:'space-between',position:'relative',top:'7px'}}>
+                                <div style={{display:'flex', width:230, justifyContent:'space-between',position:'relative',top:'2px'}}>
                                     <div style={{display:'flex',
                            
                                             justifyContent:'space-between',
@@ -790,7 +790,7 @@ let roomFilter = 'weight';
                                             justifyContent:'space-between',
                             
                                         }}>
-                                        <div style={{backgroundImage:'url(../share.svg)',backgroundSize:'contain',ackgroundRepeat:'no-repeat',height:18,width:18,marginRight:9}}></div>
+                                        <div style={{backgroundImage:'url(../share.svg)',backgroundSize:'contain',backgroundRepeat:'no-repeat',height:18,width:18,marginRight:9}}></div>
                                         <p style={{fontWeight:500}}>Share</p>
                                     </div>
                                 </div>
@@ -807,7 +807,15 @@ let roomFilter = 'weight';
                                             width:'50px',
                                             marginBottom:3
                                         }}>
-                                        <i className="fas fa-ellipsis-h"></i>
+                                        <div style={{
+                                        backgroundImage:`url(${'../EllipsisHorizontalFilled.svg'})`,
+                                        height:'7px',
+                                        width:'24px',
+                                        backgroundSize:'100%',
+                                        /* margin-top: 0px; */
+                                        backgroundRepeat:'no-repeat',
+                                        position:'relative',
+                                        top:'-4px'}}></div>
                                     </div>
                                 </div>
 

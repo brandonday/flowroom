@@ -138,7 +138,7 @@ import Overlay from './overlay.js'
       height: 5px !important;
       border-radius: 30% !important;
       top: 2px !important;
-      cursor: ns-resize !important;
+
     }
     .dg-rotator {
       position: absolute !important;
@@ -195,15 +195,18 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
        
 
         renderDHTML();
-       
-
+        // let outputframes = document.getElementsByClassName('output_frame');
+        // for(let i = 0; i < outputframes.length; i++) {
+        //   outputframes[i].className = '';
+        // }
+        // document.getElementById(`${this.props.shortID}_output_frame`).className = 'output_frame';
      }
 
      render() {
         return (
             <div style={{height:'100%', width:'100%'}}>
                   <div id="full_wrap" style={{height:'100%',width:'100%',border:'none',background:'transparent'}}> 
-                            <iframe id="output_frame" className="output_frame" src={`/full/${this.props.shortID}`} style={{position:'relative',display:'block',pointerEvents:this.props.pointerEvents}}></iframe>
+                            <iframe id={`${this.props.shortID}_output_frame`} className="output_frame" style={{position:'relative',display:'block',pointerEvents:'none'}}></iframe>
                             <iframe id="overlay_output_frame" className="overlay_output_frame" src="" style={{position:'absolute',display:'block',background:'red',top:0,height:'100%',width:'100%',background:'transparent',pointerEvents:'none'}}></iframe>
                         </div>
             </div>

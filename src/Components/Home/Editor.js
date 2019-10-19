@@ -43,7 +43,7 @@ let calledRenderC = false;
 let HTML_EDITOR;
 let CSS_EDITOR;
 let JS_EDITOR;
-
+let html,css,js
 
 class Editor extends Component {
     constructor() {
@@ -66,7 +66,8 @@ class Editor extends Component {
             saveVisible:'block',
             remixVisible:'block',
             display:'none',
-            updateHTML:''
+            updateHTML:'',
+            isCodeMirrorLoaded:false
         }
         
      }
@@ -118,8 +119,17 @@ class Editor extends Component {
         } 
        
     }
-    renderContent(before = null, htmlUpdate = null, cssUpdate = null, jsUpdate = null) {
-  
+    renderContent(before = null, htmlUpdate = null, cssUpdate = null, jsUpdate = null, shortID = null) {
+ 
+      // let codebox = document.getElementsByClassName('CodeMirror-wrap');
+      // for(let i = 0; codebox.length; i++){
+      //   if(codebox.length !== 3) {
+      //     codebox[i].remove()
+      //   }
+      // }
+
+    
+
         let base_tpl = "<!doctype html>\n" +
         "<html>\n\t" +
         "<head>\n\t\t" +
@@ -211,8 +221,8 @@ class Editor extends Component {
         let renderDHTML = () => {
           // alert('called')
           let source = prepareSource();
-          
-          let iframe = document.querySelector('.output_frame');
+          let getAllOut = document.getElementsByClassName('output_frame')
+          let iframe = document.getElementsByClassName('output_frame')[getAllOut.length - 1];
           let iframe_doc = iframe.contentDocument;
                 
           iframe_doc.open();
@@ -234,7 +244,7 @@ class Editor extends Component {
             }
           } 
         };
-  
+        if(this.state.isCodeMirrorLoaded === false) {
         HTML_EDITOR = CodeMirror.fromTextArea(document.getElementById("html_code"), {
           lineNumbers: true,
           mode: "htmlmixed",
@@ -255,6 +265,8 @@ class Editor extends Component {
           theme: "dracula",
           lineWrapping: true
         });
+        this.setState({isCodeMirrorLoaded:true})
+      }
   
         renderDHTML();
        
@@ -355,7 +367,7 @@ class Editor extends Component {
         let that = this;
         var lastSegment = parts.pop() || parts.pop();  // handle potential trailing slash
         if(lastSegment !== 'room') {
-          firebase.database().ref(`/rooms/${lastSegment}`).once('value').then(function(snapshot) {
+          firebase.database().ref(`/rooms/${shortID !== null? shortID: lastSegment}`).once('value').then(function(snapshot) {
             if(snapshot.val() !== null) {
               
               let uid = snapshot.val().uid;
@@ -372,9 +384,9 @@ class Editor extends Component {
               }
 
               
-              let html = snapshot.val().html;
-              let css = snapshot.val().css;
-              let js = snapshot.val().js;
+              html = snapshot.val().html;
+              css = snapshot.val().css;
+              js = snapshot.val().js;
               let urlHTML = snapshot.val().urlHTML;
               let urlCSS = snapshot.val().urlCSS;
               let urlJS = snapshot.val().urlJS;
@@ -566,7 +578,7 @@ class Editor extends Component {
     }
     renderContent2(before = null, htmlUpdate = null, cssUpdate = null, jsUpdate = null) {
   
-
+     
         if(before !== null) {
         
           let html = JSON.parse(localStorage.getItem("html"));
@@ -718,10 +730,32 @@ goFull = () => {
   }
 
 }
+shouldComponentUpdate(props,state) {
+  if(props.flowAdd !== '') {
+    return true
+  } else {
+    return null
+  }
+  
+}
 
     render() {
-      console.log('prosp',this.props.state)
-    
+      let {flowAdd} = this.props.state.flowAdd
+     // alert(flowAdd)
+      let exists = document.getElementById(`${flowAdd}_output_frame`) !== null ? flowAdd : null;
+       exists = exists === flowAdd ? 'already exists' : flowAdd; 
+      if(flowAdd !== '' && exists !== 'already exists') {
+        this.renderContent(null,null,null,null,flowAdd);
+      } else if(flowAdd !== '' && exists) {
+       
+       html = JSON.parse(localStorage.getItem(`${flowAdd}_html`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_html`)).html:'';
+        console.log('lo html', html)
+        css = JSON.parse(localStorage.getItem(`${flowAdd}_CSS`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_CSS`)).css:'';
+        js = JSON.parse(localStorage.getItem(`${flowAdd}_JS`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_JS`)).js:'';
+       HTML_EDITOR.setValue(html);
+        CSS_EDITOR.setValue(css);
+        JS_EDITOR.setValue(js);
+      } 
         return (<div id="full-page" className="full-page">
             <div className="top-boxes editor-parent">
                 <VelocityComponent 
@@ -806,3 +840,4 @@ const ConnectedEditor = connect((state) => {
 },mapDispatchToProps)(Editor)
 
 export default ConnectedEditor;
+

@@ -42,7 +42,7 @@ let that;
              }
               return newArray;
          }
-        
+        alert('hhsdhd')
        
         
         let that = this;

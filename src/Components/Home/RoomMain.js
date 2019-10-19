@@ -79,7 +79,12 @@ let apps = [{id:'childSnapShot.key',
     tags:'childSnapShot.val().tags',
     room_aspect_ratio:'',
     room_card_height:'',
-    thumbnail:'http://test.flowroom.com/uploads/1eiZsZ.jpg'},{id:'childSnapShot.key',
+    thumbnail:'http://test.flowroom.com/uploads/1eiZsZ.jpg',
+    urlHTML:'http://test.flowroom.com/uploads/5oCRFM.html',
+    urlCSS:'http://test.flowroom.com/uploads/Wpigub.css',
+    urlJS:'http://test.flowroom.com/uploads/QrUrfL.js'
+    },
+    {id:'childSnapShot.key',
     date:'childSnapShot.val().date',
     isAR:'childSnapShot.val().isAR',
     isDevelopmental:'childSnapShot.val().isDevelopmental',
@@ -107,7 +112,10 @@ let apps = [{id:'childSnapShot.key',
     tags:'childSnapShot.val().tags',
     room_aspect_ratio:'',
     room_card_height:'',
-    thumbnail:'http://test.flowroom.com/uploads/NzcXtl.jpg'}]
+    thumbnail:'http://test.flowroom.com/uploads/NzcXtl.jpg',    
+    urlHTML:'http://test.flowroom.com/uploads/VKHyS9.html',
+    urlCSS:'http://test.flowroom.com/uploads/PoTJHL.css',
+    urlJS:'http://test.flowroom.com/uploads/5aUvFj.js'}]
 
     let database = firebase.database();
 
@@ -1920,15 +1928,17 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                     // app_menu.style.flexWrap = 'wrap';
                 
 
-                    apps.map((i) => {
-                    
+                    for(let i = 0; i < apps.length; i++){
+                        
+                       // () => {
+                       
                         let app = document.createElement('div');
                         app.className = 'add-flow'
                         app.style.height = '300px';
                         app.style.width = '100%';
                         app.style.border = '0px solid white';
                         app.style.margin = '5px';
-                        app.setAttribute("id",`${i.shortID}`);
+                        app.setAttribute("id",`${apps[i].shortID}`);
                         app.style.background ='rgb(31, 31, 31)';
                         app.style.justifyContent = 'center';
                         app.style.alignItems = 'flex-end';
@@ -1937,7 +1947,7 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                         app.style.padding = '8px 8px 6px';
                         let toptitlelink = document.createElement('a');
                         let toptitle = document.createElement('p');
-                        toptitle.appendChild(document.createTextNode(`${i.room_title}`));
+                        toptitle.appendChild(document.createTextNode(`${apps[i].room_title}`));
                         toptitlelink.appendChild(toptitle);
                         let appTitle = document.createElement('div');
                         
@@ -1950,7 +1960,7 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                         let userp = document.createElement('p');
                         userp.style.color = 'white';
                         toptitle.style.color = 'white' 
-                        userp.appendChild(document.createTextNode(`Created by @${i.username}`));
+                        userp.appendChild(document.createTextNode(`Created by @${apps[i].username}`));
                         userp.style.fontSize = '13px';
                         userp.style.lineHeight = 1;
                         userlink.appendChild(userp);
@@ -1963,15 +1973,20 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                         let thumbnail = document.createElement('div');
                         thumbnail.style.height = '200px';
          
-                        thumbnail.style.backgroundImage = `url(${i.thumbnail})`;
+                        thumbnail.style.backgroundImage = `url(${apps[i].thumbnail})`;
                         thumbnail.style.backgroundSize = `contain`;
                         thumbnail.style.backgroundRepeat = `no-repeat`;
                         thumbnail.style.backgroundRepeat = 'center'
                         thumbnail.style.marginTop = '10px';
-                        app.appendChild(thumbnail)
+                        app.appendChild(thumbnail);
+                        let short = `${apps[i].shortID}`
+                        let urlHTML =`${apps[i].urlHTML}`;
+                        let urlCSS = `${apps[i].urlCSS}`;
+                        let urlJS = `${apps[i].urlJS}`;
                         app.addEventListener('click',()=>{
                             // let currentRoomID = window.location.pathname.split("room/").pop();
-
+                            let shorti = short;
+                        
                             // if(currentRoomID === '') {
 
                             //     this.props.flowAdd({flowAdd:'empty'});
@@ -1981,13 +1996,89 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                                     //this.props.flowAdd({flowAdd:currentRoomID})
                                    // this.props.openMenu({openMenu:null});
 
-                                this.props.flowAdd({flowAdd:i.shortID});
+                                   let html,css,js;
+                        
+                                       
+              
+             
+              if(urlHTML !== undefined && urlHTML !== '') {
+                fetch(urlHTML).then((response)=> {
+                  if (!response.ok) {
+                    return;
+                  }
+                  return response.text();
+                }).then((data)=> {
+                  html = data;
+                  html = html === undefined || html === null ? '' : html;
+                  //HTML_EDITOR.setValue(html);
+                  html = html;
+                  localStorage.setItem(`${short}_html`,JSON.stringify({html:html}))
+                });
+      
+              } else {
+                html = html === undefined || html === null ? '' : html;
+                //HTML_EDITOR.setValue(html);
+                localStorage.setItem(`${short}_html`,JSON.stringify({html:html}))
+              }
+
+              if(urlCSS !== undefined && urlCSS!== '') {
+                fetch(urlCSS).then(function(response) {
+                  if (!response.ok) {
+                    return;
+                  }
+                 return response.text();
+                }).then(function(data){
+                  css = data;
+                  css = css === undefined || css === null ? '' : css;
+                  //CSS_EDITOR.setValue(css);
+                  localStorage.setItem(`${short}_CSS`,JSON.stringify({css:css}));
+
+                });
+      
+              } else {
+                css = css === undefined || css === null ? '' : css;
+                //CSS_EDITOR.setValue(css);
+                localStorage.setItem(`${short}_CSS`,JSON.stringify({html:html}))
+              }
+
+              if(urlJS !== undefined && urlJS !== '') {
+                fetch(urlJS).then(function(response) {
+                  if (!response.ok) {
+                    return;
+                  }
+                  return response.text();
+                }).then(function(data){
+                  js = data;
+                  js = js === undefined || js === null ? '' : js;
+                  //JS_EDITOR.setValue(js);
+                  localStorage.setItem(`${short}_JS`,JSON.stringify({js:js}));
+
+                });
+      
+              } else {
+                js = js === undefined || js === null ? '' : js;
+                //JS_EDITOR.setValue(js);
+                localStorage.setItem(`${short}_JS`,JSON.stringify({html:html}))
+              }
+ 
+              
+                                       
+          
+                     
+                               this.props.flowAdd({flowAdd:shorti});
+                               
+                               
+                                // let short = `${i.shortID}`
+                                                
+                                
+
                                 
                                 // } else {
                                 //     alert('already added')
                                 // }
                             //}
                         })
+                    //}
                         
                         // resizers.className = 'resizers';
                         // resizerOne.className = 'resizer top-left';
@@ -2067,7 +2158,7 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
 
 
                         app_menu.appendChild(app);
-                    });
+                    }
                     
         }
         ScriptTag(e){
@@ -3190,24 +3281,24 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
         if(i == 1){
        
             this.ElementsTabs()
-            if(window.innerWidth < 768) {
-                document.getElementsByClassName('main-menu')[1].style.width = '271px'
-            } else {
-                document.getElementsByClassName('main-menu')[1].style.width = '330px'
-            }
-            let getSelected = document.getElementsByClassName('menubg-s');
-            let getSelectedTxt = document.getElementsByClassName('menubg'); 
-            for(let i = 0; i < getSelected.length; i++) {
-               getSelected[i].setAttribute("class","")
-            }
-            let elem = document.getElementById('Flowroom-Room---Text---Remix-Mode-v0.2');
-            elem.setAttribute("class", "menubg-s")
+            // if(window.innerWidth < 768) {
+            //     document.getElementsByClassName('main-menu')[1].style.width = '271px'
+            // } else {
+            //     document.getElementsByClassName('main-menu')[1].style.width = '330px'
+            // }
+            // let getSelected = document.getElementsByClassName('menubg-s');
+            // let getSelectedTxt = document.getElementsByClassName('menubg'); 
+            // for(let i = 0; i < getSelected.length; i++) {
+            //    getSelected[i].setAttribute("class","")
+            // }
+            // let elem = document.getElementById('Flowroom-Room---Text---Remix-Mode-v0.2');
+            // elem.setAttribute("class", "menubg-s")
 
-            for(let i = 0; i < getSelectedTxt.length; i++) {
-               getSelectedTxt[i].setAttribute("class","")
-            }
-            document.getElementById('elements-text').className = 'menubg';
-            document.getElementById('publish-text-new').className = '';
+            // for(let i = 0; i < getSelectedTxt.length; i++) {
+            //    getSelectedTxt[i].setAttribute("class","")
+            // }
+            // document.getElementById('elements-text').className = 'menubg';
+            // document.getElementById('publish-text-new').className = '';
 
         } 
         if(i == 2) {
@@ -3368,19 +3459,27 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                                             }} className="menu-bg-border"> */}
                                             {/* <IosAppsOutline color="rgb(82, 82, 82)" fontSize={30}/> */}
                                             <div style={{marginBottom:8}}>
-                                                <svg width="20px" height="20px" viewBox="0 0 23 22" version="1.1" xmlns="http://www.w3.org/2000/svg" >
-  
-                                                    <g id="Room" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                        <g id="Flowroom-Room---Text---Remix-Mode-v0.2" transform="translate(-17.000000, -212.000000)" fill="white">
-                                                            <g id="Group" transform="translate(17.000000, 212.000000)">
-                                                                <rect id="Rectangle" x="13" y="0" width="10" height="10" rx="3"></rect>
-                                                                <polygon id="Polygon" points="17.5 12 22.7308108 15.8004065 20.7328189 21.9495935 14.2671811 21.9495935 12.2691892 15.8004065"></polygon>
-                                                                <circle id="Oval" cx="4.75" cy="4.75" r="4.75"></circle>
-                                                                <polygon id="Triangle" points="4.5 13 9 22 0 22"></polygon>
-                                                            </g>
-                                                        </g>
-                                                    </g>
-                                                </svg>
+                                            <svg width="24px" height="23px" viewBox="0 0 24 23" version="1.1">
+
+    <defs></defs>
+    <g id="Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Overlay3" transform="translate(1.000000, 1.000000)">
+            <polygon id="Triangle" stroke="#979797" stroke-width="0.8" points="4.5 1 8 8 1 8"></polygon>
+            <text id="T" font-family="AmericanTypewriter, American Typewriter" font-size="13" font-weight="normal" fill="#979797">
+                <tspan x="13" y="21">T</tspan>
+            </text>
+            <g id="happiness" transform="translate(13.000000, 0.000000)" fill="#979797" fill-rule="nonzero">
+                <path d="M4.5,0 C2.01870296,0 0,2.01870296 0,4.5 C0,6.98129704 2.01870296,9 4.5,9 C6.98129704,9 9,6.98129704 9,4.5 C9,2.01870296 6.98132745,0 4.5,0 Z M4.5,8.51350694 C3.39760672,8.51350694 2.39765064,8.06666306 1.67159016,7.34470736 C1.38164029,7.05639941 1.13550521,6.72412465 0.943857349,6.3589508 C0.651961513,5.80285882 0.486493061,5.17041784 0.486493061,4.5 C0.486493061,2.28694307 2.28694307,0.486493061 4.5,0.486493061 C5.5497,0.486493061 6.5063886,0.89174178 7.22232395,1.55379802 C7.59351816,1.89701888 7.90003919,2.30920012 8.12105907,2.76990905 C8.37251517,3.29407492 8.51350694,3.88087677 8.51350694,4.5 C8.51350694,6.71305693 6.71305693,8.51350694 4.5,8.51350694 Z" id="Shape" stroke="#979797" stroke-width="0.25"></path>
+                <circle id="Oval" cx="3.25" cy="3.25" r="1"></circle>
+                <circle id="Oval" transform="translate(5.500000, 3.500000) scale(-1, 1) translate(-5.500000, -3.500000) " cx="5.25" cy="3.25" r="1"></circle>
+                <path d="M4.49084983,7 C5.49167755,7 6.45082836,6.37673485 7,5.34190996 L6.56548027,5 C6.06118648,5.95025297 5.13876567,6.48055988 4.2151162,6.35078843 C3.49532469,6.24971947 2.82969051,5.74472902 2.4344874,5 L2,5.34190996 C2.47820126,6.24310491 3.28412721,6.85416462 4.15581795,6.97661279 C4.26772158,6.99232238 4.37946354,7 4.49084983,7 Z" id="Shape"></path>
+            </g>
+            <g id="heart" transform="translate(0.000000, 12.000000)" fill="#979797" fill-rule="nonzero" stroke="#979797" stroke-width="0.25">
+                <path d="M6.3762866,0 C5.95666392,0 5.55557938,0.106057093 5.18424124,0.315245707 C4.93146186,0.457616716 4.6992433,0.646776415 4.5,0.871206645 C4.30073814,0.646776415 4.06853814,0.457616716 3.81575876,0.315245707 C3.44440206,0.106057093 3.04333608,0 2.62369485,0 C1.17699588,0 0,1.29762408 0,2.8926131 C0,4.02231345 0.541169072,5.22214569 1.60845773,6.45882377 C2.49958763,7.49138695 3.59061031,8.35211882 4.3489299,8.8923676 L4.5,9 L4.6510701,8.8923676 C5.40938969,8.35213928 6.50041237,7.49138695 7.39156082,6.45882377 C8.45884948,5.22214569 9,4.02231345 9,2.8926131 C9,1.29762408 7.82300412,0 6.3762866,0 Z M6.98824948,6.03574108 C6.19183299,6.95854417 5.22172577,7.7430475 4.5,8.26809558 C3.77827423,7.74302705 2.80816701,6.95854417 2.01176907,6.03574108 C1.04624536,4.91702696 0.556701031,3.85952482 0.556701031,2.8926131 C0.556701031,1.63604932 1.48396082,0.613756325 2.6237134,0.613756325 C3.27989691,0.613756325 3.88267423,0.946064458 4.27744948,1.52545043 L4.5,1.85207109 L4.72255052,1.52545043 C5.11732577,0.946064458 5.72010309,0.613756325 6.3762866,0.613756325 C7.51603918,0.613756325 8.44329897,1.63604932 8.44329897,2.8926131 C8.44329897,3.85952482 7.95373608,4.91702696 6.98824948,6.03574108 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>
                                            </div>
                                             {/* <i id="elements-icon" className="fas fa-shapes" style={{color:'white', fontSize:19,marginBottom:4,color:'rgb(82, 82, 82)',pointerEvents:'none',height:'20px', width:'20px',display:'none'}}></i> */}
                                             <p id="elements-text" style={{fontSize:11.2,fontWeight:600,pointerEvents:'none',color:'white'}} className="menubgnot">OVERLAYS</p>
@@ -3491,7 +3590,7 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                                 </TabList>
 
                                 <TabPanel tabId="vertical-tab-one">
-                                    <ImageEdit/>
+                                <ImageEdit/>
                                     <div className="main-menu" 
                                         style={{
                                             borderRight:'1px solid rgb(24, 24, 24)', 
