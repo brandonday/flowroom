@@ -365,7 +365,7 @@ waitForElementToDisplay(selector, time) {
         this.resetEditor(null, image);
         controltable.style.display = 'none';
         document.getElementsByClassName('pesdk-react-controls__largeButton')[0].addEventListener('click', ()=>{
-          alert('hhhj')
+          //alert('hhhj')
           this.waitForElementToDisplay('.pesdk-react-controls__list',100);
         })
       });

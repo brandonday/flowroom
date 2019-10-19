@@ -37,7 +37,7 @@ import {openMenu} from '../../actions/openMenu';
 
 import Create from './create';
 import {flowAdd} from '../../actions/flowAdd.js';
-
+import {loadRemix} from '../../actions/loadRemix.js';
 //import { disconnect } from 'cluster';
 let objArray = [];
 
@@ -341,7 +341,8 @@ let apps = [{id:'childSnapShot.key',
                 showModal:false,
                 activeTab: 0,
                 inputValue:'cats',
-                searchElements:'gifs'
+                searchElements:'gifs',
+                loadRemix:false
             };
             this.openModal = this.openModal.bind(this);
             this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -396,6 +397,7 @@ let apps = [{id:'childSnapShot.key',
     
         }
         componentDidMount() {
+            this.setState({loadRemix:true});
             document.addEventListener('DOMContentLoaded', ()=> {
                 var elems = document.querySelectorAll('.modal');
                 var instances = M.Modal.init(elems, {startingTop:'0%'});
@@ -1797,7 +1799,8 @@ let apps = [{id:'childSnapShot.key',
         // document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].contentDocument.getElementsByTagName('body')[0].appendChild(blockB)
 
         document.getElementById('overlay_output_frame').contentWindow.document.getElementById('overlay-container').appendChild(blockA)
-       document.getElementById('output_frame').contentWindow.document.getElementsByTagName('body')[0].appendChild(blockB);
+       document.getElementsByClassName('output_frame').contentWindow.document.getElementsByTagName('body')[0].appendChild(blockB);
+       
        let evref = document.getElementById('overlay_output_frame').contentWindow.document.getElementById('overlay-container');
        function getMouse(e){
         
@@ -2064,10 +2067,10 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
               
                                        
           
-                     
+                               document.getElementById('remix-image-box').remove()
                                this.props.flowAdd({flowAdd:shorti});
-                               
-                               
+                               this.props.loadRemix({loadRemix:'load'});
+                             
                                 // let short = `${i.shortID}`
                                                 
                                 
@@ -3387,7 +3390,17 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
     render() {
         let that = this;
         const {isLoading} = this.state;
+        let {flowAdd} = that.props.state.flowAdd;
+      
+       let exists = document.getElementById(`${flowAdd}_output_frame`) !== null ? flowAdd : null;
+       exists = exists === flowAdd ? 'already exists' : flowAdd; 
+      if(flowAdd !== '' && exists !== 'already exists') {
+        //that.setState({loadRemix:true});
+        
+      } else if(flowAdd !== '' && exists) {
+        //that.setState({loadRemix:true});
 
+      } 
         return (
             <div id="room-main-page" className="page-wrap twilight room-main-page-wrap">
                 <div className="room-wrap-wrap" style={{flexDirection:'column', height:'100vh',width:'100%'}}>
@@ -3464,17 +3477,17 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
     <defs></defs>
     <g id="Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="Overlay3" transform="translate(1.000000, 1.000000)">
-            <polygon id="Triangle" stroke="#979797" stroke-width="0.8" points="4.5 1 8 8 1 8"></polygon>
-            <text id="T" font-family="AmericanTypewriter, American Typewriter" font-size="13" font-weight="normal" fill="#979797">
+            <polygon id="Triangle" stroke="#FFF" stroke-width="0.8" points="4.5 1 8 8 1 8"></polygon>
+            <text id="T" font-family="AmericanTypewriter, American Typewriter" font-size="13" font-weight="normal" fill="#FFF">
                 <tspan x="13" y="21">T</tspan>
             </text>
-            <g id="happiness" transform="translate(13.000000, 0.000000)" fill="#979797" fill-rule="nonzero">
+            <g id="happiness" transform="translate(13.000000, 0.000000)" fill="#FFF" fill-rule="nonzero">
                 <path d="M4.5,0 C2.01870296,0 0,2.01870296 0,4.5 C0,6.98129704 2.01870296,9 4.5,9 C6.98129704,9 9,6.98129704 9,4.5 C9,2.01870296 6.98132745,0 4.5,0 Z M4.5,8.51350694 C3.39760672,8.51350694 2.39765064,8.06666306 1.67159016,7.34470736 C1.38164029,7.05639941 1.13550521,6.72412465 0.943857349,6.3589508 C0.651961513,5.80285882 0.486493061,5.17041784 0.486493061,4.5 C0.486493061,2.28694307 2.28694307,0.486493061 4.5,0.486493061 C5.5497,0.486493061 6.5063886,0.89174178 7.22232395,1.55379802 C7.59351816,1.89701888 7.90003919,2.30920012 8.12105907,2.76990905 C8.37251517,3.29407492 8.51350694,3.88087677 8.51350694,4.5 C8.51350694,6.71305693 6.71305693,8.51350694 4.5,8.51350694 Z" id="Shape" stroke="#979797" stroke-width="0.25"></path>
                 <circle id="Oval" cx="3.25" cy="3.25" r="1"></circle>
                 <circle id="Oval" transform="translate(5.500000, 3.500000) scale(-1, 1) translate(-5.500000, -3.500000) " cx="5.25" cy="3.25" r="1"></circle>
                 <path d="M4.49084983,7 C5.49167755,7 6.45082836,6.37673485 7,5.34190996 L6.56548027,5 C6.06118648,5.95025297 5.13876567,6.48055988 4.2151162,6.35078843 C3.49532469,6.24971947 2.82969051,5.74472902 2.4344874,5 L2,5.34190996 C2.47820126,6.24310491 3.28412721,6.85416462 4.15581795,6.97661279 C4.26772158,6.99232238 4.37946354,7 4.49084983,7 Z" id="Shape"></path>
             </g>
-            <g id="heart" transform="translate(0.000000, 12.000000)" fill="#979797" fill-rule="nonzero" stroke="#979797" stroke-width="0.25">
+            <g id="heart" transform="translate(0.000000, 12.000000)" fill="#FFF" fill-rule="nonzero" stroke="#979797" stroke-width="0.25">
                 <path d="M6.3762866,0 C5.95666392,0 5.55557938,0.106057093 5.18424124,0.315245707 C4.93146186,0.457616716 4.6992433,0.646776415 4.5,0.871206645 C4.30073814,0.646776415 4.06853814,0.457616716 3.81575876,0.315245707 C3.44440206,0.106057093 3.04333608,0 2.62369485,0 C1.17699588,0 0,1.29762408 0,2.8926131 C0,4.02231345 0.541169072,5.22214569 1.60845773,6.45882377 C2.49958763,7.49138695 3.59061031,8.35211882 4.3489299,8.8923676 L4.5,9 L4.6510701,8.8923676 C5.40938969,8.35213928 6.50041237,7.49138695 7.39156082,6.45882377 C8.45884948,5.22214569 9,4.02231345 9,2.8926131 C9,1.29762408 7.82300412,0 6.3762866,0 Z M6.98824948,6.03574108 C6.19183299,6.95854417 5.22172577,7.7430475 4.5,8.26809558 C3.77827423,7.74302705 2.80816701,6.95854417 2.01176907,6.03574108 C1.04624536,4.91702696 0.556701031,3.85952482 0.556701031,2.8926131 C0.556701031,1.63604932 1.48396082,0.613756325 2.6237134,0.613756325 C3.27989691,0.613756325 3.88267423,0.946064458 4.27744948,1.52545043 L4.5,1.85207109 L4.72255052,1.52545043 C5.11732577,0.946064458 5.72010309,0.613756325 6.3762866,0.613756325 C7.51603918,0.613756325 8.44329897,1.63604932 8.44329897,2.8926131 C8.44329897,3.85952482 7.95373608,4.91702696 6.98824948,6.03574108 Z" id="Shape"></path>
             </g>
         </g>
@@ -3590,7 +3603,7 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
                                 </TabList>
 
                                 <TabPanel tabId="vertical-tab-one">
-                                <ImageEdit/>
+                              <ImageEdit/>
                                     <div className="main-menu" 
                                         style={{
                                             borderRight:'1px solid rgb(24, 24, 24)', 
@@ -4480,7 +4493,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => ({
     startCreateRoom: (room) => dispatch(startCreateRoom(room)),
     flowAdd: (bool) => dispatch(flowAdd(bool)),
-    openMenu: (bool) => dispatch(openMenu(bool))
+    openMenu: (bool) => dispatch(openMenu(bool)),
+    loadRemix: (string)=> dispatch(loadRemix(string))
   });
 
 const ConnectedRoomMain = connect(mapStateToProps,mapDispatchToProps)(RoomMain)

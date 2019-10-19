@@ -898,9 +898,9 @@ let roomFilter = 'weight';
                             </div>
                     <div style={{width:'100%'}}>
                         <div style={{height:'100%',width:'100%',borderTop:'1px solid black',marginBottom:'10px'}}>
-                            {this.state.loggedIn ? (<div style={{width:'100%', marginTop:'20px'}}>
+                            {!this.state.loggedIn ? (<div style={{width:'100%', marginTop:'20px'}}>
                             <div style={{display:'flex', flexDirection:'column', marginBottom:20, position:'relative',background:'#1f1f1f',padding:10, height:166,borderRadius:5}}>
-                                <p style={{color:'white', padding:'5px 0px 10px'}}>Leave a comment</p>
+                                <p style={{color:'white', padding:'5px 0px 10px', marginLeft:8}}>Leave a comment</p>
                                 <div style={{display:'flex', padding:0}}>
                                     <div style={{backgroundImage:`url(${this.state.userPic}`,backgroundSize:'cover',backgroundRepeat:'no-repeat',backgroundPosition:'center',height:35,width:35,backgroundColor:'black',borderRadius:30,marginRight:10}}></div>
                                     <div style={{position:'absolute', right:'15px',zIndex:9,top:'55px'}}><p style={{fontSize:14}}>{that.state.value}</p></div>

@@ -4,7 +4,8 @@ import ReactDOM from 'react-dom'
 import {Link} from 'react-router-dom';
 
 import PhotoEditor from './PhotoEditor.js';
-
+import { connect } from 'react-redux';
+import { loadRemix } from '../../actions/loadRemix';
 // import { Darkroom, Canvas, History, Toolbar, FilePicker, CropMenu } from 'react-darkroom';
 // import ReactCrop from 'react-image-crop';
 // import 'react-image-crop/dist/ReactCrop.css';
@@ -25,10 +26,20 @@ let that;
             id:'',
             elementId:''
         }
+        this.renderContent = this.renderContent.bind(this)
     }
     componentDidMount() {
-        document.getElementsByClassName('remix-m')[0].style.display = 'none';  
+      this.renderContent()
 
+                   
+    }
+    renderContent() {
+  
+      document.getElementsByClassName('remix-m')[0].style.display = 'none'; 
+      if(document.getElementById('main-menu') !== null) {
+        document.getElementById('main-menu').innerHTML = '';
+      } 
+      //document.getElementById('main-menu').innerHTML = '';
         function removeDuplicates(originalArray, prop) {
              var newArray = [];
              var lookupObject  = {};
@@ -42,7 +53,7 @@ let that;
              }
               return newArray;
          }
-        alert('hhsdhd')
+    
        
         
         let that = this;
@@ -498,9 +509,7 @@ let that;
       
                           }
                       }
-                   
     }
-
     testFR(elId) {
       
        
@@ -671,9 +680,26 @@ let that;
         //   }, 'image/png');
         // });
       }
-
+shouldComponentUpdate(props){
+  if(props.state.loadRemix.loadRemix !== ""){
+    return true
+  } else {
+    return null
+  }
+}
     render() {
        const { currentpic, pic } = this.state;
+       let {loadRemix} = this.props.state.loadRemix
+       console.log('load remix', loadRemix)
+       
+       if(loadRemix === 'load') {
+         alert('kkjk')
+         this.renderContent()
+         this.props.loadRemix({loadRemix:'not'});
+       }
+      //  let exists = document.getElementById(`${loadRemix}_output_frame`) !== null ? flowAdd : null;
+      //  exists = exists === flowAdd ? 'already exists' : flowAdd; 
+ 
        window.onload = function () { 
         // document.getElementById('clearBtn').addEventListener('click', ()=>{
         //     var canvas = document.getElementsByClassName("pesdk-react-canvas__canvas")[0];
@@ -818,4 +844,15 @@ let that;
 
 
 
-export default ImageEdit;
+ const mapStateToProps = (state, ownProps) => {
+  return {
+      state:state
+  }
+ }
+ const mapDispatchToProps = (dispatch) => ({
+  loadRemix: (string) => dispatch(loadRemix(string)),
+});
+
+const ConnectedImageEdit = connect(mapStateToProps,mapDispatchToProps)(ImageEdit)
+
+export default ConnectedImageEdit;

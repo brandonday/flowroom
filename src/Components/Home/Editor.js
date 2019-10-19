@@ -742,6 +742,7 @@ shouldComponentUpdate(props,state) {
     render() {
       let {flowAdd} = this.props.state.flowAdd
      // alert(flowAdd)
+     //localStorage.removeItem("FR_REMIX_LIST");
       let exists = document.getElementById(`${flowAdd}_output_frame`) !== null ? flowAdd : null;
        exists = exists === flowAdd ? 'already exists' : flowAdd; 
       if(flowAdd !== '' && exists !== 'already exists') {

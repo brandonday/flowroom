@@ -68,10 +68,10 @@ let counter = 0;
         //     }
         // })
  
-        localStorage.removeItem("FR_REMIX_LIST");
-        localStorage.removeItem("remixhead");
-        localStorage.removeItem("remixhead2");
-        localStorage.removeItem("remixhead3");
+        //  localStorage.removeItem("FR_REMIX_LIST");
+        // localStorage.removeItem("remixhead");
+        // localStorage.removeItem("remixhead2");
+        // localStorage.removeItem("remixhead3");
     
         
         

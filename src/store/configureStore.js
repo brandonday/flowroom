@@ -12,6 +12,7 @@ import communitiesFilter from '../reducers/communitiesFilter'
 import UpdateEditor from '../reducers/updateEditor';
 import openMenu from '../reducers/openMenu';
 import flowAdd from '../reducers/flowAdd';
+import loadRemix from '../reducers/loadRemix';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -29,7 +30,8 @@ export default () => {
             communitiesFilter:communitiesFilter,
             updateEditor:UpdateEditor,
             openMenu:openMenu,
-            flowAdd:flowAdd
+            flowAdd:flowAdd,
+            loadRemix:loadRemix
         }),
         composeEnhancers(applyMiddleware(thunk))
     );
