@@ -60,6 +60,7 @@ let that;
         let remixImageListOptions = ['Images', 'Text', 'Audio','Other'];
         let list = document.getElementsByClassName('main-menu')[0];
         let getList = JSON.parse(localStorage.getItem( "FR_REMIX_LIST"));
+        getList = JSON.parse(localStorage.getItem( "FR_REMIX_LIST"));
         let remixImageList = document.createElement('div');
             remixImageList.setAttribute("id", "remix-image-list");
             remixImageList.style.flexDirection = 'column';
@@ -693,8 +694,9 @@ shouldComponentUpdate(props){
        console.log('load remix', loadRemix)
        
        if(loadRemix === 'load') {
-         alert('kkjk')
-         this.renderContent()
+         //alert('kkjk')
+        this.renderContent()
+       
          this.props.loadRemix({loadRemix:'not'});
        }
       //  let exists = document.getElementById(`${loadRemix}_output_frame`) !== null ? flowAdd : null;

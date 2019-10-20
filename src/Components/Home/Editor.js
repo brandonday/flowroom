@@ -44,7 +44,7 @@ let HTML_EDITOR;
 let CSS_EDITOR;
 let JS_EDITOR;
 let html,css,js
-
+let renderDHTML;
 class Editor extends Component {
     constructor() {
         super();
@@ -67,7 +67,9 @@ class Editor extends Component {
             remixVisible:'block',
             display:'none',
             updateHTML:'',
-            isCodeMirrorLoaded:false
+            isCodeMirrorLoaded:false,
+            loadRemix:false,
+            selectedFlow:'none'
         }
         
      }
@@ -218,12 +220,24 @@ class Editor extends Component {
           return src;
         };
 
-        let renderDHTML = () => {
+        renderDHTML = () => {
           // alert('called')
           let source = prepareSource();
           let getAllOut = document.getElementsByClassName('output_frame')
           let iframe = document.getElementsByClassName('output_frame')[getAllOut.length - 1];
           let iframe_doc = iframe.contentDocument;
+          if(shortID !== null){
+          //   alert(shortID)
+          if(document.getElementById(`${shortID}_output_frame`) !== null) {
+            iframe = document.getElementById(`${shortID}_output_frame`)
+            iframe_doc = iframe.contentDocument;
+          }
+        }
+          //   iframe_doc = iframe.contentDocument;
+          // }
+          // if(shortID !== null) {
+          //   iframe_doc = iframea.contentDocument;
+          // }
                 
           iframe_doc.open();
           iframe_doc.write(source);
@@ -740,15 +754,17 @@ shouldComponentUpdate(props,state) {
 }
 
     render() {
-      let {flowAdd} = this.props.state.flowAdd
+      let {flowAdd} = this.props.state.flowAdd;
+      let {loadRemix} = this.props.state.loadRemix
      // alert(flowAdd)
      //localStorage.removeItem("FR_REMIX_LIST");
       let exists = document.getElementById(`${flowAdd}_output_frame`) !== null ? flowAdd : null;
        exists = exists === flowAdd ? 'already exists' : flowAdd; 
       if(flowAdd !== '' && exists !== 'already exists') {
+        alert('rebder first')
         this.renderContent(null,null,null,null,flowAdd);
       } else if(flowAdd !== '' && exists) {
-       
+       if(this.state.selectedFlow !== flowAdd) {
        html = JSON.parse(localStorage.getItem(`${flowAdd}_html`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_html`)).html:'';
         console.log('lo html', html)
         css = JSON.parse(localStorage.getItem(`${flowAdd}_CSS`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_CSS`)).css:'';
@@ -756,6 +772,20 @@ shouldComponentUpdate(props,state) {
        HTML_EDITOR.setValue(html);
         CSS_EDITOR.setValue(css);
         JS_EDITOR.setValue(js);
+        alert(flowAdd)
+        this.renderContent(null,null,null,null,flowAdd);
+        this.setState({selectedFlow:flowAdd})
+       }
+        //this.renderContent(null,null,null,null,flowAdd);
+
+        // setTimeout(()=>{
+        
+       // if(this.state.loadRemix == false) {
+        //this.renderContent(null,null,null,null,flowAdd);
+        //   this.setState({loadRemix:true})
+        // }
+        // // },10000)
+     
       } 
         return (<div id="full-page" className="full-page">
             <div className="top-boxes editor-parent">

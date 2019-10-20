@@ -969,6 +969,12 @@ right: 0px;
   display:none !important;
 }
 
+.react-grid-item.react-grid-placeholder {
+  background: #40ffe8 !important;
+  opacity: 0.3 !important;
+ 
+}
+
 @media (max-width: 472px) {
   .search-box {
     width:100% !important;
