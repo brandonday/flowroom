@@ -761,7 +761,7 @@ shouldComponentUpdate(props,state) {
       let exists = document.getElementById(`${flowAdd}_output_frame`) !== null ? flowAdd : null;
        exists = exists === flowAdd ? 'already exists' : flowAdd; 
       if(flowAdd !== '' && exists !== 'already exists') {
-        alert('rebder first')
+     
         this.renderContent(null,null,null,null,flowAdd);
       } else if(flowAdd !== '' && exists) {
        if(this.state.selectedFlow !== flowAdd) {
@@ -772,8 +772,8 @@ shouldComponentUpdate(props,state) {
        HTML_EDITOR.setValue(html);
         CSS_EDITOR.setValue(css);
         JS_EDITOR.setValue(js);
-        alert(flowAdd)
-        this.renderContent(null,null,null,null,flowAdd);
+ 
+        //this.renderContent(null,null,null,null,flowAdd);
         this.setState({selectedFlow:flowAdd})
        }
         //this.renderContent(null,null,null,null,flowAdd);

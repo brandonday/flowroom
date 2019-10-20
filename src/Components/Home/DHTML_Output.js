@@ -166,8 +166,8 @@ let counter = 0;
                   
                   //document.getElementById(`${obj.shortID}_`).childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style.pointerEvents = 'all'
                   console.log('dfdfdf',document.getElementById(getAllOver[0].childNodes[0].offsetParent.id).childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0])
-                  this.props.flowAdd({flowAdd:obj.shortID});
-                  document.getElementById('remix-image-box').remove()
+                 this.props.flowAdd({flowAdd:obj.shortID});
+                  // document.getElementById('remix-image-box').remove()
                   this.props.loadRemix({loadRemix:'load'});
               
                   // let overlayContainer = document.createElement('div');
