@@ -1796,91 +1796,10 @@ let apps = [{id:'childSnapShot.key',
         blockB.style.pointerEvents = 'none';
         let isCollision = false;
         // console.log('lo',document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].contentDocument.getElementById('overlay-container').appendChild(blockA)
-        // document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].contentDocument.getElementsByTagName('body')[0].appendChild(blockB)
+        //document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].contentDocument.getElementsByTagName('body')[0].appendChild(blockB)
 
-        document.getElementById('overlay_output_frame').contentWindow.document.getElementById('overlay-container').appendChild(blockA)
-       let get = document.getElementsByClassName('selected_flow')[0];
-       if(get !== null) { 
-        console.log('the g', get)
-        document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].contentWindow.document.getElementsByTagName('body')[0].appendChild(blockB);
-       }
-       let evref = document.getElementById('overlay_output_frame').contentWindow.document.getElementById('overlay-container');
-       function getMouse(e){
-        
-
-        let resizable = document.getElementsByClassName('resizable');
-       
-            var x = e.pageX;
-            var y = e.pageY;
-            
-            blockA.style.left = x - 20 + 'px';
-            blockA.style.top = y + 'px';
-            
-            let getblockRect = {
-                bottom: y,
-                height: 10,
-                left: x,
-                right: x,
-                top: y,
-                width: 10,
-                x: x,
-                y: y
-            };
-
-
-
-let tag = document.getElementById('overlay_output_frame').contentWindow.document.elementsFromPoint(x, y)[1].tagName
-if(tag === 'HTML') {
-document.getElementById('overlay_output_frame').style.pointerEvents = 'none';
-document.getElementById('output_frame').style.pointerEvents = 'all';
-} else {
-    document.getElementById('overlay_output_frame').style.pointerEvents = 'all';
-    document.getElementById('output_frame').style.pointerEvents = 'none'; 
-}      
-  
-
-
-    //evref.removeEventListener('click', ()=>{alert('dfdfdf')});
-
-    }
-    evref.addEventListener('mousemove',getMouse, false);
       
-
- 
- 
-    if(get !== null) { 
-        // document.getElementById('output_frame').contentWindow.document.getElementsByTagName('body')[0].addEventListener('mousemove',
-        // function getMouse(e){
-           
-        //     var x = e.pageX;
-        //     var y = e.pageY;
-        //     blockB.style.left = x - 20 + 'px';
-        //     blockB.style.top = y + 'px';
-           
-        //     let getblockRect = {
-        //         bottom: y,
-        //         height: 10,
-        //         left: x,
-        //         right: x,
-        //         top: y,
-        //         width: 10,
-        //         x: x,
-        //         y: y
-        //     }
- 
-        // let tag = document.getElementById('overlay_output_frame').contentWindow.document.elementsFromPoint(x, y)[1].tagName
-
-        // if(tag === 'DIV') {
-        //     document.getElementById('overlay_output_frame').style.pointerEvents = 'all';
-        //     document.getElementById(`${get.id}_output_frame`).style.pointerEvents = 'none';
-        //     } else {
-        //         document.getElementById('overlay_output_frame').style.pointerEvents = 'none';
-        //         document.getElementById(`${get.id}_output_frame`).style.pointerEvents = 'all'; 
-        //     }      
-        
-        // });
-
-    }
+    
 
      
        
@@ -2071,7 +1990,7 @@ document.getElementById('output_frame').style.pointerEvents = 'all';
               
                                        
           
-                              //document.getElementById('remix-image-box').remove()
+                              document.getElementById('remix-image-box').remove()
                                this.props.flowAdd({flowAdd:shorti});
                                this.props.loadRemix({loadRemix:'load'});
                              

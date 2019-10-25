@@ -587,8 +587,9 @@ class Editor extends Component {
          
         
   
- 
+ if(shortID == null) {
         renderDHTMLOver();
+ }
     }
     renderContent2(before = null, htmlUpdate = null, cssUpdate = null, jsUpdate = null) {
   
@@ -761,7 +762,7 @@ shouldComponentUpdate(props,state) {
       let exists = document.getElementById(`${flowAdd}_output_frame`) !== null ? flowAdd : null;
        exists = exists === flowAdd ? 'already exists' : flowAdd; 
       if(flowAdd !== '' && exists !== 'already exists') {
-     
+        //alert('rebder first')
         this.renderContent(null,null,null,null,flowAdd);
       } else if(flowAdd !== '' && exists) {
        if(this.state.selectedFlow !== flowAdd) {
@@ -772,19 +773,19 @@ shouldComponentUpdate(props,state) {
        HTML_EDITOR.setValue(html);
         CSS_EDITOR.setValue(css);
         JS_EDITOR.setValue(js);
- 
-        //this.renderContent(null,null,null,null,flowAdd);
+        //alert(flowAdd)
+        this.renderContent(null,null,null,null,flowAdd);
         this.setState({selectedFlow:flowAdd})
        }
         //this.renderContent(null,null,null,null,flowAdd);
 
-        // setTimeout(()=>{
+      //   setTimeout(()=>{
         
-       // if(this.state.loadRemix == false) {
-        //this.renderContent(null,null,null,null,flowAdd);
-        //   this.setState({loadRemix:true})
-        // }
-        // // },10000)
+      //  if(this.state.loadRemix == false) {
+      //   this.renderContent(null,null,null,null,flowAdd);
+      //     this.setState({loadRemix:true})
+      //   }
+      //   // },10000)
      
       } 
         return (<div id="full-page" className="full-page">

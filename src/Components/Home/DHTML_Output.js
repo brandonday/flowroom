@@ -164,11 +164,113 @@ let counter = 0;
                   document.getElementById(`${obj.shortID}_`).className = 'flow selected_flow';
                   document.getElementById(`${obj.shortID}_`).childNodes[0].childNodes[0].style.display = 'flex'
                   
-                  //document.getElementById(`${obj.shortID}_`).childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style.pointerEvents = 'all'
+                  document.getElementById(`${obj.shortID}_`).childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style.pointerEvents = 'all'
                   console.log('dfdfdf',document.getElementById(getAllOver[0].childNodes[0].offsetParent.id).childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0])
-                 this.props.flowAdd({flowAdd:obj.shortID});
-                  // document.getElementById('remix-image-box').remove()
+                  this.props.flowAdd({flowAdd:obj.shortID});
+                  document.getElementById('remix-image-box').remove()
                   this.props.loadRemix({loadRemix:'load'});
+
+                  let blockA = document.createElement('div');
+                  blockA.style.height = '0';
+                  blockA.style.width = '0';
+                  blockA.style.background = 'white';
+                  blockA.style.position = 'absolute';
+                  blockA.style.zIndex = '99999';
+                  blockA.style.pointerEvents = 'none';
+                  let blockB = document.createElement('div');
+                  blockB.style.height = '0';
+                  blockB.style.width = '0';
+                  blockB.style.background = 'white';
+                  blockB.style.position = 'absolute';
+                  blockB.style.zIndex = '99999';
+                  blockB.style.pointerEvents = 'none';
+
+
+                  document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].contentWindow.document.getElementById('overlay-container').appendChild(blockA)
+                  document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].contentWindow.document.getElementsByTagName('body')[0].appendChild(blockB);
+                 
+                 let evref = document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].contentWindow.document.getElementById('overlay-container');
+                 function getMouse(e){
+                  
+          
+                  let resizable = document.getElementsByClassName('resizable');
+                 
+                      var x = e.pageX;
+                      var y = e.pageY;
+                      
+                      blockA.style.left = x - 20 + 'px';
+                      blockA.style.top = y + 'px';
+                      
+                      let getblockRect = {
+                          bottom: y,
+                          height: 10,
+                          left: x,
+                          right: x,
+                          top: y,
+                          width: 10,
+                          x: x,
+                          y: y
+                      };
+          
+          
+          
+          let tag = document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].contentWindow.document.elementsFromPoint(x, y)[1].tagName
+          if(tag === 'HTML') {
+              document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style.pointerEvents = 'none';
+              document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].style.pointerEvents = 'all';
+              console.log(document.getElementsByClassName("selected_flow")[0], 'ghh')
+          } else {
+              document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style.pointerEvents = 'all';
+              document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].style.pointerEvents = 'none'; 
+              console.log(document.getElementsByClassName("selected_flow")[0], 'ghh')
+
+          }      
+            
+          
+          
+              //evref.removeEventListener('click', ()=>{alert('dfdfdf')});
+          
+              }
+              evref.addEventListener('mousemove',getMouse, false);
+                
+          
+           
+          
+              document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].contentWindow.document.getElementsByTagName('body')[0].addEventListener('mousemove',
+                  function getMouse(e){
+                     
+                      var x = e.pageX;
+                      var y = e.pageY;
+                      blockB.style.left = x - 20 + 'px';
+                      blockB.style.top = y + 'px';
+                     
+                      let getblockRect = {
+                          bottom: y,
+                          height: 10,
+                          left: x,
+                          right: x,
+                          top: y,
+                          width: 10,
+                          x: x,
+                          y: y
+                      }
+           
+                  let tag = document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].contentWindow.document.elementsFromPoint(x, y)[1].tagName
+          
+                  if(tag === 'DIV') {
+                      document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style.pointerEvents = 'all';
+                      document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].style.pointerEvents = 'none';
+                      console.log(document.getElementsByClassName("selected_flow")[0], 'ghh')
+
+                      } else {
+                          document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style.pointerEvents = 'none';
+                          document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].style.pointerEvents = 'all';
+                          console.log(document.getElementsByClassName("selected_flow")[0], 'ghh')
+ 
+                      }      
+                  
+                  });
+          
               
                   // let overlayContainer = document.createElement('div');
                   // overlayContainer.style.position = 'absolute';
