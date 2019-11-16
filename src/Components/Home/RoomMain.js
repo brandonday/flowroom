@@ -1780,20 +1780,7 @@ let apps = [{id:'childSnapShot.key',
           
             /// Sticker Search
         }
-        let blockA = document.createElement('div');
-        blockA.style.height = '0';
-        blockA.style.width = '0';
-        blockA.style.background = 'white';
-        blockA.style.position = 'absolute';
-        blockA.style.zIndex = '99999';
-        blockA.style.pointerEvents = 'none';
-        let blockB = document.createElement('div');
-        blockB.style.height = '0';
-        blockB.style.width = '0';
-        blockB.style.background = 'white';
-        blockB.style.position = 'absolute';
-        blockB.style.zIndex = '99999';
-        blockB.style.pointerEvents = 'none';
+
         let isCollision = false;
         // console.log('lo',document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].contentDocument.getElementById('overlay-container').appendChild(blockA)
         //document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].contentDocument.getElementsByTagName('body')[0].appendChild(blockB)

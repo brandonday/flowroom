@@ -130,7 +130,7 @@ class Editor extends Component {
       //   }
       // }
 
-    
+    alert(shortID)
 
         let base_tpl = "<!doctype html>\n" +
         "<html>\n\t" +
@@ -591,6 +591,79 @@ class Editor extends Component {
         renderDHTMLOver();
  }
     }
+
+    renderContentAdd(before = null, htmlUpdate = null, cssUpdate = null, jsUpdate = null, shortID = null) {
+   if(document.getElementById('hidden_iframe') !== null) {
+    document.getElementById('hidden_iframe').remove()
+   }
+
+//alert(shortID)
+
+        let base_tpl = "<!doctype html>\n" +
+        "<html>\n\t" +
+        "<head>\n\t\t" +
+        "<meta charset=\"utf-8\">\n\t\t" +
+        "<title>Test</title>\n\n\t\t\n\t" +
+        "</head>\n\t" +
+        "<body>\n\t\n\t" +
+        "</body>\n" +
+        "</html>";
+
+
+        let prepareSource = () => {
+          let html = HTML_EDITOR.getValue();
+          let css = CSS_EDITOR.getValue();
+          let js = JS_EDITOR.getValue();
+
+
+          // let dhtmlObj = {html:html, js:js, css:css};
+          // localStorage.setItem("dhtml", JSON.stringify(dhtmlObj));
+          let JSflowroom = '<script src="../flowroom.js"></script>';
+          let src = '';
+          src = base_tpl.replace('</body>', html + '</body>');
+          css = '<style>' + css + '</style>';
+          src = src.replace('</head>', css + JSflowroom + '</head>');
+          js = '<script>' + js + '<\/script>';
+          src = src.replace('</body>', js + '</body>');
+          return src;
+        };
+        let iframe = document.createElement('iframe');
+        iframe.setAttribute("id","hidden_iframe")
+        renderDHTML = () => {
+          // alert('called')
+          let source = prepareSource();
+          let getAllOut = document.getElementsByClassName('output_frame')
+          
+          document.getElementsByTagName('body')[0].appendChild(iframe)
+          let iframe_doc = iframe.contentDocument;
+        //   if(shortID !== null){
+        //   //   alert(shortID)
+        //   if(document.getElementById(`${shortID}_output_frame`) !== null) {
+        //     iframe = document.getElementById(`${shortID}_output_frame`)
+        //     iframe_doc = iframe.contentDocument;
+        //   }
+        // }
+        //   //   iframe_doc = iframe.contentDocument;
+        //   // }
+        //   // if(shortID !== null) {
+        //   //   iframe_doc = iframea.contentDocument;
+        //   // }
+                
+          iframe_doc.open();
+          iframe_doc.write(source);
+          iframe_doc.close();
+  
+
+  
+
+
+
+
+      }
+      renderDHTML()
+      
+    }
+
     renderContent2(before = null, htmlUpdate = null, cssUpdate = null, jsUpdate = null) {
   
      
@@ -774,7 +847,7 @@ shouldComponentUpdate(props,state) {
         CSS_EDITOR.setValue(css);
         JS_EDITOR.setValue(js);
         //alert(flowAdd)
-        this.renderContent(null,null,null,null,flowAdd);
+       this.renderContentAdd(null,null,null,null,flowAdd);
         this.setState({selectedFlow:flowAdd})
        }
         //this.renderContent(null,null,null,null,flowAdd);

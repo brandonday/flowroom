@@ -13,7 +13,7 @@ import Overlay from './overlay.js'
      }
      componentDidMount() {
        let index = this.props.index;
-  
+
         let base_tpl = "<!doctype html>\n" +
         "<html>\n\t" +
         "<head>\n\t\t" +

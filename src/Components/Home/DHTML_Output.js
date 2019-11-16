@@ -143,7 +143,13 @@ let counter = 0;
                     //getAllFlowsSelected[i].childNodes[0].childNodes[0].style.display = 'none';
                  
                     getAllFlowsSelected[i].className = 'flow'
-                    
+                  
+
+                  }
+
+                  for(let j = 0; j < getoutPutFrame.length; j++) {
+                    document.getElementsByClassName('output_frame')[j].style.pointerEvents = 'none'
+                    document.getElementsByClassName('overlay_output_frame')[j].style.pointerEvents = 'none'
                   }
 
                   // for(let y = 0; y < getAllOver.length; y++){
@@ -164,7 +170,15 @@ let counter = 0;
                   document.getElementById(`${obj.shortID}_`).className = 'flow selected_flow';
                   document.getElementById(`${obj.shortID}_`).childNodes[0].childNodes[0].style.display = 'flex'
                   
-                  document.getElementById(`${obj.shortID}_`).childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style.pointerEvents = 'all'
+                  ///if(shortIDs.length !== 0) {
+                   // for(let i = 0; i < shortIDs.length; i++) {
+                      document.getElementsByClassName('overlay_output_frame')[index].style.pointerEvents = 'all'
+                   // }
+                  // } else {
+                    
+                  // }
+
+
                   console.log('dfdfdf',document.getElementById(getAllOver[0].childNodes[0].offsetParent.id).childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0])
                   this.props.flowAdd({flowAdd:obj.shortID});
                   document.getElementById('remix-image-box').remove()
@@ -186,10 +200,10 @@ let counter = 0;
                   blockB.style.pointerEvents = 'none';
 
 
-                  document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].contentWindow.document.getElementById('overlay-container').appendChild(blockA)
-                  document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].contentWindow.document.getElementsByTagName('body')[0].appendChild(blockB);
+                  document.getElementsByClassName("overlay_output_frame")[index].contentWindow.document.getElementById('overlay-container').appendChild(blockA)
+                  document.getElementById(`${obj.shortID}_output_frame`).contentWindow.document.getElementsByTagName('body')[0].appendChild(blockB);
                  
-                 let evref = document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].contentWindow.document.getElementById('overlay-container');
+                 let evref = document.getElementsByClassName("overlay_output_frame")[index].contentWindow.document.getElementById('overlay-container')
                  function getMouse(e){
                   
           
@@ -214,15 +228,13 @@ let counter = 0;
           
           
           
-          let tag = document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].contentWindow.document.elementsFromPoint(x, y)[1].tagName
+          let tag = document.getElementsByClassName("overlay_output_frame")[index].contentWindow.document.elementsFromPoint(x, y)[1].tagName
           if(tag === 'HTML') {
-              document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style.pointerEvents = 'none';
-              document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].style.pointerEvents = 'all';
-              console.log(document.getElementsByClassName("selected_flow")[0], 'ghh')
+              document.getElementsByClassName("overlay_output_frame")[index].style.pointerEvents = 'none';
+              document.getElementById(`${obj.shortID}_output_frame`).style.pointerEvents = 'all';
           } else {
-              document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style.pointerEvents = 'all';
-              document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].style.pointerEvents = 'none'; 
-              console.log(document.getElementsByClassName("selected_flow")[0], 'ghh')
+            document.getElementsByClassName("overlay_output_frame")[index].style.pointerEvents = 'all';
+            document.getElementById(`${obj.shortID}_output_frame`).style.pointerEvents = 'none';
 
           }      
             
@@ -236,7 +248,7 @@ let counter = 0;
           
            
           
-              document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].contentWindow.document.getElementsByTagName('body')[0].addEventListener('mousemove',
+              document.getElementById(`${obj.shortID}_output_frame`).contentWindow.document.getElementsByTagName('body')[0].addEventListener('mousemove',
                   function getMouse(e){
                      
                       var x = e.pageX;
@@ -255,17 +267,16 @@ let counter = 0;
                           y: y
                       }
            
-                  let tag = document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].contentWindow.document.elementsFromPoint(x, y)[1].tagName
+                  let tag = document.getElementsByClassName("overlay_output_frame")[index].contentWindow.document.elementsFromPoint(x, y)[1].tagName
           
                   if(tag === 'DIV') {
-                      document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style.pointerEvents = 'all';
-                      document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].style.pointerEvents = 'none';
+                    document.getElementsByClassName("overlay_output_frame")[index].style.pointerEvents = 'all';
+                    document.getElementById(`${obj.shortID}_output_frame`).style.pointerEvents = 'none';
                       console.log(document.getElementsByClassName("selected_flow")[0], 'ghh')
 
                       } else {
-                          document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].style.pointerEvents = 'none';
-                          document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[0].style.pointerEvents = 'all';
-                          console.log(document.getElementsByClassName("selected_flow")[0], 'ghh')
+                        document.getElementsByClassName("overlay_output_frame")[index].style.pointerEvents = 'none';
+                        document.getElementById(`${obj.shortID}_output_frame`).style.pointerEvents = 'all';
  
                       }      
                   
@@ -437,18 +448,26 @@ let counter = 0;
     //  alert(props.state.openMenu.openMenu )
       if(props.state.openMenu.openMenu === true || props.state.openMenu.openMenu === false) {
         return null
+      } else if(props.state.flowAdd.flowAdd) {
+        let exists = document.getElementById(`${props.state.flowAdd.flowAdd}_output_frame`) !== null ? props.state.flowAdd.flowAdd: null;
+        exists = exists === props.state.flowAdd.flowAdd ? 'already exists' : props.state.flowAdd.flowAdd; 
+        if(exists !== 'already exists') {
+          return true
+        } else {
+          return null
+        } 
+       
       } else {
-        
         return true
       }
-  
+      
    }
 
      render() {
        let {flowAdd} = this.props.state.flowAdd
        let exists = document.getElementById(`${flowAdd}_output_frame`) !== null ? flowAdd : null;
        exists = exists === flowAdd ? 'already exists' : flowAdd; 
-     
+       
         if(flowAdd !== '' && exists !== 'already exists') {
          
                 let getObj = this.state.objects;
@@ -471,7 +490,7 @@ let counter = 0;
               
             
               this.setState(addFlow)
-            
+              
             }
            
         return (
