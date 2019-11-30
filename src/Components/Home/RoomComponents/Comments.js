@@ -13,7 +13,8 @@ import M from 'materialize-css';
 import SignUp from '../SignUp.js';
 import SignUpModal from '../SignUpModal';
 import LoginModal from '../LoginModal';
-
+import { Icon, InlineIcon } from '@iconify/react';
+import speechIcon from '@iconify/icons-simple-line-icons/speech';
 
 var moment = require('moment');
 const database = firebase.database();
@@ -898,12 +899,12 @@ let roomFilter = 'weight';
                             </div>
                     <div style={{width:'100%'}}>
                         <div style={{height:'100%',width:'100%',borderTop:'1px solid black',marginBottom:'10px'}}>
-                            {!this.state.loggedIn ? (<div style={{width:'100%', marginTop:'20px'}}>
-                            <div style={{display:'flex', flexDirection:'column', marginBottom:20, position:'relative',background:'#1f1f1f',padding:10, height:166,borderRadius:5}}>
-                                <p style={{color:'white', padding:'5px 0px 10px', marginLeft:8}}>Leave a comment</p>
+                            {!this.state.loggedIn ? (<div style={{width:'100%', marginTop:'28px'}}>
+                            <div style={{display:'flex', flexDirection:'column', marginBottom:20, position:'relative',background:'#1f1f1f',padding:'10px 25px 0px 6px', height:193,borderRadius:5}}>
+                                <p style={{color:'#FAFAFA', padding:'5px 0px 10px', marginLeft:8,fontFamily:'Open Sans',fontSize:'18px',fontWeight:'600px'}}>Leave a comment</p>
                                 <div style={{display:'flex', padding:0}}>
-                                    <div style={{backgroundImage:`url(${this.state.userPic}`,backgroundSize:'cover',backgroundRepeat:'no-repeat',backgroundPosition:'center',height:35,width:35,backgroundColor:'black',borderRadius:30,marginRight:10}}></div>
-                                    <div style={{position:'absolute', right:'15px',zIndex:9,top:'55px'}}><p style={{fontSize:14}}>{that.state.value}</p></div>
+                                    <div style={{backgroundImage:`url(${this.state.userPic}`,backgroundSize:'cover',backgroundRepeat:'no-repeat',backgroundPosition:'center',height:40,width:44,backgroundColor:'black',borderRadius:30,marginRight:14,marginLeft:12,marginTop:4}}></div>
+                                    <div style={{position:'absolute', right:'38px',zIndex:9,top:'55px',fontSize:'14px',fontWeight:500}}><p style={{fontSize:14}}>{that.state.value}</p></div>
                                     <textarea id="comment" 
                                         style={{
                                             border:'1px solid #DDE0EB',
@@ -917,14 +918,16 @@ let roomFilter = 'weight';
                                             outline:'none',
                                             backgroundColor:'#F9FAFA',
                                             webkitFontSmoothing:'antialiased',
-                                            height:'60px',
+                                            height:'72px',
                                             width:'100%',
                                             resize:'none',
                                             position:'relative',
                                             paddingTop:'7px',
                                             paddingLeft:'11px',
-                                            paddingRight:'28px',
-                                            paddingBottom:'20px'
+                                            paddingRight:'45px',
+                                            paddingBottom:'20px',
+                                            fontWeight:500,
+                                            lineHeight:'17px'
                                         }} 
                                         multiline = {true}
                                         numberOfLines = {6}
@@ -934,27 +937,50 @@ let roomFilter = 'weight';
    
                                     </textarea>
                                 </div>
-                                <div style={{display:'flex',width:144,position:'absolute',right:'10px',bottom:17,alignItems:'center',justifyContent:'space-between'}}>
+                                <div style={{display:'flex',width:167,position:'absolute',right:'25px',bottom:27,alignItems:'center',justifyContent:'space-between'}}>
                                     <p style={{fontSize:11,color:'white'}}>CANCEL</p>
-                                    <button style={{border:'1px solid gray',
-                                        borderRadius:'4px',
-                                        background:'#3fffe8',
-                                        height:'25px',
-                                        width:'100px',
+                                    <span style={{
+                                        backgroundColor:'#40FFE8',
+                                        borderRadius:'3px',
+                                        width:'112px',
+                                        height:'27px',
                                         fontFamily:'Source Sans Pro',
                                         fontWeight:'bold',
                                         fontSize:10,
                                         bottom:25,
-                                        right:'10px'
+                                        right:'10px',
+                                        alignItems:'center',
+                                        display:'flex',
+                                        justifyContent:'center'
+                                        
                                     }} 
     
-                                    onClick={this.postComment.bind(this)}>POST COMMENT</button>
+                                    onClick={this.postComment.bind(this)}><p style={{color:'#0F0F0F',
+                                        fontFamily:'Open Sans',
+                                        fontSize:'11px',
+                                        fontWeight: 700,
+                                        lineHeight:'13px',
+                                        textAlign:'left'}}>POST COMMENT</p></span>
                                 </div>
                             </div>
                             <div style={{display:'flex',flexDirection:'row',marginBottom:25}}>
-                                <i className="fa fa-comments"/>
-                                <p style={{marginLeft:10}}>Comments</p>
-                                <p style={{marginLeft:10}}>{this.state.comment_number}</p>
+                                {/* <i className="fa fa-comments"/> */}
+                                <Icon icon={speechIcon} style={{ color:'#F1F1F1',
+                                    fontFamily:'simple',
+                                    fontSize:'21px',
+                                    fontWeight:'400',
+                                    lineHeight:'29px',
+                                    fontWeight:'400',
+                                    lineHeight:'29px',
+                                    marginTop:'7px',
+                                    marginLeft:'10px'
+                                    }}/>
+                                <p style={{marginLeft:10,marginLeft:'10px',
+                                            fontSize:'21px',
+                                            color:'white',
+                                            fontFamily: 'Open Sans',
+                                            fontWeight:'600'}}>Comments - </p>
+                                <p style={{marginLeft:5,fontSize:20,color:'white',marginTop:1.5}}>{this.state.comment_number}</p>
                             </div>
                        
                         </div>

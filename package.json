@@ -98,6 +98,8 @@
     "dev-server": "webpack-dev-server"
   },
   "devDependencies": {
+    "@iconify/icons-simple-line-icons": "^1.0.1",
+    "@iconify/react": "^1.1.1",
     "style-loader": "^0.23.1",
     "webpack-cli": "^3.1.2"
   },

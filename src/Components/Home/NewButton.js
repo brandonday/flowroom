@@ -33,9 +33,9 @@ class NewButton extends Component {
             }
           }
           
-          var x = window.matchMedia("(max-width: 698px)")
-          myFunction(x) // Call listener function at run time
-          x.addListener(myFunction) 
+        //   var x = window.matchMedia("(max-width: 698px)")
+        //   myFunction(x) // Call listener function at run time
+        //   x.addListener(myFunction) 
     }
     newclicked(){
         

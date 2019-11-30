@@ -34,7 +34,6 @@ let that;
                    
     }
     renderContent() {
-  
       document.getElementsByClassName('remix-m')[0].style.display = 'none'; 
       if(document.getElementById('main-menu') !== null) {
         document.getElementById('main-menu').innerHTML = '';
@@ -128,6 +127,7 @@ let that;
         remixImageBox.style.overflow = 'hidden';
         //.style.marginTop = '70px';
         remixImageBox.setAttribute("id", "remix-image-box");
+        remixImageBox.setAttribute("class", "remix-image-box")
         if(window.innerWidth > 698) {
           remixImageBox.style.marginTop = '66px'
         } else {
@@ -696,19 +696,26 @@ shouldComponentUpdate(props){
        
        
        if(loadRemix === 'load') {
-        if(document.getElementById('remix-image-box') !== null) {
-        document.getElementById('remix-image-box').remove()
+         let remixImage = document.getElementsByClassName('remix-image-box');
+         for(let i = 0; i < remixImage.length; i++) {
+        if(remixImage[i] !== null) {
+          remixImage[i].remove()
         }
+      }
 
     
       
-        this.renderContent()
-        setTimeout(()=>{
-          if(document.getElementById('remix-image-box') !== null) {
-            document.getElementById('remix-image-box').remove()
-            }
+        //this.renderContent()
+       setTimeout(()=>{
+        if(loadRemix === 'load') {
+          let remixImage = document.getElementsByClassName('remix-image-box');
+          for(let i = 0; i < remixImage.length; i++) {
+         if(remixImage[i] !== null) {
+           remixImage[i].remove()
+         }
+       }
           this.renderContent()
-        },100)
+        }},200)
       
        
 

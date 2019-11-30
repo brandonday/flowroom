@@ -45,6 +45,7 @@ let CSS_EDITOR;
 let JS_EDITOR;
 let html,css,js
 let renderDHTML;
+let checkIframeLoadedInterval;
 class Editor extends Component {
     constructor() {
         super();
@@ -130,7 +131,7 @@ class Editor extends Component {
       //   }
       // }
 
-    alert(shortID)
+    //alert(shortID)
 
         let base_tpl = "<!doctype html>\n" +
         "<html>\n\t" +
@@ -609,6 +610,12 @@ class Editor extends Component {
         "</body>\n" +
         "</html>";
 
+        let postMes = `setInterval(function() {
+          // Send the message "Hello" to the parent window
+          // ...if the domain is still "davidwalsh.name"
+          parent.postMessage("Hello","https://davidwalsh.name");
+        },1000);`
+
 
         let prepareSource = () => {
           let html = HTML_EDITOR.getValue();
@@ -619,16 +626,21 @@ class Editor extends Component {
           // let dhtmlObj = {html:html, js:js, css:css};
           // localStorage.setItem("dhtml", JSON.stringify(dhtmlObj));
           let JSflowroom = '<script src="../flowroom.js"></script>';
+          let pst = '<script>' + postMes + '</script>'
           let src = '';
           src = base_tpl.replace('</body>', html + '</body>');
           css = '<style>' + css + '</style>';
-          src = src.replace('</head>', css + JSflowroom + '</head>');
+          src = src.replace('</head>', css + '</head>');
           js = '<script>' + js + '<\/script>';
-          src = src.replace('</body>', js + '</body>');
+
+          src = src.replace('</body>', JSflowroom + js + pst + '</body>');
           return src;
         };
         let iframe = document.createElement('iframe');
         iframe.setAttribute("id","hidden_iframe")
+
+        // Every two seconds....
+
         renderDHTML = () => {
           // alert('called')
           let source = prepareSource();
@@ -827,40 +839,68 @@ shouldComponentUpdate(props,state) {
   
 }
 
-    render() {
-      let {flowAdd} = this.props.state.flowAdd;
-      let {loadRemix} = this.props.state.loadRemix
-     // alert(flowAdd)
-     //localStorage.removeItem("FR_REMIX_LIST");
-      let exists = document.getElementById(`${flowAdd}_output_frame`) !== null ? flowAdd : null;
-       exists = exists === flowAdd ? 'already exists' : flowAdd; 
-      if(flowAdd !== '' && exists !== 'already exists') {
-        //alert('rebder first')
-        this.renderContent(null,null,null,null,flowAdd);
-      } else if(flowAdd !== '' && exists) {
-       if(this.state.selectedFlow !== flowAdd) {
-       html = JSON.parse(localStorage.getItem(`${flowAdd}_html`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_html`)).html:'';
-        console.log('lo html', html)
-        css = JSON.parse(localStorage.getItem(`${flowAdd}_CSS`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_CSS`)).css:'';
-        js = JSON.parse(localStorage.getItem(`${flowAdd}_JS`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_JS`)).js:'';
-       HTML_EDITOR.setValue(html);
-        CSS_EDITOR.setValue(css);
-        JS_EDITOR.setValue(js);
-        //alert(flowAdd)
-       this.renderContentAdd(null,null,null,null,flowAdd);
-        this.setState({selectedFlow:flowAdd})
-       }
-        //this.renderContent(null,null,null,null,flowAdd);
 
-      //   setTimeout(()=>{
+
+
+checkIframeLoaded() {
+    var iframe_content = document.getElementById('hidden_frame');
+    iframe_content = iframe_content.contentDocument || iframe_content.contentWindow.document;
+    if (iframe_content.length > 0) {
+        clearInterval(checkIframeLoadedInterval);
+
+       alert('loaded')
+    }
+}
+    render() {
+//       let {flowAdd} = this.props.state.flowAdd;
+//       let {loadRemix} = this.props.state.loadRemix
+//      //localStorage.removeItem("FR_REMIX_LIST");
+//       let exists = document.getElementById(`${flowAdd}_output_frame`) !== null ? flowAdd : null;
+//        exists = exists === flowAdd ? 'already exists' : flowAdd; 
+//       if(flowAdd !== '' && exists !== 'already exists') {
+//         //alert('rebder first')
+//        // this.renderContent(null,null,null,null,flowAdd);
+//       } else if(flowAdd !== '' && exists) {
+//        if(this.state.selectedFlow !== flowAdd) {
+//         html = JSON.parse(localStorage.getItem(`${flowAdd}_html`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_html`)).html:'';
+//         console.log('lo html', html)
+//         css = JSON.parse(localStorage.getItem(`${flowAdd}_CSS`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_CSS`)).css:'';
+//         js = JSON.parse(localStorage.getItem(`${flowAdd}_JS`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_JS`)).js:'';
+//         HTML_EDITOR.setValue(html);
+//         CSS_EDITOR.setValue(css);
+//         JS_EDITOR.setValue(js);
+//         //alert(flowAdd)
+//         //  if(document.getElementById('remix-image-box') !== null) {
+//         // document.getElementById('remix-image-box').remove()
+//         // }
+
         
-      //  if(this.state.loadRemix == false) {
-      //   this.renderContent(null,null,null,null,flowAdd);
-      //     this.setState({loadRemix:true})
-      //   }
-      //   // },10000)
-     
-      } 
+//         // document.querySelector('#hidden_iframe').onload = function(){
+//         //   var iframeBody = this.contentDocument.body;
+//         //   console.log('iframe loaded, body is: ', iframeBody);
+//         // };
+//        // checkIframeLoadedInterval = setInterval(this.checkIframeLoaded, 250);
+//         var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+// var eventer = window[eventMethod];
+// var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+
+// // Listen to message from child window
+// //eventer(messageEvent,(e)=> {
+//   //this.renderContentAdd(null,null,null,null,flowAdd);
+// //},false);
+//         //this.setState({selectedFlow:flowAdd})
+//       // }
+//        //this.renderContent(null,null,null,null,flowAdd);
+
+//       //   setTimeout(()=>{
+        
+//       //  if(this.state.loadRemix == false) {
+//       //   this.renderContent(null,null,null,null,flowAdd);
+//       //     this.setState({loadRemix:true})
+//       //   }
+//       //   // },10000)
+//        }
+//       } 
         return (<div id="full-page" className="full-page">
             <div className="top-boxes editor-parent">
                 <VelocityComponent 
