@@ -1,9 +1,11 @@
 
 /*------------------------- DOM --------------------- */
+
 html,
 body {
+
   font-size: 10px;
-  font-family:Source Sans Pro;
+  font-family:'Open Sans' !important;
   margin:0;
   /* height: 100%;  */
   background:rgb(0,0,0) !important;
@@ -15,7 +17,9 @@ body {
 
 
 }
-
+.content {
+  background: #0f0f0f !important;
+}
 .dropdown > [type="checkbox"]:checked + label:after, .dropdown > ul:target ~ a:after {
   content: "#FFF" !important;
 }
@@ -1747,10 +1751,10 @@ right: 0px;
 }
 
 .signup-screen-label {
-  color: #1BB243;
+  color:white;
   font-weight: bold;
   margin: 24px;
-  font-size: 20px;
+  font-size: 21px;
 }
 
 .signup-screen-label-mobile {
@@ -1803,6 +1807,9 @@ right: 0px;
 .signup-section-p {
   font-size:12px;
   margin:10px 10px;
+  color:white;
+  font-family: 'Open Sans';
+  margin-left:15px;
 }
 
 .signup-section-p-mobile {

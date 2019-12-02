@@ -43,14 +43,16 @@ class RelatedRoomPost extends Component {
 
         return  (
             <div style={{position:'relative'}} onMouseEnter={this.mouseHover.bind(this)} onMouseLeave={this.mouseLeave.bind(this)}  style={{
-                width:232,
+                width:273,
+                height:250,
                 background:'#1f1f1f',
             
                 justifyContent:'center',
                 alignItems:'flex-end',
                 margin:'0px 0px 15px',
                 flexDirection:'column',
-                padding:'8px 8px 6px'
+                padding:'8px 8px 6px',
+                borderRadius:6
             }}>
             <div style={{width:232}}>
                 <Link to={`/room/${this.props.shortID}`}><p style={{
@@ -67,7 +69,7 @@ class RelatedRoomPost extends Component {
                 }}>{this.props.isRemix ? 'Remixed by ' :  'Created by ' + `@${this.props.userName}`}</p></Link>
             </div>
             <div style={{
-                height:118, 
+                height:180, 
                 backgroundSize:'cover',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition:'center',

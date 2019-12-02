@@ -852,15 +852,15 @@ checkIframeLoaded() {
     }
 }
     render() {
-//       let {flowAdd} = this.props.state.flowAdd;
-//       let {loadRemix} = this.props.state.loadRemix
-//      //localStorage.removeItem("FR_REMIX_LIST");
-//       let exists = document.getElementById(`${flowAdd}_output_frame`) !== null ? flowAdd : null;
-//        exists = exists === flowAdd ? 'already exists' : flowAdd; 
-//       if(flowAdd !== '' && exists !== 'already exists') {
-//         //alert('rebder first')
-//        // this.renderContent(null,null,null,null,flowAdd);
-//       } else if(flowAdd !== '' && exists) {
+      let {flowAdd} = this.props.state.flowAdd;
+      let {loadRemix} = this.props.state.loadRemix
+     //localStorage.removeItem("FR_REMIX_LIST");
+      let exists = document.getElementById(`${flowAdd}_output_frame`) !== null ? flowAdd : null;
+       exists = exists === flowAdd ? 'already exists' : flowAdd; 
+      if(flowAdd !== '' && exists !== 'already exists') {
+        //alert('rebder first')
+     //  this.renderContent(null,null,null,null,flowAdd);
+      } else if(flowAdd !== '' && exists) {
 //        if(this.state.selectedFlow !== flowAdd) {
 //         html = JSON.parse(localStorage.getItem(`${flowAdd}_html`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_html`)).html:'';
 //         console.log('lo html', html)
@@ -900,7 +900,7 @@ checkIframeLoaded() {
 //       //   }
 //       //   // },10000)
 //        }
-//       } 
+      } 
         return (<div id="full-page" className="full-page">
             <div className="top-boxes editor-parent">
                 <VelocityComponent 

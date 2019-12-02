@@ -713,7 +713,7 @@ let roomFilter = 'weight';
                 maxWidth:'1600px',
                 margin:'0 auto',
                 position:'relative',
-                padding:'0 2px',
+                padding:'0 48px',
                 top:52
                 }}>
             
@@ -743,7 +743,7 @@ let roomFilter = 'weight';
                                 <p style={{fontSize:'14px',fontWeight:'500',color:'white'}}>{'49866'+this.state.views}</p>
                             </div>
                             <div style={{display:'flex',position:'absolute',right:0}}>
-                                <div style={{display:'flex', width:230, justifyContent:'space-between',position:'relative',top:'2px'}}>
+                                <div style={{display:'flex', width:230, justifyContent:'space-between',position:'relative',top:'7px'}}>
                                     <div style={{display:'flex',
                            
                                             justifyContent:'space-between',
@@ -868,8 +868,18 @@ let roomFilter = 'weight';
                             </div>
                         </div>
                     </div>
-                    <div style={{display:'flex',height:'58px',width:'100%'}}>
-                        <p style={{color:'#fff',fontSize:14,margin:'2px 15px'}}>{this.state.description}</p>
+                    <div style={{display:'flex',height:'82px',width:'100%',overflow:'hidden'}}>
+                        <p style={{
+                            fontSize:14,margin:'15px 15px',
+                            color:'#FAFAFA',
+                            fontFamily:'Open Sans',
+                            fontSize:'16px',
+                            fontWeight:'400',
+                            lineHeight:'22px',
+                            width:'100%',
+                            textAlign:'left'
+                    
+                    }}>{'In electricity generation, a generator is a device that converts motive power into electrical power for use in an external circuit. Sources of mechanical energy include steam turbines, gas turbines, water turbines, internal combustion engines and even hand cranks.'}</p>
                     </div>
                     </div>
                     <div style={{display:'flex', width:'100%',flexDirection:'column'}}>
@@ -911,7 +921,7 @@ let roomFilter = 'weight';
                                             borderRadius:'6px',
                                             color:'#333333',
                                             resize:'100%',
-                                            fontSize:'1.4rem',
+                                            fontSize:'1.5rem',
                                             marginBottom:'1.4rem',
                                             padding:'1rem',
                                             fontFamily:'Helvetica, Arial, sans-serif',
@@ -922,8 +932,8 @@ let roomFilter = 'weight';
                                             width:'100%',
                                             resize:'none',
                                             position:'relative',
-                                            paddingTop:'7px',
-                                            paddingLeft:'11px',
+                                            paddingTop:'10px',
+                                            paddingLeft:'12px',
                                             paddingRight:'45px',
                                             paddingBottom:'20px',
                                             fontWeight:500,
@@ -1057,8 +1067,8 @@ let roomFilter = 'weight';
                                         userName={i.userName}    
                                         views={i.views} 
                                         thumbnail={i.thumbnail}   
-                                        roomHeight={118} 
-                                        roomWidth={225}
+                                        roomHeight={250} 
+                                        roomWidth={273}
                                         isRemix={i.isRemix}
                                         key={i.shortID}
                                         />)

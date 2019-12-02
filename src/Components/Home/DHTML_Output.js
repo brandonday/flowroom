@@ -29,7 +29,11 @@ let flowSel = 'none';
 
 
  class DHTML_Output extends Component {
-
+  static defaultProps = {
+    className: "layout",
+    cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
+    rowHeight: 100
+  };
 
      constructor(props) {
         super(props);
@@ -42,21 +46,36 @@ let flowSel = 'none';
             currentBreakpoint: "lg",
             compactType: "vertical",
             mounted: false,
-            layouts: { lg: props.initialLayout }
+            layouts: { lg: props.initialLayout },
+            items: [0, 1, 2, 3, 4].map(function(i, key, list) {
+              return {
+                i: i.toString(),
+                x: i * 2,
+                y: 0,
+                w: 2,
+                h: 2,
+                add: i === (list.length - 1)
+              };
+            }),
+            newCounter: 0
 
         }
+        this.onAddItem = this.onAddItem.bind(this);
+        this.onBreakpointChange = this.onBreakpointChange.bind(this);
         this.onBreakpointChange = this.onBreakpointChange.bind(this);
         this.onCompactTypeChange = this.onCompactTypeChange.bind(this);
         this.onLayoutChange = this.onLayoutChange.bind(this);
         this.onNewLayout = this.onNewLayout.bind(this);
+        
      }
      componentDidMount() {
      document.getElementsByClassName('')
       this.setState({ mounted: true });
 
-        // setTimeout(()=>{
-        //   this.onNewLayout(4)
-        // },10000)
+        setTimeout(()=>{
+          this.setState({showGrid:true})
+          this.onAddItem()
+        },5000)
         let all = document.getElementsByClassName('add-flow')
         for(let i = 0; i < all.length; i++) {
           document.getElementById(all[i].id).addEventListener('click',()=>{alert('clicked')})
@@ -142,6 +161,7 @@ let flowSel = 'none';
       
       //alert(this.state.objects.length)
          return _.map(this.state.layouts.lg, function(l, i) {
+           console.log('shortiID')
       return (
         <div key={i} id={`${l.shortID}_output_frame`} className="flow" style={{height:200}}>
         
@@ -475,7 +495,10 @@ let flowSel = 'none';
       } else if(props.state.flowAdd.flowAdd) {
         let exists = document.getElementById(`${props.state.flowAdd.flowAdd}_output_frame`) !== null ? props.state.flowAdd.flowAdd: null;
         exists = exists === props.state.flowAdd.flowAdd ? 'already exists' : props.state.flowAdd.flowAdd; 
-        if(exists !== 'already exists' && flowSel !== props.state.flowAdd.flowAdd) {          
+
+       
+        if(exists !== 'already exists' && flowSel !== props.state.flowAdd.flowAdd) {      
+          alert('g')    
           return true
         } else {
           
@@ -513,40 +536,89 @@ let flowSel = 'none';
       layouts: { lg: generateLayout(num) }
     });
   }
+  
   testf(){
     alert('t ca')
   }
+  createElement(el) {
+    const removeStyle = {
+      position: "absolute",
+      right: "2px",
+      top: 0,
+      cursor: "pointer"
+    };
+    const i = el.add ? "+" : el.i;
+    return (
+      <div key={i} data-grid={el}>
+        {el.add ? (
+          <span
+            className="add text"
+            onClick={this.onAddItem}
+            title="You can add an item by clicking here, too."
+          >
+            Add +
+          </span>
+        ) : (
+          <span className="text">{i}</span>
+        )}
+        <span
+          className="remove"
+          style={removeStyle}
+          onClick={this.onRemoveItem.bind(this, i)}
+        >
+          x
+        </span>
+      </div>
+    );
+  }
+  onAddItem() {
+    /*eslint no-console: 0*/
+    console.log("adding", "n" + this.state.newCounter);
+    this.setState({
+      // Add a new item. It must have a unique key!
+      items: this.state.items.concat({
+        i: "n" + this.state.newCounter,
+        x: (this.state.items.length * 2) % (this.state.cols || 12),
+        y: Infinity, // puts it at the bottom
+        w: 2,
+        h: 2
+      }),
+      // Increment the counter to ensure key is always unique.
+      newCounter: this.state.newCounter + 1
+    });
+  }
+
+  // We're using the cols coming back from this to calculate where to add new items.
+  onBreakpointChange(breakpoint, cols) {
+    this.setState({
+      breakpoint: breakpoint,
+      cols: cols
+    });
+  }
+
+  onLayoutChange(layout) {
+    this.props.onLayoutChange(layout);
+    this.setState({ layout: layout });
+  }
+
+  onRemoveItem(i) {
+    console.log("removing", i);
+    this.setState({ items: _.reject(this.state.items, { i: i }) });
+  }
+
+  
      render() {
-       let {flowAdd} = this.props.state.flowAdd
-       let exists = document.getElementById(`${flowAdd}_output_frame`) !== null ? flowAdd : null;
-       exists = exists === flowAdd ? 'already exists' : flowAdd; 
+      //  let {flowAdd} = this.props.state.flowAdd
+      //  let exists = document.getElementById(`${flowAdd}_output_frame`) !== null ? flowAdd : null;
+      //  exists = exists === flowAdd ? 'already exists' : flowAdd; 
      
-        if(flowAdd !== '' && exists !== 'already exists') {
+      //   if(flowAdd !== '' && exists !== 'already exists') {
         
           
-                let getObj = this.state.objects;
-                getObj.push({shortID:flowAdd})   
+      //           // let getObj = this.state.objects;
+      //           // getObj.push({shortID:flowAdd})   
                
-                
-              
-            
-            const MAX_OBJECTS = 1;
-            let addFlow = (state, props) => {
-              
-                if (state.maxobj === MAX_OBJECTS) {
-            
-                  return null;
-                } 
-              
-                return {objects:this.state.objects.concat([{shortID:flowAdd}]),showGrid:true,objects:[],maxobj:state.maxobj + 1}
-
-              }
-           
-              this.setState(addFlow)
-              flowSel = flowAdd
-              this.onNewLayout(genCount);
-              genCount++
-            }
+      //       }
            
         return (
             <div id="output-container" className="output-container">
@@ -565,20 +637,14 @@ let flowSel = 'none';
                     }
                     }}> */}
                     <div style={{position:'absolute',height:'100%',width:'100%'}}>
-                    {this.state.showGrid ?(<ResponsiveReactGridLayout
-                              {...this.props}
-                              layouts={this.state.layouts}
-                              onBreakpointChange={this.onBreakpointChange}
-                              onLayoutChange={this.onLayoutChange}
-                              // WidthProvider option
-                              measureBeforeMount={false}
-                              // I like to have it animate on mount. If you don't, delete `useCSSTransforms` (it's default `true`)
-                              // and set `measureBeforeMount={true}`.
-                              useCSSTransforms={this.state.mounted}
-                              compactType={this.state.compactType}
-                              preventCollision={!this.state.compactType}
-                           
+                    {this.state.showGrid ?(  <ResponsiveReactGridLayout
+          onLayoutChange={this.onLayoutChange}
+          onBreakpointChange={this.onBreakpointChange}
+          {...this.props}
         >
+          {_.map(this.state.items, el => this.createElement(el))}
+                           
+        
           {this.getObjects()}
 
          

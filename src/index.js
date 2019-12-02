@@ -88,7 +88,7 @@ const Routes = () => (
 
 const jsx = (
     <Provider store={store}>
-        <div style={{display:'flex',flex:1, flexDirection:'column'}}>
+        <div style={{display:'flex',flex:1, flexDirection:'column', height:'100vh'}}>
             <Routes/>
         </div>
     </Provider>

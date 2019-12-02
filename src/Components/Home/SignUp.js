@@ -14,6 +14,11 @@ import FileUploader from "react-firebase-file-uploader";
 import { WithContext as ReactTags } from 'react-tag-input';
 import Logo from './Logo.js';
 
+var providerFacebook = new firebase.auth.FacebookAuthProvider();
+var providerGoogle = new firebase.auth.GoogleAuthProvider();
+
+
+
 const KeyCodes = {
     comma: 188,
     enter: 13,
@@ -185,7 +190,7 @@ const thumb = {
         //   //URL.revokeObjectURL(file.preview);
         // }
       }
-      openModal() {
+    openModal() {
         this.props.openModal({isModalOpen:true, modalType:'image', customStyles:{
           overlay: {
             backgroundColor:'transparent'
@@ -212,18 +217,17 @@ const thumb = {
        }
 
     handleChangeUsername = event =>
-       this.setState({ username: event.target.value });
-     handleUploadStart = () => this.setState({ isUploading: true, progress: 0 });
-     handleProgress = progress => this.setState({ progress });
-     handleUploadError = error => {
-       this.setState({ isUploading: false });
-       console.error(error);
-     };
+        this.setState({ username: event.target.value });
+        handleUploadStart = () => this.setState({ isUploading: true, progress: 0 });
+        handleProgress = progress => this.setState({ progress });
+        handleUploadError = error => {
+            this.setState({ isUploading: false });
+            console.error(error);
+        };
     
 
-     handleUploadSuccess = filename => {
+    handleUploadSuccess = filename => {
         let usernamef = document.getElementById('username').value;
-
         this.setState({ avatar: filename, progress: 100, isUploading: false });
         firebase
             .storage()
@@ -257,33 +261,49 @@ const thumb = {
 
         if(!this.state.isLoggedIn) {    
             return ( 
-                
                 <div style={{flex:'1',display:'flex'}}>
-        
-                
-                        <div style={{flex:'1',display:'flex'}}>
-                            <div className="main-section-wrap-signup-screen">
+                    <div style={{flex:'1',display:'flex'}}>
+                        <div className="main-section-wrap-signup-screen">
                             <a href="/"><div style={{backgroundImage:'url("../logo.svg")', height:'31px', width:'136px', backgroundSize:'contain', backgroundRepeat:'no-repeat', top:40, position:'relative'}}></div></a>
                             <p style={{color:'white',marginBottom:10, marginTop:56}}>Sign In with</p>
 
-<div className="main-section-login-box" style={{display:'flex',
-    height:70, 
-    marginBottom:20,
-    backgroundColor: '#202020',
-    border:'none',
-    flexDirection:'row',
-    alignItems:'center'
-}}>
-    <div style={{display:'flex',
-        backgroundColor:'#4267b2',
-        height:38,
-        width:'100%',
-        maxWidth:117,
-        borderRadius:3,
-        justifyContent:'center',
-        alignItems:'center',
-        fontSize:'17px',
+                            <div className="main-section-login-box" style={{display:'flex',
+                                height:70, 
+                                marginBottom:20,
+                                backgroundColor: '#202020',
+                                border:'none',
+                                flexDirection:'row',
+                                alignItems:'center'
+                            }}>
+                                <div style={{display:'flex',
+                                    backgroundColor:'#4267b2',
+                                    height:38,
+                                    width:'100%',
+                                    maxWidth:117,
+                                    borderRadius:3,
+                                    justifyContent:'center',
+                                    alignItems:'center',
+                            fontSize:'17px',
         marginRight:10
+    }} onClick={()=>{
+        firebase.auth().signInWithPopup(providerFacebook).then(function(result) {
+            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+            var token = result.credential.accessToken;
+            // The signed-in user info.
+            var user = result.user;
+            // ...
+            alert(token)
+          }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+            alert(errorCode)
+            // ...
+          });
     }}><i class="fab fa-facebook-f" style={{color:'white'}}></i></div>
     <div style={{display:'flex',
         backgroundColor:'#38A1F3',
@@ -296,7 +316,27 @@ const thumb = {
         fontSize:'17px',
         marginRight:10
     }}><i class="fab fa-twitter" style={{color:'white'}}></i></div>
-    <div style={{display:'flex',
+    <div onClick={()=>{
+       firebase.auth().signInWithPopup(providerGoogle).then((result)=> {
+          var token = result.credential.accessToken;
+            var user = result.user;
+            console.log('user ', user)
+           // alert(token)
+            this.setState({isLoggedIn:true,postedPicURL:user.photoURL});
+
+           
+          }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+            alert(errorMessage)
+            // ...
+          });
+    }}style={{display:'flex',
         backgroundColor:'#d34836',
         height:38,
         width:'100%',
@@ -378,9 +418,9 @@ const thumb = {
                         
                     </div>
                     <div className="main-section-wrap-signup-screen">
-                        <p className="signup-screen-label">{'{sign up}'}</p>
+                        <p className="signup-screen-label">{'Setup Your Profile'}</p>
                         <div className="main-section-signup-box" style={{height:430}}>
-                            <p className="signup-section-p">Enter more information about yourself</p>
+                            <p className="signup-section-p">Profile Picture</p>
                             <div style={{width:'100%'}}>
                                 <div style={{width:'100%', padding:'0px 15px'}}>
                                     <div id="profilePic" 
@@ -389,14 +429,14 @@ const thumb = {
                                         height:'50px', 
                                         width:'50px', 
                                         borderRadius:25, 
-                                        backgroundColor:'orange', 
                                         overflow:'hidden', 
                                         marginRight:20,
                                         backgroundImage:`url(${this.state.postedPicURL})`,
                                         backgroundRepeat:'no-repeat',
                                         backgroundPosition:'center center',
                                         backgroundSize:'cover',
-                                        backgroundRepeat:'no-repeat'
+                                        backgroundRepeat:'no-repeat',
+                                        
                                         }}>
                                     {this.state.avatarURL && <img src={this.state.postedPicURL} style={{height:'50px', width:'50px'}} />}
                                     </div>
@@ -421,19 +461,19 @@ const thumb = {
                                                 borderRadius:'5px'}}> */}
                                            {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
           
-                                        <button style={{ border:'1px solid light-gray',
-                                            color:'gray',
-                                            cursor:'pointer',
-                                            fontSize:'1.4rem',
-                                            fontFamily: 'Source Sans Pro',
-                                            /* margin-bottom: 10px; */
-                                            width:'140px',
-                                            height:'35px',
-                                            borderRadius:'6px',
-                                            margin:'10px 16px 6px 0px',
-                                            display:'flex',
-                                            justifyContent:'center',
-                                            alignItems:'center'
+                                        <button style={{   cursor:'pointer',
+fontFamily: "Open Sans",
+width:'140px',
+height:'35px',
+borderTopLeftRadius:'6px',
+borderTopRightRadius:'6px',
+borderBottomRightRadius:'6px',
+borderBottomLeftRadius:'6px',
+margin:'10px 22px 6px 0px',
+color:'rgb(64, 255, 232)',
+fontSize:'13px',
+backgroundColor:'transparent',
+border:'1px solid rgb(64, 255, 232)',
                                             }}>
                             <label style={{height:34, width:'100%', border:'0px solid black',zIndex:99999999,display:'flex',
     alignItems:'center',
@@ -459,18 +499,19 @@ const thumb = {
 
                                             {/* </Dropzone> */}
                                         <button onClick={this.removePhoto.bind(this)} style={{
-                                            border:'1px solid light-gray',
-                                            color:'gray',
-                                            cursor:'pointer',
-                                            fontSize:'1.4rem',
-                                            fontFamily: 'Source Sans Pro',
-                                            /* margin-bottom: 10px; */
-                                            padding:'1rem',
-                                            lineHeight:'0',
-                                            width:'140px',
-                                            height:'35px',
-                                            borderRadius:'6px',
-                                            margin:'10px 0px 6px'}}>Remove Photo</button>
+                                             cursor:'pointer',
+                                             fontFamily: "Open Sans",
+                                             width:'140px',
+                                             height:'35px',
+                                             borderTopLeftRadius:'6px',
+                                             borderTopRightRadius:'6px',
+                                             borderBottomRightRadius:'6px',
+                                             borderBottomLeftRadius:'6px',
+                                             margin:'10px 22px 6px 0px',
+                                             color:'rgb(64, 255, 232)',
+                                             fontSize:'13px',
+                                             backgroundColor:'transparent',
+                                             border:'1px solid rgb(64, 255, 232)'}}>Remove Photo</button>
                                     </div>
                                     <div style={{display:'flex', flexDirection:'row', marginBottom:'0px'}}>
                                         <div style={{display:'flex', flexDirection:'column', marginRight:'16px',marginTop:'7px'}}>
@@ -489,20 +530,19 @@ const thumb = {
                                         </textarea>
                                     </div>
                                     <div style={{display:'flex',width:'100%', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
-                                        <button style={{backgroundColor:'#1BB243',
-                                            border:'1px solid #0A7F29',
-                                            color:'white',
-                                            cursor:'pointer',
-                                            fontSize:'1.4rem',
-                                            fontFamily: 'Source Sans Pro',
-                                            /* margin-bottom: 10px; */
-                                            padding:'1rem',
-                                            lineHeight:'0',
-                                            width:'140px',
-                                            height:'32px',
-                                            borderRadius:'6px',
-                                            margin:'10px 11px 6px',
-                                        }} onClick={this.updateProfile}>Finish</button>
+                                        <button style={{backgroundColor:'rgb(27, 178, 67)',
+
+    fontFamily: 'Open Sans',
+    borderRadius:'6px',
+    backgroundColor:'rgb(64, 255, 232)',
+    width:'140px',
+    height:'30px',
+    border:'0px',
+    fontSize:'14px',
+    color:'black',
+    fontWeight:600
+
+                                        }} onClick={this.updateProfile}>FINISH</button>
                                             {/* <p onClick={this.skipStep.bind(this)} style={{fontSize:12}}>Skip this step</p> */}
                                     </div>
                                 </div>
