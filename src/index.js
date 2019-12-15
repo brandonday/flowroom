@@ -63,7 +63,7 @@ let p = false
 const Routes = () => (
 
     <Router history={history}>
-     <div className="content">
+     <div className="content hide-scroll">
         <Switch>
             <PrivateRoute exact path="/" component={Main}></PrivateRoute>
             {/* <PrivateRoute exact path="/editor" component={PhotoEditor}></PrivateRoute> */}

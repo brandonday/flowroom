@@ -3580,7 +3580,7 @@ let apps = [{id:'childSnapShot.key',
 
                                 <TabPanel tabId="vertical-tab-one">
                               <ImageEdit/>
-                                    <div className="main-menu" 
+                                    <div className="main-menu hide-scroll" 
                                         style={{
                                             borderRight:'1px solid rgb(24, 24, 24)', 
                                             background:'rgb(24, 24, 24)', 
