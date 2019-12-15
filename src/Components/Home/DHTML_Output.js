@@ -929,8 +929,10 @@ DHTML_Output.defaultProps = {
   className: "layout",
   rowHeight: 30,
   onLayoutChange: function() {},
-  breakpoints: {lg: 2400, md: 996, sm: 768, xs: 480, xxs: 0},
-  cols: { lg: 2, md: 2, sm: 2, xs: 2, xxs: 2 },
+  margin:[0,0],
+  padding:[0,0],
+  breakpoints: {lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0},
+  cols: { lg: 2, md: 2, sm: 2, xs: 1, xxs: 1 },
   initialLayout: generateLayout()
 };
 

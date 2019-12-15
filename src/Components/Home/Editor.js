@@ -229,7 +229,9 @@ class Editor extends Component {
             return
           }
           let iframe = document.getElementsByClassName('output_frame')[getAllOut.length - 1];
-
+          if(iframe == null) {
+            return
+          }
           let iframe_doc = iframe.contentDocument;
           
           if(shortID !== null){
