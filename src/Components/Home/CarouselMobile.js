@@ -3,7 +3,7 @@ import RoomPosts from './RoomPosts.js';
 import Communities from './Communities.js';
 import Footer from './Footer.js';
 import AppModal from './AppModal';
-import Create from './create';
+import Create from './Create';
 import { firebase } from '../firebase/firebase';
 import createHistory from 'history/createBrowserHistory';
 import M from 'materialize-css';

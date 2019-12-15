@@ -35,7 +35,7 @@ import "react-web-tabs/dist/react-web-tabs.css";
 import ResizableRect from 'react-resizable-rotatable-draggable'
 import {openMenu} from '../../actions/openMenu';
 
-import Create from './create';
+import Create from './Create';
 import {flowAdd} from '../../actions/flowAdd.js';
 import {loadRemix} from '../../actions/loadRemix.js';
 //import { disconnect } from 'cluster';

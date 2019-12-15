@@ -18,7 +18,7 @@
     "darkroom": "^2.0.0",
     "dat.gui": "^0.7.5",
     "fabric": "^2.7.0",
-    "firebase": "^5.5.4",
+    "firebase": "^6.0.2",
     "gifshot": "^0.4.5",
     "giphy-js-sdk-core": "^1.0.6",
     "hashids": "^1.2.2",
