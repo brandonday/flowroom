@@ -59,7 +59,6 @@ let flowsAdded = [];
         this.onAddItem = this.onAddItem.bind(this);
         this.addFlow = this.addFlow.bind(this);
         this.onBreakpointChange = this.onBreakpointChange.bind(this);
-        this.onBreakpointChange = this.onBreakpointChange.bind(this);
         this.onCompactTypeChange = this.onCompactTypeChange.bind(this);
         this.onLayoutChange = this.onLayoutChange.bind(this);
         this.onNewLayout = this.onNewLayout.bind(this);
@@ -669,7 +668,7 @@ let flowsAdded = [];
                       };
           
           
-          
+          if(document.getElementById(`overlay_output_frame_${i}`) !== null) {
           let tag = document.getElementById(`overlay_output_frame_${i}`).contentWindow.document.elementsFromPoint(x, y)[1].tagName
           if(tag === 'HTML') {
               document.getElementById(`overlay_output_frame_${i}`).style.pointerEvents = 'none';
@@ -679,7 +678,7 @@ let flowsAdded = [];
             document.getElementById(`${shortID}_output_frame`).style.pointerEvents = 'none';
 
           }      
-            
+        }
           
           
               //evref.removeEventListener('click', ()=>{alert('dfdfdf')});
@@ -825,8 +824,8 @@ let flowsAdded = [];
         i: hashids,
         x: (this.state.items.length * 2) % (this.state.cols || 12),
         y: Infinity, // puts it at the bottom
-        w: 2,
-        h: 2,
+        w: 1,
+        h: 15,
         shortID: shortID
       })
 
@@ -884,6 +883,7 @@ let flowsAdded = [];
                     }}> */}
                     <div style={{position:'absolute',height:'100%',width:'100%'}}>
                     {this.state.showGrid ?(  <ResponsiveReactGridLayout
+
                     onLayoutChange={this.onLayoutChange}
                     onBreakpointChange={this.onBreakpointChange}
                     {...this.props}
@@ -929,7 +929,8 @@ DHTML_Output.defaultProps = {
   className: "layout",
   rowHeight: 30,
   onLayoutChange: function() {},
-  cols: { lg: 1, md: 4, sm: 4, xs: 4, xxs: 2 },
+  breakpoints: {lg: 2400, md: 996, sm: 768, xs: 480, xxs: 0},
+  cols: { lg: 2, md: 2, sm: 2, xs: 2, xxs: 2 },
   initialLayout: generateLayout()
 };
 

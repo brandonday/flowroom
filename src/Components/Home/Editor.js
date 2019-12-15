@@ -224,9 +224,14 @@ class Editor extends Component {
         renderDHTML = () => {
           // alert('called')
           let source = prepareSource();
-          let getAllOut = document.getElementsByClassName('output_frame')
+          let getAllOut = document.getElementsByClassName('output_frame');
+          if(getAllOut == null) {
+            return
+          }
           let iframe = document.getElementsByClassName('output_frame')[getAllOut.length - 1];
+
           let iframe_doc = iframe.contentDocument;
+          
           if(shortID !== null){
           //   alert(shortID)
           if(document.getElementById(`${shortID}_output_frame`) !== null) {
@@ -863,18 +868,18 @@ checkIframeLoaded() {
         this.renderContent(null,null,null,null,flowAdd);
          },500)
       } else if(flowAdd !== '' && exists) {
-//        if(this.state.selectedFlow !== flowAdd) {
-//         html = JSON.parse(localStorage.getItem(`${flowAdd}_html`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_html`)).html:'';
-//         console.log('lo html', html)
-//         css = JSON.parse(localStorage.getItem(`${flowAdd}_CSS`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_CSS`)).css:'';
-//         js = JSON.parse(localStorage.getItem(`${flowAdd}_JS`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_JS`)).js:'';
-//         HTML_EDITOR.setValue(html);
-//         CSS_EDITOR.setValue(css);
-//         JS_EDITOR.setValue(js);
-//         //alert(flowAdd)
-//         //  if(document.getElementById('remix-image-box') !== null) {
-//         // document.getElementById('remix-image-box').remove()
-//         // }
+       if(this.state.selectedFlow !== flowAdd) {
+        // html = JSON.parse(localStorage.getItem(`${flowAdd}_html`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_html`)).html:'';
+        // console.log('lo html', html)
+        // css = JSON.parse(localStorage.getItem(`${flowAdd}_CSS`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_CSS`)).css:'';
+        // js = JSON.parse(localStorage.getItem(`${flowAdd}_JS`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_JS`)).js:'';
+        // HTML_EDITOR.setValue(html);
+        // CSS_EDITOR.setValue(css);
+        // JS_EDITOR.setValue(js);
+        //alert(flowAdd)
+        //  if(document.getElementById('remix-image-box') !== null) {
+        // document.getElementById('remix-image-box').remove()
+        // }
 
         
 //         // document.querySelector('#hidden_iframe').onload = function(){
@@ -903,6 +908,7 @@ checkIframeLoaded() {
 //       //   // },10000)
 //        }
       } 
+    }
         return (<div id="full-page" className="full-page">
             <div className="top-boxes editor-parent">
                 <VelocityComponent 
