@@ -43,6 +43,7 @@ import { Store } from './Components/Home/store.js';
 const store = Store;
 
 
+
 //store.dispatch(createRoom({description:'new room'})) //when you send to the store ths object with type the rudcer for that type will run
 
 
@@ -64,6 +65,7 @@ const Routes = () => (
 
     <Router history={history}>
      <div className="content hide-scroll">
+     <div id="event-manager"></div>
         <Switch>
             <PrivateRoute exact path="/" component={Main}></PrivateRoute>
             {/* <PrivateRoute exact path="/editor" component={PhotoEditor}></PrivateRoute> */}

@@ -116,70 +116,7 @@ let apps = [{id:'childSnapShot.key',
     urlHTML:'http://test.flowroom.com/uploads/VKHyS9.html',
     urlCSS:'http://test.flowroom.com/uploads/PoTJHL.css',
     urlJS:'http://test.flowroom.com/uploads/5aUvFj.js'},
-    {id:'childSnapShot.key',
-    date:'childSnapShot.val().date',
-    isAR:'childSnapShot.val().isAR',
-    isDevelopmental:'childSnapShot.val().isDevelopmental',
-    is360:'childSnapShot.val().is360',
-    isAI:'childSnapShot.val().isAI',
-    isDesktop:'childSnapShot.val().isDesktop',
-    isDeveloper:'childSnapShot.val().isDeveloper',
-    isLive:'childSnapShot.val().isLive',
-    isLocked:'childSnapShot.val().isLocked',
-    isMobile:'childSnapShot.val().isMobile',
-    isNSFW:'childSnapShot.val().isNSFW',
-    isVR:'childSnapShot.val().isVR',
-    pic:'childSnapShot.val().pic',
-    views:'childSnapShot.val().views',
-    commentsCount:'childSnapShot.val().commentsCount === undefined ? 0 : childSnapShot.val().commentsCount',
-    likes:'childSnapShot.val().likes === undefined ? 0:childSnapShot.val().likes',
-    description:'childSnapShot.val().description',
-    objectNum:'childSnapShot.val().objectNum',
-    postedPicURL:'childSnapShot.val().postedPicURL',
-    isRemixable:'childSnapShot.val().isRemixable',
-    roomType:'childSnapShot.val().roomType',
-    username:'Brandon',
-    shortID:'v7uPu8',
-    room_title:'Comparison Slider',
-    tags:'childSnapShot.val().tags',
-    room_aspect_ratio:'',
-    room_card_height:'',
-    thumbnail:'http://test.flowroom.com/uploads/NzcXtl.jpg',    
-    urlHTML:'http://test.flowroom.com/uploads/VKHyS9.html',
-    urlCSS:'http://test.flowroom.com/uploads/PoTJHL.css',
-    urlJS:'http://test.flowroom.com/uploads/5aUvFj.js'},
-    {id:'childSnapShot.key',
-    date:'childSnapShot.val().date',
-    isAR:'childSnapShot.val().isAR',
-    isDevelopmental:'childSnapShot.val().isDevelopmental',
-    is360:'childSnapShot.val().is360',
-    isAI:'childSnapShot.val().isAI',
-    isDesktop:'childSnapShot.val().isDesktop',
-    isDeveloper:'childSnapShot.val().isDeveloper',
-    isLive:'childSnapShot.val().isLive',
-    isLocked:'childSnapShot.val().isLocked',
-    isMobile:'childSnapShot.val().isMobile',
-    isNSFW:'childSnapShot.val().isNSFW',
-    isVR:'childSnapShot.val().isVR',
-    pic:'childSnapShot.val().pic',
-    views:'childSnapShot.val().views',
-    commentsCount:'childSnapShot.val().commentsCount === undefined ? 0 : childSnapShot.val().commentsCount',
-    likes:'childSnapShot.val().likes === undefined ? 0:childSnapShot.val().likes',
-    description:'childSnapShot.val().description',
-    objectNum:'childSnapShot.val().objectNum',
-    postedPicURL:'childSnapShot.val().postedPicURL',
-    isRemixable:'childSnapShot.val().isRemixable',
-    roomType:'childSnapShot.val().roomType',
-    username:'Brandon',
-    shortID:'v7ePs8',
-    room_title:'Comparison Slider',
-    tags:'childSnapShot.val().tags',
-    room_aspect_ratio:'',
-    room_card_height:'',
-    thumbnail:'http://test.flowroom.com/uploads/NzcXtl.jpg',    
-    urlHTML:'http://test.flowroom.com/uploads/VKHyS9.html',
-    urlCSS:'http://test.flowroom.com/uploads/PoTJHL.css',
-    urlJS:'http://test.flowroom.com/uploads/5aUvFj.js'}
+  
 
 ]
 
@@ -1963,17 +1900,12 @@ let apps = [{id:'childSnapShot.key',
                         let urlCSS = `${apps[i].urlCSS}`;
                         let urlJS = `${apps[i].urlJS}`;
                         app.addEventListener('click',()=>{
-                            // let currentRoomID = window.location.pathname.split("room/").pop();
+
+
+
+
                             let shorti = short;
-                        
-                            // if(currentRoomID === '') {
-
-                            //     this.props.flowAdd({flowAdd:'empty'});
-
-                            // } else {
-                                 //if(currentRoomID !== i.shortID) {
-                                    //this.props.flowAdd({flowAdd:currentRoomID})
-                                   // this.props.openMenu({openMenu:null});
+                    
 
                                    let html,css,js;
                         
@@ -2046,16 +1978,16 @@ let apps = [{id:'childSnapShot.key',
                               //document.getElementById('remix-image-box').remove()
                                this.props.flowAdd({flowAdd:shorti});
                                this.props.loadRemix({loadRemix:'load'});
-                             
-                                // let short = `${i.shortID}`
-                                                
-                                
 
+
+                            var event = new CustomEvent('addFlow', { 
+                                detail: {
+                                    shortID:shorti
+                                }
                                 
-                                // } else {
-                                //     alert('already added')
-                                // }
-                            //}
+                            });
+                           let eventManager = document.getElementById('event-manager');
+                           eventManager.dispatchEvent(event);
                         })
                     //}
                         

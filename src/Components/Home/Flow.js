@@ -178,7 +178,11 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
 
         let renderDHTML = () => {
           let source = prepareSource();
+          
           let iframe = document.getElementsByClassName('overlay_output_frame')[index == null? 0 : index];
+          if(iframe === null) {
+            return
+          }
           let iframe_doc = iframe.contentDocument;
           
           iframe_doc.open();
@@ -193,8 +197,9 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
         };
   
        
-
-        renderDHTML();
+      //  setTimeout(()=>{
+       renderDHTML();
+       // },5000)
         // let outputframes = document.getElementsByClassName('output_frame');
         // for(let i = 0; i < outputframes.length; i++) {
         //   outputframes[i].className = '';
