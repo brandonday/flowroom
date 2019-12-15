@@ -22,7 +22,8 @@ import {flowAdd} from '../../actions/flowAdd.js';
 import { loadRemix } from '../../actions/loadRemix';
 import PropTypes from "prop-types";
 
-
+import uuid from 'uuid';
+import Hashids from 'hashids';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 let counter = 0;
 let genCount = 1;
@@ -542,7 +543,7 @@ let flowsAdded = [];
       cursor: "pointer"
     };
     const i = el.i;
-    alert('create El index ' + i)
+   // alert('create El index ' + i)
     const shortID = el.shortID;
  
     return (
@@ -613,7 +614,7 @@ let flowsAdded = [];
                   
                   ///if(shortIDs.length !== 0) {
                    // for(let i = 0; i < shortIDs.length; i++) {
-                      document.getElementsByClassName('overlay_output_frame')[i].style.pointerEvents = 'all'
+                      document.getElementById(`overlay_output_frame_${i}`).style.pointerEvents = 'all'
                    // }
                   // } else {
                     
@@ -641,10 +642,10 @@ let flowsAdded = [];
                   blockB.style.pointerEvents = 'none';
 
 
-                  document.getElementsByClassName("overlay_output_frame")[i].contentWindow.document.getElementById('overlay-container').appendChild(blockA)
+                  document.getElementById(`overlay_output_frame_${i}`).contentWindow.document.getElementById('overlay-container').appendChild(blockA)
                   document.getElementById(`${shortID}_output_frame`).contentWindow.document.getElementsByTagName('body')[0].appendChild(blockB);
                  
-                 let evref = document.getElementsByClassName("overlay_output_frame")[i].contentWindow.document.getElementById('overlay-container')
+                 let evref = document.getElementById(`overlay_output_frame_${i}`).contentWindow.document.getElementById('overlay-container')
                  function getMouse(e){
                   
           
@@ -669,12 +670,12 @@ let flowsAdded = [];
           
           
           
-          let tag = document.getElementsByClassName("overlay_output_frame")[i].contentWindow.document.elementsFromPoint(x, y)[1].tagName
+          let tag = document.getElementById(`overlay_output_frame_${i}`).contentWindow.document.elementsFromPoint(x, y)[1].tagName
           if(tag === 'HTML') {
-              document.getElementsByClassName("overlay_output_frame")[i].style.pointerEvents = 'none';
+              document.getElementById(`overlay_output_frame_${i}`).style.pointerEvents = 'none';
               document.getElementById(`${shortID}_output_frame`).style.pointerEvents = 'all';
           } else {
-            document.getElementsByClassName("overlay_output_frame")[i].style.pointerEvents = 'all';
+            document.getElementById(`overlay_output_frame_${i}`).style.pointerEvents = 'all';
             document.getElementById(`${shortID}_output_frame`).style.pointerEvents = 'none';
 
           }      
@@ -708,15 +709,15 @@ let flowsAdded = [];
                           y: y
                       }
            
-                  let tag = document.getElementsByClassName("overlay_output_frame")[i].contentWindow.document.elementsFromPoint(x, y)[1].tagName
+                  let tag = document.getElementById(`overlay_output_frame_${i}`).contentWindow.document.elementsFromPoint(x, y)[1].tagName
           
                   if(tag === 'DIV') {
-                    document.getElementsByClassName("overlay_output_frame")[i].style.pointerEvents = 'all';
+                    document.getElementById(`overlay_output_frame_${i}`).style.pointerEvents = 'all';
                     document.getElementById(`${shortID}_output_frame`).style.pointerEvents = 'none';
                       console.log(document.getElementsByClassName("selected_flow")[0], 'ghh')
 
                       } else {
-                        document.getElementsByClassName("overlay_output_frame")[i].style.pointerEvents = 'none';
+                        document.getElementById(`overlay_output_frame_${i}`).style.pointerEvents = 'none';
                         document.getElementById(`${shortID}_output_frame`).style.pointerEvents = 'all';
  
                       }      
@@ -813,18 +814,22 @@ let flowsAdded = [];
   addFlow(event){
     let shortID = event.detail.shortID;
     console.log('addflow ', event)
+
+    let hashids = (new Hashids(uuid(), 6)).encode(1, 2, 3);
+
+    
+
     this.setState({
       // Add a new item. It must have a unique key!
       items: this.state.items.concat({
-        i: this.state.newCounter,
+        i: hashids,
         x: (this.state.items.length * 2) % (this.state.cols || 12),
         y: Infinity, // puts it at the bottom
         w: 2,
         h: 2,
         shortID: shortID
-      }),
-      // Increment the counter to ensure key is always unique.
-      newCounter: this.state.newCounter + 1
+      })
+
     });;
 
   }

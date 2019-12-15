@@ -179,7 +179,7 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
         let renderDHTML = () => {
           let source = prepareSource();
           
-          let iframe = document.getElementsByClassName('overlay_output_frame')[index == null? 0 : index];
+          let iframe = document.getElementById(`overlay_output_frame_${index}`);
           if(iframe === null) {
             return
           }
@@ -212,7 +212,7 @@ let fontawesome = '<link rel="stylesheet" href="https://use.fontawesome.com/rele
             <div style={{height:'100%', width:'100%'}}>
                   <div id="full_wrap" style={{height:'100%',width:'100%',border:'none',background:'transparent'}}> 
                             <iframe id={`${this.props.shortID}_output_frame`} className="output_frame" style={{position:'relative',display:'block',pointerEvents:'none'}}></iframe>
-                            <iframe id="overlay_output_frame" className="overlay_output_frame" src="" style={{position:'absolute',display:'block',background:'red',top:0,height:'100%',width:'100%',background:'transparent',pointerEvents:'none'}}></iframe>
+                            <iframe id={`overlay_output_frame_${this.props.index}`} className="overlay_output_frame" src="" style={{position:'absolute',display:'block',background:'red',top:0,height:'100%',width:'100%',background:'transparent',pointerEvents:'none'}}></iframe>
                         </div>
             </div>
         )

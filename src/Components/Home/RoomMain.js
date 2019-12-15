@@ -1733,7 +1733,7 @@ let apps = [{id:'childSnapShot.key',
                             // document.getElementById('overlay_output_frame').contentDocument.body.appendChild(overlayContainer);
                             document.getElementsByClassName("selected_flow")[0].childNodes[1].childNodes[0].childNodes[0].childNodes[0].childNodes[1].contentDocument.getElementById('overlay-container').appendChild(div)
                             //document.getElementById('overlay_output_frame').contentDocument.getElementById('overlay-container').appendChild(div);
-                            document.getElementById('overlay_output_frame').contentDocument.body.style.padding = '10px';
+                           // document.getElementById('overlay_output_frame').contentDocument.body.style.padding = '10px';
                 
                             div.style.backgroundImage = `url(${i.images.downsized_medium.url})`;
                           
@@ -1975,7 +1975,7 @@ let apps = [{id:'childSnapShot.key',
               
                                        
           
-                              //document.getElementById('remix-image-box').remove()
+                              //document.getElemetById('remix-image-box').remove()
                                this.props.flowAdd({flowAdd:shorti});
                                this.props.loadRemix({loadRemix:'load'});
 

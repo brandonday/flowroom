@@ -858,10 +858,10 @@ checkIframeLoaded() {
       let exists = document.getElementById(`${flowAdd}_output_frame`) !== null ? flowAdd : null;
        exists = exists === flowAdd ? 'already exists' : flowAdd; 
       if(flowAdd !== '' && exists !== 'already exists') {
-        alert('redux ',flowAdd)
+        // alert('redux ',flowAdd)
          setTimeout(()=>{
         this.renderContent(null,null,null,null,flowAdd);
-         },5000)
+         },500)
       } else if(flowAdd !== '' && exists) {
 //        if(this.state.selectedFlow !== flowAdd) {
 //         html = JSON.parse(localStorage.getItem(`${flowAdd}_html`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_html`)).html:'';
