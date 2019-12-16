@@ -861,54 +861,53 @@ checkIframeLoaded() {
     render() {
       let {flowAdd} = this.props.state.flowAdd;
       let {loadRemix} = this.props.state.loadRemix
-     //localStorage.removeItem("FR_REMIX_LIST");
+      //localStorage.removeItem("FR_REMIX_LIST");
       let exists = document.getElementById(`${flowAdd}_output_frame`) !== null ? flowAdd : null;
        exists = exists === flowAdd ? 'already exists' : flowAdd; 
       if(flowAdd !== '' && exists !== 'already exists') {
-        // alert('redux ',flowAdd)
          setTimeout(()=>{
-        this.renderContent(null,null,null,null,flowAdd);
+          this.renderContent(null,null,null,null,flowAdd);
          },500)
       } else if(flowAdd !== '' && exists) {
        if(this.state.selectedFlow !== flowAdd) {
-        // html = JSON.parse(localStorage.getItem(`${flowAdd}_html`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_html`)).html:'';
-        // console.log('lo html', html)
-        // css = JSON.parse(localStorage.getItem(`${flowAdd}_CSS`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_CSS`)).css:'';
-        // js = JSON.parse(localStorage.getItem(`${flowAdd}_JS`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_JS`)).js:'';
-        // HTML_EDITOR.setValue(html);
-        // CSS_EDITOR.setValue(css);
-        // JS_EDITOR.setValue(js);
-        //alert(flowAdd)
-        //  if(document.getElementById('remix-image-box') !== null) {
-        // document.getElementById('remix-image-box').remove()
-        // }
+        html = JSON.parse(localStorage.getItem(`${flowAdd}_html`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_html`)).html:'';
+        console.log('lo html', html)
+        css = JSON.parse(localStorage.getItem(`${flowAdd}_CSS`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_CSS`)).css:'';
+        js = JSON.parse(localStorage.getItem(`${flowAdd}_JS`)) !== null?JSON.parse(localStorage.getItem(`${flowAdd}_JS`)).js:'';
+        HTML_EDITOR.setValue(html);
+        CSS_EDITOR.setValue(css);
+        JS_EDITOR.setValue(js);
+     
+         if(document.getElementById('remix-image-box') !== null) {
+        document.getElementById('remix-image-box').remove()
+        }
 
         
-//         // document.querySelector('#hidden_iframe').onload = function(){
-//         //   var iframeBody = this.contentDocument.body;
-//         //   console.log('iframe loaded, body is: ', iframeBody);
-//         // };
-//        // checkIframeLoadedInterval = setInterval(this.checkIframeLoaded, 250);
-//         var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
-// var eventer = window[eventMethod];
-// var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+        // document.querySelector('#hidden_iframe').onload = function(){
+        //   var iframeBody = this.contentDocument.body;
+        //   console.log('iframe loaded, body is: ', iframeBody);
+        // };
+       // checkIframeLoadedInterval = setInterval(this.checkIframeLoaded, 250);
+        var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+var eventer = window[eventMethod];
+var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
 
-// // Listen to message from child window
-// //eventer(messageEvent,(e)=> {
-//   //this.renderContentAdd(null,null,null,null,flowAdd);
-// //},false);
-//         //this.setState({selectedFlow:flowAdd})
-//       // }
-//        //this.renderContent(null,null,null,null,flowAdd);
+// Listen to message from child window
+//eventer(messageEvent,(e)=> {
+  //this.renderContentAdd(null,null,null,null,flowAdd);
+//},false);
+        //this.setState({selectedFlow:flowAdd})
+      // }
+       //this.renderContent(null,null,null,null,flowAdd);
 
-//       //   setTimeout(()=>{
+      //   setTimeout(()=>{
         
-//       //  if(this.state.loadRemix == false) {
-//       //   this.renderContent(null,null,null,null,flowAdd);
-//       //     this.setState({loadRemix:true})
-//       //   }
-//       //   // },10000)
-//        }
+      //  if(this.state.loadRemix == false) {
+      //   this.renderContent(null,null,null,null,flowAdd);
+      //     this.setState({loadRemix:true})
+      //   }
+      //   // },10000)
+       
       } 
     }
         return (<div id="full-page" className="full-page">
