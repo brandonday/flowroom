@@ -877,11 +877,14 @@ checkIframeLoaded() {
         HTML_EDITOR.setValue(html);
         CSS_EDITOR.setValue(css);
         JS_EDITOR.setValue(js);
-     
-         if(document.getElementById('remix-image-box') !== null) {
-        document.getElementById('remix-image-box').remove()
-        }
-
+        
+        //  if(document.getElementById('remix-image-box') !== null) {
+        // document.getElementById('remix-image-box').remove()
+        // }
+        //     if(this.state.loadRemix == false) {
+        // this.renderContent(null,null,null,null,flowAdd);
+        //   this.setState({loadRemix:true})
+        // }
         
         // document.querySelector('#hidden_iframe').onload = function(){
         //   var iframeBody = this.contentDocument.body;

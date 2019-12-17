@@ -278,7 +278,7 @@ let flows = [];
                     x: x,
                     y: y
                   }
-                  if(document.getElementById(`overlay_output_frame_${i}`) !== null) {
+                  if(document.getElementById(`overlay_output_frame_${i}`).contentWindow.document.elementsFromPoint(x, y)[1] !== undefined) {
                     let tag = document.getElementById(`overlay_output_frame_${i}`).contentWindow.document.elementsFromPoint(x, y)[1].tagName
           
                     if(tag === 'DIV') {
