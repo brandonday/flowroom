@@ -34,7 +34,7 @@
     "materialize": "^1.0.0",
     "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.22.2",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.13.1",
     "normalize.css": "^8.0.1",
     "photoeditorsdk": "^4.14.1",
     "popmotion": "^8.6.3",
