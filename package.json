@@ -13,7 +13,7 @@
     "body-scroll-lock": "^2.6.1",
     "classnames": "^2.2.6",
     "code-mirror-themes": "^1.0.0",
-    "codemirror": "^5.40.0",
+    "codemirror": "^5.58.2",
     "css-loader": "^1.0.0",
     "darkroom": "^2.0.0",
     "dat.gui": "^0.7.5",
